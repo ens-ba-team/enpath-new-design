@@ -68,6 +68,19 @@ A token whose *Do not use* matches your job is wrong even if the colour looks ri
 "rounded-[var(--radius-control)] shadow-[var(--shadow-surface)]"
 "px-[var(--spacing-component-md)] gap-[var(--spacing-component-sm)]"
 ```
+
+Page structure and component internals use different spacing families:
+```tsx
+// Page/detail structure
+<section className="p-[var(--spacing-layout-sm)]">
+  <div className="flex gap-[var(--spacing-layout-xs)]" />
+</section>
+
+// Component-owned surface
+<Card className="p-[var(--spacing-component-lg)]">
+  <div className="flex gap-[var(--spacing-component-sm)]" />
+</Card>
+```
 CSS variable name = token path with `/` → `-` and a `--` prefix (`color/surface/overlay` → `--color-surface-overlay`).
 
 **Control heights are always a pair** (drift-check #4 fails otherwise):
@@ -122,6 +135,7 @@ Do **not** reuse a near-miss or hardcode a value. Add a token:
 | `color/surface/raised` as a card fill | It's a grey tint for tab tracks and table headers | Card = `surface/overlay` + `border/default` + `shadow/surface` |
 | `status/danger-subtle/foreground` on a white page | Only valid on its own subtle fill | `color/text/invalid` |
 | `h-8`, `h-[32px]` on a control | Drifts when the scale changes; no touch rung | Height token pair |
+| `spacing/component/xl` for page padding because it equals `spacing/layout/sm` | Component and layout values may diverge; the semantic role is wrong | Page/header/body inset = `spacing/layout/sm` |
 | Hex or px in a doc next to a token name | Stale on the next re-theme | Name only |
 | `shadow/raised` on hover | Raised = dragged or pinned only | Stay on `shadow/surface` |
 

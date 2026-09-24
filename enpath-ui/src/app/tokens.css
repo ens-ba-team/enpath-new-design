@@ -975,28 +975,35 @@
   --spacing-component-sm: 8px;
   /**
    * Intent:      Default internal padding for most components
-   * Use when:    Card padding, modal padding, input horizontal padding, dropdown item padding, the go-to internal spacing when unsure
-   * Do not use:  Gaps between layout sections — use spacing/layout/* for structural spacing
-   * Use instead: spacing/component/sm for tight components, spacing/component/lg for spacious ones
+   * Use when:    Card padding, modal padding, input horizontal padding, dropdown item padding
+   * Do not use:  Gaps between components, page sections, or page-level insets — use spacing/layout/* for structural spacing
+   * Use instead: spacing/component/sm for tighter component internals, spacing/component/xl for spacious component-owned surfaces
    * Status:      active
    */
   --spacing-component-lg: 16px;
   /**
-   * Intent:      Generous internal padding for large or prominent components
-   * Use when:    Large card padding, hero section inner padding, empty state padding, dialog/modal body padding
-   * Do not use:  Small components like buttons or chips — too much breathing room
-   * Use instead: spacing/component/md for standard components
+   * Intent:      Generous internal padding for large or prominent component-owned surfaces
+   * Use when:    Large card padding, empty-state padding, dialog or overlay body padding
+   * Do not use:  Page headers, page bodies, screen-level insets, or gaps between sections — use spacing/layout/sm or spacing/layout/md
+   * Use instead: spacing/component/lg for standard components, spacing/layout/sm for standard page content insets
    * Status:      active
    */
   --spacing-component-xl: 24px;
   /**
-   * Intent:      Maximum internal spacing for very large containers
-   * Use when:    Full-page panel padding, wide modal padding, feature card inner padding
-   * Do not use:  Regular components — reserve for large-format containers only
-   * Use instead: spacing/component/lg for standard large components
+   * Intent:      Maximum internal spacing for unusually large component-owned surfaces
+   * Use when:    Wide modal padding or feature-card inner padding where spacing/component/xl is insufficient
+   * Do not use:  Application pages, page panels, page headers, page bodies, or section gaps — use spacing/layout/*
+   * Use instead: spacing/component/xl for normal large components, spacing/layout/md for distinct page groups
    * Status:      active
    */
   --spacing-component-2xl: 32px;
+  /**
+   * Intent:      Standard internal spacing for medium-sized component elements
+   * Use when:    Standard component padding, compact card padding, horizontal padding inside controls, internal gaps within a component
+   * Do not use:  Gaps between components, page regions, or sections — use spacing/layout/*
+   * Use instead: spacing/component/sm for tighter internals, spacing/component/lg for roomier components
+   * Status:      active
+   */
   --spacing-component-md: 12px;
   /**
    * Intent:      Tightest internal spacing for compact component elements
@@ -1006,20 +1013,27 @@
    * Status:      active
    */
   --spacing-component-xs: 4px;
+  /**
+   * Intent:      Compact internal spacing between spacing/component/xs and spacing/component/sm
+   * Use when:    Small component padding or internal gaps where xs is too tight and sm is too spacious
+   * Do not use:  Structural spacing between components or page regions — use spacing/layout/*
+   * Use instead: spacing/component/xs for the tightest internals, spacing/component/sm for standard compact internals
+   * Status:      active
+   */
   --spacing-component-xs-plus: 6px;
   /**
-   * Intent:      Minimum gap between adjacent components in a layout
-   * Use when:    Gap between a label and an input, gap between inline buttons, tight grid gutters in a dense UI
-   * Do not use:  Internal component padding — use spacing/component/* for inside components
-   * Use instead: spacing/layout/sm for standard component gaps
+   * Intent:      Minimum structural spacing between adjacent components or compact page groups
+   * Use when:    Tight grid gutters, compact section-heading to content spacing, or separation between adjacent page controls
+   * Do not use:  Internal component padding or icon-to-label gaps — use spacing/component/*
+   * Use instead: spacing/layout/sm for standard group spacing or page content insets
    * Status:      active
    */
   --spacing-layout-xs: 16px;
   /**
-   * Intent:      Standard gap between components and groups
-   * Use when:    Gap between form fields, gap between cards in a grid, gap between nav items, space between a heading and its content block
-   * Do not use:  Internal component padding or full section spacing
-   * Use instead: spacing/layout/xs for tighter groups, spacing/layout/md for looser groups
+   * Intent:      Standard page content inset and spacing between component groups
+   * Use when:    Page or detail header padding, page body padding, tab-list alignment, gaps between form fields or cards, space between a heading and its content block
+   * Do not use:  Internal padding owned by a card, control, dialog, or other component — use spacing/component/*
+   * Use instead: spacing/layout/xs for tighter groups, spacing/layout/md for distinct content groups
    * Status:      active
    */
   --spacing-layout-sm: 24px;

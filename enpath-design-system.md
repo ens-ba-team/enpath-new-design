@@ -201,6 +201,16 @@ spacing/shell/gap 8 · inset 8
 ```
 `component/*` = padding and gap inside a component. `layout/*` = between components and sections. Never hardcode px.
 
+| Spacing job | Canonical token |
+|---|---|
+| Page or detail header/body inset | `spacing/layout/sm` |
+| Tight separation between adjacent page groups | `spacing/layout/xs` |
+| Separation between distinct information groups | `spacing/layout/md` |
+| Standard card or component padding | `spacing/component/lg` |
+| Large dialog or component-owned surface padding | `spacing/component/xl` |
+
+Page panels are layout structure, not components: do not use `spacing/component/xl` for page padding even though it currently resolves to the same value as `spacing/layout/sm`.
+
 ### Radius — roles
 
 ```
