@@ -1,0 +1,303 @@
+{
+  "name": "breadcrumb",
+  "description": "Navigation trail showing the user's location within a hierarchy.",
+  "category": "navigation",
+  "shadcnBase": "breadcrumb",
+  "componentSets": {
+    "_breadcrumb-item": {
+      "purpose": "Individual link or current-page label."
+    },
+    "_breadcrumb-separator": {
+      "purpose": "Chevron, slash, or dot divider."
+    }
+  },
+  "variants": {
+    "Current": {
+      "type": "enum",
+      "values": [
+        "True",
+        "False"
+      ],
+      "default": "False",
+      "reactProp": "current",
+      "reactValues": {
+        "True": true,
+        "False": false
+      }
+    },
+    "Icon": {
+      "type": "enum",
+      "values": [
+        "True",
+        "False"
+      ],
+      "default": "False",
+      "reactProp": "icon",
+      "reactValues": {
+        "True": true,
+        "False": false
+      }
+    },
+    "State": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Hover",
+        "Focus",
+        "Disabled"
+      ],
+      "default": "Default",
+      "reactProp": "state",
+      "reactValues": {
+        "Default": "default",
+        "Hover": "hover",
+        "Focus": "focus",
+        "Disabled": "disabled"
+      }
+    },
+    "Separator Type": {
+      "type": "enum",
+      "values": [
+        "Chevron",
+        "Slash",
+        "Dot"
+      ],
+      "default": "Chevron",
+      "reactProp": "separator",
+      "reactValues": {
+        "Chevron": "chevron",
+        "Slash": "slash",
+        "Dot": "dot"
+      }
+    }
+  },
+  "tokens": {
+    "itemLabel": {
+      "NonCurrent Default": "color/text/secondary",
+      "NonCurrent Hover": "color/background/default/foreground",
+      "NonCurrent Focus": "color/background/default/foreground",
+      "Current": "color/background/default/foreground",
+      "Disabled": "color/text/disabled"
+    },
+    "icon": {
+      "_rule": "Paired icon — tracks the label's foreground per state (currentColor), never a fixed color/icon/*.",
+      "NonCurrent Default": "color/text/secondary",
+      "NonCurrent Hover": "color/background/default/foreground",
+      "NonCurrent Focus": "color/background/default/foreground",
+      "Current": "color/background/default/foreground",
+      "Disabled": "color/text/disabled"
+    },
+    "focus": {
+      "stroke": "color/ring",
+      "strokeWeight": 2,
+      "strokeAlign": "outside",
+      "radius": "radius/sm"
+    },
+    "separator": "color/background/default/foreground",
+    "gap": "spacing/component/xs"
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`<nav aria-label=\"breadcrumb\">` wraps the trail"
+      },
+      {
+        "property": "Current page",
+        "value": "`aria-current=\"page\"` on the last `<a>` or `<span>`"
+      },
+      {
+        "property": "Separators",
+        "value": "`aria-hidden=\"true\"` — decorative, not read by screen readers"
+      },
+      {
+        "property": "Keyboard",
+        "value": "Tab stops on each non-current link only; current page item is not focusable"
+      }
+    ]
+  },
+  "constraints": [
+    "Use breadcrumb when the page is 2+ levels deep in a hierarchy and the user benefits from knowing where they are",
+    "Always end the trail with `Current=True` — the active page",
+    "Use `Icon=True` only on the first item if you need a home/root visual anchor",
+    "`Type=Chevron` is the default separator — use `Type=Slash` for a lighter, more typographic feel",
+    "Do not use `Type=Dot` in dense navigation — it reads as ambiguous punctuation"
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Breadcrumb.md (generated from this file)",
+    "storyFile": "src/stories/Breadcrumb.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "Source markdown has no open questions."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/breadcrumb.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Breadcrumb"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Breadcrumb.stories.tsx",
+    "title": "Navigation/Breadcrumb",
+    "stories": [
+      "Default",
+      "WithIcon",
+      "SlashSeparator",
+      "DotSeparator",
+      "WithEllipsis",
+      "WithDisabled",
+      "LongTrail",
+      "AllSeparators"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Breadcrumb.md",
+    "intro": "# Breadcrumb\n\nNavigation trail showing the user's location within a hierarchy. Built from two sub-components assembled in example frames — there is no fixed composite component.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Component Sets",
+        "body": "\n| Set | ID | Variants | Purpose |\n|---|---|---|---|\n| `_breadcrumb-item` | `291:223` | 16 | Individual link or current-page label |\n| `_breadcrumb-separator` | `52:13919` | 3 | Chevron, slash, or dot divider between items |\n\n---\n\n"
+      },
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": "\n### `_breadcrumb-item`\n"
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\n`Current(2) × Icon(2) × State(4) = 16 variants`\n\n### `_breadcrumb-separator`\n"
+          },
+          {
+            "md": "| Property | Options | Default |\n|---|---|---|\n| `Type` | `Chevron`, `Slash`, `Dot` | `Chevron` |"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Structure",
+        "body": "\n### `_breadcrumb-item`\n\n```\n_breadcrumb-item                — HORIZONTAL, gap: spacing/component/xs\n  ├─ icon                       — INSTANCE (placeholder icon) — visible when Icon=True\n  └─ label                      — TEXT\n```\n\n### `_breadcrumb-separator`\n\n```\n_breadcrumb-separator\n  ├─ Type=Chevron               — INSTANCE (chevron-right icon)\n  ├─ Type=Slash                 — TEXT \"/\"\n  └─ Type=Dot                   — TEXT \"·\"\n```\n\n---\n\n"
+      },
+      {
+        "title": "Why No Composite Component",
+        "body": "\nBreadcrumb is a list pattern, not a slotted shell. The number of items is indeterminate (2–5+ items per trail) and the separator always alternates between items — two properties that make a fixed-slot component either dishonest (fixed depth) or over-engineered (Depth=2/3/4/5 variants). Example frames communicate the assembly rule more clearly than any fixed component would.\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### `_breadcrumb-item` — label text per state\n\n| `Current` | `State` | Token |\n|---|---|---|\n| `False` | `Default` | `color/text/secondary` |\n| `False` | `Hover` | `color/background/default/foreground` |\n| `False` | `Focus` | `color/background/default/foreground` |\n| `False` | `Disabled` | `color/text/disabled` |\n| `True` | `Default` | `color/background/default/foreground` |\n| `True` | `Hover` | `color/background/default/foreground` |\n| `True` | `Focus` | `color/background/default/foreground` |\n| `True` | `Disabled` | `color/text/disabled` |\n\n> `color/background/default/foreground` is correct here — breadcrumb items sit on the page canvas, not on a component surface. Do not use `color/surface/default/foreground`.\n\n### `_breadcrumb-item` — icon stroke\n\nThe leading icon is a **paired icon** — it tracks the label's foreground per state (system Paired icon rule / `currentColor`), never a fixed `color/icon/*`.\n\n| `Current` | `State` | Icon stroke = label fg |\n|---|---|---|\n| `False` | `Default` | `color/text/secondary` |\n| `False` | `Hover` / `Focus` | `color/background/default/foreground` |\n| `True` | `Default` / `Hover` / `Focus` | `color/background/default/foreground` |\n| any | `Disabled` | `color/text/disabled` |\n\nIcon stroke is bound on the VECTOR nodes inside the icon instance — never on the instance frame itself.\n\n### `_breadcrumb-item` — focus state\n\n| Property | Value |\n|---|---|\n| Stroke | `color/ring` |\n| Stroke weight | 2px |\n| Stroke align | `OUTSIDE` |\n| Corner radius | `radius/sm` (all 4 corners individually) |\n\n`radius/sm` (4px) is used on Focus to match the rounded corners of the focus ring. Without it the ring appears as a sharp rectangle around inline text. `radius/md` or above would make the item feel button-like — `radius/sm` is the correct choice for inline text elements.\n\n### `_breadcrumb-item` — spacing\n\n| Property | Token |\n|---|---|\n| Gap (icon → label) | `spacing/component/xs` (4px) |\n\n### `_breadcrumb-separator` — icon and text\n\n| Type | Layer | Token |\n|---|---|---|\n| `Chevron` | chevron-right VECTOR stroke | `color/background/default/foreground` |\n| `Slash` | \"/\" TEXT fill | `color/background/muted/foreground` |\n| `Dot` | \"·\" TEXT fill | `color/background/muted/foreground` |\n\nChevron uses the full foreground token (more visual weight as a directional marker). Slash and Dot use the muted foreground.\n\n---\n\n"
+      },
+      {
+        "title": "Example Frames",
+        "body": "\nThree example frames live in the \"Breadcrumb\" section below the component sets:\n\n| Example | Description |\n|---|---|\n| `example--basic` | 3-item trail — Default link → Chevron → Default link → Chevron → Current page |\n| `example--with-icon` | Same as basic but first item uses `Icon=True` (home icon) |\n| `example--slash-divider` | 3-item trail using `Type=Slash` separator |\n\n### Assembly rule\n\n```\n_breadcrumb-item (Current=False)\n  _breadcrumb-separator\n  _breadcrumb-item (Current=False)\n  _breadcrumb-separator\n  _breadcrumb-item (Current=True)\n```\n\n- Separator always sits between two items — never at start or end\n- Last item is always `Current=True, State=Default` (non-interactive)\n- `Icon=True` is typically used only on the first item (home / root)\n- Gap between instances in the trail: `spacing/component/xs` (4px) — bound on the example frames\n\n---\n\n"
+      },
+      {
+        "title": "Behavior",
+        "body": "\n### Navigation\n\n- Every `_breadcrumb-item` where `Current=False` is a clickable link — clicking navigates to that level\n- `Current=True` is the active page — it is a non-interactive label (`<span>` not `<a>`), never receives focus, and is never underlined\n- `State=Disabled` items are rendered but not clickable — use sparingly (e.g. a level that exists but the user doesn't have access to)\n\n### States\n\n| State | Trigger | What changes |\n|---|---|---|\n| `Default` | Resting | `color/text/secondary` label (non-current) |\n| `Hover` | Mouse over | Label brightens to `color/background/default/foreground` |\n| `Focus` | Keyboard tab | `color/ring` stroke, 2px outside, `radius/sm` |\n| `Disabled` | Prop set | `color/text/disabled`; no pointer events |\n\n### Truncation (implementation)\n\nWhen the trail is too long for the available width, collapse middle items behind an ellipsis indicator:\n\n```\nHome  /  …  /  Settings  /  Notifications\n```\n\nshadcn provides `BreadcrumbEllipsis` as a **display-only component** — it renders the `…` indicator but has no built-in expand/collapse logic. Expand-on-click behavior is implementation-defined:\n\n- Common pattern: clicking `BreadcrumbEllipsis` toggles a state flag that renders the full trail\n- Alternative: open a dropdown showing the hidden items as links\n- Collapse threshold: typically triggered when the breadcrumb container overflows — detect with a `ResizeObserver` or define a fixed max-item count\n\nRepresent the collapsed state with a `_breadcrumb-item` (`Icon=False`) whose label is \"…\" in place of the middle items.\n\n### Icon usage\n\n`Icon=True` is typically applied only to the first item to provide a home/root anchor. Using icons on multiple items adds visual noise without navigation benefit.\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Touch Target",
+        "body": "\n`_breadcrumb-item` renders at ~21px height — below the WCAG 2.2 AA 24px minimum. `BreadcrumbLink` has a built-in invisible hit area, ≥ 44×44px on coarse pointers (`height/target/touch`); the visible layout is unchanged. No wrapper needed.\n\n---\n\n"
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- A settings page at \"Settings / Notifications / Email\" shows the full path so users can step back to any level\n- An e-commerce PDP shows \"Home / Women / Shoes / Running\" above the product title\n- A file manager displays the folder path \"Drive / Projects / 2026 / Q1\" above the file list\n- A docs site shows \"Docs / Components / Breadcrumb\" at the top of each article page\n- A support portal shows \"Help Centre / Billing / Refunds\" so users know how they arrived at the article\n- A long hierarchy trail collapses middle items with an ellipsis to avoid wrapping on narrow viewports\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Current=False` (\\_breadcrumb-item) | Navigable ancestor links in the trail | \"Home\" · \"Products\" · \"Settings\" — any level the user can click back to |\n| `Current=True` (\\_breadcrumb-item) | The active page — non-interactive, always the last item | \"Running Shoes\" · \"Email Notifications\" · \"Q1 Report\" |\n| `Icon=True` (\\_breadcrumb-item) | First item only, to provide a home/root visual anchor | Home icon on the first crumb in a root-level trail |\n| `Chevron` (\\_breadcrumb-separator) | Default — clear directional separator for most contexts | Standard product, docs, and settings breadcrumbs |\n| `Slash` (\\_breadcrumb-separator) | Lighter, more typographic feel — file paths and dev tools | File system paths · Code documentation · Terminal-style UIs |\n| `Dot` (\\_breadcrumb-separator) | Compact inline trails where space is very tight | Narrow widgets only — avoid in standard navigation contexts |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| Shows user's current location in a page hierarchy | `breadcrumb` | `pagination` |\n| Navigates between numbered pages of a dataset | `pagination` | `breadcrumb` |\n| Site-level navigation to different top-level routes | `navigation-menu` | `breadcrumb` |\n| Switches between content sections on the same page | `tabs` | `breadcrumb` |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Open Questions",
+        "body": "\nNone.\n"
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/breadcrumb\n- **Composition · Separator:** chevron-right icon or text slash/dot\n- **Composition · Assembly Rule:** Items and separators alternate; separator never appears at start or end.\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "`color/surface/default/foreground` on label",
+      "correct": "`color/background/default/foreground` — breadcrumb sits on canvas, not a surface"
+    },
+    {
+      "wrong": "`color/icon/*` on current-page item icon",
+      "correct": "Same `color/background/default/foreground` as the label — icon matches text"
+    },
+    {
+      "wrong": "Put a separator after the last item",
+      "correct": "Separator only between items, never trailing"
+    },
+    {
+      "wrong": "Make `Current=True` focusable",
+      "correct": "Current page is non-interactive — remove from tab order"
+    },
+    {
+      "wrong": "Build a fixed composite `breadcrumb` component",
+      "correct": "Use example frames — the item count is variable by nature"
+    },
+    {
+      "wrong": "Use `cornerRadius` binding",
+      "correct": "Always bind all 4 corners individually (`topLeftRadius` etc.)"
+    }
+  ]
+}

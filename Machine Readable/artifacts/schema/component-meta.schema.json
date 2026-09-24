@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enpath-design-system.local/component-meta.schema.json",
+  "title": "Enpath Component Metadata v3",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "name",
+    "description",
+    "category",
+    "shadcnBase",
+    "variants",
+    "tokens",
+    "accessibility",
+    "meta",
+    "implementation",
+    "storybook"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "description": { "type": "string" },
+    "category": { "type": "string" },
+    "shadcnBase": { "type": "string" },
+    "meta": {
+      "type": "object",
+      "required": ["sourceMarkdown", "artifactStatus", "version"],
+      "additionalProperties": true,
+      "properties": {
+        "sourceMarkdown": { "type": "string" },
+        "storyFile": { "type": "string" },
+        "artifactStatus": {
+          "type": "string",
+          "enum": ["ready", "needs review", "needs audit", "stale", "blocked"]
+        },
+        "version": { "type": "string" },
+        "openQuestions": { "type": "array" },
+        "notes": { "type": "array" },
+        "knownIssues": { "type": "array" },
+        "changelog": { "type": "array" }
+      }
+    },
+    "implementation": {
+      "type": "object",
+      "required": ["tsxFile"],
+      "additionalProperties": true,
+      "properties": {
+        "tsxFile": { "type": "string" },
+        "packageDeps": { "type": "array" },
+        "exports": { "type": "array" },
+        "notes": { "type": "array" }
+      }
+    },
+    "storybook": {
+      "type": "object",
+      "required": ["file", "title"],
+      "additionalProperties": true,
+      "properties": {
+        "file": { "type": "string" },
+        "title": { "type": "string" },
+        "stories": { "type": "array" },
+        "decorators": { "type": "array" },
+        "notes": { "type": "string" }
+      }
+    },
+    "variants": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["type", "values", "default"],
+        "additionalProperties": true,
+        "properties": {
+          "type": { "type": "string", "enum": ["enum", "boolean", "string", "number"] },
+          "values": { "type": "array", "items": { "type": ["string", "number", "boolean"] }, "minItems": 1 },
+          "default": { "type": ["string", "number", "boolean"] },
+          "reactProp": { "type": "string" },
+          "reactValues": { "type": "object" }
+        }
+      }
+    },
+    "tokens": { "type": "object" },
+    "accessibility": { "type": "object", "description": "{ properties: [{ property, value }], keys?: [{ key, action }] } — rendered as the Accessibility tables" },
+    "doNot": { "type": "array", "description": "[{ wrong, correct }] — rendered as the Do Not table" },
+    "constraints": { "type": ["array", "object"], "description": "Usage rules, one per item — rendered as the Usage Rules list" },
+    "relationships": { "type": "object" }
+  }
+}

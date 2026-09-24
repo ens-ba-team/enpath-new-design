@@ -1,0 +1,246 @@
+{
+  "name": "slider",
+  "description": "A range input control that lets users select a value by dragging a thumb along a track.",
+  "category": "forms",
+  "shadcnBase": "slider",
+  "variants": {
+    "Orientation": {
+      "type": "enum",
+      "values": [
+        "Horizontal",
+        "Vertical"
+      ],
+      "default": "Horizontal",
+      "reactProp": "orientation",
+      "reactValues": {
+        "Horizontal": "horizontal",
+        "Vertical": "vertical"
+      }
+    },
+    "State": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Disabled",
+        "Focus"
+      ],
+      "default": "Default",
+      "reactProp": "disabled",
+      "reactValues": {
+        "Disabled": true
+      }
+    }
+  },
+  "tokens": {
+    "fills": {
+      "track": "color/surface/muted",
+      "range": "color/brand/primary",
+      "thumb": "color/background/default"
+    },
+    "strokes": {
+      "Default": {
+        "thumb": "color/brand/primary",
+        "weight": 2,
+        "align": "inside"
+      },
+      "Disabled": {
+        "thumb": "color/brand/primary",
+        "weight": 2,
+        "align": "inside"
+      },
+      "Focus": {
+        "thumb": "color/ring",
+        "weight": 2,
+        "align": "outside"
+      }
+    },
+    "radius": {
+      "track": "radius/full",
+      "range": "radius/full"
+    },
+    "opacity": {
+      "Disabled": "opacity/disabled"
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`slider`"
+      },
+      {
+        "property": "Touch target",
+        "value": "Thumb is 20×20px (below AA 24px) — built-in invisible hit area, ≥ 44×44px on coarse pointers (`height/target/touch`)"
+      },
+      {
+        "property": "Focus indicator",
+        "value": "`color/ring` stroke · 2px · OUTSIDE · on the `thumb` ELLIPSE"
+      },
+      {
+        "property": "Keyboard",
+        "value": "`Tab` to focus · Arrow keys to increment/decrement · `Home`/`End` for min/max"
+      },
+      {
+        "property": "Screen reader",
+        "value": "`aria-valuenow`, `aria-valuemin`, `aria-valuemax` — implementation responsibility"
+      }
+    ]
+  },
+  "constraints": [
+    "Use `Orientation=Horizontal` for standard left-to-right value selection (volume, price range, progress).",
+    "Use `Orientation=Vertical` for vertical controls — equaliser-style or height-constrained layouts.",
+    "Always pair with a visible label and a value readout in implementation — the slider alone does not communicate the current value to screen readers.",
+    "Do not use the slider for binary on/off selection — use a Toggle instead.",
+    "Do not use for navigation or progress indication — use a Progress component for read-only values.",
+    "Use for editable range values only."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Slider.md (generated from this file)",
+    "storyFile": "src/stories/Slider.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "Hover treatment is a CSS state only."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/slider.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Slider"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Slider.stories.tsx",
+    "title": "Forms/Slider",
+    "stories": [
+      "Default",
+      "Horizontal",
+      "Disabled",
+      "Vertical",
+      "Range",
+      "WithSteps"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Slider.md",
+    "intro": "# Slider\n\nA range input control that lets users select a value by dragging a thumb along a track. Supports horizontal and vertical orientations, with Default, Disabled, and Focus states.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": "\n**Component set:** `slider` · ID `67:9199` · 6 variants\n"
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\nAll 2 orientations × 3 states = 6 variants.\n\nNo Size variant — the track thickness (8px) and thumb size (20×20px) are fixed across all uses.\n\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Component Properties",
+        "body": "\n| Property | Type | Default | Notes |\n|---|---|---|---|\n| `Orientation` | VARIANT | `Horizontal` | Layout direction of the track |\n| `State` | VARIANT | `Default` | Interaction state |\n\nNo boolean props, no text content, no instance swaps — this is a pure shape component. Value percentage is represented visually by the `range` layer width (horizontal) or height (vertical).\n\n---\n\n"
+      },
+      {
+        "title": "Structure",
+        "body": "\nAll variants share the same 3-layer structure. Layers are not auto-layout children — they are absolutely positioned within the variant frame.\n\n```\nslider                        — variant frame (280×20px horizontal · 20×160px vertical)\n  ├─ track    (RECTANGLE)     — full-width/height background bar · 8px thick · radius/full\n  ├─ range    (RECTANGLE)     — filled portion · same thickness · radius/full · overlays track\n  └─ thumb    (ELLIPSE)       — drag handle · 20×20px · sits at the end of range\n```\n\n**Horizontal:** track is 280px wide × 8px tall. Thumb is vertically centered on the track.\n\n**Vertical:** track is 8px wide × 160px tall. Thumb is horizontally centered on the track.\n\nThe `range` layer represents the current value — its width (horizontal) or height (vertical) is set by the designer to show a specific percentage in static mockups. In code this is driven by the value prop.\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### Fills — all variants\n\n| Layer | Token | Notes |\n|---|---|---|\n| `track` | `color/surface/muted` | Unfilled portion of the track — component-level neutral fill |\n| `range` | `color/brand/primary` | Filled/selected portion — always brand primary |\n| `thumb` | `color/background/default` | White fill — contrasts against track and range |\n\n### Strokes — per State\n\n| State | Layer | Token | Weight | Align |\n|---|---|---|---|---|\n| `Default` | `thumb` | `color/brand/primary` | 2px | INSIDE |\n| `Disabled` | `thumb` | `color/brand/primary` | 2px | INSIDE |\n| `Focus` | `thumb` | `color/ring` | 2px | OUTSIDE |\n\n`track` and `range` have no stroke.\n\n### Radius — all variants\n\n| Layer | Token | Value |\n|---|---|---|\n| `track` | `radius/full` | 9999px |\n| `range` | `radius/full` | 9999px |\n| `thumb` | — | ELLIPSE shape — inherently circular, no radius binding needed |\n\n### Disabled state\n\n| Property | Token | Value |\n|---|---|---|\n| Variant-level opacity | `opacity/disabled` | 60% |\n\nThe Disabled variant applies `opacity/disabled` to the entire variant frame. No fill or stroke tokens change — only opacity. This matches the shadcn pattern: `disabled:opacity-50`.\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\nThe `State=Focus` variant shows the focus ring on `thumb` only — not on the full slider frame. This matches browser behavior where focus lands on the thumb handle, not the track.\n\nNo Hover state exists in this component. shadcn's CSS hover treatment (thumb scale) is an implementation concern — no variant.\n\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Behavior",
+        "body": "\n| State | Triggered by | Notes |\n|---|---|---|\n| `Default` | Resting / interactive | Track + range shown at chosen value percentage |\n| `Focus` | `Tab` key · click on thumb | `color/ring` stroke (2px, outside) on thumb only |\n| `Disabled` | `disabled` prop | Entire component at 60% opacity · not interactive · no hover or focus |\n\nThe slider has no Hover variant. Hover feedback (cursor change, thumb scale) is handled in CSS only.\n\n**Value representation in a static mockup:** set the `range` layer's width (horizontal) or height (vertical) manually to depict a specific value. Example: 70% value on a 280px horizontal track = `range` width 196px, thumb positioned at x=186.\n\n---\n\n"
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- Volume or playback speed control — user drags to an approximate level, exact value matters less than feel\n- Brightness or display contrast setting in system preferences\n- Price range filter on an e-commerce search results page — \"Min $0 — Max $500\"\n- AI model temperature or creativity parameter — 0.0 to 1.0, continuous approximate value\n- Image editing: opacity, blur radius, or saturation — visual feedback updates in real time as the user drags\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Orientation=Horizontal` | Standard left-to-right value selection — the default for almost all cases | Volume control · Price range · Opacity slider · AI temperature |\n| `Orientation=Vertical` | Height-constrained layouts or vertical equivalents like equaliser bands | Audio equaliser · Column height selector in a chart builder |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| Approximate value in a continuous range, precision not required | `slider` | `input` (number) |\n| Exact numeric value required (quantity, port number, amount) | `input` (`type=\"number\"`) | `slider` |\n| Binary on/off control | `switch` | `slider` |\n| Read-only progress display (upload %, task completion) | `progress` | `slider` |\n| User picks from a small discrete set of named levels | `radio` | `slider` |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/slider\n- **Best practice · References · Radix:** https://www.radix-ui.com/primitives/docs/components/slider\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Raw rectangle as track with hardcoded color",
+      "correct": "Use `slider` instance, set `State` and `Orientation`"
+    },
+    {
+      "wrong": "Set `range` fill directly as an override",
+      "correct": "The fill is always `color/brand/primary` — do not override per-instance"
+    },
+    {
+      "wrong": "Use `color/background/muted` on track",
+      "correct": "`color/surface/muted` — track is a component-level surface, not page canvas"
+    },
+    {
+      "wrong": "Manually draw a focus ring for keyboard states",
+      "correct": "Use `State=Focus` — the ring is bound to `color/ring` and pre-configured"
+    },
+    {
+      "wrong": "Use a range with height > track height",
+      "correct": "Range and track must share the same thickness (8px)"
+    }
+  ]
+}

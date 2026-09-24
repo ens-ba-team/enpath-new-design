@@ -1,0 +1,372 @@
+{
+  "button": {
+    "primary": {
+      "bg": {
+        "bg": {
+          "$value": "{color.brand.primary}",
+          "$type": "color"
+        },
+        "hover": {
+          "$value": "{color.brand.primary-hover}",
+          "$type": "color"
+        },
+        "active": {
+          "$value": "{color.brand.primary-active}",
+          "$type": "color"
+        }
+      },
+      "fg": {
+        "fg": {
+          "$value": "{color.brand.primary.foreground}",
+          "$type": "color"
+        }
+      }
+    },
+    "secondary": {
+      "bg": {
+        "bg": {
+          "$value": "{color.brand.secondary}",
+          "$type": "color"
+        },
+        "hover": {
+          "$value": "{color.brand.secondary-hover}",
+          "$type": "color"
+        },
+        "active": {
+          "$value": "{color.brand.secondary-active}",
+          "$type": "color"
+        }
+      },
+      "fg": {
+        "fg": {
+          "$value": "{color.brand.secondary.foreground}",
+          "$type": "color"
+        }
+      }
+    },
+    "destructive": {
+      "bg": {
+        "bg": {
+          "$value": "{color.brand.destructive}",
+          "$type": "color"
+        },
+        "hover": {
+          "$value": "{color.brand.destructive-hover}",
+          "$type": "color"
+        },
+        "active": {
+          "$value": "{color.brand.destructive-active}",
+          "$type": "color"
+        }
+      },
+      "fg": {
+        "fg": {
+          "$value": "{color.brand.destructive.foreground}",
+          "$type": "color"
+        }
+      }
+    },
+    "outline": {
+      "bg": {
+        "bg": {
+          "$value": "{color.background.default}",
+          "$type": "color"
+        },
+        "hover": {
+          "$value": "{color.background.accent}",
+          "$type": "color"
+        },
+        "active": {
+          "$value": "{color.background.accent}",
+          "$type": "color"
+        }
+      },
+      "fg": {
+        "fg": {
+          "$value": "{color.background.default.foreground}",
+          "$type": "color"
+        }
+      },
+      "border": {
+        "default": {
+          "$value": "{color.border.default}",
+          "$type": "color"
+        },
+        "hover": {
+          "$value": "{color.border.hover}",
+          "$type": "color"
+        },
+        "focus": {
+          "$value": "{color.ring}",
+          "$type": "color"
+        },
+        "active": {
+          "$value": "{color.border.strong}",
+          "$type": "color"
+        },
+        "disabled": {
+          "$value": "{color.border.disabled}",
+          "$type": "color"
+        }
+      }
+    },
+    "ghost": {
+      "bg": {
+        "hover": {
+          "$value": "{color.background.accent}",
+          "$type": "color"
+        },
+        "bg": {
+          "$value": "{color.background.default}",
+          "$type": "color"
+        },
+        "active": {
+          "$value": "{color.background.accent}",
+          "$type": "color"
+        }
+      },
+      "fg": {
+        "fg": {
+          "$value": "{color.background.default.foreground}",
+          "$type": "color"
+        }
+      }
+    },
+    "link": {
+      "fg": {
+        "default": {
+          "$value": "{color.text.link}",
+          "$type": "color"
+        },
+        "hover": {
+          "$value": "{color.text.link-hover}",
+          "$type": "color"
+        },
+        "disabled": {
+          "$value": "{color.text.disabled}",
+          "$type": "color"
+        },
+        "active": {
+          "$value": "{color.text.link-active}",
+          "$type": "color"
+        }
+      }
+    },
+    "size": {
+      "Button radius 1": {
+        "$value": "{radius.xl}",
+        "$type": "number",
+        "$description": "Corner radius for Large and Icon Large (11px = radius/xl)"
+      },
+      "Button radius 2": {
+        "$value": "{radius.base}",
+        "$type": "number",
+        "$description": "Corner radius for Small, Default, Icon Small, Icon Default (8px = radius/base)"
+      },
+      "Button spacing": {
+        "$value": "{spacing.component.xs}",
+        "$type": "number",
+        "$description": "Gap between icon and label — all sizes (4px)"
+      },
+      "Button-padding-default": {
+        "$value": "{spacing.3}",
+        "$type": "dimension",
+        "$description": "Horizontal padding for Default and Large (12px) — En UI control padding"
+      },
+      "Button-padding-small": {
+        "$value": "{spacing.3}",
+        "$type": "dimension",
+        "$description": "Horizontal padding for Small (12px)"
+      },
+      "Button-padding-xsmall": {
+        "$value": "{spacing.2}",
+        "$type": "number",
+        "$description": "Horizontal padding for XSmall button (8px) — En UI control/xs"
+      }
+    }
+  },
+  "badge": {
+    "Badge-height-small": {
+      "$value": "{spacing.4}",
+      "$type": "dimension",
+      "$description": "Badge-height-small for small badge variant"
+    },
+    "Badge-height-medium": {
+      "$value": "{spacing.5}",
+      "$type": "dimension",
+      "$description": "Badge-height-small for medium badge variant"
+    },
+    "Badge-height-large": {
+      "$value": "{spacing.6}",
+      "$type": "dimension",
+      "$description": "Badge-height-small for large badge variant"
+    }
+  },
+  "table": {
+    "table-cell-compact": {
+      "$value": "{spacing.10}",
+      "$type": "dimension",
+      "$description": "table-cell height for compact variant"
+    },
+    "table-cell-default": {
+      "$value": "{spacing.12}",
+      "$type": "dimension",
+      "$description": "table-cell height for default variant"
+    }
+  },
+  "tooltip": {
+    "bg": {
+      "$value": "{color.background.inverted}",
+      "$type": "color",
+      "$description": "Tooltip background — aliases color/background/inverted (zinc/900, a dark bubble)."
+    },
+    "fg": {
+      "$value": "{color.background.inverted.foreground}",
+      "$type": "color",
+      "$description": "Tooltip text — aliases color/background/inverted/foreground (white on the dark bubble)."
+    }
+  },
+  "item": {
+    "hover": {
+      "bg": {
+        "$value": "{color.blue.25}",
+        "$type": "color",
+        "$description": "Intent:      Fill of a selectable Item row on hover\nUse when:    Item with onSelect, pointer over it, not selected\nDo not use:  Selected rows — use item/selected/bg; static (non-selectable) rows\nUse instead: item/selected/bg for the selected row\nNote:        Added 2026-09-22; same blues as the sidebar's selected item so selection looks the same across the app.\nStatus:      active"
+      }
+    },
+    "selected": {
+      "bg": {
+        "$value": "{color.blue.50}",
+        "$type": "color",
+        "$description": "Intent:      Fill of the selected Item row in a single-select list (master–detail)\nUse when:    The one Item with selected=true; always with item/selected/border\nDo not use:  Hover — use item/hover/bg; multi-select checkmarks; the sidebar — use color/sidebar/active\nUse instead: item/hover/bg for hover\nNote:        Added 2026-09-22; same blues as the sidebar's selected item so selection looks the same across the app.\nStatus:      active"
+      },
+      "border": {
+        "$value": "{color.blue.200}",
+        "$type": "color",
+        "$description": "Intent:      1px inset border of the selected Item row\nUse when:    Always together with item/selected/bg\nDo not use:  Unselected rows; focus rings — use color/border/focus\nUse instead: color/border/default for Variant=Outline rows\nNote:        Added 2026-09-22; same blues as the sidebar's selected item so selection looks the same across the app.\nStatus:      active"
+      },
+      "fg": {
+        "$value": "{color.background.default.foreground}",
+        "$type": "color",
+        "$description": "Intent:      Title text on the selected Item row\nUse when:    Title of the row with selected=true\nDo not use:  Description text — keeps color/surface/muted/foreground\nUse instead: color/surface/default/foreground on unselected rows\nNote:        Added 2026-09-22; same blues as the sidebar's selected item so selection looks the same across the app.\nStatus:      active"
+      }
+    }
+  },
+  "career-stepper": {
+    "surface": {
+      "$value": "{gradient.career-stepper}",
+      "$type": "string",
+      "$description": "Intent:      Gradient surface of the numbered shield marker in Career Path Stepper\nUse when:    Filling the shield marker rendered by CareerPathStep\nDo not use:  Other steppers, badges, achievements, cards or decorative shapes\nUse instead: color/surface/tint for generic brand-tinted component surfaces\nForeground:  career-stepper/foreground\nStatus:      active"
+    },
+    "border": {
+      "$value": "{color.blue.200}",
+      "$type": "color",
+      "$description": "Intent:      Persistent boundary of the shield marker in Career Path Stepper\nUse when:    Drawing the inset edge around the CareerPathStep number shield\nDo not use:  Focus rings, selected states, row borders or any component outside Career Path Stepper\nUse instead: color/border/focus for focus, color/border/default for general component borders\nStatus:      active"
+    },
+    "foreground": {
+      "$value": "{color.background.default.foreground}",
+      "$type": "color",
+      "$description": "Intent:      Number text inside the shield marker in Career Path Stepper\nUse when:    Rendering the visible sequence number inside CareerPathStep\nDo not use:  Step titles, descriptions, icons or text outside Career Path Stepper\nUse instead: career-stepper/row-foreground for step titles, career-stepper/description for supporting text\nStatus:      active"
+    },
+    "connector": {
+      "$value": "{color.border.default}",
+      "$type": "color",
+      "$description": "Intent:      Structural line connecting adjacent markers in Career Path Stepper\nUse when:    Drawing the vertical rail between CareerPathStep markers, except after the final step\nDo not use:  Dividers, borders, timelines or steppers outside Career Path Stepper\nUse instead: color/border/default for general dividers and structural lines\nStatus:      active"
+    },
+    "row-surface": {
+      "$value": "{color.surface.default}",
+      "$type": "color",
+      "$description": "Intent:      Flat surface behind one content row in Career Path Stepper\nUse when:    Filling the position-and-level row rendered by CareerPathStep\nDo not use:  General cards, list items or rows outside Career Path Stepper\nUse instead: color/surface/default for generic flat component surfaces\nForeground:  career-stepper/row-foreground\nStatus:      active"
+    },
+    "row-border": {
+      "$value": "{color.border.default}",
+      "$type": "color",
+      "$description": "Intent:      Frame border around one content row in Career Path Stepper\nUse when:    Outlining the position-and-level row rendered by CareerPathStep\nDo not use:  The shield marker, focus states or containers outside Career Path Stepper\nUse instead: career-stepper/border for the shield marker, color/border/default for general component frames\nStatus:      active"
+    },
+    "row-foreground": {
+      "$value": "{color.surface.default.foreground}",
+      "$type": "color",
+      "$description": "Intent:      Primary title text inside a Career Path Stepper row\nUse when:    Rendering the position, level and level-name title in CareerPathStep\nDo not use:  Marker numbers, supporting descriptions or text outside Career Path Stepper\nUse instead: career-stepper/foreground for marker numbers, career-stepper/description for supporting text\nStatus:      active"
+    },
+    "description": {
+      "$value": "{color.text.secondary}",
+      "$type": "color",
+      "$description": "Intent:      Supporting readiness text inside a Career Path Stepper row\nUse when:    Rendering expectation counts or secondary context beneath a CareerPathStep title\nDo not use:  Primary titles, marker numbers or supporting text outside Career Path Stepper\nUse instead: career-stepper/row-foreground for titles, color/text/secondary for general supporting text\nStatus:      active"
+    },
+    "radius": {
+      "$value": "{radius.surface}",
+      "$type": "dimension",
+      "$description": "Intent:      Corner radius of the content row in Career Path Stepper\nUse when:    Rounding the bordered row rendered by CareerPathStep\nDo not use:  The clipped shield marker or containers outside Career Path Stepper\nUse instead: radius/surface for generic component surfaces\nStatus:      active"
+    },
+    "step-gap": {
+      "$value": "{spacing.component.md}",
+      "$type": "dimension",
+      "$description": "Intent:      Horizontal separation between the marker rail and content row in Career Path Stepper\nUse when:    Laying out the shield-and-connector column beside CareerPathStep content\nDo not use:  Internal row spacing or layouts outside Career Path Stepper\nUse instead: spacing/component/md for general component-internal spacing\nStatus:      active"
+    },
+    "row-gap": {
+      "$value": "{spacing.component.md}",
+      "$type": "dimension",
+      "$description": "Intent:      Internal separation between main content and trailing actions in a Career Path Stepper row\nUse when:    CareerPathStep includes controls in its actions slot\nDo not use:  The leading drag-handle gap, marker-to-row spacing or components outside Career Path Stepper\nUse instead: spacing/component/xs for the leading handle gap, career-stepper/step-gap for marker-to-row spacing\nStatus:      active"
+    },
+    "row-padding": {
+      "$value": "{spacing.component.md}",
+      "$type": "dimension",
+      "$description": "Intent:      Internal inset around content in a Career Path Stepper row\nUse when:    Padding the bordered row rendered by CareerPathStep\nDo not use:  Marker insets, page layout or containers outside Career Path Stepper\nUse instead: spacing/component/md for generic component padding\nStatus:      active"
+    },
+    "item-gap": {
+      "$value": "{spacing.component.md}",
+      "$type": "dimension",
+      "$description": "Intent:      Vertical separation after each row in Career Path Stepper\nUse when:    Spacing consecutive CareerPathStep rows while leaving room for the connector rail\nDo not use:  General list spacing, row padding or layouts outside Career Path Stepper\nUse instead: spacing/layout/xs for general gaps between adjacent components\nStatus:      active"
+    }
+  },
+  "chat": {
+    "user": {
+      "bg": {
+        "$value": "{color.blue.50}",
+        "$type": "color",
+        "$description": "Intent:      Fill of a user message block in the chat panel\nUse when:    User turns in the AI chat\nDo not use:  Assistant turns (no fill); other chat UIs\nUse instead: chat/assistant/fg on the panel for assistant text\nNote:        Added 2026-09-22 for the AI chat panel (AI Elements, VS Code-style).\nStatus:      active"
+      },
+      "fg": {
+        "$value": "{color.background.default.foreground}",
+        "$type": "color",
+        "$description": "Intent:      Text of a user message\nUse when:    On chat/user/bg only\nDo not use:  Elsewhere\nUse instead: color/background/default/foreground\nNote:        Added 2026-09-22 for the AI chat panel (AI Elements, VS Code-style).\nStatus:      active"
+      },
+      "border": {
+        "$value": "{color.blue.100}",
+        "$type": "color",
+        "$description": "Intent:      1px border of a user message block\nUse when:    Always with chat/user/bg\nDo not use:  Focus or selection\nUse instead: color/border/focus for focus\nNote:        Added 2026-09-22 for the AI chat panel (AI Elements, VS Code-style).\nStatus:      active"
+      }
+    },
+    "assistant": {
+      "fg": {
+        "$value": "{color.background.default.foreground}",
+        "$type": "color",
+        "$description": "Intent:      Assistant message text — plain, no bubble\nUse when:    Assistant turns\nDo not use:  User turns\nUse instead: chat/user/fg\nNote:        Added 2026-09-22 for the AI chat panel (AI Elements, VS Code-style).\nStatus:      active"
+      }
+    },
+    "code": {
+      "bg": {
+        "$value": "{color.surface.raised}",
+        "$type": "color",
+        "$description": "Intent:      Fill of code blocks inside chat messages\nUse when:    Code / JSON in assistant replies\nDo not use:  Inline highlights\nUse instead: color/surface/muted for inline code\nNote:        Added 2026-09-22 for the AI chat panel (AI Elements, VS Code-style).\nStatus:      active"
+      }
+    },
+    "composer": {
+      "bg": {
+        "$value": "{color.input.bg}",
+        "$type": "color",
+        "$description": "Intent:      Fill of the chat composer (text box + toolbar)\nUse when:    The PromptInput container\nDo not use:  Other inputs — use input/bg directly\nUse instead: color/input/bg\nNote:        Added 2026-09-22 for the AI chat panel (AI Elements, VS Code-style).\nStatus:      active"
+      },
+      "border": {
+        "$value": "{color.input.border}",
+        "$type": "color",
+        "$description": "Intent:      Border of the chat composer\nUse when:    PromptInput container at rest\nDo not use:  Focus — use color/border/focus\nUse instead: color/border/focus\nNote:        Added 2026-09-22 for the AI chat panel (AI Elements, VS Code-style).\nStatus:      active"
+      },
+      "radius": {
+        "$value": "{radius.overlay}",
+        "$type": "dimension",
+        "$description": "Intent:      Corner radius of the chat composer — larger than a single-line input\nUse when:    PromptInput container\nDo not use:  Single-line inputs — use radius/control\nUse instead: radius/control\nNote:        Added 2026-09-22 for the AI chat panel (AI Elements, VS Code-style).\nStatus:      active"
+      }
+    }
+  }
+}

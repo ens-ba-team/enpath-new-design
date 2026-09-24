@@ -1,0 +1,157 @@
+{
+  "name": "dropdown-menu",
+  "description": "A menu of actions opened from a button (⋯). Supports labels, separators, shortcuts, checkbox / radio items and submenus.",
+  "category": "overlay",
+  "shadcnBase": "dropdown-menu",
+  "codeOnly": true,
+  "variants": {},
+  "tokens": {
+    "Fill": "`color/surface/overlay`",
+    "Text": "`color/surface/overlay/foreground`",
+    "Highlighted item": "`color/surface/accent` + `/foreground`",
+    "Label · shortcut": "`color/text/secondary`",
+    "Destructive item": "`color/text/invalid`",
+    "Separator": "`color/border/default`"
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`menu` / `menuitem` (Radix)"
+      },
+      {
+        "property": "Keyboard",
+        "value": "Enter / Space / ↓ open, arrows move, typeahead, Esc closes and returns focus"
+      },
+      {
+        "property": "Trigger",
+        "value": "Icon-only triggers need an `aria-label`"
+      }
+    ]
+  },
+  "constraints": [
+    "Use for actions; use Select for picking a value.",
+    "Put destructive items last, after a separator.",
+    "Icon-only triggers need an aria-label (\"More actions\")."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/DropdownMenu.md (generated from this file)",
+    "storyFile": "src/stories/DropdownMenu.stories.tsx",
+    "artifactStatus": "needs review",
+    "version": "3.0",
+    "openQuestions": [],
+    "knownIssues": [],
+    "notes": [
+      "Installed 2026-09-22 with AI Elements for the chat panel. Stock source adapted to Enpath: Phosphor icons, light-only classes, shadcn colour names rewritten to Enpath tokens."
+    ],
+    "changelog": [
+      {
+        "date": "2026-09-22",
+        "change": "Added (AI Elements install) and documented."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/dropdown-menu.tsx",
+    "packageDeps": [],
+    "exports": [
+      "DropdownMenu",
+      "DropdownMenuTrigger",
+      "DropdownMenuContent",
+      "DropdownMenuItem",
+      "DropdownMenuCheckboxItem",
+      "DropdownMenuRadioItem",
+      "DropdownMenuLabel",
+      "DropdownMenuSeparator",
+      "DropdownMenuShortcut",
+      "DropdownMenuGroup",
+      "DropdownMenuPortal",
+      "DropdownMenuSub",
+      "DropdownMenuSubContent",
+      "DropdownMenuSubTrigger",
+      "DropdownMenuRadioGroup"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/DropdownMenu.stories.tsx",
+    "title": "Overlay/Dropdown Menu",
+    "stories": [
+      "Default"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "DropdownMenu.md",
+    "intro": "# DropdownMenu\n\nA menu of actions opened from a button (⋯). Supports labels, separators, shortcuts, checkbox / radio items and submenus.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "What it is",
+        "body": "\nRadix DropdownMenu. For actions, not for choosing a form value (use Select for that).\n\n**Exports:** `DropdownMenu` · `DropdownMenuTrigger` · `DropdownMenuContent` · `DropdownMenuItem` · `DropdownMenuCheckboxItem` · `DropdownMenuRadioItem` · `DropdownMenuLabel` · `DropdownMenuSeparator` · `DropdownMenuShortcut` · `DropdownMenuGroup` · `DropdownMenuPortal` · `DropdownMenuSub` · `DropdownMenuSubContent` · `DropdownMenuSubTrigger` · `DropdownMenuRadioGroup`\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n| Part | Token |\n|---|---|\n| Fill | `color/surface/overlay` |\n| Text | `color/surface/overlay/foreground` |\n| Highlighted item | `color/surface/accent` + `/foreground` |\n| Label · shortcut | `color/text/secondary` |\n| Destructive item | `color/text/invalid` |\n| Separator | `color/border/default` |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Source:** https://ui.shadcn.com/docs/components/dropdown-menu\n- **Story:** `Overlay/Dropdown Menu`\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "DropdownMenu to pick a form value",
+      "correct": "Select"
+    },
+    {
+      "wrong": "Hiding the only way to do a primary action in a menu",
+      "correct": "A visible Button"
+    }
+  ]
+}

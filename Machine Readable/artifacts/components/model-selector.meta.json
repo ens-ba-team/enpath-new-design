@@ -1,0 +1,148 @@
+{
+  "name": "model-selector",
+  "description": "Searchable model picker in a dialog, grouped by provider. For long model lists.",
+  "category": "ai",
+  "shadcnBase": "ai-elements/model-selector",
+  "codeOnly": true,
+  "variants": {},
+  "tokens": {
+    "Dialog": "`color/surface/overlay`, `radius/overlay`, `shadow/overlay`",
+    "List": "Command tokens",
+    "Selected": "`color/surface/accent`"
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Dialog",
+        "value": "Focus trapped; Esc closes; title required"
+      },
+      {
+        "property": "List",
+        "value": "Command keyboard model"
+      }
+    ]
+  },
+  "constraints": [
+    "Use when there are more than ~6 models; otherwise a Select in the tools row.",
+    "Don't load provider logos from remote URLs in the prototype (ModelSelectorLogo fetches from models.dev)."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/ModelSelector.md (generated from this file)",
+    "storyFile": "src/stories/ModelSelector.stories.tsx",
+    "artifactStatus": "needs review",
+    "version": "3.0",
+    "openQuestions": [],
+    "knownIssues": [],
+    "notes": [
+      "Installed 2026-09-22 with AI Elements for the chat panel. Stock source adapted to Enpath: Phosphor icons, light-only classes, shadcn colour names rewritten to Enpath tokens."
+    ],
+    "changelog": [
+      {
+        "date": "2026-09-22",
+        "change": "Added (AI Elements install) and documented."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ai-elements/model-selector.tsx",
+    "packageDeps": [],
+    "exports": [
+      "ModelSelector",
+      "ModelSelectorTrigger",
+      "ModelSelectorContent",
+      "ModelSelectorDialog",
+      "ModelSelectorInput",
+      "ModelSelectorList",
+      "ModelSelectorEmpty",
+      "ModelSelectorGroup",
+      "ModelSelectorItem",
+      "ModelSelectorShortcut",
+      "ModelSelectorSeparator",
+      "ModelSelectorLogo",
+      "ModelSelectorLogoGroup",
+      "ModelSelectorName"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/ModelSelector.stories.tsx",
+    "title": "AI/Model Selector",
+    "stories": [
+      "Default"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "ModelSelector.md",
+    "intro": "# ModelSelector\n\nSearchable model picker in a dialog, grouped by provider. For long model lists.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "What it is",
+        "body": "\nAI Elements ModelSelector = Dialog + Command. The chat panel currently uses a compact PromptInputSelect because there is one model; switch to this when there are many.\n\n**Exports:** `ModelSelector` · `ModelSelectorTrigger` · `ModelSelectorContent` · `ModelSelectorDialog` · `ModelSelectorInput` · `ModelSelectorList` · `ModelSelectorEmpty` · `ModelSelectorGroup` · `ModelSelectorItem` · `ModelSelectorShortcut` · `ModelSelectorSeparator` · `ModelSelectorLogo` · `ModelSelectorLogoGroup` · `ModelSelectorName`\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n| Part | Token |\n|---|---|\n| Dialog | `color/surface/overlay`, `radius/overlay`, `shadow/overlay` |\n| List | Command tokens |\n| Selected | `color/surface/accent` |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Source:** https://elements.ai-sdk.dev/components/model-selector\n- **Story:** `AI/Model Selector`\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "ModelSelectorLogo in offline / prototype builds",
+      "correct": "Text names only"
+    },
+    {
+      "wrong": "ModelSelector for one or two models",
+      "correct": "PromptInputSelect"
+    }
+  ]
+}

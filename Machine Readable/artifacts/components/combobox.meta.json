@@ -1,0 +1,401 @@
+{
+  "name": "combobox",
+  "description": "A searchable, filterable dropdown control — single selection, multi-selection, search-as-you-type, free-form tag entry, or time selection.",
+  "category": "forms",
+  "shadcnBase": "combobox",
+  "componentSets": {
+    "combobox-trigger": {
+      "purpose": "Trigger input — Types: Basic, Search, Time-picker, Tag Input.",
+      "variants": 25
+    },
+    "combobox-field": {
+      "purpose": "Complete form field with label, trigger, description or dropdown."
+    }
+  },
+  "variants": {
+    "Type": {
+      "type": "enum",
+      "values": [
+        "Basic",
+        "Search",
+        "Time-picker",
+        "Tag Input"
+      ],
+      "default": "Basic",
+      "reactProp": "type",
+      "reactValues": {
+        "Basic": "basic",
+        "Search": "search",
+        "Tag Input": "tag-input",
+        "Time-picker": "time-picker"
+      },
+      "intent": {
+        "Time-picker": "Opens menu-dropdown Type=os-time-menu for structured HH/MM selection. Visually identical to Basic (placeholder + chevron). Use when user selects time rather than typing it."
+      }
+    },
+    "State": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Hover",
+        "Open",
+        "Filled",
+        "Filled-chips",
+        "Invalid",
+        "Disabled"
+      ],
+      "default": "Default",
+      "reactProp": "state",
+      "reactValues": {
+        "Default": "default",
+        "Hover": "hover",
+        "Open": "open",
+        "Filled": "filled",
+        "Filled-chips": "filled-chips",
+        "Invalid": "invalid",
+        "Disabled": "disabled"
+      }
+    },
+    "Field State": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Open",
+        "Disabled",
+        "Invalid"
+      ],
+      "default": "Default",
+      "reactProp": "fieldState",
+      "reactValues": {
+        "Default": "default",
+        "Open": "open",
+        "Disabled": "disabled",
+        "Invalid": "invalid"
+      }
+    }
+  },
+  "availability": {
+    "Basic": [
+      "Default",
+      "Hover",
+      "Open",
+      "Filled",
+      "Filled-chips",
+      "Invalid",
+      "Disabled"
+    ],
+    "Search": [
+      "Default",
+      "Hover",
+      "Open",
+      "Filled",
+      "Invalid",
+      "Disabled"
+    ],
+    "Tag Input": [
+      "Default",
+      "Hover",
+      "Open",
+      "Filled-chips",
+      "Invalid",
+      "Disabled"
+    ],
+    "Time-picker": [
+      "Default",
+      "Hover",
+      "Open",
+      "Filled",
+      "Invalid",
+      "Disabled"
+    ]
+  },
+  "tokens": {
+    "triggerContainer": {
+      "Default": {
+        "fill": "color/input/bg",
+        "stroke": "color/input/border"
+      },
+      "Hover": {
+        "fill": "color/input/bg",
+        "stroke": "color/border/hover"
+      },
+      "Open": {
+        "fill": "color/input/bg",
+        "stroke": "color/border/focus",
+        "effect": "focus/ring"
+      },
+      "Filled": {
+        "fill": "color/input/bg",
+        "stroke": "color/input/border"
+      },
+      "Filled-chips": {
+        "fill": "color/input/bg",
+        "stroke": "color/input/border"
+      },
+      "Invalid": {
+        "fill": "color/input/bg",
+        "stroke": "color/border/error"
+      },
+      "Disabled": {
+        "fill": "color/surface/muted",
+        "stroke": "color/border/disabled"
+      },
+      "radius": "radius/lg"
+    },
+    "internalLayers": {
+      "placeholder": "color/input/placeholder",
+      "value": "color/background/default/foreground",
+      "disabledText": "color/text/disabled",
+      "icons": "color/icon/default",
+      "iconsDisabled": "color/icon/disabled",
+      "chipFill": "color/background/muted",
+      "chipFg": "color/background/muted/foreground",
+      "chipCloseIcon": "color/background/muted/foreground"
+    },
+    "spacing": {
+      "basicPaddingX": "spacing/component/md",
+      "searchPaddingX": "spacing/component/sm",
+      "filledChipsPadding": "spacing/component/xs-plus",
+      "gap": "spacing/component/sm"
+    },
+    "field": {
+      "descriptionDefault": "color/text/secondary",
+      "descriptionOpen": "hidden",
+      "descriptionDisabled": "color/text/disabled",
+      "descriptionInvalid": "color/text/invalid",
+      "gap": "spacing/component/xs"
+    },
+    "states": {
+      "invalid": {
+        "borderToken": "color/border/error",
+        "ringToken": "color/border/error",
+        "ringGlow": "color-mix(in_srgb,var(--color-border-error)_20%,transparent)",
+        "notes": "Uses [&[aria-invalid]] compound selector to beat data-[state=open]/focus-visible specificity. Blue ring must NOT appear when invalid."
+      }
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`combobox` on the trigger input"
+      },
+      {
+        "property": "Expanded",
+        "value": "`aria-expanded=\"true\"` when open"
+      },
+      {
+        "property": "Options list",
+        "value": "`role=\"listbox\"`"
+      },
+      {
+        "property": "Each option",
+        "value": "`role=\"option\"` with `aria-selected`"
+      },
+      {
+        "property": "Autocomplete",
+        "value": "`aria-autocomplete=\"list\"` (Type=Search)"
+      },
+      {
+        "property": "Required",
+        "value": "`aria-required=\"true\"`"
+      },
+      {
+        "property": "Invalid",
+        "value": "`aria-invalid=\"true\"`"
+      },
+      {
+        "property": "Label",
+        "value": "Associated via `aria-labelledby`"
+      },
+      {
+        "property": "Keyboard",
+        "value": "Arrow keys open/move · Enter selects highlighted item · Escape closes · Typing filters Type=Search"
+      }
+    ]
+  },
+  "constraints": [
+    "Use `State=Filled-chips` only with `multiple=true` in the implementation — single-select combobox should always show the value as plain text (`State=Filled`), not chips",
+    "Chips show `color/background/muted` fill — they are secondary UI elements, not primary actions. Do not use brand or accent fills on chips.",
+    "The `description` below the field explains what kind of selection is expected — \"Select all that apply\" or \"You can add up to 5 tags\"",
+    "In `State=Invalid`, the description must state a specific error: \"At least one option is required\" not just \"Invalid\"",
+    "Tag Input: Enter or comma confirms a chip. Backspace removes the last chip when input is empty. Duplicates are silently ignored."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Combobox.md (generated from this file)",
+    "storyFile": "src/stories/Combobox.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "Examples assume a ComboboxField wrapper API over the chosen Base UI implementation; source markdown itself does not mark this component not ready.",
+      "Type=Time-picker opens menu-dropdown Type=os-time-menu."
+    ],
+    "knownIssues": [
+      {
+        "issue": "Dropdown width hardcoded to 280px — CSS var --anchor-width from Base UI Positioner doesn't resolve reliably on Popup element.",
+        "workaround": "w-[280px] hardcoded on Combobox.Popup. If container width changes, update both the story wrapper and popupClass.",
+        "date": "2026-06-03"
+      }
+    ],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/combobox.tsx",
+    "packageDeps": [
+      "@base-ui/react"
+    ],
+    "exports": [
+      "Combobox"
+    ],
+    "notes": [
+      "Type=Basic/Search: @base-ui/react Combobox. Type=Tag Input: custom controlled state, no Base UI.",
+      "Dropdown width hardcoded w-[280px] — CSS var --anchor-width unreliable in Base UI Positioner.",
+      "Filtering: manual label.toLowerCase().includes() — not using useComboboxFilter hook."
+    ]
+  },
+  "storybook": {
+    "file": "src/stories/Combobox.stories.tsx",
+    "title": "Forms/Combobox",
+    "stories": [
+      "Basic",
+      "Filled",
+      "Invalid",
+      "Disabled",
+      "Search",
+      "SearchDisabled",
+      "MultiSelect",
+      "TagInput",
+      "TagInputWithSuggestions",
+      "TagInputInvalid",
+      "AllStates"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": "Time picker behaviour is shown in the Calendar/DateTimePicker story."
+  },
+  "docs": {
+    "file": "Combobox.md",
+    "intro": "# Combobox\n\nA searchable, filterable dropdown control — for single selection, multi-selection with chips, search-as-you-type, or free-form tag entry. Built on Base UI Combobox. Two component sets: `combobox-trigger` is the input that opens the dropdown; `combobox-field` is the full form control with label and description.\n\n> **Shared sub-components:** `label`, `menu-dropdown`, `menu-dropdown-item` — see `_Form-shared.md`\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Component Sets",
+        "body": "\n| Set | ID | Variants | Purpose |\n|---|---|---|---|\n| `combobox-trigger` | `75:9166` | 13 | The trigger input — sub-component of `combobox-field` |\n| `combobox-field` | `148:2191` | 4 | Complete form field — label + trigger + description. **Use this in almost every case.** |\n\n---\n\n"
+      },
+      {
+        "title": "Variant Matrices",
+        "body": "\n### `combobox-trigger` — `Type × State`\n\n| Property | Options | Default |\n|---|---|---|\n| `Type` | `Basic`, `Search`, `Time-picker`, `Tag Input` | `Basic` |\n| `State` (Basic) | `Default`, `Hover`, `Open`, `Filled`, `Filled-chips`, `Invalid`, `Disabled` | `Default` |\n| `State` (Search) | `Default`, `Hover`, `Open`, `Filled`, `Invalid`, `Disabled` | `Default` |\n| `State` (Time-picker) | `Default`, `Hover`, `Open`, `Filled`, `Invalid`, `Disabled` | `Default` |\n| `State` (Tag Input) | `Default`, `Hover`, `Open`, `Filled-chips`, `Invalid`, `Disabled` | `Default` |\n\n`Basic(7) + Search(6) + Time-picker(6) + Tag Input(6) = 25 variants`\n\n\n### `combobox-field` — `State`\n\n| Property | Options | Default |\n|---|---|---|\n| `State` | `Default`, `Open`, `Disabled`, `Invalid` | `Default` |\n\n`State(4) = 4 variants`\n\n---\n\n"
+      },
+      {
+        "title": "Type Guide",
+        "body": "\n### `Type=Basic` — click to open\n\nThe trigger looks and behaves like `select-trigger` — it shows a placeholder and a chevron icon. The user clicks to open the dropdown. The dropdown may or may not include search (controlled by `menu-dropdown Type`). Use Basic when the list is moderate in length and the click-to-open affordance is clear.\n\n`State=Filled-chips` is exclusive to Basic — it shows selected items as chips inside the trigger, enabling multi-select.\n\n### `Type=Search` — search-as-you-type\n\nThe trigger is visually a search input with a leading search icon. The user types into it and the dropdown filters in real time. Use Search when the list is long (>15 items) or when the primary user action is typing rather than browsing.\n\n### `Type=Time-picker` — time selection trigger\n\nThe trigger visually matches `Type=Basic` — a placeholder text and a trailing chevron icon. Clicking opens the `menu-dropdown Type=os-time-menu` panel (two scrollable columns: HH and MM). Use Time-picker when the user must select a time from a structured hour/minute picker rather than typing free text.\n\nNo `State=Filled-chips` — the filled state shows the selected time as plain text (e.g. `12:00`).\n\n### `Type=Tag Input` — free-form chip creation\n\nThe trigger looks like `Type=Basic, State=Filled-chips` — an input with chips inside. The user types freely and presses `Enter` (or `,`) to create a new chip from whatever they typed. No predefined options list is required, though an optional suggestions dropdown may accompany it. Use Tag Input when the user invents the values themselves (labels, keywords, email addresses, custom tags) rather than picking from a fixed list.\n\n`State=Filled-chips` is the only filled state — there is no `State=Filled` for Tag Input because every confirmed value becomes a chip immediately.\n\n---\n\n"
+      },
+      {
+        "title": "Structure",
+        "body": "\n### `combobox-trigger` — Type=Basic\n\n```\ncombobox-trigger            — H AUTO-LAYOUT, fill: color/input/bg\n                              stroke: color/input/border, radius: radius/lg\n                              padding: spacing/component/md (L/R) · no T/B padding\n                              gap: spacing/component/sm · height: `height/control-touch/md` 36px on touch · `sm:height/control/md` 32px from 640px up\n  ├─ placeholder            — TEXT\n  └─ icon-chevron           — INSTANCE (chevron-down, 16×16)\n       └─ Icon              — VECTOR\n```\n\n### `combobox-trigger` — Type=Basic, State=Filled-chips\n\n```\ncombobox-trigger            — H AUTO-LAYOUT, fill: color/input/bg\n                              stroke: color/input/border, radius: radius/lg\n                              padding: spacing/component/xs-plus (all sides)\n                              gap: spacing/component/xs\n  └─ chips-area             — FRAME\n       ├─ chip-1            — INSTANCE, fill: color/background/muted\n       │    ├─ label        — TEXT, fill: color/background/muted/foreground\n       │    └─ icon-close   — INSTANCE\n       │         └─ Icon    — VECTOR, stroke: color/background/muted/foreground\n       ├─ chip-2            — INSTANCE (same structure)\n       └─ placeholder       — TEXT, fill: color/input/placeholder\n```\n\n### `combobox-trigger` — Type=Search\n\n```\ncombobox-trigger            — H AUTO-LAYOUT, fill: color/input/bg\n                              stroke: color/input/border, radius: radius/lg\n                              padding: spacing/component/sm (L/R) · no T/B padding\n                              gap: spacing/component/sm · height: `height/control-touch/md` 36px on touch · `sm:height/control/md` 32px from 640px up\n  ├─ icon-search            — INSTANCE (search icon, 16×16)\n  ├─ placeholder            — TEXT\n  └─ icon-chevron           — INSTANCE (chevron-down, 16×16)\n```\n\n### `combobox-trigger` — Type=Time-picker\n\nIdentical structure to `Type=Basic` — placeholder text + trailing chevron. No search icon, no chips. Opens `menu-dropdown Type=os-time-menu` on click.\n\n```\ncombobox-trigger            — H AUTO-LAYOUT, fill: color/input/bg\n                              stroke: color/input/border, radius: radius/lg\n                              padding: spacing/component/md (L/R) · no T/B padding\n                              gap: spacing/component/sm · height: `height/control-touch/md` 36px on touch · `sm:height/control/md` 32px from 640px up · width: 280px\n  ├─ placeholder            — TEXT, fill: color/input/placeholder\n  └─ icon-chevron           — INSTANCE (chevron-down, 16×16)\n       └─ Icon              — VECTOR, stroke: color/icon/default\n```\n\n> 6 states: Default, Hover, Open, Filled, Invalid, Disabled.\n\n### `combobox-trigger` — Type=Tag Input\n\nIdentical structure to `Type=Basic, State=Filled-chips`. No chevron icon — the trigger is not a button that opens a dropdown, it is a growing input that accepts chips.\n\n```\ncombobox-trigger            — H AUTO-LAYOUT wrap, fill: color/input/bg\n                              stroke: color/input/border, radius: radius/lg\n                              padding: spacing/component/xs-plus (all sides)\n                              gap: spacing/component/xs · min-height: `height/control-touch/md` 36px on touch · `sm:height/control/md` 32px from 640px up\n  ├─ chips-area             — FRAME (wrapping flex)\n  │    ├─ chip-N            — INSTANCE (repeating per tag)\n  │    │    ├─ label        — TEXT, fill: color/background/muted/foreground\n  │    │    └─ icon-close   — INSTANCE (X icon, 12×12)\n  │    │         └─ Icon    — VECTOR, stroke: color/background/muted/foreground\n  │    └─ input             — TEXT (inline input, grows with typing)\n  └─ (no chevron)\n```\n\n### `combobox-field`\n\n```\ncombobox-field              — V AUTO-LAYOUT, gap: spacing/component/xs\n  ├─ label                  — INSTANCE (label component — see _Form-shared.md)\n  ├─ combobox-trigger       — INSTANCE\n  └─ menu-dropdown          — INSTANCE (Open state only)\n  or\n  └─ description            — TEXT (Default / Disabled / Invalid states)\n```\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### `combobox-trigger` — container per state\n\n| Type  | State          | Fill                       | Stroke                  | Effect       |\n| ----- | -------------- | -------------------------- | ----------------------- | ------------ |\n| Both  | `Default`      | `color/input/bg`     | `color/input/border`    | —            |\n| Both  | `Hover`        | `color/input/bg`     | `color/border/hover`    | —            |\n| Both  | `Open`         | `color/input/bg`     | `color/border/focus`    | `focus/ring` |\n| Both  | `Filled`       | `color/input/bg`     | `color/input/border`    | —            |\n| Basic | `Filled-chips` | `color/input/bg`     | `color/input/border`    | —            |\n| Both  | `Invalid`      | `color/input/bg`     | `color/border/error`    | —            |\n| Both  | `Disabled`     | `color/surface/muted` | `color/border/disabled` | —            |\n\n### `combobox-trigger` — internal layers\n\n| Layer | Property | Token | Notes |\n|---|---|---|---|\n| `placeholder` | Fill | `color/input/placeholder` | Default / Hover / Open / Invalid / Filled-chips |\n| `placeholder` | Fill | `color/background/default/foreground` | Filled (shows selected value) |\n| `placeholder` | Fill | `color/text/disabled` | Disabled |\n| `icon-search` VECTOR | Stroke | `color/icon/default` | Active states |\n| `icon-search` VECTOR | Stroke | `color/icon/disabled` | Disabled |\n| `icon-chevron` VECTOR | Stroke | `color/icon/default` | Active states |\n| `icon-chevron` VECTOR | Stroke | `color/icon/disabled` | Disabled |\n| chip `label` | Fill | `color/background/muted/foreground` | Filled-chips |\n| chip container | Fill | `color/background/muted` | Filled-chips |\n| chip `icon-close` VECTOR | Stroke | `color/background/muted/foreground` | Paired-surface rule |\n| container | Radius | `radius/lg` | All states (note: larger than input/select which use `radius/md`) |\n| container | paddingLeft / paddingRight | `spacing/component/sm` (Search) · `spacing/component/md` (Basic) | |\n| container | padding (Filled-chips / Tag Input) | `spacing/component/xs-plus` (all sides) | |\n| container | gap | `spacing/component/sm` | |\n\n### `combobox-trigger` — Tag Input per state (same fill/stroke pattern as Basic)\n\n| State | Fill | Stroke | Effect |\n|---|---|---|---|\n| `Default` | `color/input/bg` | `color/input/border` | — |\n| `Hover` | `color/input/bg` | `color/border/hover` | — |\n| `Open` | `color/input/bg` | `color/border/focus` | `focus/ring` |\n| `Filled-chips` | `color/input/bg` | `color/input/border` | — |\n| `Invalid` | `color/input/bg` | `color/border/error` | — |\n| `Disabled` | `color/surface/muted` | `color/border/disabled` | — |\n\nTag Input chip tokens are identical to `Basic, State=Filled-chips` — see chip layer rows above.\n\n> **`radius/lg` vs `radius/md`:** Combobox uses `radius/lg` (8px) while `input` and `select-trigger` use `radius/md` (6px). This is intentional — the combobox trigger has a slightly rounder feel to signal that it is an interactive search or selection control, not a plain text input.\n\n### `combobox-field` — description and label per state\n\n| State | `label` variant | `description` fill |\n|---|---|---|\n| `Default` | `label state=Default` | `color/text/secondary` |\n| `Open` | `label state=Default` | hidden (menu-dropdown shown) |\n| `Disabled` | `label state=Disabled` | `color/text/disabled` |\n| `Invalid` | `label state=Invalid` | `color/text/invalid` |\n\n---\n\n"
+      },
+      {
+        "title": "Behavior",
+        "body": "\nSource: Base UI Combobox (`base-ui.com/react/components/combobox`).\n\n### Open / Close\n\n- `Type=Basic`: clicking the trigger opens the dropdown (same affordance as select)\n- `Type=Search`: clicking the input field opens the dropdown (`openOnInputClick=true` — Base UI default); the user can also start typing immediately to filter\n- The dropdown closes when: an item is selected · `Escape` is pressed · the user clicks outside · the field loses focus (when `modal=false`, which is the default)\n\n### Filtering\n\n- `Type=Search`: the user types into the trigger and the dropdown filters items in real time using `Intl.Collator` string comparison\n- Default filter strategy: `contains` — matches the query anywhere in the item label\n- `autoHighlight=false` by default — the first matching item is NOT automatically highlighted; the user must arrow-navigate or click to select\n- `highlightItemOnHover=true` by default — hovering an item highlights it\n\n### Selection\n\n**Single selection (default):**\n- Clicking or pressing `Enter` on an item selects it, closes the dropdown, and updates the trigger to show the selected value\n- The selected item shows `State=Selected` in `menu-dropdown-item`\n\n**Multi-selection (`State=Filled-chips`):**\n- Enabled via `multiple` prop on the root component\n- Each selected item appears as a chip inside the trigger\n- Clicking the chip's close icon (×) removes that item from the selection\n- The placeholder remains visible alongside chips to invite further selection\n- The dropdown stays open after each selection so the user can pick multiple items\n\n### Tag Input — chip creation\n\n- The user types a value and presses `Enter` or `,` to confirm it as a chip\n- The input clears immediately after confirmation, ready for the next tag\n- Duplicate values are silently ignored — the same tag cannot appear twice\n- An optional suggestions dropdown may appear as the user types (same as `Type=Search` filtering); selecting a suggestion creates a chip from that suggestion's value\n- Without suggestions, the dropdown does not open — the trigger is visually identical to a multi-line input\n\n### Tag Input — chip removal\n\n- Clicking the chip's `×` icon removes that chip\n- Pressing `Backspace` with an empty input removes the last chip\n- No confirmation required — removal is immediate\n\n### Focus loop\n\n- `loopFocus=true` by default — arrow key navigation loops from the last item back to the input and vice versa\n\n### Keyboard\n\n| Key | Action |\n|---|---|\n| `Arrow Down` | Open dropdown / move focus to next item |\n| `Arrow Up` | Open dropdown / move focus to previous item |\n| `Enter` | Select highlighted item · Confirm typed tag (Type=Tag Input) |\n| `,` | Confirm typed tag (Type=Tag Input only) |\n| `Backspace` | Remove last chip when input is empty (Type=Tag Input + Filled-chips) |\n| `Escape` | Close dropdown |\n| Typing | Filter items in real time (Type=Search · Type=Tag Input with suggestions) |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": "\n> **The single most important rule: use `combobox-field`, not `combobox-trigger`.**\n>\n> `combobox-trigger` is a sub-component — it is the input control only, with no label or description. Placing it directly in a layout produces an unlabelled, contextless control. Use `combobox-field` for every standard form use case.\n\n> **Use `Type=Tag Input` when: the user creates the values themselves.** Labels, keywords, email addresses, custom filters — anything where the vocabulary is open and not predefined. Tag Input has no options list requirement.\n\n> **Choose combobox over select when: the list is long, the user needs to search, or multi-select is required.**\n>\n> - **Long list (>15 items):** select forces the user to scroll a full list; combobox lets them filter by typing. Use `Type=Search`.\n> - **Search / filter:** the user's primary action is typing a term to narrow options. Use `Type=Search`.\n> - **Multi-select:** the user picks several values at once (e.g. tags, team members, permissions). Use `Type=Basic, State=Filled-chips`.\n> - **Short, stable list (≤15 items, no search needed):** use `select-field` instead — select has a simpler visual and clearer affordance for fixed-option pickers.\n\n> **`Type=Basic` vs `Type=Search` — how to decide:**\n>\n> - `Type=Basic` — use when the user primarily browses the list (click, scan, pick). The trigger looks like `select-trigger`. Appropriate when the list fits comfortably in the dropdown without filtering.\n> - `Type=Search` — use when the user primarily types to narrow results. The trigger shows a search icon. Required when the list is long or the items are not easily scannable.\n> - Never use `Type=Basic` for a list where the user is expected to type — it shows no search affordance and the user will not discover filtering.\n> - Never use `Type=Search` for a list of 5 items — the search input adds cognitive overhead without benefit.\n"
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- Assigning team members to a task — large org, user types a name to filter hundreds of people\n- Tag or label picker in a note-taking or project tool — multi-select with chips, large tag vocabulary\n- Language or locale selector in account settings — 100+ languages, search is the only sensible UX\n- \"CC\" or recipient field in an email composer — add multiple addresses as chips\n- Framework or technology filter in a job board — long list of options, user types to narrow\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Type=Basic` | Moderate-length list where the user browses to pick — click to open, scan the list | Status picker (10 options) · Priority selector · Sprint assignment |\n| `Type=Basic, State=Filled-chips` | Multi-select from a predefined list — each chosen value shown as a chip | Permission assignment · Team member picker (org directory) |\n| `Type=Search` | Long list (15+ items) where typing to filter is the primary interaction | Country search · User/member search · Framework filter · Language selector |\n| `Type=Tag Input` | Free-form chip creation — user invents the values, no predefined list needed | Labels · Keywords · Email recipients (\"To:\", \"CC:\") · Custom filters |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| Long list or user types to filter (>15 items) | `combobox` | `select` |\n| User must pick multiple values from a fixed list | `combobox` (`Type=Basic, State=Filled-chips`) | `select` or `checkbox` |\n| User creates free-form values (labels, emails, keywords) | `combobox` (`Type=Tag Input`) | `input` |\n| Short fixed list (≤ ~10 items), no typing, pick one | `select` | `combobox` |\n| 2–5 mutually exclusive options that benefit from being fully visible | `radio` | `combobox` |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · Variant Examples · Type=Basic, State=Filled-chips · When To Use:** Multi-select where each chosen value must be visually represented and individually removable\n- **Best practice · Compared To · Situation:** User enters a completely free-form value not from a list\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/combobox\n- **Best practice · References · Radix:** https://www.radix-ui.com/primitives/docs/components/popover\n- **Composition · Filled Chips Trigger:** chips-area.chip\n- **Composition · Filled Chips Trigger:** chips-area.placeholder\n- **Composition · Combobox Field:** description or menu-dropdown\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Use `combobox-trigger` directly in a form layout",
+      "correct": "Use `combobox-field` — it includes the label and description"
+    },
+    {
+      "wrong": "Use `Type=Search` for a list of fewer than ~8 items",
+      "correct": "Use `Type=Basic` or `select-field` — search adds no value for short lists"
+    },
+    {
+      "wrong": "Use `Type=Basic` for a list of 20+ items without search",
+      "correct": "Use `Type=Search` — users cannot browse 20+ items efficiently"
+    },
+    {
+      "wrong": "Use `State=Filled-chips` for single selection",
+      "correct": "`State=Filled-chips` is for multi-select only"
+    },
+    {
+      "wrong": "Use `Type=Tag Input` when the user must pick from a fixed list",
+      "correct": "Use `Type=Basic, State=Filled-chips` for predefined options"
+    },
+    {
+      "wrong": "Use `Type=Basic` or `Type=Search` when the user must create free-form values",
+      "correct": "Use `Type=Tag Input` — it is designed for open vocabulary entry"
+    },
+    {
+      "wrong": "Use select when the user must pick multiple values",
+      "correct": "Use `combobox-field` with `State=Filled-chips`"
+    },
+    {
+      "wrong": "Override `combobox-trigger` fills from inside `combobox-field`",
+      "correct": "Change the `combobox-trigger` State prop — never reach inside the instance"
+    },
+    {
+      "wrong": "Mix `Type=Search` trigger with `menu-dropdown Type=List` (no search bar)",
+      "correct": "Match: Search trigger → Search dropdown · Basic trigger → List or Group dropdown"
+    }
+  ]
+}

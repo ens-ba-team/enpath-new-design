@@ -1,0 +1,245 @@
+{
+  "name": "drawer",
+  "description": "A sliding panel that emerges from an edge of the screen or centers responsively as an overlay.",
+  "category": "overlay",
+  "shadcnBase": "drawer",
+  "variants": {
+    "Direction": {
+      "type": "enum",
+      "values": [
+        "Bottom",
+        "Right",
+        "Responsive"
+      ],
+      "default": "Bottom",
+      "reactProp": "direction",
+      "reactValues": {
+        "Bottom": "bottom",
+        "Right": "right",
+        "Responsive": "responsive"
+      }
+    }
+  },
+  "tokens": {
+    "container": {
+      "fill": "color/surface/default",
+      "stroke": "color/border/default",
+      "strokeWeight": 1,
+      "strokeAlign": "inside",
+      "radius": "radius/lg"
+    },
+    "handle": {
+      "barPaddingY": "spacing/component/lg",
+      "fill": "color/background/muted",
+      "radius": "radius/full",
+      "size": "100x8"
+    },
+    "header": {
+      "padding": "spacing/component/lg",
+      "gap": "spacing/component/xxs",
+      "title": "color/background/default/foreground",
+      "description": "color/background/muted/foreground"
+    },
+    "content": {
+      "slot": true,
+      "padding": "spacing/component/lg"
+    },
+    "footer": {
+      "padding": "spacing/component/lg",
+      "gap": "spacing/component/sm"
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`dialog` with `aria-modal=\"true\"`"
+      },
+      {
+        "property": "Label",
+        "value": "`aria-labelledby` pointing to the `title` element"
+      },
+      {
+        "property": "Description",
+        "value": "`aria-describedby` pointing to the `description` element (if present)"
+      },
+      {
+        "property": "Focus",
+        "value": "Focus trapped inside drawer while open; returns to trigger on close"
+      },
+      {
+        "property": "Close",
+        "value": "`Escape` key closes; clicking the backdrop (scrim) closes"
+      },
+      {
+        "property": "Handle",
+        "value": "`aria-hidden=\"true\"` — decorative drag affordance, no interactive role"
+      },
+      {
+        "property": "Scroll",
+        "value": "If content overflows, the `content` slot scrolls; header and footer stay fixed"
+      }
+    ]
+  },
+  "constraints": [
+    "Use `Direction=Bottom` for mobile-first flows and short-form content (filters, quick settings, confirmation)",
+    "Use `Direction=Right` for desktop side panels where the user continues to reference the main content",
+    "Use `Direction=Responsive` when the same component must work on both mobile and desktop without a separate implementation",
+    "The footer always holds the primary confirm action (`btn-primary`) above the cancel/secondary action (`btn-outline`) — never reverse this order",
+    "Do not put navigation inside a drawer — use a nav panel or sidebar instead",
+    "Keep `title` to one line; `description` to two lines maximum",
+    "The `content` SLOT takes any layout — form fields, lists, media — but avoid deeply nested interactive trees",
+    "Footer order is primary confirm above/before secondary dismiss."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Drawer.md (generated from this file)",
+    "storyFile": "src/stories/Drawer.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "Examples assume shadcn/Vaul Drawer primitives plus an Enpath DrawerPanel wrapper."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/drawer.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Drawer"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Drawer.stories.tsx",
+    "title": "Overlay/Drawer",
+    "stories": [
+      "Bottom",
+      "Right",
+      "Responsive",
+      "WithForm"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Drawer.md",
+    "intro": "# Drawer\n\nA sliding panel that emerges from an edge of the screen (or centres as an overlay on large screens) to present supplementary content, forms, or actions without navigating away from the current view. Built on shadcn/ui Drawer (Vaul).\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Component Sets",
+        "body": "\n| Set | ID | Variants | Purpose |\n|---|---|---|---|\n| `drawer` | `74:691` | 3 | Full drawer panel — Direction controls which edge it slides from |\n\n---\n\n"
+      },
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\n`Direction × 3 = 3 variants`\n\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Structure",
+        "body": "\n### Direction=Bottom\n\n```\ndrawer                          — VERTICAL AUTO LAYOUT, radius/lg top · RAW:0 bottom\n                                  fill: color/surface/default, stroke: color/border/default\n  ├─ handle-bar                 — FRAME, paddingTop/Bottom: spacing/component/lg\n  │    └─ handle                — FRAME, 100×8px, fill: color/background/muted, radius/full\n  ├─ header                     — FRAME, padding: spacing/component/lg, gap: spacing/component/xxs\n  │    ├─ title                 — TEXT\n  │    └─ description           — TEXT\n  ├─ content                    — SLOT, padding: spacing/component/lg (all sides)\n  └─ footer                     — FRAME, padding: spacing/component/lg, gap: spacing/component/sm\n       ├─ btn-primary           — INSTANCE (Type=Default, State=Enabled, Size=Default)\n       └─ btn-outline           — INSTANCE (Type=Outline, State=Enabled, Size=Default)\n```\n\n### Direction=Right\n\n```\ndrawer                          — VERTICAL AUTO LAYOUT, radius/lg left corners · RAW:0 right corners\n                                  fill: color/surface/default, stroke: color/border/default\n  ├─ header                     — FRAME, padding: spacing/component/lg, gap: spacing/component/xxs\n  │    ├─ title                 — TEXT\n  │    └─ description           — TEXT\n  ├─ content                    — SLOT, padding: spacing/component/lg (all sides)\n  └─ footer                     — FRAME, padding: spacing/component/lg, gap: spacing/component/sm\n       ├─ btn-primary           — INSTANCE (Type=Default, State=Enabled)\n       └─ btn-outline           — INSTANCE (Type=Outline, State=Enabled)\n```\n\n### Direction=Responsive\n\n```\ndrawer                          — VERTICAL AUTO LAYOUT, radius/lg all 4 corners\n                                  fill: color/surface/default, stroke: color/border/default\n  ├─ header                     — FRAME, padding: spacing/component/lg, gap: spacing/component/xxs\n  │    ├─ title                 — TEXT\n  │    └─ description           — TEXT\n  ├─ content                    — SLOT, padding: spacing/component/lg (all sides)\n  └─ footer                     — FRAME, padding: spacing/component/lg, gap: spacing/component/sm\n       ├─ btn-primary           — INSTANCE (Type=Default, State=Enabled)\n       └─ btn-outline           — INSTANCE (Type=Outline, State=Enabled)\n```\n\n`Direction=Responsive` is `Bottom` on mobile viewports and switches to a centred floating panel (all-corner radius) on larger screens.\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### Container\n\n| Property | Token | Notes |\n|---|---|---|\n| Fill | `color/surface/default` | Drawer is a floating panel — matches shadcn --card (zinc/900 dark) |\n| Stroke | `color/border/default` 1px INSIDE | Provides edge definition against backdrop |\n| Radius — Direction=Bottom | `radius/lg` top-left · top-right · `0` bottom | Rounded cap on the exposed edge |\n| Radius — Direction=Right | `radius/lg` top-left · bottom-left · `0` right | Rounded cap on the exposed edge |\n| Radius — Direction=Responsive | `radius/lg` all 4 corners | Floats as a centred panel |\n\n### handle (Direction=Bottom only)\n\n| Layer | Property | Token |\n|---|---|---|\n| `handle-bar` | paddingTop / paddingBottom | `spacing/component/lg` |\n| `handle` | Fill | `color/background/muted` |\n| `handle` | Radius (all 4 corners) | `radius/full` |\n| `handle` | Size | 100 × 8px (fixed) |\n\n### header\n\n| Layer | Property | Token |\n|---|---|---|\n| `header` frame | Padding (all 4 sides) | `spacing/component/lg` |\n| `header` frame | `itemSpacing` (gap) | `spacing/component/xxs` |\n| `title` | Fill | `color/background/default/foreground` |\n| `description` | Fill | `color/background/muted/foreground` |\n\n### content SLOT\n\n| Property | Token |\n|---|---|\n| Padding (all 4 sides) | `spacing/component/lg` |\n\nThe `content` layer is a SLOT — replace its contents with your own layout.\n\n### footer\n\n| Layer | Property | Token |\n|---|---|---|\n| `footer` frame | Padding (all 4 sides) | `spacing/component/lg` |\n| `footer` frame | `itemSpacing` (gap) | `spacing/component/sm` |\n| `btn-primary` | Type | `Default` (primary fill) — FILL width |\n| `btn-outline` | Type | `Outline` — FILL width |\n\n---\n\n"
+      },
+      {
+        "title": "Direction Guide",
+        "body": "\n| Direction | When to use |\n|---|---|\n| `Bottom` | Mobile-first flows — forms, filters, action menus. Handle bar signals draggability. |\n| `Right` | Desktop side panels — detail views, settings, inspector panes. |\n| `Responsive` | Components that must work across breakpoints — switches from Bottom (mobile) to centred floating panel (desktop). |\n\n---\n\n"
+      },
+      {
+        "title": "Behavior",
+        "body": "\n### Open / close\n\n| Trigger | Action |\n|---|---|\n| Trigger element clicked | Drawer slides in from its edge; backdrop fades in |\n| `Escape` key | Drawer slides out; focus returns to trigger |\n| Backdrop (scrim) clicked | Drawer slides out; focus returns to trigger |\n| `btn-outline` (Cancel) clicked | Drawer closes — wire to the same dismiss handler as Escape |\n| `btn-primary` (Submit) clicked | Executes action; drawer closes on success (implementation-controlled) |\n\n### Animation\n\n- **Direction=Bottom:** slides up from the bottom edge; easing `ease-out` on enter, `ease-in` on exit\n- **Direction=Right:** slides in from the right edge; same easing\n- **Direction=Responsive:** Bottom animation on mobile, fade + scale from centre on desktop\n- Recommended duration: 300ms enter · 200ms exit\n- Backdrop: fade from `opacity: 0` to `opacity: 0.5` (`color/background/inverted` at `opacity/overlay`)\n\n### Drag to dismiss (Direction=Bottom only)\n\n- The `handle-bar` area is the drag affordance — user swipes down to dismiss\n- Dismiss threshold: dragged past **25%** of the drawer height (`closeThreshold` defaults to `0.25` in Vaul)\n- Below threshold: drawer snaps back to fully open position\n- Configurable: `closeThreshold` accepts a value between 0 and 1 — set to `0.5` for a halfway threshold\n- Drag-to-dismiss can be disabled entirely with `dismissible={false}`\n- The `handle` pill is not a button — drag is a gesture, not a click\n\n### Scroll\n\n- `content` SLOT scrolls vertically when its content exceeds the available height\n- `header` and `footer` remain fixed at top and bottom — they do not scroll with content\n- Scroll indicator (fade or shadow) is implementation-defined\n\n### Focus management\n\n- On open: focus moves to the first focusable element inside the drawer (typically the first form field or `btn-primary`)\n- Focus is trapped — `Tab` and `Shift+Tab` cycle only within the drawer while it is open\n- On close: focus returns to the element that triggered the drawer\n\n### Stacking\n\nOnly one drawer should be open at a time. Drawers do not nest. If a secondary action is needed from inside an open drawer, use a modal dialog or inline expansion instead.\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- User taps a \"Filter\" button on a mobile search page — a bottom sheet slides up with filter controls\n- A confirmation sheet asks \"Are you sure you want to delete this?\" before a destructive action on mobile\n- A quick-settings tray opens from the bottom of a dashboard on a phone\n- A right-side inspector panel slides in on a desktop canvas app when an object is selected\n- A component that must work on both mobile and desktop uses the Responsive direction to show bottom on phone, floating panel on desktop\n- An action menu with 2–4 primary choices slides up from the bottom of a mobile list view\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Bottom` | Mobile-first flows; short forms, filters, or action confirmations anchored to the bottom edge | Mobile filter panel · Quick share menu · Delete confirmation on phone |\n| `Right` | Desktop side panels where the user continues to reference the main content | Object inspector · User detail sidebar · Settings panel on a wide layout |\n| `Responsive` | Single component that must serve both mobile and desktop without separate implementations | Shared filter component used across breakpoints · Responsive settings panel |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| Bottom-anchored panel on mobile with swipe-to-dismiss | `drawer` | `sheet` |\n| Side panel on desktop that slides in from left or right | `sheet` | `drawer` |\n| Centered blocking modal that requires a decision before continuing | `dialog` | `drawer` |\n| Non-blocking status message that auto-dismisses | `toast` | `drawer` |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/drawer\n- **Composition · Bottom:** header.description\n- **Composition · Bottom:** footer buttons\n- **Composition · Right:** header.description\n- **Composition · Right:** footer buttons\n- **Composition · Responsive:** header.description\n- **Composition · Responsive:** footer buttons\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "`color/background/default` on drawer fill",
+      "correct": "`color/surface/default` — drawer is a floating panel (matches shadcn --card)"
+    },
+    {
+      "wrong": "Primitive spacing tokens (`spacing/4`) in SLOT padding",
+      "correct": "`spacing/component/lg` — same 16px, correct semantic collection"
+    },
+    {
+      "wrong": "Custom button-like frames in footer",
+      "correct": "`btn-primary` and `btn-outline` instances — change their `State` prop, never override fills"
+    },
+    {
+      "wrong": "Radius on the screen-edge corners (Direction=Bottom bottom corners)",
+      "correct": "Leave screen-edge corners at 0 — rounded corners only on the exposed cap"
+    },
+    {
+      "wrong": "More than 2 footer actions",
+      "correct": "Use a single primary action + one dismiss; move additional actions into the content slot"
+    }
+  ]
+}

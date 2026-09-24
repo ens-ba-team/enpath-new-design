@@ -1,0 +1,406 @@
+{
+  "name": "table",
+  "description": "A semantic data table. Purely presentational — renders HTML table elements. Three component sets: table-head (header cells), table-cell (47 content types), and _table-row (rows with state). No built-in sorting or filtering — use TanStack Table for that.",
+  "category": "data-display",
+  "shadcnBase": "table",
+  "primitiveBase": null,
+  "componentSets": {
+    "table-head": {
+      "variants": 3,
+      "purpose": "Column header cell — label + optional sort indicator (Sort=None/Asc/Desc)."
+    },
+    "table-cell": {
+      "variants": 47,
+      "purpose": "Data cell — 25 content Types across Default and Compact sizes."
+    },
+    "_table-row": {
+      "variants": 12,
+      "purpose": "Row container — Type=Regular/Header/Footer × State × Size."
+    }
+  },
+  "variants": {
+    "table-head Sort": {
+      "type": "enum",
+      "values": [
+        "None",
+        "Asc",
+        "Desc"
+      ],
+      "default": "None",
+      "intent": {
+        "None": "Column is not sortable or sort is inactive — label only.",
+        "Asc": "Column sorted ascending — label + upward chevron.",
+        "Desc": "Column sorted descending — label + downward chevron."
+      }
+    },
+    "table-cell Type": {
+      "type": "enum",
+      "values": [
+        "Text",
+        "Icon-Text",
+        "Checkbox-Text",
+        "Radio-Text",
+        "Toggle-Text",
+        "Avatar-Text",
+        "Avatar-Checkbox",
+        "Avatar-Radio",
+        "Avatar-Toggle",
+        "Badge",
+        "Input",
+        "Select",
+        "Trend-Up",
+        "Trend-Down",
+        "Button",
+        "Action-dropdown",
+        "Drag",
+        "Checkbox-Only",
+        "Radio-Only",
+        "Toggle-Only",
+        "Star-Ratings",
+        "Slot-1",
+        "Slot-2",
+        "Slot-3",
+        "Slot-4"
+      ],
+      "default": "Text",
+      "notes": "Avatar-Text, Input, and Select are Default size only."
+    },
+    "table-cell Size": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Compact"
+      ],
+      "default": "Default",
+      "dimensions": {
+        "Default": {
+          "rowHeight": 48
+        },
+        "Compact": {
+          "rowHeight": 40
+        }
+      }
+    },
+    "_table-row Type": {
+      "type": "enum",
+      "values": [
+        "Regular",
+        "Header",
+        "Footer"
+      ],
+      "default": "Regular"
+    },
+    "_table-row State": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Hover",
+        "Selected"
+      ],
+      "default": "Default",
+      "notes": "Header has Default only; Footer has Default and Hover; Regular has all three."
+    },
+    "_table-row Size": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Compact"
+      ],
+      "default": "Default"
+    }
+  },
+  "tokens": {
+    "tableContainer": {
+      "fill": "transparent",
+      "stroke": "color/border/default",
+      "radius": "radius/base",
+      "note": "ALWAYS use radius/base — canonical table radius. Never use radius/lg, radius/md, or hardcoded values."
+    },
+    "tableHead": {
+      "containerFill": "color/surface/raised",
+      "containerStroke": "color/border/default",
+      "labelFill": "color/surface/raised/foreground",
+      "sortIconStroke": "color/surface/raised/foreground"
+    },
+    "tableCell": {
+      "contentFill": "color/surface/default/foreground",
+      "supportingTextFill": "color/text/secondary",
+      "iconStroke": "color/surface/default/foreground",
+      "trendUpIconStroke": "color/icon/success",
+      "trendUpLabelFill": "color/text/success",
+      "trendDownIconStroke": "color/icon/danger",
+      "trendDownLabelFill": "color/text/invalid",
+      "starFill": "color/chart/4",
+      "starFrameFill": "color/surface/default",
+      "gap": {
+        "default": "spacing/component/sm",
+        "trendTypes": "spacing/component/xs",
+        "starRatings": "spacing/component/xxs"
+      }
+    },
+    "tableRow": {
+      "Regular": {
+        "Default": {
+          "fill": "transparent",
+          "stroke": "color/border/default"
+        },
+        "Hover": {
+          "fill": "color/background/accent",
+          "stroke": "color/border/default"
+        },
+        "Selected": {
+          "fill": "color/background/accent",
+          "stroke": "color/border/default",
+          "leftBorder": "color/brand/primary"
+        }
+      },
+      "Header": {
+        "Default": {
+          "fill": "color/surface/raised",
+          "stroke": "color/border/default"
+        }
+      },
+      "Footer": {
+        "Default": {
+          "fill": "color/surface/raised",
+          "stroke": "color/border/default"
+        },
+        "Hover": {
+          "fill": "color/background/accent",
+          "stroke": "color/border/default"
+        }
+      }
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Table landmark",
+        "value": "`<table>` is a native landmark — no additional role needed"
+      },
+      {
+        "property": "Column headers",
+        "value": "`<th scope=\"col\">` — essential for screen readers to associate data cells with their column"
+      },
+      {
+        "property": "Row headers",
+        "value": "`<th scope=\"row\">` — use on the first cell of each row when the row has a meaningful identifier"
+      },
+      {
+        "property": "Sort state",
+        "value": "`aria-sort=\"ascending\"` / `aria-sort=\"descending\"` / `aria-sort=\"none\"` on sortable `<th>`"
+      },
+      {
+        "property": "Selected row",
+        "value": "`aria-selected=\"true\"` on the `<tr>` for `State=Selected` rows"
+      },
+      {
+        "property": "Drag handle",
+        "value": "`role=\"button\"` + `aria-label=\"Drag to reorder\"` on the drag handle element"
+      },
+      {
+        "property": "Caption",
+        "value": "Use `<TableCaption>` when the table's purpose is not clear from surrounding context"
+      }
+    ],
+    "keys": [
+      {
+        "key": "`Tab`",
+        "action": "Move focus between interactive cells (checkboxes, buttons, inputs, drag handles)"
+      },
+      {
+        "key": "`Enter` / `Space`",
+        "action": "Activate focused checkbox, radio, button, or toggle"
+      },
+      {
+        "key": "`Arrow keys`",
+        "action": "Within a focused input or select, standard field behavior"
+      },
+      {
+        "key": "(Sort header) `Enter`",
+        "action": "Toggle sort direction on a focused sortable column header"
+      },
+      {
+        "key": "(Drag) `Space`",
+        "action": "Pick up / drop a row using keyboard drag (dnd-kit implementation)"
+      },
+      {
+        "key": "(Drag) `Arrow keys`",
+        "action": "Move the picked-up row up/down"
+      }
+    ]
+  },
+  "constraints": [
+    "Always use `Type=Header` for the top row — never use a Regular row to fake a header",
+    "Always use `Type=Footer` for totals/summaries — never use a Regular row styled differently",
+    "The `table-head` `Sort=None` variant is for non-sortable columns; only show `Sort=Asc`/`Sort=Desc` on columns that are actively sorted",
+    "`Type=Input` and `Type=Select` are Default size only — do not use in Compact tables",
+    "Star-Ratings is display-only — not interactive",
+    "Never add radius to individual `_table-row` instances — the container FRAME handles the corner radius",
+    "Always use Type=Header row for column headers — never style a Regular row to look like a header."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Table.md (generated from this file)",
+    "storyFile": "src/stories/Table.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      null
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/table.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Table"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Table.stories.tsx",
+    "title": "Data/Table",
+    "stories": [
+      "Basic",
+      "WithSort",
+      "WithSelection",
+      "WithAvatars",
+      "WithTrends"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Table.md",
+    "intro": "# Table\n\nA semantic data table built on shadcn's Table, which renders standard HTML `<table>`, `<thead>`, `<tbody>`, `<tfoot>`, `<tr>`, `<th>`, and `<td>` elements. Purely presentational — sorting, filtering, and pagination are implementation concerns supplied by the parent (e.g. TanStack Table). Three component sets cover the header cell, data cell, and row; the full table is assembled manually from these sets inside a container FRAME.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Component Sets",
+        "body": "\n| Set | ID | Variants | Purpose |\n|---|---|---|---|\n| `table-head` | `105:25960` | 3 | Column header cell — shows label + optional sort indicator |\n| `table-cell` | `105:29158` | 47 | Data cell — 25 content Types across Default and Compact sizes |\n| `_table-row` | `124:8531` | 12 | Row container — wraps cells; carries row-level fill and stroke |\n\n> There is no `table` component set. The full table is assembled as a FRAME containing `_table-row` instances. See **Table Assembly** below.\n\n---\n\n"
+      },
+      {
+        "title": "Variant Matrices",
+        "body": "\n### `table-head` — `Sort`\n\n| Property | Options | Default |\n|---|---|---|\n| `Sort` | `None`, `Asc`, `Desc` | `None` |\n\n`Sort(3) = 3 variants`\n\n---\n\n### `table-cell` — `Type × Size`\n\n| Property | Options | Default |\n|---|---|---|\n| `Type` | `Text`, `Icon-Text`, `Checkbox-Text`, `Radio-Text`, `Toggle-Text`, `Avatar-Text`, `Avatar-Checkbox`, `Avatar-Radio`, `Avatar-Toggle`, `Badge`, `Input`, `Select`, `Trend-Up`, `Trend-Down`, `Button`, `Action-dropdown`, `Drag`, `Checkbox-Only`, `Radio-Only`, `Toggle-Only`, `Star-Ratings`, `Slot-1`, `Slot-2`, `Slot-3`, `Slot-4` | `Text` |\n| `Size` | `Default`, `Compact` | `Default` |\n\n`47 variants total` — `Avatar-Text`, `Input`, and `Select` are Default-size only; all other Types have both sizes.\n\n---\n\n### `_table-row` — `Type × State × Size`\n\n| Property | Options | Default |\n|---|---|---|\n| `Type` | `Regular`, `Header`, `Footer` | `Regular` |\n| `State` (Regular) | `Default`, `Hover`, `Selected` | `Default` |\n| `State` (Footer) | `Default`, `Hover` | `Default` |\n| `State` (Header) | `Default` only | — |\n| `Size` | `Default`, `Compact` | `Default` |\n\n`Regular(3) + Header(1) + Footer(2) × 2 sizes = 12 variants`\n\n---\n\n"
+      },
+      {
+        "title": "Type Guides",
+        "body": "\n### `table-head` — Sort\n\n**`Sort=None`** — Column is not sortable, or sort is inactive. Label only; no icon.\n\n**`Sort=Asc`** — Column sorted ascending. Label + upward chevron icon.\n\n**`Sort=Desc`** — Column sorted descending. Label + downward chevron icon.\n\n---\n\n### `table-cell` — Content Types\n\n| Type | Leading element | Content | Use for |\n|---|---|---|---|\n| `Text` | — | Primary text + optional supporting text | Plain text data |\n| `Icon-Text` | 16×16 icon | Text | Data with a recognisable category icon |\n| `Checkbox-Text` | Checkbox | Text | Multi-select rows with label |\n| `Radio-Text` | Radio | Text | Single-select rows with label |\n| `Toggle-Text` | Toggle/Switch | Text | Row-level boolean setting |\n| `Avatar-Text` | Avatar | Text + supporting text | Person entity rows |\n| `Avatar-Checkbox` | Avatar | Checkbox | Person with selection |\n| `Avatar-Radio` | Avatar | Radio | Person with single-select |\n| `Avatar-Toggle` | Avatar | Toggle | Person with toggle |\n| `Badge` | — | Badge chip + optional icons | Status, tag, or category labels |\n| `Input` | — | Text input (Default size only) | Inline editable field |\n| `Select` | — | Select trigger (Default size only) | Inline dropdown selector |\n| `Trend-Up` | Arrow-up icon | Percentage label | Positive metric change |\n| `Trend-Down` | Arrow-down icon | Percentage label | Negative metric change |\n| `Button` | — | Action button | Single row-level action |\n| `Action-dropdown` | — | Dropdown trigger (⋯) | Multiple row-level actions |\n| `Drag` | Drag handle icon | — | Drag-to-reorder rows |\n| `Checkbox-Only` | — | Checkbox only | Selection without label |\n| `Radio-Only` | — | Radio only | Single-select without label |\n| `Toggle-Only` | — | Toggle only | Boolean without label |\n| `Star-Ratings` | — | 5 star icons | Rating display |\n| `Slot-1–4` | — | 1–4 SLOT placeholders | Custom / implementation-defined content |\n\n---\n\n### `_table-row` — Type\n\n**`Type=Regular`** — Standard data row. Transparent fill (inherits table surface). States: Default, Hover (`color/background/accent`), Selected (`color/background/accent` + `color/brand/primary` left border).\n\n**`Type=Header`** — Column header row. Fill: `color/surface/raised`. State: Default only. Contains `table-head` cell instances.\n\n**`Type=Footer`** — Summary/total row. Fill: `color/surface/raised`. States: Default, Hover.\n\n---\n\n"
+      },
+      {
+        "title": "Structure",
+        "body": "\n### Table assembly (FRAME — not a component)\n\n```\nExample-Table                   — FRAME, no fill, stroke: color/border/default 1px\n                                  radius: radius/base (8px) ← required for all tables\n                                  V AUTO-LAYOUT or stacked, no gap\n  ├─ _table-row (Type=Header)   — INSTANCE, fill: color/surface/raised\n  ├─ _table-row (Type=Regular)  — INSTANCE, no fill (× N data rows)\n  └─ _table-row (Type=Footer)   — INSTANCE, fill: color/surface/raised (optional)\n```\n\n> **`radius/base` is the canonical table radius.** Every table assembled in this system uses `radius/base` on the outer FRAME container. This is established by `Example-Table` on the Table page. Do not use `radius/lg`, `radius/md`, or a hardcoded value — always bind the container's corner radius to `radius/base`.\n\n---\n\n### `table-head`\n\n```\ntable-head                      — FRAME, fill: color/surface/raised, stroke: color/border/default\n  ├─ label                      — TEXT, fill: color/surface/raised/foreground\n  └─ icon                       — INSTANCE (chevron, 16×16) — Sort=Asc / Sort=Desc only\n       └─ Icon                  — VECTOR, stroke: color/surface/raised/foreground\n```\n\n---\n\n### `table-cell` — representative types\n\n```\nType=Text\n  ├─ content                    — TEXT, fill: color/surface/default/foreground\n  └─ supporting-text            — TEXT, fill: color/text/secondary\n\nType=Icon-Text\n  ├─ icon-slot                  — INSTANCE (icon placeholder, 16×16)\n  │    └─ Icon                  — VECTOR, stroke: color/surface/default/foreground\n  ├─ content                    — TEXT, fill: color/surface/default/foreground\n  └─ supporting-text            — TEXT, fill: color/text/secondary\n\nType=Trend-Up\n  ├─ icon-slot                  — INSTANCE (arrow-up icon)\n  │    └─ Icon                  — VECTOR, stroke: color/icon/success\n  └─ label                      — TEXT, fill: color/text/success\n\nType=Trend-Down\n  ├─ icon-slot                  — INSTANCE (arrow-down icon)\n  │    └─ Icon                  — VECTOR, stroke: color/icon/danger\n  └─ label                      — TEXT, fill: color/text/invalid\n\nType=Star-Ratings\n  └─ Phosphor StarIcon (weight=\"fill\" for filled) × 5\n       ├─ [INSTANCE fill]       — color/surface/default (icon frame background)\n       └─ shape                 — BOOLEAN_OPERATION, fill: color/chart/4\n\nType=Badge\n  └─ badge-slot                 — FRAME, fill: color/background/default, stroke: color/input/border\n       ├─ leading-icon › Icon   — VECTOR, stroke: color/surface/default/foreground\n       ├─ content               — TEXT, fill: color/surface/default/foreground\n       └─ trailing-icon › Icon  — VECTOR, stroke: color/surface/default/foreground\n\nType=Button\n  └─ trailing-button            — INSTANCE (button, Outline style)\n       fill: button/outline/bg/bg · stroke: button/outline/border/default\n       label fill: button/outline/fg/fg\n\nType=Slot-1  (1 × 24×24 SLOT — cell: 56px wide)\nType=Slot-2  (2 × 24×24 SLOTs — cell: 84px wide)\nType=Slot-3  (3 × 24×24 SLOTs — cell: 112px wide)\nType=Slot-4  (4 × 24×24 SLOTs — cell: 140px wide)\n```\n\n### `table-cell` — Slot types: example content\n\nSlot types are open placeholders — place any instance that fits the use case. The examples below are common patterns, not requirements.\n\n| Slot type | Example content | Notes |\n|---|---|---|\n| `Slot-1` | Single progress bar | Inline completion or health indicator |\n| `Slot-1` | Single badge / status pill | When the built-in Badge type doesn't fit |\n| `Slot-1` | Single avatar | Outside the Avatar-Text pattern |\n| `Slot-1` | Sparkline / mini chart | Trend over time in a narrow column |\n| `Slot-2` | Two buttons (e.g. Edit + Delete) | Use `Size=Small` — the only button size for slot cells |\n| `Slot-2` | Two icon buttons (e.g. View + Archive) | Use `Size=Small`, `Type=Ghost` or `Type=Outline` |\n| `Slot-2` | Two badges / status tags | Side-by-side category labels |\n| `Slot-2` | Two avatars (co-assignees) | Small team or pair |\n| `Slot-3` | Three icon buttons (View + Edit + Delete) | Use `Size=Small` |\n| `Slot-3` | Three status badges | Triple-tag rows |\n| `Slot-3` | Three avatars | Small team display |\n| `Slot-4` | Four icon buttons | Full row action set, use `Size=Small` |\n| `Slot-4` | Four avatars | Group / team of four |\n| `Slot-4` | Four status indicators | Multi-dimension status row |\n\n> **Button size rule:** When placing buttons into any Slot cell, always use `Size=Small`. Do not use Icon Small, Default, or Large — only Small fits the 48px (Default) and 40px (Compact) row heights without crowding.\n\n---\n\n### `_table-row`\n\n```\n_table-row                      — H AUTO-LAYOUT, fill: varies, stroke: color/border/default\n  ├─ cell-1                     — INSTANCE (table-cell or table-head)\n  ├─ cell-2                     — INSTANCE\n  ├─ cell-3                     — INSTANCE\n  └─ cell-4                     — INSTANCE\n```\n\n> In `Type=Selected`, the row adds a `color/brand/primary` left-side stroke to signal the active selection.\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### Table container (assembly FRAME)\n\n| Property | Token |\n|---|---|\n| Fill | — (transparent) |\n| Stroke | `color/border/default` 1px |\n| Radius | `radius/base` — **all tables must use this** |\n\n### `table-head` — per Sort\n\n| Layer | Token |\n|---|---|\n| Container fill | `color/surface/raised` |\n| Container stroke | `color/border/default` |\n| `label` TEXT fill | `color/surface/raised/foreground` |\n| `icon › Icon` stroke (Sort=Asc/Desc) | `color/surface/raised/foreground` |\n\n### `table-cell` — shared tokens\n\n| Layer | Token | Notes |\n|---|---|---|\n| `content` / `label` TEXT fill | `color/surface/default/foreground` | Primary cell text |\n| `supporting-text` TEXT fill | `color/text/secondary` | Secondary / muted text |\n| `trailing-text` TEXT fill | `color/text/secondary` | e.g. input unit suffix |\n| Icon strokes (general) | `color/surface/default/foreground` | Icons on surface/default background |\n| Container `itemSpacing` | `spacing/component/sm` (8px) | Most multi-element types |\n| Container `itemSpacing` | `spacing/component/xs` (4px) | Trend-Up, Trend-Down |\n| Container `itemSpacing` | `spacing/component/xxs` (2px) | Star-Ratings |\n| `toggle-slot` / `switch` padding | `spacing/component/xxs` (2px) all sides | Toggle wrapper inset |\n\n### `table-cell` — type-specific tokens\n\n| Type | Layer | Token |\n|---|---|---|\n| Trend-Up | `icon-slot › Icon` stroke | `color/icon/success` |\n| Trend-Up | `label` TEXT fill | `color/text/success` |\n| Trend-Down | `icon-slot › Icon` stroke | `color/icon/danger` |\n| Trend-Down | `label` TEXT fill | `color/text/invalid` |\n| Star-Ratings | `star INSTANCE` fill | `color/surface/default` (icon frame bg) |\n| Star-Ratings | `shape` fill | `color/chart/4` (the star color) |\n| Badge | `badge-slot` fill | `color/background/default` |\n| Badge | `badge-slot` stroke | `color/input/border` |\n| Button | `trailing-button` | button/outline/* tokens (never override) |\n\n### `_table-row` — per Type and State\n\n| Type | State | Container fill | Container stroke |\n|---|---|---|---|\n| Regular | Default | — (transparent) | `color/border/default` |\n| Regular | Hover | `color/background/accent` | `color/border/default` |\n| Regular | Selected | `color/background/accent` | `color/border/default` + `color/brand/primary` left |\n| Header | Default | `color/surface/raised` | `color/border/default` |\n| Footer | Default | `color/surface/raised` | `color/border/default` |\n| Footer | Hover | `color/background/accent` | `color/border/default` |\n\n---\n\n"
+      },
+      {
+        "title": "Behavior",
+        "body": "\n### Architecture\n\nshadcn Table is a **purely presentational component set** — it renders semantic HTML elements with no built-in state, sorting, filtering, or pagination. All interactive behavior is implementation-defined.\n\n| shadcn component | HTML rendered |\n|---|---|\n| `<Table>` | `<table>` |\n| `<TableHeader>` | `<thead>` |\n| `<TableBody>` | `<tbody>` |\n| `<TableFooter>` | `<tfoot>` |\n| `<TableRow>` | `<tr>` |\n| `<TableHead>` | `<th>` |\n| `<TableCell>` | `<td>` |\n| `<TableCaption>` | `<caption>` |\n\n### Sorting\n\n`Sort=Asc` / `Sort=Desc` on `table-head` are visual states only — they communicate current sort direction but carry no click handler. In implementation, the column header `<th>` receives an `onClick` that updates a sort key in the parent's state. The parent then re-renders with the new `Sort` variant and re-orders the data.\n\nUse TanStack Table (`@tanstack/react-table`) for sort, filter, and column management in data-heavy views.\n\n### Row selection\n\n`State=Selected` on `_table-row` is a visual state — the row carries no selection logic. In implementation, selection is tracked in parent state (a `Set<id>` or similar). The `Checkbox-Only` or `Checkbox-Text` cell types in each row wire to that state.\n\n### Hover state\n\n`State=Hover` is documentation only. In code, hover is handled via CSS (`:hover` pseudo-class or `onMouseEnter`/`onMouseLeave`). Do not pass `State=Hover` as a static prop in implementation.\n\n### Inline editing (Input / Select types)\n\n`Type=Input` and `Type=Select` represent cells that are editable in place. In implementation these render an `<input>` or `<select>` directly inside the `<td>`. Editing triggers update the row's data model on `onChange` or `onBlur`.\n\n### Drag to reorder (Drag type)\n\n`Type=Drag` shows a drag handle icon. In implementation, wire to a drag-and-drop library (e.g. dnd-kit) that manages row reordering. The handle should have `role=\"button\"` and `aria-label=\"Drag to reorder\"`.\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n### Keyboard\n"
+          },
+          {
+            "from": "accessibility.keys"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": "\n> **The table container FRAME must always use `radius/base`.** This is the canonical table radius established by `Example-Table` on the Table page. Apply it to the four corner radii of the outermost FRAME, not to individual rows or cells. Rows have no radius of their own — they rely on the container's `overflow: hidden` to clip the corners.\n\n> **Choose `table-cell` Type by the data being displayed, not aesthetics.**\n>\n> - `Type=Text` — plain string data; most common cell type\n> - `Type=Trend-Up` / `Type=Trend-Down` — percentage change with semantic color coding (success/danger)\n> - `Type=Badge` — categorical status that needs a visual chip\n> - `Type=Button` / `Type=Action-dropdown` — row-level actions; use Button for one action, Action-dropdown for two or more\n> - `Type=Drag` — only when row order is user-controlled\n> - `Type=Slot-1–4` — implementation-defined content; document what goes in each slot\n\n> **Use `Size=Compact` for dense data views; `Size=Default` for comfortable reading.**\n>\n> - `Size=Default` (48px row height) — standard tables, entity lists, data grids\n> - `Size=Compact` — secondary panels, in-panel sub-tables, mobile-width tables\n"
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- Invoice or transaction lists where each row has a fixed set of columns (date, amount, status, actions)\n- User or member management panels with sortable columns and row-level actions\n- Product inventory tables with filtering, inline editing, and status badges per row\n- Analytics dashboards displaying metric breakdowns by dimension (channel, campaign, cohort)\n- Order management views combining avatar, status badge, trend indicators, and action dropdowns\n- Admin data grids that require drag-to-reorder rows and column sorting\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `table-head Sort=None` | Column is informational and not sortable | ID column · Avatar column · Fixed category labels |\n| `table-head Sort=Asc` | Column is actively sorted ascending | Date oldest-first · Name A–Z · Amount low-to-high |\n| `table-head Sort=Desc` | Column is actively sorted descending | Date newest-first · Amount high-to-low · Score top-ranked |\n| `table-cell Type=Text` | Plain string or number data | Customer name · Order number · Description field |\n| `table-cell Type=Avatar-Text` | Row represents a person entity | Team member list · Assignee column · Customer table |\n| `table-cell Type=Badge` | Categorical status that needs a visual chip | Order status (Pending/Shipped/Cancelled) · Priority label · Tag column |\n| `table-cell Type=Trend-Up / Trend-Down` | Percentage change with semantic positive/negative color | Revenue growth · Conversion rate delta · MoM change |\n| `table-cell Type=Button` | Single row-level action | Edit row · View details · Download |\n| `table-cell Type=Action-dropdown` | Two or more row-level actions | Edit · Duplicate · Archive · Delete |\n| `table-cell Type=Input` | Cell content is directly editable in place | Inline quantity editor · Editable price field |\n| `table-cell Type=Drag` | Row order is user-controlled | Reorderable task list · Priority-sorted queue |\n| `_table-row Size=Default` | Standard data density — readable without strain | Main entity lists · Customer tables · Dashboard grids |\n| `_table-row Size=Compact` | High data density needed — secondary or nested panels | Sub-table inside a panel · Mobile-width table · Analytics breakdown |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| Many rows of uniform structured data with column headers and sorting | `table` | `item` list |\n| A vertical list of richer entries with image, multi-line text, and action button | `item` | `table` |\n| A single self-contained block of information (metric, profile, settings) | `card` | `table` |\n| A small set of non-tabular key-value pairs within a panel | `card` with `card-content` | `table` |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/table\n- **Behavior · Sorting Notes:** Sort=Asc/Desc are visual states only — implement sorting in TanStack Table or parent state.\n- **Composition · Structure:** FRAME (container) → _table-row Type=Header → _table-row Type=Regular × N → _table-row Type=Footer (optional)\n- **Composition · Row Contents:** _table-row is H AUTO-LAYOUT containing table-cell or table-head instances.\n- **Composition · Slot Types:** Slot-1 (1 SLOT, 56px), Slot-2 (2 SLOTs, 84px), Slot-3 (3 SLOTs, 112px), Slot-4 (4 SLOTs, 140px). Buttons in slot cells: always Size=Small.\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Apply `radius/lg` or a hardcoded radius to the table container",
+      "correct": "Always use `radius/base` — matches the system's Example-Table canonical pattern"
+    },
+    {
+      "wrong": "Apply radius to individual `_table-row` instances",
+      "correct": "Radius belongs on the outer container FRAME only"
+    },
+    {
+      "wrong": "Use a Regular row as the column header",
+      "correct": "Use `_table-row Type=Header` containing `table-head` cells"
+    },
+    {
+      "wrong": "Use a Regular row for totals",
+      "correct": "Use `_table-row Type=Footer`"
+    },
+    {
+      "wrong": "Show `Sort=Asc` / `Sort=Desc` on non-sortable columns",
+      "correct": "Use `Sort=None` — never imply sort affordance where there is none"
+    },
+    {
+      "wrong": "Use `Type=Button` for two or more row actions",
+      "correct": "Use `Type=Action-dropdown` — multiple actions belong in a dropdown"
+    },
+    {
+      "wrong": "Override fills inside `trailing-button` from the row or cell parent",
+      "correct": "Button sub-components own their token bindings — change the variant prop"
+    },
+    {
+      "wrong": "Use `Type=Input` or `Type=Select` in Compact size tables",
+      "correct": "These types are Default-size only"
+    },
+    {
+      "wrong": "Build a table without a `<TableHeader>` in the HTML",
+      "correct": "Always render `<thead>` with `<th scope=\"col\">` — screen readers require it"
+    }
+  ]
+}

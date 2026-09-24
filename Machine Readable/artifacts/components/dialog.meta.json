@@ -1,0 +1,311 @@
+{
+  "name": "dialog",
+  "description": "A modal overlay that interrupts the user to present focused content or collect input. Built on Radix UI Dialog. Renders a full-screen backdrop with a centered popup; focus is trapped inside until dismissed.",
+  "category": "overlay",
+  "shadcnBase": "dialog",
+  "primitiveBase": "Radix UI Dialog (@radix-ui/react-dialog)",
+  "variants": {
+    "Type": {
+      "type": "enum",
+      "values": [
+        "Form",
+        "No close button",
+        "Sticky footer",
+        "Scrollable"
+      ],
+      "default": "Form",
+      "intent": {
+        "Form": "Short data-collection task with inline cancel + action buttons. Use for editing a name, entering a URL, confirming with a text field.",
+        "No close button": "Informational prompt or programmatic multi-step flow — dismiss only via Escape or backdrop click.",
+        "Sticky footer": "Taller dialog with sticky heading + scrollable body + sticky footer. Use for longer forms where submit must stay visible.",
+        "Scrollable": "Sticky heading + scrollable body only, no footer. Use for read-only long content: changelogs, policies, previews."
+      }
+    }
+  },
+  "componentProperties": {
+    "Type": {
+      "type": "VARIANT",
+      "default": "Form"
+    }
+  },
+  "tokens": {
+    "backdrop": {
+      "fill": "color/background/inverted"
+    },
+    "popup": {
+      "fill": "color/surface/default",
+      "stroke": "color/border/default",
+      "strokeWeight": 1,
+      "strokeAlign": "inside",
+      "radius": "radius/overlay"
+    },
+    "popupPadding": {
+      "Form": "spacing/component/lg all sides",
+      "No close button": "spacing/component/lg all sides",
+      "Sticky footer": "none — applied per section",
+      "Scrollable": "none — applied per section"
+    },
+    "heading": {
+      "paddingTopBottom": "spacing/component/xl",
+      "paddingLeftRight": "spacing/component/lg",
+      "gap": "spacing/component/xs",
+      "titleFill": "color/surface/default/foreground",
+      "descriptionFill": "color/text/secondary"
+    },
+    "body": {
+      "paddingLeftRight": "spacing/component/lg",
+      "gap": "spacing/component/xs"
+    },
+    "footer": {
+      "StickyFooter": {
+        "fill": "color/background/subtle",
+        "stroke": "color/border/subtle",
+        "strokePosition": "top",
+        "padding": "spacing/component/lg",
+        "gap": "spacing/component/xs"
+      },
+      "Form": {
+        "gap": "spacing/component/sm"
+      }
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`DialogContent` renders `role=\"dialog\"` with `aria-modal=\"true\"`"
+      },
+      {
+        "property": "Label",
+        "value": "`aria-labelledby` automatically points to `<DialogTitle>`"
+      },
+      {
+        "property": "Description",
+        "value": "`aria-describedby` automatically points to `<DialogDescription>`"
+      },
+      {
+        "property": "Focus trap",
+        "value": "Active while dialog is open — Tab stays inside (Radix UI default)"
+      },
+      {
+        "property": "Focus return",
+        "value": "Returns to trigger element on close (Radix UI default)"
+      },
+      {
+        "property": "Escape",
+        "value": "Always closes the dialog (Radix UI default)"
+      },
+      {
+        "property": "`DialogTitle`",
+        "value": "Required — do not omit; screen readers announce it on open. Use `<VisuallyHidden>` if a visible title isn't desired"
+      },
+      {
+        "property": "`DialogDescription`",
+        "value": "Recommended — omit only if the dialog's purpose is fully clear from the title alone"
+      },
+      {
+        "property": "Close Button Touch Target",
+        "value": "Close button has a built-in invisible 44x44px hit area on coarse pointers (height/target/touch)."
+      }
+    ],
+    "keys": [
+      {
+        "key": "`Tab` / `Shift+Tab`",
+        "action": "Move focus between focusable elements inside the dialog"
+      },
+      {
+        "key": "`Escape`",
+        "action": "Close the dialog"
+      },
+      {
+        "key": "`Enter` / `Space`",
+        "action": "Activate the focused button"
+      }
+    ]
+  },
+  "constraints": [
+    "Use dialogs for tasks that **require the user's full attention** before returning to the page — editing, confirming, collecting input",
+    "Use `Type=Form` for short forms (2–4 fields); use `Type=Sticky footer` for longer forms where the submit button must always be visible",
+    "Use `Type=No close button` only when the flow is linear and has no cancel path — rare; most dialogs should be dismissible",
+    "Use `Type=Scrollable` for read-only long content (terms, changelogs, previews) — not for forms",
+    "Always include `<DialogTitle>` — even if hidden with `<VisuallyHidden>` — so screen readers can announce the dialog purpose",
+    "Keep dialog content focused on **one task** — if a dialog needs multiple independent sections, consider a drawer or a separate page instead",
+    "The `cancel` button in `footer` should always be wrapped in `<DialogClose>` — it must dismiss the dialog, not just be a button",
+    "Do not nest dialogs — open only one dialog at a time; if a secondary confirmation is needed, use an Alert Dialog over the existing dialog"
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Dialog.md (generated from this file)",
+    "storyFile": "src/stories/Dialog.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "Type=Form has Slot 1 and Slot 2 between input fields for checkboxes, selects, helper text rows, or custom form elements."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      },
+      {
+        "date": "2026-09-22",
+        "change": "Container radius → radius/overlay (12px, was radius/lg 8px) and shadow → shadow/overlay (was none) — dialogs float above the page and scrim; matches radius/panel 12px.",
+        "breaking": false
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/dialog.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Dialog"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Dialog.stories.tsx",
+    "title": "Overlay/Dialog",
+    "stories": [
+      "Form",
+      "NoCloseButton",
+      "StickyFooter",
+      "Scrollable",
+      "Destructive"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Dialog.md",
+    "intro": "# Dialog\n\nA modal overlay that interrupts the user to present focused content or collect input. Built on [Radix UI Dialog](https://www.radix-ui.com/primitives/docs/components/dialog), wrapped by shadcn. Renders as a full-screen backdrop with a centered popup panel; focus is trapped inside until dismissed.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Component Sets",
+        "body": "\n| Set | ID | Variants | Purpose |\n|---|---|---|---|\n| `dialog` | `266:131` | 4 | Full dialog composition — backdrop + popup panel |\n\n---\n\n"
+      },
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": "\n### `dialog` — `Type`\n"
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\n`Type(4) = 4 variants`\n\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Type Guide",
+        "body": "\n**`Type=Form`** — A simple dialog with a `content` header (title + description), two input fields, two content slots, and an inline `footer` with cancel and action buttons. Use for short, focused data-collection tasks: editing a name, entering a URL, confirming with a text field.\n\n**`Type=No close button`** — A dialog with only a `content` section (title + description) and no footer or close button. Dismissal is only via Escape or clicking the backdrop. Use for informational prompts where no action is required, or for multi-step flows where navigation is handled programmatically.\n\n**`Type=Sticky footer`** — A taller dialog with a sticky `heading` (title + description + close button), a scrollable `body`, and a sticky `footer` with a distinct background and top border. The footer stays visible as body content scrolls. Use for longer forms, terms and conditions, rich content review, or any dialog where the action buttons must always be reachable.\n\n**`Type=Scrollable`** — Same sticky `heading` structure but no footer. The `body` scrolls freely. Use for read-only content that may be long — changelogs, privacy policies, previews — where the only exit is the close button or Escape.\n\n---\n\n"
+      },
+      {
+        "title": "Structure",
+        "body": "\n### `Type=Form`\n\n```\ndialog                          — COMPONENT, no fill (transparent wrapper)\n  ├─ backdrop                   — FRAME, fill: color/background/inverted\n  │                               (full-bleed dark overlay behind popup)\n  └─ popup                      — FRAME, V AUTO-LAYOUT\n                                  fill: color/surface/default\n                                  stroke: color/border/default 1px INSIDE\n                                  radius: radius/overlay\n                                  padding (all sides): spacing/component/lg (16px)\n                                  gap: spacing/component/lg (16px)\n       ├─ content               — FRAME, V AUTO-LAYOUT, gap: spacing/component/xs (4px)\n       │    ├─ title            — TEXT, fill: color/surface/default/foreground\n       │    └─ description      — TEXT, fill: color/text/secondary\n       ├─ input-field           — INSTANCE (input-field component)\n       ├─ Slot 1                — SLOT (custom content placeholder)\n       ├─ Slot 2                — SLOT (custom content placeholder)\n       ├─ input-field           — INSTANCE (input-field component)\n       └─ footer                — FRAME, H AUTO-LAYOUT, gap: spacing/component/sm (8px)\n            ├─ cancel           — INSTANCE (button, Outline)\n            └─ action           — INSTANCE (button, Primary)\n```\n\n### `Type=No close button`\n\n```\ndialog\n  ├─ backdrop                   — same as Form\n  └─ popup                      — same container tokens as Form\n       └─ content               — FRAME, V AUTO-LAYOUT, gap: spacing/component/xs\n            ├─ title            — TEXT, fill: color/surface/default/foreground\n            └─ description      — TEXT, fill: color/text/secondary\n```\n\n> No footer, no close button. Dismiss via Escape or backdrop click only.\n\n### `Type=Sticky footer` / `Type=Scrollable`\n\n```\ndialog\n  ├─ backdrop                   — same\n  └─ popup                      — FRAME, V AUTO-LAYOUT, no root padding, no gap\n                                  fill: color/surface/default\n                                  stroke: color/border/default 1px INSIDE\n                                  radius: radius/overlay\n       ├─ heading               — FRAME, V AUTO-LAYOUT\n       │                          padding T/B: spacing/component/xl (24px)\n       │                          padding L/R: spacing/component/lg (16px)\n       │                          gap: spacing/component/xs (4px)\n       │    ├─ title            — TEXT, fill: color/surface/default/foreground\n       │    ├─ description      — TEXT, fill: color/text/secondary\n       │    └─ action           — INSTANCE (Ghost Icon button — close ×)\n       ├─ body                  — FRAME, V AUTO-LAYOUT, scrollable\n       │                          padding L/R: spacing/component/lg (16px)\n       │                          gap: spacing/component/xs (4px)\n       │    └─ description      — TEXT, fill: color/text/secondary\n       └─ footer                — FRAME, H AUTO-LAYOUT          ← Sticky footer only\n                                  fill: color/background/subtle\n                                  stroke: color/border/subtle (top border)\n                                  padding (all sides): spacing/component/lg (16px)\n                                  gap: spacing/component/xs (4px)\n            ├─ cancel           — INSTANCE (button, Outline)\n            └─ action           — INSTANCE (button, Primary)\n```\n\n> `Type=Scrollable` has no `footer` — only `heading` + `body`.\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### `backdrop`\n\n| Property | Token | Notes |\n|---|---|---|\n| Fill | `color/background/inverted` | Dark semi-transparent scrim behind the popup |\n\n### `popup` — all Types\n\n| Property | Token |\n|---|---|\n| Fill | `color/surface/default` |\n| Stroke | `color/border/default` 1px INSIDE |\n| Radius (all 4) | `radius/overlay` |\n| Shadow | `shadow/overlay` |\n\n### `popup` padding — by Type\n\n| Type | Padding | Token |\n|---|---|---|\n| `Form`, `No close button` | All sides 16px | `spacing/component/lg` |\n| `Sticky footer`, `Scrollable` | None on popup root — applied per section | — |\n\n### `heading` (Sticky footer / Scrollable only)\n\n| Property | Token |\n|---|---|\n| Padding T/B | `spacing/component/xl` (24px) |\n| Padding L/R | `spacing/component/lg` (16px) |\n| Gap | `spacing/component/xs` (4px) |\n\n### `content` / `heading` text layers\n\n| Layer | Token |\n|---|---|\n| `title` | `color/surface/default/foreground` |\n| `description` | `color/text/secondary` |\n\n### `footer` — Sticky footer only\n\n| Property | Token | Notes |\n|---|---|---|\n| Fill | `color/background/subtle` | Subtle tint distinguishes sticky footer from scrollable body |\n| Stroke | `color/border/subtle` | Top separator line |\n| Padding (all sides) | `spacing/component/lg` (16px) | |\n| Gap | `spacing/component/xs` (4px) | |\n\n### `footer` — Form (inline)\n\n| Property | Token |\n|---|---|\n| Gap | `spacing/component/sm` (8px) |\n\n---\n\n"
+      },
+      {
+        "title": "Behavior",
+        "body": "\n### Architecture\n\nDialog is built on **Radix UI Dialog** (`@radix-ui/react-dialog`). Shadcn re-exports `Dialog`, `DialogTrigger`, `DialogPortal`, `DialogOverlay`, `DialogContent`, `DialogHeader`, `DialogTitle`, `DialogDescription`, `DialogFooter`, and `DialogClose`.\n\n```tsx\nimport {\n  Dialog, DialogTrigger, DialogContent,\n  DialogHeader, DialogTitle, DialogDescription, DialogFooter,\n  DialogClose,\n} from \"@/components/ui/dialog\"\n\n<Dialog>\n  <DialogTrigger asChild>\n    <Button>Open</Button>\n  </DialogTrigger>\n  <DialogContent>\n    <DialogHeader>\n      <DialogTitle>Edit profile</DialogTitle>\n      <DialogDescription>Make changes to your profile here.</DialogDescription>\n    </DialogHeader>\n    {/* form fields, content */}\n    <DialogFooter>\n      <DialogClose asChild><Button variant=\"outline\">Cancel</Button></DialogClose>\n      <Button type=\"submit\">Save</Button>\n    </DialogFooter>\n  </DialogContent>\n</Dialog>\n```\n\n### Open / Close\n\n**Open:** controlled via `open` + `onOpenChange` props, or uncontrolled via `defaultOpen`. Typically triggered by a `<DialogTrigger>`.\n\n**Close triggers (Radix UI defaults):**\n- Clicking the `backdrop` (`DialogOverlay`) — dismisses by default\n- Pressing `Escape` — always dismisses\n- Clicking a `<DialogClose>` button (the × in `heading`, or the cancel button wrapped in `DialogClose`)\n\n**Prevent backdrop close:** pass `onInteractOutside={(e) => e.preventDefault()}` on `DialogContent` to disable backdrop dismiss — use only when the task requires explicit confirmation (e.g. destructive actions).\n\n### Focus trap\n\nRadix UI traps focus inside `DialogContent` when open (Radix UI default). Tab cycles through all focusable elements inside the dialog. Focus is returned to the trigger element when the dialog closes.\n\n**Initial focus:** by default, focus moves to the first focusable element inside `DialogContent`. Override with `autoFocus` on a specific element.\n\n### Scroll behavior\n\n**`Type=Form` / `Type=No close button`:** no internal scroll — popup grows with content. If content exceeds the viewport, the popup itself may overflow; avoid putting long content in these types.\n\n**`Type=Scrollable`:** the `body` section scrolls independently. `heading` stays fixed at the top. Apply `overflow-y: auto` and a `max-height` to `body` in code.\n\n**`Type=Sticky footer`:** same as Scrollable — `body` scrolls, `heading` and `footer` stay fixed. Apply `overflow-y: auto` + `max-height` to `body`; `footer` uses `position: sticky` or flex layout to remain visible.\n\n### Animation\n\nRadix Dialog uses `data-state=\"open\"` / `data-state=\"closed\"` on `DialogContent` and `DialogOverlay`. Shadcn wires CSS keyframe animations to these attributes. Default: fade-in + slight scale-up on open, reverse on close.\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n### Keyboard\n"
+          },
+          {
+            "from": "accessibility.keys"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Slots",
+        "body": "\n`Type=Form` provides `Slot 1` and `Slot 2` between the input fields for additional content — checkboxes, selects, helper text rows, or any custom form element.\n\n---\n\n"
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- User clicks \"Edit profile\" and must save or cancel before returning to the page\n- User triggers a destructive action (delete record, revoke access) that requires a short confirmation form before proceeding\n- An onboarding flow needs to collect a name and email before the user can continue\n- A \"Create workspace\" action requires 2–3 fields that should not navigate the user away\n- Terms of service must be reviewed and accepted before an action completes\n- A file upload triggers a rename dialog that must be resolved before the upload proceeds\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Form` | Short, focused data-collection tasks with 2–4 fields and inline footer buttons | Edit display name · Set a due date · Rename a file |\n| `No close button` | Linear flows with no cancel path, or informational prompts where no action is required | Session expired notice · Programmatically-advanced wizard step · Mandatory notice acknowledgement |\n| `Sticky footer` | Longer forms or content reviews where the action buttons must always stay reachable | Multi-field create form · Terms and conditions acceptance · Settings review before publish |\n| `Scrollable` | Read-only long content where the only exit is dismiss | Changelog · Privacy policy · Preview of generated content |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| User must make a decision or complete a task before returning to the page | `dialog` | `sheet` |\n| Simple \"Are you sure?\" with no form fields | `alert-dialog` | `dialog` |\n| Secondary task that benefits from staying spatially connected to page content | `sheet` | `dialog` |\n| Non-blocking status update that auto-dismisses | `toast` | `dialog` |\n| Bottom-anchored quick action on mobile | `drawer` | `dialog` |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/dialog\n- **Behavior · Focus Return:** Returns to trigger element on close.\n- **Composition · Form:** backdrop + popup (V AUTO-LAYOUT): content (title + description) → input-field × 2 → Slot 1 → Slot 2 → footer (cancel + action buttons)\n- **Composition · Sticky footer:** backdrop + popup (no root padding): heading (title + description + close ×) → body (scrollable) → footer (sticky, bg/subtle)\n- **Composition · Scrollable:** backdrop + popup (no root padding): heading (title + description + close ×) → body (scrollable)\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Use a dialog for simple confirmations (\"Are you sure?\")",
+      "correct": "Use Alert Dialog — it's semantically distinct and has `role=\"alertdialog\"`"
+    },
+    {
+      "wrong": "Use `Type=No close button` for destructive actions",
+      "correct": "Always provide an explicit exit path for destructive flows"
+    },
+    {
+      "wrong": "Put a very long form in `Type=Form`",
+      "correct": "Use `Type=Sticky footer` so action buttons stay reachable"
+    },
+    {
+      "wrong": "Omit `<DialogTitle>`",
+      "correct": "Always include it — use `<VisuallyHidden>` if not visually desired"
+    },
+    {
+      "wrong": "Override fills inside `cancel` or `action` buttons from the dialog parent",
+      "correct": "Change the button's variant prop — never repaint sub-component internals"
+    },
+    {
+      "wrong": "Disable backdrop dismiss (`onInteractOutside`) without providing another dismiss path",
+      "correct": "If backdrop click is blocked, the close button in `heading` must be present"
+    },
+    {
+      "wrong": "Open a dialog from inside another dialog",
+      "correct": "One dialog at a time — use Alert Dialog stacked over if a second confirmation is critical"
+    }
+  ]
+}

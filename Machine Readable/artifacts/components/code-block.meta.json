@@ -1,0 +1,148 @@
+{
+  "name": "code-block",
+  "description": "Syntax-highlighted code with copy..",
+  "category": "ai",
+  "shadcnBase": "ai-elements/code-block",
+  "codeOnly": true,
+  "variants": {},
+  "tokens": {
+    "Fill": "`chat/code/bg` (→ `color/surface/raised`)",
+    "Border": "`color/border/default`",
+    "Font": "Roboto Mono (`font/mono`)",
+    "Highlighting": "shiki github-light"
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Copy",
+        "value": "CodeBlockCopyButton has a label and confirms with an icon change"
+      },
+      {
+        "property": "Content",
+        "value": "Real text, selectable"
+      }
+    ]
+  },
+  "constraints": [
+    "Only for machine text (code, JSON) — Roboto Mono is for machine text only.",
+    "Always offer copy."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/CodeBlock.md (generated from this file)",
+    "storyFile": "src/stories/CodeBlock.stories.tsx",
+    "artifactStatus": "needs review",
+    "version": "3.0",
+    "openQuestions": [],
+    "knownIssues": [],
+    "notes": [
+      "Installed 2026-09-22 with AI Elements for the chat panel. Stock source adapted to Enpath: Phosphor icons, light-only classes, shadcn colour names rewritten to Enpath tokens."
+    ],
+    "changelog": [
+      {
+        "date": "2026-09-22",
+        "change": "Added (AI Elements install) and documented."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ai-elements/code-block.tsx",
+    "packageDeps": [],
+    "exports": [
+      "CodeBlockContainer",
+      "CodeBlockHeader",
+      "CodeBlockTitle",
+      "CodeBlockFilename",
+      "CodeBlockActions",
+      "CodeBlockContent",
+      "CodeBlock",
+      "CodeBlockCopyButton",
+      "CodeBlockLanguageSelector",
+      "CodeBlockLanguageSelectorTrigger",
+      "CodeBlockLanguageSelectorValue",
+      "CodeBlockLanguageSelectorContent",
+      "CodeBlockLanguageSelectorItem"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/CodeBlock.stories.tsx",
+    "title": "AI/Code Block",
+    "stories": [
+      "Default"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "CodeBlock.md",
+    "intro": "# CodeBlock\n\nSyntax-highlighted code with copy..\n\n---\n\n",
+    "sections": [
+      {
+        "title": "What it is",
+        "body": "\nAI Elements CodeBlock (shiki). Used for JSON / code in assistant replies and tool input/output.\n\n**Exports:** `CodeBlockContainer` · `CodeBlockHeader` · `CodeBlockTitle` · `CodeBlockFilename` · `CodeBlockActions` · `CodeBlockContent` · `CodeBlock` · `CodeBlockCopyButton` · `CodeBlockLanguageSelector` · `CodeBlockLanguageSelectorTrigger` · `CodeBlockLanguageSelectorValue` · `CodeBlockLanguageSelectorContent` · `CodeBlockLanguageSelectorItem`\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n| Part | Token |\n|---|---|\n| Fill | `chat/code/bg` (→ `color/surface/raised`) |\n| Border | `color/border/default` |\n| Font | Roboto Mono (`font/mono`) |\n| Highlighting | shiki github-light |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Source:** https://elements.ai-sdk.dev/components/code-block\n- **Story:** `AI/Code Block`\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Another highlighting theme",
+      "correct": "github-light"
+    },
+    {
+      "wrong": "CodeBlock for prose",
+      "correct": "MessageResponse"
+    }
+  ]
+}

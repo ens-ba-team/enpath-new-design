@@ -1,0 +1,314 @@
+{
+  "name": "input-otp",
+  "description": "A one-time password input built from individual slot cells grouped into a single control.",
+  "category": "forms",
+  "shadcnBase": "input-otp",
+  "componentSets": {
+    "_input-otp-slot": {
+      "purpose": "Individual digit display cell."
+    },
+    "input-otp": {
+      "purpose": "Full OTP control."
+    }
+  },
+  "variants": {
+    "Slot State": {
+      "type": "enum",
+      "values": [
+        "Empty",
+        "Active",
+        "Filled",
+        "Disabled",
+        "Invalid"
+      ],
+      "default": "Empty",
+      "reactProp": "slotState",
+      "reactValues": {
+        "Empty": "empty",
+        "Active": "active",
+        "Filled": "filled",
+        "Disabled": "disabled",
+        "Invalid": "invalid"
+      }
+    },
+    "Type": {
+      "type": "enum",
+      "values": [
+        "6-Slot",
+        "3+3",
+        "4-Slot"
+      ],
+      "default": "6-Slot",
+      "reactProp": "type",
+      "reactValues": {
+        "6-Slot": "6-slot",
+        "3+3": "3+3",
+        "4-Slot": "4-slot"
+      }
+    },
+    "State": {
+      "type": "enum",
+      "values": [
+        "Empty",
+        "Filled",
+        "Disabled",
+        "Invalid"
+      ],
+      "default": "Empty",
+      "reactProp": "state",
+      "reactValues": {
+        "Empty": "empty",
+        "Filled": "filled",
+        "Disabled": "disabled",
+        "Invalid": "invalid"
+      }
+    }
+  },
+  "tokens": {
+    "slot": {
+      "Empty": {
+        "fill": "color/input/bg",
+        "stroke": "color/border/default"
+      },
+      "Active": {
+        "fill": "color/input/bg",
+        "stroke": "color/border/focus",
+        "cursorFill": "color/background/default/foreground"
+      },
+      "Filled": {
+        "fill": "color/input/bg",
+        "stroke": "color/border/default",
+        "placeholderFill": "color/background/default/foreground"
+      },
+      "Disabled": {
+        "fill": "color/surface/muted",
+        "stroke": "color/border/disabled",
+        "placeholderFill": "color/text/disabled"
+      },
+      "Invalid": {
+        "fill": "color/input/bg",
+        "stroke": "color/border/error",
+        "placeholderFill": "color/background/default/foreground"
+      },
+      "radius": "none"
+    },
+    "otpGroup": {
+      "Empty": "color/border/default",
+      "Filled": "color/border/default",
+      "Disabled": "color/border/disabled",
+      "Invalid": "color/border/error",
+      "radius": "radius/md"
+    },
+    "separator": {
+      "fill": "color/background/muted/foreground"
+    },
+    "spacing": {
+      "groupGap": "spacing/component/sm"
+    },
+    "states": {
+      "invalid": {
+        "borderToken": "color/border/error",
+        "ringToken": "color/border/error",
+        "ringGlow": "color-mix(in_srgb,var(--color-border-error)_20%,transparent)",
+        "notes": "Uses [&[aria-invalid]] compound selector to beat data-[state=open]/focus-visible specificity. Blue ring must NOT appear when invalid."
+      }
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "Single `<input>` element — `role=\"textbox\"`"
+      },
+      {
+        "property": "Length",
+        "value": "`maxLength` prop defines total character count"
+      },
+      {
+        "property": "Invalid",
+        "value": "`aria-invalid=\"true\"` applied to the input when validation fails"
+      },
+      {
+        "property": "Disabled",
+        "value": "`disabled` attribute — removes from tab order"
+      },
+      {
+        "property": "Label",
+        "value": "Associated via `htmlFor` → `id` — always provide a `<label>` (\"Enter verification code\")"
+      },
+      {
+        "property": "Autocomplete",
+        "value": "`autocomplete=\"one-time-code\"` — enables SMS autofill on mobile browsers"
+      },
+      {
+        "property": "Keyboard",
+        "value": "Typing fills and advances · Backspace clears and moves back · Arrow keys move between slots · Home and End move to first and last slot · Tab exits field"
+      }
+    ]
+  },
+  "constraints": [
+    "Always pair with a descriptive label: \"Verification code\", \"Enter your PIN\" — never leave the field unlabelled",
+    "Always pair with a description below the field explaining where the code came from: \"We sent a 6-digit code to your email\"",
+    "Show `State=Invalid` only after the user has submitted an incorrect code — not during typing",
+    "In `State=Invalid`, add an error message below the field (use a text node outside the component — `input-otp` has no built-in description slot)",
+    "Add a resend link or timer below the field — implementation-defined, not part of this component",
+    "Use `autocomplete=\"one-time-code\"` on the input in implementation — this enables SMS OTP autofill on iOS and Android"
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Input-OTP.md (generated from this file)",
+    "storyFile": "src/stories/InputOTP.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "Examples assume an Enpath InputOTP wrapper over shadcn/input-otp primitives; source markdown itself does not mark this component not ready."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/input-otp.tsx",
+    "packageDeps": [
+      "input-otp"
+    ],
+    "exports": [
+      "InputOtp"
+    ],
+    "notes": [
+      "Active slot uses ring-2 ring-offset-0 z-10 (shadcn pattern) — NOT inset shadow. No overflow-hidden on group.",
+      "Slot corner radius = calc(radius/md - 1px) so inset follows group border inner edge.",
+      "Invalid ring: group-data-[invalid]:ring-[color/border/error] on active slot."
+    ]
+  },
+  "storybook": {
+    "file": "src/stories/InputOTP.stories.tsx",
+    "title": "Forms/InputOTP",
+    "stories": [
+      "SixSlot",
+      "ThreePlusThree",
+      "FourSlot",
+      "Disabled",
+      "Invalid",
+      "AllTypes"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": "Active slot: switched from inset shadow to ring-2 ring-offset-0 z-10 (shadcn pattern). No overflow-hidden on group. Per-slot borders instead. First/last slots get radius/md - 1px corner radius."
+  },
+  "docs": {
+    "file": "Input-OTP.md",
+    "intro": "# Input OTP\n\nA one-time password input built from individual slot cells grouped into a single control. Built on the `input-otp` library by Guilherme Rodz, wrapped by shadcn. Two component sets: `_input-otp-slot` is the individual cell; `input-otp` is the assembled control.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Component Sets",
+        "body": "\n| Set | ID | Variants | Purpose |\n|---|---|---|---|\n| `_input-otp-slot` | `58:17340` | 5 | Individual digit cell — assembled inside `input-otp` |\n| `input-otp` | `58:17437` | 12 | Full OTP control — use this, never the slot directly |\n\n---\n\n"
+      },
+      {
+        "title": "Variant Matrices",
+        "body": "\n### `_input-otp-slot` — `State`\n\n| Property | Options | Default |\n|---|---|---|\n| `State` | `Empty`, `Active`, `Filled`, `Disabled`, `Invalid` | `Empty` |\n\n`State(5) = 5 variants`\n\n### `input-otp` — `Type × State`\n\n| Property | Options | Default |\n|---|---|---|\n| `Type` | `6-Slot`, `3+3`, `4-Slot` | `6-Slot` |\n| `State` | `Empty`, `Filled`, `Disabled`, `Invalid` | `Empty` |\n\n`Type(3) × State(4) = 12 variants`\n\n---\n\n"
+      },
+      {
+        "title": "Type Guide",
+        "body": "\n### `Type=6-Slot`\nSix consecutive slots in a single group — the most common OTP pattern for 6-digit codes (email verification, authenticator apps).\n\n### `Type=3+3`\nSix slots split into two groups of three, separated by a dash — for codes visually formatted as `XXX–XXX`. Same total length as 6-Slot, different visual grouping.\n\n### `Type=4-Slot`\nFour consecutive slots in a single group — for 4-digit codes (PIN entry, short verification codes).\n\n---\n\n"
+      },
+      {
+        "title": "Structure",
+        "body": "\n### `_input-otp-slot`\n\n```\n_input-otp-slot             — 40×40px, fill: varies, stroke: varies (no radius)\n  ├─ cursor                 — RECTANGLE, fill: color/background/default/foreground\n  │                           (Active state only — blinking caret)\n  └─ placeholder            — TEXT, fill: varies\n                              (Filled state: typed digit · Disabled: masked · Invalid: digit)\n```\n\n### `input-otp` — Type=6-Slot / Type=4-Slot\n\n```\ninput-otp                   — H AUTO-LAYOUT, no fill, no stroke\n                              gap: spacing/component/sm\n  └─ otp-group              — FRAME, stroke: varies, radius: radius/md\n       ├─ _input-otp-slot   — INSTANCE × 6 (or × 4)\n       └─ ...\n```\n\n### `input-otp` — Type=3+3\n\n```\ninput-otp                   — H AUTO-LAYOUT, gap: spacing/component/sm\n  ├─ otp-group              — FRAME, stroke: varies, radius: radius/md\n  │    ├─ _input-otp-slot   — INSTANCE × 3\n  │    └─ ...\n  ├─ _input-otp-separator   — INSTANCE (dash \"–\" between groups)\n  │    └─ separator         — TEXT, fill: color/background/muted/foreground\n  └─ otp-group              — FRAME, stroke: varies, radius: radius/md\n       ├─ _input-otp-slot   — INSTANCE × 3\n       └─ ...\n```\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### `_input-otp-slot` — per state\n\n| State | Container fill | Container stroke | `cursor` fill | `placeholder` fill |\n|---|---|---|---|---|\n| `Empty` | `color/input/bg` | `color/border/default` | — | — |\n| `Active` | `color/input/bg` | `color/border/focus` | `color/background/default/foreground` | — |\n| `Filled` | `color/input/bg` | `color/border/default` | — | `color/background/default/foreground` |\n| `Disabled` | `color/surface/muted` | `color/border/disabled` | — | `color/text/disabled` |\n| `Invalid` | `color/input/bg` | `color/border/error` | — | `color/background/default/foreground` |\n\n> **No corner radius on `_input-otp-slot`.** The radius lives on `otp-group` (`radius/md`) — the slot cells are flush with each other inside the group, sharing borders. Adding radius to individual slots would break the connected-cell appearance.\n\n> **`State=Active` uses `color/border/focus`.** This aligns with how all other interactive form controls signal keyboard focus — consistent with `input`, `select-trigger`, and `combobox-trigger` Open states.\n\n### `otp-group` — stroke per state\n\n| `input-otp` State | `otp-group` stroke |\n|---|---|\n| `Empty` | `color/border/default` |\n| `Filled` | `color/border/default` |\n| `Disabled` | `color/border/disabled` |\n| `Invalid` | `color/border/error` |\n\n### Separator\n\n| Layer | Property | Token |\n|---|---|---|\n| `separator` TEXT | Fill | `color/background/muted/foreground` |\n\n---\n\n"
+      },
+      {
+        "title": "Behavior",
+        "body": "\nSource: `input-otp` library by Guilherme Rodz (`github.com/guilhermerodz/input-otp`).\n\n### How the input works\n\nDespite appearing as multiple individual cells, the component renders as a **single invisible HTML `<input>` element** underneath. The visual slot cells are a display layer only. This means:\n\n- The browser treats the entire OTP control as one input field\n- All standard text input keyboard shortcuts work (`Backspace`, `Delete`, `Arrow keys`, `Home`, `End`)\n- The native device keyboard appears once (not per slot)\n- Autofill and password managers treat it as a single field\n\n### Slot states at runtime\n\n| Action | Slot state |\n|---|---|\n| Field rendered, no input | All slots → `State=Empty` |\n| User focuses the field | First unfilled slot → `State=Active` (cursor appears) |\n| User types a digit | That slot → `State=Filled`; next slot → `State=Active` |\n| All slots filled | All slots → `State=Filled`; no Active slot |\n| `disabled` prop set | All slots → `State=Disabled` |\n| `aria-invalid` set (validation fails) | All slots → `State=Invalid` |\n\n### Copy-paste\n\n- Pasting a string of digits automatically fills all slots from the paste — no manual slot-by-slot entry required\n- iOS and Android copy-paste (including SMS autofill) is supported natively\n- The `pasteTransformer` prop can strip formatting from pasted codes — e.g. converting `\"123-456\"` to `\"123456\"` before filling slots\n\n### Pattern validation\n\n- Default `inputMode=\"numeric\"` — numeric keyboard on mobile\n- The `pattern` prop accepts a regex — the library exports `REGEXP_ONLY_DIGITS` for digit-only inputs and `REGEXP_ONLY_DIGITS_AND_CHARS` for alphanumeric codes\n- Characters not matching the pattern are rejected silently\n\n### Caret\n\n- The blinking caret in `State=Active` is a **fake caret** (the `cursor` element)\n- In implementation the fake caret is enabled via the `hasFakeCaret` property on `InputOTPSlot` render props\n- The real text cursor is hidden; the fake one animates with CSS\n\n### Keyboard\n\n| Key | Action |\n|---|---|\n| Any digit / character | Fill current slot, advance focus to next slot |\n| `Backspace` | Clear current slot, move focus to previous slot |\n| `Arrow Left` / `Arrow Right` | Move focus between slots |\n| `Home` | Move focus to first slot |\n| `End` | Move focus to last slot |\n| `Tab` | Move focus out of the OTP field entirely |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Touch Target",
+        "body": "\n| Component | Size | Note |\n|---|---|---|\n| `_input-otp-slot` | 40×40px | Meets WCAG 2.2 AA (24px). 44px is advisory — no change needed |\n\n---\n\n"
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": "\n> **Always use `input-otp`, never `_input-otp-slot` standalone.**\n>\n> The slot sub-component has no input behavior on its own — it is a display cell. Placing it directly in a layout produces a non-functional visual with no way to enter text.\n\n> **Choose the Type by code format, not by digit count.**\n>\n> - `Type=6-Slot` — when the code has no visual grouping (plain 6-digit code)\n> - `Type=3+3` — when the code is formatted with a separator (e.g. `ABC–DEF`, `123–456`)\n> - `Type=4-Slot` — for 4-digit codes (PIN, short verification)\n>\n> Do not use `Type=3+3` for a plain 6-digit code just because it \"looks better\" — the separator implies a specific format that the user will expect in the actual code.\n"
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- Email verification during signup — \"Enter the 6-digit code we sent to your email\"\n- Two-factor authentication (2FA) — one-time code from an authenticator app\n- SMS-based login or phone number verification\n- PIN entry for a locked account or secure action confirmation\n- Password reset flows where a code is sent before the user can set a new password\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Type=6-Slot` | Standard 6-digit code with no visual grouping | Email verification code · Authenticator app TOTP · SMS OTP |\n| `Type=3+3` | 6-character code that is formatted with a visible separator in the message | Invite codes displayed as `ABC–DEF` · Recovery codes printed in pairs |\n| `Type=4-Slot` | Short 4-digit codes or numeric PINs | ATM-style PIN entry · App lock PIN · Short SMS verification |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| User enters a structured verification or PIN code in individual slots | `input-otp` | `input` |\n| User enters any general text, password, or free-form value | `input` | `input-otp` |\n| User needs to enter a numeric quantity or free number (not a code) | `input` (`type=\"number\"`) | `input-otp` |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/input-otp\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Use `_input-otp-slot` directly in a layout",
+      "correct": "Use `input-otp` — the slot is a display-only sub-component"
+    },
+    {
+      "wrong": "Use `Type=3+3` for a plain 6-digit code",
+      "correct": "`Type=6-Slot` — the separator signals a formatted code"
+    },
+    {
+      "wrong": "Show `State=Invalid` while the user is still typing",
+      "correct": "Only after submission of an incorrect code"
+    },
+    {
+      "wrong": "Leave the OTP field without a label",
+      "correct": "Always provide a visible label and a description of the code source"
+    },
+    {
+      "wrong": "Use `State=Active` in a static mockup of a resting state",
+      "correct": "`State=Empty` for resting · `State=Active` only to show the focused/in-progress interaction"
+    },
+    {
+      "wrong": "Show a separate error message per slot",
+      "correct": "The entire group turns Invalid — one error message below the field covers the whole code"
+    }
+  ]
+}

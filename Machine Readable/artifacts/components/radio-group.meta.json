@@ -1,0 +1,375 @@
+{
+  "name": "radio-group",
+  "description": "A single-select control used within a radio group, with Basic row and Choice card layouts.",
+  "category": "forms",
+  "shadcnBase": "radio-group",
+  "componentSets": {
+    "radio-item": {
+      "purpose": "Main labeled radio option."
+    },
+    "radio": {
+      "purpose": "16x16 radio indicator sub-component."
+    }
+  },
+  "variants": {
+    "State": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Checked",
+        "Disabled",
+        "Invalid",
+        "Focus"
+      ],
+      "default": "Default",
+      "reactProp": "state",
+      "reactValues": {
+        "Default": "default",
+        "Checked": "checked",
+        "Disabled": "disabled",
+        "Invalid": "invalid",
+        "Focus": "focus"
+      }
+    },
+    "Type": {
+      "type": "enum",
+      "values": [
+        "Basic",
+        "Choice card"
+      ],
+      "default": "Basic",
+      "reactProp": "type",
+      "reactValues": {
+        "Basic": "basic",
+        "Choice card": "choice-card"
+      }
+    },
+    "Show description": {
+      "type": "enum",
+      "values": [
+        "True",
+        "False"
+      ],
+      "default": "True",
+      "reactProp": "showDescription",
+      "reactValues": {
+        "True": true,
+        "False": false
+      }
+    }
+  },
+  "componentProperties": {
+    "State": {
+      "type": "VARIANT",
+      "default": "Default"
+    },
+    "Type": {
+      "type": "VARIANT",
+      "default": "Basic"
+    },
+    "Show description": {
+      "type": "BOOLEAN",
+      "default": true
+    }
+  },
+  "tokens": {
+    "radio": {
+      "Unchecked": {
+        "fill": "transparent",
+        "stroke": "color/input/border",
+        "strokeWeight": 1,
+        "strokeAlign": "inside"
+      },
+      "Checked": {
+        "fill": "transparent",
+        "stroke": "color/brand/primary",
+        "strokeWeight": 1,
+        "strokeAlign": "inside"
+      },
+      "Disabled": {
+        "fill": "transparent",
+        "stroke": "color/border/disabled",
+        "strokeWeight": 1,
+        "strokeAlign": "inside"
+      },
+      "Focus": {
+        "fill": "transparent",
+        "stroke": "color/ring",
+        "strokeWeight": 2,
+        "strokeAlign": "outside",
+        "effect": "focus/ring"
+      },
+      "Invalid": {
+        "fill": "transparent",
+        "stroke": "color/border/error",
+        "strokeWeight": 1,
+        "strokeAlign": "inside"
+      },
+      "dot": {
+        "fill": "color/brand/primary",
+        "radius": "radius/full",
+        "size": 8
+      },
+      "radius": "radius/full"
+    },
+    "choiceCard": {
+      "Default": {
+        "fill": "transparent",
+        "stroke": "color/border/default",
+        "radius": "radius/lg"
+      },
+      "Checked": {
+        "fill": "transparent",
+        "stroke": "color/brand/primary",
+        "radius": "radius/lg"
+      },
+      "Disabled": {
+        "fill": "transparent",
+        "stroke": "color/border/default",
+        "opacity": "opacity/disabled",
+        "radius": "radius/lg"
+      },
+      "Invalid": {
+        "fill": "transparent",
+        "stroke": "color/border/error",
+        "radius": "radius/lg"
+      },
+      "Focus": {
+        "fill": "transparent",
+        "stroke": "color/border/focus",
+        "radius": "radius/lg"
+      }
+    },
+    "text": {
+      "DefaultCheckedFocus": {
+        "label": "color/surface/default/foreground",
+        "description": "color/text/secondary"
+      },
+      "Invalid": {
+        "label": "color/text/invalid",
+        "description": "color/text/secondary"
+      },
+      "DisabledBasic": {
+        "label": "color/text/disabled",
+        "description": "color/text/disabled"
+      },
+      "DisabledChoiceCard": {
+        "label": "color/surface/default/foreground",
+        "description": "color/text/secondary"
+      }
+    },
+    "spacing": {
+      "itemGap": "spacing/component/md",
+      "choiceCardPadding": "spacing/component/lg",
+      "textGap": "spacing/component/xxs"
+    },
+    "states": {
+      "invalid": {
+        "borderToken": "color/border/error",
+        "ringToken": "color/border/error",
+        "ringGlow": "color-mix(in_srgb,var(--color-border-error)_20%,transparent)",
+        "notes": "Uses [&[aria-invalid]] compound selector to beat data-[state=open]/focus-visible specificity. Blue ring must NOT appear when invalid."
+      }
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`radio` (within a `radiogroup`)"
+      },
+      {
+        "property": "Touch target",
+        "value": "`radio` is 16×16px (below WCAG 2.2 AA 24px) — built-in invisible hit area, ≥ 44×44px on coarse pointers (`height/target/touch`)"
+      },
+      {
+        "property": "Focus indicator",
+        "value": "Basic: `color/ring` 2px OUTSIDE on the radio circle · Choice card: `color/border/focus` 1px INSIDE on card border"
+      },
+      {
+        "property": "Keyboard",
+        "value": "`Tab` to enter group · `Arrow` keys to move between options · `Space` to select"
+      },
+      {
+        "property": "Screen reader name",
+        "value": "Visible label text is the accessible name; wrap items in a `<fieldset>` + `<legend>` for the group label"
+      },
+      {
+        "property": "Focus Checked Overlap",
+        "value": "Radix RadioGroup couples arrow-key focus movement with selection (native radio interaction model). On Choice card, once a group has a selected value, arrowing to another card sets Checked and Focus simultaneously — the card border shows brand/primary (Checked) and border/focus (Focus) at the same time, making the two states visually indistinguishable in practice. The pure Focus (non-Checked) border is only reachable when the group has no selection yet (first Tab into an empty group). The Basic type's radio circle ring (color/ring, 2px OUTSIDE) remains independently visible regardless of checked state."
+      }
+    ]
+  },
+  "constraints": [
+    "`Type=Basic` — default for form fields, settings, preference lists. Compact and low-visual-weight.",
+    "`Type=Choice card` — use when each option needs more explanation or when the choice carries enough weight to justify a card surface. Cards also communicate that the selection has visual consequence (e.g. a plan tier, a layout option).",
+    "Never use a single `radio-item` in isolation — always place inside a radio group. If only one option exists, use a checkbox.",
+    "`Show description=True` (default) — keep descriptions short (one line, ~60 characters). Long descriptions break the rhythm of a list. If you need more than a line, reconsider using a card pattern with richer content.",
+    "`Invalid` state: label uses `color/text/invalid` to signal the error · description stays `color/text/secondary` to remain readable as supporting context. Pair with an error message below the group (outside this component) in implementation.",
+    "Choice cards have no fill — they are transparent and rely on the page background. `opacity/disabled` (0.6) is applied to the entire card frame for the Disabled state, making all elements uniformly dim without color-matching tricks."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Radio.md (generated from this file)",
+    "storyFile": "src/stories/RadioGroup.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [
+      "Radio.md Token Bindings says Invalid text uses color/text/invalid, while Behavior says text stays default. Confirm the correct Invalid text behavior."
+    ],
+    "notes": [
+      "Examples assume RadioGroupItem and RadioItem wrapper APIs."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/radio-group.tsx",
+    "packageDeps": [],
+    "exports": [
+      "RadioGroup",
+      "RadioGroupItem"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/RadioGroup.stories.tsx",
+    "title": "Forms/RadioGroup",
+    "stories": [
+      "Basic",
+      "BasicWithDescription",
+      "ChoiceCard",
+      "Disabled",
+      "ChoiceCardDisabled",
+      "Invalid",
+      "ChoiceCardInvalid",
+      "Horizontal"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": "Invalid state: focus ring uses color/border/error instead of color/ring."
+  },
+  "docs": {
+    "file": "Radio.md",
+    "intro": "# Radio\n\nA single-select control used within a radio group. Supports 2 layout types — a compact Basic row and a bordered Choice card — each with 4 states and an optional description line.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": "\n### radio-item (main component — `96:33437`)\n"
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\nAll 5 states × 2 types = 10 variants.\n\n### radio (sub-component — `96:33420`)\n"
+          },
+          {
+            "md": "| Property | Options | Default |\n|---|---|---|\n| `State` | `Unchecked`, `Checked`, `Disabled`, `Focus`, `Invalid` | `Unchecked` |"
+          },
+          {
+            "md": "\n5 variants.\n\n> `radio-item` uses `Default` (not `Unchecked`) as its unselected state label — radio buttons belong to a group where \"default\" conveys the unselected position more naturally than \"unchecked.\"\n\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Component Properties",
+        "body": "\n### radio-item\n\n| Property | Type | Default | Notes |\n|---|---|---|---|\n| `State` | VARIANT | `Default` | Interaction and validation state |\n| `Type` | VARIANT | `Basic` | Layout type — compact row or bordered card |\n| `Show description` | BOOLEAN | `true` | Shows/hides the description text line |\n\n### radio\n\n| Property | Type | Default | Notes |\n|---|---|---|---|\n| `State` | VARIANT | `Unchecked` | Interaction and validation state |\n\n---\n\n"
+      },
+      {
+        "title": "Structure",
+        "body": "\n### radio-item — Type=Basic\n\n```\nradio-item                        — HORIZONTAL, gap: spacing/component/md (12px)\n  ├─ radio                        — INSTANCE 16×16px\n  └─ text-block                   — VERTICAL, gap: spacing/component/xxs (2px)\n       ├─ label                   — always visible\n       └─ description             — shown when Show description=True\n```\n\n### radio-item — Type=Choice card\n\n```\nradio-item                        — HORIZONTAL, gap: spacing/component/md (12px)\n                                    padding: spacing/component/lg (16px) all sides\n                                    fill + border + radius/lg\n  ├─ radio                        — INSTANCE 16×16px\n  └─ text-block                   — VERTICAL, gap: spacing/component/xxs (2px)\n       ├─ label                   — always visible\n       └─ description             — shown when Show description=True\n```\n\n### radio (sub-component)\n\n```\nradio                             — 16×16px, radius/full\n  └─ dot  (FRAME)                 — 8×8px, radius/full — visible in Checked only\n```\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### radio — per State\n\n| State | Fill | Stroke | Stroke weight | Stroke align | Effect style |\n|---|---|---|---|---|---|\n| `Unchecked` | — (transparent) | `color/input/border` | 1px | INSIDE | — |\n| `Checked` | — (transparent) | `color/brand/primary` | 1px | INSIDE | — |\n| `Disabled` | — (transparent) | `color/border/disabled` | 1px | INSIDE | — |\n| `Focus` | — (transparent) | `color/ring` | 2px | OUTSIDE | `focus/ring` |\n| `Invalid` | — (transparent) | `color/border/error` | 1px | INSIDE | — |\n\nAll variants: `border-radius → radius/full`.\n\n> Unchecked uses `color/input/border` (zinc/300), not `color/border/default` (zinc/200) — the radio circle is treated as an input boundary, one step darker to define it clearly.\n\n### radio — inner element\n\n| Element | Node | Property | Token |\n|---|---|---|---|\n| `dot` | FRAME | fill | `color/brand/primary` |\n| `dot` | FRAME | border-radius | `radius/full` |\n| `dot` | FRAME | size | 8×8px |\n\nThe dot is fill-based (FRAME), not stroke-based. Visible in `State=Checked` only.\n\n### radio-item — Type=Basic fills and strokes\n\nBasic variants have no fill, no stroke, and no border-radius on the row itself — only the embedded `radio` sub-component carries the visual state.\n\n### radio-item — Type=Choice card per State\n\nChoice cards have **no fill** — they render directly on the page background. The card border and optional `opacity/disabled` carry the full state signal.\n\n| State | Card fill | Card stroke | Stroke weight | Stroke align | Opacity | Radius |\n|---|---|---|---|---|---|---|\n| `Default` | — | `color/border/default` | 1px | INSIDE | — | `radius/lg` |\n| `Checked` | — | `color/brand/primary` | 1px | INSIDE | — | `radius/lg` |\n| `Disabled` | — | `color/border/default` | 1px | INSIDE | `opacity/disabled` (0.6) on frame | `radius/lg` |\n| `Invalid` | — | `color/border/error` | 1px | INSIDE | — | `radius/lg` |\n| `Focus` | — | `color/border/focus` | 1px | INSIDE | — | `radius/lg` |\n\n> **Disabled approach:** `opacity/disabled` is bound on the entire card frame. All child tokens remain at their default values — the uniform opacity reduces the whole card to 60%, making it visually disabled without color-matching tricks. This matches the Switch pattern.\n>\n> **Focus approach:** `color/border/focus` 1px INSIDE — consistent with all other bordered interactive components (Switch, Checkbox). Avoids OUTSIDE ring which would overlap adjacent cards in a tight list.\n>\n> ⚠️ **Focus/Checked overlap:** because Radix `RadioGroup` arrow keys move focus and selection together, `Focus` and `Checked` are usually true on the same card at once — see the note in the Behavior section below for when each is actually distinguishable.\n\n### radio-item — Choice card spacing\n\n| Property | Token | Value |\n|---|---|---|\n| Padding (all sides) | `spacing/component/lg` | 16px |\n| Gap (radio → text-block) | `spacing/component/md` | 12px |\n\n### radio-item — Basic spacing\n\n| Property | Token | Value |\n|---|---|---|\n| Gap (radio → text-block) | `spacing/component/md` | 12px |\n\n### radio-item — text-block spacing\n\n| Property | Token | Value |\n|---|---|---|\n| Gap (label → description) | `spacing/component/xxs` | 2px |\n\n### radio-item — text tokens per State\n\n| State | `label` color | `description` color | Notes |\n|---|---|---|---|\n| `Default`, `Checked`, `Focus` | `color/surface/default/foreground` | `color/text/secondary` | Surface-agnostic — works regardless of page background |\n| `Invalid` | `color/text/invalid` | `color/text/secondary` | Label signals error · description stays readable |\n| `Disabled` (Basic) | `color/text/disabled` | `color/text/disabled` | Explicit disabled color for Basic type |\n| `Disabled` (Choice card) | `color/surface/default/foreground` | `color/text/secondary` | Normal tokens — `opacity/disabled` on frame handles appearance |\n\n> `color/surface/default/foreground` is used instead of `color/background/default/foreground` because Choice cards have no fill — they sit directly on the page background. The `surface/default` token is surface-agnostic and correct for both filled and unfilled contexts.\n\n### radio-item — text styles\n\n| Layer | Text style |\n|---|---|\n| `label` | `label/md` (14px / SemiBold) |\n| `description` | `body/sm` (14px / Regular) |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\nChoice card variants (69px) meet the target natively. Basic variants rely on the radio's built-in hit area — no wrapper needed.\n\nFocus is expressed on `radio-item` directly — use `State=Focus` on the item to depict keyboard focus in a static mockup. The embedded `radio` sub-component also has its own `State=Focus` for cases where only the indicator needs to show focus.\n\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Behavior",
+        "body": "\n| State | Triggered by | Notes |\n|---|---|---|\n| `Default` | Unselected within group | Empty circle with input border |\n| `Checked` | User selects this option | Dot appears, border switches to primary |\n| `Disabled` | `disabled` prop / form disabled | No hover, focus, or active · Basic: `color/text/disabled` text, `color/border/disabled` radio · Choice card: `opacity/disabled` on entire card frame |\n| `Invalid` | Form validation failure | Error border on circle and card outline — label switches to `color/text/invalid` · description stays `color/text/secondary` |\n| `Focus` | Tab or arrow key navigation | Basic: 2px `color/ring` OUTSIDE on the radio circle · Choice card: 1px `color/border/focus` INSIDE on card border |\n\nRadio buttons must always exist within a group — selecting one deselects all others in the same group. A single standalone radio is always wrong; use a checkbox instead.\n\n> **Focus vs. Checked on Choice card — known overlap (2026-06-15):** Radix `RadioGroup` follows the native radio interaction model — **Arrow key navigation moves focus AND changes the selected value at the same time** (unlike Tabs/Menus, where focus and selection are independent). As a result:\n> - Once a Choice card group has a selected value (the normal case — `defaultValue` set), arrowing onto a different card makes it **`Checked` and `Focus` simultaneously**. The card's border shows whichever of `color/brand/primary` (Checked) or `color/border/focus` (Focus) wins by CSS order — in practice the two states are visually indistinguishable on Choice card.\n> - The dedicated `Focus` row in the per-state table above is only reachable as a **pure, non-Checked state** in the edge case where the group has **no selection yet** — the first `Tab` into an empty group focuses the first card without checking it.\n> - The Basic type's `radio` circle still shows its own independent `color/ring` 2px OUTSIDE focus ring regardless of checked state — that indicator remains reliably visible.\n> - **Implication:** don't rely on the Choice card border alone to communicate \"this card has keyboard focus\" in a group that already has a selection — the focused card and the checked card will look the same. If a screen needs to depict keyboard focus distinctly from selection on a Choice card, do so on an unselected group, or rely on the inner `radio` circle's ring.\n\n`radio-item` has no Hover state. Hover treatment for radio options is handled at the radio-group level in implementation (e.g. row background shifts to `color/background/accent`), not at the individual item level.\n\n---\n\n"
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- Pricing plan selection: Free, Plus, Pro — only one tier can be active, seeing all options at once matters\n- Subscription billing cadence: Monthly, Yearly, Lifetime — 3 visible options, mutual exclusion is the entire point\n- Notification delivery preference: Email, SMS, Push — user picks one channel\n- Layout or display mode selector: Grid view, List view, Compact view\n- Feedback form rating scale: Poor, Fair, Good, Excellent — visible options help calibrate the choice\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Type=Basic` | Compact preference list in a form or settings panel — low visual weight, options are self-explanatory | Notification channel · Sort order · Gender on profile form |\n| `Type=Choice card` | Each option warrants a title + description, or the choice carries enough visual weight to justify a card | Pricing tier (Free / Pro / Enterprise) · Onboarding goal (\"For personal use\" / \"For my team\") · Subscription plan |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| 2–5 mutually exclusive options where seeing all at once aids the decision | `radio` | `select` |\n| 5+ options or space is constrained | `select` | `radio` |\n| Only one option exists (standalone binary) | `checkbox` | `radio` |\n| User can pick multiple options from the list | `checkbox` | `radio` |\n| Each option is a major feature tier with rich description | `radio` (`Type=Choice card`) | `checkbox` |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/radio-group\n- **Best practice · References · Radix:** https://www.radix-ui.com/primitives/docs/components/radio-group\n- **Composition · Basic:** text-block.label\n- **Composition · Basic:** text-block.description\n- **Composition · Choice Card:** text-block.label\n- **Composition · Choice Card:** text-block.description\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Raw 16×16 circle with hardcoded border",
+      "correct": "Use `radio` instance"
+    },
+    {
+      "wrong": "Standalone `radio-item` outside a group",
+      "correct": "Wrap in a `radiogroup`"
+    },
+    {
+      "wrong": "Single radio option",
+      "correct": "Use a checkbox instead"
+    },
+    {
+      "wrong": "`color/border/default` for Unchecked state",
+      "correct": "`radio` uses `color/input/border` — input boundary is intentionally one step darker"
+    },
+    {
+      "wrong": "Add a fill to Choice card instances",
+      "correct": "Cards are intentionally transparent — fill is always absent"
+    },
+    {
+      "wrong": "Use `color/icon/*` for the dot",
+      "correct": "The dot uses `color/brand/primary` directly as a fill"
+    }
+  ]
+}

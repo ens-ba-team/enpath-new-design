@@ -1,0 +1,340 @@
+{
+  "name": "pagination",
+  "description": "A navigation control for moving through multi-page data sets.",
+  "category": "navigation",
+  "shadcnBase": "pagination",
+  "componentSets": {
+    "_pagination-item": {
+      "purpose": "Individual page cell."
+    },
+    "pagination": {
+      "purpose": "Full assembled control."
+    }
+  },
+  "variants": {
+    "Item Type": {
+      "type": "enum",
+      "values": [
+        "Page",
+        "Prev",
+        "Next",
+        "Ellipsis"
+      ],
+      "default": "Page",
+      "reactProp": "itemType",
+      "reactValues": {
+        "Page": "page",
+        "Prev": "prev",
+        "Next": "next",
+        "Ellipsis": "ellipsis"
+      }
+    },
+    "Item State": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Hover",
+        "Active",
+        "Disabled"
+      ],
+      "default": "Default",
+      "reactProp": "state",
+      "reactValues": {
+        "Default": "default",
+        "Hover": "hover",
+        "Active": "active",
+        "Disabled": "disabled"
+      }
+    },
+    "Type": {
+      "type": "enum",
+      "values": [
+        "Basic",
+        "More",
+        "Simple",
+        "Disabled",
+        "With Total",
+        "With Changer",
+        "With Jumper",
+        "Show All"
+      ],
+      "default": "Basic",
+      "reactProp": "type",
+      "reactValues": {
+        "Basic": "basic",
+        "More": "more",
+        "Simple": "simple",
+        "Disabled": "disabled",
+        "With Total": "with-total",
+        "With Changer": "with-changer",
+        "With Jumper": "with-jumper",
+        "Show All": "show-all"
+      }
+    }
+  },
+  "availability": {
+    "Page": [
+      "Default",
+      "Hover",
+      "Active",
+      "Disabled"
+    ],
+    "Prev": [
+      "Default",
+      "Hover",
+      "Disabled"
+    ],
+    "Next": [
+      "Default",
+      "Hover",
+      "Disabled"
+    ],
+    "Ellipsis": [
+      "single visual state"
+    ]
+  },
+  "tokens": {
+    "item": {
+      "Page Default": {
+        "fill": "color/background/default",
+        "stroke": "color/border/default",
+        "fg": "color/background/default/foreground"
+      },
+      "Page Hover": {
+        "fill": "color/background/accent",
+        "stroke": "color/border/default",
+        "fg": "color/background/accent/foreground"
+      },
+      "Page Active": {
+        "fill": "color/brand/primary",
+        "fg": "color/brand/primary/foreground"
+      },
+      "Page Disabled": {
+        "fill": "color/background/muted",
+        "stroke": "color/border/disabled",
+        "fg": "color/text/disabled"
+      },
+      "PrevNext Disabled": {
+        "fill": "color/background/muted",
+        "stroke": "color/border/disabled",
+        "icon": "color/icon/disabled"
+      },
+      "Ellipsis": {
+        "fill": "color/background/default",
+        "stroke": "color/border/default",
+        "fg": "color/background/muted/foreground"
+      },
+      "size": "32x32",
+      "radius": "radius/md"
+    },
+    "paginationGap": {
+      "Basic": "spacing/component/xxs",
+      "More": "spacing/component/xxs",
+      "Disabled": "spacing/component/xxs",
+      "Simple": "spacing/component/sm",
+      "With Changer": "spacing/component/sm",
+      "With Jumper": "spacing/component/sm",
+      "With Total": "spacing/component/lg",
+      "Show All": "spacing/component/md"
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Landmark",
+        "value": "`<nav aria-label=\"pagination\">` — announced as a navigation landmark"
+      },
+      {
+        "property": "Current page",
+        "value": "`aria-current=\"page\"` on the active `<PaginationLink>`"
+      },
+      {
+        "property": "Previous / Next disabled",
+        "value": "`aria-disabled=\"true\"` on the `<a>` (not `disabled` — `<a>` ignores the `disabled` attribute)"
+      },
+      {
+        "property": "Ellipsis",
+        "value": "`aria-hidden=\"true\"` — decorative, not interactive"
+      },
+      {
+        "property": "Icon buttons",
+        "value": "`aria-label=\"Go to previous page\"` / `aria-label=\"Go to next page\"` — icons must have a text label for screen readers"
+      },
+      {
+        "property": "Page number links",
+        "value": "Visible digit text is sufficient; no additional `aria-label` needed"
+      }
+    ]
+  },
+  "constraints": [
+    "Show `Type=Prev, State=Disabled` when on page 1; show `Type=Next, State=Disabled` when on the last page — never hide Prev/Next entirely, just disable them",
+    "Show `State=Active` on exactly one page item at a time — the current page",
+    "The ellipsis (`Type=Ellipsis`) must always have at least one navigable page on each side — never place two ellipsis cells adjacent to each other",
+    "Align the pagination control with the data table or list it controls — always place it below the content, right-aligned or centred per layout grid",
+    "In `Type=Simple`, the page indicator (\"1 / 10\") is read-only — it updates dynamically as the user navigates",
+    "`Type=With Changer` changes the page size — always reset to page 1 when the user changes it"
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Pagination.md (generated from this file)",
+    "storyFile": "src/stories/Pagination.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "Examples assume a higher-level PaginationBar wrapper for generated layouts; source markdown itself does not mark this component not ready."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/pagination.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Pagination"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Pagination.stories.tsx",
+    "title": "Navigation/Pagination",
+    "stories": [
+      "Basic",
+      "More",
+      "Simple",
+      "Disabled",
+      "WithTotal",
+      "FirstPage",
+      "LastPage",
+      "WithChanger",
+      "ShowAll",
+      "WithJumper"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Pagination.md",
+    "intro": "# Pagination\n\nA navigation control for moving through multi-page data sets. Built on shadcn's Pagination, which renders as semantic HTML `<nav>` / `<a>` elements with no interactive library dependency. Two component sets: `_pagination-item` is the individual page cell; `pagination` is the assembled control.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Component Sets",
+        "body": "\n| Set | ID | Variants | Purpose |\n|---|---|---|---|\n| `_pagination-item` | `59:17863` | 11 | Individual page cell — assembled inside `pagination` |\n| `pagination` | `59:18253` | 8 | Full control — use this, never the item directly |\n\n---\n\n"
+      },
+      {
+        "title": "Variant Matrices",
+        "body": "\n### `_pagination-item` — `Type × State`\n\n| Property | Options | Default |\n|---|---|---|\n| `Type` | `Page`, `Prev`, `Next`, `Ellipsis` | `Page` |\n| `State` (Page) | `Default`, `Hover`, `Active`, `Disabled` | `Default` |\n| `State` (Prev / Next) | `Default`, `Hover`, `Disabled` | `Default` |\n| `State` (Ellipsis) | — (single state) | — |\n\n`Page(4) + Prev(3) + Next(3) + Ellipsis(1) = 11 variants`\n\n### `pagination` — `Type`\n\n| Property | Options | Default |\n|---|---|---|\n| `Type` | `Basic`, `More`, `Simple`, `Disabled`, `With Total`, `With Changer`, `With Jumper`, `Show All` | `Basic` |\n\n`Type(8) = 8 variants`\n\n---\n\n"
+      },
+      {
+        "title": "Type Guide",
+        "body": "\n### `_pagination-item` Types\n\n**`Type=Page`** — a numbered page button. `State=Active` marks the current page (brand fill). `State=Default` / `Hover` are navigable pages. `State=Disabled` is an unclickable page (rare — typically the whole control is disabled, not individual pages).\n\n**`Type=Prev` / `Type=Next`** — Previous and Next arrow buttons (chevron icons). `State=Disabled` when the user is already at the first or last page.\n\n**`Type=Ellipsis`** — a non-interactive \"…\" cell, indicating skipped pages in the sequence. No states — always the same visual.\n\n---\n\n### `pagination` Types\n\n**`Type=Basic`** — Prev · 1 · 2 · **3** · 4 · 5 · Next. Five consecutive page buttons with no ellipsis — for datasets with a small, known page count where showing all pages at once is practical.\n\n**`Type=More`** — Prev · 1 · … · 3 · **4** · 5 · … · 10 · Next. Ellipsis on one or both sides — for large page counts where only a window of nearby pages is shown. Most common pattern for large datasets.\n\n**`Type=Simple`** — Prev · [1 / 10] · Next. A compact variant showing only the current page and total in a single indicator cell. Use in tight spaces (mobile, sidebars) where individual page buttons would not fit.\n\n**`Type=Disabled`** — The entire `Basic` layout with all items in `State=Disabled` — when the list is loading or the control is temporarily unavailable.\n\n**`Type=With Total`** — \"Total 100 items\" · Prev · 1 · 2 · **3** · 4 · 5 · Next. Adds a total-record-count label to the left of the control. Use when the user needs to know how many records exist, not just the page count.\n\n**`Type=With Changer`** — Prev · 1 · 2 · **3** · 4 · 5 · Next · [10 / page ▼]. Adds a page-size dropdown to the right. Use when the user should be able to control how many rows per page they see.\n\n**`Type=With Jumper`** — Prev · 1 · 2 · **3** · 4 · 5 · Next · Go to [ ] page. Adds a jump-to-page input to the right. Use in large datasets where direct navigation to a specific page by number is valuable.\n\n**`Type=Show All`** — Combines `With Total` + `With Changer` + `With Jumper` in a single bar — the most feature-complete layout. Use for complex data tables where users need full control over pagination.\n\n---\n\n"
+      },
+      {
+        "title": "Structure",
+        "body": "\n### `_pagination-item`\n\n```\n_pagination-item            — 32×32px FRAME, fill: varies, stroke: varies, radius: radius/md\n                              (no padding — content is centered via auto-layout)\n  ├─ label                  — TEXT (Type=Page, Type=Ellipsis)\n  │                           fill: varies per state\n  └─ chevron-left / chevron-right  — INSTANCE (16×16px icon, Type=Prev / Type=Next)\n       └─ Icon              — VECTOR, stroke: varies per state\n```\n\n### `pagination` — Type=Basic / Type=More / Type=Disabled\n\n```\npagination                  — H AUTO-LAYOUT, no fill, no stroke\n                              gap: spacing/component/xxs\n  ├─ _pagination-item       — INSTANCE (Type=Prev)\n  ├─ _pagination-item       — INSTANCE (Type=Page, State=Default) × N\n  ├─ _pagination-item       — INSTANCE (Type=Ellipsis) — Type=More only\n  ├─ _pagination-item       — INSTANCE (Type=Page, State=Active) — current page\n  ├─ _pagination-item       — INSTANCE (Type=Page, State=Default) × N\n  ├─ _pagination-item       — INSTANCE (Type=Ellipsis) — Type=More only\n  └─ _pagination-item       — INSTANCE (Type=Next)\n```\n\n### `pagination` — Type=Simple\n\n```\npagination                  — H AUTO-LAYOUT, gap: spacing/component/sm\n  ├─ _pagination-item       — INSTANCE (Type=Prev)\n  ├─ page-indicator         — FRAME, fill: color/background/default,\n  │                           stroke: color/border/default, radius: radius/md\n  │                           padding: spacing/component/xxs (T/B) · spacing/component/sm (L/R)\n  │                           gap: spacing/component/xs-plus\n  │                           layoutSizingVertical: FILL · layoutSizingHorizontal: HUG\n  │                           (FILL height locks it to 32px — same as surrounding _pagination-item cells)\n  │    ├─ current           — TEXT, fill: color/background/default/foreground (current page)\n  │    ├─ separator         — TEXT, fill: color/background/muted/foreground (\"/\")\n  │    └─ total             — TEXT, fill: color/background/muted/foreground (total pages)\n  └─ _pagination-item       — INSTANCE (Type=Next)\n```\n\n### `pagination` — Type=With Total / Type=Show All (partial)\n\n```\npagination                  — H AUTO-LAYOUT, gap: spacing/component/lg (With Total)\n                                              gap: spacing/component/md  (Show All)\n  ├─ total-label            — TEXT, fill: color/background/muted/foreground\n  │                           (e.g. \"Total 100 items\")\n  ├─ _pagination-item × N   — (same as Basic)\n  └─ ...                    — (+ size-changer and jumper frames in Show All)\n```\n\n### `pagination` — Type=With Changer / Type=Show All (size-changer)\n\n```\n  └─ size-changer           — FRAME, fill: color/background/default,\n                              stroke: color/border/default, radius: radius/md\n                              paddingL / paddingR: spacing/component/sm\n                              gap: spacing/component/xs-plus\n       ├─ label             — TEXT, fill: color/background/default/foreground (\"10 / page\")\n       └─ chevron-down      — INSTANCE (chevron-down icon, 16×16)\n            └─ Icon         — VECTOR, stroke: color/icon/default\n```\n\n### `pagination` — Type=With Jumper / Type=Show All (jumper)\n\n```\n  └─ jumper                 — FRAME, H AUTO-LAYOUT, gap: spacing/component/sm\n       ├─ label             — TEXT, fill: color/background/muted/foreground (\"Go to\")\n       ├─ jumper-input      — FRAME, fill: color/background/default,\n       │                       stroke: color/border/default, radius: radius/md, 48×32px\n       └─ unit              — TEXT, fill: color/background/muted/foreground (\"page\")\n```\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### `_pagination-item` — per state\n\n| Type | State | Container fill | Container stroke | `label` / `Icon` token |\n|---|---|---|---|---|\n| Page | `Default` | `color/background/default` | `color/border/default` | `color/background/default/foreground` |\n| Page | `Hover` | `color/background/accent` | `color/border/default` | `color/background/accent/foreground` |\n| Page | `Active` | `color/brand/primary` | — | `color/brand/primary/foreground` |\n| Page | `Disabled` | `color/background/muted` | `color/border/disabled` | `color/text/disabled` |\n| Prev / Next | `Default` | `color/background/default` | `color/border/default` | `color/background/default/foreground` (Icon stroke) |\n| Prev / Next | `Hover` | `color/background/accent` | `color/border/default` | `color/background/accent/foreground` (Icon stroke) |\n| Prev / Next | `Disabled` | `color/background/muted` | `color/border/disabled` | `color/icon/disabled` (Icon stroke) |\n| Ellipsis | — | `color/background/default` | `color/border/default` | `color/background/muted/foreground` |\n\n> **Paired-surface rule on Hover:** `color/background/accent` fill requires `color/background/accent/foreground` for all content (text and icon) — never `color/background/default/foreground` on an accent-coloured surface.\n\n> **Disabled icon uses `color/icon/disabled`,** not the `/foreground` of the Disabled fill. This aligns with every other interactive control (input, select, combobox) where icons in Disabled state use the standalone `color/icon/disabled` token.\n\n> **`Type=Ellipsis` label uses `color/background/muted/foreground`** — the \"…\" is non-interactive and secondary. It does not use `color/background/default/foreground` (that's for navigable pages).\n\n### `_pagination-item` — layout\n\n| Property | Token |\n|---|---|\n| Container size | 32×32px fixed |\n| Container radius | `radius/md` |\n| Icon size | 16×16px |\n\nNo padding tokens — the item is a fixed square. Content is centred via auto-layout.\n\n### `pagination` — gap per type\n\n| Type | Gap token |\n|---|---|\n| `Basic`, `More`, `Disabled` | `spacing/component/xxs` (2px) |\n| `Simple`, `With Changer`, `With Jumper` | `spacing/component/sm` (8px) |\n| `With Total` | `spacing/component/lg` (16px) |\n| `Show All` | `spacing/component/md` (12px) |\n\n---\n\n"
+      },
+      {
+        "title": "Behavior",
+        "body": "\nSource: shadcn Pagination (`ui.shadcn.com/docs/components/pagination`).\n\n### Architecture\n\nshadcn Pagination is a **presentational component set** — it renders styled `<nav>`, `<ul>`, `<li>`, and `<a>` / `<button>` elements with no built-in routing or state management. Page state, URL updates, and data fetching are entirely implementation concerns.\n\nComponents:\n- `<Pagination>` — `<nav aria-label=\"pagination\">`\n- `<PaginationContent>` — `<ul>` (flex row)\n- `<PaginationItem>` — `<li>` wrapper\n- `<PaginationLink>` — `<a>` with `isActive` prop for the current page\n- `<PaginationPrevious>` / `<PaginationNext>` — `<a>` with chevron icons\n- `<PaginationEllipsis>` — `<span>` with \"…\" (non-interactive)\n\n### Current page\n\nThe `isActive` prop on `PaginationLink` renders `State=Active` styling (brand fill + brand/primary/foreground text). There is no built-in page tracking — the parent component supplies `isActive` based on its own routing state.\n\n### Prev / Next disabled\n\n`State=Disabled` on `Type=Prev` / `Type=Next` is applied via the `disabled` prop (or `aria-disabled=\"true\"` on `<a>` elements, since `<a>` does not natively support `disabled`). Prev is disabled on page 1 and Next on the last page.\n\n### Ellipsis\n\n`Type=Ellipsis` is non-interactive — it has no click handler and does not accept keyboard focus. It represents a range of pages hidden from the visible window, not a button to reveal them.\n\n### Page size changer (With Changer / Show All)\n\nThe `size-changer` is a visual mock of a select trigger — in implementation it is a `<select>` or combobox that controls the `pageSize` prop (e.g. 10 / 25 / 50 / 100 per page). Changing it resets to page 1.\n\n### Jumper input (With Jumper / Show All)\n\nThe `jumper-input` accepts a page number and navigates on Enter or blur. Implementation should clamp the value to `1–totalPages` and reject non-numeric input silently.\n\n### Keyboard\n\n| Key | Action |\n|---|---|\n| `Tab` | Move focus between page items |\n| `Enter` / `Space` | Activate focused page link |\n| (Jumper) `Enter` | Submit page number and navigate |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Touch Target",
+        "body": "\n| Component | Size | Note |\n|---|---|---|\n| `_pagination-item` | 32×32px | Meets WCAG 2.2 AA (24px). 44px is advisory — add a `pointer-coarse` hit area only if pagination is touch-primary |\n\n---\n\n"
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": "\n> **Always use `pagination`, never `_pagination-item` standalone.**\n>\n> `_pagination-item` is a display cell with no page logic of its own. Placing it directly in a layout produces a non-functional visual. Use `pagination` for every standard use case.\n\n> **Choose the Type by dataset size and user need — not by aesthetics.**\n>\n> - `Type=Basic` — small, fixed page count (≤10 pages). All pages visible.\n> - `Type=More` — large page count (>10 pages). Show a window of nearby pages with ellipsis.\n> - `Type=Simple` — space-constrained (mobile, narrow sidebar). Prev/Next + page indicator only.\n> - `Type=With Total` — when users need to know the total record count to make decisions.\n> - `Type=With Changer` — when users benefit from controlling how many rows they see per page (data-heavy views, tables).\n> - `Type=With Jumper` — when users need to jump to specific pages by number (reports, very large lists).\n> - `Type=Show All` — feature-complete data tables where all pagination controls are needed.\n> - `Type=Disabled` — loading state or temporarily unavailable result set.\n"
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- A search results page returns 200 records and shows 20 per page — Basic or More pagination sits below the result list\n- An admin data table with hundreds of rows lets users jump to a specific page with the Jumper variant\n- A mobile article list uses Simple pagination (Prev / 1 of 12 / Next) where individual page buttons would not fit\n- A reports table gives users a page-size dropdown so they can switch between 10, 25, and 50 rows per page\n- A product listing shows \"Total 847 items\" alongside page controls so users can gauge result volume\n- A feature-complete data grid combines total count, page-size changer, and jump-to input in a single Show All bar\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Basic` | Small, fixed page count (≤10 pages) where all pages can be shown at once | Short article list · Admin table with few records · Simple search results |\n| `More` | Large page count (>10 pages) — shows a window of nearby pages with ellipsis | Long search results · Large user directory · Product catalogue |\n| `Simple` | Space-constrained layouts — only Prev / current / total / Next | Mobile list view · Narrow sidebar panel · Compact widget table |\n| `With Total` | User needs to know the total record count to make informed decisions | Reports page · Export preview · Filtered dataset where count validates the filter |\n| `With Changer` | User benefits from controlling rows per page | Data-heavy admin table · Analytics export · Log viewer |\n| `With Jumper` | Direct navigation to specific pages by number is valuable | Very large datasets · Numbered report pages · Audit log with 100+ pages |\n| `Show All` | Feature-complete tables where users need full pagination control | Enterprise data tables · Advanced analytics grids · Complex admin views |\n| `Disabled` | The data is loading or the control is temporarily unavailable | Loading state on initial table fetch · Search in progress |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| Navigating between numbered pages of a dataset | `pagination` | `tabs` |\n| Switching between content sections on the same page | `tabs` | `pagination` |\n| Showing the user's location in a site hierarchy | `breadcrumb` | `pagination` |\n| Navigating to different pages or routes in the top nav | `navigation-menu` | `pagination` |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/pagination\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Use `_pagination-item` directly in a layout",
+      "correct": "Use `pagination` — the item is a display-only sub-component"
+    },
+    {
+      "wrong": "Hide Prev or Next when at the boundary",
+      "correct": "Disable them (`State=Disabled`) — removing them causes layout shift"
+    },
+    {
+      "wrong": "Use `Type=Basic` for 50+ pages",
+      "correct": "Use `Type=More` with ellipsis — all 50 items visible is unusable"
+    },
+    {
+      "wrong": "Use `Type=More` for 5 pages",
+      "correct": "Use `Type=Basic` — ellipsis adds confusion when all pages fit"
+    },
+    {
+      "wrong": "Use `Type=Simple` for a desktop data table",
+      "correct": "Use `Type=Basic` or `Type=More` — Simple loses individual page access"
+    },
+    {
+      "wrong": "Show two ellipsis cells side by side",
+      "correct": "Always have at least one page between the ellipsis and the boundary"
+    },
+    {
+      "wrong": "Set `State=Active` on more than one page item",
+      "correct": "Exactly one active page at a time"
+    },
+    {
+      "wrong": "Use `Type=Disabled` as the default empty state",
+      "correct": "Only when data is loading or the control is temporarily unavailable; for zero results, hide pagination entirely"
+    }
+  ]
+}

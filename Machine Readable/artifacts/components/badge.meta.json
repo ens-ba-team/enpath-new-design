@@ -1,0 +1,576 @@
+{
+  "name": "badge",
+  "description": "A small status label used to categorise, tag, or communicate state. Supports 11 visual variants, 3 shapes, and 3 sizes.",
+  "category": "display",
+  "shadcnBase": "badge",
+  "variants": {
+    "Variant": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Secondary",
+        "Destructive",
+        "Outline",
+        "Success",
+        "Error",
+        "Warning",
+        "Blue",
+        "Online",
+        "Offline",
+        "Notification counters"
+      ],
+      "default": "Default",
+      "reactProp": "variant",
+      "reactValues": {
+        "Default": "default",
+        "Secondary": "secondary",
+        "Destructive": "destructive",
+        "Outline": "outline",
+        "Success": "success",
+        "Error": "error",
+        "Warning": "warning",
+        "Blue": "blue",
+        "Online": "online",
+        "Offline": "offline",
+        "Notification counters": "notification"
+      }
+    },
+    "Shape": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Pill",
+        "Dashed"
+      ],
+      "default": "Default",
+      "reactProp": "shape",
+      "reactValues": {
+        "Default": "default",
+        "Pill": "pill",
+        "Dashed": "dashed"
+      }
+    },
+    "Size": {
+      "type": "enum",
+      "values": [
+        "Small",
+        "Medium",
+        "Large"
+      ],
+      "default": "Small",
+      "reactProp": "size",
+      "reactValues": {
+        "Small": "sm",
+        "Medium": "md",
+        "Large": "lg"
+      },
+      "dimensions": {
+        "Small": {
+          "height": 16,
+          "paddingH": 4,
+          "gap": 4,
+          "textStyle": "label/sm"
+        },
+        "Medium": {
+          "height": 20,
+          "paddingH": 8,
+          "gap": 4,
+          "textStyle": "label/sm"
+        },
+        "Large": {
+          "height": 24,
+          "paddingH": 8,
+          "gap": 4,
+          "textStyle": "label/md"
+        }
+      }
+    }
+  },
+  "componentProperties": {
+    "Leading icon": {
+      "type": "BOOLEAN",
+      "default": true
+    },
+    "Trailing icon": {
+      "type": "BOOLEAN",
+      "default": false
+    },
+    "Leading icon swap": {
+      "type": "INSTANCE_SWAP",
+      "default": "placeholder"
+    },
+    "Trailing icon swap": {
+      "type": "INSTANCE_SWAP",
+      "default": "placeholder"
+    }
+  },
+  "availability": {
+    "Default": [
+      "Default",
+      "Pill"
+    ],
+    "Secondary": [
+      "Default",
+      "Pill"
+    ],
+    "Destructive": [
+      "Default",
+      "Pill"
+    ],
+    "Outline": [
+      "Default",
+      "Pill",
+      "Dashed"
+    ],
+    "Success": [
+      "Pill"
+    ],
+    "Error": [
+      "Pill"
+    ],
+    "Warning": [
+      "Pill"
+    ],
+    "Blue": [
+      "Pill"
+    ],
+    "Online": [
+      "Pill"
+    ],
+    "Offline": [
+      "Pill"
+    ],
+    "Notification counters": [
+      "Pill"
+    ],
+    "Notification counters sizes": [
+      "Small"
+    ]
+  },
+  "tokens": {
+    "variant": {
+      "Default": {
+        "fill": "color/brand/primary",
+        "fg": "color/brand/primary/foreground"
+      },
+      "Secondary": {
+        "fill": "color/surface/accent",
+        "border": "color/border/default",
+        "fg": "color/surface/accent/foreground"
+      },
+      "Destructive": {
+        "fill": "color/brand/destructive",
+        "fg": "color/brand/destructive/foreground"
+      },
+      "Outline": {
+        "fill": "transparent",
+        "border": "color/border/default",
+        "fg": "color/surface/default/foreground"
+      },
+      "Outline Dashed": {
+        "fill": "transparent",
+        "border": "color/border/strong",
+        "fg": "color/surface/default/foreground"
+      },
+      "Success": {
+        "fill": "color/status/success-subtle",
+        "fg": "color/status/success-subtle/foreground",
+        "stroke": "color/border/success"
+      },
+      "Error": {
+        "fill": "color/status/danger-subtle",
+        "border": "color/border/error",
+        "fg": "color/status/danger-subtle/foreground"
+      },
+      "Warning": {
+        "fill": "color/status/warning-subtle",
+        "border": "color/border/warning",
+        "fg": "color/status/warning-subtle/foreground"
+      },
+      "Blue": {
+        "fill": "color/status/info-subtle",
+        "border": "color/border/subtle",
+        "fg": "color/status/info-subtle/foreground"
+      },
+      "Online": {
+        "fill": "transparent",
+        "border": "color/border/default",
+        "fg": "color/surface/default/foreground"
+      },
+      "Offline": {
+        "fill": "transparent",
+        "border": "color/border/default",
+        "fg": "color/surface/default/foreground"
+      },
+      "Notification counters": {
+        "fill": "color/brand/primary",
+        "fg": "color/brand/primary/foreground"
+      }
+    },
+    "presenceDot": {
+      "Online": {
+        "fill": "color/status/success",
+        "radius": "radius/full"
+      },
+      "Offline": {
+        "fill": "color/status/offline",
+        "radius": "radius/full"
+      }
+    },
+    "shape": {
+      "Default": {
+        "radius": "radius/md"
+      },
+      "Pill": {
+        "radius": "radius/full"
+      },
+      "Dashed": {
+        "radius": "radius/md",
+        "strokeStyle": "dashed"
+      }
+    },
+    "size": {
+      "height": {
+        "Small": "badge/Badge-height-small",
+        "Medium": "badge/Badge-height-medium",
+        "Large": "badge/Badge-height-large"
+      },
+      "paddingH": {
+        "Small": "spacing/component/xs",
+        "Medium": "spacing/component/sm",
+        "Large": "spacing/component/sm"
+      },
+      "gap": "spacing/component/xs"
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "No interactive role — badge renders as a `<div>` or `<span>` with no implicit role"
+      },
+      {
+        "property": "Screen reader",
+        "value": "Text content is read as-is — always include a visible label"
+      },
+      {
+        "property": "Colour alone",
+        "value": "Never rely on colour alone to communicate meaning — the label text must carry the semantic intent"
+      },
+      {
+        "property": "Icon",
+        "value": "Leading/trailing icons are decorative — mark with `aria-hidden=\"true\"` in implementation"
+      },
+      {
+        "property": "Presence dot",
+        "value": "The `dot-slot` in Online and Offline variants is decorative — the label text (\"Online\", \"Offline\") carries the meaning. Mark dot with `aria-hidden=\"true\"`."
+      },
+      {
+        "property": "Dynamic badges",
+        "value": "`Notification counters`, `Online`, and `Offline` variants can update in real time. Wrap in `role=\"status\"` or `aria-live=\"polite\"` so screen readers announce the change. Static badges (Default, Secondary, Destructive, Outline, Success, Error, Warning, Blue) do not need `aria-live`."
+      }
+    ]
+  },
+  "constraints": [
+    "Examples: \"New Feature\", \"Status: Active\", \"Important\"",
+    "Use sparingly — one or two per view. If everything is important, nothing is.",
+    "Online must include visible text such as Online or Available."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Badge.md (generated from this file)",
+    "storyFile": "src/stories/Badge.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "2026-05-28: Notification counters, Offline variants added. Avatar variant removed. Open questions resolved — aria-live required for dynamic variants; presence dot label is sufficient for a11y."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      },
+      {
+        "date": "2026-09-22",
+        "change": "Success variant gains a 1px color/border/success border (was transparent) — matches Warning and Error, which already had status borders.",
+        "breaking": false
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/badge.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Badge"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Badge.stories.tsx",
+    "title": "Display/Badge",
+    "stories": [
+      "Default",
+      "Secondary",
+      "Destructive",
+      "Outline",
+      "Success",
+      "Warning",
+      "Error",
+      "Blue",
+      "Online",
+      "Offline",
+      "Notification",
+      "Dashed",
+      "Sizes",
+      "WithLeadingIcon",
+      "WithTrailingIcon",
+      "InfoWithIcon",
+      "FailedWithIcon"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Badge.md",
+    "intro": "# Badge\n\nA small status label used to categorise, tag, or communicate state. Supports 11 visual variants, 3 shapes, 3 sizes, and optional leading/trailing icons.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\n### Shape availability per Variant\n\nNot every Variant supports every Shape:\n"
+          },
+          {
+            "md": "| Variant | Default shape | Pill shape | Dashed shape |\n|---|---|---|---|\n| `Default` | ✅ | ✅ | — |\n| `Secondary` | ✅ | ✅ | — |\n| `Destructive` | ✅ | ✅ | — |\n| `Outline` | ✅ | ✅ | ✅ |\n| `Success` | — | ✅ only | — |\n| `Error` | — | ✅ only | — |\n| `Warning` | — | ✅ only | — |\n| `Blue` | — | ✅ only | — |\n| `Online` | — | ✅ only | — |\n| `Offline` | — | ✅ only | — |\n| `Notification counters` | — | ✅ only (Small only) | — |"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Sizes",
+        "body": "\n| Size | Height | Height token | Padding H token | Padding H | Gap token | Gap | Text style |\n|---|---|---|---|---|---|---|---|\n| `Small` | 16px | `badge/Badge-height-small` | `spacing/component/xs` | 4px | `spacing/component/xs` | 4px | `label/sm` |\n| `Medium` | 20px | `badge/Badge-height-medium` | `spacing/component/sm` | 8px | `spacing/component/xs` | 4px | `label/sm` |\n| `Large` | 24px | `badge/Badge-height-large` | `spacing/component/sm` | 8px | `spacing/component/xs` | 4px | `label/md` |\n\nWidth is auto (hug content) for all sizes. Icons: 12 × 12px across all sizes.\n\n---\n\n"
+      },
+      {
+        "title": "Component Properties",
+        "body": "\n| Property | Type | Default | Notes |\n|---|---|---|---|\n| `Variant` | VARIANT | `Default` | Visual style |\n| `Shape` | VARIANT | `Default` | Border radius style |\n| `Size` | VARIANT | `Small` | Size scale |\n| `Leading icon` | BOOLEAN | `true` | Show/hide leading icon slot |\n| `Trailing icon` | BOOLEAN | `false` | Show/hide trailing icon slot |\n| `Leading icon swap` | INSTANCE_SWAP | placeholder | Swappable leading icon component |\n| `Trailing icon swap` | INSTANCE_SWAP | placeholder | Swappable trailing icon component |\n\n---\n\n"
+      },
+      {
+        "title": "Structure",
+        "body": "\n### Standard badge (all variants except Online)\n```\nbadge\n  ├─ leading-icon — visible by default, wired to Leading icon prop\n  ├─ label\n  └─ trailing-icon — hidden by default, wired to Trailing icon prop\n```\n\n### Online / Offline variant\n```\nbadge\n  ├─ dot-slot — 6 × 6px status dot, always visible\n  ├─ leading-icon — hidden by default, wired to Leading icon prop\n  └─ label\n```\n\n> Both `Online` and `Offline` share this structure. The `dot-slot` color changes (`color/status/success` for Online, `color/status/offline` for Offline). The `leading-icon` slot exists but is hidden by default. There is no `trailing-icon` in either presence variant.\n\n### Notification counters variant\n```\nbadge\n  └─ number — numeric count label, always visible\n```\n\n> `Notification counters` is a minimal pill badge — a number only, no icon slots. It is always `Size=Small` and `Shape=Pill`. Use it for unread counts and notification indicators.\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### Per Variant — fills, strokes, fg\n\n| Variant | Fill token | Border token | Text/icon fg token |\n|---|---|---|---|\n| `Default` | `color/brand/primary` | — | `color/brand/primary/foreground` |\n| `Secondary` | `color/surface/accent` | `color/border/default` | `color/surface/accent/foreground` |\n| `Destructive` | `color/brand/destructive` | — | `color/brand/destructive/foreground` |\n| `Outline` (Default/Pill) | — (transparent) | `color/border/default` | `color/surface/default/foreground` |\n| `Outline` (Dashed) | — (transparent) | `color/border/strong` | `color/surface/default/foreground` |\n| `Success` | `color/status/success-subtle` | `color/border/success` | `color/status/success-subtle/foreground` |\n| `Error` | `color/status/danger-subtle` | `color/border/error` | `color/status/danger-subtle/foreground` |\n| `Warning` | `color/status/warning-subtle` | `color/border/warning` | `color/status/warning-subtle/foreground` |\n| `Blue` | `color/status/info-subtle` | `color/border/subtle` | `color/status/info-subtle/foreground` |\n| `Online` | — (transparent) | `color/border/default` | `color/surface/default/foreground` |\n| `Offline` | — (transparent) | `color/border/default` | `color/surface/default/foreground` |\n| `Notification counters` | `color/brand/primary` | — | `color/brand/primary/foreground` |\n\n> Icon color always uses the same token as the text fg. Never use `color/icon/*` inside a badge.\n\n### Per Shape — radius\n\n| Shape | Radius token |\n|---|---|\n| `Default` | `radius/md` |\n| `Pill` | `radius/full` |\n| `Dashed` | `radius/md` |\n\n> Dashed uses `radius/md` (same as Default) but with a dashed stroke pattern. The border token also changes from `color/border/default` to `color/border/strong`.\n\n### Presence dot-slot tokens\n\n| Variant | Element | Property | Token |\n|---|---|---|---|\n| `Online` | `dot-slot` | fill | `color/status/success` |\n| `Online` | `dot-slot` | border-radius | `radius/full` |\n| `Offline` | `dot-slot` | fill | `color/status/offline` |\n| `Offline` | `dot-slot` | border-radius | `radius/full` |\n\n### Size tokens — all variants share\n\n| Property | Token |\n|---|---|\n| `height` | `badge/Badge-height-small` / `badge/Badge-height-medium` / `badge/Badge-height-large` |\n| `padding-left` / `padding-right` | `spacing/component/xs` (Small) · `spacing/component/sm` (Medium / Large) |\n| `gap` | `spacing/component/xs` (all sizes) |\n| `border-radius` | `radius/md` (Default / Dashed) · `radius/full` (Pill) |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Behavior",
+        "body": "\nBadges are non-interactive by default — they have no hover, focus or active states.\n\n| Behaviour | Notes |\n|---|---|\n| Static display | Default — no interaction, no state change. No `aria-live` needed. |\n| Dynamic count | `Notification counters` — the number updates in real time. Wrap with `role=\"status\"` or `aria-live=\"polite\"`. Cap display at \"99+\" to avoid layout overflow. |\n| Dynamic presence | `Online` / `Offline` — status changes when user connects or disconnects. Wrap with `aria-live=\"polite\"`. The dot color change alone is never sufficient — the label must also update. |\n\n### No hover or focus states\n\nBadge has no Hover, Focus, or Active variants. It is a pure display element. It is not a button, not a chip, not a filter control.\n\n### Need a dismissible chip?\n\nUse the **tag** component inside the combobox. Tag is a selected-value chip with a built-in remove action — it is the correct component for any \"badge you can dismiss\" pattern. Do not attempt to add dismiss functionality to badge.\n\n### Need a clickable filter chip?\n\nTag also covers this. Badge is never clickable. If your design calls for a selectable or removable label, reach for tag — not a badge wrapped in a button.\n\n---\n\n"
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": "\nSwitch `Variant` for semantic meaning — never for visual preference alone.\n\n### By variant\n\n**`Default`** — Highlights important information, primary categories, or the current active state of an item. Uses the app's primary brand color — draws the most attention of any badge."
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n**`Secondary`** — Neutral, supplementary context. Provides information without competing with primary elements. Lowest urgency of the filled variants."
+          },
+          {
+            "md": "- Examples: \"Draft\", \"Category: General\", background metadata tags"
+          },
+          {
+            "md": "\n**`Outline`** — Lowest visual weight. Transparent background with a border — present but not prominent. Use when the badge needs to exist without drawing attention."
+          },
+          {
+            "md": "- Examples: Filter selections, ghost tags, secondary metadata"
+          },
+          {
+            "md": "\n**`Destructive`** — Maximum urgency. Solid destructive fill with high-contrast foreground text. Reserved for things that are critically broken, gone, or require immediate user action. Keep text to 1–2 words."
+          },
+          {
+            "md": "- Examples: \"Failed\", \"Deleted\", \"Rejected\", \"Blocked\"\n- Pair with a confirmation dialog when used alongside irreversible actions"
+          },
+          {
+            "md": "\n**`Success`** — Positive or healthy state. Item is active, completed, or connected."
+          },
+          {
+            "md": "- Examples: \"Active\", \"Connected\", \"Completed\", \"Live\""
+          },
+          {
+            "md": "\n**`Error`** — Soft error state. Lighter than Destructive — for validation issues or recoverable errors that need visibility but are not critical."
+          },
+          {
+            "md": "- Examples: \"Invalid\", \"Expired\", \"Limit Reached\""
+          },
+          {
+            "md": "\n**`Warning`** — Caution state. Something needs attention but has not yet failed."
+          },
+          {
+            "md": "- Examples: \"Expiring Soon\", \"Low Balance\", \"Needs Review\""
+          },
+          {
+            "md": "\n**`Blue`** — Informational or in-progress state. Neutral signal, no urgency."
+          },
+          {
+            "md": "- Examples: \"In Progress\", \"Pending\", \"Syncing\", \"Info\""
+          },
+          {
+            "md": "\n**`Online`** — Presence or availability indicator. Uses a status dot instead of an icon. Not for system status — specifically for user or entity presence."
+          },
+          {
+            "md": "- Examples: \"Online\", \"Available\", \"Active now\""
+          },
+          {
+            "md": "\n**`Offline`** — User or entity is not currently available. Uses the same dot-slot structure as Online but with `color/status/offline` (neutral gray). Not for system errors — specifically for absence or unavailability."
+          },
+          {
+            "md": "- Examples: \"Offline\", \"Away\", \"Unavailable\""
+          },
+          {
+            "md": "\n**`Notification counters`** — Unread count or notification indicator. Always `Size=Small`, `Shape=Pill`. Contains only a number — no icons, no label prefix."
+          },
+          {
+            "md": "- Examples: \"3\", \"12\", \"99+\"\n- Use `aria-live=\"polite\"` — the count updates in real time\n- Cap at \"99+\" to prevent layout overflow"
+          },
+          {
+            "md": "\n### Shape intent\n"
+          },
+          {
+            "md": "- **`Default` shape** — standard rounded rect, for inline content and general use\n- **`Pill` shape** — fully rounded, softer — the required shape for all status and presence variants\n- **`Dashed` shape** (`Outline` only) — signals something provisional, pending, or not yet confirmed. Use for placeholder states or items awaiting action."
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- Displaying the status of a record in a table row (\"Active\", \"Expired\", \"Pending review\")\n- Labelling a list item with a category or tag (\"Design\", \"Engineering\", \"Billing\")\n- Showing an unread notification count on a sidebar nav item or inbox icon\n- Indicating user presence next to a name in a team list (\"Online\", \"Away\")\n- Marking a new or recently changed item with a \"New\" or \"Updated\" label\n- Flagging a failed or blocked state on a data record (\"Failed\", \"Blocked\")\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Default` | Highest-attention label — primary category or active state | \"New Feature\" · \"Active\" · \"Important\" |\n| `Secondary` | Neutral metadata that provides context without competing for attention | \"Draft\" · \"General\" · \"Category: Design\" |\n| `Outline` | Present but not prominent — ghost tags and secondary metadata | Filter chip selections · Secondary metadata tags · \"Optional\" labels |\n| `Destructive` | Critical or irreversible — something is broken or gone | \"Failed\" · \"Deleted\" · \"Rejected\" · \"Blocked\" |\n| `Success` | Positive or healthy state — item is active or complete | \"Active\" · \"Connected\" · \"Completed\" · \"Live\" |\n| `Error` | Soft recoverable error — needs attention but not critical | \"Invalid\" · \"Expired\" · \"Limit Reached\" |\n| `Warning` | Caution — something needs attention before it fails | \"Expiring Soon\" · \"Low Balance\" · \"Needs Review\" |\n| `Blue` | Informational or in-progress — neutral signal, no urgency | \"In Progress\" · \"Pending\" · \"Syncing\" |\n| `Online` | User or entity is currently available | \"Online\" · \"Available\" · \"Active now\" |\n| `Offline` | User or entity is absent or unavailable | \"Offline\" · \"Away\" · \"Unavailable\" |\n| `Notification counters` | Unread count on a nav item or icon | \"3\" · \"12\" · \"99+\" on a mail icon or sidebar item |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| The label needs to be dismissible by the user (a selected filter chip, a tag in a combobox) | `tag` (inside combobox) | `badge` (badge has no interactive states and cannot be dismissed) |\n| The label needs to be clickable to trigger navigation or filtering | `tag` or a `button` Type=Ghost | `badge` (badge is display-only; wrapping in a button breaks accessible semantics) |\n| The user's presence changes in real time and needs screen reader announcement | `badge` Variant=Online/Offline with `aria-live=\"polite\"` | A static colored dot without a label (colour alone is never sufficient) |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Decisions",
+        "body": "\n**1. Dynamic badge content — `aria-live` is required for dynamic variants.**\n\nDecided 2026-05-28. The following variants update in real time and must be wrapped in `role=\"status\"` or `aria-live=\"polite\"` at the implementation level:\n- `Notification counters` — the count changes as new notifications arrive\n- `Online` / `Offline` — presence state changes when a user connects or disconnects\n\nStatic variants (Default, Secondary, Destructive, Outline, Success, Error, Warning, Blue) render fixed content and do not need `aria-live`.\n\nThe badge component itself does not render `aria-live` — the page or feature wrapping the badge is responsible for adding it.\n\n**2. The presence dot — colour + label is sufficient.**\n\nDecided 2026-05-28. The `dot-slot` in Online and Offline variants is a decorative visual element. The label text (\"Online\", \"Offline\", \"Available\") carries the full accessible meaning. Mark the dot with `aria-hidden=\"true\"`. No additional `aria-label` on the dot is needed.\n"
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/badge\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Raw frame with hardcoded fill + border-radius",
+      "correct": "`badge` component with correct `Variant`"
+    },
+    {
+      "wrong": "Override fill color directly on instance",
+      "correct": "Switch `Variant` prop"
+    },
+    {
+      "wrong": "`Variant=Destructive` for soft error states",
+      "correct": "`Variant=Error` — Destructive is for critical/irreversible only"
+    },
+    {
+      "wrong": "`Variant=Destructive` for positive labels like \"Sale\" or \"New\"",
+      "correct": "`Variant=Default` — red signals danger, not opportunity"
+    },
+    {
+      "wrong": "`Variant=Error` when something is critically broken",
+      "correct": "`Variant=Destructive` — Error is for soft/recoverable errors"
+    },
+    {
+      "wrong": "`Variant=Default` when providing neutral metadata",
+      "correct": "`Variant=Secondary` — Default draws too much attention"
+    },
+    {
+      "wrong": "`Variant=Online` for system status",
+      "correct": "`Variant=Success` or `Variant=Error` — Online is for user/entity presence only"
+    },
+    {
+      "wrong": "`Variant=Offline` for errors or system down",
+      "correct": "`Variant=Error` — Offline means absent/unavailable, not broken"
+    },
+    {
+      "wrong": "`Variant=Notification counters` with text labels",
+      "correct": "Notification counters is numbers only — use `Variant=Default` for labelled badges"
+    },
+    {
+      "wrong": "`Notification counters` without `aria-live`",
+      "correct": "Always wrap in `role=\"status\"` or `aria-live=\"polite\"` — counts update in real time"
+    },
+    {
+      "wrong": "`Notification counters` showing raw numbers above 99",
+      "correct": "Cap at \"99+\" — larger numbers cause layout overflow"
+    },
+    {
+      "wrong": "`color/icon/*` on icon inside badge",
+      "correct": "Use the variant's fg token"
+    },
+    {
+      "wrong": "Status variants (`Success`, `Error`, `Warning`, `Blue`, `Online`, `Offline`) with `Default` or `Dashed` shape",
+      "correct": "Pill shape only for all status/presence variants"
+    },
+    {
+      "wrong": "`color/border/default` on Dashed Outline",
+      "correct": "Dashed uses `color/border/strong`"
+    },
+    {
+      "wrong": "More than 2–3 words in a Destructive badge",
+      "correct": "Keep it short — \"Failed\", \"Deleted\", not \"This action has failed\""
+    },
+    {
+      "wrong": "Relying on color alone to communicate state",
+      "correct": "Always include a descriptive label — colour is supplementary"
+    },
+    {
+      "wrong": "Badge with a dismiss `×` button",
+      "correct": "Use the `tag` component from combobox — that is what tag is for"
+    },
+    {
+      "wrong": "Badge wrapped in `<button>` to make it clickable",
+      "correct": "Use `tag` — badge has no interactive states and should not gain them"
+    }
+  ]
+}

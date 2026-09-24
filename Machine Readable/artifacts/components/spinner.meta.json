@@ -1,0 +1,134 @@
+{
+  "name": "spinner",
+  "description": "Indeterminate loading indicator for a small area or a pending submit.",
+  "category": "feedback",
+  "shadcnBase": "spinner",
+  "codeOnly": true,
+  "variants": {},
+  "tokens": {
+    "Colour": "`currentColor` — the surrounding text colour"
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`status` with an accessible label (\"Loading\")"
+      },
+      {
+        "property": "Reduced motion",
+        "value": "Pair with visible text so meaning doesn't depend on the animation"
+      }
+    ]
+  },
+  "constraints": [
+    "Pair with a short text (\"Loading positions…\") where space allows.",
+    "For buttons use Button `loading`, not a Spinner inside.",
+    "For page / card loading use Skeleton."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Spinner.md (generated from this file)",
+    "storyFile": "src/stories/Spinner.stories.tsx",
+    "artifactStatus": "needs review",
+    "version": "3.0",
+    "openQuestions": [],
+    "knownIssues": [],
+    "notes": [
+      "Installed 2026-09-22 with AI Elements for the chat panel. Stock source adapted to Enpath: Phosphor icons, light-only classes, shadcn colour names rewritten to Enpath tokens."
+    ],
+    "changelog": [
+      {
+        "date": "2026-09-22",
+        "change": "Added (AI Elements install) and documented."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/spinner.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Spinner"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Spinner.stories.tsx",
+    "title": "Feedback/Spinner",
+    "stories": [
+      "Default"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Spinner.md",
+    "intro": "# Spinner\n\nIndeterminate loading indicator for a small area or a pending submit.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "What it is",
+        "body": "\nA spinning Phosphor icon (SpinnerGap) with `role=\"status\"`. Colour follows the text around it.\n\n**Exports:** `Spinner`\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n| Part | Token |\n|---|---|\n| Colour | `currentColor` — the surrounding text colour |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Source:** https://ui.shadcn.com/docs/components/spinner\n- **Story:** `Feedback/Spinner`\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Spinner for a whole page load",
+      "correct": "Skeleton"
+    },
+    {
+      "wrong": "Spinner inside a Button",
+      "correct": "Button `loading` prop"
+    }
+  ]
+}

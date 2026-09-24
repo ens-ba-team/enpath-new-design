@@ -1,0 +1,137 @@
+{
+  "name": "collapsible",
+  "description": "Show and hide a region with a trigger. Unstyled Radix primitive — the look comes from what you put in it.",
+  "category": "layout",
+  "shadcnBase": "collapsible",
+  "codeOnly": true,
+  "variants": {},
+  "tokens": {
+    "Content": "none — inherits its container",
+    "Trigger": "use a Button (ghost / outline)"
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Trigger",
+        "value": "Button with `aria-expanded` and `aria-controls` (Radix)"
+      },
+      {
+        "property": "Keyboard",
+        "value": "Enter / Space toggle"
+      }
+    ]
+  },
+  "constraints": [
+    "Use a Button as the trigger (`asChild`) so it gets focus styles and a hit area.",
+    "Label the trigger with what it reveals (\"Show details\"), not \"Click here\".",
+    "Don't hide required actions inside a collapsed region."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Collapsible.md (generated from this file)",
+    "storyFile": "src/stories/Collapsible.stories.tsx",
+    "artifactStatus": "needs review",
+    "version": "3.0",
+    "openQuestions": [],
+    "knownIssues": [],
+    "notes": [
+      "Installed 2026-09-22 with AI Elements for the chat panel. Stock source adapted to Enpath: Phosphor icons, light-only classes, shadcn colour names rewritten to Enpath tokens."
+    ],
+    "changelog": [
+      {
+        "date": "2026-09-22",
+        "change": "Added (AI Elements install) and documented."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/collapsible.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Collapsible",
+      "CollapsibleTrigger",
+      "CollapsibleContent"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Collapsible.stories.tsx",
+    "title": "Layout/Collapsible",
+    "stories": [
+      "Default"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Collapsible.md",
+    "intro": "# Collapsible\n\nShow and hide a region with a trigger. Unstyled Radix primitive — the look comes from what you put in it.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "What it is",
+        "body": "\nA trigger and a content region that expands and collapses. It carries no colours of its own; Reasoning and Tool are built on it.\n\n**Exports:** `Collapsible` · `CollapsibleTrigger` · `CollapsibleContent`\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n| Part | Token |\n|---|---|\n| Content | none — inherits its container |\n| Trigger | use a Button (ghost / outline) |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Source:** https://ui.shadcn.com/docs/components/collapsible\n- **Story:** `Layout/Collapsible`\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Collapsible for mutually exclusive sections",
+      "correct": "Accordion"
+    },
+    {
+      "wrong": "A bare div as the trigger",
+      "correct": "A Button via `asChild`"
+    }
+  ]
+}

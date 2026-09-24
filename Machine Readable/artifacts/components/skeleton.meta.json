@@ -1,0 +1,157 @@
+{
+  "name": "skeleton",
+  "description": "A loading placeholder that pulses while content is fetching. Compose multiple instances to mirror the real content layout.",
+  "category": "feedback",
+  "shadcnBase": "skeleton",
+  "codeOnly": true,
+  "variants": {},
+  "tokens": {
+    "background": "color/background/muted",
+    "note": "Token is applied via Tailwind class bg-muted. Uses background (not surface) because skeleton sits on the page canvas."
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "None — skeleton is decorative"
+      },
+      {
+        "property": "Screen reader",
+        "value": "Hidden by default. Communicate loading state via `aria-busy=\"true\"` on the parent container"
+      },
+      {
+        "property": "Reduced motion",
+        "value": "shadcn's `animate-pulse` respects `prefers-reduced-motion: reduce` via Tailwind — animation stops automatically"
+      }
+    ]
+  },
+  "constraints": [
+    "Background must use bg-muted (color/background/muted) — not color/surface/muted.",
+    "Match skeleton dimensions to the real content layout to avoid layout shift on load.",
+    "Wrap loading region in aria-busy='true' on the parent container.",
+    "Do not use skeleton for infinite scroll bottoms — use an indeterminate spinner instead.",
+    "Remove skeleton immediately when data is available — do not leave it animating."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Skeleton.md (generated from this file)",
+    "storyFile": "src/stories/Skeleton.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "shadcn skeleton is a single div with animate-pulse + bg-muted — no component tokens to manage."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/skeleton.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Skeleton"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Skeleton.stories.tsx",
+    "title": "Feedback/Skeleton",
+    "stories": [
+      "TextLines",
+      "AvatarRow",
+      "CardWithImage",
+      "ListRows",
+      "CardGrid",
+      "Widget",
+      "FormLayout"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Skeleton.md",
+    "intro": "# Skeleton\n\nA loading placeholder that communicates content is on its way. Built on shadcn/ui `Skeleton` — a single animated element. Compose multiple instances to mirror the layout of the real content.\n\n> **Code-only component.** Reference layouts (Card + Image, Image + Text, Text, List, Simple text, Widget) for design documentation only — not for use as component instances.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "What it is",
+        "body": "\nA `<div>` with three CSS properties:\n\n| Property | Value |\n|---|---|\n| Background | `bg-muted` → `color/background/muted` |\n| Animation | `animate-pulse` — subtle opacity pulse |\n| Border radius | `rounded-md` by default — overridable via `className` |\n\nNo variants. No props. No tokens of its own.\n\n---\n\n"
+      },
+      {
+        "title": "Usage",
+        "body": "\nImport and compose. Each `<Skeleton>` is one bone in the loading layout. Match the dimensions and structure of the real content it replaces.\n\n```tsx\nimport { Skeleton } from \"@/components/ui/skeleton\"\n```\n\n### Text lines\n\n```tsx\n<div className=\"space-y-2\">\n  <Skeleton className=\"h-4 w-3/4\" />\n  <Skeleton className=\"h-4 w-full\" />\n  <Skeleton className=\"h-4 w-1/2\" />\n</div>\n```\n\n### Card with image\n\n```tsx\n<div className=\"flex flex-col gap-4 p-4\">\n  <Skeleton className=\"h-40 w-full rounded-md\" />\n  <div className=\"space-y-2\">\n    <Skeleton className=\"h-4 w-2/3\" />\n    <Skeleton className=\"h-4 w-full\" />\n    <Skeleton className=\"h-4 w-3/4\" />\n  </div>\n</div>\n```\n\n### Avatar + name row\n\n```tsx\n<div className=\"flex items-center gap-3\">\n  <Skeleton className=\"h-10 w-10 rounded-full\" />\n  <div className=\"space-y-2\">\n    <Skeleton className=\"h-4 w-32\" />\n    <Skeleton className=\"h-3 w-20\" />\n  </div>\n</div>\n```\n\n### List rows\n\n```tsx\n<div className=\"space-y-3\">\n  {Array.from({ length: 5 }).map((_, i) => (\n    <div key={i} className=\"flex items-center gap-3 py-2 border-b border-border\">\n      <Skeleton className=\"h-8 w-8 rounded-full shrink-0\" />\n      <Skeleton className=\"h-4 flex-1\" />\n      <Skeleton className=\"h-4 w-16\" />\n    </div>\n  ))}\n</div>\n```\n\n---\n\n"
+      },
+      {
+        "title": "Sizing",
+        "body": "\nSkeleton has no built-in size variants. Pass Tailwind size utilities via `className`:\n\n| Need | Class |\n|---|---|\n| Fixed height | `h-4`, `h-8`, `h-40` etc. |\n| Full width | `w-full` |\n| Fractional width | `w-2/3`, `w-3/4` |\n| Circle | `h-10 w-10 rounded-full` |\n| Rounded rect | `rounded-md` (default) · `rounded-sm` · `rounded-lg` · `rounded-full` |\n\n---\n\n"
+      },
+      {
+        "title": "Rules",
+        "body": "\n- **Match the real layout** — each `<Skeleton>` should roughly match the size and position of the element it replaces. Off-size skeletons create layout shift on load.\n- **Do not use `color/surface/muted`** — skeleton's background comes from `bg-muted` which maps to `color/background/muted` (page canvas). Using a surface token would be semantically wrong.\n- **Remove skeleton on data load** — render `<Skeleton>` only while data is `undefined` or `null`. Switch to real content when data is available.\n- **Wrap with `aria-busy`** — add `aria-busy=\"true\"` on the containing section while loading:\n\n```tsx\n<section aria-busy={isLoading} aria-label=\"Loading content\">\n  {isLoading ? <MySkeleton /> : <MyContent />}\n</section>\n```\n\n- **Do not animate conditionally** — the CSS pulse runs automatically. Do not add or remove it based on state.\n- **Do not use for infinite scroll** — for progressively loading lists, use a spinner at the bottom (`Progress` indeterminate or a spinner icon), not skeleton rows that keep appearing.\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- Replacing a card grid while the list of items loads from an API\n- Showing placeholder rows in a table before row data has been fetched\n- Holding the layout of a user profile (avatar + name + bio) while the profile data resolves\n- Mimicking a form layout while the form's default values load from the server\n- Preserving the visual structure of a dashboard widget while its metrics are fetching\n- Replacing a full-page content area during initial navigation to prevent layout shift\n\n### Per-variant examples\n\nSkeleton has no built-in variants — it is a single composable primitive. The \"variant\" is the layout you build from it. Common patterns:\n\n| Layout pattern | When to reach for it | Real UI examples |\n|---|---|---|\n| Circle + text lines | User or entity placeholder | Avatar + name + email row · Comment author block |\n| Full-width rectangle | Image or media placeholder | Card cover image · Hero banner · Thumbnail |\n| Multiple text lines (varying widths) | Text content placeholder | Article body · Description block · Multi-line card text |\n| Row with circle + line | List item placeholder | Notification list · Contact list · Search results |\n| Grid of rectangles | Card grid placeholder | Project grid · Product listing · Dashboard panels |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| Data has loaded and there is simply nothing to show (zero items) | `empty` | `skeleton` (skeleton signals content is coming; empty signals there is nothing to come) |\n| A specific operation has a known percentage of completion | `progress` | `skeleton` (progress communicates deterministic advancement; skeleton is for unknown-duration loads) |\n| A single button or form action is in a loading state | Loading `button` with spinner | `skeleton` (skeleton replaces content layout, not interactive controls) |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/skeleton\n- **Composition · Sizing:** controlled entirely by className — pass h-*, w-*, rounded-* as needed\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "`color/surface/muted` fill",
+      "correct": "`bg-muted` (Tailwind class) — maps to `color/background/muted`"
+    },
+    {
+      "wrong": "Custom animated fills or gradients",
+      "correct": "`animate-pulse` from shadcn — consistent across the system"
+    },
+    {
+      "wrong": "Skeleton with fixed pixel widths for text lines",
+      "correct": "Use fractional widths (`w-3/4`, `w-full`) — text is fluid"
+    },
+    {
+      "wrong": "Skeleton rows in infinite scroll bottom",
+      "correct": "Spinner / indeterminate `Progress`"
+    },
+    {
+      "wrong": "Forgetting `aria-busy` on the container",
+      "correct": "Always mark the loading region for screen readers"
+    }
+  ]
+}

@@ -1,0 +1,276 @@
+{
+  "name": "progress",
+  "description": "A horizontal progress bar for communicating operation completion percentage or indeterminate loading state. Built on Radix UI Progress. Tracks with a fill indicator driven by value 0–100 or null for indeterminate.",
+  "category": "feedback",
+  "shadcnBase": "progress",
+  "primitiveBase": "Radix UI Progress (@radix-ui/react-progress)",
+  "variants": {
+    "State": {
+      "type": "enum",
+      "values": [
+        "Loading",
+        "Complete",
+        "Indeterminate"
+      ],
+      "default": "Loading",
+      "intent": {
+        "Loading": "Determinate progress — value is 0–99. Fill bar represents percentage complete.",
+        "Complete": "value=100. Fill bar spans full track width.",
+        "Indeterminate": "value=null or undefined. No measurable percentage — use CSS animation on indicator."
+      },
+      "reactMapping": {
+        "Loading": "value={50} (any 0–99)",
+        "Complete": "value={100}",
+        "Indeterminate": "value={null} or omit value prop"
+      }
+    },
+    "Size": {
+      "type": "enum",
+      "values": [
+        "SM",
+        "MD",
+        "LG"
+      ],
+      "default": "MD",
+      "dimensions": {
+        "SM": {
+          "height": 4,
+          "when": "Compact contexts — inline with text, table cells, tight layouts."
+        },
+        "MD": {
+          "height": 8,
+          "when": "Default — general use, cards, panels."
+        },
+        "LG": {
+          "height": 12,
+          "when": "Prominent status — onboarding steps, upload progress, large feature areas."
+        }
+      }
+    }
+  },
+  "componentProperties": {
+    "State": {
+      "type": "VARIANT",
+      "default": "Loading"
+    },
+    "Size": {
+      "type": "VARIANT",
+      "default": "MD"
+    }
+  },
+  "tokens": {
+    "container": {
+      "fill": "color/background/muted",
+      "radius": "radius/full",
+      "width": "fill (stretches to layout context)"
+    },
+    "fill": {
+      "fill": "color/brand/primary",
+      "radius": "radius/full",
+      "note": "Fill radius must match container radius to avoid clipping artefacts."
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`progressbar` (Radix sets `role=\"progressbar\"` on the root)"
+      },
+      {
+        "property": "`aria-valuemin`",
+        "value": "`0` (always)"
+      },
+      {
+        "property": "`aria-valuemax`",
+        "value": "`max` prop value (default `100`)"
+      },
+      {
+        "property": "`aria-valuenow`",
+        "value": "`value` — omitted when `value` is `null` (indeterminate)"
+      },
+      {
+        "property": "`aria-valuetext`",
+        "value": "Output of `getValueLabel(value, max)` — default: `\"${value}%\"`"
+      },
+      {
+        "property": "Indeterminate label",
+        "value": "`aria-valuetext` is omitted; screen readers announce the `progressbar` role with no percentage — provide surrounding context text instead"
+      },
+      {
+        "property": "Keyboard",
+        "value": "Not interactive — no keyboard interaction."
+      },
+      {
+        "property": "Context Text",
+        "value": "Always pair with a visible label naming what is progressing — 'Uploading…', 'Processing files', 'Step 2 of 5'."
+      }
+    ]
+  },
+  "constraints": [
+    "Always pair with a visible label that names what is progressing — \"Uploading…\", \"Processing files\", \"Step 2 of 5\"",
+    "Use `State=Indeterminate` when you cannot compute a percentage — never fake progress with a slow-moving determinate bar",
+    "Use `State=Complete` as a final state before unmounting — give users a moment to register success before removing the component",
+    "Keep the progress bar full-width of its container or a clearly intentional fixed width — avoid arbitrary partial widths in layout",
+    "Use `Size=SM` only when horizontal space is genuinely constrained — `Size=MD` is the default for a reason",
+    "Do not use progress for page load spinners — use a spinner or skeleton instead; progress implies measurable advancement",
+    "Leave State=Complete visible briefly before unmounting — 500–1000ms delay is appropriate."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Progress.md (generated from this file)",
+    "storyFile": "src/stories/Progress.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "Everything is driven by the value prop, and className for height."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/progress.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Progress"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Progress.stories.tsx",
+    "title": "Feedback/Progress",
+    "stories": [
+      "Default",
+      "Loading",
+      "Complete",
+      "Indeterminate",
+      "Sizes",
+      "StepTracker",
+      "Animated"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Progress.md",
+    "intro": "# Progress\n\nA horizontal progress bar for communicating operation completion percentage or indeterminate loading state. Built on [Radix UI Progress](https://www.radix-ui.com/primitives/docs/components/progress), wrapped by shadcn.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Component Sets",
+        "body": "\n| Set | ID | Variants | Purpose |\n|---|---|---|---|\n| `progress` | `110:8283` | 9 | Progress bar — track + fill indicator |\n\n---\n\n"
+      },
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": "\n### `progress` — `State × Size`\n"
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\n`State(3) × Size(3) = 9 variants`\n\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "State Guide",
+        "body": "\n**`State=Loading`** — Determinate progress. `value` is a number 0–99. The fill bar represents percentage complete. Pair with a programmatic `value` prop that updates as the operation advances.\n\n**`State=Complete`** — `value=100`. Fill bar spans the full track width. Use this state when the operation finishes — transition from Loading to Complete by setting `value={100}`.\n\n**`State=Indeterminate`** — `value` is `null` or `undefined`. Radix sets `data-state=\"indeterminate\"` on the root and omits `aria-valuenow`. Use for operations with no measurable percentage — file processing, server-side jobs, unknown duration tasks. Requires a CSS animation on the indicator to communicate activity.\n\n---\n\n"
+      },
+      {
+        "title": "Size Guide",
+        "body": "\n| Size | Height | When to use |\n|---|---|---|\n| `SM` | 4px | Compact contexts — inline with text, inside table cells, tight layouts |\n| `MD` | 8px | Default — general use, cards, panels |\n| `LG` | 12px | Prominent status — onboarding steps, upload progress, large feature areas |\n\n---\n\n"
+      },
+      {
+        "title": "Structure",
+        "body": "\n```\nprogress                        — COMPONENT, H fill, radius: radius/full\n                                  fill: color/background/muted\n  └─ fill                       — FRAME, width driven by value%, radius: radius/full\n                                  fill: color/brand/primary\n```\n\nThe `fill` frame's width is set in code via CSS transform: `translateX(-${100 - value}%)`. \n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### Container (root COMPONENT)\n\n| Property | Token | Notes |\n|---|---|---|\n| Fill | `color/background/muted` | Track background — muted to recede behind the indicator |\n| Radius (all 4) | `radius/full` | Pill shape — matches fill layer |\n\n### `fill` frame (indicator bar)\n\n| State | Fill | Notes |\n|---|---|---|\n| `Loading` | `color/brand/primary` | Brand-colored progress indicator |\n| `Complete` | `color/status/success` | Green fill signals successful completion |\n| `Indeterminate` | `color/brand/primary` | Same as Loading; animation communicates activity |\n| Radius (all 4) | `radius/full` | Must match container radius to avoid clipping artefacts |\n\n> `State=Complete` uses `color/status/success`, not `color/brand/primary`.\n\n### Dimensions\n\n| Size | Height |\n|---|---|\n| `SM` | 4px |\n| `MD` | 8px |\n| `LG` | 12px |\n\nWidth: `fill` (fills parent container). The component itself has no fixed width in code — it stretches to its layout context.\n\n---\n\n"
+      },
+      {
+        "title": "Behavior",
+        "body": "\n### Architecture\n\n`progress` is built on **Radix UI Progress** (`@radix-ui/react-progress`). The shadcn wrapper exposes the same props.\n\n```tsx\nimport { Progress } from \"@/components/ui/progress\"\n\n<Progress value={60} />                  // 60% complete\n<Progress value={100} />                 // Complete\n<Progress value={null} />                // Indeterminate\n<Progress value={75} max={200} />        // Custom max\n```\n\n### Props\n\n| Prop | Type | Default | Notes |\n|---|---|---|---|\n| `value` | `number \\| null` | `null` | 0–`max` for determinate; `null` for indeterminate |\n| `max` | `number` | `100` | Maximum value — used to compute percentage |\n| `getValueLabel` | `(value, max) => string` | `\"${value}%\"` | Custom accessible label for `aria-valuetext` |\n| `className` | `string` | — | Applied to the root element |\n\n### State transitions\n\n`State=Loading → State=Complete`: update `value` to `100`. No separate state prop needed — in code it is entirely driven by `value`.\n\n`State=Indeterminate`: pass `value={null}` (or omit `value`). Add a CSS keyframe animation to the indicator element — Radix does not include one by default. Target `[data-state=\"indeterminate\"]` on the root or the indicator.\n\n```css\n/* Example indeterminate animation */\n[data-state=\"indeterminate\"] > [data-radix-progress-indicator] {\n  animation: progress-indeterminate 1.5s ease-in-out infinite;\n}\n@keyframes progress-indeterminate {\n  0%   { transform: translateX(-100%); }\n  50%  { transform: translateX(0%); }\n  100% { transform: translateX(100%); }\n}\n```\n\n### Value → width mapping\n\nRadix sets a CSS custom property `--radix-progress-indicator-transform` on the indicator element. The shadcn wrapper uses `transform: translateX(var(--radix-progress-indicator-transform))` to drive the fill width. This means the fill always spans 100% of the track; its position is shifted left to simulate partial width, rather than being resized.\n\n### Animation\n\nShadcn adds a CSS `transition` on the indicator for smooth value changes (Radix UI default: no animation). Transition applies to the `transform` property. Duration is implementation-defined — check `globals.css` or the Progress component styles in your project.\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n### Keyboard\n\nProgress bars are not interactive — they have no keyboard interaction. Ensure surrounding context (label, description) communicates the current state to keyboard and screen reader users.\n\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- Showing file upload completion percentage as a user uploads a document or image\n- Tracking multi-step onboarding — \"Step 2 of 5\" with the bar showing 40% complete\n- Displaying a profile completeness score (\"Your profile is 70% complete\")\n- Showing a storage quota usage bar in account settings (\"2.1 GB of 5 GB used\")\n- Indicating that a background server-side job is running when no percentage is available (Indeterminate)\n- Confirming an import or export has finished by transitioning to State=Complete before unmounting\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `State=Loading` | Determinate progress — a known percentage that updates as the operation advances | File upload bar · Onboarding step tracker · Storage quota fill |\n| `State=Complete` | Operation has finished — show briefly before unmounting to confirm success | Upload complete · Import finished · All steps done |\n| `State=Indeterminate` | Operation is running but no percentage can be computed | Server-side processing · Background sync · Unknown-duration task |\n| `Size=SM` | Compact contexts where the bar is a supporting detail | Inside a table cell · Inline with a label in a dense layout |\n| `Size=MD` | General use — cards, panels, settings pages | Default for most progress bars |\n| `Size=LG` | Prominent status — onboarding, large feature areas, hero progress | Onboarding wizard header · Upload progress in a full-panel uploader |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| Loading duration is unknown and no percentage can be shown | `skeleton` (content placeholder) or a spinner | `progress` State=Indeterminate (use indeterminate progress only when an active operation is clearly running, not for passive page loads) |\n| A single binary action (save, submit) needs a loading indicator | A loading `button` or spinner | `progress` (progress implies measurable advancement across stages, not a momentary action) |\n| Content is loading on initial page load and the structure should be visible | `skeleton` | `progress` (skeleton preserves layout; progress does not) |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/progress\n- **Behavior · State Transitions:** Loading→Complete: set value to 100. Loading→Indeterminate: set value to null.\n- **Behavior · Indeterminate Css:** @keyframes progress-indeterminate { 0% { transform: translateX(-100%); } 50% { transform: translateX(0%); } 100% { transform: translateX(100%); } }\n- **Behavior · Accessibility · Role:** progressbar (set by Radix on root element)\n- **Behavior · Accessibility · Aria Valuemax:** max prop value\n- **Behavior · Accessibility · Indeterminate Label:** aria-valuetext omitted; provide surrounding context text for screen readers.\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Animate `State=Indeterminate` by fake-advancing `value` from 0→99",
+      "correct": "Pass `value={null}` and animate with CSS on `[data-state=\"indeterminate\"]`"
+    },
+    {
+      "wrong": "Use progress for a single binary action (save, submit)",
+      "correct": "Use a spinner or loading button — progress is for multi-step or measurable operations"
+    },
+    {
+      "wrong": "Leave a complete progress bar visible indefinitely",
+      "correct": "Transition to Complete state, then unmount after a short delay (500–1000ms)"
+    },
+    {
+      "wrong": "Override the fill color from a parent component",
+      "correct": "Change the `className` on `<Progress>` or extend the token — never paint over the sub-component"
+    },
+    {
+      "wrong": "Omit a label",
+      "correct": "Always pair with surrounding text that names what is progressing"
+    }
+  ]
+}

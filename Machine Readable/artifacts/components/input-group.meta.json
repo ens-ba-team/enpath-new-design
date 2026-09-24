@@ -1,0 +1,150 @@
+{
+  "name": "input-group",
+  "description": "One bordered field that combines an input or textarea with addons — icons, text or buttons. Base of the chat composer.",
+  "category": "forms",
+  "shadcnBase": "input-group",
+  "codeOnly": true,
+  "variants": {},
+  "tokens": {
+    "Fill": "`color/input/bg`",
+    "Border": "`color/input/border`",
+    "Border · focus": "`color/border/focus` + `color/ring` glow",
+    "Border · invalid": "`color/border/error`",
+    "Radius": "`radius/control` (composer overrides with `chat/composer/radius`)",
+    "Addon text / icon": "`color/text/secondary`"
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Label",
+        "value": "The inner control needs a label or `aria-label`"
+      },
+      {
+        "property": "Focus",
+        "value": "Ring on the whole group when the inner control has focus"
+      },
+      {
+        "property": "Buttons",
+        "value": "InputGroupButton is a real Button — icon-only needs `aria-label`"
+      }
+    ]
+  },
+  "constraints": [
+    "Put the label on the inner InputGroupInput / InputGroupTextarea, not the group.",
+    "Don't nest a plain Input inside — use InputGroupInput so borders don't double.",
+    "Icon-only InputGroupButton needs an aria-label."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/InputGroup.md (generated from this file)",
+    "storyFile": "src/stories/InputGroup.stories.tsx",
+    "artifactStatus": "needs review",
+    "version": "3.0",
+    "openQuestions": [],
+    "knownIssues": [],
+    "notes": [
+      "Installed 2026-09-22 with AI Elements for the chat panel. Stock source adapted to Enpath: Phosphor icons, light-only classes, shadcn colour names rewritten to Enpath tokens."
+    ],
+    "changelog": [
+      {
+        "date": "2026-09-22",
+        "change": "Added (AI Elements install) and documented."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/input-group.tsx",
+    "packageDeps": [],
+    "exports": [
+      "InputGroup",
+      "InputGroupAddon",
+      "InputGroupButton",
+      "InputGroupText",
+      "InputGroupInput",
+      "InputGroupTextarea"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/InputGroup.stories.tsx",
+    "title": "Forms/Input Group",
+    "stories": [
+      "WithIcon",
+      "WithButton",
+      "Textarea"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "InputGroup.md",
+    "intro": "# InputGroup\n\nOne bordered field that combines an input or textarea with addons — icons, text or buttons. Base of the chat composer.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "What it is",
+        "body": "\nThe group draws the border, background and focus ring; the inner Input / Textarea draws none. Addons align inline (start / end) or as block rows (start / end).\n\n**Exports:** `InputGroup` · `InputGroupAddon` · `InputGroupButton` · `InputGroupText` · `InputGroupInput` · `InputGroupTextarea`\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n| Part | Token |\n|---|---|\n| Fill | `color/input/bg` |\n| Border | `color/input/border` |\n| Border · focus | `color/border/focus` + `color/ring` glow |\n| Border · invalid | `color/border/error` |\n| Radius | `radius/control` (composer overrides with `chat/composer/radius`) |\n| Addon text / icon | `color/text/secondary` |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Source:** https://ui.shadcn.com/docs/components/input-group\n- **Story:** `Forms/Input Group`\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Plain Input / Textarea inside the group",
+      "correct": "InputGroupInput / InputGroupTextarea (they cancel their own border and focus glow)"
+    },
+    {
+      "wrong": "Absolutely positioned icon over an Input",
+      "correct": "InputGroupAddon"
+    }
+  ]
+}

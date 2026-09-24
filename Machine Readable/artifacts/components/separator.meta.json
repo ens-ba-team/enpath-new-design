@@ -1,0 +1,199 @@
+{
+  "name": "separator",
+  "description": "A visual divider between sections of content. One token, two orientations, no states, no children.",
+  "category": "layout",
+  "shadcnBase": "separator",
+  "variants": {
+    "Orientation": {
+      "type": "enum",
+      "values": [
+        "Horizontal",
+        "Vertical"
+      ],
+      "default": "Horizontal",
+      "reactProp": "orientation",
+      "reactValues": {
+        "Horizontal": "horizontal",
+        "Vertical": "vertical"
+      }
+    }
+  },
+  "tokens": {
+    "fill": "color/border/default"
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`separator` (implicit on `<hr>`)"
+      },
+      {
+        "property": "Keyboard",
+        "value": "Not interactive — no focus, no activation"
+      },
+      {
+        "property": "Screen reader",
+        "value": "Renders as a dividing landmark; use `aria-orientation=\"vertical\"` when orientation is vertical"
+      },
+      {
+        "property": "Touch target",
+        "value": "Not required — purely decorative/structural"
+      }
+    ]
+  },
+  "constraints": [
+    "Use `Horizontal` to divide stacked sections (e.g. between form groups, below a page header, between list rows).",
+    "Use `Vertical` to divide side-by-side elements within a row (e.g. between nav items, in a toolbar, between metadata pills).",
+    "Do not use a separator as a design element for visual decoration — only to communicate a logical boundary between content groups.",
+    "Do not stack two separators. If you feel you need two, the content structure needs rethinking (add a heading or more spacing instead).",
+    "Prefer spacing alone for minor grouping. Reserve separator for cases where content groups are distinct enough that a line helps, not just separated."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Separator.md (generated from this file)",
+    "storyFile": "src/stories/Separator.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "Static component; no state metadata required."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/separator.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Separator"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Separator.stories.tsx",
+    "title": "Layout/Separator",
+    "stories": [
+      "Horizontal",
+      "Vertical",
+      "InFormSections",
+      "InMetadataRow",
+      "InCard"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Separator.md",
+    "intro": "# Separator\n\nA visual divider between sections of content. One token, two orientations — no states, no children.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": "\n### separator (`75:11717`)\n"
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\n2 variants total.\n\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Component Properties",
+        "body": "\n| Property | Type | Default | Notes |\n|---|---|---|---|\n| `Orientation` | VARIANT | `Horizontal` | Controls which axis the line runs along |\n\nNo boolean props, no text props, no instance swaps.\n\n---\n\n"
+      },
+      {
+        "title": "Structure",
+        "body": "\nBoth variants are a single flat frame with no children. The fill is the line itself.\n\n```\nseparator                — FRAME, no children\n                           fill: color/border/default\n                           1px on the separator axis\n```\n\n| Variant | Width | Height | The 1px axis |\n|---|---|---|---|\n| `Horizontal` | fills parent (set in instances) | 1px | Height |\n| `Vertical` | 1px | manual (match adjacent content) | Width |\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### Fill\n\n| Property | Token | Notes |\n|---|---|---|\n| Fill | `color/border/default` | Both orientations — no per-variant difference |\n\nNo strokes, no effects, no border-radius, no opacity bindings.\n\n---\n\n"
+      },
+      {
+        "title": "Sizing",
+        "body": "\nThe separator fills its parent on the spanning axis by default — matching the shadcn/Tailwind code behavior (`w-full` for horizontal, `h-full` for vertical). No manual resize needed.\n\n| Orientation | Width | Height | Code |\n|---|---|---|---|\n| `Horizontal` | **Fill container** | 1px fixed | `w-full h-[1px]` |\n| `Vertical` | 1px fixed | **Fill container** | `w-[1px] h-full` |\n\nDrop it inside any auto-layout frame and it stretches automatically. The spanning dimension is never a designer decision — it is always the full available space.\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Behavior",
+        "body": "\nThe separator is static. It has no states, no hover, no focus, no disabled. It is purely a visual element with no interaction.\n\nIt communicates hierarchy and grouping — \"these things are related to each other; those things over there are separate.\"\n\n---\n\n"
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- Between a page header and its primary content body to signal a transition from navigation context to content\n- Between groups of form fields that belong to different logical sections (Personal info / Contact details / Preferences)\n- Between items in a dropdown menu or command palette where grouping aids scanning\n- Between nav items in a toolbar or horizontal nav strip to divide conceptually separate clusters\n- Inside a `card` or panel to divide the header region from the body, or body from the footer\n- In metadata rows (e.g. \"Author · Date · Read time\") to separate inline key-value pairs visually\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Horizontal` | Dividing stacked content — one section above, another below | Between form groups · Below a page title · Between dropdown menu sections · Card header / body boundary |\n| `Vertical` | Dividing side-by-side elements within a single row | Between nav items in a toolbar · Between metadata pills · Between two columns in a stat row |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| An explicit visual line between two content regions on the same surface | `separator` | A card border or a raw 1px rectangle |\n| A boundary that defines a card's surface (its own edge) | `card` border | `separator` |\n| Grouping related items with implied proximity rather than a hard line | spacing / gap | `separator` |\n| Dividing nav sections in an app-level sidebar | `separator` (horizontal, between groups) | `_sidebar-group-label` alone |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/separator\n- **Best practice · References · Radix:** https://www.radix-ui.com/primitives/docs/components/separator\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Raw 1px rectangle with hardcoded hex color",
+      "correct": "`separator` component — token-bound, fills automatically"
+    },
+    {
+      "wrong": "Using a separator for pure visual decoration",
+      "correct": "Spacing or a background fill change instead"
+    },
+    {
+      "wrong": "Two separators back to back",
+      "correct": "One separator — or a section heading"
+    },
+    {
+      "wrong": "Manually fixing the width/height to a pixel value",
+      "correct": "Let it fill — the spanning dimension should always be 100% of the parent"
+    }
+  ]
+}

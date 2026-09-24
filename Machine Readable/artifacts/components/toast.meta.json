@@ -1,0 +1,297 @@
+{
+  "name": "toast",
+  "description": "A temporary floating notification for system feedback — confirmations, errors, warnings, and async status. Built on Sonner (imperative API); dismissed automatically after a timeout or by the user.",
+  "category": "feedback",
+  "shadcnBase": "sonner",
+  "primitiveBase": "Sonner by Emil Kowalski",
+  "variants": {
+    "Type": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Success",
+        "Error",
+        "Warning",
+        "Loading"
+      ],
+      "default": "Default",
+      "intent": {
+        "Default": "Neutral informational message — no status implied.",
+        "Success": "Completed operation with affirmative feedback.",
+        "Error": "Failed operation — pair with description naming what failed and what to do.",
+        "Warning": "Completed with caveats or attention needed soon.",
+        "Loading": "Async operation in progress — persists indefinitely, must be dismissed programmatically."
+      }
+    }
+  },
+  "componentProperties": {
+    "Type": {
+      "type": "VARIANT",
+      "default": "Default"
+    }
+  },
+  "tokens": {
+    "container": {
+      "fill": "color/surface/overlay",
+      "stroke": "color/border/default",
+      "strokeWeight": 1,
+      "radius": "radius/lg",
+      "paddingTopBottom": "spacing/component/md",
+      "paddingLeftRight": "spacing/component/lg",
+      "gap": "spacing/component/md"
+    },
+    "internalFrames": {
+      "content": {
+        "gap": "spacing/component/xxs"
+      },
+      "actions": {
+        "gap": "spacing/component/sm"
+      }
+    },
+    "text": {
+      "title": "color/surface/overlay/foreground",
+      "description": "color/text/secondary"
+    },
+    "iconSlot": {
+      "Default": "empty FRAME — no icon",
+      "Success": "color/icon/success",
+      "Error": "color/icon/danger",
+      "Warning": "color/icon/warning",
+      "Loading": "color/surface/overlay/foreground"
+    },
+    "subComponents": {
+      "action-btn": {
+        "source": "button, Type=Outline, Size=Small",
+        "doNotOverride": true
+      },
+      "close-btn": {
+        "source": "button, Type=Ghost, Size=Icon Small",
+        "doNotOverride": true
+      }
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Region",
+        "value": "`<Toaster>` renders as `role=\"region\"` with `aria-label=\"Notifications\"`"
+      },
+      {
+        "property": "Live region",
+        "value": "Toast messages are announced via `aria-live=\"polite\"` — screen readers read them without interrupting the current focus"
+      },
+      {
+        "property": "Error toasts",
+        "value": "Consider `aria-live=\"assertive\"` for critical errors — configure via Sonner's `toastOptions.aria`"
+      },
+      {
+        "property": "Close button",
+        "value": "Accessible label provided by the Ghost button source component"
+      },
+      {
+        "property": "Hotkey",
+        "value": "`Alt + T` focuses the Toaster region; users can then Tab to individual toasts"
+      }
+    ],
+    "keys": [
+      {
+        "key": "`Alt + T`",
+        "action": "Focus the toaster notification region"
+      },
+      {
+        "key": "`Tab`",
+        "action": "Move focus between the action button and close button within a toast"
+      },
+      {
+        "key": "`Enter` / `Space`",
+        "action": "Activate the focused button (action or close)"
+      },
+      {
+        "key": "`Escape`",
+        "action": "Dismiss the focused toast"
+      }
+    ]
+  },
+  "constraints": [
+    "Set `duration` to match reading time: 2000ms for brief success confirmations, 4000ms (default) for standard messages, 6000ms or longer for error messages the user must read and act on",
+    "Show at most one toast per user action — deduplicate at the call site if the action can fire multiple times",
+    "The `action-btn` is for a single, immediately reversible action (Undo, Retry, View) — never use it for destructive confirmation",
+    "Hide `description` only when the `title` is fully self-explanatory on its own",
+    "Place `<Toaster>` once in the root layout — never inside a page component or route"
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Toast.md (generated from this file)",
+    "storyFile": "src/stories/Toast.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "Sonner imperative API — no JSX props at call site; <Toaster /> in root layout provides the portal."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/toast.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Toast"
+    ],
+    "notes": [
+      "File renamed from sonner.tsx to toast.tsx 2026-06-04. Internally uses the sonner npm package — that import stays unchanged."
+    ]
+  },
+  "storybook": {
+    "file": "src/stories/Toast.stories.tsx",
+    "title": "Feedback/Toast",
+    "stories": [
+      "Default",
+      "Success",
+      "Error",
+      "Warning",
+      "Loading",
+      "Promise",
+      "WithAction",
+      "AllTypes"
+    ],
+    "decorators": [
+      "Toaster component in decorators"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Toast.md",
+    "intro": "# Toast\n\nA temporary notification component for system feedback — confirmations, errors, warnings, and async operation status. Built on [Sonner](https://sonner.emilkowal.ski/) by Emil Kowalski, wrapped by shadcn. Renders as a floating overlay above all content; dismissed automatically after a timeout or by the user.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Component Sets",
+        "body": "\n| Set | ID | Variants | Purpose |\n|---|---|---|---|\n| `toast` | `105:666` | 5 | Full notification row — always use this |\n\n---\n\n"
+      },
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": "\n### `toast` — `Type`\n"
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\n`Type(5) = 5 variants`\n\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Type Guide",
+        "body": "\n**`Type=Default`** — No leading icon. Text-only notification. Use for neutral, informational messages where no status is implied — a setting saved, a copy action completed, a generic confirmation.\n\n**`Type=Success`** — Check icon (`color/icon/success`). Use for completed operations where the user needs affirmative feedback: form submitted, file saved, payment processed, invite sent.\n\n**`Type=Error`** — Alert icon (`color/icon/danger`). Use for failed operations. Always pair with a description that names what failed and, where possible, what the user can do next.\n\n**`Type=Warning`** — Warning icon (`color/icon/warning`). Use for cautionary feedback — an action completed with caveats, something that may have unintended consequences, or a condition that needs the user's attention soon.\n\n**`Type=Loading`** — Spinner icon (`color/surface/overlay/foreground`). Use for async operations in progress. Has no `action-btn` — only a `close-btn`. **Persists indefinitely** — must be programmatically dismissed when the operation completes. Always pair with `toast.promise()` or a manual `toast.dismiss(id)`.\n\n---\n\n"
+      },
+      {
+        "title": "Structure",
+        "body": "\n### Type=Default\n\n```\ntoast                           — H AUTO-LAYOUT, 356px wide, fill: color/surface/overlay\n                                  stroke: color/border/default 1px · radius: radius/lg\n                                  paddingT/B: spacing/component/md · paddingL/R: spacing/component/lg\n                                  gap: spacing/component/md\n  ├─ icon-slot                  — FRAME, 16×16, no fill (empty — no icon in Default)\n  ├─ content                    — FRAME, V AUTO-LAYOUT, gap: spacing/component/xxs\n  │    ├─ title                 — TEXT, fill: color/surface/overlay/foreground\n  │    └─ description           — TEXT, fill: color/text/secondary\n  └─ actions                    — FRAME, H AUTO-LAYOUT, gap: spacing/component/sm\n       ├─ action-btn            — INSTANCE (button, Type=Outline, Size=Small)\n       └─ close-btn             — INSTANCE (button, Type=Ghost, Size=Icon Small)\n```\n\n### Type=Success / Type=Error / Type=Warning\n\n```\ntoast                           — same container\n  ├─ icon-slot                  — INSTANCE (icon placeholder, 16×16)\n  │    └─ Icon                  — VECTOR, stroke: varies per type (see Token Bindings)\n  ├─ content                    — FRAME, V AUTO-LAYOUT, gap: spacing/component/xxs\n  │    ├─ title                 — TEXT, fill: color/surface/overlay/foreground\n  │    └─ description           — TEXT, fill: color/text/secondary\n  └─ actions                    — FRAME, H AUTO-LAYOUT, gap: spacing/component/sm\n       ├─ action-btn            — INSTANCE (button, Type=Outline, Size=Small)\n       └─ close-btn             — INSTANCE (button, Type=Ghost, Size=Icon Small)\n```\n\n### Type=Loading\n\n```\ntoast                           — same container\n  ├─ icon-slot                  — INSTANCE (icon placeholder, 16×16)\n  │    └─ Icon                  — VECTOR, stroke: color/surface/overlay/foreground\n  ├─ content                    — FRAME, V AUTO-LAYOUT, gap: spacing/component/xxs\n  │    ├─ title                 — TEXT, fill: color/surface/overlay/foreground\n  │    └─ description           — TEXT, fill: color/text/secondary\n  └─ actions                    — FRAME, H AUTO-LAYOUT, gap: spacing/component/sm\n       └─ close-btn             — INSTANCE (button, Type=Ghost, Size=Icon Small)\n```\n\n> `Type=Loading` has **no `action-btn`** — the action is the async operation itself. Only the close-btn is shown.\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### Container — all Types\n\n| Property | Token |\n|---|---|\n| Fill | `color/surface/overlay` |\n| Stroke | `color/border/default` 1px |\n| Radius | `radius/lg` |\n| Padding top / bottom | `spacing/component/md` (12px) |\n| Padding left / right | `spacing/component/lg` (16px) |\n| Gap between children | `spacing/component/md` (12px) |\n\n### Internal frames\n\n| Frame | Property | Token |\n|---|---|---|\n| `content` | Gap | `spacing/component/xxs` (2px) |\n| `actions` | Gap | `spacing/component/sm` (8px) |\n\n### Text tokens\n\n| Layer | Token | Notes |\n|---|---|---|\n| `title` | `color/surface/overlay/foreground` | Paired to `color/surface/overlay` container fill |\n| `description` | `color/text/secondary` | Supporting text — universal secondary token |\n\n### `icon-slot` — per Type\n\n| Type | Token |\n|---|---|\n| `Default` | — (empty FRAME, no icon) |\n| `Success` | `color/icon/success` |\n| `Error` | `color/icon/danger` |\n| `Warning` | `color/icon/warning` |\n| `Loading` | `color/surface/overlay/foreground` (spinner — paired to container surface) |\n\n> Status icons use standalone `color/icon/*` tokens — not `color/status/*-subtle/foreground`. The `*-subtle/foreground` tokens are only valid ON their matching subtle background. The toast container is `color/surface/overlay`, not a status surface.\n\n### Sub-components\n\n| Layer | Source component | Key token |\n|---|---|---|\n| `action-btn` | button, Type=Outline, Size=Small | `button/outline/fg/fg` (label + icons) |\n| `close-btn` | button, Type=Ghost, Size=Icon Small | `button/ghost/fg/fg` (icon) |\n\n> Never override fills or strokes inside `action-btn` or `close-btn` from the `toast` parent. Both sub-components own their token bindings. If a different button style is needed, change the sub-component's Variant prop.\n\n---\n\n"
+      },
+      {
+        "title": "Behavior",
+        "body": "\n### Architecture\n\n`toast` is built on **Sonner** (by Emil Kowalski), wrapped by shadcn. It is an **imperative API** — there is no JSX to render at the call site. Instead, a single `<Toaster>` component is placed once in the root layout, and toasts are triggered by calling `toast()` anywhere in the application.\n\n```tsx\n// root layout — once only\nimport { Toaster } from \"@/components/ui/sonner\"\n<Toaster />\n\n// anywhere in the app\nimport { toast } from \"sonner\"\ntoast(\"Settings saved.\")\ntoast.success(\"File uploaded.\")\ntoast.error(\"Upload failed.\", { description: \"Check your network and try again.\" })\ntoast.warning(\"Session expires in 5 minutes.\")\nconst id = toast.loading(\"Uploading…\")\ntoast.dismiss(id)\n```\n\n### Toast types\n\n| Type | JS call | Behavior |\n|---|---|---|\n| `Default` | `toast(message)` | Neutral — auto-dismissed after 4000ms |\n| `Success` | `toast.success(message)` | Auto-dismissed after 4000ms |\n| `Error` | `toast.error(message)` | Auto-dismissed after 4000ms |\n| `Warning` | `toast.warning(message)` | Auto-dismissed after 4000ms |\n| `Loading` | `toast.loading(message)` | **Persists indefinitely** — no auto-dismiss |\n\n### Auto-dismiss\n\nDefault duration: **4000ms** (Sonner default). Override per-call:\n\n```tsx\ntoast.error(\"Something went wrong.\", { duration: 6000 })\ntoast.success(\"Copied!\", { duration: 2000 })\ntoast(\"Never dismiss this.\", { duration: Infinity })\n```\n\n### Promise pattern\n\n`toast.promise()` automatically transitions from `Type=Loading` to `Type=Success` or `Type=Error` based on the promise resolution:\n\n```tsx\ntoast.promise(uploadFile(), {\n  loading: \"Uploading…\",\n  success: \"File uploaded successfully.\",\n  error: \"Upload failed.\",\n})\n```\n\nThe Loading toast persists for the duration of the promise, then auto-dismisses after the success/error message is shown.\n\n### Dismiss\n\n**Auto-dismiss:** after `duration` ms (see above).\n**Swipe:** users can swipe a toast to dismiss it. Swipe direction follows the toast position (swipe right for right-anchored, swipe down for bottom positions). `dismissible: true` by default.\n**Close button:** `close-btn` (Ghost, Icon Small) is optional. Pass `closeButton` prop to `<Toaster closeButton />` to enable globally, or pass `{ closeButton: true }` per toast.\n**Programmatic:** `toast.dismiss(id)` or `toast.dismiss()` to clear all.\n\n### Action button\n\nThe `action-btn` maps to Sonner's `action` option:\n\n```tsx\ntoast(\"File deleted.\", {\n  action: {\n    label: \"Undo\",\n    onClick: () => restoreFile(),\n  },\n})\n```\n\nClicking the action button **dismisses the toast** unless `event.preventDefault()` is called inside `onClick`.\n\n### `<Toaster>` defaults\n\n| Prop | Default | Notes |\n|---|---|---|\n| `position` | `bottom-right` | Options: `top-left`, `top-center`, `top-right`, `bottom-left`, `bottom-center`, `bottom-right` |\n| `visibleToasts` | `3` | Max toasts shown simultaneously; older ones are hidden beneath |\n| `expand` | `false` | When `true`, toasts fan out on hover instead of stacking |\n| `closeButton` | `false` | Pass `closeButton` prop to `<Toaster>` to enable globally |\n| `richColors` | `false` | When `true`, Success/Error/Warning use colored fills matching the type |\n| `offset` | `32px` | Distance from screen edge |\n| `mobileOffset` | `16px` | Applied when screen width < 600px |\n| `duration` | `4000` | Default ms; override per call |\n| `hotkey` | `Alt + T` | Keyboard shortcut to focus the toaster region |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n### Keyboard\n"
+          },
+          {
+            "from": "accessibility.keys"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": "\n> **Choose Type by semantic meaning, not visual preference.**\n>\n> - `Type=Default` — neutral confirmation; no status implied\n> - `Type=Success` — operation completed successfully\n> - `Type=Error` — operation failed; user may need to act\n> - `Type=Warning` — completed with a caveat, or attention needed\n> - `Type=Loading` — operation in progress; must be programmatically resolved\n\n> **Toasts are for system events, not user decisions or form errors.**\n>\n> - Use toasts for feedback the system gives after an action (save, upload, delete, sync)\n> - Use Alert Dialog for decisions that require confirmation before acting\n> - Use inline field validation for form input errors — not a toast\n\n> **Always provide a resolution path for Loading and Error.**\n>\n> - `Type=Loading`: always pair with `toast.promise()` or call `toast.dismiss(id)` when done — a loading toast with no resolution is a bug\n> - `Type=Error`: always write a description that names what failed and what the user can do — \"Something went wrong\" is not enough\n"
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- Confirming a settings save (\"Settings saved.\") immediately after the user clicks Save\n- Reporting the result of an async file upload — transitioning from Loading to Success or Error via `toast.promise()`\n- Notifying the user that a background sync completed or failed while they were working elsewhere on the page\n- Providing an Undo action after a soft-delete (\"Contact removed\" + Undo button)\n- Alerting the user to a session or quota warning that appeared while they were mid-task (\"Storage 90% full.\")\n- Confirming a copy-to-clipboard or share-link action that has no visible side effect (\"Link copied.\")\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Default` | Neutral confirmation with no status implication | \"Link copied.\" · \"Comment posted.\" · \"Preference saved.\" |\n| `Success` | Operation completed successfully and the user should know | \"File uploaded successfully.\" · \"Payment processed.\" · \"Invite sent.\" |\n| `Error` | Operation failed — user may need to act | \"Upload failed — check your connection.\" · \"Could not send message.\" · \"Session expired.\" |\n| `Warning` | Completed with caveats, or attention needed soon | \"Saved with warnings.\" · \"Storage 90% full.\" · \"Some recipients were skipped.\" |\n| `Loading` | Async operation in progress; duration unknown | \"Uploading…\" · \"Generating report…\" · \"Sending…\" — always paired with `toast.promise()` |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| A persistent message that stays on screen until the user acts (e.g. a form error, an expiry warning) | `alert` | `toast` (toast auto-dismisses and may be missed) |\n| The user must make a decision before continuing (confirm a destructive action) | `dialog` (alert-dialog) | `toast` (toast is non-blocking and cannot capture a decision) |\n| A form field validation error that the user needs to fix before submitting | Inline field error text | `toast` (toasts are for system-level feedback, not per-field input errors) |\n| Feedback that must persist indefinitely (legal notice, critical outage banner) | `alert` | `toast` (even `duration: Infinity` toasts lack the persistent, in-context placement of an alert) |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/sonner\n- **Behavior · Promise Pattern:** toast.promise(asyncFn, { loading, success, error }) — transitions Loading → Success/Error automatically.\n- **Behavior · Toaster Placement:** Place <Toaster /> once in root layout — never inside a page or route component.\n- **Behavior · Dismiss Methods:** swipe gesture\n- **Behavior · Dismiss Methods:** close-btn click\n- **Composition · Structure:** H AUTO-LAYOUT — icon-slot (16×16) → content (title + description, V AUTO-LAYOUT) → actions (action-btn + close-btn, H AUTO-LAYOUT)\n- **Composition · Icon Notes:** Default has an empty FRAME (no icon); Success/Error/Warning use a 16×16 icon placeholder instance; Loading uses a spinner.\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Use `Type=Loading` without a dismiss path",
+      "correct": "Always pair with `toast.promise()` or explicitly call `toast.dismiss(id)`"
+    },
+    {
+      "wrong": "Use a toast to ask \"Are you sure?\"",
+      "correct": "Use Alert Dialog — toasts are not for decisions"
+    },
+    {
+      "wrong": "Show multiple toasts for the same repeated event",
+      "correct": "Debounce or deduplicate at the call site"
+    },
+    {
+      "wrong": "Write a description that repeats the title verbatim",
+      "correct": "Description adds next-step context, detail, or the cause of the issue"
+    },
+    {
+      "wrong": "Override `action-btn` or `close-btn` fills from the toast parent",
+      "correct": "Change the button's variant prop — never repaint sub-component internals"
+    },
+    {
+      "wrong": "Use `Type=Error` for form field validation errors",
+      "correct": "Use inline validation on the field — toasts are for system-level failures"
+    },
+    {
+      "wrong": "Place `<Toaster>` inside a page or route component",
+      "correct": "Place it once in the root layout only"
+    },
+    {
+      "wrong": "Use `duration: Infinity` without a programmatic dismiss",
+      "correct": "Any non-auto-dismissed toast must have a close button or action that dismisses it"
+    }
+  ]
+}

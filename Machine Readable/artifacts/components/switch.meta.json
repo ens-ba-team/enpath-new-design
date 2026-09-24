@@ -1,0 +1,387 @@
+{
+  "name": "switch",
+  "description": "A toggle control for binary on/off choices, with a visual switch and a labeled switch-item row.",
+  "category": "forms",
+  "shadcnBase": "switch",
+  "componentSets": {
+    "switch": {
+      "purpose": "The toggle indicator: track and thumb."
+    },
+    "switch-item": {
+      "purpose": "Full row with switch, label, optional description, and optional card surface."
+    }
+  },
+  "variants": {
+    "Size": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Sm"
+      ],
+      "default": "Default",
+      "reactProp": "size",
+      "reactValues": {
+        "Default": "default",
+        "Sm": "sm"
+      },
+      "dimensions": {
+        "Default": {
+          "trackWidth": 44,
+          "trackHeight": 24,
+          "thumb": 20
+        },
+        "Sm": {
+          "trackWidth": 28,
+          "trackHeight": 16,
+          "thumb": 12
+        }
+      }
+    },
+    "Checked": {
+      "type": "enum",
+      "values": [
+        "True",
+        "False"
+      ],
+      "default": "False",
+      "reactProp": "checked",
+      "reactValues": {
+        "True": true,
+        "False": false
+      }
+    },
+    "State": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Disabled",
+        "Focus"
+      ],
+      "default": "Default",
+      "reactProp": "disabled",
+      "reactValues": {
+        "Disabled": true
+      }
+    },
+    "ItemType": {
+      "type": "enum",
+      "values": [
+        "Basic",
+        "Description",
+        "Choice Card"
+      ],
+      "default": "Basic",
+      "reactProp": "type",
+      "reactValues": {
+        "Basic": "basic",
+        "Description": "description",
+        "Choice Card": "choice-card"
+      }
+    },
+    "ItemState": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Disabled",
+        "Invalid",
+        "Focus"
+      ],
+      "default": "Default",
+      "reactProp": "state",
+      "reactValues": {
+        "Default": "default",
+        "Disabled": "disabled",
+        "Invalid": "invalid",
+        "Focus": "focus"
+      }
+    }
+  },
+  "tokens": {
+    "switch": {
+      "False Default": {
+        "trackFill": "color/border/default",
+        "thumbFill": "color/background/default"
+      },
+      "True Default": {
+        "trackFill": "color/brand/primary",
+        "thumbFill": "color/background/default"
+      },
+      "False Disabled": {
+        "trackFill": "color/border/default",
+        "thumbFill": "color/background/default",
+        "opacity": "opacity/disabled"
+      },
+      "True Disabled": {
+        "trackFill": "color/brand/primary",
+        "thumbFill": "color/background/default",
+        "opacity": "opacity/disabled"
+      },
+      "False Focus": {
+        "trackFill": "color/border/default",
+        "thumbFill": "color/background/default",
+        "stroke": "color/ring",
+        "strokeWeight": 2,
+        "strokeAlign": "outside"
+      },
+      "True Focus": {
+        "trackFill": "color/brand/primary",
+        "thumbFill": "color/background/default",
+        "stroke": "color/ring",
+        "strokeWeight": 2,
+        "strokeAlign": "outside"
+      },
+      "radius": "radius/full"
+    },
+    "switchItemText": {
+      "Default": {
+        "label": "color/background/default/foreground",
+        "description": "color/background/muted/foreground"
+      },
+      "Focus": {
+        "label": "color/background/default/foreground",
+        "description": "color/background/muted/foreground"
+      },
+      "Disabled": {
+        "label": "color/text/disabled",
+        "description": "color/text/disabled"
+      },
+      "Invalid": {
+        "label": "color/text/invalid",
+        "description": "color/text/secondary"
+      }
+    },
+    "choiceCard": {
+      "Default": {
+        "stroke": "color/border/default",
+        "fill": "transparent",
+        "radius": "radius/lg",
+        "padding": "spacing/component/lg"
+      },
+      "Disabled": {
+        "stroke": "color/border/disabled",
+        "fill": "transparent",
+        "radius": "radius/lg",
+        "padding": "spacing/component/lg"
+      },
+      "Invalid": {
+        "stroke": "color/border/error",
+        "fill": "transparent",
+        "radius": "radius/lg",
+        "padding": "spacing/component/lg"
+      },
+      "Focus": {
+        "stroke": "color/border/focus",
+        "fill": "transparent",
+        "radius": "radius/lg",
+        "padding": "spacing/component/lg"
+      }
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`switch` (WAI-ARIA) — announces as \"on\" or \"off\""
+      },
+      {
+        "property": "Touch target",
+        "value": "Default 44×24px meets AA; Small 28×16px does not — both have a built-in invisible hit area, ≥ 44×44px on coarse pointers (`height/target/touch`)"
+      },
+      {
+        "property": "Focus indicator",
+        "value": "`color/ring` · 2px · OUTSIDE on `switch` sub-component · Choice Card focus changes border to `color/border/focus`"
+      },
+      {
+        "property": "Keyboard",
+        "value": "`Tab` to focus · `Space` to toggle"
+      },
+      {
+        "property": "Screen reader name",
+        "value": "Visible label text is the accessible name"
+      },
+      {
+        "property": "State announcement",
+        "value": "`aria-checked=\"true\"` / `aria-checked=\"false\"` — browser announces \"on\"/\"off\""
+      }
+    ]
+  },
+  "constraints": [
+    "Use `switch-item` in forms and settings — never `switch` alone in a row where a label is expected.",
+    "`Type=Basic` — single-line setting with a short, self-explanatory label. Use when no supporting context is needed.",
+    "`Type=Description` — use when the label needs a clarifying sentence. Keep descriptions to one line.",
+    "`Type=Choice Card` — use when the option is significant enough to warrant a distinct card surface (e.g. plan features, major preferences). Cards add visual weight — use sparingly.",
+    "`Invalid` state indicates the switch value fails validation (e.g. a required toggle was left off). Pair with an error message below the field in implementation.",
+    "Do not use `switch` as a substitute for a checkbox. Switch = immediate effect on toggle. Checkbox = value submitted with a form.",
+    "Invalid state affects switch-item text, not the switch indicator."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Switch.md (generated from this file)",
+    "storyFile": "src/stories/Switch.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "Source markdown contains complete token, behavior, accessibility, and usage sections."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/switch.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Switch"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Switch.stories.tsx",
+    "title": "Forms/Switch",
+    "stories": [
+      "Default",
+      "Checked",
+      "Small",
+      "SmallChecked",
+      "Disabled",
+      "DisabledChecked",
+      "ItemBasic",
+      "ItemDescription",
+      "ItemChoiceCard",
+      "ItemDisabled",
+      "ItemInvalid",
+      "ItemChoiceCardInvalid",
+      "AllSizes"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Switch.md",
+    "intro": "# Switch\n\nA toggle control for binary on/off choices. Built from two component sets: `switch` (the visual toggle indicator) and `switch-item` (the full row with label, optional description, and optional card surface).\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Component Sets",
+        "body": "\n| Set | ID | Variants | Purpose |\n|---|---|---|---|\n| `switch` | `67:88` | 12 | The toggle indicator — track + thumb |\n| `switch-item` | `270:110` | 12 | Full row: switch + label + optional description |\n\n---\n\n"
+      },
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": "\n### switch\n"
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\nAll 2 sizes × 2 checked × 3 states = 12 variants.\n\n### switch-item\n"
+          },
+          {
+            "md": "| Property | Options | Default |\n|---|---|---|\n| `Type` | `Basic`, `Description`, `Choice Card` | `Basic` |\n| `State` | `Default`, `Disabled`, `Invalid`, `Focus` | `Default` |"
+          },
+          {
+            "md": "\nAll 3 types × 4 states = 12 variants.\n\n> `Type=Basic` is a single-line row — label only, no description layer. `Type=Description` adds a description line. `Type=Choice Card` wraps both in a bordered card surface.\n\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Sizes",
+        "body": "\n### switch\n\n| Size | Track W × H | Thumb size | Radius |\n|---|---|---|---|\n| `Default` | 44 × 24px | 20 × 20px | `radius/full` |\n| `Sm` | 28 × 16px | 12 × 12px | `radius/full` |\n\n---\n\n"
+      },
+      {
+        "title": "Component Properties",
+        "body": "\n### switch\n\n| Property | Type | Default | Notes |\n|---|---|---|---|\n| `Size` | VARIANT | `Default` | Track + thumb scale |\n| `Checked` | VARIANT | `False` | Whether the switch is toggled on |\n| `State` | VARIANT | `Default` | Interaction state |\n\n### switch-item\n\n| Property | Type | Default | Notes |\n|---|---|---|---|\n| `Type` | VARIANT | `Basic` | Layout type — Basic, Description, or Choice Card |\n| `State` | VARIANT | `Default` | Interaction and validation state |\n\n---\n\n"
+      },
+      {
+        "title": "Structure",
+        "body": "\n### switch\n\n```\nswitch                          — track FRAME, radius/full\n  └─ thumb                      — FRAME, radius/full — slides left (unchecked) / right (checked)\n```\n\n### switch-item — Type=Basic\n\n```\nswitch-item                     — HORIZONTAL, gap: spacing/component/sm\n  ├─ switch                     — INSTANCE\n  └─ label                      — TEXT, always visible\n```\n\n### switch-item — Type=Description\n\n```\nswitch-item                     — HORIZONTAL\n  ├─ switch                     — INSTANCE\n  └─ content                    — VERTICAL\n       ├─ label                 — TEXT, always visible\n       └─ description           — TEXT, always visible\n```\n\n### switch-item — Type=Choice Card\n\n```\nswitch-item                     — HORIZONTAL, border + radius/lg, padding: spacing/component/lg\n  ├─ switch                     — INSTANCE\n  └─ content                    — VERTICAL\n       ├─ label                 — TEXT\n       └─ description           — TEXT\n```\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### switch — per Checked × State\n\n| Checked | State | Track fill | Thumb fill | Stroke | Stroke weight | Stroke align | Opacity |\n|---|---|---|---|---|---|---|---|\n| `False` | `Default` | `color/border/default` | `color/background/default` | — | — | — | — |\n| `True` | `Default` | `color/brand/primary` | `color/background/default` | — | — | — | — |\n| `False` | `Disabled` | `color/border/default` | `color/background/default` | — | — | — | `opacity/disabled` |\n| `True` | `Disabled` | `color/brand/primary` | `color/background/default` | — | — | — | `opacity/disabled` |\n| `False` | `Focus` | `color/border/default` | `color/background/default` | `color/ring` | 2px | OUTSIDE | — |\n| `True` | `Focus` | `color/brand/primary` | `color/background/default` | `color/ring` | 2px | OUTSIDE | — |\n\nAll variants: track and thumb both use `radius/full`. Thumb fill is always `color/background/default` regardless of checked state.\n\nDisabled uses `opacity/disabled` on the entire switch frame — no separate token for track or thumb.\n\n### switch-item — text tokens per State\n\n| State | `label` | `description` |\n|---|---|---|\n| `Default`, `Focus` | `color/background/default/foreground` | `color/background/muted/foreground` |\n| `Disabled` | `color/text/disabled` | `color/text/disabled` |\n| `Invalid` | `color/text/invalid` | `color/text/secondary` |\n\nIn `Invalid` state, label uses `color/text/invalid` to carry the error signal · description stays `color/text/secondary` to remain readable as supporting context. Do not use `color/status/danger-subtle/foreground` — that token requires a `danger-subtle` background; switch-item stays on `color/background/default`.\n\n### switch-item — Choice Card frame per State\n\n| State | Card stroke | Stroke weight | Stroke align | Card fill | Radius | Padding |\n|---|---|---|---|---|---|---|\n| `Default` | `color/border/default` | 1px | INSIDE | — | `radius/lg` | `spacing/component/lg` |\n| `Disabled` | `color/border/disabled` | 1px | INSIDE | — | `radius/lg` | `spacing/component/lg` |\n| `Invalid` | `color/border/error` | 1px | INSIDE | — | `radius/lg` | `spacing/component/lg` |\n| `Focus` | `color/border/focus` | 1px | INSIDE | — | `radius/lg` | `spacing/component/lg` |\n\n> Choice Card Focus uses `color/border/focus` (1px, INSIDE) — not the 2px OUTSIDE ring. Because the card always has a visible border, focus is indicated by changing the border color rather than adding an outer ring. Basic and Description Focus show no frame-level focus ring — focus is expressed through the embedded `switch` sub-component's own 2px ring.\n\n### switch-item — spacing\n\n| Type | Property | Token |\n|---|---|---|\n| Basic | gap (switch → label) | `spacing/component/sm` |\n| Choice Card | padding (all sides) | `spacing/component/lg` |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Behavior",
+        "body": "\n| State | Triggered by | Notes |\n|---|---|---|\n| `Default / Checked=False` | Initial state | Track uses muted border fill — unchecked appearance |\n| `Default / Checked=True` | User toggles on | Track fills with `color/brand/primary` |\n| `Disabled` | `disabled` prop | Entire switch at `opacity/disabled` — no hover, focus, or toggle |\n| `Focus` | Tab key | 2px `color/ring` OUTSIDE on switch frame |\n| `Invalid` | Form validation failure | switch-item label switches to `color/text/invalid` · description stays `color/text/secondary` — the switch indicator itself does not change appearance |\n\nSwitch is always a binary control — it has no indeterminate state. Toggling is immediate; no confirmation step.\n\n---\n\n"
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- Notification settings: \"Enable push notifications\" — toggling applies immediately, no Save button\n- Account security preferences: \"Two-factor authentication\" — on/off, effect is instant\n- App-level feature flags in a settings panel: \"Show beta features\", \"Enable compact view\"\n- Focus mode features: \"Share across devices\" — toggling syncs state across the user's devices right away\n- Privacy controls: \"Allow analytics data collection\" — the change takes effect on toggle\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Type=Basic` | Short, self-explanatory setting — label alone communicates the full meaning | \"Compact view\" · \"Email notifications\" · \"Auto-save\" |\n| `Type=Description` | Setting needs a clarifying sentence to explain scope, impact, or current behavior | \"Share across devices — Sync your focus session to all signed-in devices\" |\n| `Type=Choice Card` | High-stakes or visually prominent preference that warrants a card surface — used sparingly | Plan feature toggle (\"Unlimited members\") · Onboarding preference with description |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| Instant effect on toggle, no form submit | `switch` | `checkbox` |\n| Form field submitted with a Save button (preferences page with explicit save) | `checkbox` | `switch` |\n| Single required consent (\"I agree to terms\") | `checkbox` | `switch` |\n| Multi-select list of items | `checkbox` | `switch` |\n| Mutually exclusive options (pick exactly one) | `radio` | `switch` |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/switch\n- **Best practice · References · Radix:** https://www.radix-ui.com/primitives/docs/components/switch\n- **Composition · Switch Item Description:** content.label\n- **Composition · Switch Item Description:** content.description\n- **Composition · Switch Item Choice Card:** content.label\n- **Composition · Switch Item Choice Card:** content.description\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Raw frame with hardcoded track fill",
+      "correct": "Use `switch` instance"
+    },
+    {
+      "wrong": "`switch` alone in a form row without a label",
+      "correct": "Use `switch-item`"
+    },
+    {
+      "wrong": "`color/status/danger-subtle/foreground` for Invalid text",
+      "correct": "`color/text/invalid` — danger-subtle/foreground requires a danger-subtle background"
+    },
+    {
+      "wrong": "Override track fill directly on instance",
+      "correct": "Switch the `Checked` prop"
+    },
+    {
+      "wrong": "Choice Card Focus with 2px OUTSIDE ring",
+      "correct": "Choice Card uses `color/border/focus` 1px INSIDE — the border changes colour, no outer ring"
+    }
+  ]
+}

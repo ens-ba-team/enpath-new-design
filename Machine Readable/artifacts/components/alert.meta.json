@@ -1,0 +1,344 @@
+{
+  "name": "alert",
+  "description": "Inline feedback banners for system-level messages. Three variants: Default (neutral), Destructive (error), Warning (caution). Non-blocking — does not steal focus or require a decision.",
+  "category": "feedback",
+  "shadcnBase": "alert",
+  "componentSets": {
+    "alert": {
+      "purpose": "Inline banner."
+    }
+  },
+  "variants": {
+    "Variant": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Destructive",
+        "Warning",
+        "Success",
+        "Info"
+      ],
+      "default": "Default",
+      "reactProp": "variant",
+      "reactValues": {
+        "Default": "default",
+        "Destructive": "destructive",
+        "Warning": "warning",
+        "Success": "success",
+        "Info": "info"
+      }
+    },
+    "Has Icon": {
+      "type": "enum",
+      "values": [
+        "True",
+        "False"
+      ],
+      "default": "True",
+      "reactProp": "hasIcon",
+      "reactValues": {
+        "True": true,
+        "False": false
+      }
+    },
+    "Has Action": {
+      "type": "enum",
+      "values": [
+        "True",
+        "False"
+      ],
+      "default": "False",
+      "reactProp": "hasAction",
+      "reactValues": {
+        "True": true,
+        "False": false
+      }
+    }
+  },
+  "tokens": {
+    "alertFrame": {
+      "Default": {
+        "fill": "color/background/default",
+        "stroke": "color/border/default",
+        "radius": "radius/lg",
+        "padding": "spacing/component/lg"
+      },
+      "Destructive": {
+        "fill": "color/background/default",
+        "stroke": "color/border/error",
+        "radius": "radius/lg",
+        "padding": "spacing/component/lg"
+      },
+      "Warning": {
+        "fill": "color/yellow/50",
+        "stroke": "color/yellow/200",
+        "radius": "radius/lg",
+        "padding": "spacing/component/lg"
+      }
+    },
+    "gaps": {
+      "note": "Layout structure differs by variant combination. Two layouts exist.",
+      "flatLayout": {
+        "when": "Has Icon=False AND Has Action=False",
+        "structure": "title and description are direct children of the alert frame",
+        "containerGap": "spacing/component/sm"
+      },
+      "nestedLayout": {
+        "when": "Has Icon=True OR Has Action=True",
+        "structure": "icon + content frame + action-slot are siblings inside the alert frame",
+        "containerGap": "spacing/component/md",
+        "contentFrameGap": "spacing/component/xxs"
+      }
+    },
+    "text": {
+      "Default": {
+        "title": "color/background/default/foreground",
+        "description": "color/background/muted/foreground"
+      },
+      "Destructive": {
+        "title": "color/text/invalid",
+        "description": "color/text/secondary"
+      },
+      "Warning": {
+        "title": "color/yellow/900",
+        "description": "color/yellow/800"
+      }
+    },
+    "icon": {
+      "Default": "color/background/default/foreground",
+      "Destructive": "color/icon/danger",
+      "Warning": "color/icon/warning"
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`alert` or `alertdialog` (WAI-ARIA)"
+      },
+      {
+        "property": "Live region",
+        "value": "Inline `alert` should use `role=\"alert\"` — browser announces content automatically on render"
+      },
+      {
+        "property": "Focus management",
+        "value": "`alert-dialog` must trap focus within the modal; first focusable element receives focus on open"
+      },
+      {
+        "property": "Keyboard (dialog)",
+        "value": "`Escape` to dismiss · `Tab` / `Shift+Tab` to move within footer buttons"
+      },
+      {
+        "property": "Icon alt text",
+        "value": "Decorative icons (`aria-hidden=\"true\"`) — meaning conveyed by title text"
+      },
+      {
+        "property": "Color contrast",
+        "value": "`color/text/invalid` on `color/background/default` must meet 4.5:1 minimum"
+      }
+    ]
+  },
+  "constraints": [
+    "Use `alert` (inline) for feedback that does not block the user — form submission errors, async status, warnings about a section.",
+    "Use `alert-dialog` only when the user must acknowledge or decide before continuing — destructive confirmations, critical errors that prevent further action.",
+    "`Variant=Default` — general information or success. Pair with a relevant icon (check, info).",
+    "`Variant=Destructive` — validation failures, errors, irreversible actions. Always include a clear title. Do not use for warnings that don't require action.",
+    "`Variant=Warning` — caution states where action is optional but recommended. Note: Warning currently uses primitive tokens; treat as a known limitation.",
+    "Do not use `alert` as a toast or snackbar — those require a separate component with auto-dismiss logic.",
+    "`alert-dialog` with `Type=Destructive` — always include a cancel path so the user can exit without acting."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Alert.md (generated from this file)",
+    "storyFile": "src/stories/Alert.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "Warning variant primitive tokens (color/yellow/*) are intentional — accepted design decision 2026-05-28.",
+      "Alert-dialog footer button fills are intentional — the parent component sets the root fill on each button instance (primary/outline/destructive).",
+      "action-slot stays as BOOLEAN-controlled FRAME (buttons only) — no native SLOT conversion. Decided 2026-05-28.",
+      "AlertDialog has been separated into its own file: alert-dialog.meta.json"
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/alert.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Alert"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Alert.stories.tsx",
+    "title": "Feedback/Alert",
+    "stories": [
+      "Default",
+      "Destructive",
+      "Warning",
+      "Success",
+      "InfoVariant",
+      "DefaultWithIcon",
+      "DestructiveWithIcon",
+      "WarningWithIcon",
+      "WithAction",
+      "AllVariants"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": "Alert-only stories. AlertDialog has its own separate story file and meta.json."
+  },
+  "relationships": {
+    "relatedComponents": [
+      {
+        "name": "alert-dialog",
+        "reason": "AlertDialog is the modal version requiring an explicit decision. Alert is inline and non-blocking."
+      },
+      {
+        "name": "toast",
+        "reason": "Toast auto-dismisses after an action; Alert is persistent until dismissed."
+      },
+      {
+        "name": "empty",
+        "reason": "Empty is for no-data states; Alert signals something wrong or noteworthy."
+      }
+    ]
+  },
+  "docs": {
+    "file": "Alert.md",
+    "intro": "# Alert\n\nInline feedback banners for system-level messages. Three variants: Default (neutral), Destructive (error), Warning (caution). Non-blocking — does not steal focus or require a decision.\n\n> **Separated:** `alert-dialog` (overlay modal) now has its own doc → see `AlertDialog.md`\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Component Sets",
+        "body": "\n| Set | ID | Variants | Purpose |\n|---|---|---|---|\n| `alert` | `74:1777` | 12 | Inline banner — Default, Destructive, Warning |\n| `alert-dialog` | `152:3240` | 8 | Overlay modal — Default or Destructive |\n\n---\n\n"
+      },
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": "\n### alert\n"
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\nAll 3 variants × 2 icon × 2 action = 12 variants.\n\n### alert-dialog\n"
+          },
+          {
+            "md": "| Property | Options | Default |\n|---|---|---|\n| `Align` | `Left`, `Center` | `Left` |\n| `Footer` | `Inline`, `Full-width` | `Inline` |\n| `Type` | `Default`, `Destructive` | `Default` |"
+          },
+          {
+            "md": "\nAll 2 align × 2 footer × 2 types = 8 variants.\n\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Structure",
+        "body": "\n### alert\n\nThe internal layout differs by variant combination. Two distinct structures exist:\n\n**Flat layout** — `Has Icon=False` + `Has Action=False`\n```\nalert                           — HORIZONTAL, radius/lg, padding: spacing/component/lg\n                                  gap: spacing/component/sm (8px)\n  ├─ title                      — TEXT\n  └─ description                — TEXT\n```\n\n**Nested layout** — `Has Icon=True` OR `Has Action=True` (or both)\n```\nalert                           — HORIZONTAL, radius/lg, padding: spacing/component/lg\n                                  gap: spacing/component/md (12px)\n  ├─ icon                       — INSTANCE (Icon Placeholder) — present when Has Icon=True\n  ├─ content                    — VERTICAL, gap: spacing/component/xxs (2px)\n  │    ├─ title                 — TEXT\n  │    └─ description           — TEXT\n  └─ action-slot                — INSTANCE (Button) — present when Has Action=True\n```\n\n### alert-dialog\n\n```\nalert-dialog                    — VERTICAL, radius/lg, padding: spacing/component/xl\n                                  gap: spacing/component/lg\n  ├─ icon-container             — FRAME — present in Default and Destructive\n  └─ content                    — VERTICAL\n       ├─ title                 — TEXT\n       ├─ description           — TEXT\n       └─ footer                — buttons (Inline or Full-width layout)\n```\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### alert — frame per Variant\n\n| Variant | Fill | Stroke | Stroke weight | Stroke align | Radius | Padding |\n|---|---|---|---|---|---|---|\n| `Default` | `color/background/default` | `color/border/default` | 1px | INSIDE | `radius/lg` | `spacing/component/lg` |\n| `Destructive` | `color/background/default` | `color/border/error` | 1px | INSIDE | `radius/lg` | `spacing/component/lg` |\n| `Warning` | `color/yellow/50` ⚠️ | `color/yellow/200` ⚠️ | 1px | INSIDE | `radius/lg` | `spacing/component/lg` |\n\n### alert — gaps\n\n| Layout | Property | Token | Value | Notes |\n|---|---|---|---|---|\n| Flat (no icon, no action) | Container gap (title ↔ description) | `spacing/component/sm` | 8px | title and description are direct children |\n| Nested (icon or action present) | Container gap (icon ↔ content or content ↔ action) | `spacing/component/md` | 12px | icon + content frame + action are siblings |\n| Nested | Content frame gap (title ↔ description) | `spacing/component/xxs` | 2px | tight stack inside the content frame |\n\n> ⚠️ Warning variant uses primitive tokens (`color/yellow/50`, `color/yellow/200`). No semantic `color/status/warning-*` tokens have been confirmed for this context. Do not copy this pattern to new components — flag for a design decision on semantic warning tokens.\n\n### alert — icon per Variant\n\n| Variant | `icon` fill/stroke |\n|---|---|\n| `Default` | `color/background/default/foreground` |\n| `Destructive` | `color/icon/danger` |\n| `Warning` | `color/icon/warning` |\n\n### alert — text per Variant\n\n| Variant | `title` | `description` |\n|---|---|---|\n| `Default` | `color/background/default/foreground` | `color/background/muted/foreground` |\n| `Destructive` | `color/text/invalid` | `color/text/secondary` |\n| `Warning` | `color/yellow/900` ⚠️ | `color/yellow/800` ⚠️ |\n\nIn `Destructive`, title uses `color/text/invalid` to carry the error signal · description uses `color/text/secondary` to remain readable as supporting context. Do not use `color/status/danger-subtle/foreground` here — that token requires a `danger-subtle` background; alert sits on `color/background/default`.\n\n### alert — action-slot button\n\n`action-slot` is a named region that is shown or hidden via the `Has Action` prop. It is **typed** — it must always contain a Button instance. Do not place any other component inside it.\n\nWhen `Has Action=True`, the `action-slot` contains a button instance. The button manages its own token bindings — the alert component must not override any fill or stroke inside it.\n\n| Layer inside action-slot | Correct token | Owner |\n|---|---|---|\n| `action-slot` fill | `button/primary/bg/bg` | Button component — do not touch |\n| `action-slot › description` text | `button/primary/fg/fg` | Button component — do not touch |\n| `action-slot › icon` stroke | `color/brand/primary/foreground` | Button component — do not touch |\n\n> **The button's variant, not overrides, controls its appearance.** If the Destructive alert needs a different action style (e.g. a secondary or outline button), swap the button's `Type` prop. Never repaint a child layer inside the button instance to \"match\" the alert's color scheme — the button background and text are a coupled pair and must change together via the component's own tokens.\n\n### alert — icon-container per Variant\n\n`alert` does not apply a fill to the icon-container frame — the icon itself carries the semantic color.\n\n### alert-dialog — frame\n\n| Property | Value |\n|---|---|\n| Fill | `color/surface/overlay` |\n| Stroke | `color/border/default` · 1px · INSIDE |\n| Radius | `radius/lg` |\n| Padding | `spacing/component/xl` |\n| Gap | `spacing/component/lg` |\n\n### alert-dialog — icon-container per Type\n\n| Type | `icon-container` fill |\n|---|---|\n| `Default` | `color/background/muted` |\n| `Destructive` | `color/status/danger-subtle` |\n\nThe icon-container fill matches the semantic surface — icon-container in Destructive sits on `danger-subtle`, so its icon may use `color/status/danger-subtle/foreground`.\n\n### alert-dialog — text\n\n| Layer | Token |\n|---|---|\n| `title` | `color/surface/overlay/foreground` |\n| `description` | `color/text/secondary` |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Behavior",
+        "body": "\n| Variant | Triggered by | Notes |\n|---|---|---|\n| `Default` | Info / success messages | Neutral surface; no urgency |\n| `Destructive` | Error or destructive action feedback | Red border + `color/text/invalid` text — signals failure or danger |\n| `Warning` | Caution messages | Yellow surface with primitive tokens — see token note above |\n\n`Has Action=True` adds a link or button inline within the banner — use for actionable feedback (e.g. \"Retry\", \"Undo\"). `Has Action=False` is for passive notification only.\n\n`alert-dialog` is modal — it blocks all page interaction until the user dismisses it. Use only for messages that require an explicit user decision before proceeding.\n\n---\n\n"
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Alert vs AlertDialog vs Dialog — Decision Guide",
+        "body": "\nThree components handle overlapping concerns. The wrong choice produces an incorrect ARIA role, wrong keyboard behavior, or a misleading interaction model.\n\n### The single question to ask first\n\n> **Can the user exit without making a decision — and is that a valid outcome?**\n\n- **Yes, exit is valid** — `dialog` (the × button and backdrop close are neutral exits)\n- **No, they must choose** — `alert-dialog` (both buttons are choices, not escape hatches)\n- **No modal needed** — `alert` inline (passive feedback, no blocking)\n\n### Decision table\n\n| Signal | `alert` (inline) | `alert-dialog` | `dialog` |\n|---|---|---|---|\n| Blocks the page? | ❌ No | ✅ Yes | ✅ Yes |\n| Requires a user decision? | ❌ No | ✅ Always | Sometimes |\n| Has a neutral close (× or backdrop)? | N/A | ❌ No (for destructive) | ✅ Yes |\n| ARIA role | `role=\"alert\"` | `role=\"alertdialog\"` | `role=\"dialog\"` |\n| Screen reader announcement | Auto-announces on render | Announced, focus trapped | Announced, focus trapped |\n| Both buttons are real choices? | N/A | ✅ Yes (cancel ≠ close) | ❌ No (cancel = close) |\n| Has form fields or rich content? | ❌ No | ❌ No | ✅ Usually |\n\n### Concrete decision rules\n\n**Reach for `alert` (inline) when:**\n- Feedback is passive — the user doesn't need to do anything to continue\n- The message appears in context on the page without stealing focus\n- Examples: form field error banner, async save failure, expiry warning, success confirmation\n\n**Reach for `alert-dialog` when:**\n- Both the confirm AND cancel buttons represent real decisions (not just \"close the modal\")\n- The action is irreversible or high-stakes — delete, revoke, overwrite, reset\n- The cancel path is meaningful, not just an escape hatch\n- Technically: `role=\"alertdialog\"` is the correct ARIA role — screen readers announce it as requiring a response\n- Examples: \"Delete workspace?\", \"Revoke admin access?\", \"Discard unsaved changes?\"\n\n**Reach for `dialog` when:**\n- Content is complex — forms, multi-step flows, rich read-only content\n- The user can legitimately close without deciding (clicking × means \"I changed my mind, not making a change\")\n- The close button is a valid neutral exit, not forcing a choice\n- Examples: Edit profile form, Create project, View terms of service\n\n### The × button rule (most common mistake)\n\n`AlertDialog` should not have a × close button on destructive actions because closing ≠ cancelling. If a user sees \"Delete workspace?\" and clicks ×, they have not chosen to cancel — they have deferred the decision. `AlertDialog` forces the decision into the explicit buttons. If you find yourself adding a × to an `AlertDialog`, you likely need a `Dialog` instead.\n\n> **Exception:** Non-destructive `AlertDialog` (informational acknowledgement, terms acceptance) can have a × if closing and cancelling are equivalent — the user is not making an irreversible choice either way.\n\n### Ant Design analogy (useful mental model)\n\n| Our component | Ant Design equivalent |\n|---|---|\n| `alert` (inline) | `Alert` |\n| `alert-dialog` | `Modal.confirm()` / `Modal.warning()` |\n| `dialog` | `<Modal />` (component form) |\n| `toast` | `message` / `notification` |\n\n---\n\n"
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- Displaying a form submission error inline below the form header so the user sees it without scrolling\n- Warning a user that their free trial expires in 3 days — a persistent banner they should read but don't have to act on immediately\n- Confirming a destructive action (deleting a workspace) with a modal alert-dialog before it executes\n- Announcing a new feature or policy change at the top of a settings page\n- Surfacing an async error after a failed save, inline in the affected section\n- Blocking the user from proceeding until they acknowledge a critical configuration problem (alert-dialog)\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Default` | Neutral information, success confirmation, or a general announcement | \"Your changes have been saved.\" · \"New integration available.\" · \"Invite sent.\" |\n| `Destructive` | Validation failure, API error, or confirmation that something irreversible occurred | \"Payment failed — check your card details.\" · \"Could not delete project — try again.\" |\n| `Warning` | Caution state where action is optional but advisable | \"Your API key expires in 7 days.\" · \"This action affects all team members.\" |\n| `alert` (inline) | Feedback that does not block the user from the rest of the page | Form error banner · Status update within a section |\n| `alert-dialog` (modal) | Decision required before the user can continue | \"Are you sure you want to delete this workspace?\" confirmation modal |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| Feedback that auto-dismisses after a completed action (save, copy, send) | `toast` | `alert` (alert is persistent; toast is transient) |\n| The page has loaded but there is simply no data to show | `empty` | `alert` (alert signals something wrong or noteworthy, not an empty state) |\n| User must make a choice before continuing (destructive confirm, required acknowledgement) | `alert-dialog` | `toast` (toast is non-blocking and cannot capture a decision) |\n| Inline validation error on a single form field | Field-level error text | `alert` (alert is for section- or page-level messages, not per-field errors) |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Decisions",
+        "body": "\n**`action-slot` stays as BOOLEAN-controlled FRAME — buttons only, no native SLOT.**\n\nDecided 2026-05-28. The action in an alert is always a Button instance. No other component should be placed in `action-slot`. The current BOOLEAN-controlled FRAME enforces this constraint implicitly — no conversion to a native SLOT needed.\n"
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · Compared To · Situation:** User must make a choice before continuing — both buttons are real decisions (delete, revoke, overwrite)\n- **Best practice · Compared To · Use:** alert-dialog (role=alertdialog)\n- **Best practice · Compared To · Not Instead:** dialog — dialog has a neutral close (× button), alertdialog forces a choice\n- **Best practice · Compared To · Situation:** User needs a modal for a form, review, or complex content — can dismiss neutrally with ×\n- **Best practice · Compared To · Use:** dialog (role=dialog)\n- **Best practice · Decision Guide:** See Alert.md — Alert vs AlertDialog vs Dialog Decision Guide section. Key rule: if both buttons are real choices (cancel ≠ close), use alertdialog. If user can exit neutrally (× = valid outcome), use dialog. If no blocking needed, use inline alert.\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/alert\n- **Composition · Alert · Flat Layout:** Has Icon=False AND Has Action=False — title + description are direct children of alert frame, no content wrapper\n- **Composition · Alert · Nested Layout:** Has Icon=True OR Has Action=True — icon (optional) + content frame (title + description) + action-slot (optional) are siblings\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "`color/status/danger-subtle/foreground` for Destructive title/description",
+      "correct": "`color/text/invalid` — alert sits on `color/background/default`, not `danger-subtle`"
+    },
+    {
+      "wrong": "`color/brand/destructive` for Destructive text",
+      "correct": "`color/brand/destructive` is a button fill token, never a text color"
+    },
+    {
+      "wrong": "Override `action-slot › description` fill to `color/text/invalid`",
+      "correct": "The button text is `button/primary/fg/fg` — the button owns that token. A blue button with red text is broken. Change the button's Variant prop instead"
+    },
+    {
+      "wrong": "Override any fill inside the action-slot button instance",
+      "correct": "The button component owns all its internal fills and strokes. Reach in to repaint = contract violation"
+    },
+    {
+      "wrong": "Raw frame with hardcoded yellow fill for Warning",
+      "correct": "Use `alert` instance `Variant=Warning` — even though it uses primitive tokens internally"
+    },
+    {
+      "wrong": "`alert-dialog` for non-blocking messages",
+      "correct": "Use inline `alert` — modal dialogs should only block when a decision is required"
+    },
+    {
+      "wrong": "Icon with `color/icon/*` in Default",
+      "correct": "Default icon uses `color/background/default/foreground` — match the text layer"
+    }
+  ]
+}

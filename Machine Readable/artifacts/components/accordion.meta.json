@@ -1,0 +1,246 @@
+{
+  "name": "accordion",
+  "description": "A vertically stacked set of interactive headings that each reveal a section of content.",
+  "category": "display",
+  "shadcnBase": "accordion",
+  "componentSets": {
+    "accordion": {
+      "purpose": "Single accordion item — compose multiple instances at page level."
+    }
+  },
+  "variants": {
+    "State": {
+      "type": "enum",
+      "values": [
+        "Closed",
+        "Open",
+        "Disabled"
+      ],
+      "default": "Closed",
+      "reactProp": "open / disabled",
+      "reactValues": {
+        "Closed": "open={false}",
+        "Open": "open={true}",
+        "Disabled": "disabled={true}"
+      }
+    }
+  },
+  "tokens": {
+    "container": {
+      "fill": "transparent",
+      "stroke": "color/border/default",
+      "strokeWeight": "1px",
+      "strokeAlign": "INSIDE",
+      "cornerRadius": "none",
+      "note": "Bottom border acts as the separator between stacked items. No fill — transparent."
+    },
+    "trigger": {
+      "paddingTop": "spacing/component/lg",
+      "paddingBottom": "spacing/component/lg",
+      "paddingLeft": "none",
+      "paddingRight": "none",
+      "gap": "spacing/component/sm",
+      "note": "No horizontal padding — trigger spans full width."
+    },
+    "label": {
+      "Default": "color/surface/default/foreground",
+      "Open": "color/surface/default/foreground",
+      "Disabled": "color/text/disabled"
+    },
+    "chevronIcon": {
+      "Default": "color/surface/default/foreground",
+      "Open": "color/surface/default/foreground",
+      "Disabled": "color/text/disabled",
+      "note": "Icon Placeholder — stroke-based. Color bound on VECTOR node strokes, never on instance fill."
+    },
+    "content": {
+      "paddingBottom": "spacing/component/lg",
+      "paddingTop": "none",
+      "paddingLeft": "none",
+      "paddingRight": "none",
+      "note": "Only present in Open state. No top padding — body text sits flush below trigger."
+    },
+    "contentText": "color/text/secondary"
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`button` on trigger, `region` on content"
+      },
+      {
+        "property": "Keyboard",
+        "value": "Full keyboard nav — see Keyboard table above"
+      },
+      {
+        "property": "Focus",
+        "value": "Focus ring required on trigger — use `color/ring` (2px outside)"
+      },
+      {
+        "property": "ARIA",
+        "value": "`aria-expanded` on trigger, `aria-controls` linking trigger to content panel"
+      }
+    ]
+  },
+  "constraints": [
+    "Use accordion when content can be progressively disclosed — when showing all sections at once creates cognitive overload.",
+    "Compose at page level: place multiple `accordion` instances in a vertical stack with no gap (`itemSpacing: 0`) — the bottom border on each item creates the visual separation.",
+    "Do not set a fill on the accordion container — it is intentionally transparent.",
+    "Use `type=\"single\"` for FAQ-style lists where only one answer should be visible. Use `type=\"multiple\"` when users may need to compare multiple sections simultaneously.",
+    "Set `collapsible={true}` unless a default-open item must always remain visible.",
+    "Do not use accordion for primary navigation — use a sidebar or nav menu component.",
+    "Content text uses `color/text/secondary` — if the content includes headings or structured UI, override selectively inside the content slot.",
+    "Trigger has no horizontal padding — do not add padLeft or padRight."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Accordion.md (generated from this file)",
+    "storyFile": "src/stories/Accordion.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "Focus and hover are CSS states only — no variants."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/accordion.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Accordion"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Accordion.stories.tsx",
+    "title": "Display/Accordion",
+    "stories": [
+      "Default",
+      "DefaultOpen",
+      "WithDisabledItem",
+      "Multiple"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Accordion.md",
+    "intro": "# Accordion\n\nA vertically stacked set of interactive headings that each reveal a section of content. Built on Radix UI Accordion.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Component Sets",
+        "body": "\n| Set | ID | Variants | Purpose |\n|---|---|---|---|\n| `accordion` | `27:3059` | 3 | Single accordion item — compose multiple instances at page level |\n\n---\n\n"
+      },
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": "\n### `accordion` — `State`\n"
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\n`State(3) = 3 variants`\n\n> The component is one accordion **item**. A full accordion list is assembled by stacking multiple instances. No composite accordion-list component exists — compose at the page level.\n\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Structure",
+        "body": "\n```\naccordion                         — VERTICAL AUTO LAYOUT, fill: none, stroke: color/border/default 1px INSIDE\n  ├─ trigger                      — FRAME, HORIZONTAL, padT/B: spacing/component/lg, gap: spacing/component/sm\n  │    ├─ label                   — TEXT, fill: color/surface/default/foreground\n  │    └─ chevron                 — INSTANCE (Icon Placeholder, stroke-based)\n  │         └─ Icon               — VECTOR, stroke: color/surface/default/foreground\n  └─ content                      — FRAME, VERTICAL, padB: spacing/component/lg  [Open state only]\n       └─ content-text            — TEXT, fill: color/text/secondary\n```\n\n**Layout notes:**\n- Trigger has no horizontal padding — it spans full width, with no left/right inset\n- Content has no top padding — body text sits flush below the trigger's bottom padding\n- The bottom border separator comes from the container's stroke, not a child element\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### Container\n\n| Layer | Property | Token | Notes |\n|---|---|---|---|\n| `accordion` | Fill | none | No background — transparent |\n| `accordion` | Stroke | `color/border/default` 1px INSIDE | Bottom separator line between items |\n| `accordion` | Corner radius | none (0px) | No rounding on the item frame |\n\n### Trigger\n\n| Layer | Property | Token | Notes |\n|---|---|---|---|\n| `trigger` | Padding top | `spacing/component/lg` | 16px |\n| `trigger` | Padding bottom | `spacing/component/lg` | 16px |\n| `trigger` | Padding left/right | none (0px) | Full-width, no horizontal inset |\n| `trigger` | Gap | `spacing/component/sm` | 8px between label and chevron |\n| `label` | Fill | `color/surface/default/foreground` | Default + Open states |\n| `label` | Fill | `color/text/disabled` | Disabled state |\n\n### Chevron icon\n\n| Layer | Property | Token | Notes |\n|---|---|---|---|\n| `chevron / Icon` (VECTOR) | Stroke | `color/surface/default/foreground` | Default + Open states — bound on VECTOR, not instance fill |\n| `chevron / Icon` (VECTOR) | Stroke | `color/text/disabled` | Disabled state |\n\n> Chevron is an Icon Placeholder instance (stroke-based). Color is set on the `VECTOR` node's strokes — never on the instance fill.\n\n### Content\n\n| Layer | Property | Token | Notes |\n|---|---|---|---|\n| `content` | Padding bottom | `spacing/component/lg` | 16px — only present in Open state |\n| `content-text` | Fill | `color/text/secondary` | Body copy uses secondary text, not primary |\n\n---\n\n"
+      },
+      {
+        "title": "Behavior",
+        "body": "\n### Open / Close\n\n- Clicking a trigger toggles its item open or closed.\n- `type=\"single\"` (Radix UI default): only one item can be open at a time — opening a new item closes the current one.\n- `type=\"multiple\"`: multiple items can be open simultaneously.\n- `collapsible` prop (boolean, default: `false`): when `false`, an open item cannot be closed by clicking its trigger again. Set `collapsible={true}` to allow all items to close.\n\n### State transitions\n\n- States are per-item — each item is independently Closed, Open, or Disabled.\n- Disabled items cannot be opened or focused. The trigger is visually de-emphasised using `color/text/disabled`.\n- Hover and focus are CSS states only — no variants.\n\n### Keyboard\n\n| Key | Action |\n|---|---|\n| `Space` / `Enter` | Toggle focused item open or closed |\n| `Tab` / `Shift+Tab` | Move focus between focusable elements on the page |\n| `Arrow Down` | Move focus to the next accordion trigger |\n| `Arrow Up` | Move focus to the previous accordion trigger |\n| `Home` | Move focus to the first accordion trigger |\n| `End` | Move focus to the last accordion trigger |\n\n*(Source: Radix UI Accordion keyboard spec)*\n\n### Animation\n\n- Radix UI exposes `--radix-accordion-content-width` and `--radix-accordion-content-height` CSS variables on the Content element — use these to animate open/close height transitions.\n- Animation timing is implementation-defined (not set by Radix defaults).\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- FAQ pages where users scan question headings and only open relevant answers\n- Settings panels with multiple grouped sections (Notifications, Privacy, Billing) where users rarely need all groups open at once\n- Help centre or onboarding documentation that groups topics into collapsible categories\n- Subscription or pricing pages that reveal plan details on demand without overwhelming the page\n- Form sections with optional advanced configuration hidden by default\n- Mobile views where vertical space is constrained and progressive disclosure is essential\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Closed` | Default resting state — content is hidden, trigger is visible | FAQ list at page load · Settings categories before any interaction · Collapsed filter panel |\n| `Open` | User has expanded the item to read its content | Active answer on a FAQ page · Expanded billing section in account settings · Open notification preferences panel |\n| `Disabled` | A section is unavailable in the current context (permissions, plan tier, incomplete prerequisite) | Locked plan features on a free tier · Incomplete step in a wizard · Read-only archived record |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| Stacked sections where each reveals long-form content, multiple can be open | `accordion` | `tabs` |\n| Mutually exclusive views where only one panel is visible at a time and sections have equal weight | `tabs` | `accordion` |\n| Top-level app navigation with persistent sections | `sidebar` | `accordion` |\n| A single disclosure toggle (one item, no stack) | `button` + conditional render | `accordion` |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/accordion\n- **Best practice · References · Radix:** https://www.radix-ui.com/primitives/docs/components/accordion\n- **Behavior · Type:** single or multiple — controlled by Radix UI type prop\n- **Behavior · Default Value:** sets which item opens by default\n- **Behavior · Animation:** Radix exposes --radix-accordion-content-height CSS variable for height animation; timing is implementation-defined\n- **Composition · Trigger:** FRAME — contains label (TEXT) and chevron (Icon Placeholder INSTANCE)\n- **Composition · Content:** FRAME — present in Open state only, contains content-text (TEXT)\n- **Composition · Page Level:** Accordion is a single item. Stack multiple instances with itemSpacing=0 to build a full accordion list.\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Set a fill on the chevron instance to change icon color",
+      "correct": "Bind stroke on the `Icon` VECTOR node inside the instance"
+    },
+    {
+      "wrong": "Add horizontal padding to the trigger",
+      "correct": "Leave trigger at 0 horizontal padding — it spans full width"
+    },
+    {
+      "wrong": "Add a corner radius to the accordion item",
+      "correct": "Radius is 0 — no rounding on the item frame"
+    },
+    {
+      "wrong": "Set fill on the accordion container",
+      "correct": "Container is transparent — no fill"
+    },
+    {
+      "wrong": "Use `color/surface/default/foreground` for secondary body copy",
+      "correct": "Use `color/text/secondary` for content body text"
+    },
+    {
+      "wrong": "Build a raw chevron frame to replace the Icon Placeholder",
+      "correct": "Use the Icon Placeholder instance and bind the VECTOR stroke"
+    }
+  ]
+}

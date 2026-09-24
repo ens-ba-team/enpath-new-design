@@ -1,0 +1,135 @@
+{
+  "name": "scroll-area",
+  "description": "A fixed-size region with consistent, styled scrollbars.",
+  "category": "layout",
+  "shadcnBase": "scroll-area",
+  "codeOnly": true,
+  "variants": {},
+  "tokens": {
+    "Thumb": "`color/border/default`",
+    "Region": "inherits its container"
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Keyboard",
+        "value": "The viewport is scrollable with arrow keys once focused"
+      },
+      {
+        "property": "Content",
+        "value": "Keep interactive items focusable inside it"
+      }
+    ]
+  },
+  "constraints": [
+    "Give it an explicit height.",
+    "Don't wrap the whole page — only inner regions."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/ScrollArea.md (generated from this file)",
+    "storyFile": "src/stories/ScrollArea.stories.tsx",
+    "artifactStatus": "needs review",
+    "version": "3.0",
+    "openQuestions": [],
+    "knownIssues": [],
+    "notes": [
+      "Installed 2026-09-22 with AI Elements for the chat panel. Stock source adapted to Enpath: Phosphor icons, light-only classes, shadcn colour names rewritten to Enpath tokens."
+    ],
+    "changelog": [
+      {
+        "date": "2026-09-22",
+        "change": "Added (AI Elements install) and documented."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/scroll-area.tsx",
+    "packageDeps": [],
+    "exports": [
+      "ScrollArea",
+      "ScrollBar"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/ScrollArea.stories.tsx",
+    "title": "Layout/Scroll Area",
+    "stories": [
+      "Vertical"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "ScrollArea.md",
+    "intro": "# ScrollArea\n\nA fixed-size region with consistent, styled scrollbars.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "What it is",
+        "body": "\nRadix ScrollArea. Use when a region inside a panel must scroll on its own (a long list inside a popover or sheet).\n\n**Exports:** `ScrollArea` · `ScrollBar`\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n| Part | Token |\n|---|---|\n| Thumb | `color/border/default` |\n| Region | inherits its container |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Source:** https://ui.shadcn.com/docs/components/scroll-area\n- **Story:** `Layout/Scroll Area`\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "ScrollArea around the whole page",
+      "correct": "Native page scroll"
+    },
+    {
+      "wrong": "No height set",
+      "correct": "A fixed or max height"
+    }
+  ]
+}

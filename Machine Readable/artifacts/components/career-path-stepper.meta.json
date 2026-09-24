@@ -1,0 +1,128 @@
+{
+  "name": "career-path-stepper",
+  "type": "component",
+  "description": "An ordered vertical progression that pairs numbered achievement markers with career position and level details.",
+  "category": "navigation",
+  "shadcnBase": "custom",
+  "primitiveBase": "none",
+  "variants": {},
+  "componentProperties": {
+    "number": { "type": "TEXT", "default": "1", "reactProp": "number" },
+    "title": { "type": "SLOT", "default": null, "reactProp": "title" },
+    "description": { "type": "SLOT", "default": null, "reactProp": "description" },
+    "leading": { "type": "SLOT", "default": null, "reactProp": "leading" },
+    "warning": { "type": "SLOT", "default": null, "reactProp": "warning" },
+    "actions": { "type": "SLOT", "default": null, "reactProp": "actions" },
+    "isLast": { "type": "BOOLEAN", "default": false, "reactProp": "isLast" }
+  },
+  "tokens": {
+    "marker": {
+      "fill": "career-stepper/surface",
+      "stroke": "career-stepper/border",
+      "strokeWeight": 2,
+      "radius": "career-stepper/radius",
+      "foreground": "career-stepper/foreground"
+    },
+    "row": {
+      "fill": "career-stepper/row-surface",
+      "stroke": "career-stepper/row-border",
+      "strokeWeight": 1,
+      "radius": "career-stepper/radius",
+      "foreground": "career-stepper/row-foreground",
+      "description": "career-stepper/description"
+    },
+    "connector": { "fill": "career-stepper/connector" },
+    "spacing": {
+      "markerInset": "spacing/component/xxs",
+      "leadingContentGap": "spacing/component/xs",
+      "titleWarningGap": "spacing/component/sm",
+      "stepGap": "career-stepper/step-gap",
+      "rowGap": "career-stepper/row-gap",
+      "rowPadding": "career-stepper/row-padding",
+      "itemGap": "career-stepper/item-gap"
+    }
+  },
+  "accessibility": {
+    "properties": [
+      { "property": "List semantics", "value": "CareerPathStepper renders an ordered list and each CareerPathStep renders a list item." },
+      { "property": "Marker", "value": "The shield is decorative framing; its visible number communicates the ordered sequence." },
+      { "property": "Warnings", "value": "Warning slots must expose their meaning through visible text or an accessible tooltip." },
+      { "property": "Actions", "value": "Every icon-only action requires a specific accessible label including the affected step." },
+      { "property": "Keyboard", "value": "The stepper itself is static; controls supplied through the leading and actions slots retain their native keyboard behavior. Drag reordering must have keyboard-accessible alternatives." },
+      { "property": "Touch target", "value": "Interactive content is supplied by design-system controls that own their touch sizing." }
+    ]
+  },
+  "constraints": [
+    "Use the component only for an ordered career progression where sequence is meaningful.",
+    "Pass isLast=true to the final step so the connector stops at the last marker.",
+    "Keep the marker number neutral; the blue gradient surface and border communicate the component identity.",
+    "Use the leading slot for a drag handle only when the consumer implements reordering and keyboard-accessible move actions.",
+    "Place warnings next to the title through the warning slot, never inside the trailing action group.",
+    "Use the actions slot for secondary step controls such as move and remove; published or archived paths should omit it.",
+    "Do not substitute a generic brand border or primitive color tokens for the career-stepper component tokens."
+  ],
+  "doNot": [
+    { "wrong": "Place a warning icon beside move and delete controls", "correct": "Use the warning slot beside the step title" },
+    { "wrong": "Use a circular or icon-led marker", "correct": "Use the token-bound shield marker with its visible sequence number" },
+    { "wrong": "Make drag-and-drop the only way to reorder steps", "correct": "Pair the leading drag handle with keyboard-accessible move actions" },
+    { "wrong": "Bind marker colors directly to blue primitives", "correct": "Use the career-stepper component token collection" }
+  ],
+  "composition": {
+    "structure": "CareerPathStepper ol > CareerPathStep li > marker column [shield marker, connector] + row [leading, content [title, warning, description], actions]",
+    "slots": [
+      { "name": "title", "accepts": "open-ended", "required": true, "multiple": false, "defaultContent": null },
+      { "name": "description", "accepts": "open-ended", "required": false, "multiple": false, "defaultContent": null },
+      { "name": "leading", "accepts": "open-ended", "required": false, "multiple": false, "defaultContent": null },
+      { "name": "warning", "accepts": "open-ended", "required": false, "multiple": false, "defaultContent": null },
+      { "name": "actions", "accepts": "open-ended", "required": false, "multiple": false, "defaultContent": null }
+    ],
+    "subComponents": ["CareerPathStep"],
+    "layoutMode": "VERTICAL",
+    "alignment": "MIN",
+    "rules": ["The marker and content row are siblings so the connector can extend independently between steps."]
+  },
+  "behavior": { "interactionModel": "stateless", "keyboardPattern": {} },
+  "relationships": {
+    "subComponents": [{ "name": "career-path-step", "role": "Renders one numbered progression row", "overrideRule": "Use slots without overriding component token bindings" }],
+    "usedBy": ["career-path-screen"],
+    "relatedComponents": [{ "name": "item", "reason": "Both present repeatable rows, but Item is not an ordered progression." }],
+    "mustBeChildOf": [], "mustNotBeChildOf": [], "composedWith": ["button", "tooltip"], "requires": [], "triggers": [], "blocksWhen": [], "exposesState": []
+  },
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/CareerPathStepper.md (generated from this file)",
+    "storyFile": "src/stories/CareerPathStepper.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "1.0",
+    "openQuestions": [],
+    "notes": ["Custom Enpath component with no shadcn or Radix behavioral base."],
+    "knownIssues": [],
+    "changelog": [{ "date": "2026-09-23", "change": "Created reusable Career Path Stepper and dedicated component-token collection.", "breaking": false }]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/career-path-stepper.tsx",
+    "packageDeps": ["@phosphor-icons/react"],
+    "exports": ["CareerPathStepper", "CareerPathStep", "CareerPathStepProps"],
+    "notes": ["CareerPathStep extends native li attributes; CareerPathStepper extends native ol attributes.", "The number-only shield uses a clipped component-token border and gradient surface; spacing/component/xxs creates the inset edge.", "The leading slot supports an optional drag handle; reordering behavior remains consumer-owned."]
+  },
+  "links": { "shadcn": null, "radix": null, "storybook": "http://localhost:6006/?path=/docs/navigation-career-path-stepper--docs" },
+  "storybook": {
+    "file": "src/stories/CareerPathStepper.stories.tsx",
+    "title": "Navigation/Career Path Stepper",
+    "stories": ["Default", "WithWarnings", "WithActions", "ReadOnly", "LongContent"],
+    "decorators": ["none"],
+    "notes": "Verify at 390px and 1280px."
+  },
+  "docs": {
+    "file": "CareerPathStepper.md",
+    "intro": "# Career Path Stepper\n\nAn ordered vertical progression that pairs numbered achievement markers with career position and level details.\n\n---\n\n",
+    "sections": [
+      { "title": "Structure", "body": "\n```\nCareerPathStepper — ordered list, vertical layout\n└─ CareerPathStep — list item; gap: career-stepper/step-gap\n   ├─ marker column\n   │  ├─ shield marker — gradient surface, 2px inset border and visible number\n   │  └─ connector — career-stepper/connector; omitted when isLast=true\n   └─ row — surface, border, radius, padding and gap\n      ├─ main — leading + content; gap: spacing/component/xs\n      │  ├─ leading — optional drag handle\n      │  └─ content\n      │     ├─ title + warning — gap: spacing/component/sm\n      │     └─ description\n      └─ actions\n```\n\n---\n\n" },
+      { "title": "Token Bindings", "body": "\n| Frame | Property | Token |\n|---|---|---|\n| Step | Child gap | `career-stepper/step-gap` |\n| Marker | Gradient fill | `career-stepper/surface` |\n| Marker | Border | `career-stepper/border` |\n| Marker | Border inset | `spacing/component/xxs` |\n| Marker | Number | `career-stepper/foreground` |\n| Connector | Fill | `career-stepper/connector` |\n| Row | Fill | `career-stepper/row-surface` |\n| Row | Border | `career-stepper/row-border` |\n| Row | Radius | `career-stepper/radius` |\n| Row | Padding | `career-stepper/row-padding` |\n| Row | Content / actions gap | `career-stepper/row-gap` |\n| Row | Bottom spacing | `career-stepper/item-gap` |\n| Leading + content | Internal gap | `spacing/component/xs` |\n| Title | Fill | `career-stepper/row-foreground` |\n| Title row | Title / warning gap | `spacing/component/sm` |\n| Description | Fill | `career-stepper/description` |\n\n---\n\n" },
+      { "title": "Behavior", "body": "\nThe component is stateless. Consumers own reordering, removal, warnings and read-only behavior through slots. For editable paths, place a drag handle in `leading` and retain keyboard-accessible move actions. The connector renders for every step except one marked `isLast`.\n\n---\n\n" },
+      { "title": "Accessibility", "parts": [{ "md": "" }, { "from": "accessibility.properties" }, { "md": "\n---\n\n" }] },
+      { "title": "Usage Rules", "parts": [{ "md": "" }, { "from": "constraints" }, { "md": "\n---\n\n" }] },
+      { "title": "Best Practice", "body": "\n### Use cases\n\n- A draft career path whose Position–Level steps can be reordered\n- A published career path shown as a read-only progression\n- A path audit where incomplete competency expectations need an inline warning\n\n### Composition patterns\n\n| Pattern | When to use |\n|---|---|\n| Default | Read-only progression without warnings or actions |\n| With warnings | One or more steps have incomplete setup data |\n| With actions | Draft paths where administrators can reorder or remove steps |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| Ordered career progression with connected numbered achievements | `career-path-stepper` | `item` |\n| Independent repeatable rows without sequence meaning | `item` | `career-path-stepper` |\n\n---\n\n" },
+      { "title": "Do Not", "parts": [{ "md": "" }, { "from": "doNot" }, { "md": "\n" }] }
+    ]
+  }
+}

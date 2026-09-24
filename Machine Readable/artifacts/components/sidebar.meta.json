@@ -1,0 +1,463 @@
+{
+  "name": "sidebar",
+  "description": "A composable, themeable application sidebar for primary navigation with collapsible state, mobile overlay, and keyboard shortcut.",
+  "category": "navigation",
+  "shadcnBase": "sidebar",
+  "componentSets": {
+    "sidebar": {
+      "variants": 6,
+      "purpose": "Main panel container — Type × State"
+    },
+    "sidebar-menu-1": {
+      "variants": 6,
+      "purpose": "Primary nav item with icon — State × Type"
+    },
+    "_sidebar-menu-2": {
+      "variants": 3,
+      "purpose": "Sub-item, indented, text-only — State"
+    },
+    "_sidebar-group-label": {
+      "variants": 1,
+      "purpose": "Group section label — no variants"
+    },
+    "_sidebar-badge": {
+      "variants": 1,
+      "purpose": "Notification count badge for nav items"
+    }
+  },
+  "variants": {
+    "Type": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Floating",
+        "Inset"
+      ],
+      "default": "Default",
+      "appliesTo": "sidebar",
+      "reactProp": "variant",
+      "reactValues": {
+        "Default": "sidebar",
+        "Floating": "floating",
+        "Inset": "inset"
+      }
+    },
+    "State": {
+      "type": "enum",
+      "values": [
+        "Expanded",
+        "Collapsed"
+      ],
+      "default": "Expanded",
+      "appliesTo": "sidebar",
+      "reactProp": "open (via SidebarProvider)",
+      "reactValues": {
+        "Expanded": "open={true}",
+        "Collapsed": "open={false}"
+      }
+    },
+    "menuState": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Hover",
+        "Active",
+        "Disabled",
+        "Disabled with reason"
+      ],
+      "default": "Default",
+      "appliesTo": "sidebar-menu-1, _sidebar-menu-2",
+      "reactProp": "data-active / CSS :hover",
+      "reactValues": {
+        "Active": "isActive={true}"
+      },
+      "disabledReasonNote": "From En UI (rule R-ENP-10). Prop disabledReason on SidebarMenuItem / SidebarSubItem: shown as hover title, announced via aria-describedby. Disabled items are removed from tab order and do not navigate."
+    },
+    "menuType": {
+      "type": "enum",
+      "values": [
+        "Expand",
+        "Collapse"
+      ],
+      "default": "Expand",
+      "appliesTo": "sidebar-menu-1",
+      "note": "Expand = full row (icon + label + badge + trailing). Collapse = icon-only, for collapsed sidebar mode."
+    }
+  },
+  "tokens": {
+    "sidebar": {
+      "Default": {
+        "fill": "color/sidebar/background",
+        "stroke": "color/sidebar/border",
+        "strokeAlign": "INSIDE",
+        "strokeWeight": "mixed (right edge only)",
+        "cornerRadius": "none"
+      },
+      "Floating": {
+        "fill": "color/sidebar/background",
+        "stroke": "none",
+        "cornerRadius": "radius/lg"
+      },
+      "Inset": {
+        "fill": "color/sidebar/background",
+        "stroke": "color/sidebar/border",
+        "strokeAlign": "INSIDE",
+        "cornerRadius": "none"
+      }
+    },
+    "header": {
+      "fill": "color/sidebar/background",
+      "paddingTop": "spacing/component/sm",
+      "paddingBottom": "spacing/component/sm",
+      "paddingLeft": "spacing/component/md",
+      "paddingRight": "spacing/component/md",
+      "gap": "spacing/component/lg"
+    },
+    "logo": {
+      "fill": "NOT TOKEN-BOUND — branding asset",
+      "size": "28 × 28px FIXED",
+      "note": "Branding slot — exempt from all token binding rules. Only size constraint applies. See enpath-design-system.md Branding Slots."
+    },
+    "textBlock": {
+      "gap": "spacing/component/xxs",
+      "title": "color/sidebar/foreground",
+      "caption": "color/text/secondary"
+    },
+    "content": {
+      "paddingTop": "spacing/0",
+      "paddingBottom": "spacing/0",
+      "paddingLeft": "spacing/0",
+      "paddingRight": "spacing/0",
+      "gap": "spacing/component/md"
+    },
+    "groups": {
+      "paddingTop": "spacing/component/md",
+      "paddingBottom": "spacing/component/md",
+      "paddingLeft": "spacing/component/md",
+      "paddingRight": "spacing/component/md",
+      "gap": "spacing/component/sm"
+    },
+    "menuItem": {
+      "radius": "radius/md",
+      "paddingLeft": "spacing/component/sm",
+      "paddingRight": "spacing/component/sm",
+      "gap": "spacing/component/sm",
+      "states": {
+        "Default": {
+          "fill": "transparent",
+          "iconStroke": "color/sidebar/foreground",
+          "labelFill": "color/sidebar/foreground"
+        },
+        "Hover": {
+          "fill": "color/sidebar/accent",
+          "iconStroke": "color/sidebar/accent/foreground",
+          "labelFill": "color/sidebar/accent/foreground"
+        },
+        "Active": {
+          "fill": "color/sidebar/accent",
+          "iconStroke": "color/sidebar/accent/foreground",
+          "labelFill": "color/sidebar/accent/foreground"
+        }
+      }
+    },
+    "subMenuItem": {
+      "radius": "radius/md",
+      "paddingLeft": "spacing/component/2xl",
+      "paddingRight": "spacing/component/sm",
+      "gap": "spacing/component/sm",
+      "note": "Large left padding creates the visual indent communicating sub-item hierarchy.",
+      "states": {
+        "Default": {
+          "fill": "transparent",
+          "labelFill": "color/sidebar/foreground"
+        },
+        "Hover": {
+          "fill": "color/sidebar/accent",
+          "labelFill": "color/sidebar/accent/foreground"
+        },
+        "Active": {
+          "fill": "color/sidebar/accent",
+          "labelFill": "color/sidebar/accent/foreground"
+        }
+      }
+    },
+    "groupLabel": {
+      "fill": "transparent",
+      "paddingLeft": "spacing/component/sm",
+      "paddingRight": "spacing/component/sm",
+      "labelFill": "color/text/secondary"
+    },
+    "badge": {
+      "fill": "color/brand/primary",
+      "radius": "radius/full",
+      "paddingLeft": "spacing/component/xxs",
+      "paddingRight": "spacing/component/xxs",
+      "countFill": "color/brand/primary/foreground"
+    },
+    "iconRule": "Icon Placeholder instances are stroke-based. Bind color on VECTOR node strokes — never on instance fill."
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`navigation` on the sidebar panel"
+      },
+      {
+        "property": "Keyboard",
+        "value": "`Cmd+B` / `Ctrl+B` to toggle; `Tab` to navigate items"
+      },
+      {
+        "property": "Focus",
+        "value": "Focus ring on active item — `color/sidebar/ring`"
+      },
+      {
+        "property": "ARIA",
+        "value": "`aria-expanded` on the sidebar trigger"
+      },
+      {
+        "property": "Mobile",
+        "value": "Renders as an overlay sheet on mobile — full focus trap"
+      },
+      {
+        "property": "Focus Indicator",
+        "value": "color/sidebar/ring — scoped alias of color/ring"
+      },
+      {
+        "property": "Toggle button",
+        "value": "`SidebarToggle` shows CaretLineLeft when open (\"Collapse sidebar\") and CaretLineRight when collapsed (\"Expand sidebar\"); `aria-expanded` reflects the state"
+      },
+      {
+        "property": "Collapsed badge",
+        "value": "The count is hidden; a dot on the icon keeps the signal and the accessible name includes the count (\"Notifications, 1\")"
+      }
+    ]
+  },
+  "constraints": [
+    "Always wrap the sidebar in `SidebarProvider` — it owns collapse state and the keyboard shortcut.",
+    "Use `Type=Expand` nav items when the sidebar is expanded. Switch to `Type=Collapse` when `collapsible=icon` and sidebar is collapsed.",
+    "Use `_sidebar-menu-2` for sub-items under a collapsible parent — never nest two levels of `sidebar-menu-1`.",
+    "Group related nav items under a `group-*` frame with a `_sidebar-group-label` at the top.",
+    "`_sidebar-badge` is for notification counts only — single digit or short number. Do not use for status labels or text.",
+    "Do not use `color/sidebar/*` tokens outside the sidebar component — they are scoped to this context only.",
+    "Do not put the Logo in a filled container using a sidebar token — the Logo fill is branding, not token-controlled.",
+    "Logo fill is NOT token-bound — branding asset exempt from token rules. Size: 28×28px FIXED only."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Sidebar.md (generated from this file)",
+    "storyFile": "src/stories/Sidebar.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "Logo fill override removed — branding slot, not token-bound.",
+      "Floating panel: no fill, no border, no shadow — sits directly on color/background/app. Hover uses color/sidebar/accent (60% white); the selected item uses color/sidebar/active (white) + a 1px color/sidebar/active/border, label SemiBold."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      },
+      {
+        "date": "2026-09-22",
+        "change": "Floating type gains border + shadow/surface. SidebarToggle has a built-in icon that switches (CaretLineLeft ↔ CaretLineRight) with state-based label and aria-expanded. Collapsed items show a badge dot. New story: Enpath app (expanded / collapsed)."
+      },
+      {
+        "date": "2026-09-22",
+        "change": "Light-blue panel (sidebar/background → blue/50, accent → blue/100, border → blue/100). Selected item now uses its own token color/sidebar/active (white) + shadow/surface instead of sharing sidebar/accent with hover.",
+        "breaking": false
+      },
+      {
+        "date": "2026-09-22",
+        "change": "Panel back to white; floating radius → radius/panel (14px). Selected item: blue/50 fill + new color/sidebar/active/border (blue/200), dark text; hover → blue/25. Story shell uses color/background/app (blue/25) and spacing/shell (8px).",
+        "breaking": false
+      },
+      {
+        "date": "2026-09-22",
+        "change": "Glass sidebar: floating panel is 80% white + backdrop blur (blur/sidebar), shadow removed, border kept. Selected item → white + zinc/200 hairline + shadow/sm; hover → 60% white. App shell background gains color/background/app-glow glows.",
+        "breaking": false
+      },
+      {
+        "date": "2026-09-22",
+        "change": "Contrast audit: group label and brand caption → color/text/secondary (were sidebar/foreground at 60/70% opacity, failing 4.5:1). Selected item: shadow/sm removed, label SemiBold as the non-colour cue.",
+        "breaking": false
+      },
+      {
+        "date": "2026-09-22",
+        "change": "color/sidebar/border → zinc/300 (was zinc/200, invisible on the blue app background). Sidebar separators bind color/sidebar/border instead of the Separator default color/border/default.",
+        "breaking": false
+      },
+      {
+        "date": "2026-09-22",
+        "change": "Readability: color/sidebar/foreground → zinc/800 (13.98:1); group label SemiBold; app-background glows dimmed (app-glow → blue/50) and moved behind the page panel.",
+        "breaking": false
+      },
+      {
+        "date": "2026-09-22",
+        "change": "Floating sidebar is transparent — fill, border and backdrop blur removed (glass dropped). color/sidebar/background → white (Default/Inset only). radius/panel → 12px.",
+        "breaking": false
+      },
+      {
+        "date": "2026-09-22",
+        "change": "Brand title 14px → 16px (text-base) so the product name reads as the header.",
+        "breaking": false
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/sidebar.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Sidebar"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Sidebar.stories.tsx",
+    "title": "Navigation/Sidebar",
+    "stories": [
+      "Default",
+      "WithSubItems",
+      "Collapsible",
+      "Floating",
+      "EnpathApp",
+      "EnpathAppCollapsed"
+    ],
+    "decorators": [
+      "SidebarProvider context required"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Sidebar.md",
+    "intro": "# Sidebar\n\nA composable, themeable application sidebar for primary navigation. Built on shadcn's Sidebar primitive, which manages collapsible state, mobile overlay, and keyboard shortcut via the `SidebarProvider` context.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Component Sets",
+        "body": "\n| Set | ID | Variants | Purpose |\n|---|---|---|---|\n| `sidebar` | `95:18202` | 6 | Main panel container — Type × State |\n| `sidebar-menu-1` | `95:15354` | 6 | Primary nav item with icon — State × Type |\n| `_sidebar-menu-2` | `95:15549` | 3 | Sub-item (indented, text-only) — State |\n| `_sidebar-group-label` | `95:14510` | 1 | Group section label |\n| `_sidebar-badge` | `95:14511` | 1 | Notification badge for nav items |\n\n---\n\n"
+      },
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": "\n### `sidebar` — `Type × State`\n"
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\n`Type(3) × State(2) = 6 variants`\n\n### `sidebar-menu-1` — `State × Type`\n"
+          },
+          {
+            "md": "| Property | Options | Default |\n|---|---|---|\n| `State` | `Default`, `Hover`, `Active` | `Default` |\n| `Type` | `Expand`, `Collapse` | `Expand` |"
+          },
+          {
+            "md": "\n`State(3) × Type(2) = 6 variants`\n\n> `Type=Expand` — full row: icon + label + badge + trailing chevron.\n> `Type=Collapse` — icon-only: for use when the sidebar is in collapsed/icon mode.\n\n### `_sidebar-menu-2` — `State`\n"
+          },
+          {
+            "md": "| Property | Options | Default |\n|---|---|---|\n| `State` | `Default`, `Hover`, `Active` | `Default` |"
+          },
+          {
+            "md": "\n`State(3) = 3 variants`\n\n### `_sidebar-group-label` and `_sidebar-badge`\n\nSingle-variant sub-components. No variant props.\n\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Structure",
+        "body": "\n### `sidebar`\n\n```\nsidebar                         — VERTICAL AUTO LAYOUT\n                                  fill: color/sidebar/background\n                                  stroke: color/sidebar/border INSIDE (mixed weight — edge only)\n                                  Type=Floating: radius/lg, no stroke\n  ├─ header                     — FRAME, HORIZONTAL\n  │    │                          fill: color/sidebar/background\n  │    │                          padT/padB: spacing/component/sm\n  │    │                          padL/padR: spacing/component/md\n  │    │                          gap: spacing/component/lg\n  │    ├─ Logo                  — INSTANCE, 28×28px FIXED\n  │    │                          ⚠️ Branding slot — fill is NOT token-bound\n  │    └─ text-block            — FRAME, VERTICAL, gap: spacing/component/xxs\n  │         ├─ title            — TEXT\n  │         └─ caption          — TEXT\n  └─ content                    — FRAME, VERTICAL\n                                  padding: 0 on all sides\n                                  gap: spacing/component/md\n       └─ group-*               — FRAME, VERTICAL\n                                  pad all sides: spacing/component/md\n                                  gap: spacing/component/sm\n            ├─ group-label-slot — INSTANCE (_sidebar-group-label)\n            ├─ nav-item-*       — INSTANCE (sidebar-menu-1)\n            └─ sub-items        — INSTANCE (_sidebar-menu-2)\n```\n\n### `sidebar-menu-1`\n\n```\nsidebar-menu-1                  — HORIZONTAL AUTO LAYOUT\n                                  radius: radius/md\n                                  padL/padR: spacing/component/sm\n                                  gap: spacing/component/sm\n                                  fill: none (Default) / color/sidebar/accent (Hover) / color/sidebar/active + color/sidebar/active/border (Active)\n  ├─ leading / icon             — INSTANCE (Icon Placeholder, stroke-based)\n  │    └─ Icon                  — VECTOR, stroke (see token table)\n  ├─ label                      — TEXT (fill: see token table)\n  ├─ badge                      — INSTANCE (_sidebar-badge) — Type=Expand only\n  └─ trailing                   — INSTANCE (Icon Placeholder) — Type=Expand only\n       └─ Icon                  — VECTOR, stroke (matches leading)\n```\n\n> `Type=Collapse` shows only the `leading`/`icon` slot — label, badge, and trailing are hidden.\n\n### `_sidebar-menu-2`\n\n```\n_sidebar-menu-2                 — HORIZONTAL AUTO LAYOUT\n                                  radius: radius/md\n                                  padL: spacing/component/2xl\n                                  padR: spacing/component/sm\n                                  gap: spacing/component/sm\n                                  fill: none (Default) / color/sidebar/accent (Hover) / color/sidebar/active + color/sidebar/active/border (Active)\n  └─ label                      — TEXT (fill: see token table)\n```\n\n### `_sidebar-group-label`\n\n```\n_sidebar-group-label            — HORIZONTAL AUTO LAYOUT\n                                  fill: none\n                                  padL/padR: spacing/component/sm\n  └─ label                      — TEXT, fill: color/sidebar/foreground\n```\n\n### `_sidebar-badge`\n\n```\n_sidebar-badge                  — HORIZONTAL AUTO LAYOUT\n                                  fill: color/brand/primary\n                                  radius: radius/full\n                                  padL/padR: spacing/component/xxs\n  └─ count                      — TEXT, fill: color/brand/primary/foreground\n```\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### `sidebar` — container per Type\n\n| Type | Fill | Stroke | Radius | Notes |\n|---|---|---|---|---|\n| `Default` | `color/sidebar/background` | `color/sidebar/border` INSIDE | none | Border on right edge only (mixed weight) |\n| `Floating` | none — transparent on `color/background/app` | none | `radius/panel` | No fill, border or shadow; nav sits on the app background |\n| `Inset` | `color/sidebar/background` | `color/sidebar/border` INSIDE | none | Same as Default |\n\n### `sidebar` — header\n\n| Layer | Property | Token |\n|---|---|---|\n| `header` | Fill | `color/sidebar/background` |\n| `header` | Padding top/bottom | `spacing/component/sm` |\n| `header` | Padding left/right | `spacing/component/md` |\n| `header` | Gap | `spacing/component/lg` |\n| `Logo` | Fill | **Not token-bound** — branding asset |\n| `Logo` | Size | 28 × 28px FIXED |\n| `text-block` | Gap | `spacing/component/xxs` |\n| `title` | Fill | `color/sidebar/foreground` |\n| `caption` | Fill | `color/text/secondary` |\n\n### `sidebar` — content and groups\n\n| Layer | Property | Token |\n|---|---|---|\n| `content` | Padding all sides | `spacing/0` (explicit zero) |\n| `content` | Gap (between groups) | `spacing/component/md` |\n| `group-*` | Padding all sides | `spacing/component/md` |\n| `group-*` | Gap (between items) | `spacing/component/sm` |\n\n### `sidebar-menu-1` — per State\n\n| State | Container fill | Icon stroke | Label fill |\n|---|---|---|---|\n| `Default` | none | `color/sidebar/foreground` | `color/sidebar/foreground` |\n| `Hover` | `color/sidebar/accent` | `color/sidebar/accent/foreground` | `color/sidebar/accent/foreground` |\n| `Active` | `color/sidebar/active` (+ 1px `color/sidebar/active/border`) | `color/sidebar/active/foreground` | `color/sidebar/active/foreground` |\n\n> Hover and Active share the same fill and text tokens. Active is distinguished by persistent fill — it does not reset on mouse-out.\n\n### `sidebar-menu-1` — layout (all states)\n\n| Property | Token |\n|---|---|\n| Radius | `radius/md` |\n| Padding left/right | `spacing/component/sm` |\n| Gap | `spacing/component/sm` |\n\n### `_sidebar-menu-2` — per State\n\n| State | Container fill | Label fill |\n|---|---|---|\n| `Default` | none | `color/sidebar/foreground` |\n| `Hover` | `color/sidebar/accent` | `color/sidebar/accent/foreground` |\n| `Active` | `color/sidebar/active` (+ 1px `color/sidebar/active/border`) | `color/sidebar/active/foreground` |\n\nLeft padding `spacing/component/2xl` creates the visual indent that communicates hierarchy under the parent item.\n\n### `_sidebar-badge`\n\n| Layer | Property | Token |\n|---|---|---|\n| container | Fill | `color/brand/primary` |\n| container | Radius | `radius/full` |\n| container | Padding left/right | `spacing/component/xxs` |\n| `count` | Fill | `color/brand/primary/foreground` |\n\n### Icon strokes (Icon Placeholder)\n\nAll icons in the sidebar are Icon Placeholder instances (stroke-based). Bind color on the `VECTOR` node's strokes — never on the instance fill.\n\n---\n\n\n### Contrast on the app background (audit 2026-09-22, slate neutrals)\n\n| Text | Token | On `background/app` |\n|---|---|---|\n| Nav labels, title, name | `color/sidebar/foreground` | 13.98:1 |\n| Group label (SemiBold), caption, role | `color/text/secondary` | 7.24:1 |\n\nThe app-background glows sit behind the page panel, never behind sidebar text, so these values hold across the whole sidebar.\n\nGroup label and caption used `sidebar/foreground` at 60–70% opacity — 3.2–4.1:1, below 4.5:1 for small text. The selected item is marked by **weight** (SemiBold) as well as the white chip, because the chip alone is 1.05:1 against the app background.\n\n---\n\n"
+      },
+      {
+        "title": "Branding Slot — Logo",
+        "body": "\nThe `Logo` instance in the sidebar header is a **branding slot**. It is not token-bound and is exempt from token binding rules.\n\n- **Fill:** not token-bound — set by the product's brand guidelines\n- **Size:** 28 × 28px FIXED — the only system constraint\n- **Usage:** replace the placeholder with your logomark or brand icon at any visual style. The 28px size ensures it fits within the header layout without disruption.\n\nSee `enpath-design-system.md → Branding Slots` for the system-level rule.\n\n---\n\n"
+      },
+      {
+        "title": "Behavior",
+        "body": "\n### Collapse modes (`collapsible` prop — shadcn)\n\n| Value | Behavior |\n|---|---|\n| `offcanvas` | Sidebar slides off-screen; full width when open |\n| `icon` | Collapses to icon-only strip; label/badge/trailing hidden — use `sidebar-menu-1 Type=Collapse` |\n| `none` | Always visible, not collapsible |\n\n### State management (`useSidebar` hook)\n\n| Value | Type | Description |\n|---|---|---|\n| `state` | `\"expanded\"` / `\"collapsed\"` | Current sidebar state |\n| `open` | boolean | Whether sidebar is open |\n| `toggleSidebar()` | function | Toggle open/collapsed |\n| `isMobile` | boolean | Whether viewport is mobile |\n| `openMobile` | boolean | Mobile overlay open state |\n\n### Keyboard\n\n| Key | Action |\n|---|---|\n| `Cmd+B` / `Ctrl+B` | Toggle sidebar open/collapsed |\n| `Tab` / `Shift+Tab` | Navigate between sidebar focusable elements |\n\n### Types\n\n| Type | Visual | When to use |\n|---|---|---|\n| `Default` | Flush with page edge, bordered right | Standard app layout |\n| `Floating` | Rounded panel (`radius/panel`, 14px) with a border (`color/sidebar/border`) and `shadow/surface`, floating on `color/background/app` with `spacing/shell/inset` | Enpath app shell; cards-based layouts |\n| `Inset` | Inset within page layout | Nested or sectioned app shells |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- Full application shells where primary navigation needs to be always accessible (dashboards, admin panels, SaaS apps)\n- Multi-section apps where users switch between major areas (Analytics, Settings, Users, Billing)\n- Workspaces with hierarchical navigation — top-level sections with nested sub-items below each\n- Apps that need icon-only collapsed mode on smaller screens to recover horizontal space\n- Mobile apps that render the sidebar as a slide-in overlay sheet\n- Applications requiring a persistent branding slot (logo + product name) anchored to the top of the nav\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Type=Default` | Standard app layout — sidebar is flush with the page edge, right border separates it from content | CRM · Project management tool · Admin dashboard |\n| `Type=Floating` | Cards-based or elevated layout where the sidebar should feel like a panel rather than an edge element | Analytics tool · Design tool · Dashboard with card-heavy content area |\n| `Type=Inset` | Sidebar is inset within the page layout — content wraps around it, creating a nested shell | Settings page with sectioned layout · Documentation browser · Multi-panel workspace |\n| `State=Expanded` | Default — full label and icon visible, all nav items readable | Any app in its standard working state |\n| `State=Collapsed` | Space is at a premium — show icons only (`sidebar-menu-1 Type=Collapse`) | Collapsed mode via `collapsible=icon` · Narrow viewport · User preference to minimise nav |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| Persistent full-app navigation with grouped sections, always visible or collapsible | `sidebar` | `navigation-menu` |\n| Site-level top navigation with horizontal links and dropdown panels | `navigation-menu` | `sidebar` |\n| A secondary page-level nav for sections within a single page | `tabs` | `sidebar` |\n| Collapsible content groups within a page (not navigation) | `accordion` | `sidebar` |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/sidebar\n- **Behavior · Collapsible · Icon:** Collapses to icon-only strip — switch nav items to Type=Collapse\n- **Behavior · Keyboard:** Cmd+B (Mac) / Ctrl+B (Windows) — toggles sidebar open/collapsed\n- **Behavior · Mobile:** Renders as a full-screen overlay sheet on mobile with focus trap\n- **Composition · Wrapper:** SidebarProvider — required, owns state and keyboard shortcut\n- **Composition · Slots:** header (Logo + text-block)\n- **Composition · Slots:** content (groups → group-label + nav items + sub-items)\n- **Composition · Logo Slot:** 28×28px branding slot — replace with brand logomark. No token constraint on fill.\n- **Composition · Nav Item Hierarchy:** sidebar-menu-1 for primary items, _sidebar-menu-2 for sub-items. Never nest menu-1 inside menu-1.\n- **Composition · Badge Usage:** _sidebar-badge for notification counts only — short numbers, not status labels\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Bind a token to the Logo fill",
+      "correct": "Leave Logo fill unbound — branding decision"
+    },
+    {
+      "wrong": "Use `color/sidebar/primary` on badge fill",
+      "correct": "Use `color/brand/primary` — primary is logo-block only"
+    },
+    {
+      "wrong": "Use `color/sidebar/accent/foreground` on header title/caption",
+      "correct": "Use `color/sidebar/foreground` — title sits on `color/sidebar/background`, not accent"
+    },
+    {
+      "wrong": "Use `color/background/default/foreground` on sidebar icon strokes",
+      "correct": "Use `color/sidebar/foreground` — wrong semantic group"
+    },
+    {
+      "wrong": "Use the hover token (`color/sidebar/accent`) for the selected item",
+      "correct": "Use `color/sidebar/active` for the selected item and `color/sidebar/accent` for hover — they are different tokens"
+    },
+    {
+      "wrong": "Place `_sidebar-menu-2` without a parent `sidebar-menu-1`",
+      "correct": "Sub-items always follow a parent item — the indent implies hierarchy"
+    },
+    {
+      "wrong": "Use sidebar token group outside the sidebar",
+      "correct": "Sidebar tokens are scoped — `color/sidebar/*` only inside the sidebar panel"
+    }
+  ]
+}

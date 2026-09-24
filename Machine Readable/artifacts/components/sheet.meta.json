@@ -1,0 +1,290 @@
+{
+  "name": "sheet",
+  "description": "A slide-in panel from the viewport edge for secondary tasks — filters, navigation, detail panels, settings. Built on Radix UI Dialog with a side prop. Shares the same primitive as Dialog but is positional rather than centered.",
+  "category": "overlay",
+  "shadcnBase": "sheet",
+  "primitiveBase": "Radix UI Dialog (@radix-ui/react-dialog)",
+  "variants": {
+    "Side": {
+      "type": "enum",
+      "values": [
+        "Horizontal",
+        "Vertical"
+      ],
+      "default": "Horizontal",
+      "intent": {
+        "Horizontal": "380px wide, full viewport height. Maps to side='right' (default) or side='left'. Use for side panels: filters, detail views, navigation drawers, settings.",
+        "Vertical": "Full viewport width, 423px tall. Maps to side='bottom' or side='top'. Use for bottom sheets on mobile-first layouts, command palettes, full-width menus."
+      },
+      "codeProp": "side",
+      "codeValues": {
+        "Horizontal": "side='right' (default) or side='left'",
+        "Vertical": "side='bottom' or side='top'"
+      }
+    }
+  },
+  "componentProperties": {
+    "Side": {
+      "type": "VARIANT",
+      "default": "Horizontal"
+    }
+  },
+  "tokens": {
+    "shell": {
+      "fill": "color/surface/overlay",
+      "stroke": "color/border/default",
+      "strokeWeight": 1,
+      "radius": "radius/lg"
+    },
+    "sheetHeader": {
+      "padding": "spacing/component/lg",
+      "gap": "spacing/component/md",
+      "textBlockGap": "spacing/component/sm",
+      "titleFill": "color/surface/overlay/foreground",
+      "descriptionFill": "color/text/secondary",
+      "closeButton": "button, Ghost Icon, 32×32"
+    },
+    "sheetBody": {
+      "padding": "spacing/component/lg",
+      "radius": "radius/md",
+      "type": "SLOT — replace with any content appropriate to the sheet's purpose"
+    },
+    "sheetFooter": {
+      "stroke": "color/border/default",
+      "strokePosition": "top",
+      "padding": "spacing/component/lg",
+      "gap": "spacing/component/sm",
+      "btnPrimary": {
+        "fill": "button/primary/bg/bg",
+        "width": "fill container"
+      },
+      "btnSecondary": {
+        "fill": "button/outline/bg/bg",
+        "stroke": "button/outline/border/default",
+        "width": "fill container"
+      }
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`role=\"dialog\"` with `aria-modal=\"true\"` (Radix UI Dialog default)"
+      },
+      {
+        "property": "Label",
+        "value": "`aria-labelledby` auto-points to `<SheetTitle>`"
+      },
+      {
+        "property": "Description",
+        "value": "`aria-describedby` auto-points to `<SheetDescription>`"
+      },
+      {
+        "property": "Focus trap",
+        "value": "Active while open"
+      },
+      {
+        "property": "Focus return",
+        "value": "Returns to trigger on close"
+      },
+      {
+        "property": "Escape",
+        "value": "Always closes"
+      },
+      {
+        "property": "`SheetTitle`",
+        "value": "Required — use `<VisuallyHidden>` if not visually shown"
+      },
+      {
+        "property": "Close Button Touch Target",
+        "value": "Close button has a built-in invisible 44x44px hit area on coarse pointers (height/target/touch)."
+      }
+    ],
+    "keys": [
+      {
+        "key": "`Tab` / `Shift+Tab`",
+        "action": "Move focus within the sheet"
+      },
+      {
+        "key": "`Escape`",
+        "action": "Close the sheet"
+      },
+      {
+        "key": "`Enter` / `Space`",
+        "action": "Activate focused button"
+      }
+    ]
+  },
+  "constraints": [
+    "Use Sheet for **secondary tasks** that don't require the user to lose context of the page behind — filters, quick edits, detail previews, navigation",
+    "Use Dialog instead when the task is a **focused interruption** that requires the user's full attention before returning (confirmations, destructive actions, multi-step flows)",
+    "Use `Side=Horizontal` for panels that are **spatially related to content on the left or right** — detail panels, sidebars, filter drawers",
+    "Use `Side=Vertical` for panels that **span the full width** — bottom sheets on mobile-first layouts, global command palettes, contextual action menus",
+    "Always include `<SheetTitle>` — even with `<VisuallyHidden>` — so screen readers announce the panel purpose",
+    "The `sheet-footer` buttons are full-width by design — do not place footer buttons in a horizontal row inside a `Side=Horizontal` sheet; the narrow width makes vertical stacking the correct choice",
+    "Keep `sheet-body` scrollable in code when content may exceed the available height — apply `overflow-y: auto` and let the header and footer remain fixed"
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Sheet.md (generated from this file)",
+    "storyFile": "src/stories/Sheet.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "Sheet and Dialog share the same Radix UI Dialog primitive — the distinction is purely positional.",
+      "Footer button fills are intentional — the parent sets the root fill on each button instance (primary/outline). These fills are required and should not be cleared."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/sheet.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Sheet"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Sheet.stories.tsx",
+    "title": "Overlay/Sheet",
+    "stories": [
+      "Right",
+      "Left",
+      "Bottom",
+      "Top",
+      "ScrollableBody"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Sheet.md",
+    "intro": "# Sheet\n\nA slide-in panel that appears from the edge of the viewport, overlaying the page without fully replacing it. Built on [Radix UI Dialog](https://www.radix-ui.com/primitives/docs/components/dialog) (same primitive as Dialog), wrapped by shadcn as `Sheet`. The distinction from Dialog is positional — Sheet slides in from a screen edge and is typically used for secondary tasks, filters, navigation, or detail panels that benefit from staying spatially connected to the triggering context.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Component Sets",
+        "body": "\n| Set | ID | Variants | Purpose |\n|---|---|---|---|\n| `sheet` | `98:57748` | 2 | Full sheet panel — header, body slot, footer |\n\n---\n\n"
+      },
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": "\n### `sheet` — `Side`\n"
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\n`Side(2) = 2 variants`\n\n**`Side=Horizontal`** — 380px wide, full viewport height. Maps to `side=\"left\"` or `side=\"right\"` in code. Use for side panels: filters, detail views, navigation drawers, settings panels.\n\n**`Side=Vertical`** — Full viewport width, 423px tall. Maps to `side=\"top\"` or `side=\"bottom\"` in code. Use for bottom sheets on mobile-style layouts, command palettes, or contextual menus that span the full width.\n\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Structure",
+        "body": "\nBoth variants share identical layer structure — only dimensions differ.\n\n```\nsheet                           — COMPONENT, V AUTO-LAYOUT\n                                  fill: color/surface/overlay\n                                  stroke: color/border/default 1px\n                                  radius: radius/lg\n                                  no root padding · no gap\n\n  ├─ sheet-header               — FRAME, H AUTO-LAYOUT\n  │                               padding (all sides): spacing/component/lg (16px)\n  │                               gap: spacing/component/md (12px)\n  │    ├─ text-block            — FRAME, V AUTO-LAYOUT, gap: spacing/component/sm (8px)\n  │    │    ├─ title            — TEXT, fill: color/surface/overlay/foreground\n  │    │    └─ description      — TEXT, fill: color/text/secondary\n  │    └─ close-button          — INSTANCE (button, Ghost Icon, 32×32)\n\n  ├─ sheet-body                 — SLOT, V AUTO-LAYOUT\n  │                               padding (all sides): spacing/component/lg (16px)\n  │                               radius: radius/md\n  │                               (replace with any content)\n\n  └─ sheet-footer               — FRAME, V AUTO-LAYOUT\n                                  stroke: color/border/default (top separator)\n                                  padding (all sides): spacing/component/lg (16px)\n                                  gap: spacing/component/sm (8px)\n       ├─ btn-primary           — INSTANCE (button, Primary, fill width)\n       └─ btn-secondary         — INSTANCE (button, Outline, fill width)\n```\n\n### Dimensions\n\n| Variant | Width | Height |\n|---|---|---|\n| `Side=Horizontal` | 380px | 720px (full viewport height) |\n| `Side=Vertical` | 1200px (full viewport width) | 423px |\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### Shell\n\n| Property | Token |\n|---|---|\n| Fill | `color/surface/overlay` |\n| Stroke | `color/border/default` 1px |\n| Radius | `radius/lg` |\n\n### `sheet-header`\n\n| Layer | Property | Token |\n|---|---|---|\n| root | Padding (all sides) | `spacing/component/lg` (16px) |\n| root | Gap | `spacing/component/md` (12px) |\n| `text-block` | Gap | `spacing/component/sm` (8px) |\n| `title` | Fill | `color/surface/overlay/foreground` |\n| `description` | Fill | `color/text/secondary` |\n\n### `sheet-body` (SLOT)\n\n| Property | Token |\n|---|---|\n| Padding (all sides) | `spacing/component/lg` (16px) |\n| Radius | `radius/md` |\n\n### `sheet-footer`\n\n| Layer | Property | Token |\n|---|---|---|\n| root | Stroke (top separator) | `color/border/default` |\n| root | Padding (all sides) | `spacing/component/lg` (16px) |\n| root | Gap | `spacing/component/sm` (8px) |\n| `btn-primary` | Fill | `button/primary/bg/bg` |\n| `btn-secondary` | Fill / Stroke | `button/outline/bg/bg` / `button/outline/border/default` |\n\nBoth footer buttons are full-width (`fill container`) — the sheet footer stacks them vertically.\n\n---\n\n"
+      },
+      {
+        "title": "Behavior",
+        "body": "\n### Architecture\n\nSheet is built on **Radix UI Dialog** with a `side` prop that controls which edge the panel slides in from. Shadcn re-exports `Sheet`, `SheetTrigger`, `SheetPortal`, `SheetOverlay`, `SheetContent`, `SheetHeader`, `SheetTitle`, `SheetDescription`, `SheetFooter`, and `SheetClose`.\n\n```tsx\nimport {\n  Sheet, SheetTrigger, SheetContent,\n  SheetHeader, SheetTitle, SheetDescription,\n  SheetFooter, SheetClose,\n} from \"@/components/ui/sheet\"\n\n<Sheet>\n  <SheetTrigger asChild>\n    <Button>Open filters</Button>\n  </SheetTrigger>\n  <SheetContent side=\"right\">\n    <SheetHeader>\n      <SheetTitle>Filters</SheetTitle>\n      <SheetDescription>Narrow your results.</SheetDescription>\n    </SheetHeader>\n    {/* sheet-body content */}\n    <SheetFooter>\n      <SheetClose asChild><Button variant=\"outline\">Reset</Button></SheetClose>\n      <Button>Apply</Button>\n    </SheetFooter>\n  </SheetContent>\n</Sheet>\n```\n\n### `side` prop\n\n| Variant | Code value | Slides in from |\n|---|---|---|\n| `Side=Horizontal` | `side=\"right\"` (default) or `side=\"left\"` | Right or left edge |\n| `Side=Vertical` | `side=\"bottom\"` or `side=\"top\"` | Bottom or top edge |\n\nDefault: `side=\"right\"`.\n\n### Open / Close\n\n**Open:** via `SheetTrigger`, or controlled with `open` + `onOpenChange`.\n\n**Close triggers:**\n- Clicking the backdrop (`SheetOverlay`) — dismisses by default\n- Pressing `Escape`\n- Clicking `SheetClose` (the `close-button` in `sheet-header`, or any button wrapped in `SheetClose`)\n\n**Prevent backdrop close:** pass `onInteractOutside={(e) => e.preventDefault()}` on `SheetContent`.\n\n### Focus trap\n\nFocus is trapped inside `SheetContent` while open (Radix UI Dialog default). Tab cycles through all focusable elements. Focus returns to the trigger on close.\n\n### Animation\n\nSlides in from the edge specified by `side`. Radix uses `data-state=\"open\"` / `data-state=\"closed\"` on `SheetContent`. Shadcn applies CSS translate animations matched to each side direction.\n\n### Sheet vs Dialog\n\n| | Sheet | Dialog |\n|---|---|---|\n| Position | Edge of viewport — slides in | Centered — fades in |\n| Use for | Secondary tasks, filters, nav, detail panels | Focused interruptions, confirmations, short forms |\n| Dismissal | Escape, backdrop, close button | Escape, backdrop, close button |\n| Underlying primitive | Radix UI Dialog | Radix UI Dialog |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n### Keyboard\n"
+          },
+          {
+            "from": "accessibility.keys"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Body Slot",
+        "body": "\n`sheet-body` is a SLOT — replace it with any content appropriate to the sheet's purpose:\n\n| Use case | Body content |\n|---|---|\n| Filter panel | Form fields, checkboxes, range sliders |\n| Detail view | Read-only data, metadata, activity feed |\n| Navigation drawer | `nav-panel-link` list, section headings |\n| Settings panel | Toggle rows, select fields, `item` components |\n| Command / search | Input field + result list |\n\nThe body has 16px padding on all sides and `radius/md` applied. Content placed in the slot inherits this padding context.\n\n---\n\n"
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- User clicks \"Filters\" in a data table and a right panel slides in with filter controls, keeping the table visible behind it\n- Selecting a row in a list opens a detail panel on the right showing the record's full information without navigating away\n- A settings sidebar slides in from the right when the user clicks the gear icon in the top nav\n- A mobile-style page uses a bottom sheet (`Side=Vertical`) as a global command palette that spans the full width\n- An \"Edit contact\" action opens a side panel so the user can see the contact record while editing it\n- A left-side navigation drawer slides in on a responsive layout when the hamburger menu is tapped\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Horizontal` | Panels that are spatially related to left/right content — 380px wide, full height | Filter drawer · Record detail panel · Settings sidebar · Edit form |\n| `Vertical` | Panels that span the full viewport width — bottom or top edge, typically mobile-first | Bottom action sheet · Full-width command palette · Contextual action menu on mobile |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| Secondary contextual task without losing page context | `sheet` | `dialog` |\n| Blocking decision required before the user can proceed | `dialog` | `sheet` |\n| Bottom-anchored panel on mobile with swipe-to-dismiss gesture | `drawer` | `sheet` |\n| Destructive confirmation (\"Delete account?\") | `alert-dialog` | `sheet` |\n| Persistent vertical nav along the left edge | `sidebar` | `sheet` |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/sheet\n- **Behavior · Scroll Behavior:** sheet-body does not scroll by default in code — add overflow-y:auto when content may exceed available height. Header and footer remain fixed.\n- **Composition · Structure:** V AUTO-LAYOUT (no root padding, no gap): sheet-header → sheet-body (SLOT) → sheet-footer\n- **Composition · Body Slot:** sheet-body is a SLOT — replace with any content: form fields, data, nav links, settings rows, command input + results.\n- **Composition · Footer Buttons:** Both footer buttons are full-width (fill container) — stacked vertically. Do not place them in a horizontal row.\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Use Sheet for a destructive confirmation (\"Delete account?\")",
+      "correct": "Use Alert Dialog — Sheet is not semantically appropriate for critical decisions"
+    },
+    {
+      "wrong": "Put full-page navigation inside a sheet",
+      "correct": "Use a dedicated navigation layout — sheets are for supplementary panels"
+    },
+    {
+      "wrong": "Override fills inside `btn-primary` or `btn-secondary` from the sheet parent",
+      "correct": "Change the button variant prop — never repaint sub-component internals"
+    },
+    {
+      "wrong": "Omit `<SheetTitle>`",
+      "correct": "Always include it, even hidden"
+    },
+    {
+      "wrong": "Use `Side=Vertical` for a tall form",
+      "correct": "Use `Side=Horizontal` — vertical sheets are wide and short, not suited for tall content"
+    },
+    {
+      "wrong": "Forget `overflow-y: auto` on `sheet-body` when content is long",
+      "correct": "Sheet body does not scroll by default in code — you must add it"
+    }
+  ]
+}

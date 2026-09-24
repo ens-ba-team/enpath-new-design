@@ -1,0 +1,133 @@
+{
+  "name": "shimmer",
+  "description": "Animated gradient text for 'thinking' before the first token arrives.",
+  "category": "ai",
+  "shadcnBase": "ai-elements/shimmer",
+  "codeOnly": true,
+  "variants": {},
+  "tokens": {
+    "Text": "`color/text/secondary` with a moving highlight"
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Screen readers",
+        "value": "Reads the text once (\"Thinking…\")"
+      },
+      {
+        "property": "Reduced motion",
+        "value": "Text stays readable without the animation"
+      }
+    ]
+  },
+  "constraints": [
+    "Keep the text short (\"Thinking…\").",
+    "Replace it with the reply as soon as tokens stream."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Shimmer.md (generated from this file)",
+    "storyFile": "src/stories/Shimmer.stories.tsx",
+    "artifactStatus": "needs review",
+    "version": "3.0",
+    "openQuestions": [],
+    "knownIssues": [],
+    "notes": [
+      "Installed 2026-09-22 with AI Elements for the chat panel. Stock source adapted to Enpath: Phosphor icons, light-only classes, shadcn colour names rewritten to Enpath tokens."
+    ],
+    "changelog": [
+      {
+        "date": "2026-09-22",
+        "change": "Added (AI Elements install) and documented."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ai-elements/shimmer.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Shimmer"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Shimmer.stories.tsx",
+    "title": "AI/Shimmer",
+    "stories": [
+      "Default"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Shimmer.md",
+    "intro": "# Shimmer\n\nAnimated gradient text for 'thinking' before the first token arrives.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "What it is",
+        "body": "\nAI Elements Shimmer (motion). Wraps a short string.\n\n**Exports:** `Shimmer`\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n| Part | Token |\n|---|---|\n| Text | `color/text/secondary` with a moving highlight |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Source:** https://elements.ai-sdk.dev/components/shimmer\n- **Story:** `AI/Shimmer`\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Shimmer for page loading",
+      "correct": "Skeleton"
+    },
+    {
+      "wrong": "Long sentences in a Shimmer",
+      "correct": "One or two words"
+    }
+  ]
+}

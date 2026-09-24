@@ -1,0 +1,541 @@
+{
+  "name": "button",
+  "description": "A clickable action element. Supports 6 visual types, 5 states, and 6 sizes including icon-only variants.",
+  "category": "actions",
+  "shadcnBase": "button",
+  "variants": {
+    "Type": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Outline",
+        "Secondary",
+        "Ghost",
+        "Link",
+        "Destructive"
+      ],
+      "default": "Default",
+      "reactProp": "variant",
+      "reactValues": {
+        "Default": "default",
+        "Outline": "outline",
+        "Secondary": "secondary",
+        "Ghost": "ghost",
+        "Link": "link",
+        "Destructive": "destructive"
+      },
+      "intent": {
+        "Default": "Principal call to action. Use once per page or section.",
+        "Outline": "Neutral cancel/back/dismiss, or uncolored parallel action. Use Outline for Cancel — not Secondary.",
+        "Secondary": "Lighter-weight branded parallel action paired with Default. NOT for cancel/back/dismiss.",
+        "Ghost": "Lowest-emphasis supplementary or toolbar action.",
+        "Link": "Navigation only. Do not use for data mutation.",
+        "Destructive": "Permanent delete, remove, stop, or revoke action."
+      }
+    },
+    "State": {
+      "type": "enum",
+      "values": [
+        "Enabled",
+        "Hover",
+        "Focus",
+        "Disabled",
+        "Active"
+      ],
+      "default": "Enabled",
+      "reactProp": "disabled",
+      "reactValues": {
+        "Disabled": true
+      }
+    },
+    "Size": {
+      "type": "enum",
+      "values": [
+        "XSmall",
+        "Small",
+        "Default",
+        "Large",
+        "Icon Small",
+        "Icon Default",
+        "Icon Large"
+      ],
+      "default": "Default",
+      "reactProp": "size",
+      "reactValues": {
+        "Small": "sm",
+        "Default": "default",
+        "Large": "lg",
+        "Icon Small": "icon-sm",
+        "Icon Default": "icon",
+        "Icon Large": "icon-lg",
+        "XSmall": "xs"
+      },
+      "dimensions": {
+        "Small": {
+          "height": 28,
+          "paddingH": 12,
+          "radius": 8,
+          "textStyle": "label/sm",
+          "touchHeight": 32
+        },
+        "Default": {
+          "height": 32,
+          "paddingH": 12,
+          "radius": 8,
+          "textStyle": "label/md",
+          "touchHeight": 36
+        },
+        "Large": {
+          "height": 36,
+          "paddingH": 12,
+          "radius": 12,
+          "textStyle": "label/md",
+          "touchHeight": 40
+        },
+        "Icon Small": {
+          "height": 28,
+          "width": 28,
+          "radius": 8,
+          "touchHeight": 32,
+          "touchWidth": 32
+        },
+        "Icon Default": {
+          "height": 32,
+          "width": 32,
+          "radius": 8,
+          "touchHeight": 36,
+          "touchWidth": 36
+        },
+        "Icon Large": {
+          "height": 36,
+          "width": 36,
+          "radius": 12,
+          "touchHeight": 40,
+          "touchWidth": 40
+        },
+        "XSmall": {
+          "height": 24,
+          "paddingH": 8,
+          "radius": 8,
+          "textStyle": "label/sm",
+          "touchHeight": 28
+        }
+      }
+    },
+    "Loading": {
+      "type": "boolean",
+      "values": [
+        true,
+        false
+      ],
+      "default": false,
+      "reactProp": "loading",
+      "intent": {
+        "true": "In-progress action (from En UI). Spinner before the label, label stays visible, button disabled, aria-busy set."
+      }
+    }
+  },
+  "componentProperties": {
+    "Label": {
+      "type": "TEXT",
+      "default": "Label",
+      "reactProp": "children"
+    },
+    "Leading Icon": {
+      "type": "BOOLEAN",
+      "default": false
+    },
+    "Trailing Icon": {
+      "type": "BOOLEAN",
+      "default": false
+    },
+    "Icon leading swap": {
+      "type": "INSTANCE_SWAP",
+      "default": "placeholder"
+    },
+    "Icon trailing swap": {
+      "type": "INSTANCE_SWAP",
+      "default": "placeholder"
+    },
+    "Icon swap": {
+      "type": "INSTANCE_SWAP",
+      "default": "placeholder"
+    }
+  },
+  "tokens": {
+    "type": {
+      "Default": {
+        "fill": "button/primary/bg/bg",
+        "fg": "button/primary/fg/fg"
+      },
+      "Secondary": {
+        "fill": "button/secondary/bg/bg",
+        "fg": "button/secondary/fg/fg"
+      },
+      "Outline": {
+        "fill": "button/outline/bg/bg",
+        "border": "button/outline/border/default",
+        "fg": "button/outline/fg/fg"
+      },
+      "Ghost": {
+        "fill": "transparent",
+        "fg": "button/ghost/fg/fg"
+      },
+      "Link": {
+        "fill": "transparent",
+        "fg": "button/link/fg/default"
+      },
+      "Destructive": {
+        "fill": "button/destructive/bg/bg",
+        "fg": "button/destructive/fg/fg"
+      }
+    },
+    "state": {
+      "Outline": {
+        "Enabled": {
+          "border": "button/outline/border/default"
+        },
+        "Hover": {
+          "border": "button/outline/border/hover"
+        },
+        "Focus": {
+          "border": "color/ring",
+          "strokeWeight": 2,
+          "strokeAlign": "outside"
+        },
+        "Active": {
+          "border": "button/outline/border/active"
+        },
+        "Disabled": {
+          "border": "button/outline/border/disabled"
+        }
+      },
+      "Link": {
+        "Enabled": {
+          "fg": "button/link/fg/default"
+        },
+        "Hover": {
+          "fg": "button/link/fg/hover"
+        },
+        "Active": {
+          "fg": "button/link/fg/active"
+        },
+        "Disabled": {
+          "fg": "button/link/fg/disabled"
+        }
+      }
+    },
+    "size": {
+      "height": {
+        "XSmall": "height/control-touch/xs → sm:height/control/xs",
+        "Small": "height/control-touch/sm → sm:height/control/sm",
+        "Default": "height/control-touch/md → sm:height/control/md",
+        "Large": "height/control-touch/lg → sm:height/control/lg",
+        "note": "Touch rung below 640px, pointer rung from sm up. Button-height-* component tokens removed 2026-09-21."
+      },
+      "paddingH": {
+        "Small": "button/size/Button-padding-small",
+        "Default": "button/size/Button-padding-default",
+        "Large": "button/size/Button-padding-default"
+      },
+      "gap": "button/size/Button spacing",
+      "radius": {
+        "Small": "button/size/Button radius 2",
+        "Default": "button/size/Button radius 2",
+        "Large": "button/size/Button radius 1",
+        "Icon Small": "button/size/Button radius 2",
+        "Icon Default": "button/size/Button radius 2",
+        "Icon Large": "button/size/Button radius 1"
+      }
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`button` · Link type renders as `<a>` → role becomes `link`"
+      },
+      {
+        "property": "Keyboard — button types",
+        "value": "Tab to focus · Enter or Space to activate"
+      },
+      {
+        "property": "Keyboard — Link type",
+        "value": "Tab to focus · Enter to activate · **Space does not activate** (native link behaviour)"
+      },
+      {
+        "property": "Touch target",
+        "value": "All sizes meet WCAG 2.2 AA (24px). On phones every size is one rung larger (28–40px). 44px is advisory — add a `pointer-coarse` hit area for touch-primary actions"
+      },
+      {
+        "property": "Screen reader name",
+        "value": "Visible label text · Icon-only → tooltip text must serve as `aria-label`"
+      },
+      {
+        "property": "Disabled",
+        "value": "Use `disabled` attribute — removes from tab order, browser handles announcement"
+      },
+      {
+        "property": "Discoverable disabled",
+        "value": "Use `aria-disabled=\"true\"` instead when the button should remain in the tab order (e.g. Submit inactive until form is valid — pair with a tooltip explaining why)"
+      },
+      {
+        "property": "Loading",
+        "value": "`aria-busy=\"true\"` + `disabled` during loading — prevents double-submit and announces busy state"
+      },
+      {
+        "property": "Opens a menu",
+        "value": "Add `aria-haspopup=\"menu\"` when the button triggers a dropdown or context menu"
+      },
+      {
+        "property": "Focus ring",
+        "value": "`color/ring`, 2px, OUTSIDE on all types · Destructive Focus uses `focus/destructive` effect style instead"
+      }
+    ]
+  },
+  "constraints": [
+    "Use once per page or section — never two Default buttons side by side",
+    "In a dialog or wizard, the Default button is the confirm/forward action",
+    "Exception: a temporary flow launched on top of a page (e.g. a side panel opening over a page that already has a Default button) may briefly have two — this is acceptable",
+    "Use maximum one Default button per page section."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Button.md (generated from this file)",
+    "storyFile": "src/stories/Button.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "Ready as Batch 1 schema reference."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/button.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Button"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Button.stories.tsx",
+    "title": "Actions/Button",
+    "stories": [
+      "Default",
+      "Outline",
+      "Secondary",
+      "Ghost",
+      "Link",
+      "Destructive",
+      "XSmall",
+      "Small",
+      "Large",
+      "Loading",
+      "Disabled",
+      "WithLeadingIcon",
+      "IconOnly",
+      "DestructiveWithConfirmation"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Button.md",
+    "intro": "# Button\n\nA clickable action element. Supports 6 visual types, 5 states, and 6 sizes including icon-only variants.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Sizes",
+        "body": "\n| Size | Height | Radius token | Radius | Padding H token | Padding H | Text style |\n|---|---|---|---|---|---|---|\nHeights are a **touch + pointer pair**: touch rung below 640px, pointer rung from `sm` up (`height/control-touch/*` → `sm:height/control/*`).\n\n| Size | Height touch → pointer | Radius token | Radius | Padding H token | Padding H | Text style |\n|---|---|---|---|---|---|---|\n| `XSmall` | 28 → 24px | `button/size/Button radius 2` | 8px | `button/size/Button-padding-xsmall` | 8px | `label/sm` |\n| `Small` | 32 → 28px | `button/size/Button radius 2` | 8px | `button/size/Button-padding-small` | 12px | `label/sm` |\n| `Default` | 36 → 32px | `button/size/Button radius 2` | 8px | `button/size/Button-padding-default` | 12px | `label/md` |\n| `Large` | 40 → 36px | `button/size/Button radius 1` | 12px | `button/size/Button-padding-default` | 12px | `label/md` |\n| `Icon Small` | 32 → 28px square | `button/size/Button radius 2` | 8px | — | — | — |\n| `Icon Default` | 36 → 32px square | `button/size/Button radius 2` | 8px | — | — | — |\n| `Icon Large` | 40 → 36px square | `button/size/Button radius 1` | 12px | — | — | — |\n\nEvery size meets WCAG 2.2 AA (24px). 44px is advisory — reach it with an invisible hit area (`height/target/touch`), not a bigger button.\n\nWidth is auto (hug content) for all text sizes. Icon sizes are fixed square.\n\nGap between icon and label: `button/size/Button spacing` → `spacing/component/xs` (4px) — all sizes.\n\n---\n\n"
+      },
+      {
+        "title": "Component Properties",
+        "body": "\n| Property | Type | Default | Notes |\n|---|---|---|---|\n| `Type` | VARIANT | `Default` | Visual style |\n| `State` | VARIANT | `Enabled` | Interaction state |\n| `Size` | VARIANT | `Default` | Size scale |\n| `Label` | TEXT | `\"Label\"` | Button label text |\n| `Leading Icon` | BOOLEAN | `false` | Show/hide leading icon |\n| `Trailing Icon` | BOOLEAN | `false` | Show/hide trailing icon |\n| `Icon leading swap` | INSTANCE_SWAP | placeholder | Swap leading icon component |\n| `Icon trailing swap` | INSTANCE_SWAP | placeholder | Swap trailing icon component |\n| `Icon swap` | INSTANCE_SWAP | placeholder | Swap icon (icon-only sizes) |\n\n---\n\n"
+      },
+      {
+        "title": "Structure",
+        "body": "\n### Text button (Small / Default / Large)\n```\nbutton\n  ├─ leading-icon — hidden by default, shown via Leading Icon prop\n  ├─ label\n  └─ trailing-icon — hidden by default, shown via Trailing Icon prop\n```\n\n### Icon-only button (Icon Small / Icon Default / Icon Large)\n```\nbutton\n  └─ icon — always visible, not wired to a boolean prop\n```\n\n> Icon-only sizes use an `icon` slot (always visible). Text sizes use `leading-icon` / `trailing-icon` (boolean controlled). These are different slots — do not confuse them.\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### Per Type — fills, strokes, fg\n\n| Type | Fill token | Border token | Text/icon fg token |\n|---|---|---|---|\n| `Default` | `button/primary/bg/bg` | — | `button/primary/fg/fg` |\n| `Secondary` | `button/secondary/bg/bg` | — | `button/secondary/fg/fg` |\n| `Outline` | `button/outline/bg/bg` | `button/outline/border/default` | `button/outline/fg/fg` |\n| `Ghost` | — (transparent) | — | `button/ghost/fg/fg` |\n| `Link` | — (transparent) | — | `button/link/fg/default` |\n| `Destructive` | `button/destructive/bg/bg` | — | `button/destructive/fg/fg` |\n\n### Per State — border overrides (Outline only)\n\n| State      | Border token                     |\n| ---------- | -------------------------------- |\n| `Enabled`  | `button/outline/border/default`  |\n| `Hover`    | `button/outline/border/hover`    |\n| `Focus`    | `color/ring` — overrides border, 2px OUTSIDE (same as all non-Destructive types) |\n| `Active`   | `button/outline/border/active`   |\n| `Disabled` | `button/outline/border/disabled` |\n\n### Link type — fg per state\n\n| State | Token |\n|---|---|\n| `Enabled` | `button/link/fg/default` |\n| `Hover` | `button/link/fg/hover` |\n| `Active` | `button/link/fg/active` |\n| `Disabled` | `button/link/fg/disabled` |\n\n### Focus state — ring\n\nAll types except Destructive use `color/ring` as a border stroke on the Focus state — 2px weight, `OUTSIDE` alignment.\nDestructive uses the `focus/destructive` effect style instead (no ring stroke).\n\n> Outline Focus replaces the `button/outline/border/*` stroke with `color/ring` — it does not stack both.\n\n### Size tokens — all types share\n\n| Property | Token |\n|---|---|\n| `border-radius` | `button/size/Button radius 1` → `radius/xl` 12px (Large / Icon Large) · `button/size/Button radius 2` → `radius/base` 8px (Small / Default / Icon Small / Icon Default) |\n| `height` | Touch first, pointer from `sm` (640px) up: `height/control-touch/*` → `sm:height/control/*`. XS 28→24 · Small 32→28 · Default 36→32 · Large 40→36. Icon-only sizes are square (width = height). |\n| `padding-left` / `padding-right` | `button/size/Button-padding-default` → `spacing/3` 12px (Default / Large) · `button/size/Button-padding-small` → `spacing/3` 12px (Small) · `button/size/Button-padding-xsmall` → `spacing/2` 8px (XS) |\n| `gap` | `button/size/Button spacing` → `spacing/component/xs` (4px) |\n\n### Effect styles (shadows)\n\n| State | Type | Effect style |\n|---|---|---|\n| `Enabled`, `Hover`, `Active` | All except Ghost, Link | `shadows/2xs` |\n| `Focus` | `Destructive` | `focus/destructive` |\n| `Focus` | All except Destructive | `color/ring` stroke — no shadow |\n| Any | `Ghost`, `Link` | — (no shadow, no effect) |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Behavior",
+        "body": "\n### States\n\n| State      | Trigger                   | Notes                                                                    |\n| ---------- | ------------------------- | ------------------------------------------------------------------------ |\n| `Enabled`  | Default                   | Base fill + `shadows/2xs` (except Ghost, Link)                           |\n| `Hover`    | Cursor over / touch hover | Bg overlay, shadow maintained                                            |\n| `Focus`    | Tab key or click          | `color/ring` stroke appears · Destructive: `focus/destructive` effect    |\n| `Active`   | Mouse/touch down          | Pressed fill, shadow removed                                             |\n| `Disabled` | `disabled` attribute      | Muted appearance · no hover/focus/active states · removed from tab order |\n\n### Width\n\n- Text sizes (Small / Default / Large) — hug content by default, can fill a container when placed in a full-width layout\n- Icon sizes (Icon Small / Icon Default / Icon Large) — fixed square, never stretch\n\n### Link type — semantic difference\n\n`Type=Link` renders as `<a>` in code via `asChild`. This changes behaviour:\n- Role is `link`, not `button` — screen readers announce accordingly\n- Space does not activate it — only Enter\n- Use for navigation only — if the action modifies data, use Ghost or Outline instead\n\n### Loading state\n\nNo variant — a CSS/implementation concern only.\n\n- Replace label with spinner + short status text (\"Saving…\", \"Generating…\")\n- Set `aria-busy=\"true\"` and `disabled` on the button during the operation\n- Restore both when the operation completes\n- Never leave a button in loading state indefinitely — always resolve to success, error, or restored state\n\n### Focus management\n\nWhen a button opens an overlay (dialog, sheet, drawer):\n- Focus moves into the overlay on open\n- Focus must return to the triggering button when the overlay closes\n- Designers: spec the return target explicitly in interaction flows — do not leave it implied\n\n---\n\n"
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": "\n### By type\n\n**`Default`** — The principal call to action. Highest visual emphasis."
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n**`Secondary`** — A lighter-weight branded action that pairs with a Default button."
+          },
+          {
+            "md": "- Always use alongside a Default button, never in isolation\n- Typical labels: \"Import\", \"Preview\", \"Export\" — parallel positive actions that are less important than the primary\n- Do not use Secondary for cancel, back, or dismiss actions — use Outline instead\n- Secondary is a colored button (brand/secondary fill); it signals \"positive but secondary\", not \"exit this flow\""
+          },
+          {
+            "md": "\n**`Outline`** — Neutral bordered button for cancel, back, or parallel uncolored actions."
+          },
+          {
+            "md": "- Use for cancel/back/dismiss labels: \"Cancel\", \"Back\", \"Discard\", \"Close\"\n- Can be used alone or alongside a Default button\n- Preferred over Secondary for three or more footer actions — Secondary's colored fill is too heavy at that scale"
+          },
+          {
+            "md": "\n**`Ghost`** — Least prominent. Supplementary or low-priority actions."
+          },
+          {
+            "md": "- Use for cancel actions in progressive flows (where users have to find it deliberately)\n- Use for toolbar actions and card actions where primary actions already exist elsewhere on the page\n- Works well flush against a container edge or inline with other components\n- Avoid as a standalone CTA — it disappears in empty space"
+          },
+          {
+            "md": "\n**`Link`** — Navigation only. Takes the user to a new page or route."
+          },
+          {
+            "md": "- Use when the outcome is navigation, not an in-page action\n- Do not use `Link` type for actions that modify data or trigger processes — use `Ghost` or `Outline` instead"
+          },
+          {
+            "md": "\n**`Destructive`** — For actions that permanently delete or remove data."
+          },
+          {
+            "md": "- Use for \"Delete\", \"Remove\", \"Stop\", \"Revoke\"\n- Not for warnings or error states — use `color/status/danger` tokens for those\n- Always pair with a confirmation dialog for irreversible actions"
+          },
+          {
+            "md": "\n---\n\n### Size guidance\n"
+          },
+          {
+            "md": "| Our size | Height | Radius | Padding H | shadcn equivalent | When to use |\n|---|---|---|---|---|---|\n| `XSmall` | 28 → 24px | 8px | 8px | `xs` | Dense table rows, toolbars |\n| `Small` | 32 → 28px | 8px | 12px | `sm` | Compact layouts, secondary actions |\n| `Default` | 36 → 32px | 8px | 12px | `default` | Standard product UI — most common size |\n| `Large` | 40 → 36px | 12px | 12px | `lg` | Prominent CTAs, onboarding |\n| `Icon` sizes | square, same pair | matches text size | — | `icon` | Toolbars, icon-only actions — always add a tooltip |"
+          },
+          {
+            "md": "\nHeights: touch rung below 640px → pointer rung from `sm` up.\n\n---\n\n### Button groups\n"
+          },
+          {
+            "md": "- Include only one Default button per group — all others should be lower emphasis\n- Buttons in a group should be the same width (determined by the longest label)\n- Do not group more than three buttons — beyond that, use a dropdown menu\n- Keep calls to action related — only group buttons that act on the same thing"
+          },
+          {
+            "md": "\n---\n\n### Labels\n"
+          },
+          {
+            "md": "- Use **{verb} + {noun}** format wherever possible — \"Delete Project\", \"Save Changes\", \"Add Member\"\n- Short common actions are exceptions — \"Done\", \"Cancel\", \"Back\", \"Close\" are fine alone\n- Never truncate a button label — wrap to a second line if needed\n- Icon-only buttons must always have a tooltip — even universally recognised icons"
+          },
+          {
+            "md": "\n---\n\n### Implementation notes\n"
+          },
+          {
+            "md": "- Switch `Type` for visual intent — never override fills manually\n- Focus ring uses `color/ring` as a stroke except `Destructive` which uses `focus/destructive` effect style\n- Icon-only sizes use a dedicated `icon` slot — not the `leading-icon` boolean slot"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- Submitting a form (creating a project, saving settings, sending a message)\n- Triggering a destructive action that opens a confirmation dialog (deleting a record, revoking access)\n- Providing the primary call-to-action in a hero section or onboarding step\n- Opening an overlay — a dialog, sheet, or drawer — via a clearly labelled button\n- Performing a toolbar or in-context action (formatting text, adding a row, running a filter)\n- Navigating to a new route when the destination is the primary next step in a flow (Type=Link only)\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Default` | The single most important action on the current view | \"Create Project\" in an empty state · \"Save Changes\" in settings · \"Confirm\" in a dialog footer |\n| `Outline` | Neutral cancel/back/dismiss, or parallel uncolored actions | \"Cancel\" next to \"Save Changes\" · \"Back\" in a multi-step wizard · \"Import\" in a page header |\n| `Secondary` | Lighter-weight branded parallel action alongside Default — NOT cancel | \"Preview\" next to \"Publish\" · \"Export\" next to \"Generate\" |\n| `Ghost` | Low-priority supplementary action in a dense or contextual space | \"Edit\" inside a card · \"Clear\" in a filter bar · toolbar icon actions |\n| `Link` | Pure navigation — takes the user to a new route | \"View documentation\" · \"See all results\" · \"Go to billing\" |\n| `Destructive` | Permanently removes or irreversibly modifies data | \"Delete Project\" · \"Revoke API key\" · \"Remove member\" |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| User needs to navigate to a different page or route | `button` Type=Link | `navigation-menu` (use nav-menu for multi-item top nav; Link button for single inline link) |\n| Two or more related actions that belong together visually (Bold / Italic, Grid / List) | `button-group` | `button` placed side by side without grouping |\n| Inline anchor text within a paragraph | `button` Type=Link or a plain `<a>` | `button` Type=Default (fills draw too much weight in running text) |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · Variant Examples · Outline · Examples:** Import next to Create\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/button\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Two `Default` buttons side by side",
+      "correct": "One `Default` + one `Outline` or `Ghost`"
+    },
+    {
+      "wrong": "`Secondary` button used alone",
+      "correct": "`Secondary` only alongside a `Default` button"
+    },
+    {
+      "wrong": "`Secondary` for cancel/back/dismiss",
+      "correct": "`Outline` for cancel/back — Secondary is a colored button, not a neutral exit"
+    },
+    {
+      "wrong": "`Link` type to trigger a data action",
+      "correct": "`Ghost` or `Outline` — `Link` is navigation only"
+    },
+    {
+      "wrong": "`Destructive` for error or warning states",
+      "correct": "`color/status/danger` tokens for status, `Destructive` for delete CTAs"
+    },
+    {
+      "wrong": "More than 3 buttons in a group",
+      "correct": "Use a dropdown menu for 4+ actions"
+    },
+    {
+      "wrong": "Icon-only button without a tooltip",
+      "correct": "Always add a tooltip — icon meaning is never guaranteed"
+    },
+    {
+      "wrong": "Raw frame with hardcoded background color",
+      "correct": "`button` component, correct `Type`"
+    },
+    {
+      "wrong": "Override fill color directly on instance",
+      "correct": "Switch `Type` variant prop"
+    },
+    {
+      "wrong": "`color/icon/*` on icon inside button",
+      "correct": "Use container's `/foreground` token"
+    },
+    {
+      "wrong": "Icon sizes with `leading-icon` slot",
+      "correct": "Use `icon` slot — always visible, no boolean prop"
+    }
+  ]
+}

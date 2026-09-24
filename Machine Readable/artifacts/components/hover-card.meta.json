@@ -1,0 +1,143 @@
+{
+  "name": "hover-card",
+  "description": "A preview card shown when hovering or focusing a link. For supplementary detail only.",
+  "category": "overlay",
+  "shadcnBase": "hover-card",
+  "codeOnly": true,
+  "variants": {},
+  "tokens": {
+    "Fill": "`color/surface/overlay`",
+    "Text": "`color/surface/overlay/foreground`",
+    "Border": "`color/border/default`",
+    "Shadow": "`shadow/overlay`"
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Opens on",
+        "value": "Hover and keyboard focus of the trigger"
+      },
+      {
+        "property": "Touch",
+        "value": "No hover on touch — never put essential info only here"
+      },
+      {
+        "property": "Content",
+        "value": "Not announced as a dialog; keep it short"
+      }
+    ]
+  },
+  "constraints": [
+    "Only for previews of information available elsewhere.",
+    "The trigger must be focusable (a link or button).",
+    "Keep content short — no forms or actions."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/HoverCard.md (generated from this file)",
+    "storyFile": "src/stories/HoverCard.stories.tsx",
+    "artifactStatus": "needs review",
+    "version": "3.0",
+    "openQuestions": [],
+    "knownIssues": [],
+    "notes": [
+      "Installed 2026-09-22 with AI Elements for the chat panel. Stock source adapted to Enpath: Phosphor icons, light-only classes, shadcn colour names rewritten to Enpath tokens."
+    ],
+    "changelog": [
+      {
+        "date": "2026-09-22",
+        "change": "Added (AI Elements install) and documented."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/hover-card.tsx",
+    "packageDeps": [],
+    "exports": [
+      "HoverCard",
+      "HoverCardTrigger",
+      "HoverCardContent"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/HoverCard.stories.tsx",
+    "title": "Overlay/Hover Card",
+    "stories": [
+      "Default"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "HoverCard.md",
+    "intro": "# HoverCard\n\nA preview card shown when hovering or focusing a link. For supplementary detail only.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "What it is",
+        "body": "\nRadix HoverCard. Opens on hover or keyboard focus of its trigger; the content must also be reachable another way.\n\n**Exports:** `HoverCard` · `HoverCardTrigger` · `HoverCardContent`\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n| Part | Token |\n|---|---|\n| Fill | `color/surface/overlay` |\n| Text | `color/surface/overlay/foreground` |\n| Border | `color/border/default` |\n| Shadow | `shadow/overlay` |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Source:** https://ui.shadcn.com/docs/components/hover-card\n- **Story:** `Overlay/Hover Card`\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Actions or forms in a HoverCard",
+      "correct": "Popover or Dialog"
+    },
+    {
+      "wrong": "Essential info only on hover",
+      "correct": "Show it inline or on the page it links to"
+    }
+  ]
+}

@@ -1,0 +1,382 @@
+{
+  "name": "tabs",
+  "description": "A navigation component for switching between content sections.",
+  "category": "navigation",
+  "shadcnBase": "tabs",
+  "componentSets": {
+    "tab-trigger": {
+      "purpose": "Individual clickable tab item."
+    },
+    "tab-list": {
+      "purpose": "Container that holds tab-trigger instances."
+    }
+  },
+  "variants": {
+    "Type": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Line"
+      ],
+      "default": "Default",
+      "reactProp": "variant",
+      "reactValues": {
+        "Default": "default",
+        "Line": "line"
+      }
+    },
+    "State": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Hover",
+        "Active",
+        "Disabled"
+      ],
+      "default": "Default",
+      "reactProp": "state",
+      "reactValues": {
+        "Default": "default",
+        "Hover": "hover",
+        "Active": "active",
+        "Disabled": "disabled"
+      }
+    },
+    "Orientation": {
+      "type": "enum",
+      "values": [
+        "Horizontal",
+        "Vertical"
+      ],
+      "default": "Horizontal",
+      "reactProp": "orientation",
+      "reactValues": {
+        "Horizontal": "horizontal",
+        "Vertical": "vertical"
+      }
+    }
+  },
+  "availability": {
+    "Line": [
+      "Default",
+      "Active",
+      "Disabled"
+    ],
+    "tab-list Line": [
+      "Horizontal"
+    ]
+  },
+  "componentProperties": {
+    "tab-trigger.Type": {
+      "type": "VARIANT",
+      "default": "Default"
+    },
+    "tab-trigger.State": {
+      "type": "VARIANT",
+      "default": "Default"
+    },
+    "tab-list.Variant": {
+      "type": "VARIANT",
+      "default": "Default"
+    },
+    "tab-list.Orientation": {
+      "type": "VARIANT",
+      "default": "Horizontal"
+    },
+    "slot-1": {
+      "type": "SLOT",
+      "accepts": "tab-trigger"
+    },
+    "slot-2": {
+      "type": "SLOT",
+      "accepts": "tab-trigger"
+    },
+    "slot-3": {
+      "type": "SLOT",
+      "accepts": "tab-trigger"
+    }
+  },
+  "tokens": {
+    "trigger": {
+      "Default Default": {
+        "fill": "transparent",
+        "fg": "color/text/secondary"
+      },
+      "Default Hover": {
+        "fill": "color/surface/accent",
+        "fg": "color/text/secondary"
+      },
+      "Default Active": {
+        "fill": "color/surface/default",
+        "fg": "color/surface/default/foreground",
+        "shadow": "shadows/2xs"
+      },
+      "Default Disabled": {
+        "fill": "transparent",
+        "fg": "color/text/disabled"
+      },
+      "Line Default": {
+        "fill": "transparent",
+        "fg": "color/text/secondary",
+        "indicatorOpacity": 0
+      },
+      "Line Active": {
+        "fill": "transparent",
+        "fg": "color/surface/default/foreground",
+        "indicatorOpacity": 1
+      },
+      "Line Disabled": {
+        "fill": "transparent",
+        "fg": "color/text/disabled",
+        "indicatorOpacity": 0
+      }
+    },
+    "_iconRule": "Optional leading icon (14x14, stroke-based) tracks the trigger's fg per state (Paired icon rule) — same token as the label. Never color/icon/*. Gap icon↔label: Default 6px (spacing/component/xs-plus), Line 4px (spacing/component/xs).",
+    "indicator": {
+      "fill": "color/brand/primary",
+      "height": 2
+    },
+    "list": {
+      "Default": {
+        "fill": "color/surface/raised",
+        "padding": "spacing/component/xxs",
+        "gap": "spacing/component/xxs",
+        "radius": "radius/lg"
+      },
+      "Line": {
+        "fill": "transparent",
+        "strokeBottom": "color/border/default"
+      }
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role — container",
+        "value": "`role=\"tablist\"` on the `tab-list` element"
+      },
+      {
+        "property": "Role — item",
+        "value": "`role=\"tab\"` on each `tab-trigger`"
+      },
+      {
+        "property": "Role — panel",
+        "value": "`role=\"tabpanel\"` on each content panel"
+      },
+      {
+        "property": "Selected state",
+        "value": "`aria-selected=\"true\"` on the active tab · `aria-selected=\"false\"` on all others"
+      },
+      {
+        "property": "Disabled",
+        "value": "`aria-disabled=\"true\"` on disabled tabs — keeps them in the DOM and readable"
+      },
+      {
+        "property": "Linking",
+        "value": "`aria-controls=\"[panel-id]\"` on each tab · `aria-labelledby=\"[tab-id]\"` on each panel"
+      },
+      {
+        "property": "Focus",
+        "value": "Tab key moves focus to the tablist as a single unit — not to individual triggers"
+      },
+      {
+        "property": "Keyboard",
+        "value": "Arrow keys navigate between triggers · active trigger follows focus (automatic activation)"
+      },
+      {
+        "property": "Orientation",
+        "value": "`aria-orientation=\"vertical\"` on vertical tab-list — changes arrow key axis to Up/Down"
+      },
+      {
+        "property": "Focus Indicator",
+        "value": "Focus ring handled by CSS at the tablist or trigger level."
+      }
+    ]
+  },
+  "constraints": [
+    "Always pair `tab-list Variant` with the `tab-trigger Type` inside — `Variant=Default` holds `Type=Default` triggers, `Variant=Line` holds `Type=Line` triggers",
+    "Never mix `Type=Default` and `Type=Line` triggers inside the same `tab-list`",
+    "Always set exactly one trigger to `State=Active` — zero or two active states are both wrong",
+    "`State=Disabled` tabs stay visible — use sparingly, and never disable all tabs",
+    "`tab-list Variant=Line` has a bottom border — place it flush against its content panel, not floating or inside a card",
+    "`Type=Default` for primary page-level navigation · `Type=Line` for secondary navigation inside panels, cards, or dense layouts",
+    "Do not mix Default and Line triggers in one list."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Tabs.md (generated from this file)",
+    "storyFile": "src/stories/Tabs.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "Ready from source markdown."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/tabs.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Tabs"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Tabs.stories.tsx",
+    "title": "Navigation/Tabs",
+    "stories": [
+      "Default",
+      "Line",
+      "WithIcon",
+      "LineWithIcon",
+      "Vertical",
+      "WithDisabled",
+      "LineWithDisabled",
+      "BothTypes"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Tabs.md",
+    "intro": "# Tabs\n\nA navigation component for switching between content sections. Built from two composable component sets: `tab-trigger` (individual tab items) and `tab-list` (the container that holds triggers).\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Component Sets",
+        "body": "\n| Set | ID | Variants | Purpose |\n|---|---|---|---|\n| `tab-trigger` | `59:17766` | 7 | Individual clickable tab item |\n| `tab-list` | `59:17793` | 3 | Container that holds tab triggers |\n\n---\n\n"
+      },
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": "\n### tab-trigger\n"
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\n> `Type=Line` has no `Hover` state — line tabs are flat and stateless outside of Active.\n\n### tab-list\n"
+          },
+          {
+            "md": "| Property | Options | Default |\n|---|---|---|\n| `Variant` | `Default`, `Line` | `Default` |\n| `Orientation` | `Horizontal`, `Vertical` | `Horizontal` |"
+          },
+          {
+            "md": "\n> `Variant=Line` only supports `Orientation=Horizontal`.\n\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Visual Hierarchy",
+        "body": "\n- **`Default`** — pill/background style. Active trigger has a filled surface and shadow. Use when tabs are the primary navigation element and need visual weight.\n- **`Line`** — flat/underline style. Active state communicated through the indicator line only — no background fill or shadow at any state. Use when tabs are secondary, embedded in a dense layout, or need to stay visually light.\n\nChoose `Default` when the tabs command attention. Choose `Line` when they should recede.\n\n---\n\n"
+      },
+      {
+        "title": "Structure",
+        "body": "\n### tab-trigger\n```\ntab-trigger\n  ├─ icon — optional leading icon (14×14, stroke-based)\n  ├─ label — always visible\n  └─ indicator — always present in all Line states; opacity 1 when Active, opacity 0 when Default/Disabled\n```\n\n> The `indicator` exists in all three `Type=Line` states to keep heights consistent (all 24px). It is not present in `Type=Default` variants.\n\n> The `icon` is an optional leading slot (stroke-based `Icon Placeholder`, 14×14). Its stroke **must match the label's state foreground token** — never `color/icon/*` (see per-state table + Do Not). Bound via `setBoundVariableForPaint` on the VECTOR strokes.\n\n### tab-list\n```\ntab-list\n  ├─ slot-1 — tab-trigger instance\n  ├─ slot-2 — tab-trigger instance\n  └─ slot-3 — tab-trigger instance\n```\n\n> Swap each slot with a `tab-trigger` instance. Set its `Type` and `State` props directly.\n\n---\n\n"
+      },
+      {
+        "title": "Component Properties",
+        "body": "\n### tab-trigger\n\n| Property | Type | Default | Notes |\n|---|---|---|---|\n| `Type` | VARIANT | `Default` | Visual style and hierarchy |\n| `State` | VARIANT | `Default` | Interaction state |\n\n### tab-list\n\n| Property | Type | Default | Notes |\n|---|---|---|---|\n| `Variant` | VARIANT | `Default` | Must match the `Type` of triggers inside |\n| `Orientation` | VARIANT | `Horizontal` | Layout direction |\n| `slot-1` | SLOT | — | First tab-trigger — **typed**: must be replaced with a `tab-trigger` instance only |\n| `slot-2` | SLOT | — | Second tab-trigger — **typed**: must be replaced with a `tab-trigger` instance only |\n| `slot-3` | SLOT | — | Third tab-trigger — **typed**: must be replaced with a `tab-trigger` instance only |\n\n> These slots are **typed** — the slot must always be filled with a `tab-trigger` instance. Do not drop other components into these slots.\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### tab-trigger — per Type × State\n\nIcon stroke **always equals the Text fg** for that state (they are one unit — never split them).\n\n| Type | State | Root fill | Shadow | Text fg + icon stroke |\n|---|---|---|---|---|\n| `Default` | `Default` | — (transparent) | — | `color/text/secondary` |\n| `Default` | `Hover` | `color/surface/accent` | — | `color/text/secondary` |\n| `Default` | `Active` | `color/surface/default` | `shadows/2xs` | `color/surface/default/foreground` |\n| `Default` | `Disabled` | — (transparent) | — | `color/text/disabled` |\n| `Line` | `Default` | — (transparent) | — | `color/text/secondary` |\n| `Line` | `Active` | — (transparent) | — | `color/surface/default/foreground` |\n| `Line` | `Disabled` | — (transparent) | — | `color/text/disabled` |\n\n### tab-trigger — indicator (`Type=Line` only)\n\n| State | Fill token | Opacity |\n|---|---|---|\n| `Default` | `color/brand/primary` | 0% |\n| `Active` | `color/brand/primary` | 100% |\n| `Disabled` | `color/brand/primary` | 0% |\n\n> The indicator is always present in the layout — opacity controls visibility, not display. Height is **2px hardcoded** (no token). This keeps all three Line states at a consistent 24px height.\n\n### tab-list — per Variant\n\n| Variant | Root fill | Root stroke |\n|---|---|---|\n| `Default` | `color/surface/raised` | — |\n| `Line` | — (transparent) | `color/border/default` (bottom only) |\n\n### Size tokens — tab-trigger `Type=Default`\n\n| Property | Token | Value |\n|---|---|---|\n| `padding-left` / `padding-right` | `spacing/component/md` | 12px |\n| `padding-top` | `spacing/component/xs-plus` | 6px |\n| `gap` (icon ↔ label) | `spacing/component/xs-plus` | 6px |\n| `icon` size | — (no token) | 14 × 14px |\n| `border-radius` | `radius/md` | — |\n| `text-style` | `label/sm` | — |\n\n### Size tokens — tab-trigger `Type=Line`\n\n| Property | Token | Value |\n|---|---|---|\n| `padding-left` / `padding-right` | `spacing/component/md` | 12px |\n| `padding-top` | `spacing/component/sm` | 8px |\n| `gap` (icon ↔ label) | `spacing/component/xs` | 4px |\n| `icon` size | — (no token) | 14 × 14px |\n| `border-radius` | — | none |\n| `text-style` | `label/sm` | — |\n\n### Size tokens — tab-list\n\n| Property | Token | Value |\n|---|---|---|\n| `padding` (all sides) | `spacing/component/xxs` | 2px |\n| `gap` | `spacing/component/xxs` | 2px |\n| `border-radius` | `radius/lg` | — |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": "\n> **How to write this section:**\n> Based on our system decisions. Tabs follow the WAI-ARIA composite widget pattern — the tablist is one focusable unit, arrow keys navigate inside it. No `State=Focus` variant was added to `tab-trigger` (Option B — the active state serves as the selected indicator, focus ring is handled at the tablist level or by the browser).\n"
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n> No Focus state variant in `tab-trigger`. Shadcn/ui applies `focus-visible:ring-2 focus-visible:ring-ring` via CSS, which resolves to our `color/ring` token — matching every other interactive component in the system. Do not suppress the browser focus outline on the tablist.\n\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Behavior",
+        "body": "\n> Based on our system. `tab-trigger` has no Hover state for `Type=Line` and no Focus state for either type.\n\n### State triggers\n\n| State | Triggered by | Notes |\n|---|---|---|\n| `Default` | Idle — not active, not hovered | Transparent background |\n| `Hover` | Mouse over (`Type=Default` only) | `color/surface/accent` fill |\n| `Active` | Tab is the currently selected section | One tab must always be Active |\n| `Disabled` | Tab is unavailable | Visible but not interactive — no hover, no activation |\n\n### Keyboard navigation (composite widget)\n\nTabs use the **automatic activation** pattern — arrow key focus and selection move together:\n\n| Key | Action |\n|---|---|\n| `Tab` | Moves focus into the tablist (to the currently active tab) |\n| `ArrowRight` / `ArrowDown` | Moves to the next tab and activates it |\n| `ArrowLeft` / `ArrowUp` | Moves to the previous tab and activates it |\n| `Home` | Moves to the first tab |\n| `End` | Moves to the last tab |\n| `Tab` (again) | Moves focus out of the tablist and into the active panel |\n\n> Shadcn/ui Tabs uses automatic activation by default — this is confirmed and matches our Behavior section.\n> Horizontal tab-list uses Left/Right arrows. Vertical tab-list uses Up/Down arrows.\n> Disabled tabs are skipped during arrow key navigation.\n> Focus does not wrap — at the first tab, Left/Up has no effect; at the last tab, Right/Down has no effect.\n\n### One active tab at a time\n\nOnly one trigger can be `State=Active` in a tab-list — managed by the Tabs component state.\n\n### Orientation\n\n`Orientation=Vertical` on `tab-list` stacks triggers top-to-bottom. Arrow key navigation axis changes to Up/Down. The content panel sits to the right of the tab-list.\n\n---\n\n"
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- A dashboard page has \"Overview\", \"Analytics\", \"Reports\", and \"Settings\" sections — one is visible at a time\n- A user profile page separates \"Activity\", \"Projects\", and \"Teams\" into distinct tab panels\n- A settings page organises \"Account\", \"Password\", and \"Notifications\" so users can jump directly to a section\n- A code editor shows \"index.tsx\", \"styles.css\", and \"types.ts\" in a tab bar above the editor panel\n- A detail card uses line tabs to switch between \"Summary\" and \"Details\" without adding visual weight\n- An admin panel uses vertical tabs to navigate between configuration categories in the left column\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Default` (tab-trigger) + `Default` (tab-list) | Primary page-level navigation where tabs need visual weight — pill/background style | Dashboard sections · Main content views · Top-level page tabs |\n| `Line` (tab-trigger) + `Line` (tab-list) | Secondary navigation inside panels, cards, or dense layouts — flat underline style | Tabs inside a card · Filter tabs in a sidebar · Sub-navigation within a settings section |\n| `Horizontal` orientation | Standard left-to-right tab row — the default for most UIs | Page header tabs · Card header tabs · Editor tab bar |\n| `Vertical` orientation | Side-by-side layout where the content panel sits to the right of the tab list | Admin config panel · Multi-section settings page · Sidebar-driven content switching |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| Switching between mutually exclusive sections on the same page | `tabs` | `accordion` |\n| Expandable Q&A or stacked sections where multiple can be open | `accordion` | `tabs` |\n| Site-level navigation to different pages or routes | `navigation-menu` | `tabs` |\n| Navigating between numbered pages of a dataset | `pagination` | `tabs` |\n| Too many sections to fit in a tab row (8+) | `select` or `navigation-menu` | `tabs` |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Slot count",
+        "body": "\n- **In code** — fully flexible. Pass any number of tab items as children.\n- **Recommended range** — 2–7 tabs. Below 2 is a layout decision, not a tab pattern. Beyond 7, users struggle to scan and choose — consider whether a different navigation pattern (sidebar nav, select) better fits the content structure. 5–6 is the sweet spot for most product UIs.\n- **Slot accepts** — `tab-trigger` instances only. This is a typed slot — do not place any other component inside it.\n\nThis principle applies to all slot-based components in this system (button-group, item-group, nav-panel, sidebar-menu): slot count is never a code constraint.\n"
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/tabs\n- **Best practice · References · Radix:** https://www.radix-ui.com/primitives/docs/components/tabs\n- **Composition · Slot Rule:** tab-list slots are typed and accept tab-trigger instances only.\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Mixing `Type=Default` and `Type=Line` in the same list",
+      "correct": "One type per list, matched to list Variant"
+    },
+    {
+      "wrong": "`Type=Default` for secondary embedded tabs",
+      "correct": "`Type=Line` — lower visual weight"
+    },
+    {
+      "wrong": "Shadow on any `Type=Line` trigger",
+      "correct": "`Type=Line` has no shadow at any state"
+    },
+    {
+      "wrong": "`color/background/*` on trigger or list fills",
+      "correct": "`color/surface/*` — these are component surfaces"
+    },
+    {
+      "wrong": "`color/icon/*` on indicator or label",
+      "correct": "Use the state's fg token"
+    },
+    {
+      "wrong": "Zero or two active triggers in a list",
+      "correct": "Exactly one trigger must be `State=Active`"
+    },
+    {
+      "wrong": "Removing the indicator from Default/Disabled Line states",
+      "correct": "Keep it at opacity 0 — it holds the height"
+    }
+  ]
+}

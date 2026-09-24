@@ -1,0 +1,154 @@
+{
+  "name": "message",
+  "description": "One chat turn. User turns sit in a light blue block; assistant turns are plain text with markdown, plus actions (copy, retry).",
+  "category": "ai",
+  "shadcnBase": "ai-elements/message",
+  "codeOnly": true,
+  "variants": {},
+  "tokens": {
+    "User fill": "`chat/user/bg`",
+    "User border": "`chat/user/border`",
+    "User text": "`chat/user/fg`",
+    "User radius": "`radius/lg`",
+    "Assistant text": "`chat/assistant/fg` — no bubble",
+    "Actions": "Button ghost; tooltips"
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Structure",
+        "value": "Each turn is a group; the author is conveyed by position and by the Conversation log"
+      },
+      {
+        "property": "Actions",
+        "value": "MessageAction takes `label` for icon-only buttons"
+      },
+      {
+        "property": "Markdown",
+        "value": "Headings and lists render as real HTML"
+      }
+    ]
+  },
+  "constraints": [
+    "Assistant replies are plain text — no bubble (VS Code style).",
+    "Icon-only MessageAction must have a `label`.",
+    "Proposals from the AI are a card below the reply; the AI never saves."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Message.md (generated from this file)",
+    "storyFile": "src/stories/Message.stories.tsx",
+    "artifactStatus": "needs review",
+    "version": "3.0",
+    "openQuestions": [],
+    "knownIssues": [],
+    "notes": [
+      "Installed 2026-09-22 with AI Elements for the chat panel. Stock source adapted to Enpath: Phosphor icons, light-only classes, shadcn colour names rewritten to Enpath tokens."
+    ],
+    "changelog": [
+      {
+        "date": "2026-09-22",
+        "change": "Added (AI Elements install) and documented."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ai-elements/message.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Message",
+      "MessageContent",
+      "MessageActions",
+      "MessageAction",
+      "MessageBranch",
+      "MessageBranchContent",
+      "MessageBranchSelector",
+      "MessageBranchPrevious",
+      "MessageBranchNext",
+      "MessageBranchPage",
+      "MessageResponse",
+      "MessageToolbar"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Message.stories.tsx",
+    "title": "AI/Message",
+    "stories": [
+      "UserAndAssistant"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Message.md",
+    "intro": "# Message\n\nOne chat turn. User turns sit in a light blue block; assistant turns are plain text with markdown, plus actions (copy, retry).\n\n---\n\n",
+    "sections": [
+      {
+        "title": "What it is",
+        "body": "\nAI Elements Message. `from=\"user\" | \"assistant\"`. MessageResponse renders streaming markdown (streamdown). Replaces the deleted ChatBubble.\n\n**Exports:** `Message` · `MessageContent` · `MessageActions` · `MessageAction` · `MessageBranch` · `MessageBranchContent` · `MessageBranchSelector` · `MessageBranchPrevious` · `MessageBranchNext` · `MessageBranchPage` · `MessageResponse` · `MessageToolbar`\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n| Part | Token |\n|---|---|\n| User fill | `chat/user/bg` |\n| User border | `chat/user/border` |\n| User text | `chat/user/fg` |\n| User radius | `radius/lg` |\n| Assistant text | `chat/assistant/fg` — no bubble |\n| Actions | Button ghost; tooltips |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Source:** https://elements.ai-sdk.dev/components/message\n- **Story:** `AI/Message`\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Solid brand-blue user bubbles",
+      "correct": "`chat/user/*` light block"
+    },
+    {
+      "wrong": "Rendering assistant markdown as raw text",
+      "correct": "MessageResponse"
+    }
+  ]
+}

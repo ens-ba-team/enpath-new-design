@@ -1,0 +1,349 @@
+{
+  "name": "select",
+  "description": "A dropdown control for choosing one option from a predefined fixed list.",
+  "category": "forms",
+  "shadcnBase": "select",
+  "componentSets": {
+    "select-trigger": {
+      "purpose": "Clickable trigger that opens the dropdown."
+    },
+    "select-field": {
+      "purpose": "Complete form field with label, trigger, and description."
+    }
+  },
+  "variants": {
+    "State": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Hover",
+        "Open",
+        "Filled",
+        "Disabled",
+        "Invalid"
+      ],
+      "default": "Default",
+      "reactProp": "state",
+      "reactValues": {
+        "Default": "default",
+        "Hover": "hover",
+        "Open": "open",
+        "Filled": "filled",
+        "Disabled": "disabled",
+        "Invalid": "invalid"
+      }
+    },
+    "Field state": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Open",
+        "Disabled",
+        "Invalid"
+      ],
+      "default": "Default",
+      "reactProp": "fieldState",
+      "reactValues": {
+        "Default": "default",
+        "Open": "open",
+        "Disabled": "disabled",
+        "Invalid": "invalid"
+      }
+    }
+  },
+  "tokens": {
+    "triggerContainer": {
+      "Default": {
+        "fill": "color/input/bg",
+        "stroke": "color/input/border"
+      },
+      "Hover": {
+        "fill": "color/input/bg",
+        "stroke": "color/border/hover"
+      },
+      "Open": {
+        "fill": "color/input/bg",
+        "stroke": "color/border/focus",
+        "effect": "focus/ring"
+      },
+      "Filled": {
+        "fill": "color/input/bg",
+        "stroke": "color/input/border"
+      },
+      "Disabled": {
+        "fill": "color/surface/muted",
+        "stroke": "color/border/disabled"
+      },
+      "Invalid": {
+        "fill": "color/input/bg",
+        "stroke": "color/border/error"
+      },
+      "radius": "radius/md"
+    },
+    "triggerInternal": {
+      "placeholder": "color/input/placeholder",
+      "value": "color/background/default/foreground",
+      "disabledText": "color/text/disabled",
+      "icon": "color/icon/default",
+      "iconDisabled": "color/icon/disabled",
+      "paddingY": "spacing/component/sm",
+      "paddingX": "spacing/component/md"
+    },
+    "field": {
+      "descriptionDefault": "color/text/secondary",
+      "descriptionOpen": "hidden",
+      "descriptionDisabled": "color/text/disabled",
+      "descriptionInvalid": "color/text/invalid",
+      "gap": "spacing/component/xs"
+    },
+    "dropdown": {
+      "container": {
+        "fill": "color/surface/overlay",
+        "stroke": "color/border/default",
+        "radius": "radius/lg",
+        "shadow": "shadow/sm",
+        "padding": "spacing/component/xxs (2px all sides)",
+        "gap": "spacing/component/xxs (2px between items)"
+      },
+      "item": {
+        "height": "height/control-touch/md 36px → sm:height/control/md 32px",
+        "paddingX": "spacing/component/sm (8px) — px-2",
+        "radius": "radius/md",
+        "Default": {
+          "fill": "transparent",
+          "text": "color/background/default/foreground"
+        },
+        "Hover": {
+          "fill": "color/background/accent",
+          "text": "color/background/accent/foreground"
+        },
+        "Selected": {
+          "fill": "transparent",
+          "text": "color/brand/primary",
+          "notes": "No checkmark — selected state uses brand/primary text color only"
+        },
+        "Disabled": {
+          "fill": "transparent",
+          "text": "color/text/disabled"
+        }
+      }
+    },
+    "states": {
+      "invalid": {
+        "borderToken": "color/border/error",
+        "ringToken": "color/border/error",
+        "ringGlow": "color-mix(in_srgb,var(--color-border-error)_20%,transparent)",
+        "notes": "Uses [&[aria-invalid]] compound selector to beat data-[state=open]/focus-visible specificity. Blue ring must NOT appear when invalid."
+      }
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`combobox` on the trigger button"
+      },
+      {
+        "property": "Expanded",
+        "value": "`aria-expanded=\"true\"` when open"
+      },
+      {
+        "property": "Options list",
+        "value": "`role=\"listbox\"`"
+      },
+      {
+        "property": "Each option",
+        "value": "`role=\"option\"` with `aria-selected`"
+      },
+      {
+        "property": "Required",
+        "value": "`aria-required=\"true\"` on the trigger"
+      },
+      {
+        "property": "Invalid",
+        "value": "`aria-invalid=\"true\"` on the trigger"
+      },
+      {
+        "property": "Label",
+        "value": "Associated via `aria-labelledby` pointing to the label element"
+      },
+      {
+        "property": "Keyboard",
+        "value": "Space or Enter opens/selects · Arrow keys move options · Escape closes and returns focus"
+      }
+    ]
+  },
+  "constraints": [
+    "Use `select-field` for fields like: country, gender, status, priority, role — any field with a short, stable list of options",
+    "Always provide a meaningful placeholder (e.g. \"Select a country\") — do not use a blank placeholder; the user must understand what they are selecting",
+    "The `description` below the field should explain constraints or context — not repeat the label",
+    "In `State=Invalid`, the description must state the specific error — \"Please select an option\" rather than \"Invalid\"",
+    "In `State=Open` the description is hidden because the dropdown visually occupies that space — no information should be hidden there that the user needs to see before making a selection",
+    "Do not use select for boolean choices (yes/no, on/off) — use a toggle or checkbox instead",
+    "Do not use select when the user might want to type or create a new option — use combobox instead",
+    "Use combobox for long, searchable, or multi-select lists."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Select.md (generated from this file)",
+    "storyFile": "src/stories/Select.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "Examples assume a SelectField wrapper API over shadcn Select primitives; source markdown itself does not mark this component not ready."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/select.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Select",
+      "SelectGroup",
+      "SelectValue",
+      "SelectTrigger",
+      "SelectContent",
+      "SelectLabel",
+      "SelectItem",
+      "SelectSeparator",
+      "SelectScrollUpButton",
+      "SelectScrollDownButton"
+    ],
+    "notes": [
+      "SelectItem: no checkmark indicator — selected state uses data-[state=checked]:text-[color/brand/primary] only.",
+      "Dropdown container uses radius/lg (not radius/md like trigger). Viewport uses p-0.5 + gap-0.5 flex-col layout."
+    ]
+  },
+  "storybook": {
+    "file": "src/stories/Select.stories.tsx",
+    "title": "Forms/Select",
+    "stories": [
+      "Default",
+      "Filled",
+      "Disabled",
+      "Invalid",
+      "WithField",
+      "WithFieldInvalid",
+      "WithFieldDisabled",
+      "WithGroups",
+      "WithSeparator",
+      "AllStates"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": "SelectItem: removed checkmark indicator. Selected state now uses color/brand/primary text (transparent bg) per spec. Container radius changed to radius/lg. Viewport padding p-0.5, gap-0.5 between items, item height h-8, px-2."
+  },
+  "docs": {
+    "file": "Select.md",
+    "intro": "# Select\n\nA dropdown control for choosing one option from a predefined, fixed list. Built on Radix UI Select. Two component sets: `select-trigger` is the button that opens the dropdown; `select-field` is the full form control with label and description.\n\n> **Shared sub-components:** `label`, `menu-dropdown`, `menu-dropdown-item` — see `_Form-shared.md`\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Component Sets",
+        "body": "\n| Set | ID | Variants | Purpose |\n|---|---|---|---|\n| `select-trigger` | `74:757` | 6 | The clickable button that opens the dropdown — sub-component of `select-field` |\n| `select-field` | `146:3751` | 4 | Complete form field — label + trigger + description. **Use this in almost every case.** |\n\n---\n\n"
+      },
+      {
+        "title": "Variant Matrices",
+        "body": "\n### `select-trigger` — `State`\n\n| Property | Options | Default |\n|---|---|---|\n| `State` | `Default`, `Hover`, `Open`, `Filled`, `Disabled`, `Invalid` | `Default` |\n\n`State(6) = 6 variants`\n\n### `select-field` — `Field state`\n\n| Property | Options | Default |\n|---|---|---|\n| `Field state` | `Default`, `Open`, `Disabled`, `Invalid` | `Default` |\n\n`Field state(4) = 4 variants`\n\n---\n\n"
+      },
+      {
+        "title": "Structure",
+        "body": "\n### `select-trigger`\n\n```\nselect-trigger              — H AUTO-LAYOUT, fill: color/input/bg\n                              stroke: color/input/border, radius: radius/md\n                              padding: spacing/component/sm (T/B) · spacing/component/md (L/R)\n                              gap: spacing/component/sm · height: `height/control-touch/md` 36px on touch · `sm:height/control/md` 32px from 640px up\n  ├─ value                  — FRAME (fills remaining width)\n  │    └─ placeholder       — TEXT\n  └─ icon                   — INSTANCE (chevron-down, 16×16)\n       └─ Icon              — VECTOR\n```\n\n### `select-field`\n\n```\nselect-field                — V AUTO-LAYOUT, gap: spacing/component/xs\n  ├─ label                  — INSTANCE (label component — see _Form-shared.md)\n  ├─ select-trigger         — INSTANCE\n  └─ description            — TEXT  (hidden in Open state — dropdown replaces it visually)\n```\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### `select-trigger` — container per state\n\n| State | Fill | Stroke |\n|---|---|---|\n| `Default` | `color/input/bg` | `color/input/border` |\n| `Hover` | `color/input/bg` | `color/border/hover` |\n| `Open` | `color/input/bg` | `color/border/focus` + `focus/ring` effect |\n| `Filled` | `color/input/bg` | `color/input/border` |\n| `Disabled` | `color/surface/muted` | `color/border/disabled` |\n| `Invalid` | `color/input/bg` | `color/border/error` |\n\n### `select-trigger` — internal layers\n\n| Layer | Property | Token | Notes |\n|---|---|---|---|\n| `placeholder` | Fill | `color/input/placeholder` | Default / Hover / Open / Invalid |\n| `placeholder` | Fill | `color/background/default/foreground` | Filled (shows selected value) |\n| `placeholder` | Fill | `color/text/disabled` | Disabled |\n| `icon` VECTOR | Stroke | `color/icon/default` | All states except Disabled |\n| `icon` VECTOR | Stroke | `color/icon/disabled` | Disabled |\n| container | Radius | `radius/md` | All states |\n| container | paddingTop / paddingBottom | `spacing/component/sm` | |\n| container | paddingLeft / paddingRight | `spacing/component/md` | |\n\n### `select-field` — description and label per state\n\n| State | `label` variant | `description` fill |\n|---|---|---|\n| `Default` | `label state=Default` | `color/text/secondary` |\n| `Open` | `label state=Default` | hidden (menu-dropdown shown instead) |\n| `Disabled` | `label state=Disabled` | `color/text/disabled` |\n| `Invalid` | `label state=Invalid` | `color/text/invalid` |\n\n---\n\n"
+      },
+      {
+        "title": "Behavior",
+        "body": "\nSource: Radix UI Select primitive.\n\n### Open / Close\n\n- Clicking `select-trigger` opens the dropdown (Radix UI Select.Trigger)\n- The dropdown closes when: an item is selected · `Escape` is pressed · the user clicks outside\n- On open, the dropdown positions so the currently selected item appears over the trigger (`position=\"item-aligned\"` — Radix UI default). Use `position=\"popper\"` to align to the trigger's bottom edge instead\n- Selecting an item closes the dropdown and updates the trigger's value display (placeholder → selected text, `color/input/placeholder` → `color/background/default/foreground`)\n\n### Keyboard\n\n| Key | Action |\n|---|---|\n| `Space` | Open select / select focused item |\n| `Enter` | Open select / select focused item |\n| `Arrow Down` | Open select / move focus to next item |\n| `Arrow Up` | Open select / move focus to previous item |\n| `Escape` | Close select, return focus to trigger |\n\n(Radix UI Select keyboard behavior — verified against Radix UI docs.)\n\n### Scroll\n\n- The native scrollbar inside the dropdown is hidden by default\n- When the option list overflows the viewport, `ScrollUpButton` and `ScrollDownButton` affordances appear — implementation-defined whether to use these or the Scroll Area primitive\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": "\n> **The single most important rule: use `select-field`, not `select-trigger`.**\n>\n> `select-trigger` is a sub-component — it is the clickable button only, with no label or description. Placing it directly in a layout produces an unlabelled control that is inaccessible and impossible for the user to understand without context. Use `select-field` for every standard form use case.\n\n> **Choose select over combobox when: the list is short and fully known.**\n>\n> Select is for choosing from a fixed, predetermined set of options where the user benefits from seeing the full list at once. If the list has more than ~10–15 items, or if the user needs to search or type to filter, use `combobox-field` instead. If the user needs to select multiple values, use `combobox-field` with `Type=Basic, State=Filled-chips`.\n"
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- Country or region field in a checkout or address form — fixed list, user needs to scroll and pick one\n- Timezone selector in account settings — short curated list, no typing required\n- Status or priority picker in a project tool: To Do, In Progress, Done, Blocked\n- Theme preference: Light, Dark, System — 3 options, no search needed\n- Role assignment in a user management form: Admin, Editor, Viewer\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `State=Default` | Field rendered, no value chosen yet — placeholder shown | Empty \"Select a country\" on page load |\n| `State=Open` | Actively showing the dropdown — use in mockups to preview the list | Design spec showing dropdown with fruit options |\n| `State=Filled` | A value has been selected and is displayed in the trigger | \"United States\" after user picks a country |\n| `State=Invalid` | Form submitted without a required selection, or value fails validation | \"Please select a timezone\" error state |\n| `State=Disabled` | Field is locked — context determines the value or user lacks permission to change it | Read-only role display on a locked team member record |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| Fixed short list (≤ ~10 items), pick one, no typing needed | `select` | `combobox` |\n| Long list (10+ items) or user needs to search/filter | `combobox` | `select` |\n| User must pick multiple values | `combobox` (`State=Filled-chips`) | `select` |\n| 2–5 options where seeing all at once aids the decision | `radio` | `select` |\n| Binary yes/no or on/off choice | `checkbox` or `switch` | `select` |\n| User may need to type a value not in the list | `input` | `select` |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/select\n- **Best practice · References · Radix:** https://www.radix-ui.com/primitives/docs/components/select\n- **Composition · Select Field:** description or menu-dropdown\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Use `select-trigger` directly in a form layout",
+      "correct": "Use `select-field` — it includes the label and description"
+    },
+    {
+      "wrong": "Use select for a list of 20+ items",
+      "correct": "Use `combobox-field` with `Type=Search` — users need to filter"
+    },
+    {
+      "wrong": "Use select for multiple selection",
+      "correct": "Use `combobox-field` with `State=Filled-chips`"
+    },
+    {
+      "wrong": "Use select for yes/no choices",
+      "correct": "Use a checkbox or toggle"
+    },
+    {
+      "wrong": "Blank placeholder",
+      "correct": "\"Select a country\" — always name what's being selected"
+    },
+    {
+      "wrong": "Override `select-trigger` fills from inside `select-field`",
+      "correct": "Change the `select-trigger` State prop — never reach inside"
+    },
+    {
+      "wrong": "Use `select-trigger` State=Open without showing `menu-dropdown`",
+      "correct": "Open state must always show the dropdown panel"
+    }
+  ]
+}

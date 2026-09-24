@@ -1,0 +1,313 @@
+{
+  "name": "avatar",
+  "description": "A circular user representation with image, initials fallback, 3 sizes, and optional online/offline status indicator.",
+  "category": "display",
+  "shadcnBase": "avatar",
+  "componentSets": {
+    "avatar": {
+      "variants": 12,
+      "purpose": "Type × Size × Badge"
+    },
+    "avatar-indicator": {
+      "variants": 4,
+      "purpose": "Online/offline presence dot — type=online/offline × size=Default/large"
+    }
+  },
+  "variants": {
+    "Type": {
+      "type": "enum",
+      "values": [
+        "Image",
+        "Fallback"
+      ],
+      "default": "Image",
+      "reactProp": "type",
+      "reactValues": {
+        "Image": "image",
+        "Fallback": "fallback"
+      }
+    },
+    "Size": {
+      "type": "enum",
+      "values": [
+        "SM",
+        "Default",
+        "LG"
+      ],
+      "default": "SM",
+      "reactProp": "size",
+      "reactValues": {
+        "SM": "sm",
+        "Default": "default",
+        "LG": "lg"
+      },
+      "dimensions": {
+        "SM": {
+          "width": 32,
+          "height": 32,
+          "textStyle": "label/sm"
+        },
+        "Default": {
+          "width": 40,
+          "height": 40,
+          "textStyle": "label/md"
+        },
+        "LG": {
+          "width": 56,
+          "height": 56,
+          "textStyle": "label/md"
+        }
+      }
+    },
+    "Badge": {
+      "type": "enum",
+      "values": [
+        "False",
+        "True"
+      ],
+      "default": "False",
+      "reactProp": "badge",
+      "reactValues": {
+        "False": false,
+        "True": true
+      }
+    }
+  },
+  "tokens": {
+    "type": {
+      "Image": {
+        "fill": "image",
+        "radius": "radius/full"
+      },
+      "Fallback": {
+        "fill": "color/surface/tint",
+        "fg": "color/surface/tint/foreground",
+        "radius": "radius/full"
+      }
+    },
+    "avatarIndicator": {
+      "online": {
+        "fill": "color/status/success",
+        "radius": "radius/full"
+      },
+      "offline": {
+        "fill": "color/status/offline",
+        "radius": "radius/full"
+      },
+      "dimensions": {
+        "Default": {
+          "width": 8,
+          "height": 8
+        },
+        "large": {
+          "width": 12,
+          "height": 12
+        }
+      }
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`img`"
+      },
+      {
+        "property": "Touch target",
+        "value": "All sizes meet WCAG 2.2 AA (24px). Only relevant when the avatar is interactive; 44px is advisory"
+      },
+      {
+        "property": "Screen reader name",
+        "value": "Full name as `alt` or `aria-label` — never just initials"
+      },
+      {
+        "property": "Badge",
+        "value": "Pair `avatar-indicator` with an accessible status label (e.g. `aria-label=\"Online\"` on the avatar wrapper) — dot color alone is not screen-reader accessible"
+      }
+    ]
+  },
+  "constraints": [
+    "Use `Image` when a photo URL is available — always prefer it over `Fallback`",
+    "Use `Fallback` when no photo exists — show 1–2 initials (first + last name initial)",
+    "`Badge=True` with `type=online` — user is active/connected",
+    "`Badge=True` with `type=offline` — user is absent/unavailable",
+    "Match `avatar-indicator` size to the avatar size: `size=Default` (8px) for `Size=SM`, `size=large` (12px) for `Size=Default` and `Size=LG`",
+    "Size choice follows context: `SM` in dense lists and table rows · `Default` in cards and comment threads · `LG` in profile headers"
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Avatar.md (generated from this file)",
+    "storyFile": "src/stories/Avatar.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "Examples assume an Enpath wrapper API over shadcn Avatar primitives.",
+      "R3 fixed 2026-05-28: Fallback label fill changed from color/background/muted/foreground → color/surface/muted/foreground to match the color/surface/muted container (paired-surface rule).",
+      "R8 fixed 2026-05-28: avatar-indicator fill override cleared on all Badge=True variants; avatar-indicator sub-component provides its own fill token (color/status/success / color/status/offline) — no override needed on the avatar instance.",
+      "2026-05-28: avatar-badge renamed to avatar-indicator. Redesigned as pure online/offline presence dot — removed Type=Dot/Icon and ring stroke. New variants: type=online/offline × size=Default/large (4 total)."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      },
+      {
+        "date": "2026-09-22",
+        "change": "Fallback fill: color/surface/muted (grey) → new color/surface/tint (blue/50); text → color/surface/tint/foreground (same neutral). surface/muted stays grey for the 7 other components that share it.",
+        "breaking": false
+      },
+      {
+        "date": "2026-09-22",
+        "change": "surface/tint → blue/100 (blue/50 too pale); initials → surface/tint/foreground = blue/800 (9.51:1). zinc/500 would fail on blue/100 (4.33:1).",
+        "breaking": false
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/avatar.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Avatar"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Avatar.stories.tsx",
+    "title": "Display/Avatar",
+    "stories": [
+      "WithImage",
+      "Fallback",
+      "Sizes",
+      "SizesWithImage",
+      "Online",
+      "Offline",
+      "IndicatorSizes",
+      "OnlineVsOffline"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Avatar.md",
+    "intro": "# Avatar\n\nA circular user representation. Supports 2 types (photo and initials fallback), 3 sizes, and an optional online/offline status indicator.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\nAll 12 combinations are valid.\n\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Sizes",
+        "body": "\n| Size | Dimensions | Text style |\n|---|---|---|\n| `SM` | 32 × 32px | `label/sm` |\n| `Default` | 40 × 40px | `label/md` |\n| `LG` | 56 × 56px | `label/md` |\n\nAll sizes are fixed square. Avatar never hugs or fills — always switch via the `Size` variant prop.\n\n---\n\n"
+      },
+      {
+        "title": "Component Properties",
+        "body": "\n| Property | Type | Default | Notes |\n|---|---|---|---|\n| `Type` | VARIANT | `Image` | `Image` shows a photo fill · `Fallback` shows initials |\n| `Size` | VARIANT | `SM` | Controls dimensions and text style |\n| `Badge` | VARIANT | `False` | `True` shows the `avatar-indicator` sub-component |\n\n> `Badge` is a variant (`True`/`False`), not a boolean prop.\n\n---\n\n"
+      },
+      {
+        "title": "Structure",
+        "body": "\n### Type=Image\n```\navatar\n  └─ (image fill — no child layers)\n```\n\n### Type=Fallback\n```\navatar\n  └─ label — initials text, always visible\n```\n\n### Badge=True (either Type)\n```\navatar\n  ├─ label — present on Fallback only\n  └─ avatar-indicator — instance, positioned bottom-right\n```\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### Per Type — fills & radius\n\n| Type | Fill token | Radius token |\n|---|---|---|\n| `Image` | — (image fill, no color token) | `radius/full` |\n| `Fallback` | `color/surface/tint` (blue/100) | `radius/full` |\n\n### Fallback — text\n\n| Element | Token |\n|---|---|\n| `label` fill | `color/surface/tint/foreground` |\n| `label` text style | `label/sm` (SM) · `label/md` (Default / LG) |\n\n### Sub-component — `avatar-indicator`\n\n| Variant | Element | Token |\n|---|---|---|\n| `type=online` | fill | `color/status/success` |\n| `type=offline` | fill | `color/status/offline` |\n\nBoth variants use `radius/full`. No stroke — the indicator is a pure filled dot.\n\n| Size | Dimensions |\n|---|---|\n| `size=Default` | 8 × 8px |\n| `size=large` | 12 × 12px |\n\n> Size pairing: use `size=Default` with `Size=SM` avatars, `size=large` with `Size=Default` and `Size=LG` avatars.\n\n---\n\n"
+      },
+      {
+        "title": "Sub-components",
+        "body": "\n| Sub-component | Variants | When it appears |\n|---|---|---|\n| `avatar-indicator` | `type=online` / `type=offline` × `size=Default` / `size=large` | When `Badge=True` |\n\n- `type=online` — user is active and connected. Fill: `color/status/success`.\n- `type=offline` — user is absent or unavailable. Fill: `color/status/offline`.\n\nDo not use `avatar-indicator` as a standalone component outside of `avatar`.\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Behavior",
+        "body": "\n| State | Notes |\n|---|---|\n| Static (default) | No interactive states — avatar is display-only unless wrapped in a button or link |\n| Interactive | If clickable, wrap in a button or anchor and add focus/hover states at the wrapper level — not on the avatar component itself |\n\n---\n\n"
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- User profile headers where a photo or initials identifies the account owner at a glance\n- Comment threads and activity feeds where each entry is attributed to a specific person\n- Team member lists and collaborator panels in project or document views\n- Table rows representing people (paired with name and role text)\n- Chat interfaces where each message is associated with its sender\n- Dropdown or popover triggers that open a user account menu\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Image` | A verified photo URL is available — always prefer this over Fallback | Profile header · Comment attribution · Team member card |\n| `Fallback` | No photo exists or fails to load — show 1–2 initials | New user who skipped photo upload · SSO user with no avatar on file · Deleted account placeholder |\n| `SM` (32px) | Dense contexts where the avatar supports other content rather than leads it | Table rows · Notification list items · Compact activity feeds |\n| `Default` (40px) | Standard use — comfortable size for lists, cards, and comment threads | Comment threads · Card headers · Settings profile row |\n| `LG` (56px) | The avatar is the primary visual anchor of the view | Profile page header · Account settings page · User detail modal |\n| `Badge=True` | A presence or availability signal is needed alongside the identity | Chat participant list (online/offline) · Collaboration toolbar · \"Who's viewing\" panel |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| Showing a user's identity (photo or initials) | `avatar` | A raw circle frame with image fill |\n| Showing online/offline presence status overlaid on a user identity | `avatar` with `Badge=True` + `avatar-indicator` | `badge` as a standalone element |\n| Showing a category label, count, or status chip unrelated to a person | `badge` | `avatar` |\n| Showing a small thumbnail for a product, file, or non-person entity | `item` (`Type=Image`) | `avatar` |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/avatar\n- **Best practice · References · Radix:** https://www.radix-ui.com/primitives/docs/components/avatar\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Raw circle frame with image fill",
+      "correct": "`avatar` component, `Type=Image`"
+    },
+    {
+      "wrong": "`color/background/muted` on fallback fill",
+      "correct": "`color/surface/tint` — the avatar fallback is a light brand-blue identity fill with dark blue initials"
+    },
+    {
+      "wrong": "Three or more characters in `label`",
+      "correct": "1–2 initials only"
+    },
+    {
+      "wrong": "Detaching `avatar-indicator` to customise it",
+      "correct": "Switch `type=` variant instead"
+    },
+    {
+      "wrong": "Avatar as interactive element without a focus ring",
+      "correct": "Wrap in a button/link at implementation level"
+    },
+    {
+      "wrong": "Using `avatar-indicator` standalone outside an avatar",
+      "correct": "It is a sub-component — only use inside `avatar`"
+    }
+  ]
+}

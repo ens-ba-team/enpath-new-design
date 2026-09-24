@@ -1,0 +1,340 @@
+{
+  "name": "input",
+  "description": "A single-line text input control. Built on the native HTML input element. Use for name, email, password, search, and any single-line text entry.",
+  "category": "forms",
+  "shadcnBase": "input",
+  "componentSets": {
+    "input": {
+      "purpose": "Raw input or textarea control."
+    },
+    "input-field": {
+      "purpose": "Complete form field with label, input, and description."
+    }
+  },
+  "variants": {
+    "Type": {
+      "type": "enum",
+      "values": [
+        "Input"
+      ],
+      "default": "Input",
+      "reactProp": "type",
+      "reactValues": {
+        "Input": "input",
+        "Textarea": "textarea"
+      },
+      "intent": {
+        "Input": "Single-line text entry. 36px height on touch (under 640px), 32px from sm up, horizontal layout."
+      }
+    },
+    "State": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Hover",
+        "Focused",
+        "Filled",
+        "Disabled",
+        "Invalid",
+        "Read-only"
+      ],
+      "default": "Default",
+      "reactProp": "state",
+      "reactValues": {
+        "Default": "default",
+        "Hover": "hover",
+        "Focused": "focused",
+        "Filled": "filled",
+        "Disabled": "disabled",
+        "Invalid": "invalid"
+      },
+      "readOnlyNote": "From En UI. Native readOnly: surface/muted fill, full-strength text, no hover change, still focusable and selectable."
+    },
+    "Field state": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Filled",
+        "Disabled",
+        "Invalid"
+      ],
+      "default": "Default",
+      "reactProp": "fieldState",
+      "reactValues": {
+        "Default": "default",
+        "Filled": "filled",
+        "Disabled": "disabled",
+        "Invalid": "invalid"
+      }
+    }
+  },
+  "tokens": {
+    "container": {
+      "Default": {
+        "fill": "color/input/bg",
+        "stroke": "color/input/border"
+      },
+      "Hover": {
+        "fill": "color/input/bg",
+        "stroke": "color/border/hover"
+      },
+      "Focused": {
+        "fill": "color/input/bg",
+        "stroke": "color/border/focus",
+        "effect": "focus/ring"
+      },
+      "Filled": {
+        "fill": "color/input/bg",
+        "stroke": "color/input/border"
+      },
+      "Disabled": {
+        "fill": "color/surface/muted",
+        "stroke": "color/border/disabled"
+      },
+      "Invalid": {
+        "fill": "color/input/bg",
+        "stroke": "color/border/error"
+      },
+      "radius": "radius/md"
+    },
+    "internalLayers": {
+      "placeholder": "color/input/placeholder",
+      "placeholderDisabled": "color/text/disabled",
+      "value": "color/background/default/foreground",
+      "trailingText": "color/background/muted/foreground",
+      "trailingTextDisabled": "color/text/disabled",
+      "icon": "color/icon/default",
+      "iconDisabled": "color/icon/disabled"
+    },
+    "spacing": {
+      "inputPaddingY": "spacing/component/xs",
+      "textareaPaddingY": "spacing/component/sm",
+      "paddingX": "spacing/component/md",
+      "gap": "spacing/component/sm"
+    },
+    "inputField": {
+      "descriptionDefault": "color/text/secondary",
+      "descriptionDisabled": "color/text/disabled",
+      "descriptionInvalid": "color/text/invalid",
+      "gap": "spacing/component/xs"
+    },
+    "states": {
+      "invalid": {
+        "borderToken": "color/border/error",
+        "ringToken": "color/border/error",
+        "ringGlow": "color-mix(in_srgb,var(--color-border-error)_20%,transparent)",
+        "notes": "Uses [&[aria-invalid]] compound selector to beat data-[state=open]/focus-visible specificity. Blue ring must NOT appear when invalid."
+      }
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`textbox` (Input) / `textbox` with `aria-multiline=\"true\"` (Textarea)"
+      },
+      {
+        "property": "Label",
+        "value": "Associated via `htmlFor` → `id` pairing between `<label>` and `<input>`"
+      },
+      {
+        "property": "Invalid",
+        "value": "`aria-invalid=\"true\"` on the `<input>`"
+      },
+      {
+        "property": "Required",
+        "value": "`required` or `aria-required=\"true\"` on the `<input>`"
+      },
+      {
+        "property": "Disabled",
+        "value": "`disabled` attribute — also removes from tab order"
+      },
+      {
+        "property": "Description",
+        "value": "`aria-describedby` pointing to the description element"
+      }
+    ]
+  },
+  "constraints": [
+    "Use `input-field` for every standard form field — it wraps the label, input, and description in a single composable unit",
+    "Use `Type=Input` for any single-line entry: name, email, password, search, number, date",
+    "Use `Type=Textarea` for multi-line entry: notes, comments, descriptions, addresses",
+    "Do not use `Type=Textarea` for structured multi-value entry (e.g. adding multiple tags or emails) — use `combobox-trigger Type=Basic, State=Filled-chips` instead",
+    "Show `description` text to explain format requirements (\"Must be at least 8 characters\") or constraints — not as a repeat of the label",
+    "In `State=Invalid`, both label and `description` use `color/text/invalid` — the description IS the error message (e.g. \"Email must contain @\"), not supporting context, so it carries the same signal as the label",
+    "`trailing-button` is for input-bound actions only — if the action opens a modal or navigates away, use a standalone button next to the field instead"
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Input.md (generated from this file)",
+    "storyFile": "src/stories/Input.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "Examples assume InputField and Textarea wrappers around shadcn Input/Textarea; source markdown itself does not mark this component not ready.",
+      "Textarea has been separated into its own file: textarea.meta.json"
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/input.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Input"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Input.stories.tsx",
+    "title": "Forms/Input",
+    "stories": [
+      "Default",
+      "Filled",
+      "ReadOnly",
+      "Disabled",
+      "Invalid",
+      "Email",
+      "Password",
+      "WithField",
+      "WithFieldInvalid",
+      "WithFieldDisabled",
+      "WithLeadingIcon",
+      "WithTrailingIcon",
+      "WithTrailingButton",
+      "WithTrailingText",
+      "AllStates"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": "Input-only (single-line) stories. Textarea has its own separate story file and meta.json."
+  },
+  "relationships": {
+    "relatedComponents": [
+      {
+        "name": "textarea",
+        "reason": "Textarea is the multi-line version. Same token set, different height and vertical layout."
+      },
+      {
+        "name": "combobox",
+        "reason": "Use combobox for searchable/filterable lists or multi-value tag entry."
+      },
+      {
+        "name": "select",
+        "reason": "Use select for short fixed lists where typing is not needed."
+      },
+      {
+        "name": "input-otp",
+        "reason": "Use input-otp for verification codes and PINs requiring individual slot entry."
+      }
+    ]
+  },
+  "docs": {
+    "file": "Input.md",
+    "intro": "# Input\n\nA single-line text input control. Built on the native HTML `<input>` element, wrapped in shadcn's Input component. Two component sets: `input` is the raw control; `input-field` is the full form control with label and description.\n\n> **Separated:** `textarea` (multi-line) now has its own doc → see `Textarea.md`\n\n> **Shared sub-components:** `label` — see `_Form-shared.md`\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Component Sets",
+        "body": "\n| Set | ID | Variants | Purpose |\n|---|---|---|---|\n| `input` | `49:10806` | 12 | Raw input control — use standalone only when building a fully custom field wrapper |\n| `input-field` | `49:10848` | 4 | Complete form field — label + input + description. **Use this in almost every case.** |\n\n---\n\n"
+      },
+      {
+        "title": "Variant Matrices",
+        "body": "\n### `input` — `Type × State`\n\n| Property | Options | Default |\n|---|---|---|\n| `Type` | `Input`, `Textarea` | `Input` |\n| `State` | `Default`, `Hover`, `Focused`, `Filled`, `Disabled`, `Invalid` | `Default` |\n\n`Type(2) × State(6) = 12 variants`\n\n### `input-field` — `State`\n\n| Property | Options | Default |\n|---|---|---|\n| `State` | `Default`, `Filled`, `Disabled`, `Invalid` | `Default` |\n\n`State(4) = 4 variants`\n\n---\n\n"
+      },
+      {
+        "title": "Structure",
+        "body": "\n### `input` — Type=Input\n\n```\ninput                       — H AUTO-LAYOUT, fill: color/input/bg\n                              stroke: color/input/border, radius: radius/md\n                              padding: spacing/component/xs (T/B) · spacing/component/md (L/R)\n                              gap: spacing/component/sm · height: `height/control-touch/md` 36px on touch · `sm:height/control/md` 32px from 640px up\n  ├─ leading-icon           — INSTANCE (placeholder icon, 16×16) — optional\n  ├─ placeholder            — TEXT\n  ├─ trailing-text          — TEXT — optional label/unit (e.g. \"kg\", \"USD\")\n  ├─ trailing-icon          — INSTANCE (placeholder icon, 16×16) — optional\n  └─ trailing-button        — INSTANCE (button, outline style) — optional\n```\n\n### `input` — Type=Textarea\n\n```\ninput                       — V AUTO-LAYOUT, fill: color/input/bg\n                              stroke: color/input/border, radius: radius/md\n                              padding: spacing/component/sm (T/B) · spacing/component/md (L/R)\n                              height: 120px\n  ├─ leading-icon           — INSTANCE (placeholder icon, 16×16) — hidden by default (Leading Icon prop)\n  ├─ header                 — FRAME — hidden by default (Header prop)\n  │    ├─ header-icon       — INSTANCE (placeholder icon, 16×16), stroke: color/icon/default\n  │    ├─ header-label      — TEXT, fill: color/background/default/foreground\n  │    └─ header-trailing-icon — INSTANCE (placeholder icon, 16×16), stroke: color/icon/default\n  ├─ placeholder            — TEXT, fill: color/input/placeholder\n  ├─ footer                 — FRAME (always present)\n  │    ├─ counter           — TEXT — hidden by default (Trailing Text prop), fill: color/text/secondary\n  │    └─ action            — INSTANCE (Button, Type=Primary) — hidden by default (Trailing Button prop)\n  └─ trailing-icon          — INSTANCE (placeholder icon, 16×16) — hidden by default (Trailing Icon prop)\n```\n\n> **Textarea vs Input slots:** Textarea shares `Leading Icon`, `Trailing Icon`, `Trailing Text`, and `Trailing Button` boolean props with Input. It adds a `Header` prop unique to the Textarea. The footer `action` is a **primary button** — unlike Input's `trailing-button` which is outline.\n\n### `input-field`\n\n```\ninput-field                 — V AUTO-LAYOUT, gap: spacing/component/xs\n  ├─ label                  — INSTANCE (label component — see _Form-shared.md)\n  ├─ input                  — INSTANCE (input component)\n  └─ description            — TEXT\n```\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### `input` — container per state\n\n| State | Fill | Stroke |\n|---|---|---|\n| `Default` | `color/input/bg` | `color/input/border` |\n| `Hover` | `color/input/bg` | `color/border/hover` |\n| `Focused` | `color/input/bg` | `color/border/focus` |\n| `Filled` | `color/input/bg` | `color/input/border` |\n| `Disabled` | `color/surface/muted` | `color/border/disabled` |\n| `Invalid` | `color/input/bg` | `color/border/error` |\n\n### `input` — internal layers\n\n| Layer | Property | Token | Notes |\n|---|---|---|---|\n| `placeholder` | Fill | `color/input/placeholder` | All states except Disabled |\n| `placeholder` | Fill | `color/text/disabled` | Disabled state |\n| `placeholder` | Fill | `color/background/default/foreground` | Filled state (shows typed value) |\n| `trailing-text` | Fill | `color/background/muted/foreground` | Resting states |\n| `trailing-text` | Fill | `color/text/disabled` | Disabled state |\n| `leading-icon` VECTOR | Stroke | `color/icon/default` | Resting + Focused + Filled |\n| `leading-icon` VECTOR | Stroke | `color/icon/disabled` | Disabled state |\n| `trailing-icon` VECTOR | Stroke | `color/icon/default` | Resting + Focused + Filled |\n| `trailing-icon` VECTOR | Stroke | `color/icon/disabled` | Disabled state |\n| `header > header-icon` VECTOR | Stroke | `color/icon/default` | Textarea only |\n| `header > header-trailing-icon` VECTOR | Stroke | `color/icon/default` | Textarea only |\n| `header > header-label` | Fill | `color/background/default/foreground` | Textarea only |\n| `footer > counter` | Fill | `color/text/secondary` | Textarea only — hidden by default |\n| `footer > action` | Fill | `button/primary/bg/bg` | Textarea only — primary button, hidden by default |\n| container | Radius | `radius/md` | All states |\n| container | paddingTop / paddingBottom | `spacing/component/xs` (Input) · `spacing/component/sm` (Textarea) | |\n| container | paddingLeft / paddingRight | `spacing/component/md` | Both types |\n| container | gap | `spacing/component/sm` | Both types |\n\n> **Focus state:** uses `focus/ring` effect style + `color/border/focus` stroke. This is the correct pattern for input controls — not the `color/ring` stroke used by buttons. The ring appears as an outer glow while the border changes color simultaneously.\n\n### `input-field` — description per state\n\n| State | `label` variant | `description` fill |\n|---|---|---|\n| `Default` | `label state=Default` | `color/text/secondary` |\n| `Filled` | `label state=Default` | `color/text/secondary` |\n| `Disabled` | `label state=Disabled` | `color/text/disabled` |\n| `Invalid` | `label state=Invalid` | `color/text/invalid` |\n\n---\n\n"
+      },
+      {
+        "title": "Behavior",
+        "body": "\n### Focus and interaction\n\n- Clicking anywhere inside the input field moves focus to the `<input>` element and shows the Focused state (blue border + focus/ring glow)\n- `Type=Input`: single line — pressing Enter submits the associated form (implementation-defined)\n- `Type=Textarea`: multiline — pressing Enter inserts a newline; form submit requires a separate submit button\n- The `disabled` prop prevents all interaction and applies `pointer-events: none`; visually renders as `State=Disabled`\n- The `aria-invalid` prop marks the field as invalid for screen readers; visually renders as `State=Invalid`\n\n### Placeholder vs value\n\n- Placeholder text (`color/input/placeholder`) is visible in `State=Default` — it disappears as soon as the user types\n- Filled state (`color/background/default/foreground`) shows the typed value in the `placeholder` element\n\n### Trailing slots\n\n- `trailing-button` — use for actions directly tied to the input (e.g. \"Copy\", \"Show password\", \"Search\"). The button is always `Type=Outline` — it shares the input border height at 36px\n- `trailing-icon` — use for a status icon or decorative affordance with no click action\n- `trailing-text` — use for units, currency labels, or format hints (e.g. \"USD\", \"kg\", \".com\")\n- Only one trailing slot should be visible at a time — combinations are unsupported\n\n### Resize (Textarea)\n\n- The browser renders a diagonal grip icon in the bottom-right corner of every `<textarea>` by default — this is the native resize handle, not a design system element\n- **Keep the resize handle** — users can drag it to increase the textarea height, which is useful for notes, comments, and description fields\n- To remove it, add `resize-none` to the textarea className — only do this when a fixed height is strictly required by the layout\n- Default minimum height 120px; the user resizes it, or set `rows` / CSS `min-height`\n- The resize handle is not tokenised and cannot be styled with design system tokens — it renders in the browser's native UI color\n\n### Keyboard\n\n| Key | Action |\n|---|---|\n| `Tab` | Move focus into / out of the input |\n| `Shift+Tab` | Move focus backwards |\n| `Enter` | Submit form (Input) / insert newline (Textarea) |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": "\n> **The single most important rule: use `input-field`, not `input`.**\n>\n> `input` is a raw control with no label or description. A form field without a visible label is inaccessible and fails WCAG 1.3.1. The only valid reason to use `input` standalone is when you are building a completely custom field wrapper that provides its own label association — for example, an inline edit control inside a table cell.\n"
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- User registration or account setup forms: name, email, phone, username fields\n- Login forms where a single line of text is collected (email + password)\n- Search bars paired with a button — use `trailing-button` with the input\n- Address entry: street, city, postcode — each as a separate `input-field`\n- API key or token display fields where the user reads or copies a value\n- Notes, comments, or bio fields that require multi-line entry (`Type=Textarea`)\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Type=Input` | Single-line text, number, email, password, or search entry | Login email field · Username on signup · Search bar · Postcode |\n| `Type=Textarea` | Free-form multi-line prose — the user needs more than one line | Comment box · Product description · Support message · User bio |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| User must type a free-form value — anything goes | `input` | `select` or `combobox` |\n| User enters a verification or PIN code in individual slots | `input-otp` | `input` |\n| User needs to pick one value from a fixed list (no typing) | `select` | `input` |\n| User needs to pick from a long list or select multiple values | `combobox` | `input` |\n| User needs to add multiple tag-like values (email recipients, labels) | `combobox` (`Type=Basic, State=Filled-chips`) | `input` |\n| User must enter an exact number (quantity, amount, port) | `input` (`type=\"number\"`) | `slider` |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/input\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Use `input` standalone in a form",
+      "correct": "Use `input-field` — it includes the label and description"
+    },
+    {
+      "wrong": "Use `Type=Textarea` for tag / multi-value entry",
+      "correct": "Use `combobox-trigger` with `State=Filled-chips`"
+    },
+    {
+      "wrong": "Put multiple trailing slots in the same variant",
+      "correct": "One trailing slot at a time — icon OR text OR button"
+    },
+    {
+      "wrong": "Show a generic \"Invalid\" description in the Invalid state",
+      "correct": "Write the specific error: \"Email must contain @\""
+    },
+    {
+      "wrong": "Use `color/input/placeholder` for the value in Filled state",
+      "correct": "`color/background/default/foreground` — Filled shows real content"
+    },
+    {
+      "wrong": "Override `input` fills from inside `input-field`",
+      "correct": "Change the `input` State prop — never reach inside the instance"
+    }
+  ]
+}

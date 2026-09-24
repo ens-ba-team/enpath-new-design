@@ -1,0 +1,150 @@
+{
+  "name": "command",
+  "description": "Searchable, keyboard-first list of items and actions (cmdk). Powers the Model selector and prompt mentions.",
+  "category": "navigation",
+  "shadcnBase": "command",
+  "codeOnly": true,
+  "variants": {},
+  "tokens": {
+    "Fill": "`color/surface/overlay`",
+    "Text": "`color/surface/overlay/foreground`",
+    "Group heading · empty · shortcut": "`color/text/secondary`",
+    "Selected item": "`color/surface/accent` + `/foreground`",
+    "Border": "`color/border/default`"
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`combobox` input + `listbox` (cmdk)"
+      },
+      {
+        "property": "Keyboard",
+        "value": "↑ ↓ move, Enter selects, Esc closes the dialog"
+      },
+      {
+        "property": "Empty state",
+        "value": "Always render CommandEmpty so a no-match is announced"
+      }
+    ]
+  },
+  "constraints": [
+    "Always include a CommandEmpty message.",
+    "Group items under headings when there are more than ~7.",
+    "Show shortcuts with CommandShortcut, never in the label."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Command.md (generated from this file)",
+    "storyFile": "src/stories/Command.stories.tsx",
+    "artifactStatus": "needs review",
+    "version": "3.0",
+    "openQuestions": [],
+    "knownIssues": [],
+    "notes": [
+      "Installed 2026-09-22 with AI Elements for the chat panel. Stock source adapted to Enpath: Phosphor icons, light-only classes, shadcn colour names rewritten to Enpath tokens."
+    ],
+    "changelog": [
+      {
+        "date": "2026-09-22",
+        "change": "Added (AI Elements install) and documented."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/command.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Command",
+      "CommandDialog",
+      "CommandInput",
+      "CommandList",
+      "CommandEmpty",
+      "CommandGroup",
+      "CommandItem",
+      "CommandShortcut",
+      "CommandSeparator"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Command.stories.tsx",
+    "title": "Navigation/Command",
+    "stories": [
+      "Default"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Command.md",
+    "intro": "# Command\n\nSearchable, keyboard-first list of items and actions (cmdk). Powers the Model selector and prompt mentions.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "What it is",
+        "body": "\nAn input that filters a grouped list as you type. Arrow keys move, Enter selects. Can sit inline or in a dialog (CommandDialog).\n\n**Exports:** `Command` · `CommandDialog` · `CommandInput` · `CommandList` · `CommandEmpty` · `CommandGroup` · `CommandItem` · `CommandShortcut` · `CommandSeparator`\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n| Part | Token |\n|---|---|\n| Fill | `color/surface/overlay` |\n| Text | `color/surface/overlay/foreground` |\n| Group heading · empty · shortcut | `color/text/secondary` |\n| Selected item | `color/surface/accent` + `/foreground` |\n| Border | `color/border/default` |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Source:** https://ui.shadcn.com/docs/components/command\n- **Story:** `Navigation/Command`\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Command for a short fixed choice (≤ 5 options)",
+      "correct": "Select or Radio group"
+    },
+    {
+      "wrong": "Items without text (icon only)",
+      "correct": "Always a text label"
+    }
+  ]
+}

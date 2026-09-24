@@ -1,0 +1,270 @@
+{
+  "name": "empty",
+  "description": "A placeholder displayed when a list, panel, or section has no content. Icon + title + description + optional action buttons. Three Variants control container surface. Purely presentational — no Radix primitive.",
+  "category": "feedback",
+  "shadcnBase": null,
+  "primitiveBase": null,
+  "variants": {
+    "Variant": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Outline",
+        "Background"
+      ],
+      "default": "Default",
+      "intent": {
+        "Default": "No fill, no stroke, no radius — transparent. Use inside cards, sheets, dialogs that already provide the surface.",
+        "Outline": "No fill, color/border/default stroke, radius/lg. Use for bordered empty areas — list zones, table bodies, dropzone areas.",
+        "Background": "color/background/subtle fill, no stroke, radius/lg. Use for page-level or sidebar empty states with no other framing."
+      }
+    }
+  },
+  "componentProperties": {
+    "Variant": {
+      "type": "VARIANT",
+      "default": "Default"
+    }
+  },
+  "tokens": {
+    "container": {
+      "Default": {
+        "fill": "transparent",
+        "stroke": "none",
+        "radius": "none"
+      },
+      "Outline": {
+        "fill": "transparent",
+        "stroke": "color/border/default",
+        "radius": "radius/lg"
+      },
+      "Background": {
+        "fill": "color/background/subtle",
+        "stroke": "none",
+        "radius": "radius/lg"
+      },
+      "padding": "spacing/component/2xl",
+      "gap": "spacing/component/lg"
+    },
+    "header": {
+      "gap": "spacing/component/sm",
+      "media": {
+        "dimensions": "36×36px",
+        "radius": "radius/lg",
+        "fillDefaultOutline": "color/background/subtle",
+        "fillBackground": "color/surface/default",
+        "fillNote": "In Background variant, media steps up to color/surface/default to stay distinct from the subtle fill behind it."
+      },
+      "iconStroke": "color/background/default/foreground",
+      "titleFill": "color/background/default/foreground",
+      "descriptionFill": "color/text/secondary"
+    },
+    "content": {
+      "gap": "spacing/component/sm"
+    },
+    "buttons": {
+      "btnPrimary": {
+        "fill": "button/primary/bg/bg",
+        "doNotOverride": true
+      },
+      "btnOutline": {
+        "fill": "button/outline/bg/bg",
+        "stroke": "button/outline/border/default",
+        "doNotOverride": true
+      }
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "No implicit role — renders as a `<div>`. Add `role=\"status\"` if the empty state appears dynamically after a search or filter action"
+      },
+      {
+        "property": "Icon",
+        "value": "`aria-hidden=\"true\"` on the icon — the title and description carry the message"
+      },
+      {
+        "property": "`title`",
+        "value": "Should be descriptive enough to stand alone as the accessible label"
+      },
+      {
+        "property": "`description`",
+        "value": "Provides context — include the next step, not just a restatement of the title"
+      },
+      {
+        "property": "Action buttons",
+        "value": "Use the button component's built-in accessible label — ensure label text describes the action, not just \"Click here\""
+      }
+    ]
+  },
+  "constraints": [
+    "Use `Variant=Default` inside containers that already provide a surface — cards, sheets, dialogs, drawers",
+    "Use `Variant=Outline` for empty states that occupy a bordered area — table bodies, list panels, dropzone areas",
+    "Use `Variant=Background` for page-level or sidebar empty states where no other framing is present",
+    "Always provide a `title` and `description` — the title states what is missing; the description explains what to do next",
+    "Replace the icon with one contextually relevant to the empty state — the default folder icon is a placeholder",
+    "Do not show the empty state during loading — show a skeleton loader first, then transition to the empty state if results are empty",
+    "Keep `description` short — one sentence or two short sentences maximum",
+    "Do not modify fills inside `btn-primary` or `btn-outline` from the `empty` parent — change the button variant prop instead"
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Empty.md (generated from this file)",
+    "storyFile": "src/stories/Empty.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "empty is a custom design system component — implementation is a custom React component, not a shadcn base."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/empty.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Empty"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Empty.stories.tsx",
+    "title": "Feedback/Empty",
+    "stories": [
+      "Default",
+      "Outline",
+      "Background",
+      "PrimaryActionOnly",
+      "ReadOnly",
+      "NoIcon",
+      "AllVariants",
+      "InsideCard"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Empty.md",
+    "intro": "# Empty\n\nA placeholder component displayed when a list, panel, or section has no content. Combines an icon container, a title, a description, and optional action buttons to communicate the empty state and guide the user toward a next step. Three container Variants control whether the empty state brings its own visual boundary or inherits its surface from the parent context. No underlying Radix primitive — purely presentational.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Component Sets",
+        "body": "\n| Set | ID | Variants | Purpose |\n|---|---|---|---|\n| `empty` | `97:34667` | 3 | Empty state placeholder — icon + title + description + actions |\n\n---\n\n"
+      },
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": "\n### `empty` — `Variant`\n"
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\n`Variant(3) = 3 variants`\n\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Variant Guide",
+        "body": "\n**`Variant=Default`** — No fill, no stroke, no radius. The component is transparent — it inherits whatever surface it sits on. Use when the empty state lives inside an existing container (a `card`, a `sheet`, a `dialog`) that already provides the background and border. The component provides only the content, not the shell.\n\n**`Variant=Outline`** — No fill, `color/border/default` stroke, `radius/lg`. Creates a bordered enclosure around the empty state. Use when the empty state occupies a clearly defined area that needs its own boundary — a bordered list zone, a data table with no rows, a dashed dropzone area.\n\n**`Variant=Background`** — `color/background/subtle` fill, no stroke, `radius/lg`. A soft tinted container. Use when the empty state is the primary content of a page section or sidebar that has no other framing — the subtle tint grounds the component on the canvas without a hard border.\n\n---\n\n"
+      },
+      {
+        "title": "Structure",
+        "body": "\n```\nempty                           — COMPONENT, V AUTO-LAYOUT, CENTER×CENTER\n                                  padding (all sides): spacing/component/2xl (32px)\n                                  gap: spacing/component/lg (16px)\n                                  fill / stroke / radius: per Variant (see Token Bindings)\n\n  ├─ header                     — FRAME, V AUTO-LAYOUT, CENTER×CENTER\n  │                               gap: spacing/component/sm (8px)\n  │\n  │    ├─ media                 — FRAME, H AUTO-LAYOUT, CENTER×CENTER\n  │    │                           36×36px · radius: radius/lg\n  │    │                           fill: color/background/subtle (Default, Outline)\n  │    │                           fill: color/surface/default (Background)\n  │    │    └─ folder           — INSTANCE (icon placeholder)\n  │    │         └─ Icon        — VECTOR, stroke: color/background/default/foreground\n  │    │\n  │    ├─ title                 — TEXT, fill: color/background/default/foreground\n  │    └─ description           — TEXT, fill: color/text/secondary\n\n  └─ content                    — FRAME, H AUTO-LAYOUT, CENTER×CENTER\n                                  gap: spacing/component/sm (8px)\n       ├─ btn-primary           — INSTANCE (button, Primary)\n       └─ btn-outline           — INSTANCE (button, Outline)\n```\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### Root container — per Variant\n\n| Variant | Fill | Stroke | Radius |\n|---|---|---|---|\n| `Default` | — (transparent) | — | — |\n| `Outline` | — | `color/border/default` | `radius/lg` |\n| `Background` | `color/background/subtle` | — | `radius/lg` |\n\n### Root container — spacing\n\n| Property | Token | Value |\n|---|---|---|\n| Padding (all sides) | `spacing/component/2xl` | 32px |\n| Gap (header → content) | `spacing/component/lg` | 16px |\n\n### `header`\n\n| Layer | Property | Token | Value |\n|---|---|---|---|\n| root | Gap | `spacing/component/sm` | 8px |\n| `media` | Fill (Default, Outline) | `color/background/subtle` | Subtle tint |\n| `media` | Fill (Background) | `color/surface/default` | Component surface — lifts slightly above the subtle bg |\n| `media` | Radius | `radius/lg` | 8px |\n| `media` | Dimensions | — | 36×36px |\n| `folder > Icon` | Stroke | `color/background/default/foreground` | Foreground on default canvas |\n| `title` | Fill | `color/background/default/foreground` | Primary text |\n| `description` | Fill | `color/text/secondary` | Supporting text |\n\n> **`media` fill changes between Variants:** In `Default` and `Outline`, the icon container sits on a neutral or bordered surface — `color/background/subtle` provides a quiet tint. In `Background`, the whole component already uses `color/background/subtle` as its fill, so the icon container steps up to `color/surface/default` to remain visually distinct.\n\n### `content`\n\n| Property | Token | Value |\n|---|---|---|\n| Gap | `spacing/component/sm` | 8px |\n\n### `btn-primary` / `btn-outline` (sub-components)\n\nFills, strokes, and label colors are owned by the button source component — never override them from within `empty`.\n\n| Layer | Token |\n|---|---|\n| `btn-primary` fill | `button/primary/bg/bg` |\n| `btn-outline` fill | `button/outline/bg/bg` |\n| `btn-outline` stroke | `button/outline/border/default` |\n\n---\n\n"
+      },
+      {
+        "title": "Behavior",
+        "body": "\n### Architecture\n\n`empty` is a **purely presentational component** with no underlying Radix primitive or built-in state. It is conditionally rendered by the parent whenever data is absent.\n\n```tsx\n// Typical conditional render pattern\n{items.length === 0 && (\n  <EmptyState\n    icon={<FolderIcon />}\n    title=\"No Projects Yet\"\n    description=\"Get started by creating your first project.\"\n    primaryAction={{ label: \"Create Project\", onClick: handleCreate }}\n    secondaryAction={{ label: \"Import Project\", onClick: handleImport }}\n  />\n)}\n```\n\n### When to show\n\nRender the empty state when:\n- A list, table, or feed returns zero items\n- Search or filter returns no results\n- An inbox, calendar, or queue has no entries\n- The user has not yet performed a first action (onboarding state)\n\nDo not show the empty state while data is loading — use a skeleton or loading indicator instead. Replace the empty state immediately when the first item is created.\n\n### Icon customisation\n\nThe `media` frame holds a single icon instance (`folder` by default). Replace it with an icon appropriate to the context:\n\n| Context | Icon |\n|---|---|\n| Empty file list | `file` or `folder` |\n| No search results | `search` or `search-x` |\n| Empty inbox | `inbox` |\n| No events / calendar | `calendar` |\n| No notifications | `bell` |\n| No team members | `users` |\n| No data / analytics | `bar-chart` |\n\nSwap the `folder` icon for any Phosphor icon — pass it as a prop or slot.\n\n### Button visibility\n\n`btn-primary` and `btn-outline` are both shown by default but should be conditionally rendered:\n\n| Scenario | Buttons to show |\n|---|---|\n| User can create a new item | `btn-primary` (create action) + `btn-outline` (secondary action) |\n| User can perform one action only | `btn-primary` only |\n| Read-only context (no permission to create) | No buttons — or a text link to request access |\n| Filtered empty (clear filter to see results) | `btn-outline` only (\"Clear filters\") |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- A project list that has no projects yet — first-use onboarding state with a \"Create Project\" CTA\n- A search results panel that returns zero matches — with a \"Clear filters\" or \"Try different keywords\" action\n- An inbox or notification feed that has been fully read or cleared (\"You're all caught up.\")\n- A team members table where no members have been invited yet (\"Invite your team to get started.\")\n- A calendar or event list with no upcoming events (\"No events scheduled — add one to get started.\")\n- A filtered data table that returns nothing after applying active filters\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Default` | Empty state lives inside a container that already provides a surface | Inside a `card`, `sheet`, `dialog`, or `drawer` |\n| `Outline` | Empty state needs its own clear boundary in an open layout | Empty table body · Bordered list zone · Dashed dropzone area |\n| `Background` | Empty state is the primary content of a page section with no other framing | Full-page empty state · Sidebar with no items · Stand-alone panel on a canvas |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| Data is still loading and content is expected to appear | `skeleton` | `empty` (showing empty state during a load is a false negative — the data hasn't arrived yet) |\n| Something went wrong and the page has content but an error occurred | `alert` Variant=Destructive | `empty` (alert communicates failure; empty communicates absence) |\n| The list has items but the user needs to be prompted to add more | An inline CTA or `button` | `empty` (empty state is for zero-item states, not low-count nudges) |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Behavior · Render Timing:** Render only after data load completes with zero results. Show skeleton or spinner during loading.\n- **Composition · Structure:** V AUTO-LAYOUT, CENTER×CENTER: header (media 36×36 + title + description) → content (btn-primary + btn-outline, H AUTO-LAYOUT)\n- **Composition · Icon Customisation:** Replace the default folder icon with a context-specific icon: file, search, inbox, calendar, bell, users, bar-chart.\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Show the empty state while data is loading",
+      "correct": "Show a skeleton or spinner first; render empty state only after load completes with zero results"
+    },
+    {
+      "wrong": "Use the same folder icon for every empty state",
+      "correct": "Use a context-specific icon — inbox, calendar, search, etc."
+    },
+    {
+      "wrong": "Put a long paragraph in `description`",
+      "correct": "Keep it to one or two short sentences — the user needs a clear next step, not an explanation"
+    },
+    {
+      "wrong": "Show two action buttons when only one action is available",
+      "correct": "Conditionally render; show `btn-primary` alone when there's no valid secondary action"
+    },
+    {
+      "wrong": "Override button fills from within `empty`",
+      "correct": "Change the button's variant prop — never repaint sub-component internals"
+    },
+    {
+      "wrong": "Use `Variant=Background` inside a card",
+      "correct": "Use `Variant=Default` — the card already provides the surface; a subtle fill inside it creates an unintended double-layer"
+    }
+  ]
+}

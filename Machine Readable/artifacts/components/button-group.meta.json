@@ -1,0 +1,226 @@
+{
+  "name": "button-group",
+  "description": "A bordered container that visually groups related ghost buttons into a connected control.",
+  "category": "actions",
+  "shadcnBase": "toggle-group",
+  "variants": {
+    "Orientation": {
+      "type": "enum",
+      "values": [
+        "Horizontal",
+        "Vertical"
+      ],
+      "default": "Horizontal",
+      "reactProp": "orientation",
+      "reactValues": {
+        "Horizontal": "horizontal",
+        "Vertical": "vertical"
+      }
+    },
+    "Number": {
+      "type": "enum",
+      "values": [
+        "2",
+        "3"
+      ],
+      "default": "2",
+      "reactProp": "count",
+      "reactValues": {
+        "2": 2,
+        "3": 3
+      }
+    }
+  },
+  "tokens": {
+    "container": {
+      "fill": "color/surface/default",
+      "stroke": "color/border/default",
+      "radius": "radius/md",
+      "padding": 0,
+      "gap": 0
+    },
+    "separator": "color/border/default",
+    "buttons": {
+      "Horizontal": "Button Type=Ghost Size=Default",
+      "Vertical": "Button Type=Ghost Size=Icon Large"
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`group` with `aria-label` describing the group purpose"
+      },
+      {
+        "property": "Individual buttons",
+        "value": "Each button needs its own `aria-label` (especially icon-only in Vertical)"
+      },
+      {
+        "property": "Separator",
+        "value": "`aria-hidden=\"true\"` — decorative only"
+      },
+      {
+        "property": "Keyboard",
+        "value": "Standard tab order through each button"
+      }
+    ]
+  },
+  "constraints": [
+    "Use `button-group` when actions are related and the grouped visual treatment communicates their relationship — not for unrelated buttons placed near each other",
+    "`Orientation=Horizontal` is for text-label actions (Bold / Italic / Underline, Export / Preview / Share)",
+    "`Orientation=Vertical` is for icon-only stacked controls (zoom in / zoom out, align top / align bottom)",
+    "`Number=2` is the default — use `Number=3` only when all three actions are equally important and distinct",
+    "Do not mix text buttons and icon buttons within the same group — pick one type per group",
+    "The button-group has no disabled state at the container level — disable individual buttons by switching their `State` prop"
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Button-group.md (generated from this file)",
+    "storyFile": "src/stories/ButtonGroup.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "shadcnBase is approximate; this is a custom grouped-button pattern, not shadcn ToggleGroup behavior."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/button-group.tsx",
+    "packageDeps": [],
+    "exports": [
+      "ButtonGroup"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/ButtonGroup.stories.tsx",
+    "title": "Actions/ButtonGroup",
+    "stories": [
+      "HorizontalTwo",
+      "HorizontalThree",
+      "HorizontalIcons",
+      "TextFormatting",
+      "VerticalTwo",
+      "VerticalThree",
+      "AllVariants"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Button-group.md",
+    "intro": "# Button Group\n\nA bordered container that visually groups related ghost buttons into a single connected control. Used for segmented actions, toolbar clusters, and paired controls where the actions are related but mutually independent.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Component Sets",
+        "body": "\n| Set | ID | Variants | Purpose |\n|---|---|---|---|\n| `button-group` | `52:11151` | 4 | Grouped button container — horizontal or vertical, 2 or 3 buttons |\n\n---\n\n"
+      },
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\n`Orientation(2) × Number(2) = 4 variants`\n\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Structure",
+        "body": "\n```\nbutton-group                    — AUTO LAYOUT (HORIZONTAL or VERTICAL), radius/md, stroke: color/border/default\n  ├─ button                     — INSTANCE (Type=Ghost, State=Enabled)\n  ├─ separator                  — INSTANCE (_breadcrumb-separator or separator component)\n  ├─ button                     — INSTANCE\n  ├─ separator                  — INSTANCE (Number=3 only)\n  └─ button                     — INSTANCE (Number=3 only)\n```\n\n- **Horizontal** variants use `Type=Ghost, Size=Default` buttons — text + optional icon\n- **Vertical** variants use `Type=Ghost, Size=Icon Large` buttons — icon only (44×44px)\n- Separators sit between every pair of buttons — never at start or end\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### Container frame\n\n| Property | Token | Value |\n|---|---|---|\n| Fill | `color/surface/default` | Component surface — adapts to any parent surface |\n| Stroke | `color/border/default` | 1px · INSIDE |\n| Radius (all 4 corners) | `radius/md` | 6px |\n| Padding | none (0px) | Buttons fill edge-to-edge |\n| Gap | none (0px) | Buttons are flush — separator provides the visual divide |\n\n### Button instances\n\nButton instances own their own token bindings — `button-group` does not override any internal fills or spacing. Use the button component's `Type`, `State`, and `Size` props to change appearance.\n\n| Orientation | Button type used |\n|---|---|\n| `Horizontal` | `Type=Ghost, Size=Default` |\n| `Vertical` | `Type=Ghost, Size=Icon Large` |\n\n### Separator instances\n\n| Property | Token |\n|---|---|\n| Fill | `color/border/default` |\n\nSeparators are 1px wide (Horizontal) or 1px tall (Vertical) — they render as a hairline rule between buttons.\n\n---\n\n"
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- Formatting controls where options are complementary but independent (Bold / Italic / Underline in a rich text editor)\n- View-mode toggles where the user picks one display mode at a time (List view / Grid view / Table view)\n- Zoom and transform controls in a canvas or map toolbar (Zoom in / Zoom out)\n- Alignment controls in a design or layout tool (Align left / Align center / Align right)\n- Export or share actions that are closely related but individually invokable (Export / Preview / Share)\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Orientation=Horizontal` | Text-label actions where the labels communicate the distinction | Bold / Italic / Underline · Export / Preview / Share · Month / Week / Day in a calendar |\n| `Orientation=Vertical` | Icon-only stacked controls where vertical real estate is better than horizontal | Zoom in / Zoom out on a map · Align top / center / bottom in a layout panel |\n| `Number=2` | Two clearly paired complementary actions | List view / Grid view · Expand / Collapse |\n| `Number=3` | Three equally weighted actions in the same cluster | Left / Center / Right alignment · Previous / Current / Next period |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| A single isolated action | `button` | `button-group` (grouping a lone button adds visual noise with no meaning) |\n| Mutually exclusive selection where one option must always be active (like tabs) | `tabs` or a segmented control | `button-group` (button-group doesn't manage selected state) |\n| More than 3 related actions | A dropdown menu | `button-group` with 4+ items (too wide and visually cluttered) |\n| Navigation between routes | `navigation-menu` | `button-group` (button-group is for actions, not route navigation) |\n\n---\n\n"
+      },
+      {
+        "title": "Behavior",
+        "body": "\n### Individual button states\n\nEach button inside the group manages its own state independently — hover, focus, active, and disabled states on one button do not affect its siblings.\n\n| State | How to apply |\n|---|---|\n| Hover / Focus / Active | Handled by the embedded `button` component automatically |\n| Disabled | Set the individual button's `State=Disabled` prop — not a group-level control |\n| All disabled | Set each button to `State=Disabled` individually |\n\n### No group-level toggle\n\n`button-group` is not a segmented control — it does not manage selected/active state across buttons. If you need mutually exclusive selection (only one button active at a time), handle selection state in code and reflect it by switching the active button's `Type` or `State` prop.\n\n### Separator behavior\n\nThe separator between buttons is purely visual — it has no interactive behavior, receives no focus, and is always `aria-hidden`. It renders as a 1px line using `color/border/default`.\n\n### Orientation switching\n\n- `Orientation=Horizontal`: buttons read left-to-right, text labels visible\n- `Orientation=Vertical`: buttons stack top-to-bottom, icon-only (40×40 on touch, 36×36 from 640px up)\n- Do not switch orientation at runtime — choose the correct variant at design time\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Composition · Horizontal:** optional separator\n- **Composition · Horizontal:** optional button\n- **Composition · Vertical:** optional separator\n- **Composition · Vertical:** optional icon button\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "`color/background/default` on container fill",
+      "correct": "`color/surface/default` — group is a component surface, not page canvas"
+    },
+    {
+      "wrong": "Override button fills from button-group",
+      "correct": "Change the button's `Type` or `State` prop instead"
+    },
+    {
+      "wrong": "Place non-Ghost buttons inside button-group",
+      "correct": "Ghost type only — the group border provides the visual container"
+    },
+    {
+      "wrong": "Use button-group for navigation",
+      "correct": "Use tab-list or nav-button instead"
+    },
+    {
+      "wrong": "More than 3 buttons",
+      "correct": "Split into separate groups or use a different pattern"
+    }
+  ]
+}

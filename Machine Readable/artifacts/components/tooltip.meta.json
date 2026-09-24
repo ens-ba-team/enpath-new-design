@@ -1,0 +1,237 @@
+{
+  "name": "tooltip",
+  "description": "A floating label that appears on hover or focus to provide supplementary context.",
+  "category": "overlay",
+  "shadcnBase": "tooltip",
+  "componentSets": {
+    "bubble": {
+      "purpose": "Rounded pill with text label."
+    },
+    "tooltip": {
+      "purpose": "Positioned composite with bubble and directional arrow."
+    }
+  },
+  "variants": {
+    "Side": {
+      "type": "enum",
+      "values": [
+        "Top",
+        "Bottom",
+        "Left",
+        "Right"
+      ],
+      "default": "Top",
+      "reactProp": "side",
+      "reactValues": {
+        "Top": "top",
+        "Bottom": "bottom",
+        "Left": "left",
+        "Right": "right"
+      }
+    }
+  },
+  "tokens": {
+    "componentTokens": {
+      "tooltip/bg": "color/background/inverted",
+      "tooltip/fg": "color/background/inverted/foreground"
+    },
+    "bubble": {
+      "fill": "tooltip/bg",
+      "fg": "tooltip/fg",
+      "paddingX": "spacing/component/md",
+      "paddingY": "spacing/component/xs-plus",
+      "radius": "radius/md",
+      "textStyle": "label/sm"
+    },
+    "arrow": {
+      "fill": "tooltip/bg"
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`tooltip` (WAI-ARIA)"
+      },
+      {
+        "property": "Trigger",
+        "value": "`aria-describedby` on the trigger element pointing to the tooltip `id`"
+      },
+      {
+        "property": "Show on",
+        "value": "Focus and hover"
+      },
+      {
+        "property": "Dismiss",
+        "value": "`Escape` key or moving focus away"
+      },
+      {
+        "property": "Delay",
+        "value": "300ms show delay (`delayDuration=300` on `TooltipProvider`) — fast enough to feel responsive, slow enough to prevent flash on quick mouse pass"
+      },
+      {
+        "property": "Never",
+        "value": "Do not put interactive content inside a tooltip — use a popover instead"
+      }
+    ]
+  },
+  "constraints": [
+    "Use `Side=Top` by default — flip to other sides when there is insufficient space",
+    "Tooltip text should be short — one line preferred, two lines maximum",
+    "Do not use tooltips on mobile — hover is unavailable; use visible labels or a popover instead",
+    "The trigger element must be focusable (button, link, input) — do not attach tooltips to non-interactive elements",
+    "`bubble` is the source of truth for text and colour — never override its internal fills from the `tooltip` instance",
+    "Do not use tooltips on mobile as the only way to reveal information."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Tooltip.md (generated from this file)",
+    "storyFile": "src/stories/Tooltip.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "Tooltip aliases semantic tokens through component tokens — tooltip/bg → color/background/inverted, tooltip/fg → color/background/inverted/foreground. Auto-inverts per mode: dark bubble in light, light bubble in dark."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/tooltip.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Tooltip"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Tooltip.stories.tsx",
+    "title": "Overlay/Tooltip",
+    "stories": [
+      "Top",
+      "Bottom",
+      "Left",
+      "Right",
+      "IconButtons",
+      "ShortcutHint",
+      "DisabledButton",
+      "AllSides"
+    ],
+    "decorators": [
+      "TooltipProvider wrapping all stories"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Tooltip.md",
+    "intro": "# Tooltip\n\nFloating label that appears on hover or focus to provide supplementary context for an element. Built from two components: `bubble` (the content pill) and `tooltip` (the full positioned composite with arrow).\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Component Sets",
+        "body": "\n| Set | ID | Variants | Purpose |\n|---|---|---|---|\n| `bubble` | `74:1682` | 1 | Sub-component — the rounded pill with text label |\n| `tooltip` | `74:1699` | 4 | Full tooltip — bubble + directional arrow, one per side |\n\n---\n\n"
+      },
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": "\n### `tooltip`\n"
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\n4 variants — one per arrow direction.\n\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Structure",
+        "body": "\n### `bubble` (sub-component)\n\n```\nbubble                          — HORIZONTAL, radius/md, padding: spacing/component/md × spacing/component/xs-plus\n  └─ label                      — TEXT\n```\n\n### `tooltip`\n\n```\ntooltip                         — no layout, transparent fill\n  ├─ bubble                     — INSTANCE of bubble sub-component\n  └─ arrow                      — FRAME, transparent fill\n       └─ arrow-shape           — VECTOR (the directional caret)\n```\n\nThe outer `tooltip` frame has no fill and no layout mode — position of `bubble` and `arrow` is fixed per variant to reflect the correct side.\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### Component tokens — tooltip-specific\n\n| Token | Alias | Resolves to |\n|---|---|---|\n| `tooltip/bg` | `color/background/inverted` | `zinc/900` — dark bubble on a light page |\n| `tooltip/fg` | `color/background/inverted/foreground` | `white` — text on the dark bubble |\n\nThese alias **semantic tokens** — `color/background/inverted` and its foreground pair. Dark bubble with light text.\n\n### `bubble` — fills\n\n| Layer | Token |\n|---|---|\n| `bubble` fill | `tooltip/bg` |\n| `label` fill | `tooltip/fg` |\n\n### `bubble` — spacing\n\n| Property | Token | Value |\n|---|---|---|\n| `paddingLeft` | `spacing/component/md` | 12px |\n| `paddingRight` | `spacing/component/md` | 12px |\n| `paddingTop` | `spacing/component/xs-plus` | 6px |\n| `paddingBottom` | `spacing/component/xs-plus` | 6px |\n\n### `bubble` — radius\n\n| Property | Token |\n|---|---|\n| All 4 corners | `radius/md` |\n\n### `tooltip` variants — fills\n\n| Layer | Fill |\n|---|---|\n| Outer `tooltip` frame | Transparent — no fill |\n| `arrow` frame | Transparent — no fill |\n| `arrow-shape` (VECTOR) | `tooltip/bg` |\n\nArrow inherits the same `tooltip/bg` token so it always matches the bubble.\n\n### `label` — text style\n\n| Property | Value |\n|---|---|\n| Text style | `label/sm` |\n\n---\n\n"
+      },
+      {
+        "title": "Behavior",
+        "body": "\n### Show / hide\n\n| Trigger | Action |\n|---|---|\n| Mouse enters trigger | Start **300ms** delay timer (`delayDuration=300` — system default); show when timer completes |\n| Mouse leaves trigger during delay | Cancel timer — tooltip never shows |\n| Mouse leaves trigger after shown | Hide immediately (no delay) |\n| Move to a second trigger within **300ms** of leaving the first | Second tooltip opens immediately — no delay (`skipDelayDuration=300`) |\n| Mouse moves from trigger into tooltip content | Tooltip **stays open** — hoverable content is enabled by default (`disableHoverableContent=false`) |\n| Mouse leaves tooltip content | Hide immediately |\n| Trigger receives keyboard focus | Show immediately — no delay |\n| Trigger loses focus (blur) | Hide immediately |\n| `Escape` key | Hide immediately |\n\nSource: Radix UI Tooltip — Radix default is `delayDuration=700`. **This system overrides it to `300`** — set `<TooltipProvider delayDuration={300}>` at the app root. `skipDelayDuration` stays at `300`.\n\n> If you want the tooltip to close when the mouse moves from trigger to content (no hoverable zone), set `disableHoverableContent={true}` on the Provider.\n\n### Positioning\n\n- Default side: `Top` — used unless there is insufficient viewport space\n- Flip order: `Top` → `Bottom` → `Left` → `Right` — the tooltip repositions to the first side with enough room\n- The `arrow-shape` always points toward the trigger regardless of which side is active\n- Tooltip never clips outside the viewport — clamps to a safe inset if needed\n\n### Z-index\n\nTooltip sits above all page content and overlays but below modal dialogs. Recommended z-index layer: `popover` (typically 1000–1100 depending on the project stack).\n\n### No interactive content\n\nTooltip is read-only — do not place buttons, links, or form fields inside it. If interaction is needed, use a Popover instead.\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- Labelling an icon-only button so keyboard and mouse users know what it does (\"Archive\", \"Share\", \"Delete\")\n- Revealing the full text of a truncated cell or label when the container is too narrow to show it\n- Surfacing a keyboard shortcut hint alongside a toolbar action (\"Bold — ⌘B\")\n- Explaining an unfamiliar setting or field label with a one-line definition on hover\n- Describing what a disabled button requires before it can be activated (wrap in a `<span>` since disabled elements don't fire hover events)\n- Adding supplementary context to a data point or metric label without cluttering the UI permanently\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Side=Top` | Default — use unless there is insufficient space above the trigger | Icon button labels · Truncated text · Keyboard shortcut hints |\n| `Side=Bottom` | Trigger is near the top of the viewport or inside a fixed top bar | Top navigation icon buttons · App header actions |\n| `Side=Left` | Trigger is near the right edge and top/bottom are also constrained | Right-docked toolbar icons · Table action column |\n| `Side=Right` | Trigger is near the left edge | Left sidebar icons · Collapsed navigation items |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| The hint contains interactive content (links, buttons, form fields) | `popover` | `tooltip` (tooltip is read-only; interactive content inside it is inaccessible) |\n| The explanation is long (more than two lines) or needs formatting | `popover` | `tooltip` (tooltip should be one or two lines max; longer content needs a proper overlay) |\n| The user must act on the information before continuing | `dialog` (alert-dialog) | `tooltip` (tooltips are purely supplementary and dismissible) |\n| The label is for a mobile touch interface | Visible label text | `tooltip` (hover is unavailable on touch; tooltips are desktop-only) |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/tooltip\n- **Best practice · References · Radix:** https://www.radix-ui.com/primitives/docs/components/tooltip\n- **Behavior · Open State · Trigger:** hover or keyboard focus on trigger element\n- **Behavior · Open State · Delay:** 300ms show delay (system default — overrides Radix's 700ms). Set delayDuration={300} on TooltipProvider at app root.\n- **Behavior · Focus Management · Initial Focus:** none — tooltip is not focusable\n- **Behavior · Animation · Data Attributes:** data-state=open\n- **Behavior · Animation · Data Attributes:** data-state=closed\n- **Behavior · Animation · Data Attributes:** data-side=top/bottom/left/right\n- **Behavior · Animation · Description:** Fades in with zoom-in-95. Slides in from opposite direction of Side variant.\n- **Behavior · Scroll Behavior:** none — tooltip closes on scroll by default\n- **Composition · Outer Frame:** transparent, positioned per Side variant\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "`color/background/default/foreground` directly on bubble fill",
+      "correct": "`tooltip/bg` — use the component alias"
+    },
+    {
+      "wrong": "`color/background/default` directly on label fill",
+      "correct": "`tooltip/fg` — use the component alias"
+    },
+    {
+      "wrong": "`color/surface/overlay` for tooltip bubble",
+      "correct": "`tooltip/bg` — overlay is for light floating surfaces (dropdowns, modals), not dark tooltips"
+    },
+    {
+      "wrong": "Interactive elements inside tooltip",
+      "correct": "Use a Popover component instead"
+    },
+    {
+      "wrong": "Tooltip on a `<div>` or `<span>` without a role",
+      "correct": "Trigger must be natively focusable"
+    }
+  ]
+}

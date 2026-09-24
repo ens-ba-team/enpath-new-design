@@ -1,0 +1,366 @@
+{
+  "name": "item",
+  "description": "A compact, repeatable list-row component for a single entry in a list, feed, or menu. Six leading Types, three container Variants, and three Sizes. Always use 'item' — never '_item-image' standalone.",
+  "category": "layout",
+  "shadcnBase": null,
+  "primitiveBase": null,
+  "componentSets": {
+    "item": {
+      "variants": 54,
+      "purpose": "Full list row — 6 Types × 3 Variants × 3 Sizes. Always use this."
+    },
+    "_item-image": {
+      "variants": 1,
+      "purpose": "Image placeholder sub-component — assembled inside item. Never use standalone."
+    }
+  },
+  "variants": {
+    "Type": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Icon",
+        "Avatar",
+        "Image",
+        "Header",
+        "Link"
+      ],
+      "default": "Default",
+      "intent": {
+        "Default": "Text-only — no leading element. Simplest list row.",
+        "Icon": "16×16 icon precedes content. Use for category/action rows.",
+        "Avatar": "40×40 avatar precedes content. Use for people-centric lists.",
+        "Image": "32×32 image thumbnail precedes content. Use for product/file/brand rows.",
+        "Header": "Full-width cover image above content row. Use for editorial/rich rows. No action-slot.",
+        "Link": "Content + trailing chevron-right. Full row is the interactive target — no button."
+      }
+    },
+    "Variant": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Outline",
+        "Muted"
+      ],
+      "default": "Default",
+      "intent": {
+        "Default": "No fill, no stroke — inherits parent surface. Use inside bordered containers.",
+        "Outline": "color/surface/default fill + color/border/default stroke + radius/lg. Standalone card-like boundary.",
+        "Muted": "color/surface/muted fill + radius/lg, no stroke. Subtle tint for alternating/highlighted rows."
+      }
+    },
+    "Size": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Sm",
+        "Xs"
+      ],
+      "default": "Default",
+      "dimensions": {
+        "Default": {
+          "padding": "spacing/component/md",
+          "gap": "spacing/component/md"
+        },
+        "Sm": {
+          "padding": "spacing/component/sm",
+          "gap": "spacing/component/sm"
+        },
+        "Xs": {
+          "padding": "spacing/component/xs-plus",
+          "gap": "spacing/component/xs-plus"
+        }
+      }
+    }
+  },
+  "componentProperties": {
+    "Type": {
+      "type": "VARIANT",
+      "default": "Default"
+    },
+    "Variant": {
+      "type": "VARIANT",
+      "default": "Default"
+    },
+    "Size": {
+      "type": "VARIANT",
+      "default": "Default"
+    },
+    "selected": {
+      "type": "BOOLEAN",
+      "default": false
+    },
+    "onSelect": {
+      "type": "FUNCTION",
+      "default": null
+    }
+  },
+  "tokens": {
+    "container": {
+      "Default": {
+        "fill": "transparent",
+        "stroke": "none",
+        "radius": "radius/lg"
+      },
+      "Outline": {
+        "fill": "color/surface/default",
+        "stroke": "color/border/default",
+        "radius": "radius/lg"
+      },
+      "Muted": {
+        "fill": "color/surface/muted",
+        "stroke": "none",
+        "radius": "radius/lg"
+      }
+    },
+    "text": {
+      "title": "color/surface/default/foreground",
+      "description": "color/surface/muted/foreground",
+      "textGap": "spacing/component/xxs"
+    },
+    "leadingElements": {
+      "Icon": {
+        "iconStroke": "color/surface/default/foreground"
+      },
+      "Avatar": {
+        "fallbackFill": "color/surface/muted"
+      },
+      "Image": {
+        "fill": "IMAGE fill — replace with actual src in implementation"
+      },
+      "Header": {
+        "fill": "color/surface/muted",
+        "notes": "Replace with real cover image in implementation"
+      },
+      "Link": {
+        "chevronStroke": "color/surface/default/foreground"
+      }
+    },
+    "actionSlot": {
+      "fill": "button/outline/bg/bg",
+      "stroke": "button/outline/border/default",
+      "labelFill": "button/outline/fg/fg",
+      "doNotOverride": true
+    },
+    "selectable": {
+      "hover": {
+        "fill": "item/hover/bg"
+      },
+      "selected": {
+        "fill": "item/selected/bg",
+        "stroke": "item/selected/border",
+        "title": "item/selected/fg"
+      },
+      "focus": "color/border/focus"
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "`Type=Link` row",
+        "value": "Wrap in `<a href=\"...\">` or `<button>` — gives it an accessible role and focus target"
+      },
+      {
+        "property": "`action-slot` button",
+        "value": "Uses the button component's built-in accessible label — ensure the label text is descriptive, not just \"Edit\" without context"
+      },
+      {
+        "property": "`Type=Image` media",
+        "value": "Provide `alt` text describing the image content (`alt=\"Product: Blue Widget\"`)"
+      },
+      {
+        "property": "`Type=Header` cover",
+        "value": "Provide `alt` text or `aria-hidden=\"true\"` if the image is purely decorative"
+      },
+      {
+        "property": "`Type=Avatar`",
+        "value": "Avatar component handles its own accessible label — confirm the name is exposed via `aria-label` or visible text"
+      },
+      {
+        "property": "`description` when hidden",
+        "value": "If `description` is conditionally hidden, ensure the `title` alone is still sufficient to identify the item"
+      },
+      {
+        "property": "Selectable row (`onSelect`)",
+        "value": "Renders a `<button>`; the selected row gets `aria-current=\"true\"`. Use for single-select lists where selecting shows details elsewhere (master–detail)"
+      }
+    ]
+  },
+  "constraints": [
+    "The `description` layer is optional in implementation — hide it when items are atomic (single-line lists, command palettes)",
+    "The `action-slot` is optional in implementation — hide it when the row itself is the action (`Type=Link`) or when no action is available",
+    "Do not change the button inside `action-slot` to a destructive style by overriding fills — swap the `action-slot` INSTANCE to the appropriate button variant instead",
+    "For `Type=Image`, replace the IMAGE fill in `media` in implementation with the actual image source — the muted placeholder is for design representation only",
+    "`Type=Header`'s `header` frame represents a cover image — replace the muted fill with a real image in implementation",
+    "Selectable rows (`onSelect`) are single-select only — one `selected` row per list. For multi-select use a Checkbox in the row."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Item.md (generated from this file)",
+    "storyFile": "src/stories/Item.stories.tsx",
+    "artifactStatus": "ready",
+    "version": "3.0",
+    "openQuestions": [],
+    "notes": [
+      "item is a custom design system component — no direct shadcn equivalent. Implementation is a custom React component.",
+      "Type=Header and Type=Link only have Variant=Default in smaller sizes (Sm/Xs)."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-21",
+        "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/item.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Item"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Item.stories.tsx",
+    "title": "Layout/Item",
+    "stories": [
+      "TypeDefault",
+      "TypeIcon",
+      "TypeAvatar",
+      "TypeImage",
+      "TypeHeader",
+      "TypeLink",
+      "VariantOutline",
+      "VariantMuted",
+      "AllSizes",
+      "InsideCard",
+      "Selectable"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Item.md",
+    "intro": "# Item\n\nA compact, repeatable list-row component that represents a single selectable or informational entry — a notification, a file, a user in a group, a settings option. Designed to be flat and tightly grouped: items appear inside lists, feeds, menus, or as rows inside a `card`. They are not self-contained information blocks — they are list elements. Six layout Types control the leading element; three Variants control the container surface; three Sizes control density. Two component sets: `_item-image` is the image sub-component used by `Type=Image`; `item` is the full row — always use this.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Component Sets",
+        "body": "\n| Set | ID | Variants | Purpose |\n|---|---|---|---|\n| `_item-image` | `65:572` | 1 | Image placeholder sub-component — assembled inside `item` |\n| `item` | `65:815` | 54 | Full list row — use this |\n\n---\n\n"
+      },
+      {
+        "title": "Variant Matrices",
+        "body": "\n### `item` — `Type × Variant × Size`\n\n| Property | Options | Default |\n|---|---|---|\n| `Type` | `Default`, `Icon`, `Avatar`, `Image`, `Header`, `Link` | `Default` |\n| `Variant` | `Default`, `Outline`, `Muted` | `Default` |\n| `Size` | `Default`, `Sm`, `Xs` | `Default` |\n\n`Type(6) × Variant(3) × Size(3) = 54 variants`\n\n> **Note:** `Type=Header` and `Type=Link` only have `Variant=Default` in the smaller sizes (Sm / Xs). The Variant dimension applies in full across `Type=Default`, `Icon`, `Avatar`, `Image`.\n\n---\n\n"
+      },
+      {
+        "title": "Type Guide",
+        "body": "\n**`Type=Default`** — Text-only leading. Title + description fill the full content width. Use when no media or avatar is needed — the simplest, most neutral list row.\n\n**`Type=Icon`** — A 16×16 icon (`placeholder` instance) precedes the content block. Use when items map to an identifiable category or action that benefits from visual scannability (e.g. file type, action type, feature name).\n\n**`Type=Avatar`** — A 40×40 avatar precedes the content. Use for people-centric lists: team members, assignees, contacts, conversation threads.\n\n**`Type=Image`** — A 32×32 image thumbnail (`media` instance) precedes the content. Use for entity lists where a product image, logo, or preview gives context (products, brands, files).\n\n**`Type=Header`** — A large image header (`header` frame, full width) sits above the content row. Use as a card-like row with a cover image — article previews, featured content, rich list entries. Has no action-slot.\n\n**`Type=Link`** — Content + a trailing chevron-right icon. The whole row is the call-to-action — no button. Use for navigation lists, settings rows, disclosure rows. The trailing icon signals \"tap to open\" rather than a discrete button action.\n\n---\n\n"
+      },
+      {
+        "title": "Variant Guide",
+        "body": "\n**`Variant=Default`** — No container fill, no stroke. The row blends into whatever surface it sits on (a card, a list panel, the page). Use in most cases — the content speaks for itself.\n\n**`Variant=Outline`** — White fill (`color/surface/default`) + `color/border/default` stroke, `radius/lg`. Creates a card-like boundary. Use when items need visual separation from each other or from the page background, or when placed directly on a canvas without a wrapping list container.\n\n**`Variant=Muted`** — Muted fill (`color/surface/muted`), no stroke, `radius/lg`. A subtle background tint without a hard border. Use for zebra-striping alternatives, highlighted rows, or items in a sidebar context.\n\n---\n\n"
+      },
+      {
+        "title": "Size Guide",
+        "body": "\n| Size | Container padding / gap | Approx. height |\n|---|---|---|\n| `Default` | `spacing/component/md` (12px) all sides + gap | 61–181px depending on Type |\n| `Sm` | `spacing/component/sm` (8px) all sides + gap | 52–147px |\n| `Xs` | `spacing/component/xs-plus` (6px) all sides + gap | 48–116px |\n\n> **For `Type=Header`**, padding applies to `content-row` (not the outer container). The `header` image frame has no padding — it bleeds to the container edge.\n\n---\n\n"
+      },
+      {
+        "title": "Structure",
+        "body": "\n### `item` — Type=Default\n\n```\nitem                        — H AUTO-LAYOUT, fill: varies, stroke: varies, radius: radius/lg\n                              padding: per size · gap: per size\n  ├─ content                — FRAME, no fill, gap: spacing/component/xxs\n  │    ├─ title             — TEXT, fill: color/surface/default/foreground\n  │    └─ description       — TEXT, fill: color/surface/muted/foreground\n  └─ action-slot            — INSTANCE (button, Outline style)\n```\n\n### `item` — Type=Icon\n\n```\nitem                        — H AUTO-LAYOUT, fill: varies, stroke: varies, radius: radius/lg\n  ├─ placeholder            — INSTANCE (icon placeholder, 16×16)\n  │    └─ Icon              — VECTOR, stroke: color/surface/default/foreground\n  ├─ content                — FRAME, no fill, gap: spacing/component/xxs\n  │    ├─ title             — TEXT\n  │    └─ description       — TEXT\n  └─ action-slot            — INSTANCE (button)\n```\n\n### `item` — Type=Avatar\n\n```\nitem                        — H AUTO-LAYOUT, fill: varies, stroke: varies, radius: radius/lg\n  ├─ avatar                 — INSTANCE (avatar component, 40×40, radius/full)\n  │                           fill: color/surface/muted (fallback bg)\n  ├─ content                — FRAME, no fill, gap: spacing/component/xxs\n  │    ├─ title             — TEXT\n  │    └─ description       — TEXT\n  └─ action-slot            — INSTANCE (button)\n```\n\n### `item` — Type=Image\n\n```\nitem                        — H AUTO-LAYOUT, fill: varies, stroke: varies, radius: radius/lg\n  ├─ media                  — INSTANCE (_item-image, 32×32, radius/md)\n  │                           fill: image (placeholder — replace with the real image)\n  ├─ content                — FRAME, no fill, gap: spacing/component/xxs\n  │    ├─ title             — TEXT\n  │    └─ description       — TEXT\n  └─ action-slot            — INSTANCE (button)\n```\n\n### `item` — Type=Header\n\n```\nitem                        — V AUTO-LAYOUT, fill: varies, stroke: varies, radius: radius/lg\n                              (no container padding — header bleeds to edge)\n  ├─ header                 — FRAME, fill: color/surface/muted\n  │                           full-width image area — 120px (Default) · 96px (Sm) · 72px (Xs)\n  └─ content-row            — FRAME, no fill, padding + gap: per size\n       └─ content           — FRAME, no fill, gap: spacing/component/xxs\n            ├─ title        — TEXT\n            └─ description  — TEXT\n```\n\n> `Type=Header` has **no action-slot** — the Variant matrix applies only to the container fill/stroke. If an action is needed, use a button below the item, outside the component.\n\n### `item` — Type=Link\n\n```\nitem                        — H AUTO-LAYOUT, fill: varies, stroke: varies, radius: radius/lg\n                              align items: TOP (not center) — chevron anchors to top edge\n  ├─ content                — FRAME, no fill, gap: spacing/component/xxs\n  │    ├─ title             — TEXT\n  │    └─ description       — TEXT\n  └─ action-slot            — INSTANCE (chevron-right icon, 16×16, no fill/stroke on container)\n       └─ Icon              — VECTOR, stroke: color/surface/default/foreground\n```\n\n> `Type=Link` uses a bare icon as the action-slot — not a button. The entire row is the interactive target; the chevron signals navigation rather than a discrete action.\n>\n> **Alignment is top-left** (`counterAxisAlignItems = MIN`). When `description` wraps to multiple lines, a center-aligned chevron drifts away from the title. Top alignment pins the chevron to the title baseline regardless of how tall the content grows. All other Types use center alignment.\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n### Container — per Variant\n\n| Variant | Fill | Stroke | Radius |\n|---|---|---|---|\n| `Default` | — (transparent) | — | `radius/lg` |\n| `Outline` | `color/surface/default` | `color/border/default` | `radius/lg` |\n| `Muted` | `color/surface/muted` | — | `radius/lg` |\n\n### Container — padding and gap per Size\n\n| Size | All padding sides | Gap between children |\n|---|---|---|\n| `Default` | `spacing/component/md` | `spacing/component/md` |\n| `Sm` | `spacing/component/sm` | `spacing/component/sm` |\n| `Xs` | `spacing/component/xs-plus` | `spacing/component/xs-plus` |\n\n> `Type=Header` applies these values to `content-row`, not the outer container.\n\n### Text tokens\n\n| Layer | Token | Notes |\n|---|---|---|\n| `title` TEXT | `color/surface/default/foreground` | Primary text — all Types and Variants |\n| `description` TEXT | `color/surface/muted/foreground` | Supporting text — all Types and Variants |\n\n### Leading element tokens\n\n| Type | Layer | Token |\n|---|---|---|\n| Icon | `placeholder > Icon` VECTOR stroke | `color/surface/default/foreground` |\n| Avatar | `avatar` fill | `color/surface/muted` (fallback bg, from avatar source) |\n| Image | `media` fill | IMAGE fill — implementation replaces with actual src |\n| Header | `header` fill | `color/surface/muted` (placeholder bg) |\n| Link | `action-slot > Icon` VECTOR stroke | `color/surface/default/foreground` |\n\n### `action-slot` (button sub-component)\n\nThe `action-slot` is a button INSTANCE. Its fills and strokes come from the button source component's own tokens — never override them from within `item`.\n\n| Property | Token |\n|---|---|\n| Fill | `button/outline/bg/bg` |\n| Stroke | `button/outline/border/default` |\n| Label fill | `button/outline/fg/fg` |\n\n> Never reach inside `action-slot` to repaint its label or icon. If a different button style is needed, change the button's `Type` variant prop on the instance.\n\n---\n\n\n### Selectable rows (`onSelect`)\n\n| State | Fill | Stroke | Title |\n|---|---|---|---|\n| Hover | `item/hover/bg` | — | unchanged |\n| Selected | `item/selected/bg` | `item/selected/border` (1px inset) | `item/selected/fg`, SemiBold |\n| Focus | — | ring `color/border/focus` | — |\n\nSame blues as the sidebar's selected item, via component tokens (sidebar tokens stay scoped to the sidebar).\n\n---\n\n"
+      },
+      {
+        "title": "Behavior",
+        "body": "\n### Architecture\n\n`item` is a **presentational list-row component** — it has no built-in state management, routing, or click handling. Interactivity is entirely an implementation concern. The parent supplies `onClick`, `href`, or any selection logic.\n\n### Row interaction models\n\nThere are two distinct interaction models depending on Type:\n\n**Discrete action (`Type=Default`, `Icon`, `Avatar`, `Image`, `Header`)**\nThe row itself is non-interactive. The `action-slot` button is the sole interactive target. The row does not receive focus or hover styling — only the embedded button does.\n\n**Full-row action (`Type=Link`)**\nThe entire row is the interactive target — wrap it in an `<a>` or `<button>` in implementation. The trailing chevron-right icon signals navigation (\"tap to open\") rather than a discrete action. There is no separate button; the row itself handles the click/tap.\n\n### `action-slot` visibility\n\nThe `action-slot` is conditionally rendered:\n- **Show** when the item has a discrete action (e.g. Edit, Remove, View)\n- **Hide** for `Type=Link` — the row is the action; a button would duplicate the target\n- **Hide** for `Type=Header` — no action-slot exists in this Type\n- **Hide** when the item is read-only or informational (e.g. a status row)\n\nConditionally render the button in the `action-slot`.\n\n### `description` visibility\n\nThe `description` TEXT layer is optional. Hide it when:\n- Items are atomic and self-explanatory (single-line command palettes, simple pickers)\n- Space is so constrained that a second line causes density problems at `Size=Xs`\n\n### Image and header fills\n\n`Type=Image` (`media` INSTANCE) and `Type=Header` (`header` FRAME) use muted fill placeholders. In implementation:\n- Replace the IMAGE fill in `media` with the actual image src (product photo, logo, thumbnail)\n- Replace the muted fill in `header` with a real cover image\n- Both should include appropriate `alt` text for accessibility\n\n### Keyboard\n\n| Key | Action |\n|---|---|\n| `Tab` | Move focus to `action-slot` button (or to the `<a>` / `<button>` row for `Type=Link`) |\n| `Enter` / `Space` | Activate the focused action-slot button or full-row link |\n\n> For `Type=Link`, the entire row is the focus target — not a child element. For other Types, only the `action-slot` button receives focus; the row content is not keyboard-navigable on its own.\n\n---\n\n\n### Selectable (single-select list)\n\nPass `onSelect` and the whole row becomes a `<button>`; pass `selected` on the current one. Hover is lighter than selected. Use for master–detail lists (e.g. Setup → Positions). Not with `Type=Link` or `Type=Header`.\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": "\n> **Typical use cases:**\n>\n> - **Navigation menus** — `Type=Icon` or `Type=Link` rows listing destinations, each with an icon and label\n> - **Activity feeds** — `Type=Avatar` rows showing who did what, with a timestamp in the description\n> - **Compact settings lists** — `Type=Icon` or `Type=Default` rows inside a `card`, each a toggle or disclosure row\n> - **File or folder listings** — `Type=Image` rows with a thumbnail, filename, and file size\n> - **User or member groups** — `Type=Avatar` rows listing team members with role in the description\n\n---\n\n> **Item vs Card — when to use which:**\n>\n> | | `item` | `card` |\n> |---|---|---|\n> | Purpose | A single entry in a list | A self-contained block of independent information |\n> | Structure | Flat — icon / avatar / image + title + description + action | Sectioned — `card-header`, `card-content`, `card-footer` |\n> | Design | Compact, repeatable, grouped tightly | Padded shell (24px), spaced sections (16px gap), border + shadow |\n> | Standalone? | Rarely — lives inside a list, feed, menu, or card | Yes — placed directly on the page canvas or in a grid |\n> | Use case | Navigation menu row, activity feed entry, settings list row | Metric panel, product listing, profile summary, settings category |\n>\n> **Rule:** if the content is one entry in a repeating list → `item`. If the content is a complete, independently meaningful block → `card`. When a card contains a list of entries, put `item` rows inside `card-content`.\n\n---\n\n> **Always use `item`, never `_item-image` standalone.**\n>\n> `_item-image` is the image placeholder sub-component. Placing it directly in a layout produces a non-functional visual with no content or action.\n\n> **Choose the Type by what the leading element communicates, not by aesthetics.**\n>\n> - `Type=Default` — no leading context needed; text is self-sufficient\n> - `Type=Icon` — item maps to a category, type, or action recognisable by icon\n> - `Type=Avatar` — item represents a person or user entity\n> - `Type=Image` — item represents a product, file, or visual entity\n> - `Type=Header` — item needs a large cover image (article, feature, rich content)\n> - `Type=Link` — item is a navigation row; tapping the whole row goes somewhere\n\n> **Choose Variant by surface context:**\n>\n> - `Variant=Default` — inside a bordered list container or card that already defines the boundary\n> - `Variant=Outline` — standalone on open canvas, or when each item needs its own card boundary\n> - `Variant=Muted` — subtle row tint for alternating rows, active/highlighted states, or sidebar items\n\n> **Choose Size by information density and available space:**\n>\n> - `Size=Default` — standard use; comfortable reading with full description line\n> - `Size=Sm` — compact lists, secondary panels, sidebars\n> - `Size=Xs` — very dense lists, mobile views, inline pickers\n"
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      },
+      {
+        "title": "Best Practice",
+        "body": "\n### Use cases\n\nConcrete UI situations where this component is the right choice:\n\n- Navigation menus where each row lists a destination with an icon and label\n- Activity feeds showing who performed an action, with a timestamp or status in the description\n- Settings lists inside a card — each row is a toggle, disclosure, or option\n- File or folder browsers with a thumbnail, filename, and file size on each row\n- Team or member group lists showing user avatars, names, and roles\n- Command palettes or search result lists where each result is a compact, tappable row\n\n### Per-variant examples\n\n| Variant | When to reach for it | Real UI examples |\n|---|---|---|\n| `Type=Default` | No leading media needed — text alone is sufficient to identify the item | Simple settings rows · Text-only options list · Command palette entries |\n| `Type=Icon` | Items map to a recognisable category, action type, or feature | App navigation menu · File type list · Feature settings with category icons |\n| `Type=Avatar` | Each item represents a person or user entity | Team member list · Assignee picker · Chat conversation list · Activity feed |\n| `Type=Image` | Each item represents a product, file, brand, or visual entity | Product picker · File browser · Brand or integration list |\n| `Type=Header` | Item needs a large cover image — editorial or feature-rich content | Article preview · Featured course row · Rich onboarding card |\n| `Type=Link` | The entire row navigates somewhere — no discrete button action needed | Settings disclosure rows · Navigation list in a sheet · Mobile-style menu rows |\n| `Variant=Default` | Item is inside a bordered list container or card that already defines boundaries | Items inside a `card` · Rows inside a panel with its own border |\n| `Variant=Outline` | Item stands alone on open canvas or needs its own card-like boundary | Standalone selection cards · Items placed directly on page background |\n| `Variant=Muted` | Subtle row tint for alternating rows, highlighted active state, or sidebar context | Active/selected row highlight · Zebra-stripe alternative · Sidebar active item |\n| `Size=Default` | Standard density — comfortable reading with full description line | Main navigation lists · Activity feeds · Settings panels |\n| `Size=Sm` | Compact density — secondary panels, sidebars, nested lists | Sidebar sub-items · Compact pickers · Secondary settings |\n| `Size=Xs` | Maximum density — very tight spaces or mobile views | Inline pickers · Dense command palettes · Mobile list views |\n\n### Compared to similar components\n\n| If the situation is… | Use | Not |\n|---|---|---|\n| A single repeatable row in a vertical list | `item` | `card` |\n| A self-contained block of independent information (metric, product, profile) | `card` | `item` |\n| Many rows of uniform structured data with column headers and sorting | `table` | `item` |\n| A navigation row that opens a new view when tapped | `item` (`Type=Link`) | `button` as a full-width row |\n| A full app navigation panel with grouped sections | `sidebar` | a stack of `item` rows |\n\n---\n\n"
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Behavior · Interaction Models · Discrete Action:** Types Default, Icon, Avatar, Image, Header — row itself is non-interactive; action-slot button is the sole target.\n- **Behavior · No Built In State:** item has no hover, focus, active, or selected state built in. Hover treatment is parent-level (e.g. row background to color/surface/accent — the Type=Link variant applies this directly via hover:bg-[var(--color-surface-accent)]).\n- **Composition · Structure · Default:** H AUTO-LAYOUT: content (title + description) → action-slot (button INSTANCE)\n- **Composition · Structure · Icon:** H AUTO-LAYOUT: placeholder icon (16×16) → content → action-slot\n- **Composition · Structure · Avatar:** H AUTO-LAYOUT: avatar (40×40) → content → action-slot\n- **Composition · Structure · Image:** H AUTO-LAYOUT: media (_item-image, 32×32) → content → action-slot\n- **Composition · Structure · Header:** V AUTO-LAYOUT: header FRAME (full-width image, no padding) → content-row → content\n- **Composition · Structure · Link:** H AUTO-LAYOUT, TOP alignment: content → action-slot (chevron icon, no button)\n- **Composition · Link Alignment Note:** Type=Link uses counterAxisAlignItems=MIN (top) to anchor chevron to title when description wraps.\n- **Composition · Action Slot Visibility:** Show when item has a discrete action. Hide for Type=Link (row is the action). Hide for Type=Header. Hide for read-only rows.\n- **Composition · Description Visibility:** Optional — hide when items are atomic (command palettes, simple pickers, dense Xs lists).\n- **Composition · Image Fills:** Type=Image media and Type=Header header use a muted fill as a placeholder — replace with real images.\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Use `_item-image` directly in a layout",
+      "correct": "Use `item` — the image sub-component has no standalone behavior"
+    },
+    {
+      "wrong": "Use `Type=Avatar` for a non-person entity",
+      "correct": "Use `Type=Image` for products, files, logos"
+    },
+    {
+      "wrong": "Use `Type=Link` when a specific button action is needed",
+      "correct": "Use `Type=Default/Icon/Avatar/Image` with `action-slot`"
+    },
+    {
+      "wrong": "Use `Type=Header` for standard list rows",
+      "correct": "`Type=Header` is for editorial/rich content rows with a cover image"
+    },
+    {
+      "wrong": "Override fills inside `action-slot` from the `item` parent",
+      "correct": "Change the button's variant prop — never repaint its internals"
+    },
+    {
+      "wrong": "Use `Variant=Outline` inside a component that already provides its own border",
+      "correct": "Use `Variant=Default` — double borders look broken"
+    },
+    {
+      "wrong": "Stack `Variant=Outline` items without any gap",
+      "correct": "Add a gap or use a list container — adjacent borders merge visually"
+    },
+    {
+      "wrong": "Put a description that repeats the title",
+      "correct": "Description adds context the title doesn't carry: role, date, status, count"
+    }
+  ]
+}

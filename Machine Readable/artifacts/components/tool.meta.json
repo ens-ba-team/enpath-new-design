@@ -1,0 +1,142 @@
+{
+  "name": "tool",
+  "description": "Collapsible record of a tool call the assistant made — name, status, input and output.",
+  "category": "ai",
+  "shadcnBase": "ai-elements/tool",
+  "codeOnly": true,
+  "variants": {},
+  "tokens": {
+    "Border": "`color/border/default`",
+    "Status badge": "Badge secondary",
+    "Input / output code": "`chat/code/bg`",
+    "Error text": "`color/text/invalid`"
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Header",
+        "value": "Collapsible trigger — `aria-expanded`"
+      },
+      {
+        "property": "Status",
+        "value": "Text label next to the icon, not colour alone"
+      }
+    ]
+  },
+  "constraints": [
+    "Collapsed by default when completed; open on error.",
+    "Show input and output as formatted JSON.",
+    "Use plain names for tools (\"Read position\"), not function ids."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Tool.md (generated from this file)",
+    "storyFile": "src/stories/Tool.stories.tsx",
+    "artifactStatus": "needs review",
+    "version": "3.0",
+    "openQuestions": [],
+    "knownIssues": [],
+    "notes": [
+      "Installed 2026-09-22 with AI Elements for the chat panel. Stock source adapted to Enpath: Phosphor icons, light-only classes, shadcn colour names rewritten to Enpath tokens."
+    ],
+    "changelog": [
+      {
+        "date": "2026-09-22",
+        "change": "Added (AI Elements install) and documented."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ai-elements/tool.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Tool",
+      "ToolHeader",
+      "ToolContent",
+      "ToolInput",
+      "ToolOutput"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Tool.stories.tsx",
+    "title": "AI/Tool",
+    "stories": [
+      "Completed",
+      "Error"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Tool.md",
+    "intro": "# Tool\n\nCollapsible record of a tool call the assistant made — name, status, input and output.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "What it is",
+        "body": "\nAI Elements Tool (Collapsible). Header shows the tool name and a status badge (pending, running, completed, error). The chat panel currently shows a lighter one-line row; use Tool when input / output matter.\n\n**Exports:** `Tool` · `ToolHeader` · `ToolContent` · `ToolInput` · `ToolOutput`\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n| Part | Token |\n|---|---|\n| Border | `color/border/default` |\n| Status badge | Badge secondary |\n| Input / output code | `chat/code/bg` |\n| Error text | `color/text/invalid` |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Source:** https://elements.ai-sdk.dev/components/tool\n- **Story:** `AI/Tool`\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Raw function ids in the header",
+      "correct": "A readable title"
+    },
+    {
+      "wrong": "Colour-only status",
+      "correct": "Badge with text"
+    }
+  ]
+}

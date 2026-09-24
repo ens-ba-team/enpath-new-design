@@ -1,0 +1,136 @@
+{
+  "name": "suggestion",
+  "description": "Starter prompts shown before the first message. Clicking one sends it.",
+  "category": "ai",
+  "shadcnBase": "ai-elements/suggestion",
+  "codeOnly": true,
+  "variants": {},
+  "tokens": {
+    "Chip": "Button outline — `color/border/default`, `color/surface/default`",
+    "Radius": "`radius/full`"
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "Buttons; the text is the label"
+      },
+      {
+        "property": "Keyboard",
+        "value": "Tab to each, Enter sends"
+      }
+    ]
+  },
+  "constraints": [
+    "Show 2–4 suggestions, only before the first message.",
+    "Phrase them as the user would type them.",
+    "In narrow panels stack them instead of a scrolling row."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Suggestion.md (generated from this file)",
+    "storyFile": "src/stories/Suggestion.stories.tsx",
+    "artifactStatus": "needs review",
+    "version": "3.0",
+    "openQuestions": [],
+    "knownIssues": [],
+    "notes": [
+      "Installed 2026-09-22 with AI Elements for the chat panel. Stock source adapted to Enpath: Phosphor icons, light-only classes, shadcn colour names rewritten to Enpath tokens."
+    ],
+    "changelog": [
+      {
+        "date": "2026-09-22",
+        "change": "Added (AI Elements install) and documented."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ai-elements/suggestion.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Suggestions",
+      "Suggestion"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Suggestion.stories.tsx",
+    "title": "AI/Suggestion",
+    "stories": [
+      "Default"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Suggestion.md",
+    "intro": "# Suggestion\n\nStarter prompts shown before the first message. Clicking one sends it.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "What it is",
+        "body": "\nAI Elements Suggestion — a pill-shaped outline Button; Suggestions is a horizontal scroll row. The chat panel stacks them vertically instead (narrow panel).\n\n**Exports:** `Suggestions` · `Suggestion`\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n| Part | Token |\n|---|---|\n| Chip | Button outline — `color/border/default`, `color/surface/default` |\n| Radius | `radius/full` |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Source:** https://elements.ai-sdk.dev/components/suggestion\n- **Story:** `AI/Suggestion`\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Suggestions after the conversation has started",
+      "correct": "Hide them"
+    },
+    {
+      "wrong": "Vague suggestions (\"Help me\")",
+      "correct": "Specific, context-aware prompts"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "name": "conversation",
+  "description": "Scroll container for a chat thread. Sticks to the newest message while streaming and shows a jump-to-latest button.",
+  "category": "ai",
+  "shadcnBase": "ai-elements/conversation",
+  "codeOnly": true,
+  "variants": {},
+  "tokens": {
+    "Region": "inherits the chat panel (`color/background/default`)",
+    "Empty-state text": "`color/text/secondary`",
+    "Scroll button": "Button outline, `color/surface/overlay`"
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Role",
+        "value": "`log` region with `aria-live` so new messages are announced"
+      },
+      {
+        "property": "Scroll button",
+        "value": "Has an accessible label"
+      },
+      {
+        "property": "Empty state",
+        "value": "Plain text, reachable by screen readers"
+      }
+    ]
+  },
+  "constraints": [
+    "One Conversation per chat panel.",
+    "Always provide an empty state with what the assistant can do.",
+    "Don't auto-scroll when the user has scrolled up — the component handles this; don't override it."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Conversation.md (generated from this file)",
+    "storyFile": "src/stories/Conversation.stories.tsx",
+    "artifactStatus": "needs review",
+    "version": "3.0",
+    "openQuestions": [],
+    "knownIssues": [],
+    "notes": [
+      "Installed 2026-09-22 with AI Elements for the chat panel. Stock source adapted to Enpath: Phosphor icons, light-only classes, shadcn colour names rewritten to Enpath tokens."
+    ],
+    "changelog": [
+      {
+        "date": "2026-09-22",
+        "change": "Added (AI Elements install) and documented."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ai-elements/conversation.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Conversation",
+      "ConversationContent",
+      "ConversationEmptyState",
+      "ConversationScrollButton",
+      "ConversationDownload"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Conversation.stories.tsx",
+    "title": "AI/Conversation",
+    "stories": [
+      "Default",
+      "Empty"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Conversation.md",
+    "intro": "# Conversation\n\nScroll container for a chat thread. Sticks to the newest message while streaming and shows a jump-to-latest button.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "What it is",
+        "body": "\nAI Elements Conversation (use-stick-to-bottom). Holds Message rows; ConversationEmptyState shows before the first message.\n\n**Exports:** `Conversation` · `ConversationContent` · `ConversationEmptyState` · `ConversationScrollButton` · `ConversationDownload`\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n| Part | Token |\n|---|---|\n| Region | inherits the chat panel (`color/background/default`) |\n| Empty-state text | `color/text/secondary` |\n| Scroll button | Button outline, `color/surface/overlay` |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Source:** https://elements.ai-sdk.dev/components/conversation\n- **Story:** `AI/Conversation`\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "A plain overflow div for chat",
+      "correct": "Conversation (keeps position while streaming)"
+    },
+    {
+      "wrong": "Blank panel before the first message",
+      "correct": "ConversationEmptyState + Suggestions"
+    }
+  ]
+}

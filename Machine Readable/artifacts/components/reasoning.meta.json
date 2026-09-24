@@ -1,0 +1,136 @@
+{
+  "name": "reasoning",
+  "description": "Collapsible 'thinking' text. Opens while the model streams its reasoning and closes when it finishes.",
+  "category": "ai",
+  "shadcnBase": "ai-elements/reasoning",
+  "codeOnly": true,
+  "variants": {},
+  "tokens": {
+    "Trigger text": "`color/text/secondary`",
+    "Content": "`color/text/secondary`"
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Trigger",
+        "value": "`aria-expanded`"
+      },
+      {
+        "property": "Streaming",
+        "value": "Shimmer text; content stays readable when expanded"
+      }
+    ]
+  },
+  "constraints": [
+    "Only show when the model provides reasoning.",
+    "Collapse automatically when the answer starts."
+  ],
+  "meta": {
+    "sourceMarkdown": "Component Markdown (reference)/Reasoning.md (generated from this file)",
+    "storyFile": "src/stories/Reasoning.stories.tsx",
+    "artifactStatus": "needs review",
+    "version": "3.0",
+    "openQuestions": [],
+    "knownIssues": [],
+    "notes": [
+      "Installed 2026-09-22 with AI Elements for the chat panel. Stock source adapted to Enpath: Phosphor icons, light-only classes, shadcn colour names rewritten to Enpath tokens."
+    ],
+    "changelog": [
+      {
+        "date": "2026-09-22",
+        "change": "Added (AI Elements install) and documented."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ai-elements/reasoning.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Reasoning",
+      "ReasoningTrigger",
+      "ReasoningContent"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Reasoning.stories.tsx",
+    "title": "AI/Reasoning",
+    "stories": [
+      "Done"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "file": "Reasoning.md",
+    "intro": "# Reasoning\n\nCollapsible 'thinking' text. Opens while the model streams its reasoning and closes when it finishes.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "What it is",
+        "body": "\nAI Elements Reasoning (Collapsible). ReasoningTrigger shows \"Thinking…\" / \"Thought for N seconds\"; ReasoningContent renders markdown.\n\n**Exports:** `Reasoning` · `ReasoningTrigger` · `ReasoningContent`\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n| Part | Token |\n|---|---|\n| Trigger text | `color/text/secondary` |\n| Content | `color/text/secondary` |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Source:** https://elements.ai-sdk.dev/components/reasoning\n- **Story:** `AI/Reasoning`\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "Reasoning open after the answer",
+      "correct": "Let it auto-collapse"
+    },
+    {
+      "wrong": "Reasoning text styled like the answer",
+      "correct": "Secondary text"
+    }
+  ]
+}
