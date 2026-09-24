@@ -125,11 +125,19 @@ Destructive uses the `focus/destructive` effect style instead (no ring stroke).
 | `padding-left` / `padding-right` | `button/size/Button-padding-default` → `spacing/3` 12px (Default / Large) · `button/size/Button-padding-small` → `spacing/3` 12px (Small) · `button/size/Button-padding-xsmall` → `spacing/2` 8px (XS) |
 | `gap` | `button/size/Button spacing` → `spacing/component/xs` (4px) |
 
+### Interaction motion
+
+| Property | Token |
+|---|---|
+| Transition duration | `motion/duration/fast` |
+| Transition easing | `motion/easing/standard` |
+
+The active state translates the button down by 1px. It does not add an active or inset shadow. Reduced-motion preferences disable the transition and translation.
+
 ### Effect styles (shadows)
 
 | State | Type | Effect style |
 |---|---|---|
-| `Enabled`, `Hover`, `Active` | All except Ghost, Link | `shadows/2xs` |
 | `Focus` | `Destructive` | `focus/destructive` |
 | `Focus` | All except Destructive | `color/ring` stroke — no shadow |
 | Any | `Ghost`, `Link` | — (no shadow, no effect) |
@@ -138,7 +146,7 @@ Destructive uses the `focus/destructive` effect style instead (no ring stroke).
 
 Generated from `src/components/ui/button.tsx` — always current. The tables above explain each token's role.
 
-`button/destructive/bg/active` · `button/destructive/bg/bg` · `button/destructive/bg/hover` · `button/destructive/fg/fg` · `button/ghost/bg/active` · `button/ghost/bg/hover` · `button/ghost/fg/fg` · `button/link/fg/active` · `button/link/fg/default` · `button/link/fg/disabled` · `button/link/fg/hover` · `button/outline/bg/active` · `button/outline/bg/bg` · `button/outline/bg/hover` · `button/outline/border/active` · `button/outline/border/default` · `button/outline/border/disabled` · `button/outline/border/focus` · `button/outline/border/hover` · `button/outline/fg/fg` · `button/primary/bg/active` · `button/primary/bg/bg` · `button/primary/bg/hover` · `button/primary/fg/fg` · `button/secondary/bg/active` · `button/secondary/bg/bg` · `button/secondary/bg/hover` · `button/secondary/fg/fg` · `button/size/Button radius 1` · `button/size/Button radius 2` · `button/size/Button spacing` · `button/size/Button-padding-default` · `button/size/Button-padding-small` · `button/size/Button-padding-xsmall` · `color/brand/destructive` · `color/ring` · `height/control-touch/lg` · `height/control-touch/md` · `height/control-touch/sm` · `height/control-touch/xs` · `height/control/lg` · `height/control/md` · `height/control/sm` · `height/control/xs` · `opacity/disabled`
+`button/destructive/bg/active` · `button/destructive/bg/bg` · `button/destructive/bg/hover` · `button/destructive/fg/fg` · `button/ghost/bg/active` · `button/ghost/bg/hover` · `button/ghost/fg/fg` · `button/link/fg/active` · `button/link/fg/default` · `button/link/fg/disabled` · `button/link/fg/hover` · `button/outline/bg/active` · `button/outline/bg/bg` · `button/outline/bg/hover` · `button/outline/border/active` · `button/outline/border/default` · `button/outline/border/disabled` · `button/outline/border/focus` · `button/outline/border/hover` · `button/outline/fg/fg` · `button/primary/bg/active` · `button/primary/bg/bg` · `button/primary/bg/hover` · `button/primary/fg/fg` · `button/secondary/bg/active` · `button/secondary/bg/bg` · `button/secondary/bg/hover` · `button/secondary/fg/fg` · `button/size/Button radius 1` · `button/size/Button radius 2` · `button/size/Button spacing` · `button/size/Button-padding-default` · `button/size/Button-padding-small` · `button/size/Button-padding-xsmall` · `color/brand/destructive` · `color/ring` · `height/control-touch/lg` · `height/control-touch/md` · `height/control-touch/sm` · `height/control-touch/xs` · `height/control/lg` · `height/control/md` · `height/control/sm` · `height/control/xs` · `motion/duration/fast` · `motion/easing/standard` · `opacity/disabled`
 
 ---
 
@@ -165,11 +173,13 @@ Generated from `src/components/ui/button.tsx` — always current. The tables abo
 
 | State      | Trigger                   | Notes                                                                    |
 | ---------- | ------------------------- | ------------------------------------------------------------------------ |
-| `Enabled`  | Default                   | Base fill + `shadows/2xs` (except Ghost, Link)                           |
-| `Hover`    | Cursor over / touch hover | Bg overlay, shadow maintained                                            |
+| `Enabled`  | Default                   | Base fill                                                                |
+| `Hover`    | Cursor over / touch hover | Hover fill or border transition                                          |
 | `Focus`    | Tab key or click          | `color/ring` stroke appears · Destructive: `focus/destructive` effect    |
-| `Active`   | Mouse/touch down          | Pressed fill, shadow removed                                             |
+| `Active`   | Mouse/touch down          | Pressed fill plus 1px downward movement; no pressed-state shadow          |
 | `Disabled` | `disabled` attribute      | Muted appearance · no hover/focus/active states · removed from tab order |
+
+Color, border, and transform changes use `motion/duration/fast` with `motion/easing/standard`. Reduced-motion preferences disable the transition and movement.
 
 ### Width
 

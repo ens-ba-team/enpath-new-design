@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
 const buttonVariants = cva(
   // focus/destructive = brand/destructive glow @40%, 3px spread — replaces color/ring
 // All other variants use color/ring (blue, 2px) via focus-visible:ring-*
-"inline-flex items-center justify-center gap-[var(--button-size-button-spacing)] whitespace-nowrap rounded-[var(--button-size-button-radius-2)] text-sm leading-none font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ring)] disabled:pointer-events-none disabled:opacity-[calc(var(--opacity-disabled)/100)] [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+"inline-flex items-center justify-center gap-[var(--button-size-button-spacing)] whitespace-nowrap rounded-[var(--button-size-button-radius-2)] text-sm leading-none font-semibold transition-[background-color,border-color,color,transform] duration-[calc(var(--motion-duration-fast)*1ms)] ease-[var(--motion-easing-standard)] active:translate-y-px motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ring)] disabled:pointer-events-none disabled:opacity-[calc(var(--opacity-disabled)/100)] [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
