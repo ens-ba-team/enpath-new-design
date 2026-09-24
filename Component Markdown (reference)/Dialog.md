@@ -168,7 +168,19 @@ dialog
 
 Generated from `src/components/ui/dialog.tsx` — always current. The tables above explain each token's role.
 
-`color/background/accent` · `color/background/accent/foreground` · `color/background/inverted` · `color/border/default` · `color/ring` · `color/surface/default` · `color/surface/default/foreground` · `color/text/secondary` · `height/target/touch` · `radius/overlay` · `radius/sm` · `shadow/overlay` · `spacing/component/lg` · `spacing/component/md` · `spacing/component/sm` · `spacing/component/xs`
+`color/background/accent` · `color/background/accent/foreground` · `color/background/inverted` · `color/border/default` · `color/ring` · `color/surface/default` · `color/surface/default/foreground` · `color/text/secondary` · `height/target/touch` · `motion/duration/normal` · `motion/easing/enter` · `motion/easing/exit` · `radius/overlay` · `radius/sm` · `shadow/overlay` · `spacing/component/lg` · `spacing/component/md` · `spacing/component/sm` · `spacing/component/xs`
+
+---
+
+## Motion Token Bindings
+
+| Property | Token |
+|---|---|
+| Enter and exit duration | `motion/duration/normal` |
+| Enter easing | `motion/easing/enter` |
+| Exit easing | `motion/easing/exit` |
+
+The popup fades and scales from its centered position. It does not slide horizontally or vertically. Reduced-motion preferences disable the animation.
 
 ---
 

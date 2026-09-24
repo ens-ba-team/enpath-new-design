@@ -102,7 +102,19 @@ Footer buttons are chosen by the **parent alert-dialog** through the Button `var
 
 Generated from `src/components/ui/alert-dialog.tsx` — always current. The tables above explain each token's role.
 
-`color/background/inverted` · `color/border/default` · `color/surface/overlay` · `color/surface/overlay/foreground` · `color/text/secondary` · `radius/overlay` · `shadow/overlay` · `spacing/component/lg` · `spacing/component/sm` · `spacing/component/xl` · `spacing/component/xs`
+`color/background/inverted` · `color/border/default` · `color/surface/overlay` · `color/surface/overlay/foreground` · `color/text/secondary` · `motion/duration/normal` · `motion/easing/enter` · `motion/easing/exit` · `radius/overlay` · `shadow/overlay` · `spacing/component/lg` · `spacing/component/sm` · `spacing/component/xl` · `spacing/component/xs`
+
+---
+
+## Motion Token Bindings
+
+| Property | Token |
+|---|---|
+| Enter and exit duration | `motion/duration/normal` |
+| Enter easing | `motion/easing/enter` |
+| Exit easing | `motion/easing/exit` |
+
+The panel fades and scales from its centered position without a horizontal or vertical slide. Reduced-motion preferences disable the animation.
 
 ---
 

@@ -67,6 +67,11 @@
       "Form": {
         "gap": "spacing/component/sm"
       }
+    },
+    "motion": {
+      "duration": "motion/duration/normal",
+      "enterEasing": "motion/easing/enter",
+      "exitEasing": "motion/easing/exit"
     }
   },
   "accessibility": {
@@ -211,6 +216,10 @@
       {
         "title": "Token Bindings",
         "body": "\n### `backdrop`\n\n| Property | Token | Notes |\n|---|---|---|\n| Fill | `color/background/inverted` | Dark semi-transparent scrim behind the popup |\n\n### `popup` — all Types\n\n| Property | Token |\n|---|---|\n| Fill | `color/surface/default` |\n| Stroke | `color/border/default` 1px INSIDE |\n| Radius (all 4) | `radius/overlay` |\n| Shadow | `shadow/overlay` |\n\n### `popup` padding — by Type\n\n| Type | Padding | Token |\n|---|---|---|\n| `Form`, `No close button` | All sides 16px | `spacing/component/lg` |\n| `Sticky footer`, `Scrollable` | None on popup root — applied per section | — |\n\n### `heading` (Sticky footer / Scrollable only)\n\n| Property | Token |\n|---|---|\n| Padding T/B | `spacing/component/xl` (24px) |\n| Padding L/R | `spacing/component/lg` (16px) |\n| Gap | `spacing/component/xs` (4px) |\n\n### `content` / `heading` text layers\n\n| Layer | Token |\n|---|---|\n| `title` | `color/surface/default/foreground` |\n| `description` | `color/text/secondary` |\n\n### `footer` — Sticky footer only\n\n| Property | Token | Notes |\n|---|---|---|\n| Fill | `color/background/subtle` | Subtle tint distinguishes sticky footer from scrollable body |\n| Stroke | `color/border/subtle` | Top separator line |\n| Padding (all sides) | `spacing/component/lg` (16px) | |\n| Gap | `spacing/component/xs` (4px) | |\n\n### `footer` — Form (inline)\n\n| Property | Token |\n|---|---|\n| Gap | `spacing/component/sm` (8px) |\n\n---\n\n"
+      },
+      {
+        "title": "Motion Token Bindings",
+        "body": "\n| Property | Token |\n|---|---|\n| Enter and exit duration | `motion/duration/normal` |\n| Enter easing | `motion/easing/enter` |\n| Exit easing | `motion/easing/exit` |\n\nThe popup fades and scales from its centered position. It does not slide horizontally or vertically. Reduced-motion preferences disable the animation.\n\n---\n\n"
       },
       {
         "title": "Behavior",

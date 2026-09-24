@@ -197,6 +197,11 @@
         "weight": 2,
         "align": "outside"
       }
+    },
+    "motion": {
+      "duration": "motion/duration/normal",
+      "enterEasing": "motion/easing/enter",
+      "exitEasing": "motion/easing/exit"
     }
   },
   "accessibility": {
@@ -303,6 +308,10 @@
       {
         "title": "Token Bindings",
         "body": "\n### Container\n\n| Property | Token |\n|---|---|\n| Fill | `color/surface/overlay` |\n| Stroke | `color/border/default` · 1px · INSIDE |\n| Radius | `radius/overlay` |\n| Shadow | `shadow/overlay` |\n| Padding | `spacing/component/xl` (24px all sides) |\n| Gap | `spacing/component/lg` (16px) |\n\n### icon-container per Type\n\n| Type | Fill |\n|---|---|\n| `Default` | `color/background/muted` |\n| `Destructive` | `color/status/danger-subtle` |\n\nThe icon inside `Destructive` icon-container sits on `color/status/danger-subtle` — its icon may use `color/status/danger-subtle/foreground`. This is a valid paired-surface usage.\n\n### Text\n\n| Layer | Token |\n|---|---|\n| `title` | `color/surface/overlay/foreground` |\n| `description` | `color/text/secondary` |\n\n### Footer buttons\n\nFooter buttons are chosen by the **parent alert-dialog** through the Button `variant` prop — never by overriding the button's own styles.\n\n| Type | btn-confirm | btn-cancel |\n|---|---|---|\n| `Default` | Primary (`button/primary/bg/bg`) | Outline (`button/outline/bg/bg`) |\n| `Destructive` | Destructive (`button/destructive/bg/bg`) | Outline (`button/outline/bg/bg`) |\n\n\n### Footer spacing\n\n| Property | Token |\n|---|---|\n| Gap between buttons | `spacing/component/sm` (8px) |\n| Padding | inherited from container |\n\n---\n\n"
+      },
+      {
+        "title": "Motion Token Bindings",
+        "body": "\n| Property | Token |\n|---|---|\n| Enter and exit duration | `motion/duration/normal` |\n| Enter easing | `motion/easing/enter` |\n| Exit easing | `motion/easing/exit` |\n\nThe panel fades and scales from its centered position without a horizontal or vertical slide. Reduced-motion preferences disable the animation.\n\n---\n\n"
       },
       {
         "title": "Behavior",
