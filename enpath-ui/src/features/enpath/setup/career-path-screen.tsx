@@ -346,7 +346,7 @@ export function CareerPathScreen({
         className="flex min-w-0 flex-1 flex-col"
         aria-label={current.name}
       >
-        <header className="flex items-center gap-[var(--spacing-component-lg)] border-b border-[var(--color-border-default)] p-[var(--spacing-component-xl)]">
+        <header className="flex items-center gap-[var(--spacing-layout-xs)] border-b border-[var(--color-border-default)] p-[var(--spacing-layout-sm)]">
           <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xs)]">
             <div className="flex items-center gap-[var(--spacing-component-sm)]">
               <h2 className="text-xl font-semibold text-[var(--color-background-default-foreground)]">
@@ -357,7 +357,7 @@ export function CareerPathScreen({
             <p className="text-sm text-[var(--color-text-secondary)]">
               {current.description}
             </p>
-            <dl className="flex flex-wrap items-center gap-x-[var(--spacing-component-xl)] gap-y-[var(--spacing-component-xs)] text-sm">
+            <dl className="flex flex-wrap items-center gap-x-[var(--spacing-layout-sm)] gap-y-[var(--spacing-component-xs)] text-sm">
               <div>
                 <dt className="inline text-[var(--color-text-secondary)]">
                   Owner{" "}
@@ -405,9 +405,9 @@ export function CareerPathScreen({
             )}
           </div>
         </header>
-        <div className="flex-1 overflow-auto p-[var(--spacing-component-xl)]">
-          <div className="mx-auto max-w-[760px]">
-            <div className="mb-[var(--spacing-component-lg)]">
+        <div className="flex-1 overflow-auto p-[var(--spacing-layout-sm)]">
+          <div className="w-full max-w-[760px]">
+            <div className="mb-[var(--spacing-layout-xs)]">
               <h3 className="font-semibold">Progression steps</h3>
               <p className="text-sm text-[var(--color-text-secondary)]">
                 Arrange Position–Level steps into a direction employees can
@@ -417,7 +417,7 @@ export function CareerPathScreen({
             {current.nodes.length < 2 && (
               <Alert
                 variant="warning"
-                className="mb-[var(--spacing-component-lg)]"
+                className="mb-[var(--spacing-layout-xs)]"
               >
                 <WarningIcon />
                 <AlertTitle>Add at least 2 steps</AlertTitle>
@@ -503,7 +503,7 @@ export function CareerPathScreen({
               ))}
             </CareerPathStepper>
             {!readOnly && (
-              <div className="mt-[var(--spacing-component-md)] flex flex-wrap items-end gap-[var(--spacing-layout-xs)] rounded-[var(--radius-surface)] border border-[var(--color-border-default)] bg-[var(--color-surface-default)] p-[var(--spacing-component-md)]">
+              <div className="mt-[var(--spacing-layout-xs)] flex flex-wrap items-end gap-[var(--spacing-layout-xs)] rounded-[var(--radius-surface)] border border-[var(--color-border-default)] bg-[var(--color-surface-default)] p-[var(--spacing-component-md)]">
                 <div className="min-w-[220px] flex-1">
                   <label className="mb-[var(--spacing-component-xs)] block text-sm font-semibold">
                     Position

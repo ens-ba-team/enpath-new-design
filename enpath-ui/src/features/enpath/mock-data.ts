@@ -16,6 +16,8 @@ export interface Behavior { title: string; description: string }
 export interface Competency { id: string; name: string; description: string; behaviors: (Behavior | null)[] }
 export interface Matrix {
   id: string; name: string; description: string; status: MatrixStatus;
+  /** Stable identity across revisions; Positions point to one concrete version by id. */
+  familyId: string; version: number; previousVersionId?: string;
   /** number of scale points this Matrix uses, 2–5 — editable while Draft */
   scaleSize: number;
   owners: string[]; competencies: Competency[];
@@ -58,7 +60,7 @@ const behaviorsFor = (name: string): (Behavior | null)[] => [
 
 export const initialMatrices: Matrix[] = [
   { id: 'eng', name: 'Northstar Engineering', description: 'Core engineering craft, shared by every engineering position.',
-    status: 'Active', scaleSize: 5, owners: ['Minh Tran'], changes: 0, editedBy: 'Minh Tran', editedAt: '2 weeks ago',
+    familyId: 'eng', version: 1, status: 'Active', scaleSize: 5, owners: ['Minh Tran'], changes: 0, editedBy: 'Minh Tran', editedAt: '2 weeks ago',
     history: [{ who: 'Minh Tran', what: 'Published', when: '9 Sep 2026, 10:00' }],
     competencies: [
       { id: 'sys', name: 'System design', description: 'Designs systems that meet scale, reliability and cost needs.', behaviors: behaviorsFor('system design') },
@@ -69,7 +71,7 @@ export const initialMatrices: Matrix[] = [
       { id: 'ment', name: 'Mentoring', description: 'Grows the skills of the engineers around them.', behaviors: behaviorsFor('mentoring') },
     ] },
   { id: 'prod', name: 'Northstar Product', description: 'Product craft for PMs driving discovery through execution.',
-    status: 'Draft', scaleSize: 5, owners: [], changes: 2, editedBy: 'Lan Nguyen', editedAt: '3 days ago',
+    familyId: 'prod', version: 1, status: 'Draft', scaleSize: 5, owners: [], changes: 2, editedBy: 'Lan Nguyen', editedAt: '3 days ago',
     history: [{ who: 'Lan Nguyen', what: 'Created matrix', when: '18 Sep 2026, 09:00' }],
     competencies: [
       { id: 'disc', name: 'Discovery', description: 'Finds and validates the right problem to solve.', behaviors: [null, null, null, null, null] },
@@ -79,7 +81,7 @@ export const initialMatrices: Matrix[] = [
       { id: 'stake', name: 'Stakeholder management', description: 'Aligns stakeholders around a shared product direction.', behaviors: [null, null, null, null, null] },
     ] },
   { id: 'des', name: 'Northstar Design', description: 'Design craft, from visual craft to systems thinking.',
-    status: 'Active', scaleSize: 5, owners: ['Lan Nguyen'], changes: 0, editedBy: 'Lan Nguyen', editedAt: '1 month ago',
+    familyId: 'des', version: 1, status: 'Active', scaleSize: 5, owners: ['Lan Nguyen'], changes: 0, editedBy: 'Lan Nguyen', editedAt: '1 month ago',
     history: [{ who: 'Lan Nguyen', what: 'Published', when: '20 Aug 2026, 14:00' }],
     competencies: [
       { id: 'craft', name: 'Visual craft', description: 'Produces polished, on-brand visual design.', behaviors: behaviorsFor('visual craft') },

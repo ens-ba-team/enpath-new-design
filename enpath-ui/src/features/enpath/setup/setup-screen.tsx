@@ -200,8 +200,8 @@ function Meta({ label, children }: { label: string; children: React.ReactNode })
 const edited = (p: Position, patch: Partial<Position>): Position =>
   ({ ...p, ...patch, status: 'Draft', changes: p.changes + 1, editedBy: 'Lan Nguyen', editedAt: 'just now' });
 
-function PositionDetail({ position, matrix, onChange, onPublish, onUnpublish, onEdit, onDuplicate, onOpenMatrix }: {
-  position: Position; matrix: Matrix; onChange: (p: Position) => void; onPublish: () => void; onUnpublish: () => void; onEdit: () => void; onDuplicate: () => void; onOpenMatrix: () => void;
+function PositionDetail({ position, matrix, updateAvailable, onChange, onPublish, onUnpublish, onEdit, onDuplicate, onOpenMatrix }: {
+  position: Position; matrix: Matrix; updateAvailable?: Matrix; onChange: (p: Position) => void; onPublish: () => void; onUnpublish: () => void; onEdit: () => void; onDuplicate: () => void; onOpenMatrix: () => void;
 }) {
   const [confirm, setConfirm] = React.useState(false);
   const [confirmUnpublish, setConfirmUnpublish] = React.useState(false);
@@ -223,13 +223,13 @@ function PositionDetail({ position, matrix, onChange, onPublish, onUnpublish, on
 
   return (
     <section className="flex min-w-0 flex-1 flex-col" aria-label={position.name}>
-      <header className="flex items-center gap-[var(--spacing-component-lg)] border-b border-[var(--color-border-default)] p-[var(--spacing-component-xl)]">
+      <header className="flex items-center gap-[var(--spacing-layout-xs)] border-b border-[var(--color-border-default)] p-[var(--spacing-layout-sm)]">
         <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xs)]">
           <div className="flex items-center gap-[var(--spacing-component-sm)]">
             <h2 className="text-xl font-semibold text-[var(--color-background-default-foreground)]">{position.name}</h2>
             <StatusBadge status={position.status} />
           </div>
-          <dl className="flex flex-wrap items-center gap-x-[var(--spacing-component-xl)] gap-y-[var(--spacing-component-xs)] text-sm">
+          <dl className="flex flex-wrap items-center gap-x-[var(--spacing-layout-sm)] gap-y-[var(--spacing-component-xs)] text-sm">
             <Meta label="Matrix">
               {/* Neutral chip, not a link: information first, a shortcut to Matrices config second */}
               <Tip label="Open in Matrices config">
@@ -242,6 +242,7 @@ function PositionDetail({ position, matrix, onChange, onPublish, onUnpublish, on
                 </button>
               </Tip>
             </Meta>
+            {updateAvailable && <Badge variant="blue">V{updateAvailable.version} update available</Badge>}
             <Meta label="Last edited">{position.editedBy} · {position.editedAt}</Meta>
           </dl>
         </div>
@@ -272,7 +273,7 @@ function PositionDetail({ position, matrix, onChange, onPublish, onUnpublish, on
         </div>
       </header>
 
-      <div className="flex-1 overflow-auto p-[var(--spacing-component-xl)]">
+      <div className="flex-1 overflow-auto p-[var(--spacing-layout-sm)]">
         <table className="w-full border-separate border-spacing-0 text-sm">
           <thead>
             <tr>
@@ -426,9 +427,76 @@ export function SetupScreen({ sidebarClassName, initialTab = 'structure' }: { si
   const [selectedMatrix, setSelectedMatrix] = React.useState(initialMatrices[0].id);
   const updateMatrix = (m: Matrix) => setMatrices((all) => all.map((x) => (x.id === m.id ? m : x)));
   const addMatrix = (m: Matrix) => setMatrices((all) => [...all, m]);
+  const createMatrixDraft = (source: Matrix) => {
+    const existingDraft = matrices.find((m) => m.familyId === source.familyId && m.status === 'Draft');
+    if (existingDraft) {
+      setSelectedMatrix(existingDraft.id);
+      return;
+    }
+    const version = Math.max(...matrices.filter((m) => m.familyId === source.familyId).map((m) => m.version)) + 1;
+    const draft: Matrix = {
+      ...source,
+      id: `${source.familyId}-v${version}-${Date.now()}`,
+      version,
+      previousVersionId: source.id,
+      status: 'Draft',
+      changes: 0,
+      editedBy: 'Lan Nguyen',
+      editedAt: 'just now',
+      competencies: source.competencies.map((c) => ({ ...c, behaviors: c.behaviors.map((b) => b ? { ...b } : null) })),
+      history: [{ who: 'Lan Nguyen', what: `Created Draft V${version} from V${source.version}`, when: 'just now' }],
+    };
+    setMatrices((all) => [...all, draft]);
+    setSelectedMatrix(draft.id);
+  };
+  const publishMatrix = (matrix: Matrix, positionIds: string[]) => {
+    const previous = matrix.previousVersionId ? matrices.find((m) => m.id === matrix.previousVersionId) : undefined;
+    const previousCompetencyIds = previous?.competencies.map((c) => c.id) ?? matrix.competencies.map((c) => c.id);
+    const structuralChange = !!previous && (
+      previous.scaleSize !== matrix.scaleSize ||
+      previousCompetencyIds.join('|') !== matrix.competencies.map((c) => c.id).join('|')
+    );
+    const migrating = new Set(positionIds);
+
+    setMatrices((all) => all.map((item) => {
+      if (item.id === matrix.id) return { ...item, status: 'Active', changes: 0, editedAt: 'just now' };
+      if (item.familyId === matrix.familyId && item.status === 'Active') {
+        return { ...item, status: 'Archived', editedAt: 'just now' };
+      }
+      return item;
+    }));
+    if (migrating.size > 0) {
+      setPositions((all) => all.map((position) => {
+        if (!migrating.has(position.id)) return position;
+        const clearsRatings = Object.values(position.expectations).some((row) =>
+          Object.values(row).some((value) => value != null && value > matrix.scaleSize),
+        );
+        const activeRows = Object.fromEntries(matrix.competencies.map((competency) => [
+          competency.id,
+          Object.fromEntries(position.levels.map((level) => {
+            const value = position.expectations[competency.id]?.[level.id] ?? null;
+            return [level.id, value != null && value > matrix.scaleSize ? null : value];
+          })),
+        ]));
+        return {
+          ...position,
+          matrixId: matrix.id,
+          expectations: { ...position.expectations, ...activeRows },
+          status: (structuralChange || clearsRatings || (!previous && matrix.changes > 0)) && position.status === 'Published' ? 'Draft' : position.status,
+          changes: position.changes + 1,
+          editedBy: 'Lan Nguyen',
+          editedAt: 'just now',
+          history: [{ who: 'Lan Nguyen', what: `Updated matrix to V${matrix.version}`, when: 'just now' }, ...position.history],
+        };
+      }));
+    }
+  };
   const updatePath = (p: CareerPath) => setCareerPaths((all) => all.map((x) => (x.id === p.id ? p : x)));
   const addPath = (p: CareerPath) => setCareerPaths((all) => [...all, p]);
   const currentMatrix = matrices.find((m) => m.id === current.matrixId)!;
+  const availableMatrixUpdate = matrices
+    .filter((m) => m.familyId === currentMatrix.familyId && m.status === 'Active' && m.version > currentMatrix.version)
+    .sort((a, b) => b.version - a.version)[0];
 
   // Progress = share of expectation cells set across all positions.
   const total = positions.reduce((n, p) => n + p.levels.length * matrices.find((m) => m.id === p.matrixId)!.competencies.length, 0);
@@ -525,7 +593,7 @@ export function SetupScreen({ sidebarClassName, initialTab = 'structure' }: { si
         <Placeholder>{page} — not built yet. Go to Setup.</Placeholder>
       ) : (
         <div className="flex h-full flex-col">
-          <div className="flex items-center gap-[var(--spacing-component-lg)] px-[var(--spacing-component-xl)] pt-[var(--spacing-component-xl)]">
+          <div className="flex items-center gap-[var(--spacing-layout-xs)] px-[var(--spacing-layout-sm)] pt-[var(--spacing-layout-sm)]">
             <h1 className="text-2xl font-semibold text-[var(--color-background-default-foreground)]">Setup</h1>
             <Alert
               variant="success"
@@ -546,15 +614,15 @@ export function SetupScreen({ sidebarClassName, initialTab = 'structure' }: { si
               </Tip>
             )}
           </div>
-          <Tabs value={tab} onValueChange={(value) => { if (value === 'structure' || value === 'matrices' || value === 'paths') setTab(value); }} className="mt-[var(--spacing-component-lg)] flex min-h-0 flex-1 flex-col">
-            <TabsList variant="line" className="px-[var(--spacing-component-xl)]">
+          <Tabs value={tab} onValueChange={(value) => { if (value === 'structure' || value === 'matrices' || value === 'paths') setTab(value); }} className="mt-[var(--spacing-layout-xs)] flex min-h-0 flex-1 flex-col">
+            <TabsList variant="line" className="px-[var(--spacing-layout-sm)]">
               <TabsTrigger variant="line" value="structure">Career structure</TabsTrigger>
               <TabsTrigger variant="line" value="matrices">Matrices config</TabsTrigger>
               <TabsTrigger variant="line" value="paths">Career path</TabsTrigger>
             </TabsList>
             <TabsContent value="structure" className="mt-0 flex min-h-0 flex-1 border-t border-[var(--color-border-default)]">
               <PositionList positions={positions} selected={selected} onSelect={setSelected} onAdd={() => setDialog('add')} onImport={() => setImportOpen(true)} />
-              <PositionDetail key={current.id} position={current} matrix={currentMatrix} onChange={update} onEdit={() => setDialog('edit')}
+              <PositionDetail key={current.id} position={current} matrix={currentMatrix} updateAvailable={availableMatrixUpdate} onChange={update} onEdit={() => setDialog('edit')}
                 onDuplicate={() => { setDuplicateSourceId(current.id); setDialog('add'); }}
                 onOpenMatrix={() => { setSelectedMatrix(current.matrixId); setTab('matrices'); }}
                 onPublish={() => update({ ...current, status: 'Published', changes: 0, editedAt: 'just now' })}
@@ -562,6 +630,7 @@ export function SetupScreen({ sidebarClassName, initialTab = 'structure' }: { si
             </TabsContent>
             <TabsContent value="matrices" className="mt-0 flex min-h-0 flex-1 border-t border-[var(--color-border-default)]">
               <MatricesScreen matrices={matrices} positions={positions} selected={selectedMatrix} onSelect={setSelectedMatrix} onChange={updateMatrix} onAdd={addMatrix}
+                onPublish={publishMatrix} onCreateDraft={createMatrixDraft}
                 onOpenPosition={(id) => { setSelected(id); setTab('structure'); }} />
             </TabsContent>
             <TabsContent value="paths" className="mt-0 flex min-h-0 flex-1 border-t border-[var(--color-border-default)]">

@@ -1,13 +1,15 @@
 'use client';
 import * as React from 'react';
-import { ArchiveIcon, ArrowCounterClockwiseIcon, BriefcaseIcon, ClockCounterClockwiseIcon, MagnifyingGlassIcon, PencilSimpleIcon, PlusIcon, RocketLaunchIcon, WarningIcon, XIcon } from '@phosphor-icons/react/ssr';
+import { ArchiveIcon, ArrowCounterClockwiseIcon, BriefcaseIcon, ClockCounterClockwiseIcon, CopyIcon, MagnifyingGlassIcon, PencilSimpleIcon, PlusIcon, RocketLaunchIcon, WarningIcon, XIcon } from '@phosphor-icons/react/ssr';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
-import { Alert, AlertTitle } from '@/components/ui/alert';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Item } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 import { scale, type Behavior, type Competency, type Matrix, type Position } from '../mock-data';
@@ -64,7 +66,7 @@ function MatrixList({ matrices, selected, onSelect, onAdd }: { matrices: Matrix[
               size="sm"
               className="px-[var(--spacing-component-md)]"
               title={m.name}
-              description={<span className="text-xs">{m.competencies.length} {m.competencies.length === 1 ? 'competency' : 'competencies'}</span>}
+              description={<span className="text-xs">V{m.version} · {m.competencies.length} {m.competencies.length === 1 ? 'competency' : 'competencies'}</span>}
               action={<MatrixStatusBadge status={m.status} />}
               selected={m.id === selected}
               onSelect={() => onSelect(m.id)}
@@ -134,14 +136,47 @@ function CompetencyStepper({ competencies, scaleSize, active, onSelect }: {
   );
 }
 
-// The selected competency's rating scale — pill Tabs, one point's title/description shown at a
-// time. Called "point" throughout, never "level" — that word means a Position's step (L1, L2…)
-// elsewhere in this app; reusing it here for a Matrix's scale would collide with it.
-// `key={competency.id}` on the mount below resets to point 0 whenever the selected competency changes.
-function LevelPanel({ competency, scaleSize, editable, onChangeBehavior }: {
-  competency: Competency; scaleSize: number; editable: boolean;
+function ReadonlyRatingScale({ competency, scaleSize }: { competency: Competency; scaleSize: number }) {
+  return (
+    <section className="flex flex-col gap-[var(--spacing-layout-xs)]" aria-labelledby={`rating-scale-${competency.id}`}>
+      <h4 id={`rating-scale-${competency.id}`} className="text-sm font-semibold text-[var(--color-background-default-foreground)]">
+        Rating scale
+      </h4>
+      <ol>
+        {Array.from({ length: scaleSize }, (_, i) => {
+          const behavior = competency.behaviors[i];
+          return (
+            <React.Fragment key={i}>
+              {i > 0 && <Separator className="bg-[var(--color-border-subtle)]" />}
+              <li className="flex flex-col gap-[var(--spacing-component-sm)] py-[var(--spacing-component-lg)] first:pt-0 last:pb-0">
+                <h5 className="text-sm font-semibold text-[var(--color-background-default-foreground)]">
+                  <span className="font-medium text-[var(--color-text-secondary)]">Scale {i + 1}</span>
+                  <span aria-hidden="true"> · </span>
+                  <span className={behavior?.title ? undefined : 'text-[var(--color-text-secondary)]'}>{behavior?.title || 'Not set'}</span>
+                </h5>
+                <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
+                  <span className="text-xs font-medium text-[var(--color-text-secondary)]">Description</span>
+                  <p className={`text-sm ${behavior?.description ? 'text-[var(--color-background-default-foreground)]' : 'text-[var(--color-text-secondary)]'}`}>
+                    {behavior?.description || 'Not set'}
+                  </p>
+                </div>
+              </li>
+            </React.Fragment>
+          );
+        })}
+      </ol>
+    </section>
+  );
+}
+
+// Drafts keep one-point-at-a-time tabs for editing. Active and Archived matrices expose the
+// complete scale in a single read-only list.
+function RatingScalePanel({ competency, scaleSize, editable, expandedReadOnly, onChangeBehavior }: {
+  competency: Competency; scaleSize: number; editable: boolean; expandedReadOnly: boolean;
   onChangeBehavior: (i: number, patch: Partial<Behavior>) => void;
 }) {
+  if (expandedReadOnly) return <ReadonlyRatingScale competency={competency} scaleSize={scaleSize} />;
+
   return (
     <Tabs defaultValue="0">
       <Label className="mb-[var(--spacing-component-xs)] block">Rating scale</Label>
@@ -183,8 +218,8 @@ function LevelPanel({ competency, scaleSize, editable, onChangeBehavior }: {
 // point at a time on the right (Tabs variant="default" — the pill/segmented look). Page height stays
 // constant no matter how many competencies or scale points exist — the accordion version stacked
 // every point of every competency at once.
-function CompetencyEditor({ competencies, scaleSize, editable, onChangeCompetency, onRemoveCompetency, onAddCompetency }: {
-  competencies: Competency[]; scaleSize: number; editable: boolean;
+function CompetencyEditor({ competencies, scaleSize, editable, expandedReadOnly, onChangeCompetency, onRemoveCompetency, onAddCompetency }: {
+  competencies: Competency[]; scaleSize: number; editable: boolean; expandedReadOnly: boolean;
   onChangeCompetency: (id: string, patch: Partial<Competency>) => void;
   onRemoveCompetency: (id: string) => void; onAddCompetency: () => void;
 }) {
@@ -219,7 +254,7 @@ function CompetencyEditor({ competencies, scaleSize, editable, onChangeCompetenc
   }
 
   return (
-    <div className="flex gap-[var(--spacing-component-lg)]">
+    <div className="flex gap-[var(--spacing-layout-xs)]">
       <aside className="flex w-[220px] shrink-0 flex-col gap-[var(--spacing-component-xs)]">
         <CompetencyStepper competencies={competencies} scaleSize={scaleSize} active={selected ?? ''} onSelect={setSelected} />
         {editable && (
@@ -230,7 +265,9 @@ function CompetencyEditor({ competencies, scaleSize, editable, onChangeCompetenc
       </aside>
 
       {current && (
-        <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-lg)] border-l border-[var(--color-border-default)] pl-[var(--spacing-component-xl)]">
+        <div className={`flex min-w-0 flex-1 flex-col border-l border-[var(--color-border-default)] pl-[var(--spacing-layout-sm)] ${
+          expandedReadOnly ? 'gap-[var(--spacing-layout-md)]' : 'gap-[var(--spacing-layout-xs)]'
+        }`}>
           {editable ? (
             <div className="flex flex-col gap-[var(--spacing-component-sm)]">
               <Input value={current.name} placeholder="Competency name, e.g. System design"
@@ -245,7 +282,7 @@ function CompetencyEditor({ competencies, scaleSize, editable, onChangeCompetenc
             </div>
           )}
 
-          <LevelPanel key={current.id} competency={current} scaleSize={scaleSize} editable={editable} onChangeBehavior={setBehavior} />
+          <RatingScalePanel key={current.id} competency={current} scaleSize={scaleSize} editable={editable} expandedReadOnly={expandedReadOnly} onChangeBehavior={setBehavior} />
 
           {editable && (
             <Button type="button" variant="ghost" size="sm" className="self-start" onClick={() => onRemoveCompetency(current.id)}>
@@ -258,16 +295,26 @@ function CompetencyEditor({ competencies, scaleSize, editable, onChangeCompetenc
   );
 }
 
-function MatrixDetail({ matrix, positions, onChange, onPublish, onArchive, onRestore, onEdit, onOpenPosition }: {
-  matrix: Matrix; positions: Position[]; onChange: (m: Matrix) => void;
-  onPublish: () => void; onArchive: () => void; onRestore: () => void; onEdit: () => void; onOpenPosition: (id: string) => void;
+function MatrixDetail({ matrix, matrices, positions, onChange, onPublish, onArchive, onRestore, onCreateDraft, onEdit, onOpenPosition }: {
+  matrix: Matrix; matrices: Matrix[]; positions: Position[]; onChange: (m: Matrix) => void;
+  onPublish: (positionIds: string[]) => void; onArchive: () => void; onRestore: () => void; onCreateDraft: () => void; onEdit: () => void; onOpenPosition: (id: string) => void;
 }) {
   const editable = matrix.status === 'Draft';
   const linked = positions.filter((p) => p.matrixId === matrix.id);
+  const previousVersion = matrix.previousVersionId ? matrices.find((m) => m.id === matrix.previousVersionId) : undefined;
+  // Revisions migrate Positions from the previous version. A legacy/direct Draft may already be
+  // referenced by Positions, so it must run through the same impact preview instead of bypassing it.
+  const migrationCandidates = previousVersion ? positions.filter((p) => p.matrixId === previousVersion.id) : linked;
+  const ratingsAboveScale = new Map(migrationCandidates.map((p) => [
+    p.id,
+    Object.values(p.expectations).reduce((total, row) => total + Object.values(row).filter((value) => value != null && value > matrix.scaleSize).length, 0),
+  ]));
+  const invalidRatingTotal = [...ratingsAboveScale.values()].reduce((total, count) => total + count, 0);
   const [confirmPublish, setConfirmPublish] = React.useState(false);
   const [confirmArchive, setConfirmArchive] = React.useState(false);
   const [confirmRestore, setConfirmRestore] = React.useState(false);
   const [historyOpen, setHistoryOpen] = React.useState(false);
+  const [migrationIds, setMigrationIds] = React.useState<Set<string>>(() => new Set(migrationCandidates.map((p) => p.id)));
   const issues = activationIssues(matrix);
 
   const touch = (patch: Partial<Matrix>) => onChange({ ...matrix, ...patch, changes: matrix.changes + 1, editedBy: 'Lan Nguyen', editedAt: 'just now' });
@@ -278,18 +325,19 @@ function MatrixDetail({ matrix, positions, onChange, onPublish, onArchive, onRes
 
   return (
     <section className="flex min-w-0 flex-1 flex-col" aria-label={matrix.name}>
-      <header className="flex items-center gap-[var(--spacing-component-lg)] border-b border-[var(--color-border-default)] p-[var(--spacing-component-xl)]">
+      <header className="flex items-center gap-[var(--spacing-layout-xs)] border-b border-[var(--color-border-default)] p-[var(--spacing-layout-sm)]">
         <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xs)]">
           <div className="flex items-center gap-[var(--spacing-component-sm)]">
             <h2 className="text-xl font-semibold text-[var(--color-background-default-foreground)]">{matrix.name}</h2>
             <MatrixStatusBadge status={matrix.status} />
           </div>
-          <dl className="flex flex-wrap items-center gap-x-[var(--spacing-component-xl)] gap-y-[var(--spacing-component-xs)] text-sm">
+          <dl className="flex flex-wrap items-center gap-x-[var(--spacing-layout-sm)] gap-y-[var(--spacing-component-xs)] text-sm">
+            <Meta label="Version">V{matrix.version}</Meta>
             <Meta label="Scale">{matrix.scaleSize} points</Meta>
             <Meta label="Owners">{matrix.owners.length ? matrix.owners.join(', ') : 'None yet'}</Meta>
             <Meta label="Last edited">{matrix.editedBy} · {matrix.editedAt}</Meta>
           </dl>
-          <div className="flex flex-wrap items-center gap-[var(--spacing-component-xs)] pt-[var(--spacing-component-xs)]">
+          <div className="flex flex-wrap items-center gap-[var(--spacing-component-sm)] pt-[var(--spacing-component-xs)]">
             <span className="text-xs text-[var(--color-text-secondary)]">{linked.length > 0 ? 'Used by' : 'Not used by any position yet'}</span>
             {linked.map((p) => (
               <button
@@ -316,7 +364,10 @@ function MatrixDetail({ matrix, positions, onChange, onPublish, onArchive, onRes
             <Button onClick={() => setConfirmPublish(true)}><RocketLaunchIcon className="h-4 w-4" aria-hidden="true" />Publish</Button>
           )}
           {matrix.status === 'Active' && (
-            <Button variant="outline" onClick={() => setConfirmArchive(true)}><ArchiveIcon className="h-4 w-4" aria-hidden="true" />Archive</Button>
+            <>
+              <Button variant="outline" onClick={onCreateDraft}><CopyIcon className="h-4 w-4" aria-hidden="true" />Create draft</Button>
+              <Button variant="outline" onClick={() => setConfirmArchive(true)}><ArchiveIcon className="h-4 w-4" aria-hidden="true" />Archive</Button>
+            </>
           )}
           {matrix.status === 'Archived' && (
             <Button onClick={() => setConfirmRestore(true)}><ArrowCounterClockwiseIcon className="h-4 w-4" aria-hidden="true" />Restore</Button>
@@ -324,11 +375,12 @@ function MatrixDetail({ matrix, positions, onChange, onPublish, onArchive, onRes
         </div>
       </header>
 
-      <div className="flex-1 overflow-auto p-[var(--spacing-component-xl)]">
+      <div className="flex-1 overflow-auto p-[var(--spacing-layout-sm)]">
         <CompetencyEditor
           competencies={matrix.competencies}
           scaleSize={matrix.scaleSize}
           editable={editable}
+          expandedReadOnly={matrix.status !== 'Draft'}
           onChangeCompetency={(id, patch) => setCompetency(id, patch)}
           onRemoveCompetency={removeCompetency}
           onAddCompetency={addCompetency}
@@ -341,7 +393,9 @@ function MatrixDetail({ matrix, positions, onChange, onPublish, onArchive, onRes
             <AlertDialogTitle>Publish {matrix.name}?</AlertDialogTitle>
             <AlertDialogDescription>
               {issues.length === 0
-                ? `Positions can start using this matrix.${linked.length > 0 ? ` ${linked.length} already ${linked.length === 1 ? 'does' : 'do'}.` : ''}`
+                ? previousVersion
+                  ? `Publishing V${matrix.version} makes it Active and archives V${previousVersion.version}. Choose which positions move to V${matrix.version}; unselected positions stay linked to archived V${previousVersion.version}.`
+                  : `Positions can start using this matrix.${linked.length > 0 ? ` ${linked.length} already ${linked.length === 1 ? 'does' : 'do'}.` : ''}`
                 : "This matrix isn't ready to publish yet."}
             </AlertDialogDescription>
           </AlertDialogHeader>
@@ -356,9 +410,49 @@ function MatrixDetail({ matrix, positions, onChange, onPublish, onArchive, onRes
               </div>
             </Alert>
           )}
+          {issues.length === 0 && migrationCandidates.length > 0 && (
+            <div className="flex flex-col gap-[var(--spacing-component-sm)]">
+              <p className="text-sm font-semibold text-[var(--color-background-default-foreground)]">Update positions from V{previousVersion?.version}</p>
+              {invalidRatingTotal > 0 && (
+                <Alert variant="warning" role="status" className="flex-row items-start gap-[var(--spacing-component-sm)]">
+                  <WarningIcon className="mt-[var(--spacing-component-xxs)] h-4 w-4 shrink-0" aria-hidden="true" />
+                  <div>
+                    <AlertTitle>{invalidRatingTotal} {invalidRatingTotal === 1 ? 'rating is' : 'ratings are'} above the new {matrix.scaleSize}-point scale</AlertTitle>
+                    <AlertDescription>Those ratings will become “Not set”. Affected Published positions return to Draft for review.</AlertDescription>
+                  </div>
+                </Alert>
+              )}
+              <div className="flex max-h-[180px] flex-col gap-[var(--spacing-component-sm)] overflow-auto rounded-[var(--radius-md)] border border-[var(--color-border-default)] p-[var(--spacing-component-md)]">
+                {migrationCandidates.map((position) => {
+                  const invalidCount = ratingsAboveScale.get(position.id) ?? 0;
+                  return (
+                    <label key={position.id} className="flex items-start gap-[var(--spacing-component-sm)] text-sm">
+                      <Checkbox
+                        checked={migrationIds.has(position.id)}
+                        onCheckedChange={(checked) => setMigrationIds((current) => {
+                          const next = new Set(current);
+                          if (checked) next.add(position.id); else next.delete(position.id);
+                          return next;
+                        })}
+                        aria-label={`Update ${position.name}`}
+                      />
+                      <span className="flex flex-1 flex-col gap-[var(--spacing-component-xxs)]">
+                        <span className="font-semibold text-[var(--color-background-default-foreground)]">{position.name}</span>
+                        <span className="text-xs text-[var(--color-text-secondary)]">
+                          {invalidCount > 0
+                            ? `${invalidCount} ${invalidCount === 1 ? 'rating' : 'ratings'} will become Not set · Returns to Draft`
+                            : position.status === 'Published' ? 'Returns to Draft if the structure changed' : 'Preserves matching ratings'}
+                        </span>
+                      </span>
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+          )}
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction disabled={issues.length > 0} onClick={onPublish}>Publish</AlertDialogAction>
+            <AlertDialogAction disabled={issues.length > 0} onClick={() => onPublish([...migrationIds])}>Publish</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
@@ -397,9 +491,10 @@ function MatrixDetail({ matrix, positions, onChange, onPublish, onArchive, onRes
   );
 }
 
-export function MatricesScreen({ matrices, positions, selected, onSelect, onChange, onAdd, onOpenPosition }: {
+export function MatricesScreen({ matrices, positions, selected, onSelect, onChange, onAdd, onPublish, onCreateDraft, onOpenPosition }: {
   matrices: Matrix[]; positions: Position[]; selected: string; onSelect: (id: string) => void;
-  onChange: (m: Matrix) => void; onAdd: (m: Matrix) => void; onOpenPosition: (id: string) => void;
+  onChange: (m: Matrix) => void; onAdd: (m: Matrix) => void; onPublish: (m: Matrix, positionIds: string[]) => void;
+  onCreateDraft: (m: Matrix) => void; onOpenPosition: (id: string) => void;
 }) {
   const current = matrices.find((m) => m.id === selected) ?? matrices[0];
   const [dialog, setDialog] = React.useState<'add' | 'edit' | null>(null);
@@ -409,7 +504,8 @@ export function MatricesScreen({ matrices, positions, selected, onSelect, onChan
 
   const saveDialog = (d: MatrixDraft) => {
     if (dialog === 'add') {
-      const m: Matrix = { id: `mx-${Date.now()}`, ...d, status: 'Draft', changes: 1,
+      const id = `mx-${Date.now()}`;
+      const m: Matrix = { id, familyId: id, version: 1, ...d, status: 'Draft', changes: 1,
         competencies: [], editedBy: 'Lan Nguyen', editedAt: 'just now', history: [] };
       onAdd(m);
       onSelect(m.id);
@@ -430,11 +526,13 @@ export function MatricesScreen({ matrices, positions, selected, onSelect, onChan
       <MatrixDetail
         key={current.id}
         matrix={current}
+        matrices={matrices}
         positions={positions}
         onChange={onChange}
         onEdit={() => setDialog('edit')}
         onOpenPosition={onOpenPosition}
-        onPublish={() => onChange({ ...current, status: 'Active', changes: 0, editedAt: 'just now' })}
+        onPublish={(positionIds) => onPublish(current, positionIds)}
+        onCreateDraft={() => onCreateDraft(current)}
         onArchive={() => onChange({ ...current, status: 'Archived', editedBy: 'Lan Nguyen', editedAt: 'just now' })}
         onRestore={() => onChange({ ...current, status: 'Draft', editedBy: 'Lan Nguyen', editedAt: 'just now' })}
       />
