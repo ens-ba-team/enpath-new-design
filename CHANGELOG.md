@@ -6,6 +6,36 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-25 — Career Map routes: green main path, violet visions, route selection
+
+### Added
+- Primitive **`color/violet/50–950`** (Tailwind violet) — for Career visions. 5.5:1 (600) / 4.1:1 (500) on the canvas.
+- **`career-map/followed-edge`** → green/600 — the company path the employee follows (3.2:1 on the canvas).
+- Career Map **route selection**: click a line (or its legend entry — now a button) → the route's lines thicken and its cards get a ring in the route's colour. `selectedRoute` / `onSelectRoute`, `routeColor()`.
+- My Career: a **route panel** — company path summary (levels in order, where you are, Follow this path) and Career vision summary (route, status, Request / Withdraw / Remove Career vision N). Vision actions moved here from the cards; a vision card offers "Show Career vision N".
+
+### Changed — breaking (Career Map API)
+- `CareerMapLink.route` (required) replaces optional `pathId`; Career visions are routes with `kind: "vision"`; `CareerMapPath.followed` marks the green path; `color` is optional. `CareerMapLegend` loses `showVision` (visions are listed as routes). Migrate: give every link its route id and add vision routes to `paths`.
+- `career-map/vision-edge` → violet/600, `career-map/vision-border` → violet/500 (were zinc/500). Red was considered and rejected — it means error in Enpath.
+
+---
+
+## 2026-09-25 — Stat + My Career progress and gaps
+
+### Added
+- **Stat** (`stat.tsx`, `Display/Stat`, `stat.meta.json`) — one labelled number with an optional one-line explanation in a flat bordered tile; `tone` (neutral · success · warning) colours the icon only. Existing tokens only (no warning-coloured text token exists for white surfaces).
+- My Career: **progress board** fixed to the Active target (Ready · Growth area · Needs evidence counts, "Based on N acknowledged records") and **gap rows** in the side panel for any selected role ("You 3 · Intermediate → needs 4 · Advanced", or "Needs 3 · Intermediate · not enough records yet", or "Not set"). Mock evidence for Lan stands in for Records. Gap row is feature-level (`my-career/gap-row.tsx`: Item + Badge), not a design-system component yet.
+
+- Career Map: **completed** state and `item.lane` (rows) — My Career puts the followed company path on one row and each Career vision on its own row below. Cards 176px wide, column gap 48, readable minimum 70% (a 4-level path fits one row on a laptop).
+- Career Map: `item.label` (e.g. "Career vision 2"), a `toolbar` slot (top-left), and the view re-fits when cards are added or removed — moving to new cards when the whole map isn't readable.
+- My Career: **company-path picker** (when several published paths include the employee's level; no approval), **Explore a role** (one dialog: starting card + role; it's a Planned step when the move is on a company path planned for the employee's role, otherwise a numbered Career vision — replaced a two-tab "Add from selected" that let other positions' paths skip approval), **Remove from my map** (with preview; blocked for the Active target or a waiting request). Any number of Career visions, one sent to the manager at a time.
+- My Career: **Set as target** (Preview → Confirm, old target back to Planned) and the employee side of the **Career vision request** (send with optional note, Waiting status on the board, withdraw). Manager review not built. First screen to mount the `Toaster`.
+
+### Changed
+- Career Map cards are 104px tall and the title wraps to two lines (was cut off at one).
+
+---
+
 ## 2026-09-25 — Career Map + My Career (employee view)
 
 ### Added

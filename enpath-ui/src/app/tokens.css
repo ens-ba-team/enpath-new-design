@@ -174,6 +174,17 @@
   --color-yellow-800: #973c00;
   --color-yellow-900: #7b3306;
   --color-yellow-950: #461901;
+  --color-violet-50: #fcfaff;
+  --color-violet-100: #f6f0ff;
+  --color-violet-200: #ede2ff;
+  --color-violet-300: #dfcffe;
+  --color-violet-400: #c5a9f8;
+  --color-violet-500: #aa83f0;
+  --color-violet-600: #9063dd;
+  --color-violet-700: #7548c4;
+  --color-violet-800: #5c349f;
+  --color-violet-900: #422477;
+  --color-violet-950: #29164d;
   /**
    * Intent: First data series color in charts and data visualizations.
    * Use when: The primary or first dataset in any chart (bar, line, pie). Maps to shadcn --chart-1.
@@ -2062,23 +2073,31 @@
    */
   --career-map-target-border: #16a34a;
   /**
-   * Intent:      Dashed border of a Career vision role card — the employee's own draft, not a company path
+   * Intent:      Dashed border of a Career vision card — the employee's own draft path, not a company path
    * Use when:    Outlining a CareerMapNode in state vision (dashed)
    * Do not use:  Company-path cards, dividers or borders outside Career Map
    * Use instead: career-map/node-border for company-path cards
    * Status:      active
    */
-  --career-map-vision-border: #64748b;
+  --career-map-vision-border: #aa83f0;
   /**
-   * Intent:      Dashed connection line of a Career vision on the Career Map
-   * Use when:    Drawing links whose kind is vision in CareerMap
-   * Do not use:  Company-path connections or lines outside Career Map
-   * Use instead: career-map/path-1..3 for company paths
+   * Intent:      Dashed line of a Career vision, and the ring on its cards when the vision is highlighted
+   * Use when:    Drawing links on a vision route in CareerMap; ringing that route's cards when it's selected
+   * Do not use:  Company-path lines, the card selection ring, or anything outside Career Map
+   * Use instead: career-map/followed-edge or career-map/path-1..3 for company paths, career-map/node-selected for a selected card
    * Status:      active
    */
-  --career-map-vision-edge: #64748b;
+  --career-map-vision-edge: #9063dd;
   /**
-   * Intent:      Connection colour for the first named company Career Path on the map (categorical, like a chart series)
+   * Intent:      Line of the company path the employee follows (their main route), and the ring on its cards when that path is highlighted
+   * Use when:    Drawing links on the route marked followed in CareerMap
+   * Do not use:  Other company paths, success messages, or anything outside Career Map
+   * Use instead: career-map/path-1..3 for other company paths, color/border/success for validation
+   * Status:      active
+   */
+  --career-map-followed-edge: #16a34a;
+  /**
+   * Intent:      Line colour (and highlight ring) for the first named company Career Path on the map — used when it isn't the followed path (categorical, like a chart series)
    * Use when:    Drawing links and the legend swatch for the path assigned colour 1 in CareerMap
    * Do not use:  UI status, brand, or any element outside Career Map
    * Use instead: career-map/vision-edge for the employee's own draft
@@ -2086,7 +2105,7 @@
    */
   --career-map-path-1: #274754;
   /**
-   * Intent:      Connection colour for the second named company Career Path on the map (categorical)
+   * Intent:      Line colour (and highlight ring) for the second named company Career Path on the map (categorical)
    * Use when:    Drawing links and the legend swatch for the path assigned colour 2 in CareerMap
    * Do not use:  UI status, brand, or any element outside Career Map
    * Use instead: career-map/path-1 for the first path
@@ -2094,7 +2113,7 @@
    */
   --career-map-path-2: #2a9d90;
   /**
-   * Intent:      Connection colour for the third named company Career Path on the map (categorical)
+   * Intent:      Line colour (and highlight ring) for the third named company Career Path on the map (categorical)
    * Use when:    Drawing links and the legend swatch for the path assigned colour 3 in CareerMap
    * Do not use:  UI status, brand, or any element outside Career Map
    * Use instead: career-map/path-1 for the first path

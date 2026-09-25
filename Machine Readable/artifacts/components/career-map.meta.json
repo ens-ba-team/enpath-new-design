@@ -1,7 +1,7 @@
 {
   "name": "career-map",
   "type": "component",
-  "description": "A read-only canvas of an employee's career plan — role cards joined by colour-coded company Career Path lines and dashed Career vision lines, laid out left to right.",
+  "description": "A read-only canvas of an employee's career plan — role cards joined by routes: company Career Paths (the followed one green) and dashed violet Career visions. Clicking a line selects its whole route.",
   "category": "navigation",
   "shadcnBase": "custom",
   "primitiveBase": "none",
@@ -36,6 +36,21 @@
       "type": "TEXT",
       "default": null,
       "reactProp": "aria-label"
+    },
+    "toolbar": {
+      "type": "SLOT",
+      "default": null,
+      "reactProp": "toolbar"
+    },
+    "selectedRoute": {
+      "type": "TEXT",
+      "default": null,
+      "reactProp": "selectedRoute"
+    },
+    "onSelectRoute": {
+      "type": "TEXT",
+      "default": null,
+      "reactProp": "onSelectRoute"
     }
   },
   "tokens": {
@@ -59,14 +74,17 @@
       "currentLabel": "career-map/current-label",
       "targetLabel": "career-map/target-label",
       "targetStroke": "career-map/target-border",
-      "visionStroke": "career-map/vision-border"
+      "visionStroke": "career-map/vision-border",
+      "routeRing": "the selected route's edge token"
     },
     "edges": {
+      "followed": "career-map/followed-edge",
       "path1": "career-map/path-1",
       "path2": "career-map/path-2",
       "path3": "career-map/path-3",
       "vision": "career-map/vision-edge",
-      "strokeWeight": 2
+      "strokeWeight": 2,
+      "strokeWeightSelected": 3.5
     },
     "controls": {
       "inset": "spacing/component/md",
@@ -91,11 +109,11 @@
       },
       {
         "property": "Colour",
-        "value": "Company paths are told apart by colour and named in CareerMapLegend; Career vision is dashed (not colour alone). The target card has a border and a text label, not colour alone. Path and vision lines are at least 3:1 against the canvas."
+        "value": "The followed path is green and named \"· you follow\" in the legend; other company paths are told apart by colour and named in the legend; Career visions are dashed as well as violet. A selected route is shown by thicker lines and a ring on its cards, not colour alone. All lines are at least 3:1 against the canvas."
       },
       {
         "property": "Zoom",
-        "value": "Opening view never shrinks cards below 80% zoom so text stays readable. When the whole map doesn't fit at that zoom, it opens on the current role and its next steps; \"Show whole map\" zooms out. Page scroll is never captured — scroll-to-zoom is off."
+        "value": "Opening view never shrinks cards below 70% zoom so text stays readable. When the whole map doesn't fit at that zoom, it opens on the current role and its next steps; \"Show whole map\" zooms out. Page scroll is never captured — scroll-to-zoom is off."
       },
       {
         "property": "Controls",
@@ -104,17 +122,27 @@
       {
         "property": "Fallback",
         "value": "Freeform canvases are hard to use by keyboard and on phones. A list view of the same items is planned for My Career; until then every card is reachable by Tab."
+      },
+      {
+        "property": "Routes",
+        "value": "Lines aren't focusable. Legend entries are buttons (aria-pressed) that select the same route, so keyboard and screen-reader users can do everything a pointer can."
       }
     ]
   },
   "constraints": [
     "Use only for an employee's career plan — role cards connected by moves. For an ordered, admin-edited path use career-path-stepper.",
     "Pass items and links only; the component lays cards out left to right from the links. Never pass coordinates.",
-    "A link with pathId is a company Career Path move and takes that path's colour; a link without pathId is the employee's Career vision and is dashed.",
-    "Assign each company path a colour 1–3 and render CareerMapLegend with the same paths so colours are named.",
     "Exactly one card should be in state current; at most one in state target.",
     "The map is read-only: no dragging, connecting or deleting. Plan changes happen through Preview → Confirm outside the map.",
-    "Give the map a height from its container (it fills 100%)."
+    "Give the map a height from its container (it fills 100%).",
+    "Use item.label only to number or name a state (\"Career vision 2\"); the state still sets the icon and colour.",
+    "Put page actions for the map (a path picker, Explore a role) in the toolbar slot — top-left, clear of the zoom controls.",
+    "Give cards a lane to put a sequence on one row (lane 0 = top) and branches on rows below; without lanes, cards are centred per column.",
+    "Use state completed for levels already passed on the followed path; it has no actions.",
+    "Every link names its route (a CareerMapPath id). Company paths are solid; routes with kind \"vision\" are dashed violet.",
+    "Mark exactly one company path followed — it's drawn green. Give other company paths a colour 1–3. Name routes in CareerMapLegend with the same list.",
+    "Pass onSelectRoute to both the map and the legend: lines are clicked with a pointer, legend entries are the keyboard way to select a route.",
+    "Selecting a card and selecting a route are exclusive — clear one when the other is set."
   ],
   "doNot": [
     {
@@ -126,16 +154,24 @@
       "correct": "Use career-map/path-1..3 — brand means selected / primary and blue means info"
     },
     {
-      "wrong": "Tell a Career vision apart by colour only",
-      "correct": "Leave pathId off the link so it renders dashed, with a dashed card border"
-    },
-    {
       "wrong": "Open the map zoomed out until text is unreadable",
       "correct": "Let the component choose the opening view; offer Show whole map for the overview"
     },
     {
       "wrong": "Add a minimap or scroll-to-zoom",
       "correct": "Use the built-in zoom and Show whole map buttons"
+    },
+    {
+      "wrong": "Tell a Career vision apart by colour only",
+      "correct": "Give its route kind \"vision\" so lines and card borders are dashed as well as violet"
+    },
+    {
+      "wrong": "Draw a Career vision red",
+      "correct": "Use the vision route (violet) — red means error in Enpath and would read as \"not allowed\""
+    },
+    {
+      "wrong": "Dim the other cards when a route is selected",
+      "correct": "Ring the route's cards and thicken its lines; never dim text with opacity"
     }
   ],
   "relationships": {
@@ -176,7 +212,7 @@
       "List view fallback for keyboard and mobile is not built yet."
     ],
     "notes": [
-      "Built on React Flow (@xyflow/react, MIT). Layout constants (card 192×88, column gap 64, row gap 32) are canvas coordinates, not CSS spacing."
+      "Built on React Flow (@xyflow/react, MIT). Layout constants (card 176×104, column gap 48, row gap 32) are canvas coordinates, not CSS spacing."
     ],
     "knownIssues": [
       "React Flow's attribution link shows in the bottom-right corner."
@@ -186,6 +222,21 @@
         "date": "2026-09-25",
         "change": "Created Career Map, Career Map Legend and the career-map component-token collection for My Career.",
         "breaking": false
+      },
+      {
+        "date": "2026-09-25",
+        "change": "Added item.label (e.g. \"Career vision 2\") and a toolbar slot; the view re-fits when cards are added or removed.",
+        "breaking": false
+      },
+      {
+        "date": "2026-09-25",
+        "change": "Added the completed state and item.lane (rows); cards 176px wide, column gap 48; opening view's readable minimum 70% so a 4-level path fits one row on a laptop.",
+        "breaking": false
+      },
+      {
+        "date": "2026-09-25",
+        "change": "Breaking: links take a required `route` (replaces optional pathId); visions are routes with kind \"vision\" (violet, dashed); `followed` path drawn green; route selection (selectedRoute / onSelectRoute) with rings; legend entries become buttons; `showVision` removed from the legend.",
+        "breaking": true
       }
     ]
   },
@@ -198,6 +249,7 @@
     "exports": [
       "CareerMap",
       "CareerMapLegend",
+      "routeColor",
       "CareerMapProps",
       "CareerMapLegendProps",
       "CareerMapItem",
@@ -221,6 +273,7 @@
     "stories": [
       "Default",
       "Selected",
+      "RouteSelected",
       "CompanyPathsOnly",
       "CurrentRoleOnly",
       "ThreePathsLongTitles"
@@ -235,15 +288,15 @@
     "sections": [
       {
         "title": "Structure",
-        "body": "\n```\nCareerMap — group, fills its container; fill: career-map/canvas\n├─ grid — two line layers: career-map/grid (fine) · career-map/grid-strong (wide)\n├─ controls — top-right; inset spacing/component/md, gap spacing/component/xs\n│  └─ Button ×3 — Zoom out · Zoom in · Show whole map\n├─ CareerMapNode ×n — one per item, 192×88\n│  ├─ state label — icon + text (You are here · Active target · Planned · Career vision)\n│  ├─ title — Position name\n│  └─ level — \"L2 · Mid\"\n└─ connection ×n — curved line + arrowhead; path colour or dashed vision\nCareerMapLegend — list below the map, one entry per company path + Your career vision\n```\n\n---\n\n"
+        "body": "\n```\nCareerMap — group, fills its container; fill: career-map/canvas\n├─ grid — two line layers: career-map/grid (fine) · career-map/grid-strong (wide)\n├─ toolbar — optional consumer slot, top-left; inset spacing/component/md, gap spacing/component/xs\n├─ controls — top-right; inset spacing/component/md, gap spacing/component/xs\n│  └─ Button ×3 — Zoom out · Zoom in · Show whole map\n├─ CareerMapNode ×n — one per item, 176×104; title wraps to 2 lines\n│  ├─ state label — icon + text (Completed · You are here · Active target · Planned · Career vision)\n│  ├─ title — Position name\n│  └─ level — \"L2 · Mid\"\n└─ connection ×n — curved line + arrowhead in its route's colour (followed = green, other paths = path-N, vision = dashed violet); thicker when its route is selected\nCareerMapLegend — list below the map, one entry per route; buttons when onSelectRoute is set\n```\n\n---\n\n"
       },
       {
         "title": "Token Bindings",
-        "body": "\n| Frame | Property | Token |\n|---|---|---|\n| Canvas | Fill | `career-map/canvas` |\n| Canvas | Fine grid | `career-map/grid` |\n| Canvas | Wide grid | `career-map/grid-strong` |\n| Node | Fill | `career-map/node-surface` |\n| Node | Border | `career-map/node-border` |\n| Node — target | Border | `career-map/target-border` |\n| Node — vision | Border (dashed) | `career-map/vision-border` |\n| Node — selected / focus | Outline | `career-map/node-selected` |\n| Node | Radius | `career-map/node-radius` |\n| Node | Padding | `career-map/node-padding` |\n| Node | Line gap | `career-map/node-gap` |\n| Node | Title | `career-map/node-foreground` |\n| Node | Level, Planned and Career vision labels | `career-map/node-description` |\n| Node — current | Label | `career-map/current-label` |\n| Node — target | Label | `career-map/target-label` |\n| Connection — company path | Stroke + arrow | `career-map/path-1` · `career-map/path-2` · `career-map/path-3` |\n| Connection — vision | Stroke + arrow (dashed) | `career-map/vision-edge` |\n| Controls | Inset | `spacing/component/md` |\n| Controls | Gap | `spacing/component/xs` |\n| Legend | Text | `color/text/secondary` |\n| Legend | Entry gap | `spacing/component/lg` · `spacing/component/xs` |\n\n---\n\n"
+        "body": "\n| Frame | Property | Token |\n|---|---|---|\n| Canvas | Fill | `career-map/canvas` |\n| Canvas | Fine grid | `career-map/grid` |\n| Canvas | Wide grid | `career-map/grid-strong` |\n| Node | Fill | `career-map/node-surface` |\n| Node | Border | `career-map/node-border` |\n| Node — target | Border | `career-map/target-border` |\n| Node — vision | Border (dashed) | `career-map/vision-border` |\n| Node — selected / focus | Outline | `career-map/node-selected` |\n| Node | Radius | `career-map/node-radius` |\n| Node | Padding | `career-map/node-padding` |\n| Node | Line gap | `career-map/node-gap` |\n| Node | Title | `career-map/node-foreground` |\n| Node | Level, Planned and Career vision labels | `career-map/node-description` |\n| Node — current | Label | `career-map/current-label` |\n| Node — target | Label | `career-map/target-label` |\n| Connection — followed path | Stroke + arrow + route ring | `career-map/followed-edge` |\n| Connection — other company path | Stroke + arrow + route ring | `career-map/path-1` · `career-map/path-2` · `career-map/path-3` |\n| Connection — vision | Stroke + arrow (dashed) + route ring | `career-map/vision-edge` |\n| Controls | Inset | `spacing/component/md` |\n| Controls | Gap | `spacing/component/xs` |\n| Legend | Text | `color/text/secondary` |\n| Legend | Entry gap | `spacing/component/lg` · `spacing/component/xs` |\n\n---\n\n"
       },
       {
         "title": "Behavior",
-        "body": "\nRead-only: cards can't be dragged, connected or deleted. Click, Enter or Space on a card calls `onSelect(id)`; the consumer controls `selectedId`. Cards are placed in columns by the longest chain of links reaching them and centred per column.\n\nOpening view: the whole map if it fits at 80% zoom or more, otherwise the current role and its next steps. Zoom buttons step in and out; Show whole map zooms out to everything (down to 40%). Drag to pan; pinch to zoom; mouse-wheel scroll is left to the page.\n\n---\n\n"
+        "body": "\nRead-only: cards can't be dragged, connected or deleted. Clicking a line calls `onSelectRoute(routeId)`; the consumer controls `selectedRoute` — its lines thicken and its cards get a ring in the route's colour (for a Career vision, only the roles in it, not the card it branches from). Click, Enter or Space on a card calls `onSelect(id)`; the consumer controls `selectedId`. Cards are placed in columns by the longest chain of links reaching them. Rows come from each card's `lane` (0 = top; a taken spot pushes the card down); cards without a lane are centred per column.\n\nOpening view: the whole map if it fits at 70% zoom or more, otherwise the current role and its next steps. The view re-fits the same way whenever cards are added or removed (not on selection); when cards are added and the whole map isn't readable, it moves to the new cards and the card they start from. Fitting keeps the top strip of the canvas clear for the toolbar and zoom controls. Zoom buttons step in and out; Show whole map zooms out to everything (down to 40%). Drag to pan; pinch to zoom; mouse-wheel scroll is left to the page.\n\n---\n\n"
       },
       {
         "title": "Accessibility",

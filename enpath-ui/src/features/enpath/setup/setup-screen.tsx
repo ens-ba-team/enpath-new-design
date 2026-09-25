@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import { CaretDownIcon, ClockCounterClockwiseIcon, CopyIcon, DotsThreeIcon, EyeSlashIcon, SparkleIcon, WarningIcon, SquaresFourIcon, FlagCheckeredIcon, MagnifyingGlassIcon, PaintBucketIcon, PencilSimpleIcon, PlusIcon, RocketLaunchIcon, UploadSimpleIcon } from '@phosphor-icons/react/ssr';
+import { ArrowLeftIcon, CaretDownIcon, ClockCounterClockwiseIcon, CopyIcon, DotsThreeIcon, EyeSlashIcon, SparkleIcon, WarningIcon, SquaresFourIcon, FlagCheckeredIcon, MagnifyingGlassIcon, PaintBucketIcon, PencilSimpleIcon, PlusIcon, RocketLaunchIcon, UploadSimpleIcon } from '@phosphor-icons/react/ssr';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Badge } from '@/components/ui/badge';
@@ -124,8 +124,8 @@ function LevelCell({ id, value, onChange, label, readOnly, max }: { id?: string;
 
 // Grouped by department — a collapsible uppercase caption per group, same visual language as the
 // app sidebar's own group labels ("WORKSPACE" / "OPERATIONS"), not a new pattern.
-function PositionList({ positions, selected, onSelect, onAdd, onImport }: {
-  positions: Position[]; selected: string; onSelect: (id: string) => void; onAdd: () => void; onImport: () => void;
+function PositionList({ positions, selected, onSelect, onAdd, onImport, className = '' }: {
+  positions: Position[]; selected: string; onSelect: (id: string) => void; onAdd: () => void; onImport: () => void; className?: string;
 }) {
   const [query, setQuery] = React.useState('');
   const [collapsedGroups, setCollapsedGroups] = React.useState<Set<string>>(new Set());
@@ -140,7 +140,7 @@ function PositionList({ positions, selected, onSelect, onAdd, onImport }: {
   });
 
   return (
-    <aside className="flex w-[280px] shrink-0 flex-col border-r border-[var(--color-border-default)]">
+    <aside className={`w-full shrink-0 flex-col border-[var(--color-border-default)] lg:w-[280px] lg:border-r ${className}`}>
       <div className="flex flex-col gap-[var(--spacing-component-md)] p-[var(--spacing-component-lg)]">
         <h2 className="text-base font-semibold text-[var(--color-background-default-foreground)]">Positions</h2>
         <div className="relative">
@@ -200,8 +200,8 @@ function Meta({ label, children }: { label: string; children: React.ReactNode })
 const edited = (p: Position, patch: Partial<Position>): Position =>
   ({ ...p, ...patch, status: 'Draft', changes: p.changes + 1, editedBy: 'Lan Nguyen', editedAt: 'just now' });
 
-function PositionDetail({ position, matrix, updateAvailable, onChange, onPublish, onUnpublish, onEdit, onDuplicate, onOpenMatrix }: {
-  position: Position; matrix: Matrix; updateAvailable?: Matrix; onChange: (p: Position) => void; onPublish: () => void; onUnpublish: () => void; onEdit: () => void; onDuplicate: () => void; onOpenMatrix: () => void;
+function PositionDetail({ position, matrix, updateAvailable, onChange, onPublish, onUnpublish, onEdit, onDuplicate, onOpenMatrix, onBack, className = '' }: {
+  position: Position; matrix: Matrix; updateAvailable?: Matrix; onChange: (p: Position) => void; onPublish: () => void; onUnpublish: () => void; onEdit: () => void; onDuplicate: () => void; onOpenMatrix: () => void; onBack: () => void; className?: string;
 }) {
   const [confirm, setConfirm] = React.useState(false);
   const [confirmUnpublish, setConfirmUnpublish] = React.useState(false);
@@ -222,11 +222,12 @@ function PositionDetail({ position, matrix, updateAvailable, onChange, onPublish
   const jumpTo = (cId: string, lId: string) => { setConfirm(false); setTimeout(() => document.getElementById(`cell-${cId}-${lId}`)?.focus(), 50); };
 
   return (
-    <section className="flex min-w-0 flex-1 flex-col" aria-label={position.name}>
-      <header className="flex items-center gap-[var(--spacing-layout-xs)] border-b border-[var(--color-border-default)] p-[var(--spacing-layout-sm)]">
+    <section className={`min-w-0 flex-1 flex-col ${className}`} aria-label={position.name}>
+      <header className="flex flex-col items-stretch gap-[var(--spacing-layout-xs)] border-b border-[var(--color-border-default)] p-[var(--spacing-layout-sm)] md:flex-row md:items-center">
         <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xs)]">
           <div className="flex items-center gap-[var(--spacing-component-sm)]">
-            <h2 className="text-xl font-semibold text-[var(--color-background-default-foreground)]">{position.name}</h2>
+            <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Back to positions" onClick={onBack}><ArrowLeftIcon /></Button>
+            <h2 className="min-w-0 text-xl font-semibold text-[var(--color-background-default-foreground)]">{position.name}</h2>
             <StatusBadge status={position.status} />
           </div>
           <dl className="flex flex-wrap items-center gap-x-[var(--spacing-layout-sm)] gap-y-[var(--spacing-component-xs)] text-sm">
@@ -246,7 +247,7 @@ function PositionDetail({ position, matrix, updateAvailable, onChange, onPublish
             <Meta label="Last edited">{position.editedBy} · {position.editedAt}</Meta>
           </dl>
         </div>
-        <div className="flex shrink-0 items-center gap-[var(--spacing-component-sm)]">
+        <div className="flex shrink-0 flex-wrap items-center gap-[var(--spacing-component-sm)] md:justify-end">
           <Tip label={position.status === 'Published' ? 'Unpublish to edit' : undefined}>
             <span className="inline-flex">
               <Button variant="outline" onClick={onEdit} disabled={position.status === 'Published'}>
@@ -273,11 +274,11 @@ function PositionDetail({ position, matrix, updateAvailable, onChange, onPublish
         </div>
       </header>
 
-      <div className="flex-1 overflow-auto p-[var(--spacing-layout-sm)]">
-        <table className="w-full border-separate border-spacing-0 text-sm">
+      <div className="relative flex-1 overflow-auto p-[var(--spacing-layout-sm)]">
+        <table className="min-w-max border-separate border-spacing-0 text-sm">
           <thead>
             <tr>
-              <th scope="col" className="sticky left-0 w-[160px] border-b border-[var(--color-border-default)] bg-[var(--color-background-default)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)] text-left font-semibold">Competency</th>
+              <th scope="col" className="sticky left-0 z-20 w-[160px] min-w-[160px] border-b border-[var(--color-border-default)] bg-[var(--color-background-default)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)] text-left font-semibold">Competency</th>
               {position.levels.map((l) => {
                 const label = levelLabel(position.levels, l);
                 const unsetInLevel = matrix.competencies.filter((c) => position.expectations[c.id]?.[l.id] == null).length;
@@ -334,7 +335,7 @@ function PositionDetail({ position, matrix, updateAvailable, onChange, onPublish
           <tbody>
             {matrix.competencies.map((c) => (
               <tr key={c.id}>
-                <th scope="row" className="sticky left-0 border-b border-[var(--color-border-subtle)] bg-[var(--color-background-default)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)] text-left font-normal">{c.name}</th>
+                <th scope="row" className="sticky left-0 z-10 w-[160px] min-w-[160px] max-w-[160px] border-b border-[var(--color-border-subtle)] bg-[var(--color-background-default)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)] text-left font-normal [overflow-wrap:anywhere]">{c.name}</th>
                 {position.levels.map((l) => (
                   <td key={l.id} className="border-b border-[var(--color-border-subtle)] p-[var(--spacing-component-xs)]">
                     <LevelCell id={`cell-${c.id}-${l.id}`} label={`${c.name}, ${levelLabel(position.levels, l)}`} value={position.expectations[c.id]?.[l.id] ?? null} onChange={(v) => setCell(c.id, l.id, v)} readOnly={position.status === 'Published'} max={matrix.scaleSize} />
@@ -507,6 +508,7 @@ export function SetupScreen({ sidebarClassName, initialTab = 'structure' }: { si
   const done = total === 0 ? 0 : Math.round(((total - positions.reduce((n, p) => n + unsetCount(matrices, p), 0)) / total) * 100);
 
   const [dialog, setDialog] = React.useState<'add' | 'edit' | null>(null);
+  const [structurePane, setStructurePane] = React.useState<'list' | 'detail'>('list');
   const [chatOpen, setChatOpen] = React.useState(false);
   const [proposal, setProposal] = React.useState<LevelProposal | null>(null);
   const [duplicateSourceId, setDuplicateSourceId] = React.useState<string | null>(null);
@@ -557,6 +559,7 @@ export function SetupScreen({ sidebarClassName, initialTab = 'structure' }: { si
         editedBy: 'Lan Nguyen', editedAt: 'just now', history: [] };
       setPositions((all) => [...all, p]);
       setSelected(p.id);
+      setStructurePane('detail');
       setDuplicateSourceId(null);
     } else {
       // Keep expectations of kept levels; new levels start Not set; removed levels drop out.
@@ -593,36 +596,38 @@ export function SetupScreen({ sidebarClassName, initialTab = 'structure' }: { si
         <Placeholder>{page} — not built yet. Go to Setup.</Placeholder>
       ) : (
         <div className="flex h-full flex-col">
-          <div className="flex items-center gap-[var(--spacing-layout-xs)] px-[var(--spacing-layout-sm)] pt-[var(--spacing-layout-sm)]">
+          <div className="flex flex-wrap items-center gap-[var(--spacing-layout-xs)] px-[var(--spacing-layout-sm)] pt-[var(--spacing-layout-sm)]">
             <h1 className="text-2xl font-semibold text-[var(--color-background-default-foreground)]">Setup</h1>
             <Alert
               variant="success"
               role="status"
               title={`${unsetTotal} ${unsetTotal === 1 ? 'cell' : 'cells'} not set · ${drafts} ${drafts === 1 ? 'position' : 'positions'} not published`}
-              className="ml-auto w-auto flex-row items-center gap-[var(--spacing-component-md)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)]"
+              className="order-last w-full flex-row items-center gap-[var(--spacing-component-md)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)] sm:order-none sm:ml-auto sm:w-auto"
             >
               <FlagCheckeredIcon className="h-4 w-4" aria-hidden="true" />
               <AlertTitle>Your setup is {done}% done</AlertTitle>
               {/* Green fill before 100% — overrides Progress's brand fill; see note in reply */}
-              <Progress value={done} aria-label="Setup progress" className="w-[160px] bg-[var(--color-background-default)] [&>div]:bg-[var(--color-status-success)]" />
+              <Progress value={done} aria-label="Setup progress" className="min-w-0 flex-1 bg-[var(--color-background-default)] sm:w-[160px] sm:flex-none [&>div]:bg-[var(--color-status-success)]" />
             </Alert>
             {!chatOpen && (
               <Tip label="Ask AI (⌘I)">
-                <Button variant="outline" onClick={() => setChatOpen(true)}>
+                <Button variant="outline" className="hidden lg:inline-flex" onClick={() => setChatOpen(true)}>
                   <SparkleIcon className="h-4 w-4" aria-hidden="true" />Ask AI
                 </Button>
               </Tip>
             )}
           </div>
           <Tabs value={tab} onValueChange={(value) => { if (value === 'structure' || value === 'matrices' || value === 'paths') setTab(value); }} className="mt-[var(--spacing-layout-xs)] flex min-h-0 flex-1 flex-col">
-            <TabsList variant="line" className="px-[var(--spacing-layout-sm)]">
+            <div className="overflow-x-auto">
+            <TabsList variant="line" className="w-max min-w-full px-[var(--spacing-layout-sm)]">
               <TabsTrigger variant="line" value="structure">Career structure</TabsTrigger>
               <TabsTrigger variant="line" value="matrices">Matrices config</TabsTrigger>
               <TabsTrigger variant="line" value="paths">Career path</TabsTrigger>
             </TabsList>
+            </div>
             <TabsContent value="structure" className="mt-0 flex min-h-0 flex-1 border-t border-[var(--color-border-default)]">
-              <PositionList positions={positions} selected={selected} onSelect={setSelected} onAdd={() => setDialog('add')} onImport={() => setImportOpen(true)} />
-              <PositionDetail key={current.id} position={current} matrix={currentMatrix} updateAvailable={availableMatrixUpdate} onChange={update} onEdit={() => setDialog('edit')}
+              <PositionList className={structurePane === 'list' ? 'flex' : 'hidden lg:flex'} positions={positions} selected={selected} onSelect={(id) => { setSelected(id); setStructurePane('detail'); }} onAdd={() => setDialog('add')} onImport={() => setImportOpen(true)} />
+              <PositionDetail className={structurePane === 'detail' ? 'flex' : 'hidden lg:flex'} key={current.id} position={current} matrix={currentMatrix} updateAvailable={availableMatrixUpdate} onChange={update} onEdit={() => setDialog('edit')} onBack={() => setStructurePane('list')}
                 onDuplicate={() => { setDuplicateSourceId(current.id); setDialog('add'); }}
                 onOpenMatrix={() => { setSelectedMatrix(current.matrixId); setTab('matrices'); }}
                 onPublish={() => update({ ...current, status: 'Published', changes: 0, editedAt: 'just now' })}
@@ -631,7 +636,7 @@ export function SetupScreen({ sidebarClassName, initialTab = 'structure' }: { si
             <TabsContent value="matrices" className="mt-0 flex min-h-0 flex-1 border-t border-[var(--color-border-default)]">
               <MatricesScreen matrices={matrices} positions={positions} selected={selectedMatrix} onSelect={setSelectedMatrix} onChange={updateMatrix} onAdd={addMatrix}
                 onPublish={publishMatrix} onCreateDraft={createMatrixDraft}
-                onOpenPosition={(id) => { setSelected(id); setTab('structure'); }} />
+                onOpenPosition={(id) => { setSelected(id); setStructurePane('detail'); setTab('structure'); }} />
             </TabsContent>
             <TabsContent value="paths" className="mt-0 flex min-h-0 flex-1 border-t border-[var(--color-border-default)]">
               <CareerPathScreen paths={careerPaths} positions={positions} selected={selectedPath} onSelect={setSelectedPath} onChange={updatePath} onAdd={addPath} />

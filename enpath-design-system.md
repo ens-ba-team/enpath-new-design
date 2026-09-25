@@ -86,6 +86,7 @@ color/info/25–950    same values as blue; not referenced by any token yet
 color/red/50–950     error
 color/green/50–950   success (Tailwind green)
 color/yellow/50–950  warning (Tailwind amber)
+color/violet/50–950  Career vision on the Career Map (Tailwind violet) — no status meaning; clearly more purple than brand
 color/chart/1–5      data series only
 color/white-alpha/60  sidebar hover only
 color/scale/1–5      proficiency steps on the 5-level rating scale (blue/200 → blue/700), darker per step; always labelled
@@ -362,6 +363,10 @@ Anatomy: `Card > CardHeader (title + optional right-aligned action) + CardConten
 | Prose · feature | 24px `spacing/component/xl` |
 
 Section gap inside a card 16px; micro-gaps 4px. A grid of cards uses the same gap as the card padding. Tables and images run edge-to-edge or carry their own border. Primary action in header **or** footer, not both. Tokens: fill `surface/overlay` · border `border/default` · radius `radius/lg` · shadow `shadow/surface`.
+
+**Anti-pattern — coloured edge cards.** Do not generate cards with a thick coloured left stroke/rail alongside a neutral card border to communicate status, priority, category or impact. This “left accent border card” pattern adds a decorative second boundary and makes the card read like a ticket queue. Use the appropriate semantic text, icon, badge, or a clearly scoped status treatment instead; keep the card container on its standard fill, border, radius and shadow.
+
+**Anti-pattern — adjacent destructive and primary actions.** Do not place a destructive primary button immediately beside a primary button in the same action group. Two equally prominent fills create competing calls to action and make the destructive outcome too easy to trigger. Use one clear primary action, move destructive actions into a separate area or confirmation flow, and use `button/outline`, `button/ghost`, or `button/link` for secondary actions when they must remain nearby.
 
 ### Layout
 

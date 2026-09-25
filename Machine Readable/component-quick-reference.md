@@ -1,6 +1,6 @@
 # Component Quick Reference
 
-Scanned from all 53 component artifacts. Read before building any screen — covers what each component is for, the key usage rule, and the most common mistake.
+Scanned from all 54 component artifacts. Read before building any screen — covers what each component is for, the key usage rule, and the most common mistake.
 
 **Source of truth:** all information here is extracted from `Machine Readable/artifacts/components/[name].meta.json`.  
 Each entry links to its artifact file and Storybook story — open those for full token bindings, variant matrices, and accessibility specs.
@@ -153,6 +153,19 @@ Each entry links to its artifact file and Storybook story — open those for ful
 **vs `input (number)`:** Approximate value in a continuous range, precision not required → use `slider`
 
 → Artifact: `Machine Readable/artifacts/components/slider.meta.json` · Storybook: `Forms/Slider`
+
+---
+
+### `stat`
+**What it's for:** One labelled number with an optional one-line explanation, in a flat bordered tile.
+
+**Use when:** Showing 2–4 counts side by side — e.g. Ready · Growth area · Needs evidence on My Career's progress board.
+
+**Key rule:** Tone colours the icon only; never colour the number. Don't show a percentage built from missing data.
+
+**vs `card`:** One labelled number → `stat`; general content container → `card`.
+
+→ Artifact: `Machine Readable/artifacts/components/stat.meta.json` · Storybook: `Display/Stat`
 
 ---
 

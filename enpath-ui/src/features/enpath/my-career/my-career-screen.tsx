@@ -1,93 +1,271 @@
 'use client';
 // My Career — employee view (Lan Nguyen). Spec: Enpath/document/my-career-build.md.
-// Built so far: the career map (build-my-path job) and a panel for the selected card.
-// Not yet: progress board, gap rows, Set as target, Career vision request.
+// Three jobs, three places: progress board (fixed to the Active target) · career map (build the
+// path) · side panel (the selected role card, or the selected route — a company path or a Career
+// vision). The map is derived from Lan's plan (mock-data.ts → buildMap). Every plan change is
+// Preview → Confirm, then a toast. Career visions are numbered; one can be sent to the manager at
+// a time. Not yet: manager review, list view.
 
 import * as React from 'react';
-import { CareerMap, CareerMapLegend, type CareerMapItem } from '@/components/ui/career-map';
+import { toast } from 'sonner';
+import { PlusIcon, SparkleIcon } from '@phosphor-icons/react/ssr';
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription,
+  AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { CareerMap, CareerMapLegend, type CareerMapItem, type CareerMapPath } from '@/components/ui/career-map';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Toaster } from '@/components/ui/toast';
+import { TooltipProvider } from '@/components/ui/tooltip';
 import { EnpathAppShell } from '../app-shell';
-import { companyPaths, describeStep, employee, planLinks, planSteps, type PlanStep } from './mock-data';
-
-const stateText: Record<PlanStep['state'], string> = {
-  current: 'You are here',
-  target: 'Your Active target',
-  planned: 'Exploring — what would this need?',
-  vision: 'In your Career vision',
-};
+import { SidebarFollowsChat, useChatShortcut } from '../chat/sidebar-follows-chat';
+import { Tip } from '../tip';
+import { CareerChat } from './career-chat';
+import {
+  buildMap, companyPaths, describeStep, employee, initialPlan, matchingPaths, removeBranch, removeVision,
+  visionNumbers, visionRoute, visionRouteId, type Branch, type Plan, type VisionRequest,
+} from './mock-data';
+import { ProgressBoard, RoutePanel, stateName, StepPanel } from './my-career-panels';
+import { ExploreRoleDialog, levelName, SetTargetDialog, SwitchPathDialog, VisionRequestDialog, type StartOption } from './plan-dialogs';
 
 function Placeholder({ children }: { children: React.ReactNode }) {
   return <p className="p-[var(--spacing-layout-sm)] text-sm text-[var(--color-text-secondary)]">{children}</p>;
 }
 
-function StepPanel({ step }: { step: PlanStep }) {
-  const d = describeStep(step);
-  const incoming = planLinks.find((l) => l.to === step.id);
-  const source = step.state === 'current'
-    ? 'Your official role, set by your admin'
-    : incoming?.pathId
-      ? `Company path · ${companyPaths.find((p) => p.id === incoming.pathId)?.name}`
-      : 'Your career vision · draft, only you can see it';
-  return (
-    <section aria-labelledby="step-title" className="flex flex-col gap-[var(--spacing-component-sm)] p-[var(--spacing-layout-sm)]">
-      <p className="text-xs font-semibold text-[var(--color-text-secondary)]">{stateText[step.state]}</p>
-      <h2 id="step-title" className="text-lg font-semibold text-[var(--color-background-default-foreground)]">
-        {d.title} <span className="font-normal text-[var(--color-text-secondary)]">{d.level}</span>
-      </h2>
-      <p className="text-sm text-[var(--color-text-secondary)]">{source}</p>
-      <p className="text-sm text-[var(--color-background-default-foreground)]">
-        {d.expectationsSet} of {d.expectationsTotal} expectations set for this level
-      </p>
-      <p className="mt-[var(--spacing-component-sm)] border-t border-[var(--color-border-default)] pt-[var(--spacing-component-md)] text-sm text-[var(--color-text-secondary)]">
-        What this role needs from you — competency by competency — comes next.
-      </p>
-    </section>
-  );
-}
+type Selection = { kind: 'card'; id: string } | { kind: 'route'; id: string };
+type DialogName = 'target' | 'request' | 'add' | 'remove' | 'switch' | null;
 
 export function MyCareerScreen() {
   const [page, setPage] = React.useState('My Career');
-  const [selected, setSelected] = React.useState('be-3');
-  const current = describeStep(planSteps.find((s) => s.state === 'current')!);
-  const items: CareerMapItem[] = planSteps.map((s) => {
+  const [plan, setPlan] = React.useState<Plan>(initialPlan);
+  const [request, setRequest] = React.useState<VisionRequest | null>(null);
+  const [notes, setNotes] = React.useState<Record<number, string>>({});
+  const [sel, setSel] = React.useState<Selection>({ kind: 'card', id: initialPlan.targetId });
+  const [dialog, setDialog] = React.useState<DialogName>(null);
+  const [switchTo, setSwitchTo] = React.useState('');
+  const [chatOpen, setChatOpen] = React.useState(false);
+  useChatShortcut(React.useCallback(() => setChatOpen((o) => !o), []));
+
+  const { steps, links } = React.useMemo(() => buildMap(plan), [plan]);
+  const current = steps.find((s) => s.state === 'current')!;
+  const target = steps.find((s) => s.state === 'target');
+  const visions = visionNumbers(plan);
+
+  // Routes on the map: company paths (the followed one first, drawn green) and Career visions.
+  const routes: CareerMapPath[] = [
+    ...companyPaths
+      .filter((p) => links.some((l) => l.route === p.id))
+      .sort((a, b) => Number(b.id === plan.followedPathId) - Number(a.id === plan.followedPathId))
+      .map((p) => ({ id: p.id, name: p.id === plan.followedPathId ? `${p.name} · you follow` : p.name, color: p.color, followed: p.id === plan.followedPathId })),
+    ...visions.map((n): CareerMapPath => ({ id: visionRouteId(n), name: `Career vision ${n}`, kind: 'vision' })),
+  ];
+  const route = sel.kind === 'route' ? routes.find((r) => r.id === sel.id) : undefined;
+  const step = (sel.kind === 'card' ? steps.find((s) => s.id === sel.id) : undefined) ?? (route ? undefined : current);
+  const visionOfRoute = route?.kind === 'vision' ? Number(route.id.replace('vision-', '')) : undefined;
+  // Actions on the "selected thing" need a card even while a route is shown (e.g. the request dialog).
+  const actionStep = step ?? current;
+
+  const items: CareerMapItem[] = steps.map((s) => {
     const d = describeStep(s);
-    return { id: s.id, title: d.title, level: d.level, state: s.state };
+    return { id: s.id, title: d.title, level: d.level, state: s.state, lane: s.lane, label: s.state === 'vision' ? `Career vision ${s.vision}` : undefined };
   });
-  const step = planSteps.find((s) => s.id === selected) ?? planSteps[0];
+  const starts: StartOption[] = steps.filter((s) => s.state !== 'completed').map((s) => ({ id: s.id, label: stateName(s), vision: s.vision }));
+
+  // What "Remove" takes away: a whole Career vision (route panel) or one company-path card you added.
+  const removal = React.useMemo(() => {
+    let next: Plan | null = null;
+    if (visionOfRoute !== undefined) next = removeVision(plan, visionOfRoute);
+    else if (step?.branch !== undefined && step.state !== 'vision') next = removeBranch(plan, step.branch);
+    if (!next) return null;
+    const left = new Set(buildMap(next).steps.map((s) => s.id));
+    const gone = steps.filter((s) => !left.has(s.id));
+    const blocked = gone.some((s) => s.id === plan.targetId)
+      ? 'Your Active target is on it — set another target before removing it.'
+      : request?.status === 'waiting' && !visionNumbers(next).includes(request.vision)
+        ? `Career vision ${request.vision} is waiting for ${employee.manager} — withdraw the request before removing it.`
+        : undefined;
+    return { next, gone, blocked };
+  }, [plan, step, steps, request, visionOfRoute]);
+
+  const commit = (next: Plan, message: string) => {
+    setPlan(next);
+    if (request && !visionNumbers(next).includes(request.vision)) setRequest(null);
+    setDialog(null);
+    toast.success(message);
+  };
+
+  const switchPreview = React.useMemo(() => {
+    if (!switchTo) return null;
+    const next = { ...plan, followedPathId: switchTo };
+    if (buildMap(next).steps.some((s) => s.id === plan.targetId)) return { next, note: undefined };
+    const path = companyPaths.find((p) => p.id === switchTo)!;
+    const newTarget = path.levels[path.levels.indexOf(employee.levelId) + 1] ?? employee.levelId;
+    return { next: { ...next, targetId: newTarget }, note: `${levelName(plan.targetId)} isn't on ${path.name}, so ${levelName(newTarget)} becomes your target.` };
+  }, [switchTo, plan]);
+
+  const follow = (pathId: string) => { if (pathId !== plan.followedPathId) { setSwitchTo(pathId); setDialog('switch'); } };
+  const selectCard = (id: string) => setSel({ kind: 'card', id });
+  const selectRoute = (id: string) => setSel((s) => (s.kind === 'route' && s.id === id ? { kind: 'card', id: current.id } : { kind: 'route', id }));
+  const addStep = (branch: Branch, message: string) => { commit({ ...plan, branches: [...plan.branches, branch] }, message); selectCard(branch.to); };
+  // From the AI chat: the suggested roles become a new Career vision, then it's highlighted.
+  const addVisionFromChat = (from: string, ids: string[]) => {
+    const onMap = new Set(steps.map((s) => s.id));
+    const fresh = ids.filter((id) => !onMap.has(id));
+    if (fresh.length === 0) { toast('Those roles are already on your map'); return; }
+    const n = (visions.at(-1) ?? 0) + 1;
+    const start = onMap.has(from) ? from : current.id;
+    const added: Branch[] = fresh.map((to, i) => ({ kind: 'vision', vision: n, from: i === 0 ? start : fresh[i - 1], to }));
+    commit({ ...plan, branches: [...plan.branches, ...added] }, `Added to your map as Career vision ${n}`);
+    setSel({ kind: 'route', id: visionRouteId(n) });
+  };
 
   return (
-    <EnpathAppShell active={page} onNavigate={setPage}>
+    <TooltipProvider>
+    <EnpathAppShell
+      active={page}
+      onNavigate={setPage}
+      rightPanel={chatOpen && (
+        <CareerChat
+          target={target}
+          context={route ? route.name : levelName((step ?? current).id)}
+          onMap={new Set(steps.map((s) => s.id))}
+          onAddVision={addVisionFromChat}
+          onClose={() => setChatOpen(false)}
+        />
+      )}
+    >
+      <SidebarFollowsChat chatOpen={chatOpen} />
       {page !== 'My Career' ? (
         <Placeholder>{page} — not built yet. Go to My Career or Setup.</Placeholder>
       ) : (
-        <div className="flex h-full flex-col">
-          <header className="flex flex-col gap-[var(--spacing-component-xs)] border-b border-[var(--color-border-default)] px-[var(--spacing-layout-sm)] py-[var(--spacing-layout-sm)]">
-            <h1 className="text-2xl font-semibold text-[var(--color-background-default-foreground)]">My Career</h1>
-            <p className="text-sm text-[var(--color-text-secondary)]">
-              {employee.name} · {current.title} {current.level}
-            </p>
+        <div className="flex h-full flex-col overflow-y-auto lg:overflow-hidden">
+          <header className="flex items-start gap-[var(--spacing-layout-xs)] px-[var(--spacing-layout-sm)] py-[var(--spacing-layout-sm)]">
+            <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xs)]">
+              <h1 className="text-2xl font-semibold text-[var(--color-background-default-foreground)]">My Career</h1>
+              <p className="text-sm text-[var(--color-text-secondary)]">{employee.name} · {levelName(current.id)}</p>
+            </div>
+            {!chatOpen && (
+              <Tip label="Ask AI (⌘I)">
+                <Button variant="outline" className="hidden lg:inline-flex" onClick={() => setChatOpen(true)}>
+                  <SparkleIcon className="h-4 w-4" aria-hidden="true" />Ask AI
+                </Button>
+              </Tip>
+            )}
           </header>
-          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto lg:flex-row lg:overflow-hidden">
+          {target && <ProgressBoard target={target} plan={plan} request={request} />}
+          <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
             <div className="flex min-h-[60dvh] flex-1 flex-col lg:min-h-0">
               <CareerMap
                 aria-label={`${employee.name}'s career map`}
                 items={items}
-                links={planLinks}
-                paths={companyPaths}
-                selectedId={selected}
-                onSelect={setSelected}
+                links={links}
+                paths={routes}
+                selectedId={step?.id}
+                onSelect={selectCard}
+                selectedRoute={route?.id}
+                onSelectRoute={selectRoute}
                 className="flex-1"
+                toolbar={
+                  <>
+                    {matchingPaths.length > 1 && (
+                      <Select value={plan.followedPathId} onValueChange={follow}>
+                        <SelectTrigger aria-label="Company path you follow" className="w-auto gap-[var(--spacing-component-xs)] bg-[var(--color-surface-default)]"><SelectValue /></SelectTrigger>
+                        <SelectContent>{matchingPaths.map((p) => <SelectItem key={p.id} value={p.id}>Following: {p.name}</SelectItem>)}</SelectContent>
+                      </Select>
+                    )}
+                    <Button variant="outline" className="bg-[var(--color-surface-default)]" onClick={() => setDialog('add')}>
+                      <PlusIcon aria-hidden="true" />Explore a role
+                    </Button>
+                  </>
+                }
               />
-              <CareerMapLegend
-                paths={companyPaths}
-                className="border-t border-[var(--color-border-default)] px-[var(--spacing-layout-sm)] py-[var(--spacing-component-md)]"
-              />
+              <CareerMapLegend paths={routes} selectedRoute={route?.id} onSelectRoute={selectRoute} className="border-t border-[var(--color-border-default)] px-[var(--spacing-layout-sm)] py-[var(--spacing-component-sm)]" />
             </div>
-            <aside className="shrink-0 border-t border-[var(--color-border-default)] lg:w-[320px] lg:overflow-y-auto lg:border-l lg:border-t-0">
-              <StepPanel step={step} />
+            <aside aria-label={route ? 'Selected route' : 'Selected role'} className="flex shrink-0 flex-col border-t border-[var(--color-border-default)] lg:w-[320px] lg:overflow-y-auto lg:border-l lg:border-t-0">
+              {route ? (
+                <RoutePanel route={route} plan={plan} steps={steps} request={request} removeBlocked={removal?.blocked}
+                  actions={{
+                    onFollow: follow,
+                    onRequest: () => setDialog('request'),
+                    onWithdraw: () => { setRequest(null); toast(`Request withdrawn — Career vision ${visionOfRoute} is a draft again`); },
+                    onRemoveVision: () => setDialog('remove'),
+                    onSelectCard: selectCard,
+                  }} />
+              ) : (
+                <StepPanel step={actionStep} plan={plan} links={links} request={request} removable={!!removal} removeBlocked={removal?.blocked}
+                  actions={{ onSetTarget: () => setDialog('target'), onAdd: () => setDialog('add'), onRemove: () => setDialog('remove'), onShowRoute: selectRoute }} />
+              )}
             </aside>
           </div>
         </div>
       )}
+
+      {target && (
+        <SetTargetDialog open={dialog === 'target'} onOpenChange={(o) => !o && setDialog(null)} from={levelName(target.id)} to={levelName(actionStep.id)}
+          onConfirm={() => commit({ ...plan, targetId: actionStep.id }, `${levelName(actionStep.id)} is your new target`)} />
+      )}
+      {visionOfRoute !== undefined && (
+        <VisionRequestDialog
+          open={dialog === 'request'}
+          onOpenChange={(o) => !o && setDialog(null)}
+          visionName={`Career vision ${visionOfRoute}`}
+          route={visionRoute(plan, visionOfRoute).map(levelName).join(' → ')}
+          manager={employee.manager}
+          initialNote={notes[visionOfRoute] ?? ''}
+          onSend={(note) => {
+            setNotes((n) => ({ ...n, [visionOfRoute]: note }));
+            setRequest({ vision: visionOfRoute, status: 'waiting', note, managerNote: '' });
+            setDialog(null);
+            toast.success(`Career vision ${visionOfRoute} sent to ${employee.manager}`);
+          }}
+        />
+      )}
+      <ExploreRoleDialog
+        open={dialog === 'add'}
+        onOpenChange={(o) => !o && setDialog(null)}
+        starts={starts}
+        defaultFrom={actionStep.state === 'completed' ? current.id : actionStep.id}
+        nextVision={(visions.at(-1) ?? 0) + 1}
+        onMap={new Set(steps.map((s) => s.id))}
+        manager={employee.manager}
+        onAdd={addStep}
+      />
+      {removal && (
+        <AlertDialog open={dialog === 'remove'} onOpenChange={(o) => !o && setDialog(null)}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>{visionOfRoute !== undefined ? `Remove Career vision ${visionOfRoute}?` : 'Remove from your map?'}</AlertDialogTitle>
+              <AlertDialogDescription>
+                {removal.gone.length === 1 ? 'This card goes:' : `These ${removal.gone.length} cards go, including anything added from them:`}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <ul className="list-disc pl-[var(--spacing-component-lg)] text-sm text-[var(--color-background-default-foreground)]">
+              {removal.gone.map((s) => <li key={s.id}>{levelName(s.id)}{s.vision !== undefined ? ` · Career vision ${s.vision}` : ''}</li>)}
+            </ul>
+            <p className="text-sm text-[var(--color-text-secondary)]">You can add {removal.gone.length === 1 ? 'it' : 'them'} back any time. Your current role and Active target stay.</p>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={() => {
+                selectCard(current.id);
+                commit(removal.next, visionOfRoute !== undefined ? `Career vision ${visionOfRoute} removed` : removal.gone.length === 1 ? `${levelName(removal.gone[0].id)} removed from your map` : `${removal.gone.length} cards removed from your map`);
+              }}>Remove</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
+      {switchPreview && (
+        <SwitchPathDialog
+          open={dialog === 'switch'}
+          onOpenChange={(o) => { if (!o) { setDialog(null); setSwitchTo(''); } }}
+          from={companyPaths.find((p) => p.id === plan.followedPathId)!.name}
+          to={companyPaths.find((p) => p.id === switchTo)!.name}
+          targetNote={switchPreview.note}
+          onConfirm={() => { commit(switchPreview.next, `You now follow ${companyPaths.find((p) => p.id === switchTo)!.name}`); setSwitchTo(''); }}
+        />
+      )}
+      <Toaster />
     </EnpathAppShell>
+    </TooltipProvider>
   );
 }

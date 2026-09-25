@@ -1,6 +1,6 @@
 # Component Directory
 
-Generated from `artifacts/components/[name].meta.json` — 53 components with their Storybook title and source file. Regenerate when a meta.json changes; never edit rows by hand.
+Generated from `artifacts/components/[name].meta.json` — 54 components with their Storybook title and source file. Regenerate when a meta.json changes; never edit rows by hand.
 
 **Deep lookup:** read `artifacts/components/[name].meta.json` for tokens, behaviour, implementation notes, known issues and story names.
 
@@ -28,6 +28,7 @@ Generated from `artifacts/components/[name].meta.json` — 53 components with th
 | radio-group | A single-select control used within a radio group, with Basic row and Choice card layouts. | `Forms/RadioGroup` | `radio-group.tsx` |
 | select | A dropdown control for choosing one option from a predefined fixed list. | `Forms/Select` | `select.tsx` |
 | slider | A range input control that lets users select a value by dragging a thumb along a track. | `Forms/Slider` | `slider.tsx` |
+| stat | One labelled number with an optional one-line explanation, in a flat bordered tile. Tone colours the icon only. | `Display/Stat` | `stat.tsx` |
 | switch | A toggle control for binary on/off choices, with a visual switch and a labeled switch-item row. | `Forms/Switch` | `switch.tsx` |
 | textarea | A multi-line text input for free-form prose. | `Forms/Textarea` | `textarea.tsx` |
 

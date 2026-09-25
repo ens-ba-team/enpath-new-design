@@ -351,6 +351,53 @@
         "$type": "color"
       }
     },
+    "violet": {
+      "$description": "Violet ramp — Tailwind violet values. Added 2026-09-25 for Career vision lines and rings on the Career Map (the employee's own draft path). Kept clearly more purple than brand (OKLCH hue ~293 vs 264) so it never reads as the brand selection colour. No status meaning.",
+      "50": {
+        "$value": "#FCFAFF",
+        "$type": "color"
+      },
+      "100": {
+        "$value": "#F6F0FF",
+        "$type": "color"
+      },
+      "200": {
+        "$value": "#EDE2FF",
+        "$type": "color"
+      },
+      "300": {
+        "$value": "#DFCFFE",
+        "$type": "color"
+      },
+      "400": {
+        "$value": "#C5A9F8",
+        "$type": "color"
+      },
+      "500": {
+        "$value": "#AA83F0",
+        "$type": "color"
+      },
+      "600": {
+        "$value": "#9063DD",
+        "$type": "color"
+      },
+      "700": {
+        "$value": "#7548C4",
+        "$type": "color"
+      },
+      "800": {
+        "$value": "#5C349F",
+        "$type": "color"
+      },
+      "900": {
+        "$value": "#422477",
+        "$type": "color"
+      },
+      "950": {
+        "$value": "#29164D",
+        "$type": "color"
+      }
+    },
     "chart": {
       "1": {
         "$value": "#e76e50",

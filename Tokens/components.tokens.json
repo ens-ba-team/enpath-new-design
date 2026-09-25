@@ -426,29 +426,34 @@
       "$description": "Intent:      Border of the Active target role card — a non-colour-text signal for the target\nUse when:    Outlining the CareerMapNode in state target\nDo not use:  Validation borders or containers outside Career Map\nUse instead: color/border/success for validated inputs\nStatus:      active"
     },
     "vision-border": {
-      "$value": "{color.zinc.500}",
+      "$value": "{color.violet.500}",
       "$type": "color",
-      "$description": "Intent:      Dashed border of a Career vision role card — the employee's own draft, not a company path\nUse when:    Outlining a CareerMapNode in state vision (dashed)\nDo not use:  Company-path cards, dividers or borders outside Career Map\nUse instead: career-map/node-border for company-path cards\nStatus:      active"
+      "$description": "Intent:      Dashed border of a Career vision card — the employee's own draft path, not a company path\nUse when:    Outlining a CareerMapNode in state vision (dashed)\nDo not use:  Company-path cards, dividers or borders outside Career Map\nUse instead: career-map/node-border for company-path cards\nStatus:      active"
     },
     "vision-edge": {
-      "$value": "{color.zinc.500}",
+      "$value": "{color.violet.600}",
       "$type": "color",
-      "$description": "Intent:      Dashed connection line of a Career vision on the Career Map\nUse when:    Drawing links whose kind is vision in CareerMap\nDo not use:  Company-path connections or lines outside Career Map\nUse instead: career-map/path-1..3 for company paths\nStatus:      active"
+      "$description": "Intent:      Dashed line of a Career vision, and the ring on its cards when the vision is highlighted\nUse when:    Drawing links on a vision route in CareerMap; ringing that route's cards when it's selected\nDo not use:  Company-path lines, the card selection ring, or anything outside Career Map\nUse instead: career-map/followed-edge or career-map/path-1..3 for company paths, career-map/node-selected for a selected card\nStatus:      active"
+    },
+    "followed-edge": {
+      "$value": "{color.green.600}",
+      "$type": "color",
+      "$description": "Intent:      Line of the company path the employee follows (their main route), and the ring on its cards when that path is highlighted\nUse when:    Drawing links on the route marked followed in CareerMap\nDo not use:  Other company paths, success messages, or anything outside Career Map\nUse instead: career-map/path-1..3 for other company paths, color/border/success for validation\nStatus:      active"
     },
     "path-1": {
       "$value": "{color.chart.3}",
       "$type": "color",
-      "$description": "Intent:      Connection colour for the first named company Career Path on the map (categorical, like a chart series)\nUse when:    Drawing links and the legend swatch for the path assigned colour 1 in CareerMap\nDo not use:  UI status, brand, or any element outside Career Map\nUse instead: career-map/vision-edge for the employee's own draft\nStatus:      active"
+      "$description": "Intent:      Line colour (and highlight ring) for the first named company Career Path on the map — used when it isn't the followed path (categorical, like a chart series)\nUse when:    Drawing links and the legend swatch for the path assigned colour 1 in CareerMap\nDo not use:  UI status, brand, or any element outside Career Map\nUse instead: career-map/vision-edge for the employee's own draft\nStatus:      active"
     },
     "path-2": {
       "$value": "{color.chart.2}",
       "$type": "color",
-      "$description": "Intent:      Connection colour for the second named company Career Path on the map (categorical)\nUse when:    Drawing links and the legend swatch for the path assigned colour 2 in CareerMap\nDo not use:  UI status, brand, or any element outside Career Map\nUse instead: career-map/path-1 for the first path\nStatus:      active"
+      "$description": "Intent:      Line colour (and highlight ring) for the second named company Career Path on the map (categorical)\nUse when:    Drawing links and the legend swatch for the path assigned colour 2 in CareerMap\nDo not use:  UI status, brand, or any element outside Career Map\nUse instead: career-map/path-1 for the first path\nStatus:      active"
     },
     "path-3": {
       "$value": "{color.chart.1}",
       "$type": "color",
-      "$description": "Intent:      Connection colour for the third named company Career Path on the map (categorical)\nUse when:    Drawing links and the legend swatch for the path assigned colour 3 in CareerMap\nDo not use:  UI status, brand, or any element outside Career Map\nUse instead: career-map/path-1 for the first path\nStatus:      active"
+      "$description": "Intent:      Line colour (and highlight ring) for the third named company Career Path on the map (categorical)\nUse when:    Drawing links and the legend swatch for the path assigned colour 3 in CareerMap\nDo not use:  UI status, brand, or any element outside Career Map\nUse instead: career-map/path-1 for the first path\nStatus:      active"
     },
     "node-radius": {
       "$value": "{radius.surface}",

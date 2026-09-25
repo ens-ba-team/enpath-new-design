@@ -55,6 +55,7 @@ Per-component pipeline status for **Enpath**. Update after completing each phase
 | sidebar | ⚠️ | ✅ 4 stories | ❌ | |
 | skeleton | ⚠️ | ✅ 7 stories | ❌ | |
 | slider | ⚠️ | ✅ 6 stories | ❌ | |
+| stat | ✅ | ✅ 4 stories | ❌ | added 2026-09-25; used on My Career, page checked in browser |
 | switch | ⚠️ | ✅ 13 stories | ❌ | |
 | table | ⚠️ | ✅ 5 stories | ❌ | |
 | tabs | ⚠️ | ✅ 8 stories | ❌ | |

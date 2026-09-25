@@ -1,0 +1,248 @@
+{
+  "name": "stat",
+  "type": "component",
+  "description": "One labelled number with an optional one-line explanation, in a flat bordered tile. Tone colours the icon only.",
+  "category": "display",
+  "shadcnBase": "custom",
+  "primitiveBase": "none",
+  "variants": {
+    "tone": {
+      "type": "enum",
+      "values": [
+        "neutral",
+        "success",
+        "warning"
+      ],
+      "default": "neutral",
+      "reactProp": "tone"
+    }
+  },
+  "componentProperties": {
+    "label": {
+      "type": "SLOT",
+      "default": null,
+      "reactProp": "label"
+    },
+    "value": {
+      "type": "SLOT",
+      "default": null,
+      "reactProp": "value"
+    },
+    "description": {
+      "type": "SLOT",
+      "default": null,
+      "reactProp": "description"
+    },
+    "icon": {
+      "type": "SLOT",
+      "default": null,
+      "reactProp": "icon"
+    }
+  },
+  "tokens": {
+    "tile": {
+      "fill": "color/surface/default",
+      "stroke": "color/border/default",
+      "strokeWeight": 1,
+      "radius": "radius/surface",
+      "padding": "spacing/component/md",
+      "gap": "spacing/component/xs"
+    },
+    "label": {
+      "foreground": "color/text/secondary",
+      "iconGap": "spacing/component/xs"
+    },
+    "value": {
+      "foreground": "color/surface/default/foreground"
+    },
+    "description": {
+      "foreground": "color/text/secondary"
+    },
+    "icon": {
+      "neutral": "color/icon/muted",
+      "success": "color/icon/success",
+      "warning": "color/icon/warning"
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Reading order",
+        "value": "Label, then value, then description — a screen reader hears \"Ready, 2, You meet the expectation\"."
+      },
+      {
+        "property": "Colour",
+        "value": "Tone colours the decorative icon only; the label always names the meaning, so colour is never the only signal."
+      },
+      {
+        "property": "Icon",
+        "value": "Decorative (aria-hidden). Don't put meaning in the icon that the label doesn't say."
+      },
+      {
+        "property": "Contrast",
+        "value": "All text uses neutral text tokens on a white surface (AA)."
+      }
+    ]
+  },
+  "constraints": [
+    "Use for a small set of counts or totals shown side by side (2–4 tiles).",
+    "Keep the label short and the description to one line — it explains the number, not the feature.",
+    "Use tone only when the number has a clear meaning (success = good to go, warning = needs attention); otherwise neutral.",
+    "Never colour the value or label text — tone reaches the icon only.",
+    "Place tiles in a grid; the tile fills its cell."
+  ],
+  "doNot": [
+    {
+      "wrong": "Show a percentage built from missing data (e.g. readiness 0% when nothing is assessed)",
+      "correct": "Show the counts behind it, including the ones that can't be judged yet"
+    },
+    {
+      "wrong": "Colour the number red or amber",
+      "correct": "Use tone on the icon and let the label name the state"
+    },
+    {
+      "wrong": "Put actions or links inside the tile",
+      "correct": "Keep tiles read-only; put actions next to the group"
+    }
+  ],
+  "relationships": {
+    "subComponents": [],
+    "usedBy": [
+      "my-career-screen"
+    ],
+    "relatedComponents": [
+      {
+        "name": "card",
+        "reason": "Card is a general container; Stat is one number with a label."
+      },
+      {
+        "name": "badge",
+        "reason": "Badge labels a state inline; Stat shows a count."
+      }
+    ],
+    "mustBeChildOf": [],
+    "mustNotBeChildOf": [],
+    "composedWith": [],
+    "requires": [],
+    "triggers": [],
+    "blocksWhen": [],
+    "exposesState": []
+  },
+  "meta": {
+    "storyFile": "src/stories/Stat.stories.tsx",
+    "artifactStatus": "needs review",
+    "version": "1.0",
+    "openQuestions": [],
+    "notes": [
+      "No warning-coloured text token exists for white surfaces, so tone is carried by the icon (color/icon/*)."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-25",
+        "change": "Created Stat for the My Career progress board.",
+        "breaking": false
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/stat.tsx",
+    "packageDeps": [],
+    "exports": [
+      "Stat",
+      "StatProps",
+      "StatTone"
+    ],
+    "notes": [
+      "Extends native div attributes."
+    ]
+  },
+  "links": {
+    "shadcn": null,
+    "radix": null,
+    "storybook": "http://localhost:6006/?path=/docs/display-stat--docs"
+  },
+  "storybook": {
+    "file": "src/stories/Stat.stories.tsx",
+    "title": "Display/Stat",
+    "stories": [
+      "Default",
+      "Tones",
+      "WithoutDescription",
+      "LongContent"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": "Verify at 390px and 1280px."
+  },
+  "docs": {
+    "intro": "# Stat\n\nOne labelled number with an optional one-line explanation, in a flat bordered tile. Tone colours the icon only.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Structure",
+        "body": "\n```\nStat — tile; vertical stack, gap spacing/component/xs, padding spacing/component/md\n├─ label — optional icon (tone colour) + text\n├─ value — the number\n└─ description — optional one line\n```\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n| Frame | Property | Token |\n|---|---|---|\n| Tile | Fill | `color/surface/default` |\n| Tile | Border | `color/border/default` |\n| Tile | Radius | `radius/surface` |\n| Tile | Padding | `spacing/component/md` |\n| Tile | Gap | `spacing/component/xs` |\n| Label | Text | `color/text/secondary` |\n| Label | Icon gap | `spacing/component/xs` |\n| Icon — neutral | Fill | `color/icon/muted` |\n| Icon — success | Fill | `color/icon/success` |\n| Icon — warning | Fill | `color/icon/warning` |\n| Value | Text | `color/surface/default/foreground` |\n| Description | Text | `color/text/secondary` |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      }
+    ]
+  }
+}
