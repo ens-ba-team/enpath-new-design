@@ -24,27 +24,28 @@ import { Tip } from '../tip';
 import { CareerChat } from './career-chat';
 import {
   buildMap, companyPaths, describeStep, employee, initialPlan, matchingPaths, removeBranch, removeVision,
-  visionNumbers, visionRoute, visionRouteId, type Branch, type Plan, type VisionRequest,
+  visionNumbers, visionRoute, visionRouteId, type Branch, type GapStatus, type Plan, type VisionRequest,
 } from './mock-data';
-import { ProgressBoard, RoutePanel, stateName, StepPanel } from './my-career-panels';
-import { ExploreRoleDialog, levelName, SetTargetDialog, SwitchPathDialog, VisionRequestDialog, type StartOption } from './plan-dialogs';
+import { NoTargetStrip, ProgressBoard, RoutePanel, stateName, StepPanel } from './my-career-panels';
+import { ExplorePositionDialog, levelName, RemoveTargetDialog, SetTargetDialog, SwitchPathDialog, VisionRequestDialog, type StartOption } from './plan-dialogs';
 
 function Placeholder({ children }: { children: React.ReactNode }) {
   return <p className="p-[var(--spacing-layout-sm)] text-sm text-[var(--color-text-secondary)]">{children}</p>;
 }
 
 type Selection = { kind: 'card'; id: string } | { kind: 'route'; id: string };
-type DialogName = 'target' | 'request' | 'add' | 'remove' | 'switch' | null;
+type DialogName = 'target' | 'untarget' | 'request' | 'add' | 'remove' | 'switch' | 'unfollow' | null;
 
 export function MyCareerScreen() {
   const [page, setPage] = React.useState('My Career');
   const [plan, setPlan] = React.useState<Plan>(initialPlan);
   const [request, setRequest] = React.useState<VisionRequest | null>(null);
   const [notes, setNotes] = React.useState<Record<number, string>>({});
-  const [sel, setSel] = React.useState<Selection>({ kind: 'card', id: initialPlan.targetId });
+  const [sel, setSel] = React.useState<Selection>({ kind: 'card', id: initialPlan.targetId ?? employee.levelId });
   const [dialog, setDialog] = React.useState<DialogName>(null);
   const [switchTo, setSwitchTo] = React.useState('');
   const [chatOpen, setChatOpen] = React.useState(false);
+  const [focusGroup, setFocusGroup] = React.useState<{ group: GapStatus; n: number } | undefined>();
   useChatShortcut(React.useCallback(() => setChatOpen((o) => !o), []));
 
   const { steps, links } = React.useMemo(() => buildMap(plan), [plan]);
@@ -88,6 +89,20 @@ export function MyCareerScreen() {
     return { next, gone, blocked };
   }, [plan, step, steps, request, visionOfRoute]);
 
+  // Stop following the core path: its cards leave the map (and anything added from them).
+  const unfollow = React.useMemo(() => {
+    if (!plan.followedPathId) return null;
+    const next = { ...plan, followedPathId: null };
+    const left = new Set(buildMap(next).steps.map((s) => s.id));
+    const gone = steps.filter((s) => !left.has(s.id));
+    const blocked = gone.some((s) => s.id === plan.targetId)
+      ? 'Your Active target is on this path — remove it or pick another target first.'
+      : request?.status === 'waiting' && !visionNumbers(next).includes(request.vision)
+        ? `Career vision ${request.vision} starts on this path and is waiting for ${employee.manager} — withdraw it first.`
+        : undefined;
+    return { next, gone, blocked };
+  }, [plan, steps, request]);
+
   const commit = (next: Plan, message: string) => {
     setPlan(next);
     if (request && !visionNumbers(next).includes(request.vision)) setRequest(null);
@@ -98,6 +113,7 @@ export function MyCareerScreen() {
   const switchPreview = React.useMemo(() => {
     if (!switchTo) return null;
     const next = { ...plan, followedPathId: switchTo };
+    if (!plan.targetId) return { next, note: 'You have no target yet — pick one on the path when you’re ready.' };
     if (buildMap(next).steps.some((s) => s.id === plan.targetId)) return { next, note: undefined };
     const path = companyPaths.find((p) => p.id === switchTo)!;
     const newTarget = path.levels[path.levels.indexOf(employee.levelId) + 1] ?? employee.levelId;
@@ -107,7 +123,7 @@ export function MyCareerScreen() {
   const follow = (pathId: string) => { if (pathId !== plan.followedPathId) { setSwitchTo(pathId); setDialog('switch'); } };
   const selectCard = (id: string) => setSel({ kind: 'card', id });
   const selectRoute = (id: string) => setSel((s) => (s.kind === 'route' && s.id === id ? { kind: 'card', id: current.id } : { kind: 'route', id }));
-  const addStep = (branch: Branch, message: string) => { commit({ ...plan, branches: [...plan.branches, branch] }, message); selectCard(branch.to); };
+  const addBranches = (added: Branch[], message: string, select: string) => { commit({ ...plan, branches: [...plan.branches, ...added] }, message); selectCard(select); };
   // From the AI chat: the suggested roles become a new Career vision, then it's highlighted.
   const addVisionFromChat = (from: string, ids: string[]) => {
     const onMap = new Set(steps.map((s) => s.id));
@@ -153,7 +169,7 @@ export function MyCareerScreen() {
               </Tip>
             )}
           </header>
-          {target && <ProgressBoard target={target} plan={plan} request={request} />}
+          {target ? <ProgressBoard target={target} onOpenGroup={(group) => { selectCard(target.id); setFocusGroup((f) => ({ group, n: (f?.n ?? 0) + 1 })); }} /> : <NoTargetStrip />}
           <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
             <div className="flex min-h-[60dvh] flex-1 flex-col lg:min-h-0">
               <CareerMap
@@ -168,25 +184,26 @@ export function MyCareerScreen() {
                 className="flex-1"
                 toolbar={
                   <>
-                    {matchingPaths.length > 1 && (
-                      <Select value={plan.followedPathId} onValueChange={follow}>
-                        <SelectTrigger aria-label="Company path you follow" className="w-auto gap-[var(--spacing-component-xs)] bg-[var(--color-surface-default)]"><SelectValue /></SelectTrigger>
+                    {(matchingPaths.length > 1 || !plan.followedPathId) && (
+                      <Select value={plan.followedPathId ?? ''} onValueChange={follow}>
+                        <SelectTrigger aria-label="Company path you follow" className="w-auto gap-[var(--spacing-component-xs)] bg-[var(--color-surface-default)]"><SelectValue placeholder="Choose a company path" /></SelectTrigger>
                         <SelectContent>{matchingPaths.map((p) => <SelectItem key={p.id} value={p.id}>Following: {p.name}</SelectItem>)}</SelectContent>
                       </Select>
                     )}
                     <Button variant="outline" className="bg-[var(--color-surface-default)]" onClick={() => setDialog('add')}>
-                      <PlusIcon aria-hidden="true" />Explore a role
+                      <PlusIcon aria-hidden="true" />Explore a position
                     </Button>
                   </>
                 }
               />
               <CareerMapLegend paths={routes} selectedRoute={route?.id} onSelectRoute={selectRoute} className="border-t border-[var(--color-border-default)] px-[var(--spacing-layout-sm)] py-[var(--spacing-component-sm)]" />
             </div>
-            <aside aria-label={route ? 'Selected route' : 'Selected role'} className="flex shrink-0 flex-col border-t border-[var(--color-border-default)] lg:w-[320px] lg:overflow-y-auto lg:border-l lg:border-t-0">
+            <aside aria-label={route ? 'Selected route' : 'Selected role'} className="flex shrink-0 flex-col border-t border-[var(--color-border-default)] lg:w-[400px] lg:overflow-y-auto lg:border-l lg:border-t-0">
               {route ? (
-                <RoutePanel route={route} plan={plan} steps={steps} request={request} removeBlocked={removal?.blocked}
+                <RoutePanel route={route} plan={plan} steps={steps} request={request} removeBlocked={removal?.blocked} unfollowBlocked={unfollow?.blocked}
                   actions={{
                     onFollow: follow,
+                    onUnfollow: () => setDialog('unfollow'),
                     onRequest: () => setDialog('request'),
                     onWithdraw: () => { setRequest(null); toast(`Request withdrawn — Career vision ${visionOfRoute} is a draft again`); },
                     onRemoveVision: () => setDialog('remove'),
@@ -194,16 +211,19 @@ export function MyCareerScreen() {
                   }} />
               ) : (
                 <StepPanel step={actionStep} plan={plan} links={links} request={request} removable={!!removal} removeBlocked={removal?.blocked}
-                  actions={{ onSetTarget: () => setDialog('target'), onAdd: () => setDialog('add'), onRemove: () => setDialog('remove'), onShowRoute: selectRoute }} />
+                  focusGroup={actionStep.state === 'target' ? focusGroup : undefined}
+                  actions={{ onSetTarget: () => setDialog('target'), onRemoveTarget: () => setDialog('untarget'), onAdd: () => setDialog('add'), onRemove: () => setDialog('remove'), onShowRoute: selectRoute }} />
               )}
             </aside>
           </div>
         </div>
       )}
 
+      <SetTargetDialog open={dialog === 'target'} onOpenChange={(o) => !o && setDialog(null)} from={target ? levelName(target.id) : undefined} to={levelName(actionStep.id)}
+        onConfirm={() => commit({ ...plan, targetId: actionStep.id }, `${levelName(actionStep.id)} is your new target`)} />
       {target && (
-        <SetTargetDialog open={dialog === 'target'} onOpenChange={(o) => !o && setDialog(null)} from={levelName(target.id)} to={levelName(actionStep.id)}
-          onConfirm={() => commit({ ...plan, targetId: actionStep.id }, `${levelName(actionStep.id)} is your new target`)} />
+        <RemoveTargetDialog open={dialog === 'untarget'} onOpenChange={(o) => !o && setDialog(null)} target={levelName(target.id)}
+          onConfirm={() => commit({ ...plan, targetId: null }, 'Target removed — pick another any time')} />
       )}
       {visionOfRoute !== undefined && (
         <VisionRequestDialog
@@ -221,7 +241,7 @@ export function MyCareerScreen() {
           }}
         />
       )}
-      <ExploreRoleDialog
+      <ExplorePositionDialog
         open={dialog === 'add'}
         onOpenChange={(o) => !o && setDialog(null)}
         starts={starts}
@@ -229,7 +249,7 @@ export function MyCareerScreen() {
         nextVision={(visions.at(-1) ?? 0) + 1}
         onMap={new Set(steps.map((s) => s.id))}
         manager={employee.manager}
-        onAdd={addStep}
+        onAdd={addBranches}
       />
       {removal && (
         <AlertDialog open={dialog === 'remove'} onOpenChange={(o) => !o && setDialog(null)}>
@@ -254,11 +274,29 @@ export function MyCareerScreen() {
           </AlertDialogContent>
         </AlertDialog>
       )}
+      {unfollow && (
+        <AlertDialog open={dialog === 'unfollow'} onOpenChange={(o) => !o && setDialog(null)}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Stop following {companyPaths.find((p) => p.id === plan.followedPathId)?.name}?</AlertDialogTitle>
+              <AlertDialogDescription>Your top row will show only your current role. These cards leave your map:</AlertDialogDescription>
+            </AlertDialogHeader>
+            <ul className="list-disc pl-[var(--spacing-component-lg)] text-sm text-[var(--color-background-default-foreground)]">
+              {unfollow.gone.map((s) => <li key={s.id}>{levelName(s.id)} · {stateName(s)}</li>)}
+            </ul>
+            <p className="text-sm text-[var(--color-text-secondary)]">You can follow a company path again any time from the map.</p>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={() => { selectCard(current.id); commit(unfollow.next, 'You no longer follow a company path'); }}>Stop following</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
       {switchPreview && (
         <SwitchPathDialog
           open={dialog === 'switch'}
           onOpenChange={(o) => { if (!o) { setDialog(null); setSwitchTo(''); } }}
-          from={companyPaths.find((p) => p.id === plan.followedPathId)!.name}
+          from={companyPaths.find((p) => p.id === plan.followedPathId)?.name}
           to={companyPaths.find((p) => p.id === switchTo)!.name}
           targetNote={switchPreview.note}
           onConfirm={() => { commit(switchPreview.next, `You now follow ${companyPaths.find((p) => p.id === switchTo)!.name}`); setSwitchTo(''); }}

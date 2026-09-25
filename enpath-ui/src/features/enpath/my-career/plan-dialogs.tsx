@@ -2,7 +2,7 @@
 // My Career plan changes — every one is Preview → Confirm (PRD-020 RQ-10).
 // SetTargetDialog: the employee changes their Active target (no approval — it's personal).
 // VisionRequestDialog: the employee sends one Career vision to their manager.
-// ExploreRoleDialog: add a role; the dialog says whether it's a company-path step or a Career vision.
+// ExplorePositionDialog: add a position's ladder; the dialog says whether it's company-path steps or a Career vision.
 // SwitchPathDialog: follow a different company path planned for the employee's role.
 
 import * as React from 'react';
@@ -15,10 +15,10 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { initialPositions, levelLabel } from '../mock-data';
-import { classifyMove, positionOfLevel, type Branch } from './mock-data';
+import { levelLabel } from '../mock-data';
+import { ladderMove, positionOfLevel, publishedPositions, type Branch } from './mock-data';
 
 /** "Backend Engineer L3 · Senior" for a level id */
 export function levelName(levelId: string) {
@@ -39,8 +39,8 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
 export function SetTargetDialog({ open, onOpenChange, from, to, onConfirm }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  /** Current target, e.g. "Backend Engineer L3 · Senior" */
-  from: string;
+  /** Current target, e.g. "Backend Engineer L3 · Senior" — omitted when there is none */
+  from?: string;
   /** New target */
   to: string;
   onConfirm: () => void;
@@ -50,14 +50,14 @@ export function SetTargetDialog({ open, onOpenChange, from, to, onConfirm }: {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Make this your target?</AlertDialogTitle>
-          <AlertDialogDescription>Your progress board will track the new role instead.</AlertDialogDescription>
+          <AlertDialogDescription>Your progress strip will track the new role instead.</AlertDialogDescription>
         </AlertDialogHeader>
         <dl>
-          <Row label="From">{from}</Row>
+          <Row label="From">{from ?? 'No target yet'}</Row>
           <Row label="To">{to}</Row>
         </dl>
         <p className="text-sm text-[var(--color-text-secondary)]">
-          {from} stays on your map as Planned. Your official role doesn’t change — a target is your own goal, not a promotion or transfer.
+          {from ? `${from} stays on your map as Planned. ` : ''}Your official role doesn’t change — a target is your own goal, not a promotion or transfer.
         </p>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
@@ -121,10 +121,37 @@ function VisionRequestForm({ visionName, route, manager, initialNote, onSend, on
   );
 }
 
-// ─── Explore a role ──────────────────────────────────────────────────────────
-// One question — where to? — and the dialog says what the move becomes. A move on a company path
-// planned for the employee's role is a Planned step (no approval); anything else is a Career
-// vision (private until sent; the manager approves it before it can be the target).
+export function RemoveTargetDialog({ open, onOpenChange, target, onConfirm }: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  /** "Backend Engineer L3 · Senior" */
+  target: string;
+  onConfirm: () => void;
+}) {
+  return (
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Remove your target?</AlertDialogTitle>
+          <AlertDialogDescription>{target} stays on your map — you just stop tracking progress toward it.</AlertDialogDescription>
+        </AlertDialogHeader>
+        <p className="text-sm text-[var(--color-text-secondary)]">
+          Your progress strip stays empty until you choose another target. You can set it again any time.
+        </p>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={onConfirm}>Remove target</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
+// ─── Explore a position ──────────────────────────────────────────────────────
+// Pick where to start and a Position; its whole ladder from the "Join at" level is laid out on its
+// own row. The dialog says what it becomes: Planned steps when it's on a company path planned for the
+// employee's role (no approval), otherwise a Career vision (private until sent; the manager approves
+// it before any role in it can be the target).
 
 export interface StartOption {
   id: string;
@@ -134,7 +161,7 @@ export interface StartOption {
   vision?: number;
 }
 
-export function ExploreRoleDialog({ open, onOpenChange, starts, defaultFrom, nextVision, onMap, manager, onAdd }: {
+export function ExplorePositionDialog({ open, onOpenChange, starts, defaultFrom, nextVision, onMap, manager, onAdd }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   /** Cards a move can start from, in map order */
@@ -145,92 +172,99 @@ export function ExploreRoleDialog({ open, onOpenChange, starts, defaultFrom, nex
   /** Level ids already on the map — a role can appear only once */
   onMap: Set<string>;
   manager: string;
-  onAdd: (branch: Branch, message: string) => void;
+  onAdd: (branches: Branch[], message: string, select: string) => void;
 }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[560px]">
-        <ExploreRoleForm starts={starts} defaultFrom={defaultFrom} nextVision={nextVision} onMap={onMap} manager={manager} onAdd={onAdd} onCancel={() => onOpenChange(false)} />
+        <ExplorePositionForm starts={starts} defaultFrom={defaultFrom} nextVision={nextVision} onMap={onMap} manager={manager} onAdd={onAdd} onCancel={() => onOpenChange(false)} />
       </DialogContent>
     </Dialog>
   );
 }
 
-function ExploreRoleForm({ starts, defaultFrom, nextVision, onMap, manager, onAdd, onCancel }: {
+function ExplorePositionForm({ starts, defaultFrom, nextVision, onMap, manager, onAdd, onCancel }: {
   starts: StartOption[]; defaultFrom: string; nextVision: number; onMap: Set<string>; manager: string;
-  onAdd: (branch: Branch, message: string) => void; onCancel: () => void;
+  onAdd: (branches: Branch[], message: string, select: string) => void; onCancel: () => void;
 }) {
   const [from, setFrom] = React.useState(defaultFrom);
   const [positionId, setPositionId] = React.useState('');
-  const [levelId, setLevelId] = React.useState('');
+  // The level the person picked; until they pick one, "Join at" shows the default for the position.
+  const [pickedEntry, setPickedEntry] = React.useState('');
   const [tried, setTried] = React.useState(false);
 
-  const position = initialPositions.find((p) => p.id === positionId);
+  const position = publishedPositions.find((p) => p.id === positionId);
   const start = starts.find((s) => s.id === from);
-  const error = !levelId ? 'Choose a position and level.' : onMap.has(levelId) ? `${levelName(levelId)} is already on your map.` : '';
-  const move = levelId ? classifyMove(from, levelId) : null;
   const vision = start?.vision ?? nextVision;
+  // Default "Join at": the next level up in your own position, otherwise the position's first level.
+  const defaultEntry = (p: typeof position, fromId: string) => {
+    if (!p) return '';
+    const here = p.levels.findIndex((l) => l.id === fromId);
+    return (here >= 0 ? p.levels[here + 1] : p.levels[0])?.id ?? p.levels[0].id;
+  };
+  const entry = pickedEntry || defaultEntry(position, from);
+  const ladder = position && entry ? position.levels.slice(position.levels.findIndex((l) => l.id === entry)).map((l) => l.id).filter((id) => !onMap.has(id)) : [];
+  const move = ladderMove(from, ladder, vision);
+  const error = !position ? 'Choose a position.' : !entry ? 'Choose where to join.' : !move ? `${position.name} from ${levelName(entry)} is already on your map.` : '';
+  const departments = [...new Set(publishedPositions.map((p) => p.department))];
 
   const submit = () => {
     setTried(true);
     if (error || !move) return;
-    if (move.kind === 'path') onAdd({ kind: 'path', pathId: move.path.id, from, to: levelId }, `${levelName(levelId)} added as a planned step`);
-    else onAdd({ kind: 'vision', vision, from, to: levelId }, `${levelName(levelId)} added to Career vision ${vision}`);
+    const last = move.levels[move.levels.length - 1];
+    onAdd(move.branches, move.path ? `${position!.name} added as planned steps` : `${position!.name} added to Career vision ${vision}`, last);
   };
 
   return (
     <>
       <DialogHeader>
-        <DialogTitle>Explore a role</DialogTitle>
-        <DialogDescription>Add a role to your map to see what it would need. It doesn’t change your current role.</DialogDescription>
+        <DialogTitle>Explore a position</DialogTitle>
+        <DialogDescription>See the path from where you are to another position, and what each level would need. It doesn’t change your current role.</DialogDescription>
       </DialogHeader>
       <form className="flex flex-col gap-[var(--spacing-component-lg)]" onSubmit={(e) => { e.preventDefault(); submit(); }} noValidate>
         <div className="flex flex-col gap-[var(--spacing-component-xs)]">
           <Label htmlFor="explore-from">Starting from</Label>
-          <Select value={from} onValueChange={setFrom}>
+          <Select value={from} onValueChange={(v) => { setFrom(v); setPickedEntry(''); }}>
             <SelectTrigger id="explore-from"><SelectValue /></SelectTrigger>
             <SelectContent>{starts.map((s) => <SelectItem key={s.id} value={s.id}>{s.label} · {levelName(s.id)}</SelectItem>)}</SelectContent>
           </Select>
         </div>
 
-        <fieldset className="flex flex-col gap-[var(--spacing-component-xs)]">
-          <legend className="mb-[var(--spacing-component-xs)] text-sm font-semibold text-[var(--color-background-default-foreground)]">Where to?</legend>
-          <div className="grid grid-cols-1 gap-[var(--spacing-component-md)] sm:grid-cols-2">
-            <div className="flex flex-col gap-[var(--spacing-component-xs)]">
-              <Label htmlFor="explore-position">Position</Label>
-              <Select value={positionId} onValueChange={(v) => { setPositionId(v); setLevelId(''); }}>
-                <SelectTrigger id="explore-position" aria-invalid={(tried && !positionId) || undefined}><SelectValue placeholder="Choose a position" /></SelectTrigger>
-                <SelectContent>{initialPositions.map((p) => <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>)}</SelectContent>
-              </Select>
-            </div>
-            <div className="flex flex-col gap-[var(--spacing-component-xs)]">
-              <Label htmlFor="explore-level">Level</Label>
-              <Select value={levelId} onValueChange={setLevelId} disabled={!position}>
-                <SelectTrigger id="explore-level" aria-invalid={(tried && !!error) || undefined}><SelectValue placeholder="Choose a level" /></SelectTrigger>
-                <SelectContent>{position?.levels.map((l) => <SelectItem key={l.id} value={l.id}>{levelLabel(position.levels, l)}</SelectItem>)}</SelectContent>
-              </Select>
-            </div>
+        <div className="grid grid-cols-1 gap-[var(--spacing-component-md)] sm:grid-cols-2">
+          <div className="flex flex-col gap-[var(--spacing-component-xs)]">
+            <Label htmlFor="explore-position">Position</Label>
+            <Select value={positionId} onValueChange={(v) => { setPositionId(v); setPickedEntry(''); }}>
+              <SelectTrigger id="explore-position" aria-invalid={(tried && !positionId) || undefined}><SelectValue placeholder="Choose a position" /></SelectTrigger>
+              <SelectContent>
+                {departments.map((dept) => (
+                  <SelectGroup key={dept}>
+                    <SelectLabel>{dept}</SelectLabel>
+                    {publishedPositions.filter((p) => p.department === dept).map((p) => <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>)}
+                  </SelectGroup>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
-        </fieldset>
+          <div className="flex flex-col gap-[var(--spacing-component-xs)]">
+            <Label htmlFor="explore-entry">Join at</Label>
+            <Select value={entry} onValueChange={(v) => v && setPickedEntry(v)} disabled={!position}>
+              <SelectTrigger id="explore-entry" aria-invalid={(tried && !!error && !!position) || undefined}><SelectValue placeholder="Choose a level" /></SelectTrigger>
+              <SelectContent>{position?.levels.map((l) => <SelectItem key={l.id} value={l.id}>{levelLabel(position.levels, l)}</SelectItem>)}</SelectContent>
+            </Select>
+          </div>
+        </div>
 
         {tried && error && <p role="alert" className="text-sm text-[var(--color-text-invalid)]">{error}</p>}
 
-        {move && !error && (
-          <Alert variant={move.kind === 'path' ? 'success' : 'info'} role="status">
-            {move.kind === 'path' ? <CheckCircleIcon aria-hidden="true" /> : <CompassIcon aria-hidden="true" />}
-            {move.kind === 'path' ? (
-              <>
-                <AlertTitle>{levelName(levelId)} is on your company path, {move.path.name}</AlertTitle>
-                <AlertDescription>It’s added as a planned step. No approval needed — you can make it your target any time.</AlertDescription>
-              </>
-            ) : (
-              <>
-                <AlertTitle>{levelName(levelId)} isn’t on a company path for your role</AlertTitle>
-                <AlertDescription>
-                  It {start?.vision ? `joins Career vision ${vision}` : `becomes Career vision ${vision}`}. Only you see it until you send it to {manager}, who approves it before it can be your target.
-                </AlertDescription>
-              </>
-            )}
+        {move && (
+          <Alert variant={move.path ? 'success' : 'info'} role="status">
+            {move.path ? <CheckCircleIcon aria-hidden="true" /> : <CompassIcon aria-hidden="true" />}
+            <AlertTitle>{[from, ...move.levels].map(levelName).join(' → ')}</AlertTitle>
+            <AlertDescription>
+              {move.path
+                ? `On your company path, ${move.path.name}. Added as planned steps — no approval needed.`
+                : `Not on a company path for your role, so it ${start?.vision ? `joins Career vision ${vision}` : `becomes Career vision ${vision}`}. Only you see it until you send it to ${manager}, who approves it before any role in it can be your target.`}
+            </AlertDescription>
           </Alert>
         )}
 
@@ -248,7 +282,8 @@ function ExploreRoleForm({ starts, defaultFrom, nextVision, onMap, manager, onAd
 export function SwitchPathDialog({ open, onOpenChange, from, to, targetNote, onConfirm }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  from: string;
+  /** The path followed now — omitted when none */
+  from?: string;
   to: string;
   /** Set when the Active target isn't on the new path and will move */
   targetNote?: string;
@@ -258,11 +293,11 @@ export function SwitchPathDialog({ open, onOpenChange, from, to, targetNote, onC
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Follow a different company path?</AlertDialogTitle>
+          <AlertDialogTitle>{from ? 'Follow a different company path?' : `Follow ${to}?`}</AlertDialogTitle>
           <AlertDialogDescription>Your map shows the path you follow from your current role.</AlertDialogDescription>
         </AlertDialogHeader>
         <dl>
-          <Row label="From">{from}</Row>
+          <Row label="From">{from ?? 'No company path'}</Row>
           <Row label="To">{to}</Row>
         </dl>
         <p className="text-sm text-[var(--color-text-secondary)]">

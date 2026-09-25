@@ -24,6 +24,11 @@ const buttonVariants = cva(
           "bg-[var(--button-secondary-bg-bg)] text-[var(--button-secondary-fg-fg)] hover:bg-[var(--button-secondary-bg-hover)] active:bg-[var(--button-secondary-bg-active)]",
         ghost:
           "bg-transparent text-[var(--button-ghost-fg-fg)] hover:bg-[var(--button-ghost-bg-hover)] active:bg-[var(--button-ghost-bg-active)]",
+        // Secondary removal that is reversible or confirmed by a preview (e.g. "Remove as target").
+        // Red text, no fill; light danger tint on hover; same red focus glow as destructive.
+        // Final "Remove" inside a confirmation, or anything irreversible, stays on destructive.
+        "ghost-destructive":
+          "bg-transparent text-[var(--color-text-invalid)] hover:bg-[var(--color-status-danger-subtle)] hover:text-[var(--color-status-danger-subtle-foreground)] active:bg-[var(--color-status-danger-subtle)] focus-visible:ring-0 focus-visible:[box-shadow:0_0_0_3px_color-mix(in_srgb,var(--color-brand-destructive)_40%,transparent)]",
         link:
           "text-[var(--button-link-fg-default)] underline-offset-4 hover:underline hover:text-[var(--button-link-fg-hover)] active:text-[var(--button-link-fg-active)] disabled:text-[var(--button-link-fg-disabled)]",
       },

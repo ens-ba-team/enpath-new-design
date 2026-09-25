@@ -397,18 +397,16 @@ export function CareerMapLegend({ paths, selectedRoute, onSelectRoute, className
         return (
           <li key={p.id}>
             {onSelectRoute ? (
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                size="xs"
                 aria-pressed={p.id === selectedRoute}
                 onClick={() => onSelectRoute(p.id)}
-                className={cn(
-                  "inline-flex min-h-[var(--height-control-touch-sm)] items-center gap-[var(--spacing-component-sm)] rounded-[var(--radius-control)] px-[var(--spacing-component-xs)] hover:bg-[var(--color-background-accent)] focus-visible:outline-2 focus-visible:outline-[var(--color-border-focus)] sm:min-h-[var(--height-control-sm)]",
-                  p.id === selectedRoute && "font-semibold text-[var(--color-background-default-foreground)]"
-                )}
+                className={cn("font-normal text-[var(--color-text-secondary)]", p.id === selectedRoute && "bg-[var(--button-ghost-bg-hover)] font-semibold text-[var(--color-background-default-foreground)]")}
               >
                 {swatch}
                 {p.name}
-              </button>
+              </Button>
             ) : (
               <span className="inline-flex items-center gap-[var(--spacing-component-sm)]">{swatch}{p.name}</span>
             )}

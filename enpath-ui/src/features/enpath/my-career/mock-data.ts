@@ -17,12 +17,19 @@ export interface CompanyPath extends CareerMapPath {
   levels: string[];
 }
 
-/** Published company Career Paths (colour = career-map/path-N). */
-export const companyPaths: CompanyPath[] = [
+/** Positions employees can see — Published in Setup (my career.md #16). */
+export const publishedPositions = initialPositions.filter((p) => p.status === 'Published');
+const isPublishedLevel = (levelId: string) => publishedPositions.some((p) => p.levels.some((l) => l.id === levelId));
+
+/** Company Career Paths (colour = career-map/path-N). Employees only see a path when every
+ *  position on it is published. */
+const allCompanyPaths: CompanyPath[] = [
   { id: 'engineering-growth', name: 'Engineering growth', color: 1, levels: ['BE-L1', 'BE-L2', 'BE-L3', 'BE-L4'] },
   { id: 'engineering-to-product', name: 'Engineering to product', color: 2, levels: ['BE-L2', 'BE-L3', 'PM-L2', 'PM-L3'] },
   { id: 'design-craft', name: 'Design craft', color: 3, levels: ['PD-L1', 'PD-L2', 'PD-L3'] },
 ];
+
+export const companyPaths = allCompanyPaths.filter((p) => p.levels.every(isPublishedLevel));
 
 /** Company paths planned for the employee's current role — the ones they can follow. */
 export const matchingPaths = companyPaths.filter((p) => p.levels.includes(employee.levelId));
@@ -41,9 +48,27 @@ export function classifyMove(from: string, to: string): { kind: 'path'; path: Co
   return path ? { kind: 'path', path } : { kind: 'vision' };
 }
 
+/** Explore a Position: its ladder from the entry level, as chained branches from a card. On a
+ *  company path planned for Lan's role it's Planned steps (as far as the path goes); anything else
+ *  is Career vision `vision`. `ladder` is the levels to add, in order, already minus ones on the map. */
+export function ladderMove(from: string, ladder: string[], vision: number) {
+  if (ladder.length === 0) return null;
+  const move = classifyMove(from, ladder[0]);
+  const levels = move.kind === 'path'
+    ? ladder.slice(0, ladder.findIndex((id) => !move.path.levels.includes(id)) === -1 ? ladder.length : ladder.findIndex((id) => !move.path.levels.includes(id)))
+    : ladder;
+  const branches: Branch[] = levels.map((to, i) => {
+    const prev = i === 0 ? from : levels[i - 1];
+    return move.kind === 'path' ? { kind: 'path', pathId: move.path.id, from: prev, to } : { kind: 'vision', vision, from: prev, to };
+  });
+  return { branches, levels, path: move.kind === 'path' ? move.path : undefined };
+}
+
 export interface Plan {
-  followedPathId: string;
-  targetId: string;
+  /** The company path the employee follows (the top row) — null when they stop following (my career.md #12) */
+  followedPathId: string | null;
+  /** The Active target — null when the employee has removed it (my career.md #13) */
+  targetId: string | null;
   branches: Branch[];
 }
 
@@ -121,7 +146,7 @@ export function buildMap(plan: Plan) {
       link({ from: b.from, to: b.to, route: visionRouteId(b.vision) });
     }
   });
-  const target = steps.get(plan.targetId);
+  const target = plan.targetId ? steps.get(plan.targetId) : undefined;
   if (target && target.state !== 'current' && target.state !== 'completed') target.state = 'target';
   return { steps: [...steps.values()], links };
 }
@@ -188,6 +213,10 @@ export interface Gap {
   /** The level's expectation, or null when Setup hasn't set one */
   required: number | null;
   status: GapStatus;
+  /** What the required point looks like in practice (the Matrix's behavior text) */
+  meaning?: string;
+  /** The record Lan's assessed point comes from */
+  source?: string;
 }
 
 /** "3 · Intermediate" — a rating-scale point, never "L3" (that's a Position level). */
@@ -201,7 +230,8 @@ export function gapsFor(step: PlanStep): Gap[] {
     const required = position.expectations[c.id]?.[step.levelId] ?? null;
     const current = evidence[c.id]?.point ?? null;
     const status: GapStatus = required == null ? 'unset' : current == null ? 'evidence' : current >= required ? 'ready' : 'growth';
-    return { id: c.id, name: c.name, current, required, status };
+    const meaning = required != null ? c.behaviors[required - 1]?.description : undefined;
+    return { id: c.id, name: c.name, current, required, status, meaning, source: evidence[c.id]?.source };
   });
 }
 
