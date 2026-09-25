@@ -368,5 +368,102 @@
         "$description": "Intent:      Corner radius of the chat composer — larger than a single-line input\nUse when:    PromptInput container\nDo not use:  Single-line inputs — use radius/control\nUse instead: radius/control\nNote:        Added 2026-09-22 for the AI chat panel (AI Elements, VS Code-style).\nStatus:      active"
       }
     }
+  },
+  "career-map": {
+    "canvas": {
+      "$value": "{color.brand.25}",
+      "$type": "color",
+      "$description": "Intent:      Background of the Career Map canvas\nUse when:    Filling the pannable canvas behind CareerMap nodes and connections\nDo not use:  Page backgrounds, cards, panels or anything outside Career Map\nUse instead: color/background/default for pages, color/background/app for the app shell\nStatus:      active"
+    },
+    "grid": {
+      "$value": "{color.brand.50}",
+      "$type": "color",
+      "$description": "Intent:      Minor grid lines on the Career Map canvas\nUse when:    Drawing the fine background grid in CareerMap\nDo not use:  Borders, dividers or any line outside the Career Map canvas\nUse instead: color/border/subtle for general hairline separators\nStatus:      active"
+    },
+    "grid-strong": {
+      "$value": "{color.brand.100}",
+      "$type": "color",
+      "$description": "Intent:      Major grid lines on the Career Map canvas\nUse when:    Drawing the wider background grid in CareerMap, every few minor lines\nDo not use:  Borders, dividers or any line outside the Career Map canvas\nUse instead: career-map/grid for the fine grid, color/border/default for general frames\nStatus:      active"
+    },
+    "node-surface": {
+      "$value": "{color.surface.default}",
+      "$type": "color",
+      "$description": "Intent:      Fill of one role card on the Career Map\nUse when:    Filling a CareerMapNode\nDo not use:  General cards or rows outside Career Map\nUse instead: color/surface/default for generic flat cards\nForeground:  career-map/node-foreground\nStatus:      active"
+    },
+    "node-border": {
+      "$value": "{color.border.default}",
+      "$type": "color",
+      "$description": "Intent:      Resting border of a role card on the Career Map\nUse when:    Outlining a CareerMapNode that is a company-path, current or planned role\nDo not use:  Career vision cards, the Active target card, selected or focused cards\nUse instead: career-map/vision-border, career-map/target-border, career-map/node-selected\nStatus:      active"
+    },
+    "node-foreground": {
+      "$value": "{color.surface.default.foreground}",
+      "$type": "color",
+      "$description": "Intent:      Position name inside a Career Map role card\nUse when:    Rendering the Position title in a CareerMapNode\nDo not use:  Level text, state labels or text outside Career Map\nUse instead: career-map/node-description for the level, the state label tokens for labels\nStatus:      active"
+    },
+    "node-description": {
+      "$value": "{color.text.secondary}",
+      "$type": "color",
+      "$description": "Intent:      Supporting text inside a Career Map role card\nUse when:    Rendering the level (\"L2 · Mid\") and neutral state labels (Planned, Career vision) in a CareerMapNode\nDo not use:  Position titles, current or target labels, text outside Career Map\nUse instead: career-map/node-foreground for titles, career-map/current-label and career-map/target-label\nStatus:      active"
+    },
+    "node-selected": {
+      "$value": "{color.border.focus}",
+      "$type": "color",
+      "$description": "Intent:      Ring around the selected or keyboard-focused role card on the Career Map\nUse when:    The CareerMapNode whose details are open, and :focus-visible on any node\nDo not use:  Resting, current or target states\nUse instead: career-map/node-border, career-map/target-border\nStatus:      active"
+    },
+    "current-label": {
+      "$value": "{color.brand.primary}",
+      "$type": "color",
+      "$description": "Intent:      \"You are here\" label and icon on the employee's current role card\nUse when:    The state label of the CareerMapNode in state current\nDo not use:  Other labels, links or any text outside Career Map\nUse instead: color/text/link for links, career-map/node-description for neutral labels\nStatus:      active"
+    },
+    "target-label": {
+      "$value": "{color.text.success}",
+      "$type": "color",
+      "$description": "Intent:      \"Active target\" label and icon on the target role card\nUse when:    The state label of the CareerMapNode in state target\nDo not use:  Success messages or any text outside Career Map\nUse instead: color/text/success for general success text\nStatus:      active"
+    },
+    "target-border": {
+      "$value": "{color.border.success}",
+      "$type": "color",
+      "$description": "Intent:      Border of the Active target role card — a non-colour-text signal for the target\nUse when:    Outlining the CareerMapNode in state target\nDo not use:  Validation borders or containers outside Career Map\nUse instead: color/border/success for validated inputs\nStatus:      active"
+    },
+    "vision-border": {
+      "$value": "{color.zinc.500}",
+      "$type": "color",
+      "$description": "Intent:      Dashed border of a Career vision role card — the employee's own draft, not a company path\nUse when:    Outlining a CareerMapNode in state vision (dashed)\nDo not use:  Company-path cards, dividers or borders outside Career Map\nUse instead: career-map/node-border for company-path cards\nStatus:      active"
+    },
+    "vision-edge": {
+      "$value": "{color.zinc.500}",
+      "$type": "color",
+      "$description": "Intent:      Dashed connection line of a Career vision on the Career Map\nUse when:    Drawing links whose kind is vision in CareerMap\nDo not use:  Company-path connections or lines outside Career Map\nUse instead: career-map/path-1..3 for company paths\nStatus:      active"
+    },
+    "path-1": {
+      "$value": "{color.chart.3}",
+      "$type": "color",
+      "$description": "Intent:      Connection colour for the first named company Career Path on the map (categorical, like a chart series)\nUse when:    Drawing links and the legend swatch for the path assigned colour 1 in CareerMap\nDo not use:  UI status, brand, or any element outside Career Map\nUse instead: career-map/vision-edge for the employee's own draft\nStatus:      active"
+    },
+    "path-2": {
+      "$value": "{color.chart.2}",
+      "$type": "color",
+      "$description": "Intent:      Connection colour for the second named company Career Path on the map (categorical)\nUse when:    Drawing links and the legend swatch for the path assigned colour 2 in CareerMap\nDo not use:  UI status, brand, or any element outside Career Map\nUse instead: career-map/path-1 for the first path\nStatus:      active"
+    },
+    "path-3": {
+      "$value": "{color.chart.1}",
+      "$type": "color",
+      "$description": "Intent:      Connection colour for the third named company Career Path on the map (categorical)\nUse when:    Drawing links and the legend swatch for the path assigned colour 3 in CareerMap\nDo not use:  UI status, brand, or any element outside Career Map\nUse instead: career-map/path-1 for the first path\nStatus:      active"
+    },
+    "node-radius": {
+      "$value": "{radius.surface}",
+      "$type": "dimension",
+      "$description": "Intent:      Corner radius of a Career Map role card\nUse when:    Rounding a CareerMapNode\nDo not use:  Controls or containers outside Career Map\nUse instead: radius/surface for generic cards\nStatus:      active"
+    },
+    "node-padding": {
+      "$value": "{spacing.component.md}",
+      "$type": "dimension",
+      "$description": "Intent:      Inset inside a Career Map role card\nUse when:    Padding a CareerMapNode\nDo not use:  Page layout or containers outside Career Map\nUse instead: spacing/component/md for generic component padding\nStatus:      active"
+    },
+    "node-gap": {
+      "$value": "{spacing.component.xxs}",
+      "$type": "dimension",
+      "$description": "Intent:      Vertical separation between label, title and level inside a Career Map role card\nUse when:    Stacking the text lines of a CareerMapNode\nDo not use:  Spacing between cards or outside Career Map\nUse instead: spacing/component/xs for generic tight stacks\nStatus:      active"
+    }
   }
 }

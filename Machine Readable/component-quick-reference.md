@@ -1,6 +1,6 @@
 # Component Quick Reference
 
-Scanned from all 52 component artifacts. Read before building any screen — covers what each component is for, the key usage rule, and the most common mistake.
+Scanned from all 53 component artifacts. Read before building any screen — covers what each component is for, the key usage rule, and the most common mistake.
 
 **Source of truth:** all information here is extracted from `Machine Readable/artifacts/components/[name].meta.json`.  
 Each entry links to its artifact file and Storybook story — open those for full token bindings, variant matrices, and accessibility specs.
@@ -362,6 +362,19 @@ Each entry links to its artifact file and Storybook story — open those for ful
 ---
 
 ## Navigation
+
+### `career-map`
+**What it's for:** A read-only canvas of an employee's career plan — role cards joined by colour-coded company Career Path lines and dashed Career vision lines, laid out left to right.
+
+**Use when:** An employee's plan branches — company paths plus their own Career vision, across Positions (My Career).
+
+**Key rule:** Pass items and links, never coordinates; a link without `pathId` is the Career vision (dashed). Keep progress and gaps off the cards.
+
+**vs `career-path-stepper`:** Employee's branching plan → use `career-map`; ordered admin-edited path → use `career-path-stepper`.
+
+→ Artifact: `Machine Readable/artifacts/components/career-map.meta.json` · Storybook: `Navigation/Career Map`
+
+---
 
 ### `career-path-stepper`
 **What it's for:** An ordered vertical progression that pairs numbered achievement markers with career position and level details.

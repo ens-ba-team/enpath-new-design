@@ -1,8 +1,8 @@
 # Enpath Design System
 
-> Enpath's design system — built on shadcn/ui and Tailwind CSS v4, with a three-tier token architecture (Primitives → Semantics → Components), 52 documented components, and Storybook. No Figma: tokens, docs and code are the source. Light mode only.
+> Enpath's design system — built on shadcn/ui and Tailwind CSS v4, with a three-tier token architecture (Primitives → Semantics → Components), 53 documented components, and Storybook. No Figma: tokens, docs and code are the source. Light mode only.
 
-**Storybook:** `http://localhost:6006` — 52 components (verification status in `Tracking/Storybook Status.md`)
+**Storybook:** `http://localhost:6006` — 53 components (verification status in `Tracking/Storybook Status.md`)
 **Code:** `enpath-ui/` — Next.js + Tailwind v4 + shadcn/ui. Lives as a subfolder of this monorepo (repo root → `enpath-ui/`). All `enpath-ui/...` paths below are relative to the repo root.
 
 ---
@@ -19,7 +19,7 @@
 
 ## Component Documentation
 
-52 components — each has one `meta.json` (the **only** spec) and a Storybook story. There is no separate Markdown page per component (removed 2026-09-25): the readable spec is `meta.json` → `docs`, and Variant Matrix, Do Not, Usage Rules and Accessibility are the structured fields `variants`, `doNot`, `constraints` and `accessibility`.
+53 components — each has one `meta.json` (the **only** spec) and a Storybook story. There is no separate Markdown page per component (removed 2026-09-25): the readable spec is `meta.json` → `docs`, and Variant Matrix, Do Not, Usage Rules and Accessibility are the structured fields `variants`, `doNot`, `constraints` and `accessibility`.
 
 - `Machine Readable/artifacts/shared/form-shared.docs.json`: Shared spec for the form sub-components `label`, `menu-dropdown`, `menu-dropdown-item`.
 - `Machine Readable/component-doc-template.md`: Section-by-section guide for writing a new component's `docs` (was `_template.md`).
@@ -28,14 +28,14 @@
 
 ## Machine-Readable Artifacts
 
-**52 meta.json files** — one per component, v3 schema.
+**53 meta.json files** — one per component, v3 schema.
 
 - `Machine Readable/artifacts/components/[name].meta.json`: Structured metadata — variants (`reactProp`/`reactValues`), tokens per state (including invalid ring spec), storybook reference, implementation notes, known issues, changelog, behavior typeGuide. **Read before any component work.**
-- `Machine Readable/component-quick-reference.md`: **Scan before building any screen.** What each component is for, key usage rule, common mistake, comparison to similar components. Hand-maintained from meta.json — all 52 components.
-- `Machine Readable/component-directory.md`: Directory of all 52 components with Storybook title and tsx file, generated from meta.json.
+- `Machine Readable/component-quick-reference.md`: **Scan before building any screen.** What each component is for, key usage rule, common mistake, comparison to similar components. Hand-maintained from meta.json — all 53 components.
+- `Machine Readable/component-directory.md`: Directory of all 53 components with Storybook title and tsx file, generated from meta.json.
 - `Machine Readable/meta-artifact-template.md`: **v3 template** — all required fields documented. Read before generating or updating any meta.json.
 - `Machine Readable/generation-rules.md`: When and how to regenerate meta.json — triggered by code changes, story changes, doc updates, bug fixes.
-- `Machine Readable/validate-artifacts.mjs`: Validation script — run with `node "Machine Readable/validate-artifacts.mjs"` to check all 52 meta.json files.
+- `Machine Readable/validate-artifacts.mjs`: Validation script — run with `node "Machine Readable/validate-artifacts.mjs"` to check all 53 meta.json files.
 - `Machine Readable/sync-doc-values.mjs`: **Rewrites restated px values from `Tokens/*.json`.** Docs name a token then restate its value (`spacing/component/lg (16px)`). The name is right forever; the number is a hand-typed snapshot that goes stale the moment a primitive changes — so a single re-theme edit invalidates ~180 of them at once. This makes them derived instead of authored. Dry-run by default; `--write` applies. **Run after any token value change, before committing.** Never hand-type a px next to a token name again.
 - `Machine Readable/drift-check.mjs`: **Drift detector** — run `node "Machine Readable/drift-check.mjs"`. Checks (1) every path in llms.txt resolves, (2) component-count claims match meta.json files, (3) no hex values in any doc or meta.json — values live only in `Tokens/`, (4) control heights use tokens, paired touch + pointer, (5) every story is owned by a meta.json, (6) every restated px value matches the token it names, (7) no retired tooling or deleted files are mentioned, (8) every meta.json `docs` section is well-formed, (9) every token a meta.json names exists. Exit 1 on drift. Run after renames/moves, token edits, or component changes.
 
@@ -45,7 +45,7 @@
 
 ## Storybook
 
-- `enpath-ui/src/stories/[Name].stories.tsx`: **52 story files** — interactive demos for all components. Verification status per component in `Tracking/Storybook Status.md` (not all verified).
+- `enpath-ui/src/stories/[Name].stories.tsx`: **53 story files** — interactive demos for all components. Verification status per component in `Tracking/Storybook Status.md` (not all verified).
 - `enpath-ui/src/components/ui/[name].tsx`: Component implementation files — all tokens spec-fixed.
 - `enpath-ui/src/app/tokens.css`: **Generated** by `Tokens/sd.build.mjs` — every token as a CSS custom property (`:root`, light mode only). Never edit by hand.
 - `enpath-ui/.storybook/preview.tsx`: Storybook config — light mode only; backgrounds: default / muted.
@@ -65,9 +65,11 @@ Guides for designing full product screens using real components + Tailwind in St
 Run `cd enpath-ui && npm run dev` → `http://localhost:3000/setup`. Mock data only — a refresh resets it. Restart the dev server (and `rm -rf .next`) after `.tsx` or token changes.
 
 - `enpath-ui/src/app/setup/page.tsx`: the Setup route.
-- `enpath-ui/src/features/enpath/app-shell.tsx`: app shell — transparent floating sidebar + page panel + optional right panel, on `color/background/app`.
+- `enpath-ui/src/app/me/career/page.tsx`: the My Career route.
+- `enpath-ui/src/features/enpath/app-shell.tsx`: app shell — transparent floating sidebar + page panel + optional right panel, on `color/background/app` Sidebar links to the two built routes, `/setup` and `/me/career`; other items show a placeholder.
 - `enpath-ui/src/features/enpath/mock-data.ts`: Positions, Levels (with headcount), Matrices, expectations — shape from the project note dev-logic.md (Enpath/document/).
 - `enpath-ui/src/features/enpath/setup/`: `setup-screen.tsx` (Career structure tab, grid, Publish / Unpublish) · `position-dialog.tsx` (Create / Edit position).
+- `enpath-ui/src/features/enpath/my-career/`: `my-career-screen.tsx` (route `/me/career` — employee view for Lan: Career Map + selected-card panel) · `mock-data.ts` (Lan's plan; Positions and Levels come from Setup's mock). Spec: project note my-career-build.md (Enpath/document).
 - `enpath-ui/src/features/enpath/chat/chat-panel.tsx`: AI chat panel (mock streaming, Ask / Edit, proposal → Edit position).
 - `enpath-ui/src/components/ai-elements/`: [AI Elements](https://elements.ai-sdk.dev/) source (conversation, message, prompt-input, model-selector, suggestion, tool, reasoning, shimmer, code-block) — Phosphor icons, light only, bound to `chat/*` tokens. Documented like every component (meta.json → generated page, stories under `AI/…`), as are the ui primitives it added (collapsible, command, dropdown-menu, hover-card, input-group, scroll-area, spinner).
 

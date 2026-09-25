@@ -1,6 +1,6 @@
 # Component Directory
 
-Generated from `artifacts/components/[name].meta.json` — 52 components with their Storybook title and source file. Regenerate when a meta.json changes; never edit rows by hand.
+Generated from `artifacts/components/[name].meta.json` — 53 components with their Storybook title and source file. Regenerate when a meta.json changes; never edit rows by hand.
 
 **Deep lookup:** read `artifacts/components/[name].meta.json` for tokens, behaviour, implementation notes, known issues and story names.
 
@@ -36,6 +36,7 @@ Generated from `artifacts/components/[name].meta.json` — 52 components with th
 | Component | Description | Storybook | tsx |
 |---|---|---|---|
 | breadcrumb | Navigation trail showing the user's location within a hierarchy. | `Navigation/Breadcrumb` | `breadcrumb.tsx` |
+| career-map | A read-only canvas of an employee's career plan — role cards joined by colour-coded company Career Path lines and dashed Career vision lines. | `Navigation/Career Map` | `career-map.tsx` |
 | career-path-stepper | An ordered vertical progression that pairs numbered achievement markers with career position and level details. | `Navigation/Career Path Stepper` | `career-path-stepper.tsx` |
 | command | Searchable, keyboard-first list of items and actions (cmdk). | `Navigation/Command` | `command.tsx` |
 | navigation-menu | A horizontal site navigation bar with dropdown panels. | `Navigation/NavigationMenu` | `navigation-menu.tsx` |

@@ -1,0 +1,292 @@
+{
+  "name": "career-map",
+  "type": "component",
+  "description": "A read-only canvas of an employee's career plan — role cards joined by colour-coded company Career Path lines and dashed Career vision lines, laid out left to right.",
+  "category": "navigation",
+  "shadcnBase": "custom",
+  "primitiveBase": "none",
+  "variants": {},
+  "componentProperties": {
+    "items": {
+      "type": "TEXT",
+      "default": null,
+      "reactProp": "items"
+    },
+    "links": {
+      "type": "TEXT",
+      "default": null,
+      "reactProp": "links"
+    },
+    "paths": {
+      "type": "TEXT",
+      "default": null,
+      "reactProp": "paths"
+    },
+    "selectedId": {
+      "type": "TEXT",
+      "default": null,
+      "reactProp": "selectedId"
+    },
+    "onSelect": {
+      "type": "TEXT",
+      "default": null,
+      "reactProp": "onSelect"
+    },
+    "aria-label": {
+      "type": "TEXT",
+      "default": null,
+      "reactProp": "aria-label"
+    }
+  },
+  "tokens": {
+    "canvas": {
+      "fill": "career-map/canvas",
+      "grid": "career-map/grid",
+      "gridStrong": "career-map/grid-strong"
+    },
+    "node": {
+      "fill": "career-map/node-surface",
+      "stroke": "career-map/node-border",
+      "strokeWeight": 1,
+      "radius": "career-map/node-radius",
+      "padding": "career-map/node-padding",
+      "gap": "career-map/node-gap",
+      "title": "career-map/node-foreground",
+      "description": "career-map/node-description",
+      "selected": "career-map/node-selected"
+    },
+    "states": {
+      "currentLabel": "career-map/current-label",
+      "targetLabel": "career-map/target-label",
+      "targetStroke": "career-map/target-border",
+      "visionStroke": "career-map/vision-border"
+    },
+    "edges": {
+      "path1": "career-map/path-1",
+      "path2": "career-map/path-2",
+      "path3": "career-map/path-3",
+      "vision": "career-map/vision-edge",
+      "strokeWeight": 2
+    },
+    "controls": {
+      "inset": "spacing/component/md",
+      "gap": "spacing/component/xs"
+    },
+    "legend": {
+      "foreground": "color/text/secondary",
+      "columnGap": "spacing/component/lg",
+      "rowGap": "spacing/component/xs",
+      "swatchGap": "spacing/component/sm"
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Name",
+        "value": "The map is a group with the consumer's aria-label (e.g. \"Lan Nguyen's career map\")."
+      },
+      {
+        "property": "Cards",
+        "value": "Every card is focusable with Tab and announces its state, Position and level (\"Active target: Backend Engineer, L3 · Senior\"). Enter or Space selects it; the description says so. Delete does nothing — the map is read-only."
+      },
+      {
+        "property": "Colour",
+        "value": "Company paths are told apart by colour and named in CareerMapLegend; Career vision is dashed (not colour alone). The target card has a border and a text label, not colour alone. Path and vision lines are at least 3:1 against the canvas."
+      },
+      {
+        "property": "Zoom",
+        "value": "Opening view never shrinks cards below 80% zoom so text stays readable. When the whole map doesn't fit at that zoom, it opens on the current role and its next steps; \"Show whole map\" zooms out. Page scroll is never captured — scroll-to-zoom is off."
+      },
+      {
+        "property": "Controls",
+        "value": "Zoom out, Zoom in and Show whole map are design-system Buttons with accessible names."
+      },
+      {
+        "property": "Fallback",
+        "value": "Freeform canvases are hard to use by keyboard and on phones. A list view of the same items is planned for My Career; until then every card is reachable by Tab."
+      }
+    ]
+  },
+  "constraints": [
+    "Use only for an employee's career plan — role cards connected by moves. For an ordered, admin-edited path use career-path-stepper.",
+    "Pass items and links only; the component lays cards out left to right from the links. Never pass coordinates.",
+    "A link with pathId is a company Career Path move and takes that path's colour; a link without pathId is the employee's Career vision and is dashed.",
+    "Assign each company path a colour 1–3 and render CareerMapLegend with the same paths so colours are named.",
+    "Exactly one card should be in state current; at most one in state target.",
+    "The map is read-only: no dragging, connecting or deleting. Plan changes happen through Preview → Confirm outside the map.",
+    "Give the map a height from its container (it fills 100%)."
+  ],
+  "doNot": [
+    {
+      "wrong": "Show progress or gap numbers on the cards",
+      "correct": "Keep cards to state, Position and level; show progress and gaps in the page, fixed to the Active target"
+    },
+    {
+      "wrong": "Use brand or blue for a company path line",
+      "correct": "Use career-map/path-1..3 — brand means selected / primary and blue means info"
+    },
+    {
+      "wrong": "Tell a Career vision apart by colour only",
+      "correct": "Leave pathId off the link so it renders dashed, with a dashed card border"
+    },
+    {
+      "wrong": "Open the map zoomed out until text is unreadable",
+      "correct": "Let the component choose the opening view; offer Show whole map for the overview"
+    },
+    {
+      "wrong": "Add a minimap or scroll-to-zoom",
+      "correct": "Use the built-in zoom and Show whole map buttons"
+    }
+  ],
+  "relationships": {
+    "subComponents": [
+      {
+        "name": "career-map-legend",
+        "role": "Names each company path colour and the dashed Career vision",
+        "overrideRule": "Pass the same paths as the map"
+      }
+    ],
+    "usedBy": [
+      "my-career-screen"
+    ],
+    "relatedComponents": [
+      {
+        "name": "career-path-stepper",
+        "reason": "Both show career moves; the stepper is an ordered admin list, the map is an employee's branching plan."
+      }
+    ],
+    "mustBeChildOf": [],
+    "mustNotBeChildOf": [],
+    "composedWith": [
+      "button"
+    ],
+    "requires": [],
+    "triggers": [],
+    "blocksWhen": [],
+    "exposesState": [
+      "selectedId"
+    ]
+  },
+  "meta": {
+    "storyFile": "src/stories/CareerMap.stories.tsx",
+    "artifactStatus": "needs review",
+    "version": "1.0",
+    "openQuestions": [
+      "Path colours use chart/1–3 via career-map/path-*; hex values may change later.",
+      "List view fallback for keyboard and mobile is not built yet."
+    ],
+    "notes": [
+      "Built on React Flow (@xyflow/react, MIT). Layout constants (card 192×88, column gap 64, row gap 32) are canvas coordinates, not CSS spacing."
+    ],
+    "knownIssues": [
+      "React Flow's attribution link shows in the bottom-right corner."
+    ],
+    "changelog": [
+      {
+        "date": "2026-09-25",
+        "change": "Created Career Map, Career Map Legend and the career-map component-token collection for My Career.",
+        "breaking": false
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/career-map.tsx",
+    "packageDeps": [
+      "@xyflow/react",
+      "@phosphor-icons/react"
+    ],
+    "exports": [
+      "CareerMap",
+      "CareerMapLegend",
+      "CareerMapProps",
+      "CareerMapLegendProps",
+      "CareerMapItem",
+      "CareerMapLink",
+      "CareerMapPath",
+      "CareerMapNodeState"
+    ],
+    "notes": [
+      "Controlled selection: pass selectedId and onSelect; click, Enter and Space all report through onSelect.",
+      "Opening view is computed from the layout (fixed card sizes) with setViewport — not fitView, whose options React Flow overwrites from props before cards are measured."
+    ]
+  },
+  "links": {
+    "shadcn": null,
+    "radix": null,
+    "storybook": "http://localhost:6006/?path=/docs/navigation-career-map--docs"
+  },
+  "storybook": {
+    "file": "src/stories/CareerMap.stories.tsx",
+    "title": "Navigation/Career Map",
+    "stories": [
+      "Default",
+      "Selected",
+      "CompanyPathsOnly",
+      "CurrentRoleOnly",
+      "ThreePathsLongTitles"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": "Verify at 390px and 1280px."
+  },
+  "docs": {
+    "intro": "# Career Map\n\nA read-only canvas of an employee's career plan — role cards joined by colour-coded company Career Path lines and dashed Career vision lines, laid out left to right.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Structure",
+        "body": "\n```\nCareerMap — group, fills its container; fill: career-map/canvas\n├─ grid — two line layers: career-map/grid (fine) · career-map/grid-strong (wide)\n├─ controls — top-right; inset spacing/component/md, gap spacing/component/xs\n│  └─ Button ×3 — Zoom out · Zoom in · Show whole map\n├─ CareerMapNode ×n — one per item, 192×88\n│  ├─ state label — icon + text (You are here · Active target · Planned · Career vision)\n│  ├─ title — Position name\n│  └─ level — \"L2 · Mid\"\n└─ connection ×n — curved line + arrowhead; path colour or dashed vision\nCareerMapLegend — list below the map, one entry per company path + Your career vision\n```\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n| Frame | Property | Token |\n|---|---|---|\n| Canvas | Fill | `career-map/canvas` |\n| Canvas | Fine grid | `career-map/grid` |\n| Canvas | Wide grid | `career-map/grid-strong` |\n| Node | Fill | `career-map/node-surface` |\n| Node | Border | `career-map/node-border` |\n| Node — target | Border | `career-map/target-border` |\n| Node — vision | Border (dashed) | `career-map/vision-border` |\n| Node — selected / focus | Outline | `career-map/node-selected` |\n| Node | Radius | `career-map/node-radius` |\n| Node | Padding | `career-map/node-padding` |\n| Node | Line gap | `career-map/node-gap` |\n| Node | Title | `career-map/node-foreground` |\n| Node | Level, Planned and Career vision labels | `career-map/node-description` |\n| Node — current | Label | `career-map/current-label` |\n| Node — target | Label | `career-map/target-label` |\n| Connection — company path | Stroke + arrow | `career-map/path-1` · `career-map/path-2` · `career-map/path-3` |\n| Connection — vision | Stroke + arrow (dashed) | `career-map/vision-edge` |\n| Controls | Inset | `spacing/component/md` |\n| Controls | Gap | `spacing/component/xs` |\n| Legend | Text | `color/text/secondary` |\n| Legend | Entry gap | `spacing/component/lg` · `spacing/component/xs` |\n\n---\n\n"
+      },
+      {
+        "title": "Behavior",
+        "body": "\nRead-only: cards can't be dragged, connected or deleted. Click, Enter or Space on a card calls `onSelect(id)`; the consumer controls `selectedId`. Cards are placed in columns by the longest chain of links reaching them and centred per column.\n\nOpening view: the whole map if it fits at 80% zoom or more, otherwise the current role and its next steps. Zoom buttons step in and out; Show whole map zooms out to everything (down to 40%). Drag to pan; pinch to zoom; mouse-wheel scroll is left to the page.\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      }
+    ]
+  }
+}

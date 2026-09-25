@@ -34,6 +34,7 @@ Per-component pipeline status for **Enpath**. Update after completing each phase
 | button | ⚠️ | ✅ 14 stories | ❌ | |
 | calendar | ⚠️ | ✅ 7 stories | ❌ | |
 | card | ⚠️ | ✅ 11 stories | ❌ | |
+| career-map | ✅ | ✅ 5 stories | ❌ | added 2026-09-25; page checked in browser at 390–1440px (My Career), stories not yet |
 | career-path-stepper | ✅ | ✅ 5 stories | ❌ | added 2026-09-23; browser verification pending |
 | checkbox | ⚠️ | ✅ 12 stories | ❌ | |
 | combobox | ⚠️ | ✅ 11 stories | ❌ | |

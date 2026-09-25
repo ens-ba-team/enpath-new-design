@@ -6,6 +6,16 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-25 — Career Map + My Career (employee view)
+
+### Added
+- **Career Map** (`career-map.tsx`, `Navigation/Career Map`, `career-map.meta.json`) — read-only canvas of an employee's career plan on React Flow (`@xyflow/react` 12.12, MIT — new dependency). Cards are laid out left → right from the links; company-path lines take a path colour, Career vision lines are dashed. Opening view never goes below 80% zoom — on narrow canvases it opens on the current role and its next steps; "Show whole map" zooms out. Plus **CareerMapLegend**.
+- **`career-map/*` component tokens** (19): `canvas` → brand/25, `grid` → brand/50, `grid-strong` → brand/100 (brand, not blue — the canvas is a brand surface); node surface / border / foreground / description / selected / radius / padding / gap; `current-label` → brand/primary, `target-label` → text/success, `target-border` → border/success; `vision-border` and `vision-edge` → zinc/500 (zinc/400 was 2.5:1 on the canvas — under 3:1); `path-1..3` → chart/3 · chart/2 · chart/1 (categorical, 9.7 / 3.2 / 3.0:1 on the canvas; hex values may change).
+- **My Career route** `/me/career` — Lan Nguyen's plan: Career Map + legend + a panel for the selected card. Progress board, gap rows, Set as target and the Career vision request are not built yet.
+- App shell: sidebar links to `/setup` and `/me/career`; other items still show a placeholder.
+
+---
+
 ## 2026-09-25 — Component Markdown removed; meta.json is the only component spec
 
 ### Removed
