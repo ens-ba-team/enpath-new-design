@@ -27,7 +27,6 @@
     "Don't load provider logos from remote URLs in the prototype (ModelSelectorLogo fetches from models.dev)."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/ModelSelector.md (generated from this file)",
     "storyFile": "src/stories/ModelSelector.stories.tsx",
     "artifactStatus": "needs review",
     "version": "3.0",
@@ -76,7 +75,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "ModelSelector.md",
     "intro": "# ModelSelector\n\nSearchable model picker in a dialog, grouped by provider. For long model lists.\n\n---\n\n",
     "sections": [
       {

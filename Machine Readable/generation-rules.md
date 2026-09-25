@@ -1,6 +1,6 @@
 # Meta Artifact Requirements
 
-A component's `meta.json` is its **only** documentation source: structured fields for tools (variants, tokens, constraints, storybook, implementation) plus `docs` — the readable spec, section by section. The markdown in `Component Markdown (reference)/` is **generated** from `docs` by `generate-component-docs.mjs`; never edit it.
+A component's `meta.json` is its **only** documentation source: structured fields for tools (variants, tokens, constraints, storybook, implementation) plus `docs` — the readable spec, section by section. There is no separate Markdown page (removed 2026-09-25).
 
 ## Trigger Rule — When to Regenerate
 
@@ -10,7 +10,7 @@ A component's `meta.json` is its **only** documentation source: structured field
 
 Full trigger table in `meta-artifact-template.md → Regeneration Trigger Rule`.
 
-The markdown can't drift: it is generated. `drift-check.mjs` #8 fails if a page is stale or hand-edited. Facts are not duplicated: Variant Matrix, Do Not, Usage Rules and Accessibility render **from** `variants`, `doNot`, `constraints` and `accessibility`; the "All tokens used in code" list renders from the `.tsx`. `drift-check.mjs` #9 fails if a `meta.json` names a token that doesn't exist.
+Facts are not duplicated: Variant Matrix, Do Not, Usage Rules and Accessibility are the structured fields `variants`, `doNot`, `constraints` and `accessibility` (a `docs` section points to them with `{ "from": … }`). The tokens a component actually uses are in its `.tsx`. `drift-check.mjs` #8 fails if a `docs` section is malformed; #9 fails if a `meta.json` names a token that doesn't exist.
 
 ---
 
@@ -41,7 +41,7 @@ Do not write any token into the doc or JSON from memory. If a token is not in th
 
 ### Stage 2 — `docs` (human-readable spec, inside meta.json)
 
-Write `docs.sections` (Token Bindings, Structure, Behavior…) from the code inspection — follow `component-doc-template.md`. Then run `generate-component-docs.mjs`. Rules:
+Write `docs.sections` (Token Bindings, Structure, Behavior…) from the code inspection — follow `component-doc-template.md`. Rules:
 
 - Every frame in the structure tree must have a token bindings row
 - Gaps and padding must appear as structured table rows — not prose descriptions
@@ -127,7 +127,6 @@ Every `[component].meta.json` must include:
 | Field | Purpose |
 |---|---|
 | `name` | kebab-case component name |
-| `sourceMarkdown` | the generated markdown page for this artifact |
 | `artifactStatus` | current approval/readiness state |
 | `description` | one-sentence component summary |
 | `category` | component group such as `actions`, `forms`, `display`, `layout`, `navigation`, `overlay` |

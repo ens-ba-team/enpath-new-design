@@ -165,7 +165,6 @@
     "`trailing-button` is for input-bound actions only — if the action opens a modal or navigates away, use a standalone button next to the field instead"
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Input.md (generated from this file)",
     "storyFile": "src/stories/Input.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -236,7 +235,6 @@
     ]
   },
   "docs": {
-    "file": "Input.md",
     "intro": "# Input\n\nA single-line text input control. Built on the native HTML `<input>` element, wrapped in shadcn's Input component. Two component sets: `input` is the raw control; `input-field` is the full form control with label and description.\n\n> **Separated:** `textarea` (multi-line) now has its own doc → see `Textarea.md`\n\n> **Shared sub-components:** `label` — see `_Form-shared.md`\n\n---\n\n",
     "sections": [
       {

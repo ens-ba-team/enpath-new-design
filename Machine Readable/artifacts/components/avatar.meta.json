@@ -135,7 +135,6 @@
     "Size choice follows context: `SM` in dense lists and table rows · `Default` in cards and comment threads · `LG` in profile headers"
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Avatar.md (generated from this file)",
     "storyFile": "src/stories/Avatar.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -191,7 +190,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Avatar.md",
     "intro": "# Avatar\n\nA circular user representation. Supports 2 types (photo and initials fallback), 3 sizes, and an optional online/offline status indicator.\n\n---\n\n",
     "sections": [
       {
@@ -222,7 +220,7 @@
       },
       {
         "title": "Token Bindings",
-        "body": "\n### Per Type — fills & radius\n\n| Type | Fill token | Radius token |\n|---|---|---|\n| `Image` | — (image fill, no color token) | `radius/full` |\n| `Fallback` | `color/surface/tint` (blue/100) | `radius/full` |\n\n### Fallback — text\n\n| Element | Token |\n|---|---|\n| `label` fill | `color/surface/tint/foreground` |\n| `label` text style | `label/sm` (SM) · `label/md` (Default / LG) |\n\n### Sub-component — `avatar-indicator`\n\n| Variant | Element | Token |\n|---|---|---|\n| `type=online` | fill | `color/status/success` |\n| `type=offline` | fill | `color/status/offline` |\n\nBoth variants use `radius/full`. No stroke — the indicator is a pure filled dot.\n\n| Size | Dimensions |\n|---|---|\n| `size=Default` | 8 × 8px |\n| `size=large` | 12 × 12px |\n\n> Size pairing: use `size=Default` with `Size=SM` avatars, `size=large` with `Size=Default` and `Size=LG` avatars.\n\n---\n\n"
+        "body": "\n### Per Type — fills & radius\n\n| Type | Fill token | Radius token |\n|---|---|---|\n| `Image` | — (image fill, no color token) | `radius/full` |\n| `Fallback` | `color/surface/tint` | `radius/full` |\n\n### Fallback — text\n\n| Element | Token |\n|---|---|\n| `label` fill | `color/surface/tint/foreground` |\n| `label` text style | `label/sm` (SM) · `label/md` (Default / LG) |\n\n### Sub-component — `avatar-indicator`\n\n| Variant | Element | Token |\n|---|---|---|\n| `type=online` | fill | `color/status/success` |\n| `type=offline` | fill | `color/status/offline` |\n\nBoth variants use `radius/full`. No stroke — the indicator is a pure filled dot.\n\n| Size | Dimensions |\n|---|---|\n| `size=Default` | 8 × 8px |\n| `size=large` | 12 × 12px |\n\n> Size pairing: use `size=Default` with `Size=SM` avatars, `size=large` with `Size=Default` and `Size=LG` avatars.\n\n---\n\n"
       },
       {
         "title": "Sub-components",

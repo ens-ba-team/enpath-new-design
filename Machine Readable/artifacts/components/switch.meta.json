@@ -215,7 +215,6 @@
     "Invalid state affects switch-item text, not the switch indicator."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Switch.md (generated from this file)",
     "storyFile": "src/stories/Switch.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -263,7 +262,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Switch.md",
     "intro": "# Switch\n\nA toggle control for binary on/off choices. Built from two component sets: `switch` (the visual toggle indicator) and `switch-item` (the full row with label, optional description, and optional card surface).\n\n---\n\n",
     "sections": [
       {

@@ -120,7 +120,6 @@
     "Place `<Toaster>` once in the root layout — never inside a page component or route"
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Toast.md (generated from this file)",
     "storyFile": "src/stories/Toast.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -165,7 +164,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Toast.md",
     "intro": "# Toast\n\nA temporary notification component for system feedback — confirmations, errors, warnings, and async operation status. Built on [Sonner](https://sonner.emilkowal.ski/) by Emil Kowalski, wrapped by shadcn. Renders as a floating overlay above all content; dismissed automatically after a timeout or by the user.\n\n---\n\n",
     "sections": [
       {

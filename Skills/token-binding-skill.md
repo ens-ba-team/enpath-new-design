@@ -90,8 +90,8 @@ CSS variable name = token path with `/` → `-` and a `--` prefix (`color/surfac
 
 ### 6. Document the binding
 Add or update the component's header comment and its `meta.json` — the `tokens` fields **and** the
-**Token Bindings** section in `docs` — token **names only**, never hex (drift-check #3). Then run
-`node "Machine Readable/generate-component-docs.mjs"` to refresh the markdown page.
+**Token Bindings** section in `docs` — token **names only**, never hex (drift-check #3). meta.json is
+the only component spec; there is no Markdown page to regenerate.
 
 ### 7. Verify
 ```bash

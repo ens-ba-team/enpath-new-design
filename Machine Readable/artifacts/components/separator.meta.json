@@ -49,7 +49,6 @@
     "Prefer spacing alone for minor grouping. Reserve separator for cases where content groups are distinct enough that a line helps, not just separated."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Separator.md (generated from this file)",
     "storyFile": "src/stories/Separator.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -89,7 +88,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Separator.md",
     "intro": "# Separator\n\nA visual divider between sections of content. One token, two orientations — no states, no children.\n\n---\n\n",
     "sections": [
       {

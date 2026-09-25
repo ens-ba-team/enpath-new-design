@@ -148,7 +148,6 @@
     "`alert-dialog` with `Type=Destructive` — always include a cancel path so the user can exit without acting."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Alert.md (generated from this file)",
     "storyFile": "src/stories/Alert.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -212,7 +211,6 @@
     ]
   },
   "docs": {
-    "file": "Alert.md",
     "intro": "# Alert\n\nInline feedback banners for system-level messages. Three variants: Default (neutral), Destructive (error), Warning (caution). Non-blocking — does not steal focus or require a decision.\n\n> **Separated:** `alert-dialog` (overlay modal) now has its own doc → see `AlertDialog.md`\n\n---\n\n",
     "sections": [
       {

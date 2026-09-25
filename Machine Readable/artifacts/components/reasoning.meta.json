@@ -26,7 +26,6 @@
     "Collapse automatically when the answer starts."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Reasoning.md (generated from this file)",
     "storyFile": "src/stories/Reasoning.stories.tsx",
     "artifactStatus": "needs review",
     "version": "3.0",
@@ -64,7 +63,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Reasoning.md",
     "intro": "# Reasoning\n\nCollapsible 'thinking' text. Opens while the model streams its reasoning and closes when it finishes.\n\n---\n\n",
     "sections": [
       {

@@ -33,7 +33,6 @@
     "Remove skeleton immediately when data is available — do not leave it animating."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Skeleton.md (generated from this file)",
     "storyFile": "src/stories/Skeleton.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -75,7 +74,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Skeleton.md",
     "intro": "# Skeleton\n\nA loading placeholder that communicates content is on its way. Built on shadcn/ui `Skeleton` — a single animated element. Compose multiple instances to mirror the layout of the real content.\n\n> **Code-only component.** Reference layouts (Card + Image, Image + Text, Text, List, Simple text, Widget) for design documentation only — not for use as component instances.\n\n---\n\n",
     "sections": [
       {

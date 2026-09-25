@@ -89,7 +89,6 @@
     "mustBeChildOf": [], "mustNotBeChildOf": [], "composedWith": ["button", "tooltip"], "requires": [], "triggers": [], "blocksWhen": [], "exposesState": []
   },
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/CareerPathStepper.md (generated from this file)",
     "storyFile": "src/stories/CareerPathStepper.stories.tsx",
     "artifactStatus": "ready",
     "version": "1.0",
@@ -113,7 +112,6 @@
     "notes": "Verify at 390px and 1280px."
   },
   "docs": {
-    "file": "CareerPathStepper.md",
     "intro": "# Career Path Stepper\n\nAn ordered vertical progression that pairs numbered achievement markers with career position and level details.\n\n---\n\n",
     "sections": [
       { "title": "Structure", "body": "\n```\nCareerPathStepper — ordered list, vertical layout\n└─ CareerPathStep — list item; gap: career-stepper/step-gap\n   ├─ marker column\n   │  ├─ shield marker — gradient surface, 2px inset border and visible number\n   │  └─ connector — career-stepper/connector; omitted when isLast=true\n   └─ row — surface, border, radius, padding and gap\n      ├─ main — leading + content; gap: spacing/component/xs\n      │  ├─ leading — optional drag handle\n      │  └─ content\n      │     ├─ title + warning — gap: spacing/component/sm\n      │     └─ description\n      └─ actions\n```\n\n---\n\n" },

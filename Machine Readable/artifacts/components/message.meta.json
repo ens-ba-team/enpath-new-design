@@ -35,7 +35,6 @@
     "Proposals from the AI are a card below the reply; the AI never saves."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Message.md (generated from this file)",
     "storyFile": "src/stories/Message.stories.tsx",
     "artifactStatus": "needs review",
     "version": "3.0",
@@ -82,7 +81,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Message.md",
     "intro": "# Message\n\nOne chat turn. User turns sit in a light blue block; assistant turns are plain text with markdown, plus actions (copy, retry).\n\n---\n\n",
     "sections": [
       {

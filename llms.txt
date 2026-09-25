@@ -19,16 +19,10 @@
 
 ## Component Documentation
 
-52 components — each has one `meta.json` (the source), a generated markdown page, and a Storybook story.
+52 components — each has one `meta.json` (the **only** spec) and a Storybook story. There is no separate Markdown page per component (removed 2026-09-25): the readable spec is `meta.json` → `docs`, and Variant Matrix, Do Not, Usage Rules and Accessibility are the structured fields `variants`, `doNot`, `constraints` and `accessibility`.
 
-- `Component Markdown (reference)/[Name].md`: **Generated — never edit.** Readable spec per component (variants, anatomy, token bindings per state, behaviour, accessibility, usage rules, do-nots, best practice), rendered from `meta.json` → `docs`; Variant Matrix, Do Not, Usage Rules and Accessibility render from structured fields, and Token Bindings lists every token the `.tsx` uses. **53 files** (52 components + `Form-shared.md`).
-- `Machine Readable/generate-component-docs.mjs`: Writes the component markdown from `meta.json` (`--check` exits 1 if any page is stale). Run after editing any `meta.json` `docs`.
-- `Machine Readable/artifacts/shared/form-shared.docs.json`: Source for `Form-shared.md` — shared sub-components `label`, `menu-dropdown`, `menu-dropdown-item`.
+- `Machine Readable/artifacts/shared/form-shared.docs.json`: Shared spec for the form sub-components `label`, `menu-dropdown`, `menu-dropdown-item`.
 - `Machine Readable/component-doc-template.md`: Section-by-section guide for writing a new component's `docs` (was `_template.md`).
-
-**Notable separations (2026-06-03):**
-- `AlertDialog.md` — separated from Alert.md. Full spec for the modal overlay component.
-- `Textarea.md` — separated from Input.md. Full spec for the multi-line text control.
 
 ---
 
@@ -40,10 +34,10 @@
 - `Machine Readable/component-quick-reference.md`: **Scan before building any screen.** What each component is for, key usage rule, common mistake, comparison to similar components. Hand-maintained from meta.json — all 52 components.
 - `Machine Readable/component-directory.md`: Directory of all 52 components with Storybook title and tsx file, generated from meta.json.
 - `Machine Readable/meta-artifact-template.md`: **v3 template** — all required fields documented. Read before generating or updating any meta.json.
-- `Machine Readable/generation-rules.md`: When and how to regenerate meta.json — triggered by markdown changes, code changes, story changes, bug fixes.
+- `Machine Readable/generation-rules.md`: When and how to regenerate meta.json — triggered by code changes, story changes, doc updates, bug fixes.
 - `Machine Readable/validate-artifacts.mjs`: Validation script — run with `node "Machine Readable/validate-artifacts.mjs"` to check all 52 meta.json files.
 - `Machine Readable/sync-doc-values.mjs`: **Rewrites restated px values from `Tokens/*.json`.** Docs name a token then restate its value (`spacing/component/lg (16px)`). The name is right forever; the number is a hand-typed snapshot that goes stale the moment a primitive changes — so a single re-theme edit invalidates ~180 of them at once. This makes them derived instead of authored. Dry-run by default; `--write` applies. **Run after any token value change, before committing.** Never hand-type a px next to a token name again.
-- `Machine Readable/drift-check.mjs`: **Drift detector** — run `node "Machine Readable/drift-check.mjs"`. Checks (1) every path in llms.txt resolves, (2) component-count claims match meta.json files, (3) no hex values in any doc or meta.json — values live only in `Tokens/`, (4) control heights use tokens, paired touch + pointer, (5) every story is owned by a meta.json, (6) every restated px value matches the token it names, (7) no retired tooling or deleted files are mentioned, (8) component docs match their meta.json, (9) every token a meta.json names exists. Exit 1 on drift. Run after renames/moves, token edits, or component changes.
+- `Machine Readable/drift-check.mjs`: **Drift detector** — run `node "Machine Readable/drift-check.mjs"`. Checks (1) every path in llms.txt resolves, (2) component-count claims match meta.json files, (3) no hex values in any doc or meta.json — values live only in `Tokens/`, (4) control heights use tokens, paired touch + pointer, (5) every story is owned by a meta.json, (6) every restated px value matches the token it names, (7) no retired tooling or deleted files are mentioned, (8) every meta.json `docs` section is well-formed, (9) every token a meta.json names exists. Exit 1 on drift. Run after renames/moves, token edits, or component changes.
 
 **Note:** `examples.tsx` files deleted 2026-06-03. Examples now live in `src/stories/*.stories.tsx`. The `storybook` field in each meta.json references the story file path and named exports.
 

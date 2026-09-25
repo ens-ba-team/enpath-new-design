@@ -277,7 +277,6 @@
     "Online must include visible text such as Online or Available."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Badge.md (generated from this file)",
     "storyFile": "src/stories/Badge.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -334,7 +333,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Badge.md",
     "intro": "# Badge\n\nA small status label used to categorise, tag, or communicate state. Supports 11 visual variants, 3 shapes, 3 sizes, and optional leading/trailing icons.\n\n---\n\n",
     "sections": [
       {

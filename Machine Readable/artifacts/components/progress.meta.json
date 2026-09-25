@@ -116,7 +116,6 @@
     "Leave State=Complete visible briefly before unmounting — 500–1000ms delay is appropriate."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Progress.md (generated from this file)",
     "storyFile": "src/stories/Progress.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -158,7 +157,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Progress.md",
     "intro": "# Progress\n\nA horizontal progress bar for communicating operation completion percentage or indeterminate loading state. Built on [Radix UI Progress](https://www.radix-ui.com/primitives/docs/components/progress), wrapped by shadcn.\n\n---\n\n",
     "sections": [
       {

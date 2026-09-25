@@ -92,7 +92,6 @@
     "Footer order is primary confirm above/before secondary dismiss."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Drawer.md (generated from this file)",
     "storyFile": "src/stories/Drawer.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -131,7 +130,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Drawer.md",
     "intro": "# Drawer\n\nA sliding panel that emerges from an edge of the screen (or centres as an overlay on large screens) to present supplementary content, forms, or actions without navigating away from the current view. Built on shadcn/ui Drawer (Vaul).\n\n---\n\n",
     "sections": [
       {
@@ -158,7 +156,7 @@
       },
       {
         "title": "Token Bindings",
-        "body": "\n### Container\n\n| Property | Token | Notes |\n|---|---|---|\n| Fill | `color/surface/default` | Drawer is a floating panel — matches shadcn --card (zinc/900 dark) |\n| Stroke | `color/border/default` 1px INSIDE | Provides edge definition against backdrop |\n| Radius — Direction=Bottom | `radius/lg` top-left · top-right · `0` bottom | Rounded cap on the exposed edge |\n| Radius — Direction=Right | `radius/lg` top-left · bottom-left · `0` right | Rounded cap on the exposed edge |\n| Radius — Direction=Responsive | `radius/lg` all 4 corners | Floats as a centred panel |\n\n### handle (Direction=Bottom only)\n\n| Layer | Property | Token |\n|---|---|---|\n| `handle-bar` | paddingTop / paddingBottom | `spacing/component/lg` |\n| `handle` | Fill | `color/background/muted` |\n| `handle` | Radius (all 4 corners) | `radius/full` |\n| `handle` | Size | 100 × 8px (fixed) |\n\n### header\n\n| Layer | Property | Token |\n|---|---|---|\n| `header` frame | Padding (all 4 sides) | `spacing/component/lg` |\n| `header` frame | `itemSpacing` (gap) | `spacing/component/xxs` |\n| `title` | Fill | `color/background/default/foreground` |\n| `description` | Fill | `color/background/muted/foreground` |\n\n### content SLOT\n\n| Property | Token |\n|---|---|\n| Padding (all 4 sides) | `spacing/component/lg` |\n\nThe `content` layer is a SLOT — replace its contents with your own layout.\n\n### footer\n\n| Layer | Property | Token |\n|---|---|---|\n| `footer` frame | Padding (all 4 sides) | `spacing/component/lg` |\n| `footer` frame | `itemSpacing` (gap) | `spacing/component/sm` |\n| `btn-primary` | Type | `Default` (primary fill) — FILL width |\n| `btn-outline` | Type | `Outline` — FILL width |\n\n---\n\n"
+        "body": "\n### Container\n\n| Property | Token | Notes |\n|---|---|---|\n| Fill | `color/surface/default` | Drawer is a floating panel — matches shadcn --card |\n| Stroke | `color/border/default` 1px INSIDE | Provides edge definition against backdrop |\n| Radius — Direction=Bottom | `radius/lg` top-left · top-right · `0` bottom | Rounded cap on the exposed edge |\n| Radius — Direction=Right | `radius/lg` top-left · bottom-left · `0` right | Rounded cap on the exposed edge |\n| Radius — Direction=Responsive | `radius/lg` all 4 corners | Floats as a centred panel |\n\n### handle (Direction=Bottom only)\n\n| Layer | Property | Token |\n|---|---|---|\n| `handle-bar` | paddingTop / paddingBottom | `spacing/component/lg` |\n| `handle` | Fill | `color/background/muted` |\n| `handle` | Radius (all 4 corners) | `radius/full` |\n| `handle` | Size | 100 × 8px (fixed) |\n\n### header\n\n| Layer | Property | Token |\n|---|---|---|\n| `header` frame | Padding (all 4 sides) | `spacing/component/lg` |\n| `header` frame | `itemSpacing` (gap) | `spacing/component/xxs` |\n| `title` | Fill | `color/background/default/foreground` |\n| `description` | Fill | `color/background/muted/foreground` |\n\n### content SLOT\n\n| Property | Token |\n|---|---|\n| Padding (all 4 sides) | `spacing/component/lg` |\n\nThe `content` layer is a SLOT — replace its contents with your own layout.\n\n### footer\n\n| Layer | Property | Token |\n|---|---|---|\n| `footer` frame | Padding (all 4 sides) | `spacing/component/lg` |\n| `footer` frame | `itemSpacing` (gap) | `spacing/component/sm` |\n| `btn-primary` | Type | `Default` (primary fill) — FILL width |\n| `btn-outline` | Type | `Outline` — FILL width |\n\n---\n\n"
       },
       {
         "title": "Direction Guide",

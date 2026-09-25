@@ -124,7 +124,6 @@
     "Do not use `Type=Dot` in dense navigation — it reads as ambiguous punctuation"
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Breadcrumb.md (generated from this file)",
     "storyFile": "src/stories/Breadcrumb.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -167,7 +166,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Breadcrumb.md",
     "intro": "# Breadcrumb\n\nNavigation trail showing the user's location within a hierarchy. Built from two sub-components assembled in example frames — there is no fixed composite component.\n\n---\n\n",
     "sections": [
       {

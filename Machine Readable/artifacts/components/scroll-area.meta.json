@@ -26,7 +26,6 @@
     "Don't wrap the whole page — only inner regions."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/ScrollArea.md (generated from this file)",
     "storyFile": "src/stories/ScrollArea.stories.tsx",
     "artifactStatus": "needs review",
     "version": "3.0",
@@ -63,7 +62,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "ScrollArea.md",
     "intro": "# ScrollArea\n\nA fixed-size region with consistent, styled scrollbars.\n\n---\n\n",
     "sections": [
       {

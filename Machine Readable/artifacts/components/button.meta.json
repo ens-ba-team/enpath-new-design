@@ -304,7 +304,6 @@
     "Use maximum one Default button per page section."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Button.md (generated from this file)",
     "storyFile": "src/stories/Button.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -354,7 +353,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Button.md",
     "intro": "# Button\n\nA clickable action element. Supports 6 visual types, 5 states, and 6 sizes including icon-only variants.\n\n---\n\n",
     "sections": [
       {

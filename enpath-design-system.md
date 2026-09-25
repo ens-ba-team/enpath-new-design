@@ -13,9 +13,9 @@ Enpath has **no Figma file**. Every change is made in documents and code.
 | Token values (hex/px) | `Tokens/primitives.tokens.json` | Edit JSON → `node sd.build.mjs`. The build writes `enpath-ui/src/app/tokens.css` — never edit that file |
 | Token names + semantic rules | This file + `Tokens/semantics.tokens.json` | Update both together |
 | Theme decisions (the *why*) | §Theme Decisions below | Update with every theme change |
-| Component behaviour + variants | `enpath-ui/src/components/ui/*.tsx` | Code wins; update meta.json + markdown to match |
+| Component behaviour + variants | `enpath-ui/src/components/ui/*.tsx` | Code wins; update meta.json to match |
 | Component spec (machine-readable) | `Machine Readable/artifacts/components/*.meta.json` | Regenerate when the component changes |
-| Component usage guidance | `meta.json` → `docs` (rendered to `Component Markdown (reference)/`) | Edit the JSON, run `generate-component-docs.mjs` — never edit the markdown |
+| Component usage guidance | `meta.json` → `docs` | Edit the JSON — there is no separate Markdown page |
 
 **Gates — run before calling any change done:**
 ```bash

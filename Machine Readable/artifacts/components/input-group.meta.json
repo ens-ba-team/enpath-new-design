@@ -35,7 +35,6 @@
     "Icon-only InputGroupButton needs an aria-label."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/InputGroup.md (generated from this file)",
     "storyFile": "src/stories/InputGroup.stories.tsx",
     "artifactStatus": "needs review",
     "version": "3.0",
@@ -78,7 +77,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "InputGroup.md",
     "intro": "# InputGroup\n\nOne bordered field that combines an input or textarea with addons — icons, text or buttons. Base of the chat composer.\n\n---\n\n",
     "sections": [
       {

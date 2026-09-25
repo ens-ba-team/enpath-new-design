@@ -505,7 +505,7 @@ Each entry links to its artifact file and Storybook story — open those for ful
 2. **Spot the component** — identify which system component matches your need
 3. **Check the artifact** — open the linked `meta.json` for full token bindings and variant matrices  
 4. **Verify in Storybook** — navigate to the Storybook path to see the component live before using it
-5. **Read full spec if needed** — `Component Markdown/[Name].md` for behavior, accessibility, and do-nots
+5. **Read full spec if needed** — `Machine Readable/artifacts/components/[name].meta.json` → `docs`, `accessibility`, `doNot`
 
 **Do not duplicate content from this doc** — if something changes in a component, update `meta.json`. This document regenerates from it.
 

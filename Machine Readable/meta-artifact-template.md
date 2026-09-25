@@ -1,15 +1,15 @@
 # Meta Artifact Template (v3)
 
-> **One fact, one place.** `docs` holds the readable spec (intro + ordered sections). Sections that duplicate structured data are **rendered from it**: a section's `parts` mix verbatim `{ "md": "…" }` with `{ "from": "…" }`:
+> **One fact, one place.** `docs` holds the readable spec (intro + ordered sections). Sections that duplicate structured data **point to it** instead of restating it: a section's `parts` mix verbatim `{ "md": "…" }` with `{ "from": "…" }`:
 >
-> | `from` | Structured field | Renders |
+> | `from` | Structured field | Stands for |
 > |---|---|---|
 > | `variants` | `variants` | Variant Matrix table |
 > | `doNot` | `doNot: [{ wrong, correct }]` | Do Not table |
 > | `constraints` | `constraints: [string]` | Usage Rules list |
 > | `accessibility.properties` / `accessibility.keys` | `accessibility.properties` / `.keys` | Accessibility tables |
 >
-> Token Bindings also gets an **"All tokens used in code"** list, generated from the `.tsx` on every run. `bestPractice`, `behavior` and `composition` were removed (2026-09-22) — that content is prose in `docs`. Section guidance: `component-doc-template.md`.
+> `bestPractice`, `behavior` and `composition` were removed (2026-09-22) — that content is prose in `docs`. Section guidance: `component-doc-template.md`.
 
 Changes from v2:
 - **`storybook`** block — story file path + named exports (required now that Storybook is complete)
@@ -40,7 +40,6 @@ src/stories/[Component].stories.tsx
   "type": "component",
 
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/[Component].md (generated from this file)",
     "storyFile": "src/stories/[Component].stories.tsx",
     "artifactStatus": "ready",
     "version": "1.0",
@@ -65,7 +64,6 @@ src/stories/[Component].stories.tsx
   "description": "[One-sentence description of what this component is and does.]",
 
   "docs": {
-    "file": "[Component].md",
     "intro": "# [Component]\n\n[One sentence.]\n\n---\n\n",
     "sections": [
       { "title": "Variant Matrix", "body": "\n[markdown]\n\n---\n\n" }

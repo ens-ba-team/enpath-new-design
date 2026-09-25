@@ -2,7 +2,6 @@
   "name": "form-shared",
   "description": "Shared sub-components used inside form controls: label, menu-dropdown, menu-dropdown-item.",
   "docs": {
-    "file": "Form-shared.md",
     "intro": "# Form Shared Sub-components\n\nSub-components shared across `input-field`, `select-field`, and `combobox-field`. These are never used standalone — they exist only inside the field-level components. Document is referenced by `Input.md`, `Select.md`, and `Combobox.md`.\n\n---\n\n",
     "sections": [
       {

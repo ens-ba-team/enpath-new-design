@@ -1,6 +1,6 @@
-> **How to use:** this is the section guide for a component's `meta.json` → `docs`. Write each `## Section` below as one entry in `docs.sections` (`title` + markdown `body`), then run `generate-component-docs.mjs`. Never write the markdown page by hand.
+> **How to use:** this is the section guide for a component's `meta.json` → `docs`. Write each `## Section` below as one entry in `docs.sections` (`title` + markdown `body`). meta.json is the only component spec — there is no separate Markdown page.
 >
-> **Generated sections:** Variant Matrix, Do Not, Usage Rules and the Accessibility tables are rendered from `variants`, `doNot`, `constraints` and `accessibility` — edit those fields, not the section text (see `meta-artifact-template.md`). Token Bindings' "All tokens used in code" list is generated from the `.tsx`.
+> **Sections that point to structured fields:** Variant Matrix, Do Not, Usage Rules and the Accessibility tables come from `variants`, `doNot`, `constraints` and `accessibility` — edit those fields, not the section text (see `meta-artifact-template.md`).
 
 # [Component Name]
 

@@ -6,6 +6,21 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-25 — Component Markdown removed; meta.json is the only component spec
+
+### Removed
+- `Component Markdown (reference)/` (53 generated pages) and `Machine Readable/generate-component-docs.mjs`. The readable spec stays in each `meta.json` → `docs`; nothing was lost — the pages were generated from it.
+- `meta.sourceMarkdown` and `docs.file` from every meta.json and from the schema. `validate-artifacts.mjs` now rejects either field if it comes back.
+- The generated "All tokens used in code" list — the component's `.tsx` is the source for that.
+
+### Changed
+- `drift-check.mjs` #8 now checks every meta.json `docs` section is well-formed (was: generated Markdown up to date). #6 scans the meta.json spec fields (`docs`, `doNot`, `constraints`, `accessibility`) for restated px values — not `meta.changelog`, which records past values. #9 reads token names straight from `Tokens/`.
+- `sync-doc-values.mjs` no longer regenerates Markdown after fixing meta.json.
+- Dropped four hand-typed colour primitives restated after token names (Avatar, Radio Group ×2, Drawer) — token names only. The px notes stay (synced from `Tokens/` and verified by drift-check #6).
+- Docs updated: `llms.txt`, `enpath-ui/CLAUDE.md`, `enpath-design-system.md`, `Skills/token-binding-skill.md`, `generation-rules.md`, `component-doc-template.md`, `meta-artifact-template.md`, `component-quick-reference.md`.
+
+---
+
 ## 2026-09-25 — Brand ramp separated from blue (docs)
 
 The token migration was done in `Tokens/semantics.tokens.json` before this entry; this records it and brings the docs in line.

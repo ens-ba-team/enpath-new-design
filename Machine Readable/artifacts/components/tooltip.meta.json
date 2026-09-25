@@ -84,7 +84,6 @@
     "Do not use tooltips on mobile as the only way to reveal information."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Tooltip.md (generated from this file)",
     "storyFile": "src/stories/Tooltip.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -127,7 +126,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Tooltip.md",
     "intro": "# Tooltip\n\nFloating label that appears on hover or focus to provide supplementary context for an element. Built from two components: `bubble` (the content pill) and `tooltip` (the full positioned composite with arrow).\n\n---\n\n",
     "sections": [
       {

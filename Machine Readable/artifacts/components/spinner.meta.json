@@ -26,7 +26,6 @@
     "For page / card loading use Skeleton."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Spinner.md (generated from this file)",
     "storyFile": "src/stories/Spinner.stories.tsx",
     "artifactStatus": "needs review",
     "version": "3.0",
@@ -62,7 +61,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Spinner.md",
     "intro": "# Spinner\n\nIndeterminate loading indicator for a small area or a pending submit.\n\n---\n\n",
     "sections": [
       {

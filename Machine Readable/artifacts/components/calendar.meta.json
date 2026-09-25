@@ -238,7 +238,6 @@
     "Never override `calendar-day` fills from the parent `calendar` — change the day's `State` prop instead"
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Calendar.md (generated from this file)",
     "storyFile": "src/stories/Calendar.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -288,7 +287,6 @@
     "notes": "Month/year selector: 3 views (days|months|years), separate June/2026 buttons. Time picker: custom HH:MM popover with scrollable columns, trailing Clock icon, bidirectional text+picker sync. Row spacing: [&_tbody_tr+tr]:mt-0.5. Outside day selected foreground: aria-selected:opacity-100 + brand/primary/foreground. [title fixed: was Forms/Calendar]"
   },
   "docs": {
-    "file": "Calendar.md",
     "intro": "\n\nA date and range selection control built from four composable component sets. `calendar` is the top-level container; the three sub-components (`calendar-day`, `calendar-month`, `_calendar-preset`) handle individual cell rendering.\n\n---\n\n",
     "sections": [
       {

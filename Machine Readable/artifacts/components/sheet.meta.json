@@ -125,7 +125,6 @@
     "Keep `sheet-body` scrollable in code when content may exceed the available height — apply `overflow-y: auto` and let the header and footer remain fixed"
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Sheet.md (generated from this file)",
     "storyFile": "src/stories/Sheet.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -166,7 +165,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Sheet.md",
     "intro": "# Sheet\n\nA slide-in panel that appears from the edge of the viewport, overlaying the page without fully replacing it. Built on [Radix UI Dialog](https://www.radix-ui.com/primitives/docs/components/dialog) (same primitive as Dialog), wrapped by shadcn as `Sheet`. The distinction from Dialog is positional — Sheet slides in from a screen edge and is typically used for secondary tasks, filters, navigation, or detail panels that benefit from staying spatially connected to the triggering context.\n\n---\n\n",
     "sections": [
       {

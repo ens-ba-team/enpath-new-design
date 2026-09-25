@@ -243,7 +243,6 @@
     "Logo fill is NOT token-bound — branding asset exempt from token rules. Size: 28×28px FIXED only."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Sidebar.md (generated from this file)",
     "storyFile": "src/stories/Sidebar.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -329,7 +328,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Sidebar.md",
     "intro": "# Sidebar\n\nA composable, themeable application sidebar for primary navigation. Built on shadcn's Sidebar primitive, which manages collapsible state, mobile overlay, and keyboard shortcut via the `SidebarProvider` context.\n\n---\n\n",
     "sections": [
       {

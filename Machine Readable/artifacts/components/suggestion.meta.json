@@ -27,7 +27,6 @@
     "In narrow panels stack them instead of a scrolling row."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Suggestion.md (generated from this file)",
     "storyFile": "src/stories/Suggestion.stories.tsx",
     "artifactStatus": "needs review",
     "version": "3.0",
@@ -64,7 +63,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Suggestion.md",
     "intro": "# Suggestion\n\nStarter prompts shown before the first message. Clicking one sends it.\n\n---\n\n",
     "sections": [
       {

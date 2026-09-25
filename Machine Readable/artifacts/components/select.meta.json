@@ -184,7 +184,6 @@
     "Use combobox for long, searchable, or multi-select lists."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Select.md (generated from this file)",
     "storyFile": "src/stories/Select.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -241,7 +240,6 @@
     "notes": "SelectItem: removed checkmark indicator. Selected state now uses color/brand/primary text (transparent bg) per spec. Container radius changed to radius/lg. Viewport padding p-0.5, gap-0.5 between items, item height h-8, px-2."
   },
   "docs": {
-    "file": "Select.md",
     "intro": "# Select\n\nA dropdown control for choosing one option from a predefined, fixed list. Built on Radix UI Select. Two component sets: `select-trigger` is the button that opens the dropdown; `select-field` is the full form control with label and description.\n\n> **Shared sub-components:** `label`, `menu-dropdown`, `menu-dropdown-item` — see `_Form-shared.md`\n\n---\n\n",
     "sections": [
       {

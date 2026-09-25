@@ -195,7 +195,6 @@
     "Selectable rows (`onSelect`) are single-select only — one `selected` row per list. For multi-select use a Checkbox in the row."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Item.md (generated from this file)",
     "storyFile": "src/stories/Item.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -242,7 +241,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Item.md",
     "intro": "# Item\n\nA compact, repeatable list-row component that represents a single selectable or informational entry — a notification, a file, a user in a group, a settings option. Designed to be flat and tightly grouped: items appear inside lists, feeds, menus, or as rows inside a `card`. They are not self-contained information blocks — they are list elements. Six layout Types control the leading element; three Variants control the container surface; three Sizes control density. Two component sets: `_item-image` is the image sub-component used by `Type=Image`; `item` is the full row — always use this.\n\n---\n\n",
     "sections": [
       {

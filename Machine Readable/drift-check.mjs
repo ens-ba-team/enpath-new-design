@@ -12,8 +12,8 @@
  *
  *   6. Docs — every restated px value matches the token it names
  *   7. No retired tooling — Figma, dark mode, non-Phosphor icons, Inter, R1–R8 audits, deleted files
- *   8. Component docs — Component Markdown is generated from meta.json and up to date
- *   9. Component docs — every token named in a meta.json exists
+ *   8. Component specs — every meta.json `docs` section is well-formed (meta.json is the only component spec)
+ *   9. Component specs — every token named in a meta.json exists
  *
  * Exit code 1 if any drift is found (so CI can gate on it).
  */
@@ -158,7 +158,7 @@ section('6. Docs — restated px values match the token they name');
     const m = v === undefined ? null : String(v).match(/^(\d+(?:\.\d+)?)(px)?$/);
     return m ? m[1] : null;
   };
-  const dirs = ['Component Markdown (reference)', 'Skills', 'Machine Readable', 'Tracking'];
+  const dirs = ['Skills', 'Machine Readable', 'Tracking'];
   const loose = ['enpath-design-system.md', 'content-guidelines.md', 'Hypertokens - System Bundles.md'];
   const docs = [];
   for (const d of dirs) {
@@ -176,6 +176,24 @@ section('6. Docs — restated px values match the token they name');
       if (actual === null) continue;
       seen++;
       if (actual !== m[2]) { bad(`${rel}: "${m[1]}" written as ${m[2]}px but the token is ${actual}px`); stale++; }
+    }
+  }
+  // Component specs live in meta.json — scan their text fields.
+  for (const d of ['Machine Readable/artifacts/components', 'Machine Readable/artifacts/shared']) {
+    const dp = path.join(root, d);
+    if (!fs.existsSync(dp)) continue;
+    for (const f of fs.readdirSync(dp).filter((x) => x.endsWith('.json'))) {
+      const strings = [];
+      const collect = (o) => { if (typeof o === 'string') strings.push(o); else if (o && typeof o === 'object') Object.values(o).forEach(collect); };
+      const j = JSON.parse(fs.readFileSync(path.join(dp, f), 'utf8'));
+      // Same fields sync-doc-values.mjs maintains — not meta.changelog, which records past values.
+      for (const k of ['docs', 'doNot', 'constraints', 'accessibility']) collect(j[k]);
+      for (const text of strings) for (const m of text.matchAll(re)) {
+        const actual = resolveT(m[1]);
+        if (actual === null) continue;
+        seen++;
+        if (actual !== m[2]) { bad(`${d}/${f}: "${m[1]}" written as ${m[2]}px but the token is ${actual}px`); stale++; }
+      }
     }
   }
   if (stale === 0) ok(`${seen} restated px values all match their token`);
@@ -229,28 +247,41 @@ section('7. No retired tooling — Figma, dark mode, other icon libraries, Inter
 }
 
 
-// ── 8. Component docs are generated from meta.json and up to date ───────────
-section('8. Component docs — generated markdown matches meta.json');
+// ── 8. Component specs are well-formed ──────────────────────────────────────
+// meta.json is the only component spec (no generated Markdown). A docs section is prose
+// { title, body } or { title, parts: [{ md } | { from }] }, where `from` names a structured field.
+section('8. Component specs — every meta.json docs section is well-formed');
 {
-  const { renderAll } = await import(new URL('./generate-component-docs.mjs', import.meta.url));
-  const files = renderAll();
-  const outDir = path.join(root, 'Component Markdown (reference)');
-  let stale = 0;
-  for (const [file, text] of files) {
-    const p = path.join(outDir, file);
-    if (!fs.existsSync(p) || fs.readFileSync(p, 'utf8') !== text) { bad(`${file} is out of date or hand-edited — edit its meta.json, then run generate-component-docs.mjs`); stale++; }
+  const FROM = new Set(['doNot', 'variants', 'constraints', 'accessibility.properties', 'accessibility.keys']);
+  let bads = 0, n = 0;
+  for (const d of ['Machine Readable/artifacts/components', 'Machine Readable/artifacts/shared']) {
+    const dp = path.join(root, d);
+    if (!fs.existsSync(dp)) continue;
+    for (const f of fs.readdirSync(dp).filter((x) => x.endsWith('.json'))) {
+      const j = JSON.parse(fs.readFileSync(path.join(dp, f), 'utf8'));
+      if (!j.docs) { if (d.endsWith('components')) { bad(`${f}: no docs — every component needs its spec in meta.json`); bads++; } continue; }
+      n++;
+      if (typeof j.docs.intro !== 'string') { bad(`${f}: docs.intro missing`); bads++; }
+      for (const sec of j.docs.sections ?? []) {
+        if (!sec.title) { bad(`${f}: a docs section has no title`); bads++; }
+        if (sec.body === undefined && !Array.isArray(sec.parts)) { bad(`${f}: section "${sec.title}" has neither body nor parts`); bads++; }
+        for (const p of sec.parts ?? []) if (p.md === undefined && !FROM.has(p.from)) { bad(`${f}: section "${sec.title}" part names unknown field "${p.from}"`); bads++; }
+      }
+    }
   }
-  for (const f of fs.readdirSync(outDir).filter((x) => x.endsWith('.md') && !files.has(x))) { bad(`${f} has no meta.json source`); stale++; }
-  if (stale === 0) ok(`${files.size} component docs match their meta.json`);
+  if (bads === 0) ok(`${n} component specs well-formed`);
 }
 
 
 // ── 9. Every token named in a component doc exists ──────────────────────────
 // Renamed or deleted tokens left behind in meta.json (tokens, docs, doNot, constraints).
-section('9. Component docs — every token they name exists');
+section('9. Component specs — every token named in a meta.json exists');
 {
-  const { tokenPaths } = await import(new URL('./generate-component-docs.mjs', import.meta.url));
-  const known = new Set([...tokenPaths.values()]);
+  const known = new Set();
+  for (const tf of ['primitives', 'semantics', 'components']) {
+    (function walk(o, p) { for (const k in o) { if (k.startsWith('$')) continue; const v = o[k]; const q = p ? `${p}/${k}` : k;
+      if (v && v.$value !== undefined) known.add(q); if (v && typeof v === 'object') walk(v, q); } })(JSON.parse(fs.readFileSync(path.join(root, `Tokens/${tf}.tokens.json`), 'utf8')), '');
+  }
   const knownLower = new Set([...known].map((k) => k.toLowerCase()));
   const RE = /\b(?:color|spacing|radius|shadow|height|opacity|font-size|font-weight|line-height|letter-spacing|z-index|motion|button|badge|table|tooltip)\/[a-z0-9][a-z0-9\/-]*[a-z0-9]/g;
   const prefixOk = (t) => [...knownLower].some((k) => k.startsWith(t.toLowerCase() + '/'));

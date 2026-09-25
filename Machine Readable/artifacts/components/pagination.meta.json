@@ -175,7 +175,6 @@
     "`Type=With Changer` changes the page size — always reset to page 1 when the user changes it"
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Pagination.md (generated from this file)",
     "storyFile": "src/stories/Pagination.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -220,7 +219,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Pagination.md",
     "intro": "# Pagination\n\nA navigation control for moving through multi-page data sets. Built on shadcn's Pagination, which renders as semantic HTML `<nav>` / `<a>` elements with no interactive library dependency. Two component sets: `_pagination-item` is the individual page cell; `pagination` is the assembled control.\n\n---\n\n",
     "sections": [
       {

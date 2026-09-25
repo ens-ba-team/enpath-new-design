@@ -93,7 +93,6 @@
     "Trigger has no horizontal padding — do not add padLeft or padRight."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Accordion.md (generated from this file)",
     "storyFile": "src/stories/Accordion.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -132,7 +131,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Accordion.md",
     "intro": "# Accordion\n\nA vertically stacked set of interactive headings that each reveal a section of content. Built on Radix UI Accordion.\n\n---\n\n",
     "sections": [
       {

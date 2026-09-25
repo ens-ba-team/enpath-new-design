@@ -5,7 +5,6 @@
   "shadcnBase": "alert-dialog",
   "primitiveBase": "Radix UI AlertDialog (@radix-ui/react-alert-dialog)",
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/AlertDialog.md (generated from this file)",
     "storyFile": "src/stories/AlertDialog.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -280,7 +279,6 @@
     "The description must explain the consequence: \"This cannot be undone\" not just \"Are you sure?\""
   ],
   "docs": {
-    "file": "AlertDialog.md",
     "intro": "# AlertDialog\n\nA modal overlay that requires an explicit user decision before the page can continue. Built on Radix UI AlertDialog. Use when both the confirm and cancel actions are real choices — not when cancel is simply \"close the modal.\"\n\n> **Related:** `alert` (inline banner) · `dialog` (form modal with neutral close)\n\n---\n\n",
     "sections": [
       {

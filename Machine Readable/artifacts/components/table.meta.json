@@ -240,7 +240,6 @@
     "Always use Type=Header row for column headers — never style a Regular row to look like a header."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Table.md (generated from this file)",
     "storyFile": "src/stories/Table.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -280,7 +279,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Table.md",
     "intro": "# Table\n\nA semantic data table built on shadcn's Table, which renders standard HTML `<table>`, `<thead>`, `<tbody>`, `<tfoot>`, `<tr>`, `<th>`, and `<td>` elements. Purely presentational — sorting, filtering, and pagination are implementation concerns supplied by the parent (e.g. TanStack Table). Three component sets cover the header cell, data cell, and row; the full table is assembled manually from these sets inside a container FRAME.\n\n---\n\n",
     "sections": [
       {

@@ -95,7 +95,6 @@
     "Use for editable range values only."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Slider.md (generated from this file)",
     "storyFile": "src/stories/Slider.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -136,7 +135,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Slider.md",
     "intro": "# Slider\n\nA range input control that lets users select a value by dragging a thumb along a track. Supports horizontal and vertical orientations, with Default, Disabled, and Focus states.\n\n---\n\n",
     "sections": [
       {

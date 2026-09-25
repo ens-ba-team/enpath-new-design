@@ -222,7 +222,6 @@
     "Tag Input: Enter or comma confirms a chip. Backspace removes the last chip when input is empty. Duplicates are silently ignored."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Combobox.md (generated from this file)",
     "storyFile": "src/stories/Combobox.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -281,7 +280,6 @@
     "notes": "Time picker behaviour is shown in the Calendar/DateTimePicker story."
   },
   "docs": {
-    "file": "Combobox.md",
     "intro": "# Combobox\n\nA searchable, filterable dropdown control — for single selection, multi-selection with chips, search-as-you-type, or free-form tag entry. Built on Base UI Combobox. Two component sets: `combobox-trigger` is the input that opens the dropdown; `combobox-field` is the full form control with label and description.\n\n> **Shared sub-components:** `label`, `menu-dropdown`, `menu-dropdown-item` — see `_Form-shared.md`\n\n---\n\n",
     "sections": [
       {

@@ -25,7 +25,6 @@
     "Replace it with the reply as soon as tokens stream."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Shimmer.md (generated from this file)",
     "storyFile": "src/stories/Shimmer.stories.tsx",
     "artifactStatus": "needs review",
     "version": "3.0",
@@ -61,7 +60,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Shimmer.md",
     "intro": "# Shimmer\n\nAnimated gradient text for 'thinking' before the first token arrives.\n\n---\n\n",
     "sections": [
       {

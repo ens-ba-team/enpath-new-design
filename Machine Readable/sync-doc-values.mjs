@@ -78,8 +78,7 @@ const tokenIn = (s) => (s.match(new RegExp(`${GROUPS}\\/[a-z0-9\\/-]+`, 'i')) ||
 // Every doc that restates a dimensional token, not just the component specs — the
 // ruleset, the skills and the tracking files carry the same liability. Tokens/ is not
 // scanned: it is where the values live.
-// Component docs are generated from meta.json, so they are corrected at the source (the JSON
-// `docs` strings below) and regenerated — never in the generated markdown.
+// Component specs live only in meta.json, so they are corrected in the JSON strings below.
 const SCAN_DIRS = ['Skills', 'Machine Readable', 'Tracking'];
 const SCAN_FILES = ['enpath-design-system.md', 'content-guidelines.md', 'Hypertokens - System Bundles.md'];
 
@@ -118,7 +117,7 @@ for (const file of files) {
   }
 }
 
-// ── Component docs: correct the source strings in meta.json, then regenerate ──
+// ── Component specs: correct the strings in meta.json ──
 const fixText = (file, text) => {
   let out = text;
   for (const { re } of PATTERNS) {
@@ -135,7 +134,6 @@ const fixText = (file, text) => {
   }
   return out;
 };
-let docsChanged = false;
 for (const d of ['Machine Readable/artifacts/components', 'Machine Readable/artifacts/shared']) {
   const dir = path.join(root, d);
   if (!fs.existsSync(dir)) continue;
@@ -154,14 +152,10 @@ for (const d of ['Machine Readable/artifacts/components', 'Machine Readable/arti
     const fixDeep = (o) => { if (Array.isArray(o)) return o.map(fixDeep); if (o && typeof o === 'object') { for (const k of Object.keys(o)) o[k] = fixDeep(o[k]); return o; } return typeof o === 'string' ? fixText(label, o) : o; };
     for (const k of ['doNot', 'constraints', 'accessibility']) if (j[k]) j[k] = fixDeep(j[k]);
     if (JSON.stringify([j.docs, j.doNot, j.constraints, j.accessibility]) !== before) {
-      filesTouched++; docsChanged = true;
+      filesTouched++;
       if (WRITE) fs.writeFileSync(full, JSON.stringify(j, null, 2) + '\n');
     }
   }
-}
-if (WRITE && docsChanged) {
-  const { execFileSync } = await import('node:child_process');
-  execFileSync(process.execPath, [path.join(root, 'Machine Readable/generate-component-docs.mjs')], { stdio: 'inherit' });
 }
 
 // ── Report ───────────────────────────────────────────────────────────────────

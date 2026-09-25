@@ -109,7 +109,6 @@
     "Do not modify fills inside `btn-primary` or `btn-outline` from the `empty` parent — change the button variant prop instead"
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Empty.md (generated from this file)",
     "storyFile": "src/stories/Empty.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -152,7 +151,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Empty.md",
     "intro": "# Empty\n\nA placeholder component displayed when a list, panel, or section has no content. Combines an icon container, a title, a description, and optional action buttons to communicate the empty state and guide the user toward a next step. Three container Variants control whether the empty state brings its own visual boundary or inherits its surface from the parent context. No underlying Radix primitive — purely presentational.\n\n---\n\n",
     "sections": [
       {

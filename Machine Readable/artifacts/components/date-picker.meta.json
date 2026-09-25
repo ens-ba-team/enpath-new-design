@@ -111,7 +111,6 @@
     "Use Range for start/end periods."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Date-picker.md (generated from this file)",
     "storyFile": "src/stories/DatePicker.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -155,7 +154,6 @@
     "notes": "Trigger icon moved from leading to trailing position."
   },
   "docs": {
-    "file": "Date-picker.md",
     "intro": "# Date Picker\n\nAn input trigger that opens a calendar popup for selecting a single date, date range, or typed date input. Built from one component set; the calendar popup is a `calendar` instance.\n\n---\n\n",
     "sections": [
       {

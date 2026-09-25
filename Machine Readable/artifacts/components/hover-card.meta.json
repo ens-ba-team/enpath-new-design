@@ -33,7 +33,6 @@
     "Keep content short — no forms or actions."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/HoverCard.md (generated from this file)",
     "storyFile": "src/stories/HoverCard.stories.tsx",
     "artifactStatus": "needs review",
     "version": "3.0",
@@ -71,7 +70,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "HoverCard.md",
     "intro": "# HoverCard\n\nA preview card shown when hovering or focusing a link. For supplementary detail only.\n\n---\n\n",
     "sections": [
       {

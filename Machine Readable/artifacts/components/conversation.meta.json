@@ -32,7 +32,6 @@
     "Don't auto-scroll when the user has scrolled up — the component handles this; don't override it."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Conversation.md (generated from this file)",
     "storyFile": "src/stories/Conversation.stories.tsx",
     "artifactStatus": "needs review",
     "version": "3.0",
@@ -73,7 +72,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Conversation.md",
     "intro": "# Conversation\n\nScroll container for a chat thread. Sticks to the newest message while streaming and shows a jump-to-latest button.\n\n---\n\n",
     "sections": [
       {

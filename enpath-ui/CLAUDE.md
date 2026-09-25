@@ -12,6 +12,6 @@ This repo implements the **Enpath Design System**. The full spec lives in a sepa
 
 Before writing or modifying any UI code:
 1. Read `llms.txt` to find the relevant spec file(s).
-2. Read the component's markdown spec (`Component Markdown (reference)/[Name].md`) and/or its `Machine Readable/artifacts/components/[name].meta.json` for variants, tokens, and behavior.
+2. Read the component's `Machine Readable/artifacts/components/[name].meta.json` — the only spec: variants, tokens, behavior, and the readable `docs` sections.
 3. Use only `var(--...)` tokens already defined in `src/app/tokens.css` — never hardcode hex/px values for colors, spacing, radius, etc.
 4. Cross-check against `Tracking/Storybook Status.md` for known parity gaps before assuming a story is "verified."

@@ -203,7 +203,6 @@
     "Do not mix Default and Line triggers in one list."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Tabs.md (generated from this file)",
     "storyFile": "src/stories/Tabs.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -246,7 +245,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Tabs.md",
     "intro": "# Tabs\n\nA navigation component for switching between content sections. Built from two composable component sets: `tab-trigger` (individual tab items) and `tab-list` (the container that holds triggers).\n\n---\n\n",
     "sections": [
       {

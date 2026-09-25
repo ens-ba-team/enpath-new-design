@@ -34,7 +34,6 @@
     "Disable send when the box is empty."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/PromptInput.md (generated from this file)",
     "storyFile": "src/stories/PromptInput.stories.tsx",
     "artifactStatus": "needs review",
     "version": "3.0",
@@ -106,7 +105,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "PromptInput.md",
     "intro": "# PromptInput\n\nThe chat composer: auto-growing text box, a tools row (mode, model, attachments) and a submit / stop button.\n\n---\n\n",
     "sections": [
       {

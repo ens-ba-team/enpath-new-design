@@ -34,7 +34,6 @@
     "Show shortcuts with CommandShortcut, never in the label."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Command.md (generated from this file)",
     "storyFile": "src/stories/Command.stories.tsx",
     "artifactStatus": "needs review",
     "version": "3.0",
@@ -78,7 +77,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Command.md",
     "intro": "# Command\n\nSearchable, keyboard-first list of items and actions (cmdk). Powers the Model selector and prompt mentions.\n\n---\n\n",
     "sections": [
       {

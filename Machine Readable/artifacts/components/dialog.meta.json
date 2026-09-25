@@ -139,7 +139,6 @@
     "Do not nest dialogs — open only one dialog at a time; if a secondary confirmation is needed, use an Alert Dialog over the existing dialog"
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Dialog.md (generated from this file)",
     "storyFile": "src/stories/Dialog.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -184,7 +183,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Dialog.md",
     "intro": "# Dialog\n\nA modal overlay that interrupts the user to present focused content or collect input. Built on [Radix UI Dialog](https://www.radix-ui.com/primitives/docs/components/dialog), wrapped by shadcn. Renders as a full-screen backdrop with a centered popup panel; focus is trapped inside until dismissed.\n\n---\n\n",
     "sections": [
       {

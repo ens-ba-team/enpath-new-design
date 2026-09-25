@@ -29,7 +29,6 @@
     "Use plain names for tools (\"Read position\"), not function ids."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Tool.md (generated from this file)",
     "storyFile": "src/stories/Tool.stories.tsx",
     "artifactStatus": "needs review",
     "version": "3.0",
@@ -70,7 +69,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Tool.md",
     "intro": "# Tool\n\nCollapsible record of a tool call the assistant made — name, status, input and output.\n\n---\n\n",
     "sections": [
       {

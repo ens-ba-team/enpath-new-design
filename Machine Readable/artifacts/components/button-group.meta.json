@@ -74,7 +74,6 @@
     "The button-group has no disabled state at the container level — disable individual buttons by switching their `State` prop"
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Button-group.md (generated from this file)",
     "storyFile": "src/stories/ButtonGroup.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -116,7 +115,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Button-group.md",
     "intro": "# Button Group\n\nA bordered container that visually groups related ghost buttons into a single connected control. Used for segmented actions, toolbar clusters, and paired controls where the actions are related but mutually independent.\n\n---\n\n",
     "sections": [
       {

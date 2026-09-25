@@ -35,7 +35,6 @@
     "Icon-only triggers need an aria-label (\"More actions\")."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/DropdownMenu.md (generated from this file)",
     "storyFile": "src/stories/DropdownMenu.stories.tsx",
     "artifactStatus": "needs review",
     "version": "3.0",
@@ -85,7 +84,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "DropdownMenu.md",
     "intro": "# DropdownMenu\n\nA menu of actions opened from a button (⋯). Supports labels, separators, shortcuts, checkbox / radio items and submenus.\n\n---\n\n",
     "sections": [
       {

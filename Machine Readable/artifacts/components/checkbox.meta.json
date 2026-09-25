@@ -184,7 +184,6 @@
     "`Description=True` adds a supporting line — use it for options that need a brief explanation. Keep descriptions to one line (≤ ~60 characters) to avoid excessive vertical stacking."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Checkbox.md (generated from this file)",
     "storyFile": "src/stories/Checkbox.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -233,7 +232,6 @@
     "notes": "Invalid state: focus ring uses color/border/error instead of color/ring."
   },
   "docs": {
-    "file": "Checkbox.md",
     "intro": "# Checkbox\n\nA binary selection control used to toggle an option on or off. Supports 8 states and an optional description line below the label, with a Focus variant on both the sub-component and the item itself.\n\n---\n\n",
     "sections": [
       {

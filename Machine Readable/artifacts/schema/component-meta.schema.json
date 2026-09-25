@@ -26,10 +26,9 @@
     "shadcnBase": { "type": "string" },
     "meta": {
       "type": "object",
-      "required": ["sourceMarkdown", "artifactStatus", "version"],
+      "required": ["artifactStatus", "version"],
       "additionalProperties": true,
       "properties": {
-        "sourceMarkdown": { "type": "string" },
         "storyFile": { "type": "string" },
         "artifactStatus": {
           "type": "string",

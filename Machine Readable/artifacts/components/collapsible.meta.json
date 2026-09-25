@@ -27,7 +27,6 @@
     "Don't hide required actions inside a collapsed region."
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Collapsible.md (generated from this file)",
     "storyFile": "src/stories/Collapsible.stories.tsx",
     "artifactStatus": "needs review",
     "version": "3.0",
@@ -65,7 +64,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Collapsible.md",
     "intro": "# Collapsible\n\nShow and hide a region with a trigger. Unstyled Radix primitive — the look comes from what you put in it.\n\n---\n\n",
     "sections": [
       {

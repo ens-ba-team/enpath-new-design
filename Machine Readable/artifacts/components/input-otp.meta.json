@@ -155,7 +155,6 @@
     "Use `autocomplete=\"one-time-code\"` on the input in implementation — this enables SMS OTP autofill on iOS and Android"
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Input-OTP.md (generated from this file)",
     "storyFile": "src/stories/InputOTP.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -202,7 +201,6 @@
     "notes": "Active slot: switched from inset shadow to ring-2 ring-offset-0 z-10 (shadcn pattern). No overflow-hidden on group. Per-slot borders instead. First/last slots get radius/md - 1px corner radius."
   },
   "docs": {
-    "file": "Input-OTP.md",
     "intro": "# Input OTP\n\nA one-time password input built from individual slot cells grouped into a single control. Built on the `input-otp` library by Guilherme Rodz, wrapped by shadcn. Two component sets: `_input-otp-slot` is the individual cell; `input-otp` is the assembled control.\n\n---\n\n",
     "sections": [
       {

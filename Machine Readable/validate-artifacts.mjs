@@ -56,6 +56,14 @@ for (const fileName of fs.readdirSync(componentsDir).filter((file) => file.endsW
     }
   }
 
+  // meta.json is the only component spec — no generated Markdown to point at
+  if (data.meta && "sourceMarkdown" in data.meta) {
+    errors.push(`${fileName}: stale "meta.sourceMarkdown" — component Markdown was removed; meta.json is the spec`);
+  }
+  if (data.docs && "file" in data.docs) {
+    errors.push(`${fileName}: stale "docs.file" — component Markdown was removed; meta.json is the spec`);
+  }
+
   // Warn if old examples field still present
   if (data.examples) {
     errors.push(`${fileName}: stale "examples" field — remove it (examples.tsx deleted, stories are the examples now)`);

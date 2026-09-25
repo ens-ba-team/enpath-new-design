@@ -99,7 +99,6 @@
     "For interactive cards, add `cursor-pointer` and a focus ring in code — the component has no hover or focus variant"
   ],
   "meta": {
-    "sourceMarkdown": "Component Markdown (reference)/Card.md (generated from this file)",
     "storyFile": "src/stories/Card.stories.tsx",
     "artifactStatus": "ready",
     "version": "3.0",
@@ -145,7 +144,6 @@
     "notes": ""
   },
   "docs": {
-    "file": "Card.md",
     "intro": "# Card\n\nA structured container that presents an independent, self-contained block of heterogeneous information — product details, dashboard metrics, user profiles, settings panels. Built on [shadcn Card](https://ui.shadcn.com/docs/components/card), a purely presentational component with no underlying Radix primitive. A card is a shell: it owns the surface, border, radius, and padding, then delegates all interior content to its child sections.\n\n---\n\n",
     "sections": [
       {
