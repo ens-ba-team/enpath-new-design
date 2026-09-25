@@ -211,7 +211,7 @@ The `action-slot` is a button INSTANCE. Its fills and strokes come from the butt
 | Selected | `item/selected/bg` | `item/selected/border` (1px inset) | `item/selected/fg`, SemiBold |
 | Focus | — | ring `color/border/focus` | — |
 
-Same blues as the sidebar's selected item, via component tokens (sidebar tokens stay scoped to the sidebar).
+Hover and selected use Item's own component tokens (`item/*`, blue ramp); sidebar tokens stay scoped to the sidebar.
 
 ### All tokens used in code
 

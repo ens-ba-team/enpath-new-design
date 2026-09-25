@@ -135,7 +135,7 @@ Generated from `src/components/ui/textarea.tsx` — always current. The tables a
 
 ### Focus and interaction
 
-- Clicking anywhere inside the textarea moves focus to the `<textarea>` element — Focused state (blue border + focus ring glow)
+- Clicking anywhere inside the textarea moves focus to the `<textarea>` element — Focused state (`color/border/focus` border + focus ring glow)
 - Pressing `Enter` inserts a newline — form submit requires a separate submit button
 - `disabled` prevents all interaction and applies `pointer-events: none`
 - `aria-invalid` marks the field as invalid for screen readers; visually renders as `State=Invalid`
@@ -253,7 +253,7 @@ Generated from `src/components/ui/textarea.tsx` — always current. The tables a
 - **Best practice · Compared To · Situation:** Rich text with formatting (bold, lists, links)
 - **Best practice · References · Shadcn:** https://ui.shadcn.com/docs/components/textarea
 - **Behavior · Type Guide · Default:** Empty field awaiting input. Shows placeholder text.
-- **Behavior · Type Guide · Focused:** User has clicked in. Blue border + ring glow. Enter inserts newline.
+- **Behavior · Type Guide · Focused:** User has clicked in. `color/border/focus` border + ring glow. Enter inserts newline.
 - **Behavior · Type Guide · Filled:** User has typed content. Value text replaces placeholder.
 - **Behavior · Type Guide · Invalid:** Validation failed. Red border + red ring. Description shows specific error message.
 - **Behavior · Type Guide · Disabled:** Non-interactive. Muted fill. No focus possible.

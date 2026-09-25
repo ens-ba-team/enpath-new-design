@@ -147,7 +147,7 @@ Generated from `src/components/ui/input.tsx` — always current. The tables abov
 
 ### Focus and interaction
 
-- Clicking anywhere inside the input field moves focus to the `<input>` element and shows the Focused state (blue border + focus/ring glow)
+- Clicking anywhere inside the input field moves focus to the `<input>` element and shows the Focused state (`color/border/focus` border + focus/ring glow)
 - `Type=Input`: single line — pressing Enter submits the associated form (implementation-defined)
 - `Type=Textarea`: multiline — pressing Enter inserts a newline; form submit requires a separate submit button
 - The `disabled` prop prevents all interaction and applies `pointer-events: none`; visually renders as `State=Disabled`

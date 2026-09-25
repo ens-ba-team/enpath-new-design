@@ -6,6 +6,21 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-25 — Brand ramp separated from blue (docs)
+
+The token migration was done in `Tokens/semantics.tokens.json` before this entry; this records it and brings the docs in line.
+
+### Changed
+- **`color/brand/*` is the brand; `color/blue/*` is not.** `brand/primary*` → `brand/500–700`, `brand/secondary*` → `brand/100–300`, `ring` → `brand/500`, `drop-indicator` → `brand/400`, `background/app` → `brand/50`, `background/app-glow` → `brand/300`. Not breaking for code — token names unchanged.
+- `color/blue/*` stays for info, links, the rating scale (`scale/1–5`) and identity tints. `color/info/*` has the same values and no references yet.
+- Docs: `enpath-design-system.md` (Theme Decisions, Primitives, App shell, AI handoff line) no longer says "blue = indigo brand"; Sidebar selected-item row corrected to the white + hairline state already in the tokens. Input, Textarea and Item docs no longer call the focus border "blue".
+
+### Open
+- Still on blue although their descriptions or role suggest brand: `color/surface/tint` ("light brand-blue"), `color/sidebar/ring` (global `ring` is brand), `item/hover|selected/*`, `career-stepper/border` and its gradient, `chat/user/*`. Decide per token.
+- `Tokens/validate-contrast.mjs` doesn't check `brand/primary` (OKLCH values). Measured separately: `brand/500` ≈ 6.5:1 on white (sRGB).
+
+---
+
 ## 2026-09-23 — Career Path Stepper
 
 ### Added

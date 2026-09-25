@@ -33,24 +33,24 @@ cd Tokens && node validate-contrast.mjs
 
 Why the values are what they are. Values themselves live only in `Tokens/*.tokens.json` — never restate a hex in a doc.
 
-Enpath's system started as a copy of Agentic, re-themed from En UI (2026-09-21). **Token names are Tailwind's; values are Enpath's** — `color/blue/*` holds the indigo brand, `color/yellow/*` holds amber.
+Enpath's system started as a copy of Agentic, re-themed from En UI (2026-09-21). **Token names are Tailwind's; values are Enpath's** — `color/brand/*` holds the brand (its own OKLCH ramp), `color/blue/*` is a separate true blue for info, links and the rating scale, `color/yellow/*` holds amber. **Brand and blue are different colours — never swap one for the other.**
 
 | Decision | Choice | Why |
 |---|---|---|
 | Colour source | En UI `/500` of each colour → full 50–950 ramp generated around it (OKLCH) | Keep En UI's colours, Agentic's ramp structure |
-| Brand | Indigo, anchor `/500` | 6.52:1 on white — valid as fill **and** small text. Dark steps `/600`–`/950` kept at lower saturation so they stay blue, not violet |
-| Neutral | Tailwind **slate** (blue-grey) under the name `zinc` | Harmonises with the blue brand and app background (2026-09-22; was En UI's pure grey) |
+| Brand | Own ramp `color/brand/*`, OKLCH hue 264.5 (slightly violet), anchor `/500` — separate from `color/blue` | `/500` ≈ 6.5:1 on white — valid as fill **and** small text. Defined in OKLCH: on wide-gamut (P3) screens it renders more saturated and violet; on sRGB screens `/500` clips to the same colour as `blue/500`, and the light steps (`/100`–`/400`) stay visibly softer than blue's |
+| Neutral | Tailwind **slate** (blue-grey) under the name `zinc` | Harmonises with the brand and app background (2026-09-22; was En UI's pure grey) |
 | Success | Tailwind green | — |
 | Warning | Tailwind amber (stored in `color/yellow/*`) | Closer to En UI's orange-leaning warning |
-| Info | Uses brand (`color/blue`) — no own ramp | Agentic structure kept |
+| Info · links · rating scale | `color/blue/*` — not brand. A `color/info/*` ramp with the same values exists but no token references it yet | Keeps informational and data colours from reading as brand actions |
 | Destructive · danger fill · invalid text | `red/600` (hover `700`, pressed `800`) | `red/500` is 3.76:1 — fill-only. `/600` is 4.81:1, passes small text |
 | Success / warning fills | Dark text (`zinc/900`); text and icons on `/700` | Their `/500` is under 3:1 with white |
 | Radius, spacing | Agentic values (already equal to En UI's) + En UI role aliases | — |
 | Control height | En UI touch + pointer ladders, 32px default from 640px up | Denser than Agentic's 40px |
 | Type | Nunito + Roboto Mono · Agentic's 18 styles · labels SemiBold | Option A — smallest change; unadopted En UI styles parked in `Enpath/retheme/parked-en-ui-text-styles.md` |
 | Cards | White + border + `shadow/surface` | En UI; `surface/raised` stays a grey tint |
-| App shell | Transparent sidebar and white page panel (`radius/panel` 12px) on a light-blue app background with soft blue glows (`color/background/app`, `/app-glow`), 8px apart (`spacing/shell`) | Modern, calm, with depth — as in modern productivity apps |
-| Sidebar selected item | Blue/50 tint + blue/200 border, dark text; hover blue/25 | Border = non-colour signal; hover lighter than selected so it never looks selected |
+| App shell | Transparent sidebar and white page panel (`radius/panel` 12px) on a light brand-tinted app background with soft brand glows (`color/background/app`, `/app-glow`), 8px apart (`spacing/shell`) | Modern, calm, with depth — as in modern productivity apps |
+| Sidebar selected item | White + `sidebar/border` hairline, label SemiBold; hover `sidebar/accent` (60% white) | Border = non-colour signal; hover lighter than selected so it never looks selected |
 | Icons | Phosphor, Regular | — |
 | Figma | Not used | Documents and code are the source |
 | Dark mode | Not supported | Light only; `.dark` block is inherited and unmaintained |
@@ -80,7 +80,9 @@ Names are Tailwind's; **values are Enpath's** (see §Theme Decisions). The name 
 ```
 color/white · color/black
 color/zinc/50–950    neutral — Tailwind slate values (blue-grey); name kept
-color/blue/10–950    brand — Enpath indigo, anchor /500 (10 and 25 are extra-light tints, blue only)
+color/brand/25–950   brand — Enpath brand, OKLCH hue 264.5, anchor /500. Primary actions, focus ring, app background
+color/blue/10–950    blue — info, links, rating scale, identity tints. Not brand (10 and 25 are extra-light tints)
+color/info/25–950    same values as blue; not referenced by any token yet
 color/red/50–950     error
 color/green/50–950   success (Tailwind green)
 color/yellow/50–950  warning (Tailwind amber)
@@ -89,7 +91,8 @@ color/white-alpha/60  sidebar hover only
 color/scale/1–5      proficiency steps on the 5-level rating scale (blue/200 → blue/700), darker per step; always labelled
 ```
 
-- Brand anchors at **`/500`**. Hover = `/600`, pressed = `/700`. Never hardcode hover hex.
+- Brand anchors at **`color/brand/500`**. Hover = `/600`, pressed = `/700`. Never hardcode hover hex.
+- Choose brand vs blue by meaning: brand = "this is Enpath / the primary action / selected / focus"; blue = "information, a link, a rating-scale step".
 - Regenerate a whole ramp when a colour changes — never one step. Exception: blue has two extra-light steps, `blue/10` and `blue/25`, generated between white and `blue/50` (same hue).
 
 ### Spacing
@@ -233,10 +236,10 @@ shadow/modal    → 2xl    dialogs, sheets
 
 ### App shell
 
-The frame every page sits in: **a transparent sidebar and a white page panel on a light-blue app background.**
+The frame every page sits in: **a transparent sidebar and a white page panel on a light brand-tinted app background.**
 
 ```
-color/background/app (blue/25) + two soft color/background/app-glow (blue/200) glows on the right, behind the page panel — never behind sidebar text
+color/background/app (brand/50) + two soft color/background/app-glow (brand/300) glows on the right, behind the page panel — never behind sidebar text
   └ spacing/shell/inset 8px from the window edge
     [ sidebar ]  8px  [ page panel ]  8px  [ chat panel ]     ← spacing/shell/gap
      sidebar: no fill · page: white, border, shadow/surface · radius/panel 12px
@@ -482,4 +485,4 @@ None currently.
 ## For AI Handoff
 
 Give: this file · `Tokens/*.tokens.json` · `llms.txt`. Summary line:
-_"Tailwind v4 + shadcn. Semantic tokens reference primitives — never hex. Token names are Tailwind's, values are Enpath's (blue = indigo brand). Light mode only. Controls 32px. Labels SemiBold. Nunito + Roboto Mono. Phosphor Regular icons. destructive ≠ danger. Every surface has a /foreground pair. Flex inside components, grid for pages. Named z-index only."_
+_"Tailwind v4 + shadcn. Semantic tokens reference primitives — never hex. Token names are Tailwind's, values are Enpath's (brand = its own OKLCH ramp; blue = info/links/scale, not brand). Light mode only. Controls 32px. Labels SemiBold. Nunito + Roboto Mono. Phosphor Regular icons. destructive ≠ danger. Every surface has a /foreground pair. Flex inside components, grid for pages. Named z-index only."_
