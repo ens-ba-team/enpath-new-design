@@ -4,9 +4,13 @@
 
 import * as React from "react";
 import {
+  ArrowRightIcon,
+  CheckCircleIcon,
+  ClockIcon,
   CompassIcon,
   FlagIcon,
   InfoIcon,
+  MapPinIcon,
   PlusIcon,
   TrashIcon,
 } from "@phosphor-icons/react/ssr";
@@ -180,11 +184,11 @@ export function ProgressBoard({
             />
           ))}
         </div>
-        <div className="flex flex-wrap items-center">
+        <div className="flex flex-wrap items-center gap-x-[var(--spacing-component-xs)] gap-y-[var(--spacing-component-xs)]">
           {groups.map((g) => (
             <Button
               key={g.key}
-              variant="ghost"
+              variant="outline"
               size="sm"
               className="font-normal"
               onClick={() => onOpenGroup(g.key)}
@@ -422,14 +426,10 @@ export interface RouteActions {
 function RouteSteps({
   ids,
   steps,
-  color,
-  anchorFirst = false,
   onSelectCard,
 }: {
   ids: string[];
   steps: PlanStep[];
-  color: string;
-  anchorFirst?: boolean;
   onSelectCard: (id: string) => void;
 }) {
   return (
@@ -440,24 +440,32 @@ function RouteSteps({
     >
       {ids.map((id, i) => {
         const s = steps.find((x) => x.id === id);
+        const state = s?.state;
+        const StatusIcon = state === "completed"
+          ? CheckCircleIcon
+          : state === "current"
+            ? MapPinIcon
+            : state === "target"
+              ? FlagIcon
+              : state === "planned"
+                ? ClockIcon
+                : CompassIcon;
+        const statusClass = state === "current"
+          ? "text-[var(--career-map-current-label)]"
+          : state === "target"
+            ? "text-[var(--career-map-target-label)]"
+            : "text-[var(--color-text-secondary)]";
         return (
           <div role="listitem" key={id}>
             <Item
               type="icon"
               size="sm"
               icon={
-                <span
-                  aria-hidden="true"
-                  className="block h-2 w-2 rounded-[var(--radius-pill)] border-2"
-                  style={
-                    anchorFirst && i === 0
-                      ? { borderColor: color }
-                      : { borderColor: color, backgroundColor: color }
-                  }
-                />
+                <StatusIcon aria-hidden="true" className={`h-4 w-4 ${statusClass}`} />
               }
               title={levelName(id)}
               description={s ? stateName(s) : undefined}
+              action={<ArrowRightIcon aria-hidden="true" className="h-4 w-4 text-[var(--color-text-secondary)]" />}
               onSelect={() => onSelectCard(id)}
             />
           </div>
@@ -572,8 +580,6 @@ export function RoutePanel({
         <RouteSteps
           ids={ids}
           steps={steps}
-          color={color}
-          anchorFirst
           onSelectCard={actions.onSelectCard}
         />
       </Panel>
@@ -584,6 +590,35 @@ export function RoutePanel({
   const ids = path.levels.filter((id) => steps.some((s) => s.id === id));
   const followed = route.id === plan.followedPathId;
   const canFollow = !followed && matchingPaths.some((p) => p.id === route.id);
+  const target = steps.find((s) => s.state === "target");
+  const blockedByTarget = followed && Boolean(unfollowBlocked);
+  const companyButtons: React.ReactNode[] = [];
+  if (canFollow) {
+    companyButtons.push(
+      <Button key="follow" onClick={() => actions.onFollow(route.id)}>
+        Follow this path
+      </Button>,
+    );
+  } else if (followed) {
+    if (target) {
+      companyButtons.push(
+        <Button key="target" variant="outline" onClick={() => actions.onSelectCard(target.id)}>
+          Open Active target
+        </Button>,
+      );
+    }
+    // Shown disabled when blocked, so the way out stays visible; the note says why.
+    companyButtons.push(
+      <Button
+        key="unfollow"
+        variant="ghost-destructive"
+        disabled={blockedByTarget}
+        onClick={actions.onUnfollow}
+      >
+        Stop following this path
+      </Button>,
+    );
+  }
   return (
     <Panel
       labelledBy="route-title"
@@ -591,37 +626,18 @@ export function RoutePanel({
         canFollow && "It becomes your main route, shown in the top row.",
         followed && unfollowBlocked,
       ]}
-      buttons={
-        canFollow
-          ? [
-              <Button key="follow" onClick={() => actions.onFollow(route.id)}>
-                Follow this path
-              </Button>,
-            ]
-          : followed && !unfollowBlocked
-          ? [
-              <Button
-                key="unfollow"
-                variant="ghost-destructive"
-                onClick={actions.onUnfollow}
-              >
-                Stop following this path
-              </Button>,
-            ]
-          : []
-      }
+      buttons={companyButtons}
     >
       {header(
         followed ? "The company path you follow" : "Company path",
         path.name,
         followed
-          ? "Your main route — planned for your role by your company."
-          : "Planned for your role by your company. No approval needed."
+          ? "Planned by your company"
+          : "Planned for your role by your company · no approval needed"
       )}
       <RouteSteps
         ids={ids}
         steps={steps}
-        color={color}
         onSelectCard={actions.onSelectCard}
       />
     </Panel>

@@ -3,13 +3,14 @@
 // Career Map — a read-only canvas of an employee's career plan: role cards joined by routes —
 // company Career Paths (the followed one green, others coloured per path) and dashed violet Career
 // visions (the employee's own drafts). Clicking a line (or its legend entry) selects the whole route:
-// its lines thicken and its cards get a ring in the route's colour. Built on React Flow (@xyflow/react); every colour, radius and spacing is a career-map/*
+// its lines thicken and its cards get a ring in the route's colour; other routes' lines fade.
+// Built on React Flow (@xyflow/react); every colour, radius and spacing is a career-map/*
 // component token. Cards are laid out left → right automatically from the links — consumers pass
 // items and links, never coordinates.
 //
-// Tokens: career-map/canvas · grid · grid-strong · node-surface · node-border · node-foreground ·
+// Tokens: career-map/canvas · grid · node-surface · node-border · node-foreground ·
 // node-description · node-selected · current-label · target-label · target-border ·
-// vision-border · vision-edge · followed-edge · path-1..3 · node-radius · node-padding · node-gap
+// vision-border · vision-edge · followed-edge · path-1..3 · edge-inactive-opacity · node-radius · node-padding · node-gap
 
 import * as React from "react";
 import {
@@ -78,6 +79,9 @@ export interface CareerMapPath {
 }
 
 /** CSS colour of a route's lines, arrowheads and highlight ring. */
+/** Lines and legend swatches of routes that aren't active. Never used on text. */
+const INACTIVE_EDGE_OPACITY = "calc(var(--career-map-edge-inactive-opacity) / 100)";
+
 export function routeColor(p?: CareerMapPath) {
   if (!p || p.kind === "vision") return "var(--career-map-vision-edge)";
   if (p.followed) return "var(--career-map-followed-edge)";
@@ -123,14 +127,16 @@ function CareerMapNode({ data, selected }: NodeProps<CareerMapFlowNode>) {
       data-slot="career-map-node"
       data-state={data.state}
       className={cn(
-        "flex h-full flex-col justify-center gap-[var(--career-map-node-gap)] rounded-[var(--career-map-node-radius)] border bg-[var(--career-map-node-surface)] p-[var(--career-map-node-padding)] text-left",
+        "flex h-full flex-col justify-center gap-[var(--career-map-node-gap)] rounded-[var(--career-map-node-radius)] border bg-[var(--career-map-node-surface)] p-[var(--career-map-node-padding)] text-left shadow-[var(--shadow-surface)]",
         data.state === "vision"
           ? "border-dashed border-[var(--career-map-vision-border)]"
           : data.state === "target"
             ? "border-[var(--career-map-target-border)]"
             : "border-[var(--career-map-node-border)]",
         selected &&
-          "outline-2 outline-offset-2 outline-[var(--career-map-node-selected)] outline-solid",
+          (data.state === "target"
+            ? "outline-2 outline-offset-0 outline-[var(--career-map-node-selected)] outline-solid"
+            : "outline-2 outline-offset-2 outline-[var(--career-map-node-selected)] outline-solid"),
         !selected && data.ring && "outline-2 outline-offset-2 outline-solid"
       )}
       style={!selected && data.ring ? { outlineColor: data.ring } : undefined}
@@ -297,7 +303,8 @@ function CareerMapCanvas({ items, links, paths, selectedId, onSelect, selectedRo
   const edges: Edge[] = valid.map((l) => {
     const route = routeOf.get(l.route);
     const stroke = routeColor(route);
-    const on = l.route === selectedRoute;
+    // The followed route is the default active route; an explicit selection overrides it.
+    const on = selectedRoute ? l.route === selectedRoute : route?.followed === true;
     return {
       id: `${l.from}->${l.to}`,
       source: l.from,
@@ -308,7 +315,7 @@ function CareerMapCanvas({ items, links, paths, selectedId, onSelect, selectedRo
       interactionWidth: 20,
       className: onSelectRoute ? "cursor-pointer" : undefined,
       zIndex: on ? 1 : 0,
-      style: { stroke, strokeWidth: on ? 3.5 : 2, strokeDasharray: route?.kind === "vision" ? "6 4" : undefined },
+      style: { stroke, opacity: on ? 1 : INACTIVE_EDGE_OPACITY, strokeWidth: on ? 3.5 : 2, strokeDasharray: route?.kind === "vision" ? "6 4" : undefined },
       markerEnd: { type: MarkerType.ArrowClosed, color: stroke, width: 16, height: 16 },
     };
   });
@@ -354,8 +361,7 @@ function CareerMapCanvas({ items, links, paths, selectedId, onSelect, selectedRo
           "node.a11yDescription.keyboardDisabled": "Press Enter or Space to see what this role needs.",
         }}
       >
-        <Background id="career-map-minor" variant={BackgroundVariant.Lines} gap={24} color="var(--career-map-grid)" />
-        <Background id="career-map-major" variant={BackgroundVariant.Lines} gap={120} color="var(--career-map-grid-strong)" />
+        <Background id="career-map-dots" variant={BackgroundVariant.Dots} gap={20} size={1.25} color="var(--career-map-grid)" />
         {toolbar && (
           <div className="absolute left-[var(--spacing-component-md)] top-[var(--spacing-component-md)] z-10 flex flex-wrap items-center gap-[var(--spacing-component-xs)]">{toolbar}</div>
         )}
@@ -391,18 +397,19 @@ export function CareerMapLegend({ paths, selectedRoute, onSelectRoute, className
       {...props}
     >
       {paths.map((p) => {
+        const active = p.id === selectedRoute || (!selectedRoute && p.followed === true);
         const swatch = p.kind === "vision"
-          ? <span aria-hidden="true" className="w-5 border-t-2 border-dashed" style={{ borderColor: routeColor(p) }} />
-          : <span aria-hidden="true" className="h-0.5 w-5 rounded-[var(--radius-pill)]" style={{ backgroundColor: routeColor(p) }} />;
+          ? <span aria-hidden="true" className="w-5 border-t-2 border-dashed" style={{ borderColor: routeColor(p), opacity: active ? 1 : INACTIVE_EDGE_OPACITY }} />
+          : <span aria-hidden="true" className="h-0.5 w-5 rounded-[var(--radius-pill)]" style={{ backgroundColor: routeColor(p), opacity: active ? 1 : INACTIVE_EDGE_OPACITY }} />;
         return (
           <li key={p.id}>
             {onSelectRoute ? (
               <Button
                 variant="ghost"
                 size="xs"
-                aria-pressed={p.id === selectedRoute}
+                aria-pressed={active}
                 onClick={() => onSelectRoute(p.id)}
-                className={cn("font-normal text-[var(--color-text-secondary)]", p.id === selectedRoute && "bg-[var(--button-ghost-bg-hover)] font-semibold text-[var(--color-background-default-foreground)]")}
+                className={cn("font-normal text-[var(--color-text-secondary)]", active && "bg-[var(--button-ghost-bg-hover)] font-semibold text-[var(--color-background-default-foreground)]")}
               >
                 {swatch}
                 {p.name}

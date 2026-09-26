@@ -69,7 +69,7 @@ export function MyCareerScreen() {
 
   const items: CareerMapItem[] = steps.map((s) => {
     const d = describeStep(s);
-    return { id: s.id, title: d.title, level: d.level, state: s.state, lane: s.lane, label: s.state === 'vision' ? `Career vision ${s.vision}` : undefined };
+    return { id: s.id, title: d.title, level: d.level, state: s.state, lane: s.lane, label: s.state === 'vision' ? 'Career vision' : undefined };
   });
   const starts: StartOption[] = steps.filter((s) => s.state !== 'completed').map((s) => ({ id: s.id, label: stateName(s), vision: s.vision }));
 
@@ -299,7 +299,12 @@ export function MyCareerScreen() {
           from={companyPaths.find((p) => p.id === plan.followedPathId)?.name}
           to={companyPaths.find((p) => p.id === switchTo)!.name}
           targetNote={switchPreview.note}
-          onConfirm={() => { commit(switchPreview.next, `You now follow ${companyPaths.find((p) => p.id === switchTo)!.name}`); setSwitchTo(''); }}
+          onConfirm={() => {
+            const nextPath = switchTo;
+            commit(switchPreview.next, `You now follow ${companyPaths.find((p) => p.id === nextPath)!.name}`);
+            setSel({ kind: 'route', id: nextPath });
+            setSwitchTo('');
+          }}
         />
       )}
       <Toaster />

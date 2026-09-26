@@ -6,6 +6,22 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-26 — Career Map contrast pass: dot grid, darker lines, fading inactive routes
+
+### Removed — breaking
+- **`career-map/grid-strong`** — the canvas now draws one dot grid (`career-map/grid`) instead of two line layers. Migrate: drop any use of `--career-map-grid-strong`.
+
+### Added
+- **`career-map/edge-inactive-opacity`** → opacity/40 — fades the lines and legend swatches of routes that aren't active (the selected route, or the followed path when nothing is selected). Lines and swatches only — never text or cards. Consume as `calc(var(--career-map-edge-inactive-opacity) / 100)`.
+
+### Changed
+- `career-map/canvas` brand/25 → brand/100; `career-map/grid` brand/50 → brand/200 (dots).
+- `career-map/vision-border` violet/500 → violet/600 (2.8:1 → 4.2:1 on white); `career-map/followed-edge` green/600 → green/700 (4.2:1 on the canvas).
+- Career Map cards get `shadow/surface`; the selected target's ring sits flush on its green border (no double outline). Legend labels no longer fade with opacity.
+- **Known gap:** on the brand/100 canvas `career-map/path-2` (2.8:1) and `path-3` (2.6:1) fall under the 3:1 non-text minimum.
+
+---
+
 ## 2026-09-25 — Career Map routes: green main path, violet visions, route selection
 
 ### Added
