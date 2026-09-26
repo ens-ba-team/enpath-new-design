@@ -10,7 +10,7 @@ A component's `meta.json` is its **only** documentation source: structured field
 
 Full trigger table in `meta-artifact-template.md → Regeneration Trigger Rule`.
 
-Facts are not duplicated: Variant Matrix, Do Not, Usage Rules and Accessibility are the structured fields `variants`, `doNot`, `constraints` and `accessibility` (a `docs` section points to them with `{ "from": … }`). The tokens a component actually uses are in its `.tsx`. `drift-check.mjs` #8 fails if a `docs` section is malformed; #9 fails if a `meta.json` names a token that doesn't exist.
+Facts are not duplicated: Variant Matrix, Do Not, Usage Rules and Accessibility are the structured fields `variants`, `doNot`, `constraints` and `accessibility` (a `docs` section points to them with `{ "from": … }`). The tokens a component actually uses are in its `.tsx`. `drift-check.mjs` #8 fails if a `docs` section is malformed; #9 fails if a `meta.json` names a token that doesn't exist; #10 fails if `component-directory.md` or `component-quick-reference.md` no longer matches a changed `description`.
 
 ---
 

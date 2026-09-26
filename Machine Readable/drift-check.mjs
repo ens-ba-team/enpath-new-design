@@ -13,7 +13,9 @@
  *   6. Docs — every restated px value matches the token it names
  *   7. No retired tooling — Figma, dark mode, non-Phosphor icons, Inter, R1–R8 audits, deleted files
  *   8. Component specs — every meta.json `docs` section is well-formed (meta.json is the only component spec)
- *   9. Component specs — every token named in a meta.json exists
+ *   9. Component specs — every token named in a meta.json exists (component-token families included;
+ *      meta.changelog is history and skipped)
+ *  10. Component directory + quick reference — each entry starts with its meta.json description
  *
  * Exit code 1 if any drift is found (so CI can gate on it).
  */
@@ -283,14 +285,20 @@ section('9. Component specs — every token named in a meta.json exists');
       if (v && v.$value !== undefined) known.add(q); if (v && typeof v === 'object') walk(v, q); } })(JSON.parse(fs.readFileSync(path.join(root, `Tokens/${tf}.tokens.json`), 'utf8')), '');
   }
   const knownLower = new Set([...known].map((k) => k.toLowerCase()));
-  const RE = /\b(?:color|spacing|radius|shadow|height|opacity|font-size|font-weight|line-height|letter-spacing|z-index|motion|button|badge|table|tooltip)\/[a-z0-9][a-z0-9\/-]*[a-z0-9]/g;
+  // Families: the semantic ones plus every component-token collection (career-map/, chat/, …), so a
+  // removed component token left in a spec is caught too.
+  const componentFamilies = Object.keys(JSON.parse(fs.readFileSync(path.join(root, 'Tokens/components.tokens.json'), 'utf8'))).filter((k) => !k.startsWith('$'));
+  const families = ['color', 'spacing', 'radius', 'shadow', 'height', 'opacity', 'font-size', 'font-weight', 'line-height', 'letter-spacing', 'z-index', 'motion', 'button', 'badge', 'table', 'tooltip', ...componentFamilies];
+  const RE = new RegExp(`\\b(?:${[...new Set(families)].map((f) => f.replace(/[-/]/g, '\\$&')).join('|')})\\/[a-z0-9][a-z0-9\\/-]*[a-z0-9]`, 'g');
   const prefixOk = (t) => [...knownLower].some((k) => k.startsWith(t.toLowerCase() + '/'));
   const dir = path.join(root, 'Machine Readable/artifacts/components');
   let bads = 0, seen = 0;
   for (const f of fs.readdirSync(dir).filter((x) => x.endsWith('.json'))) {
     const j = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
     // Structured fields: every match counts. Prose in `docs`: only names written as code (`token/name`).
+    // meta.changelog is history — it may name tokens that were removed since.
     const { docs, ...structured } = j;
+    if (structured.meta) structured.meta = { ...structured.meta, changelog: undefined };
     const strings = [];
     const collect = (o) => { if (typeof o === 'string') strings.push(o); else if (o && typeof o === 'object') Object.values(o).forEach(collect); };
     collect(docs ?? {});
@@ -303,6 +311,38 @@ section('9. Component specs — every token named in a meta.json exists');
     }
   }
   if (bads === 0) ok(`${seen} token names in component docs all exist`);
+}
+
+// ── 10. Directory + quick reference agree with meta.json ───────────────────
+// Both files are maintained by hand from each meta.json. A row or "What it's for" line must be the
+// start of that component's meta.json description, so a changed description can't leave them stale.
+section('10. Component directory + quick reference match meta.json descriptions');
+{
+  const mr = path.join(root, 'Machine Readable');
+  const directory = fs.readFileSync(path.join(mr, 'component-directory.md'), 'utf8');
+  const quickRef = fs.readFileSync(path.join(mr, 'component-quick-reference.md'), 'utf8');
+  const norm = (t) => t.trim().replace(/\s+/g, ' ');
+  // Quick-reference entries: "### `name`" … "**What it's for:** …" … "→ Artifact: `…/x.meta.json`".
+  const qr = new Map();
+  for (const entry of quickRef.split(/^### /m).slice(1)) {
+    const art = entry.match(/artifacts\/components\/([a-z0-9-]+)\.meta\.json/);
+    const what = entry.match(/\*\*What it.s for:\*\* (.*)/);
+    if (art && what) qr.set(art[1], what[1]);
+  }
+  let bads = 0, n = 0;
+  const dir = path.join(mr, 'artifacts/components');
+  for (const f of fs.readdirSync(dir).filter((x) => x.endsWith('.meta.json'))) {
+    const name = f.replace('.meta.json', '');
+    const desc = norm(JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')).description ?? '');
+    n++;
+    const row = directory.split('\n').find((l) => l.startsWith(`| ${name} |`));
+    if (!row) { bad(`component-directory.md: no row for ${name}`); bads++; }
+    else if (!desc.startsWith(norm(row.split('|')[2]))) { bad(`component-directory.md: ${name} description differs from its meta.json`); bads++; }
+    const what = qr.get(name);
+    if (what === undefined) { bad(`component-quick-reference.md: no entry linking ${f}`); bads++; }
+    else if (!desc.startsWith(norm(what))) { bad(`component-quick-reference.md: ${name} "What it's for" differs from its meta.json`); bads++; }
+  }
+  if (bads === 0) ok(`${n} components — directory rows and quick-reference entries match meta.json`);
 }
 
 // ── Summary ──────────────────────────────────────────────────────────────────

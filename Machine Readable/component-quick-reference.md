@@ -377,11 +377,11 @@ Each entry links to its artifact file and Storybook story — open those for ful
 ## Navigation
 
 ### `career-map`
-**What it's for:** A read-only canvas of an employee's career plan — role cards joined by colour-coded company Career Path lines and dashed Career vision lines, laid out left to right.
+**What it's for:** A read-only canvas of an employee's career plan — role cards joined by routes coloured by role: the followed company path green, other company paths grey, Career visions dashed violet. Clicking a line selects its whole route.
 
 **Use when:** An employee's plan branches — company paths plus their own Career vision, across Positions (My Career).
 
-**Key rule:** Pass items and links, never coordinates; a link without `pathId` is the Career vision (dashed). Keep progress and gaps off the cards.
+**Key rule:** Pass items and links, never coordinates; every link names its route. Colour comes from the route's role — followed (green), other company path (grey), Career vision (dashed violet) — never one colour per path. Keep progress and gaps off the cards; the legend lists only routes drawn on the map.
 
 **vs `career-path-stepper`:** Employee's branching plan → use `career-map`; ordered admin-edited path → use `career-path-stepper`.
 
