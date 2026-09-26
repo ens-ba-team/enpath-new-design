@@ -376,7 +376,7 @@
       "$description": "Intent:      Background of the Career Map canvas\nUse when:    Filling the pannable canvas behind CareerMap nodes and connections\nDo not use:  Page backgrounds, cards, panels or anything outside Career Map\nUse instead: color/background/default for pages, color/background/app for the app shell\nStatus:      active"
     },
     "grid": {
-      "$value": "{color.brand.200}",
+      "$value": "{color.brand.300}",
       "$type": "color",
       "$description": "Intent:      Dot grid on the Career Map canvas\nUse when:    Drawing the background dot pattern in CareerMap\nDo not use:  Borders, dividers or any line outside the Career Map canvas\nUse instead: color/border/subtle for general hairline separators\nStatus:      active"
     },
@@ -420,6 +420,31 @@
       "$type": "color",
       "$description": "Intent:      Border of the Active target role card — a non-colour-text signal for the target\nUse when:    Outlining the CareerMapNode in state target\nDo not use:  Validation borders or containers outside Career Map\nUse instead: color/border/success for validated inputs\nStatus:      active"
     },
+    "band-completed": {
+      "$value": "{color.background.muted}",
+      "$type": "color",
+      "$description": "Intent:      Status band across the top of a Career Map card in state completed\nUse when:    Filling the band that holds the state label (icon + text) of a CareerMapNode in state completed\nDo not use:  Card bodies, badges, alerts or anything outside Career Map\nUse instead: career-map/node-surface for the card body\nForeground:  career-map/node-description (6.9:1)\nStatus:      active"
+    },
+    "band-current": {
+      "$value": "{color.brand.200}",
+      "$type": "color",
+      "$description": "Intent:      Status band across the top of a Career Map card in state current\nUse when:    Filling the band that holds the state label (icon + text) of a CareerMapNode in state current\nDo not use:  Card bodies, badges, alerts or anything outside Career Map\nUse instead: career-map/node-surface for the card body\nForeground:  career-map/current-label (4.8:1)\nStatus:      active"
+    },
+    "band-target": {
+      "$value": "{color.green.100}",
+      "$type": "color",
+      "$description": "Intent:      Status band across the top of a Career Map card in state target\nUse when:    Filling the band that holds the state label (icon + text) of a CareerMapNode in state target\nDo not use:  Card bodies, badges, alerts or anything outside Career Map\nUse instead: career-map/node-surface for the card body\nForeground:  career-map/target-label (4.6:1)\nStatus:      active"
+    },
+    "band-planned": {
+      "$value": "{color.background.subtle}",
+      "$type": "color",
+      "$description": "Intent:      Status band across the top of a Career Map card in state planned\nUse when:    Filling the band that holds the state label (icon + text) of a CareerMapNode in state planned\nDo not use:  Card bodies, badges, alerts or anything outside Career Map\nUse instead: career-map/node-surface for the card body\nForeground:  career-map/node-description (7.2:1)\nStatus:      active"
+    },
+    "band-vision": {
+      "$value": "{color.violet.100}",
+      "$type": "color",
+      "$description": "Intent:      Status band across the top of a Career Map card in state vision\nUse when:    Filling the band that holds the state label (icon + text) of a CareerMapNode in state vision\nDo not use:  Card bodies, badges, alerts or anything outside Career Map\nUse instead: career-map/node-surface for the card body\nForeground:  career-map/node-description (7.0:1)\nStatus:      active"
+    },
     "vision-border": {
       "$value": "{color.violet.600}",
       "$type": "color",
@@ -451,7 +476,7 @@
       "$description": "Intent:      Line colour (and highlight ring) for the third named company Career Path on the map (categorical)\nUse when:    Drawing links and the legend swatch for the path assigned colour 3 in CareerMap\nDo not use:  UI status, brand, or any element outside Career Map\nUse instead: career-map/path-1 for the first path\nStatus:      active"
     },
     "edge-inactive-opacity": {
-      "$value": "{opacity.40}",
+      "$value": "{opacity.60}",
       "$type": "number",
       "$description": "Intent:      Fades the lines and legend swatches of routes that aren't active, so the active route reads darker as well as thicker\nUse when:    Stroke of a CareerMap connection and its legend swatch when the route is neither selected nor (with nothing selected) the followed path\nDo not use:  Text, cards, labels or anything outside Career Map lines and swatches — never dim text with opacity\nUse instead: color/text/secondary for de-emphasised text\nStatus:      active"
     },

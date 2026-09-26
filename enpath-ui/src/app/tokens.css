@@ -1998,7 +1998,7 @@
    * Use instead: color/border/subtle for general hairline separators
    * Status:      active
    */
-  --career-map-grid: oklch(90% 0.05 264.53);
+  --career-map-grid: oklch(85% 0.1 264.53);
   /**
    * Intent:      Fill of one role card on the Career Map
    * Use when:    Filling a CareerMapNode
@@ -2065,6 +2065,51 @@
    */
   --career-map-target-border: #16a34a;
   /**
+   * Intent:      Status band across the top of a Career Map card in state completed
+   * Use when:    Filling the band that holds the state label (icon + text) of a CareerMapNode in state completed
+   * Do not use:  Card bodies, badges, alerts or anything outside Career Map
+   * Use instead: career-map/node-surface for the card body
+   * Foreground:  career-map/node-description (6.9:1)
+   * Status:      active
+   */
+  --career-map-band-completed: #f1f5f9;
+  /**
+   * Intent:      Status band across the top of a Career Map card in state current
+   * Use when:    Filling the band that holds the state label (icon + text) of a CareerMapNode in state current
+   * Do not use:  Card bodies, badges, alerts or anything outside Career Map
+   * Use instead: career-map/node-surface for the card body
+   * Foreground:  career-map/current-label (4.8:1)
+   * Status:      active
+   */
+  --career-map-band-current: oklch(90% 0.05 264.53);
+  /**
+   * Intent:      Status band across the top of a Career Map card in state target
+   * Use when:    Filling the band that holds the state label (icon + text) of a CareerMapNode in state target
+   * Do not use:  Card bodies, badges, alerts or anything outside Career Map
+   * Use instead: career-map/node-surface for the card body
+   * Foreground:  career-map/target-label (4.6:1)
+   * Status:      active
+   */
+  --career-map-band-target: #dcfce7;
+  /**
+   * Intent:      Status band across the top of a Career Map card in state planned
+   * Use when:    Filling the band that holds the state label (icon + text) of a CareerMapNode in state planned
+   * Do not use:  Card bodies, badges, alerts or anything outside Career Map
+   * Use instead: career-map/node-surface for the card body
+   * Foreground:  career-map/node-description (7.2:1)
+   * Status:      active
+   */
+  --career-map-band-planned: #f8fafc;
+  /**
+   * Intent:      Status band across the top of a Career Map card in state vision
+   * Use when:    Filling the band that holds the state label (icon + text) of a CareerMapNode in state vision
+   * Do not use:  Card bodies, badges, alerts or anything outside Career Map
+   * Use instead: career-map/node-surface for the card body
+   * Foreground:  career-map/node-description (7.0:1)
+   * Status:      active
+   */
+  --career-map-band-vision: #f6f0ff;
+  /**
    * Intent:      Dashed border of a Career vision card — the employee's own draft path, not a company path
    * Use when:    Outlining a CareerMapNode in state vision (dashed)
    * Do not use:  Company-path cards, dividers or borders outside Career Map
@@ -2119,7 +2164,7 @@
    * Use instead: color/text/secondary for de-emphasised text
    * Status:      active
    */
-  --career-map-edge-inactive-opacity: 40;
+  --career-map-edge-inactive-opacity: 60;
   /**
    * Intent:      Corner radius of a Career Map role card
    * Use when:    Rounding a CareerMapNode

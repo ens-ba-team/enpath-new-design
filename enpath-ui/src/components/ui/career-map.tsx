@@ -10,6 +10,7 @@
 //
 // Tokens: career-map/canvas · grid · node-surface · node-border · node-foreground ·
 // node-description · node-selected · current-label · target-label · target-border ·
+// band-completed · band-current · band-target · band-planned · band-vision ·
 // vision-border · vision-edge · followed-edge · path-1..3 · edge-inactive-opacity · node-radius · node-padding · node-gap
 
 import * as React from "react";
@@ -105,11 +106,11 @@ const stateLabel: Record<
   CareerMapNodeState,
   { text: string; icon: React.ElementType; className: string }
 > = {
-  completed: { text: "Completed", icon: CheckCircleIcon, className: "text-[var(--career-map-node-description)]" },
-  current: { text: "You are here", icon: MapPinIcon, className: "text-[var(--career-map-current-label)]" },
-  target: { text: "Active target", icon: FlagIcon, className: "text-[var(--career-map-target-label)]" },
-  planned: { text: "Planned", icon: ClockIcon, className: "text-[var(--career-map-node-description)]" },
-  vision: { text: "Career vision", icon: CompassIcon, className: "text-[var(--career-map-node-description)]" },
+  completed: { text: "Completed", icon: CheckCircleIcon, className: "bg-[var(--career-map-band-completed)] text-[var(--career-map-node-description)]" },
+  current: { text: "You are here", icon: MapPinIcon, className: "bg-[var(--career-map-band-current)] text-[var(--career-map-current-label)]" },
+  target: { text: "Active target", icon: FlagIcon, className: "bg-[var(--career-map-band-target)] text-[var(--career-map-target-label)]" },
+  planned: { text: "Planned", icon: ClockIcon, className: "bg-[var(--career-map-band-planned)] text-[var(--career-map-node-description)]" },
+  vision: { text: "Career vision", icon: CompassIcon, className: "bg-[var(--career-map-band-vision)] text-[var(--career-map-node-description)]" },
 };
 
 type CareerMapNodeData = {
@@ -127,7 +128,7 @@ function CareerMapNode({ data, selected }: NodeProps<CareerMapFlowNode>) {
       data-slot="career-map-node"
       data-state={data.state}
       className={cn(
-        "flex h-full flex-col justify-center gap-[var(--career-map-node-gap)] rounded-[var(--career-map-node-radius)] border bg-[var(--career-map-node-surface)] p-[var(--career-map-node-padding)] text-left shadow-[var(--shadow-surface)]",
+        "flex h-full flex-col overflow-hidden rounded-[var(--career-map-node-radius)] border bg-[var(--career-map-node-surface)] text-left shadow-[var(--shadow-surface)]",
         data.state === "vision"
           ? "border-dashed border-[var(--career-map-vision-border)]"
           : data.state === "target"
@@ -142,12 +143,22 @@ function CareerMapNode({ data, selected }: NodeProps<CareerMapFlowNode>) {
       style={!selected && data.ring ? { outlineColor: data.ring } : undefined}
     >
       <Handle type="target" position={Position.Left} isConnectable={false} className="!pointer-events-none !opacity-0" />
-      <span className={cn("inline-flex items-center gap-[var(--spacing-component-xs)] text-xs font-semibold", label.className)}>
+      {/* Status band on top; the level leads (it's what changes along a path), the Position follows. */}
+      <span className={cn("flex items-center gap-[var(--spacing-component-xs)] px-[var(--career-map-node-padding)] py-[var(--spacing-component-xs)] text-xs font-semibold", label.className)}>
         <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
         {data.label ?? label.text}
       </span>
-      <span className="line-clamp-2 text-sm font-semibold leading-snug text-[var(--career-map-node-foreground)]">{data.title}</span>
-      <span className="truncate text-sm text-[var(--career-map-node-description)]">{data.level}</span>
+      <span className="flex flex-1 flex-col justify-center gap-[var(--career-map-node-gap)] px-[var(--career-map-node-padding)]">
+        <span
+          className={cn(
+            "truncate text-base font-semibold leading-snug",
+            data.state === "completed" ? "text-[var(--career-map-node-description)]" : "text-[var(--career-map-node-foreground)]"
+          )}
+        >
+          {data.level}
+        </span>
+        <span className="line-clamp-2 text-xs leading-snug text-[var(--career-map-node-description)]">{data.title}</span>
+      </span>
       <Handle type="source" position={Position.Right} isConnectable={false} className="!pointer-events-none !opacity-0" />
     </div>
   );
@@ -203,9 +214,9 @@ function CareerMapControls({ ids, position }: { ids: string[]; position: Positio
   const showAll = () => setViewport(viewportFor(ids, position, width, height, MIN_ZOOM).viewport, { duration: 200 });
   return (
     <div className="absolute right-[var(--spacing-component-md)] top-[var(--spacing-component-md)] z-10 flex gap-[var(--spacing-component-xs)]">
-      <Button variant="outline" size="icon-sm" aria-label="Zoom out" onClick={() => zoomOut()}><MinusIcon /></Button>
-      <Button variant="outline" size="icon-sm" aria-label="Zoom in" onClick={() => zoomIn()}><PlusIcon /></Button>
-      <Button variant="outline" size="icon-sm" aria-label="Show whole map" onClick={showAll}><CornersOutIcon /></Button>
+      <Button variant="outline" size="icon" aria-label="Zoom out" onClick={() => zoomOut()}><MinusIcon /></Button>
+      <Button variant="outline" size="icon" aria-label="Zoom in" onClick={() => zoomIn()}><PlusIcon /></Button>
+      <Button variant="outline" size="icon" aria-label="Show whole map" onClick={showAll}><CornersOutIcon /></Button>
     </div>
   );
 }
@@ -271,6 +282,8 @@ export interface CareerMapProps {
   selectedRoute?: string;
   /** Clicking a line selects its whole route */
   onSelectRoute?: (id: string) => void;
+  /** Clicking empty canvas (not a drag) — e.g. to clear the selection */
+  onPaneClick?: () => void;
   /** Accessible name of the map, e.g. "Lan Nguyen's career map" */
   "aria-label": string;
   /** Controls shown top-left on the canvas, e.g. an "Explore a role" button */
@@ -278,11 +291,11 @@ export interface CareerMapProps {
   className?: string;
 }
 
-function CareerMapCanvas({ items, links, paths, selectedId, onSelect, selectedRoute, onSelectRoute, "aria-label": ariaLabel, toolbar, className }: CareerMapProps) {
+function CareerMapCanvas({ items, links, paths, selectedId, onSelect, selectedRoute, onSelectRoute, onPaneClick, "aria-label": ariaLabel, toolbar, className }: CareerMapProps) {
   const { position, links: valid } = React.useMemo(() => layout(items, links), [items, links]);
   const routeOf = React.useMemo(() => new Map(paths.map((p) => [p.id, p])), [paths]);
   // Cards on the selected route: both ends of a company path's links; for a Career vision, only the
-  // roles in it (not the card it branches from).
+  // roles in it (not the card it branches from). Completed cards never get the ring — the past recedes.
   const selected = selectedRoute ? routeOf.get(selectedRoute) : undefined;
   const onRoute = new Set(
     valid.filter((l) => l.route === selectedRoute).flatMap((l) => (selected?.kind === "vision" ? [l.to] : [l.from, l.to]))
@@ -292,7 +305,7 @@ function CareerMapCanvas({ items, links, paths, selectedId, onSelect, selectedRo
     id: i.id,
     type: "careerMapNode",
     position: position.get(i.id) ?? { x: 0, y: 0 },
-    data: { title: i.title, level: i.level, state: i.state, label: i.label, ring: onRoute.has(i.id) ? routeColor(selected) : undefined },
+    data: { title: i.title, level: i.level, state: i.state, label: i.label, ring: onRoute.has(i.id) && i.state !== "completed" ? routeColor(selected) : undefined },
     selected: i.id === selectedId,
     width: NODE_WIDTH,
     height: NODE_HEIGHT,
@@ -316,7 +329,9 @@ function CareerMapCanvas({ items, links, paths, selectedId, onSelect, selectedRo
       className: onSelectRoute ? "cursor-pointer" : undefined,
       zIndex: on ? 1 : 0,
       style: { stroke, opacity: on ? 1 : INACTIVE_EDGE_OPACITY, strokeWidth: on ? 3.5 : 2, strokeDasharray: route?.kind === "vision" ? "6 4" : undefined },
-      markerEnd: { type: MarkerType.ArrowClosed, color: stroke, width: 16, height: 16 },
+      // Arrowheads in screen units so they don't grow with the thicker active line. React Flow draws
+      // the arrow in a quarter of the marker box, so 40 → a ~10px arrow at every stroke width.
+      markerEnd: { type: MarkerType.ArrowClosed, color: stroke, width: 40, height: 40, markerUnits: "userSpaceOnUse" },
     };
   });
 
@@ -344,6 +359,9 @@ function CareerMapCanvas({ items, links, paths, selectedId, onSelect, selectedRo
         nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
         onEdgeClick={(_, edge) => onSelectRoute?.(String(edge.data?.route))}
+        onPaneClick={onPaneClick}
+        // React Flow is MIT-licensed; the attribution badge is optional.
+        proOptions={{ hideAttribution: true }}
         minZoom={MIN_ZOOM}
         maxZoom={1.5}
         nodesDraggable={false}
@@ -361,7 +379,7 @@ function CareerMapCanvas({ items, links, paths, selectedId, onSelect, selectedRo
           "node.a11yDescription.keyboardDisabled": "Press Enter or Space to see what this role needs.",
         }}
       >
-        <Background id="career-map-dots" variant={BackgroundVariant.Dots} gap={20} size={1.25} color="var(--career-map-grid)" />
+        <Background id="career-map-dots" variant={BackgroundVariant.Dots} gap={20} size={1.5} color="var(--career-map-grid)" />
         {toolbar && (
           <div className="absolute left-[var(--spacing-component-md)] top-[var(--spacing-component-md)] z-10 flex flex-wrap items-center gap-[var(--spacing-component-xs)]">{toolbar}</div>
         )}

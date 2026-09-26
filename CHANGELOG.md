@@ -6,6 +6,19 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-26 — Career Map card redesign (status band) and audit fixes
+
+### Added
+- **`career-map/band-completed · band-current · band-target · band-planned · band-vision`** → background/muted · brand/200 · green/100 · background/subtle · violet/100. The state label now sits in a tinted band across the top of each card (label text 4.6–7.2:1 on its band; `band-current` is brand/200 so it doesn't match the brand/100 canvas).
+- `CareerMap` prop **`onPaneClick`** — click on empty canvas (not a drag); My Career uses it to clear the selection.
+
+### Changed
+- Career Map card: the **level is the title** (text-base SemiBold) and the Position sits under it in small secondary text — the level is what changes along a path. Completed cards grey their level and never get the route ring. Card size unchanged.
+- `career-map/edge-inactive-opacity` opacity/40 → **opacity/60** (vision lines were unreadable). `career-map/grid` brand/200 → brand/300 (dots were invisible).
+- Arrowheads are a fixed ~10px in screen units instead of scaling with stroke width. Zoom controls use Button `icon` to match the toolbar height. React Flow's attribution badge is hidden.
+
+---
+
 ## 2026-09-26 — Career Map contrast pass: dot grid, darker lines, fading inactive routes
 
 ### Removed — breaking

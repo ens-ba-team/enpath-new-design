@@ -10,7 +10,7 @@
 import type { CareerMapNodeState, CareerMapPath } from '@/components/ui/career-map';
 import { initialMatrices, initialPositions, levelLabel, scale } from '../mock-data';
 
-export const employee = { name: 'Lan Nguyen', manager: 'Minh Tran', levelId: 'BE-L2' };
+export const employee = { name: 'Lan Nguyen', levelId: 'BE-L2' };
 
 export interface CompanyPath extends CareerMapPath {
   /** Level ids in order */

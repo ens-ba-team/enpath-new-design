@@ -33,7 +33,8 @@ function Placeholder({ children }: { children: React.ReactNode }) {
   return <p className="p-[var(--spacing-layout-sm)] text-sm text-[var(--color-text-secondary)]">{children}</p>;
 }
 
-type Selection = { kind: 'card'; id: string } | { kind: 'route'; id: string };
+// 'none' = nothing selected: the detail panel is closed and the map gets the full width.
+type Selection = { kind: 'card'; id: string } | { kind: 'route'; id: string } | { kind: 'none' };
 type DialogName = 'target' | 'untarget' | 'request' | 'add' | 'remove' | 'switch' | 'unfollow' | null;
 
 export function MyCareerScreen() {
@@ -41,7 +42,7 @@ export function MyCareerScreen() {
   const [plan, setPlan] = React.useState<Plan>(initialPlan);
   const [request, setRequest] = React.useState<VisionRequest | null>(null);
   const [notes, setNotes] = React.useState<Record<number, string>>({});
-  const [sel, setSel] = React.useState<Selection>({ kind: 'card', id: initialPlan.targetId ?? employee.levelId });
+  const [sel, setSel] = React.useState<Selection>({ kind: 'card', id: employee.levelId }); // opens on "You are here"
   const [dialog, setDialog] = React.useState<DialogName>(null);
   const [switchTo, setSwitchTo] = React.useState('');
   const [chatOpen, setChatOpen] = React.useState(false);
@@ -62,14 +63,16 @@ export function MyCareerScreen() {
     ...visions.map((n): CareerMapPath => ({ id: visionRouteId(n), name: `Career vision ${n}`, kind: 'vision' })),
   ];
   const route = sel.kind === 'route' ? routes.find((r) => r.id === sel.id) : undefined;
-  const step = (sel.kind === 'card' ? steps.find((s) => s.id === sel.id) : undefined) ?? (route ? undefined : current);
+  const step = sel.kind === 'card' ? steps.find((s) => s.id === sel.id) : undefined;
   const visionOfRoute = route?.kind === 'vision' ? Number(route.id.replace('vision-', '')) : undefined;
   // Actions on the "selected thing" need a card even while a route is shown (e.g. the request dialog).
   const actionStep = step ?? current;
 
+  // Number vision cards only when there's more than one vision to tell apart.
+  const visionCount = new Set(steps.filter((s) => s.state === 'vision').map((s) => s.vision)).size;
   const items: CareerMapItem[] = steps.map((s) => {
     const d = describeStep(s);
-    return { id: s.id, title: d.title, level: d.level, state: s.state, lane: s.lane, label: s.state === 'vision' ? 'Career vision' : undefined };
+    return { id: s.id, title: d.title, level: d.level, state: s.state, lane: s.lane, label: s.state === 'vision' ? (visionCount > 1 ? `Career vision ${s.vision}` : 'Career vision') : undefined };
   });
   const starts: StartOption[] = steps.filter((s) => s.state !== 'completed').map((s) => ({ id: s.id, label: stateName(s), vision: s.vision }));
 
@@ -84,7 +87,7 @@ export function MyCareerScreen() {
     const blocked = gone.some((s) => s.id === plan.targetId)
       ? 'Your Active target is on it — set another target before removing it.'
       : request?.status === 'waiting' && !visionNumbers(next).includes(request.vision)
-        ? `Career vision ${request.vision} is waiting for ${employee.manager} — withdraw the request before removing it.`
+        ? `Career vision ${request.vision} is waiting for approval — withdraw the request before removing it.`
         : undefined;
     return { next, gone, blocked };
   }, [plan, step, steps, request, visionOfRoute]);
@@ -98,7 +101,7 @@ export function MyCareerScreen() {
     const blocked = gone.some((s) => s.id === plan.targetId)
       ? 'Your Active target is on this path — remove it or pick another target first.'
       : request?.status === 'waiting' && !visionNumbers(next).includes(request.vision)
-        ? `Career vision ${request.vision} starts on this path and is waiting for ${employee.manager} — withdraw it first.`
+        ? `Career vision ${request.vision} starts on this path and is waiting for approval — withdraw it first.`
         : undefined;
     return { next, gone, blocked };
   }, [plan, steps, request]);
@@ -122,7 +125,15 @@ export function MyCareerScreen() {
 
   const follow = (pathId: string) => { if (pathId !== plan.followedPathId) { setSwitchTo(pathId); setDialog('switch'); } };
   const selectCard = (id: string) => setSel({ kind: 'card', id });
-  const selectRoute = (id: string) => setSel((s) => (s.kind === 'route' && s.id === id ? { kind: 'card', id: current.id } : { kind: 'route', id }));
+  const selectRoute = (id: string) => setSel((s) => (s.kind === 'route' && s.id === id ? { kind: 'none' } : { kind: 'route', id }));
+  const clearSelection = () => setSel({ kind: 'none' });
+  // Esc closes the details — unless a dialog is open (it handles its own Esc).
+  React.useEffect(() => {
+    if (sel.kind === 'none' || dialog) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape' && !e.defaultPrevented && !document.querySelector('[role="dialog"]')) setSel({ kind: 'none' }); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [sel.kind, dialog]);
   const addBranches = (added: Branch[], message: string, select: string) => { commit({ ...plan, branches: [...plan.branches, ...added] }, message); selectCard(select); };
   // From the AI chat: the suggested roles become a new Career vision, then it's highlighted.
   const addVisionFromChat = (from: string, ids: string[]) => {
@@ -181,6 +192,7 @@ export function MyCareerScreen() {
                 onSelect={selectCard}
                 selectedRoute={route?.id}
                 onSelectRoute={selectRoute}
+                onPaneClick={clearSelection}
                 className="flex-1"
                 toolbar={
                   <>
@@ -198,6 +210,7 @@ export function MyCareerScreen() {
               />
               <CareerMapLegend paths={routes} selectedRoute={route?.id} onSelectRoute={selectRoute} className="border-t border-[var(--color-border-default)] px-[var(--spacing-layout-sm)] py-[var(--spacing-component-sm)]" />
             </div>
+            {(route || step) && (
             <aside aria-label={route ? 'Selected route' : 'Selected role'} className="flex shrink-0 flex-col border-t border-[var(--color-border-default)] lg:w-[400px] lg:overflow-y-auto lg:border-l lg:border-t-0">
               {route ? (
                 <RoutePanel route={route} plan={plan} steps={steps} request={request} removeBlocked={removal?.blocked} unfollowBlocked={unfollow?.blocked}
@@ -208,13 +221,15 @@ export function MyCareerScreen() {
                     onWithdraw: () => { setRequest(null); toast(`Request withdrawn — Career vision ${visionOfRoute} is a draft again`); },
                     onRemoveVision: () => setDialog('remove'),
                     onSelectCard: selectCard,
+                    onClose: clearSelection,
                   }} />
               ) : (
                 <StepPanel step={actionStep} plan={plan} links={links} request={request} removable={!!removal} removeBlocked={removal?.blocked}
                   focusGroup={actionStep.state === 'target' ? focusGroup : undefined}
-                  actions={{ onSetTarget: () => setDialog('target'), onRemoveTarget: () => setDialog('untarget'), onAdd: () => setDialog('add'), onRemove: () => setDialog('remove'), onShowRoute: selectRoute }} />
+                  actions={{ onSetTarget: () => setDialog('target'), onRemoveTarget: () => setDialog('untarget'), onAdd: () => setDialog('add'), onRemove: () => setDialog('remove'), onShowRoute: selectRoute, onClose: clearSelection }} />
               )}
             </aside>
+            )}
           </div>
         </div>
       )}
@@ -231,24 +246,23 @@ export function MyCareerScreen() {
           onOpenChange={(o) => !o && setDialog(null)}
           visionName={`Career vision ${visionOfRoute}`}
           route={visionRoute(plan, visionOfRoute).map(levelName).join(' → ')}
-          manager={employee.manager}
           initialNote={notes[visionOfRoute] ?? ''}
           onSend={(note) => {
             setNotes((n) => ({ ...n, [visionOfRoute]: note }));
             setRequest({ vision: visionOfRoute, status: 'waiting', note, managerNote: '' });
             setDialog(null);
-            toast.success(`Career vision ${visionOfRoute} sent to ${employee.manager}`);
+            toast.success(`Career vision ${visionOfRoute} sent for approval`);
           }}
         />
       )}
       <ExplorePositionDialog
+        followedPathId={plan.followedPathId}
         open={dialog === 'add'}
         onOpenChange={(o) => !o && setDialog(null)}
         starts={starts}
         defaultFrom={actionStep.state === 'completed' ? current.id : actionStep.id}
         nextVision={(visions.at(-1) ?? 0) + 1}
         onMap={new Set(steps.map((s) => s.id))}
-        manager={employee.manager}
         onAdd={addBranches}
       />
       {removal && (

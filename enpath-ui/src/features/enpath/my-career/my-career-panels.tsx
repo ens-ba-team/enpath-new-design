@@ -13,6 +13,7 @@ import {
   MapPinIcon,
   PlusIcon,
   TrashIcon,
+  XIcon,
 } from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -24,7 +25,6 @@ import {
   companyPaths,
   countGaps,
   describeStep,
-  employee,
   gapsFor,
   matchingPaths,
   recordCount,
@@ -42,16 +42,16 @@ export const requestBadge: Record<
   VisionStatus,
   { text: string; variant: "blue" | "success" | "secondary" }
 > = {
-  waiting: { text: `Waiting for ${employee.manager}`, variant: "blue" },
-  approved: { text: `Approved by ${employee.manager}`, variant: "success" },
-  declined: { text: `Declined by ${employee.manager}`, variant: "secondary" },
+  waiting: { text: "Waiting for approval", variant: "blue" },
+  approved: { text: "Approved", variant: "success" },
+  declined: { text: "Declined", variant: "secondary" },
 };
 
 const visionStatusText: Record<VisionStatus | "draft", string> = {
   draft: "draft, only you can see it",
-  waiting: `waiting for ${employee.manager}`,
-  approved: `approved by ${employee.manager}`,
-  declined: `declined by ${employee.manager}`,
+  waiting: "waiting for approval",
+  approved: "approved",
+  declined: "declined",
 };
 
 export const stateName = (s: PlanStep) =>
@@ -74,16 +74,31 @@ function Panel({
   children,
   notes,
   buttons,
+  onClose,
 }: {
   labelledBy: string;
   children: React.ReactNode;
   notes: (string | false | undefined)[];
   buttons: React.ReactNode[];
+  /** Shows a close button top-right (same place as the Sheet's) — closing clears the selection. */
+  onClose?: () => void;
 }) {
   const shown = notes.filter((n): n is string => !!n);
   return (
-    <section aria-labelledby={labelledBy} className="flex flex-1 flex-col">
-      <div className="flex flex-1 flex-col gap-[var(--spacing-layout-xs)] p-[var(--spacing-layout-xs)]">
+    <section aria-labelledby={labelledBy} className="relative flex flex-1 flex-col">
+      {onClose && (
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          aria-label="Close details"
+          onClick={onClose}
+          className="absolute right-[var(--spacing-layout-xs)] top-[var(--spacing-layout-xs)] z-10"
+        >
+          <XIcon aria-hidden="true" />
+        </Button>
+      )}
+      {/* The header (first child) leaves room for the close button. */}
+      <div className={`flex flex-1 flex-col gap-[var(--spacing-layout-xs)] p-[var(--spacing-layout-xs)]${onClose ? " [&>*:first-child]:pr-[var(--height-control-md)]" : ""}`}>
         {children}
       </div>
       {(shown.length > 0 || buttons.length > 0) && (
@@ -239,6 +254,7 @@ export interface StepActions {
   onAdd: () => void;
   onRemove: () => void;
   onShowRoute: (routeId: string) => void;
+  onClose?: () => void;
 }
 
 export function StepPanel({
@@ -321,7 +337,7 @@ export function StepPanel({
       </Button>
     );
     if (mine?.status !== "approved")
-      hint = `${employee.manager} approves career visions before they can become your target.`;
+      hint = "Your manager approves career visions before they can become your target.";
   }
   if (step.state !== "completed")
     buttons.push(
@@ -354,6 +370,7 @@ export function StepPanel({
 
   return (
     <Panel
+      onClose={actions.onClose}
       labelledBy="step-title"
       notes={[hint, removable && removeBlocked]}
       buttons={buttons}
@@ -419,6 +436,7 @@ export interface RouteActions {
   onWithdraw: () => void;
   onRemoveVision: () => void;
   onSelectCard: (id: string) => void;
+  onClose?: () => void;
 }
 
 /** Roles on a route in order, as selectable Items. For a Career vision the first entry is the card it
@@ -438,7 +456,7 @@ function RouteSteps({
       aria-label="Roles on this route"
       className="-mx-[var(--spacing-component-sm)] flex flex-col"
     >
-      {ids.map((id, i) => {
+      {ids.map((id) => {
         const s = steps.find((x) => x.id === id);
         const state = s?.state;
         const StatusIcon = state === "completed"
@@ -463,8 +481,12 @@ function RouteSteps({
               icon={
                 <StatusIcon aria-hidden="true" className={`h-4 w-4 ${statusClass}`} />
               }
-              title={levelName(id)}
-              description={s ? stateName(s) : undefined}
+              title={
+                <>
+                  <span className={state === "current" ? "font-semibold" : undefined}>{levelName(id)}</span>
+                  {s && <span className="font-normal text-[var(--color-text-secondary)]"> · {stateName(s)}</span>}
+                </>
+              }
               action={<ArrowRightIcon aria-hidden="true" className="h-4 w-4 text-[var(--color-text-secondary)]" />}
               onSelect={() => onSelectCard(id)}
             />
@@ -534,11 +556,11 @@ export function RoutePanel({
           Withdraw request
         </Button>
       );
-      hint = `${employee.manager} is reviewing it. Your current role stays the same.`;
+      hint = "Your manager is reviewing it. Your current role stays the same.";
     } else if (mine?.status === "approved") {
-      hint = `${employee.manager} agreed on this direction. Select a role in it to make it your target.`;
+      hint = `Your manager agreed on this direction. Select a role in it to make it your target.`;
     } else if (request?.status === "waiting") {
-      hint = `Career vision ${request.vision} is waiting for ${employee.manager}. You can send one at a time — withdraw it to send this one.`;
+      hint = `Career vision ${request.vision} is waiting for approval. You can send one at a time — withdraw it to send this one.`;
     } else {
       buttons.push(
         <Button key="request" onClick={actions.onRequest}>
@@ -547,7 +569,7 @@ export function RoutePanel({
             : "Request manager approval"}
         </Button>
       );
-      hint = `It leaves your company path, so ${employee.manager} approves it before any role in it can become your target.`;
+      hint = `It leaves your company path, so your manager approves it before any role in it can become your target.`;
     }
     if (!removeBlocked)
       buttons.push(
@@ -562,10 +584,11 @@ export function RoutePanel({
       );
     return (
       <Panel
+      onClose={actions.onClose}
         labelledBy="route-title"
         notes={[
           mine?.status === "declined" && mine.managerNote
-            ? `${employee.manager}: “${mine.managerNote}”`
+            ? `Your manager: “${mine.managerNote}”`
             : undefined,
           hint,
           removeBlocked,
@@ -611,7 +634,8 @@ export function RoutePanel({
     companyButtons.push(
       <Button
         key="unfollow"
-        variant="ghost-destructive"
+        // Disabled red reads as pink-but-clickable; a disabled ghost reads as unavailable.
+        variant={blockedByTarget ? "ghost" : "ghost-destructive"}
         disabled={blockedByTarget}
         onClick={actions.onUnfollow}
       >
@@ -621,6 +645,7 @@ export function RoutePanel({
   }
   return (
     <Panel
+      onClose={actions.onClose}
       labelledBy="route-title"
       notes={[
         canFollow && "It becomes your main route, shown in the top row.",

@@ -10,9 +10,8 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription,
   AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { CheckCircleIcon, CompassIcon } from '@phosphor-icons/react/ssr';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
+import { routeColor } from '@/components/ui/career-map';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -68,14 +67,13 @@ export function SetTargetDialog({ open, onOpenChange, from, to, onConfirm }: {
   );
 }
 
-export function VisionRequestDialog({ open, onOpenChange, visionName, route, manager, initialNote, onSend }: {
+export function VisionRequestDialog({ open, onOpenChange, visionName, route, initialNote, onSend }: {
   open: boolean;
   /** "Career vision 2" */
   visionName: string;
   onOpenChange: (open: boolean) => void;
   /** "Backend Engineer L2 · Mid → Product Designer L1 · Designer → …" */
   route: string;
-  manager: string;
   initialNote: string;
   onSend: (note: string) => void;
 }) {
@@ -83,29 +81,28 @@ export function VisionRequestDialog({ open, onOpenChange, visionName, route, man
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[520px]">
         {/* DialogContent unmounts when closed, so the form starts from initialNote every time it opens. */}
-        <VisionRequestForm visionName={visionName} route={route} manager={manager} initialNote={initialNote} onSend={onSend} onCancel={() => onOpenChange(false)} />
+        <VisionRequestForm visionName={visionName} route={route} initialNote={initialNote} onSend={onSend} onCancel={() => onOpenChange(false)} />
       </DialogContent>
     </Dialog>
   );
 }
 
-function VisionRequestForm({ visionName, route, manager, initialNote, onSend, onCancel }: {
-  visionName: string; route: string; manager: string; initialNote: string; onSend: (note: string) => void; onCancel: () => void;
+function VisionRequestForm({ visionName, route, initialNote, onSend, onCancel }: {
+  visionName: string; route: string; initialNote: string; onSend: (note: string) => void; onCancel: () => void;
 }) {
   const [note, setNote] = React.useState(initialNote);
   return (
       <>
         <DialogHeader>
           <DialogTitle>Request manager approval</DialogTitle>
-          <DialogDescription>{visionName} leaves your company path, so {manager} reviews it first. You can send one career vision at a time.</DialogDescription>
+          <DialogDescription>{visionName} leaves your company path, so your manager reviews it first. You can send one career vision at a time.</DialogDescription>
         </DialogHeader>
         <form className="flex flex-col gap-[var(--spacing-component-lg)]" onSubmit={(e) => { e.preventDefault(); onSend(note.trim()); }} noValidate>
           <dl>
             <Row label={visionName}>{route}</Row>
-            <Row label="Reviewer">{manager}</Row>
           </dl>
           <div className="flex flex-col gap-[var(--spacing-component-xs)]">
-            <Label htmlFor="vision-note">Note for {manager} (optional)</Label>
+            <Label htmlFor="vision-note">Note for your manager (optional)</Label>
             <Textarea id="vision-note" rows={3} value={note} onChange={(e) => setNote(e.target.value)}
               placeholder="I’ve enjoyed the onboarding research with the design team and want to grow into design." />
           </div>
@@ -161,7 +158,7 @@ export interface StartOption {
   vision?: number;
 }
 
-export function ExplorePositionDialog({ open, onOpenChange, starts, defaultFrom, nextVision, onMap, manager, onAdd }: {
+export function ExplorePositionDialog({ open, onOpenChange, starts, defaultFrom, nextVision, onMap, followedPathId, onAdd }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   /** Cards a move can start from, in map order */
@@ -171,20 +168,21 @@ export function ExplorePositionDialog({ open, onOpenChange, starts, defaultFrom,
   nextVision: number;
   /** Level ids already on the map — a role can appear only once */
   onMap: Set<string>;
-  manager: string;
+  /** The company path the employee follows — its steps preview green, like on the map */
+  followedPathId: string | null;
   onAdd: (branches: Branch[], message: string, select: string) => void;
 }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[560px]">
-        <ExplorePositionForm starts={starts} defaultFrom={defaultFrom} nextVision={nextVision} onMap={onMap} manager={manager} onAdd={onAdd} onCancel={() => onOpenChange(false)} />
+        <ExplorePositionForm starts={starts} defaultFrom={defaultFrom} nextVision={nextVision} onMap={onMap} followedPathId={followedPathId} onAdd={onAdd} onCancel={() => onOpenChange(false)} />
       </DialogContent>
     </Dialog>
   );
 }
 
-function ExplorePositionForm({ starts, defaultFrom, nextVision, onMap, manager, onAdd, onCancel }: {
-  starts: StartOption[]; defaultFrom: string; nextVision: number; onMap: Set<string>; manager: string;
+function ExplorePositionForm({ starts, defaultFrom, nextVision, onMap, followedPathId, onAdd, onCancel }: {
+  starts: StartOption[]; defaultFrom: string; nextVision: number; onMap: Set<string>; followedPathId: string | null;
   onAdd: (branches: Branch[], message: string, select: string) => void; onCancel: () => void;
 }) {
   const [from, setFrom] = React.useState(defaultFrom);
@@ -219,7 +217,7 @@ function ExplorePositionForm({ starts, defaultFrom, nextVision, onMap, manager, 
     <>
       <DialogHeader>
         <DialogTitle>Explore a position</DialogTitle>
-        <DialogDescription>See the path from where you are to another position, and what each level would need. It doesn’t change your current role.</DialogDescription>
+        <DialogDescription>See the path from where you are to another position. It doesn’t change your current role.</DialogDescription>
       </DialogHeader>
       <form className="flex flex-col gap-[var(--spacing-component-lg)]" onSubmit={(e) => { e.preventDefault(); submit(); }} noValidate>
         <div className="flex flex-col gap-[var(--spacing-component-xs)]">
@@ -257,15 +255,17 @@ function ExplorePositionForm({ starts, defaultFrom, nextVision, onMap, manager, 
         {tried && error && <p role="alert" className="text-sm text-[var(--color-text-invalid)]">{error}</p>}
 
         {move && (
-          <Alert variant={move.path ? 'success' : 'info'} role="status">
-            {move.path ? <CheckCircleIcon aria-hidden="true" /> : <CompassIcon aria-hidden="true" />}
-            <AlertTitle>{[from, ...move.levels].map(levelName).join(' → ')}</AlertTitle>
-            <AlertDescription>
-              {move.path
-                ? `On your company path, ${move.path.name}. Added as planned steps — no approval needed.`
-                : `Not on a company path for your role, so it ${start?.vision ? `joins Career vision ${vision}` : `becomes Career vision ${vision}`}. Only you see it until you send it to ${manager}, who approves it before any role in it can be your target.`}
-            </AlertDescription>
-          </Alert>
+          <RoutePreview
+            from={from}
+            fromLabel={start?.label}
+            levels={move.levels}
+            heading={move.path
+              ? `Part of ${move.path.name} · no approval needed`
+              : start?.vision ? `Joins Career vision ${vision}` : `Becomes Career vision ${vision}`}
+            note={move.path ? undefined : 'Private until you send it for approval.'}
+            color={move.path ? routeColor({ id: move.path.id, name: move.path.name, color: move.path.color, followed: move.path.id === followedPathId }) : routeColor({ id: 'vision', name: '', kind: 'vision' })}
+            dashed={!move.path}
+          />
         )}
 
         <DialogFooter>
@@ -274,6 +274,46 @@ function ExplorePositionForm({ starts, defaultFrom, nextVision, onMap, manager, 
         </DialogFooter>
       </form>
     </>
+  );
+}
+
+// The route as a vertical step rail — the map's line language turned on its side: dashed violet for a
+// Career vision, solid in the path's colour for company-path steps. The start card is grey context.
+function RoutePreview({ from, fromLabel, levels, heading, note, color, dashed }: {
+  from: string; fromLabel?: string; levels: string[]; heading: string; note?: string; color: string; dashed: boolean;
+}) {
+  // Dots are solid rings painted over the rail (a 12px dashed ring breaks into fragments); the rail's
+  // dash carries the Career-vision signal.
+  const dot = 'relative h-3 w-3 shrink-0 rounded-[var(--radius-pill)] border-2 bg-[var(--color-background-default)]';
+  const row = 'relative flex min-h-[var(--height-control-md)] items-center gap-[var(--spacing-component-sm)] text-sm';
+  return (
+    <div role="status" className="flex flex-col gap-[var(--spacing-component-xs)]">
+      <p className="text-xs font-semibold text-[var(--color-text-secondary)]">{heading}</p>
+      <div className="relative">
+        {/* The rail: from the first dot's centre to the last's. */}
+        <span
+          aria-hidden="true"
+          className={`absolute bottom-[calc(var(--height-control-md)/2)] left-[5px] top-[calc(var(--height-control-md)/2)] border-l-2 ${dashed ? 'border-dashed' : 'border-solid'}`}
+          style={{ borderColor: color }}
+        />
+        <ol aria-label="Route" className="flex flex-col">
+          <li className={row}>
+            <span aria-hidden="true" className={`${dot} border-[var(--color-border-strong)]`} />
+            <span className="text-[var(--color-text-secondary)]">
+              {levelName(from)}
+              {fromLabel && <> · <span className={fromLabel === 'You are here' ? 'text-[var(--career-map-current-label)]' : undefined}>{fromLabel}</span></>}
+            </span>
+          </li>
+          {levels.map((id) => (
+            <li key={id} className={row}>
+              <span aria-hidden="true" className={dot} style={{ borderColor: color }} />
+              <span className="font-semibold text-[var(--color-background-default-foreground)]">{levelName(id)}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+      {note && <p className="text-sm text-[var(--color-text-secondary)]">{note}</p>}
+    </div>
   );
 }
 

@@ -51,6 +51,11 @@
       "type": "TEXT",
       "default": null,
       "reactProp": "onSelectRoute"
+    },
+    "onPaneClick": {
+      "type": "TEXT",
+      "default": null,
+      "reactProp": "onPaneClick"
     }
   },
   "tokens": {
@@ -65,10 +70,19 @@
       "radius": "career-map/node-radius",
       "padding": "career-map/node-padding",
       "gap": "career-map/node-gap",
-      "title": "career-map/node-foreground",
-      "description": "career-map/node-description",
+      "title": "career-map/node-foreground (level; node-description when completed)",
+      "description": "career-map/node-description (Position)",
       "selected": "career-map/node-selected",
-      "shadow": "shadow/surface"
+      "shadow": "shadow/surface",
+      "band": {
+        "completed": "career-map/band-completed",
+        "current": "career-map/band-current",
+        "target": "career-map/band-target",
+        "planned": "career-map/band-planned",
+        "vision": "career-map/band-vision",
+        "paddingX": "career-map/node-padding",
+        "paddingY": "spacing/component/xs"
+      }
     },
     "states": {
       "currentLabel": "career-map/current-label",
@@ -86,11 +100,13 @@
       "vision": "career-map/vision-edge",
       "strokeWeight": 2,
       "strokeWeightSelected": 3.5,
-      "inactiveOpacity": "career-map/edge-inactive-opacity"
+      "inactiveOpacity": "career-map/edge-inactive-opacity",
+      "arrowhead": "~10px fixed (marker 40 in screen units), same at every stroke width"
     },
     "controls": {
       "inset": "spacing/component/md",
-      "gap": "spacing/component/xs"
+      "gap": "spacing/component/xs",
+      "buttonSize": "Button size icon (matches the toolbar's control height)"
     },
     "legend": {
       "foreground": "color/text/secondary",
@@ -111,7 +127,7 @@
       },
       {
         "property": "Colour",
-        "value": "The followed path is green and named \"· you follow\" in the legend; other company paths are told apart by colour and named in the legend; Career visions are dashed as well as violet. The active route (the selected one, or the followed path when nothing is selected) is shown by thicker lines and a ring on its cards, not colour alone; other routes' lines fade to 40%. On the canvas: followed 4.2:1, vision 3.5:1, path-1 8.3:1; path-2 (2.8:1) and path-3 (2.6:1) are under 3:1 — see knownIssues. Faded lines are below 3:1 by design; the legend names every route at full contrast."
+        "value": "The followed path is green and named \"· you follow\" in the legend; other company paths are told apart by colour and named in the legend; Career visions are dashed as well as violet. The active route (the selected one, or the followed path when nothing is selected) is shown by thicker lines and a ring on its cards, not colour alone; other routes' lines fade to 60%. On the canvas: followed 4.2:1, vision 3.5:1, path-1 8.3:1; path-2 (2.8:1) and path-3 (2.6:1) are under 3:1 — see knownIssues. Faded lines are below 3:1 by design; the legend names every route at full contrast."
       },
       {
         "property": "Zoom",
@@ -144,7 +160,8 @@
     "Every link names its route (a CareerMapPath id). Company paths are solid; routes with kind \"vision\" are dashed violet.",
     "Mark exactly one company path followed — it's drawn green. Give other company paths a colour 1–3. Name routes in CareerMapLegend with the same list.",
     "Pass onSelectRoute to both the map and the legend: lines are clicked with a pointer, legend entries are the keyboard way to select a route.",
-    "Selecting a card and selecting a route are exclusive — clear one when the other is set."
+    "Selecting a card and selecting a route are exclusive — clear one when the other is set.",
+    "Pass onPaneClick to let a click on empty canvas clear the consumer's selection (a drag to pan never counts as a click)."
   ],
   "doNot": [
     {
@@ -178,6 +195,10 @@
     {
       "wrong": "Fade legend labels with opacity",
       "correct": "Inactive entries use color/text/secondary; the active entry is SemiBold foreground on the ghost hover fill"
+    },
+    {
+      "wrong": "Ring completed cards when their route is selected",
+      "correct": "Completed cards never get the route ring and grey their level — the past recedes"
     }
   ],
   "relationships": {
@@ -221,7 +242,6 @@
       "Built on React Flow (@xyflow/react, MIT). Layout constants (card 176×104, column gap 48, row gap 32) are canvas coordinates, not CSS spacing."
     ],
     "knownIssues": [
-      "React Flow's attribution link shows in the bottom-right corner.",
       "Since the canvas moved to brand/100, career-map/path-2 (2.8:1) and path-3 (2.6:1) are under the 3:1 non-text minimum on the canvas; faded (inactive) lines are well below it. Card white vs canvas is 1.19:1 — the card edge relies on shadow/surface."
     ],
     "changelog": [
@@ -249,6 +269,26 @@
         "date": "2026-09-26",
         "change": "Breaking: removed the wide-grid token (the canvas is now one dot grid, career-map/grid). Canvas → brand/100, grid → brand/200, vision-border → violet/600, followed-edge → green/700. Cards get shadow/surface; the selected target's ring sits flush with its green border. Inactive routes' lines and legend swatches fade via new career-map/edge-inactive-opacity (opacity/40); with nothing selected the followed path counts as active. Legend labels no longer use opacity.",
         "breaking": true
+      },
+      {
+        "date": "2026-09-26",
+        "change": "Card redesign (option C): the state label moves into a tinted status band across the top (career-map/band-completed · current · target · planned · vision); the level is now the card's title (text-base SemiBold) and the Position sits under it in small secondary text, because the level is what changes along a path. Completed cards grey their level. Card size unchanged (176×104).",
+        "breaking": false
+      },
+      {
+        "date": "2026-09-26",
+        "change": "Audit fixes: career-map/edge-inactive-opacity → opacity/60 (40% made vision lines unreadable); arrowheads fixed at ~10px in screen units instead of scaling with stroke width; completed cards skip the route ring; dot grid → brand/300 at 1.5px; zoom controls use Button size icon to match the toolbar height.",
+        "breaking": false
+      },
+      {
+        "date": "2026-09-26",
+        "change": "Added onPaneClick (click on empty canvas, not a drag). career-map/band-current → brand/100 → brand/200 so the You are here band doesn't match the brand/100 canvas (label 4.8:1).",
+        "breaking": false
+      },
+      {
+        "date": "2026-09-26",
+        "change": "Hid React Flow's attribution badge (proOptions.hideAttribution — allowed under its MIT licence).",
+        "breaking": false
       }
     ]
   },
@@ -300,15 +340,15 @@
     "sections": [
       {
         "title": "Structure",
-        "body": "\n```\nCareerMap — group, fills its container; fill: career-map/canvas\n├─ grid — dot pattern: career-map/grid\n├─ toolbar — optional consumer slot, top-left; inset spacing/component/md, gap spacing/component/xs\n├─ controls — top-right; inset spacing/component/md, gap spacing/component/xs\n│  └─ Button ×3 — Zoom out · Zoom in · Show whole map\n├─ CareerMapNode ×n — one per item, 176×104, shadow/surface; title wraps to 2 lines\n│  ├─ state label — icon + text (Completed · You are here · Active target · Planned · Career vision)\n│  ├─ title — Position name\n│  └─ level — \"L2 · Mid\"\n└─ connection ×n — curved line + arrowhead in its route's colour (followed = green, other paths = path-N, vision = dashed violet); thicker when its route is active; other routes' lines fade\nCareerMapLegend — list below the map, one entry per route; buttons when onSelectRoute is set\n```\n\n---\n\n"
+        "body": "\n```\nCareerMap — group, fills its container; fill: career-map/canvas\n├─ grid — dot pattern: career-map/grid\n├─ toolbar — optional consumer slot, top-left; inset spacing/component/md, gap spacing/component/xs\n├─ controls — top-right; inset spacing/component/md, gap spacing/component/xs\n│  └─ Button ×3 (size icon) — Zoom out · Zoom in · Show whole map\n├─ CareerMapNode ×n — one per item, 176×104, shadow/surface; title wraps to 2 lines\n│  ├─ status band — full width, tinted per state; icon + text (Completed · You are here · Active target · Planned · Career vision)\n│  ├─ level — the card's title, \"L2 · Mid\" (secondary when completed)\n│  └─ Position — small secondary text, up to 2 lines\n└─ connection ×n — curved line + ~10px arrowhead in its route's colour (followed = green, other paths = path-N, vision = dashed violet); thicker when its route is active; other routes' lines fade\nCareerMapLegend — list below the map, one entry per route; buttons when onSelectRoute is set\n```\n\n---\n\n"
       },
       {
         "title": "Token Bindings",
-        "body": "\n| Frame | Property | Token |\n|---|---|---|\n| Canvas | Fill | `career-map/canvas` |\n| Canvas | Dot grid | `career-map/grid` |\n| Node | Fill | `career-map/node-surface` |\n| Node | Border | `career-map/node-border` |\n| Node — target | Border | `career-map/target-border` |\n| Node — vision | Border (dashed) | `career-map/vision-border` |\n| Node — selected / focus | Outline | `career-map/node-selected` |\n| Node | Shadow | `shadow/surface` |\n| Node | Radius | `career-map/node-radius` |\n| Node | Padding | `career-map/node-padding` |\n| Node | Line gap | `career-map/node-gap` |\n| Node | Title | `career-map/node-foreground` |\n| Node | Level, Planned and Career vision labels | `career-map/node-description` |\n| Node — current | Label | `career-map/current-label` |\n| Node — target | Label | `career-map/target-label` |\n| Connection — followed path | Stroke + arrow + route ring | `career-map/followed-edge` |\n| Connection — other company path | Stroke + arrow + route ring | `career-map/path-1` · `career-map/path-2` · `career-map/path-3` |\n| Connection — vision | Stroke + arrow (dashed) + route ring | `career-map/vision-edge` |\n| Connection — inactive route | Stroke + legend swatch opacity | `career-map/edge-inactive-opacity` |\n| Controls | Inset | `spacing/component/md` |\n| Controls | Gap | `spacing/component/xs` |\n| Legend | Text | `color/text/secondary` |\n| Legend | Entry gap | `spacing/component/lg` · `spacing/component/xs` |\n\n---\n\n"
+        "body": "\n| Frame | Property | Token |\n|---|---|---|\n| Canvas | Fill | `career-map/canvas` |\n| Canvas | Dot grid | `career-map/grid` |\n| Node | Fill | `career-map/node-surface` |\n| Node | Border | `career-map/node-border` |\n| Node — target | Border | `career-map/target-border` |\n| Node — vision | Border (dashed) | `career-map/vision-border` |\n| Node — selected / focus | Outline | `career-map/node-selected` |\n| Node | Shadow | `shadow/surface` |\n| Node | Radius | `career-map/node-radius` |\n| Node | Padding | `career-map/node-padding` |\n| Node | Line gap | `career-map/node-gap` |\n| Node | Level (title) | `career-map/node-foreground` |\n| Node | Position, completed level, Completed / Planned / Career vision labels | `career-map/node-description` |\n| Status band — completed | Fill | `career-map/band-completed` |\n| Status band — current | Fill | `career-map/band-current` |\n| Status band — target | Fill | `career-map/band-target` |\n| Status band — planned | Fill | `career-map/band-planned` |\n| Status band — vision | Fill | `career-map/band-vision` |\n| Status band | Padding | `career-map/node-padding` × `spacing/component/xs` |\n| Node — current | Label | `career-map/current-label` |\n| Node — target | Label | `career-map/target-label` |\n| Connection — followed path | Stroke + arrow + route ring | `career-map/followed-edge` |\n| Connection — other company path | Stroke + arrow + route ring | `career-map/path-1` · `career-map/path-2` · `career-map/path-3` |\n| Connection — vision | Stroke + arrow (dashed) + route ring | `career-map/vision-edge` |\n| Connection — inactive route | Stroke + legend swatch opacity | `career-map/edge-inactive-opacity` |\n| Controls | Inset | `spacing/component/md` |\n| Controls | Gap | `spacing/component/xs` |\n| Legend | Text | `color/text/secondary` |\n| Legend | Entry gap | `spacing/component/lg` · `spacing/component/xs` |\n\n---\n\n"
       },
       {
         "title": "Behavior",
-        "body": "\nRead-only: cards can't be dragged, connected or deleted. Clicking a line calls `onSelectRoute(routeId)`; the consumer controls `selectedRoute` — its lines thicken and its cards get a ring in the route's colour, while other routes' lines and legend swatches fade (`career-map/edge-inactive-opacity`); with no route selected, the followed path is the active one (for a Career vision, only the roles in it, not the card it branches from). Click, Enter or Space on a card calls `onSelect(id)`; the consumer controls `selectedId`. Cards are placed in columns by the longest chain of links reaching them. Rows come from each card's `lane` (0 = top; a taken spot pushes the card down); cards without a lane are centred per column.\n\nOpening view: the whole map if it fits at 70% zoom or more, otherwise the current role and its next steps. The view re-fits the same way whenever cards are added or removed (not on selection); when cards are added and the whole map isn't readable, it moves to the new cards and the card they start from. Fitting keeps the top strip of the canvas clear for the toolbar and zoom controls. Zoom buttons step in and out; Show whole map zooms out to everything (down to 40%). Drag to pan; pinch to zoom; mouse-wheel scroll is left to the page.\n\n---\n\n"
+        "body": "\nRead-only: cards can't be dragged, connected or deleted. Clicking a line calls `onSelectRoute(routeId)`; the consumer controls `selectedRoute` — its lines thicken and its cards get a ring in the route's colour (completed cards excepted), while other routes' lines and legend swatches fade (`career-map/edge-inactive-opacity`); with no route selected, the followed path is the active one (for a Career vision, only the roles in it, not the card it branches from). Click, Enter or Space on a card calls `onSelect(id)`; the consumer controls `selectedId`. Clicking empty canvas calls `onPaneClick()` — dragging to pan doesn't. Cards are placed in columns by the longest chain of links reaching them. Rows come from each card's `lane` (0 = top; a taken spot pushes the card down); cards without a lane are centred per column.\n\nOpening view: the whole map if it fits at 70% zoom or more, otherwise the current role and its next steps. The view re-fits the same way whenever cards are added or removed (not on selection); when cards are added and the whole map isn't readable, it moves to the new cards and the card they start from. Fitting keeps the top strip of the canvas clear for the toolbar and zoom controls. Zoom buttons step in and out; Show whole map zooms out to everything (down to 40%). Drag to pan; pinch to zoom; mouse-wheel scroll is left to the page.\n\n---\n\n"
       },
       {
         "title": "Accessibility",
