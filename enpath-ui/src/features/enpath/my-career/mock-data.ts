@@ -24,9 +24,9 @@ const isPublishedLevel = (levelId: string) => publishedPositions.some((p) => p.l
 /** Company Career Paths (colour = career-map/path-N). Employees only see a path when every
  *  position on it is published. */
 const allCompanyPaths: CompanyPath[] = [
-  { id: 'engineering-growth', name: 'Engineering growth', color: 1, levels: ['BE-L1', 'BE-L2', 'BE-L3', 'BE-L4'] },
-  { id: 'engineering-to-product', name: 'Engineering to product', color: 2, levels: ['BE-L2', 'BE-L3', 'PM-L2', 'PM-L3'] },
-  { id: 'design-craft', name: 'Design craft', color: 3, levels: ['PD-L1', 'PD-L2', 'PD-L3'] },
+  { id: 'engineering-growth', name: 'Engineering growth', levels: ['BE-L1', 'BE-L2', 'BE-L3', 'BE-L4'] },
+  { id: 'engineering-to-product', name: 'Engineering to product', levels: ['BE-L2', 'BE-L3', 'PM-L2', 'PM-L3'] },
+  { id: 'design-craft', name: 'Design craft', levels: ['PD-L1', 'PD-L2', 'PD-L3'] },
 ];
 
 export const companyPaths = allCompanyPaths.filter((p) => p.levels.every(isPublishedLevel));

@@ -59,7 +59,7 @@ export function MyCareerScreen() {
     ...companyPaths
       .filter((p) => links.some((l) => l.route === p.id))
       .sort((a, b) => Number(b.id === plan.followedPathId) - Number(a.id === plan.followedPathId))
-      .map((p) => ({ id: p.id, name: p.id === plan.followedPathId ? `${p.name} · you follow` : p.name, color: p.color, followed: p.id === plan.followedPathId })),
+      .map((p) => ({ id: p.id, name: p.id === plan.followedPathId ? `${p.name} · you follow` : p.name, followed: p.id === plan.followedPathId })),
     ...visions.map((n): CareerMapPath => ({ id: visionRouteId(n), name: `Career vision ${n}`, kind: 'vision' })),
   ];
   const route = sel.kind === 'route' ? routes.find((r) => r.id === sel.id) : undefined;

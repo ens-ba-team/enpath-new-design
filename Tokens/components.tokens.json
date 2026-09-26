@@ -453,32 +453,32 @@
     "vision-edge": {
       "$value": "{color.violet.600}",
       "$type": "color",
-      "$description": "Intent:      Dashed line of a Career vision, and the ring on its cards when the vision is highlighted\nUse when:    Drawing links on a vision route in CareerMap; ringing that route's cards when it's selected\nDo not use:  Company-path lines, the card selection ring, or anything outside Career Map\nUse instead: career-map/followed-edge or career-map/path-1..3 for company paths, career-map/node-selected for a selected card\nStatus:      active"
+      "$description": "Intent:      Dashed line of a Career vision, and the ring on its cards when the vision is highlighted\nUse when:    Drawing links on a vision route in CareerMap; ringing that route's cards when it's selected\nDo not use:  Company-path lines, the card selection ring, or anything outside Career Map\nUse instead: career-map/followed-edge or career-map/other-path-edge for company paths, career-map/node-selected for a selected card\nStatus:      active"
+    },
+    "vision-edge-inactive": {
+      "$value": "{color.violet.400}",
+      "$type": "color",
+      "$description": "Intent:      Dashed line and legend swatch of a Career vision that isn't the active route — lighter so the active route reads darker\nUse when:    A vision route while another route is selected (or nothing is selected and the followed path is active)\nDo not use:  Text, card borders or anything outside Career Map lines and swatches\nUse instead: career-map/vision-edge when the vision is the active route\nStatus:      active"
     },
     "followed-edge": {
       "$value": "{color.green.700}",
       "$type": "color",
-      "$description": "Intent:      Line of the company path the employee follows (their main route), and the ring on its cards when that path is highlighted\nUse when:    Drawing links on the route marked followed in CareerMap\nDo not use:  Other company paths, success messages, or anything outside Career Map\nUse instead: career-map/path-1..3 for other company paths, color/border/success for validation\nStatus:      active"
+      "$description": "Intent:      Line of the company path the employee follows (their main route), and the ring on its cards when that path is highlighted\nUse when:    Drawing links on the route marked followed in CareerMap\nDo not use:  Other company paths, success messages, or anything outside Career Map\nUse instead: career-map/other-path-edge for other company paths, color/border/success for validation\nStatus:      active"
     },
-    "path-1": {
-      "$value": "{color.chart.3}",
+    "followed-edge-inactive": {
+      "$value": "{color.green.400}",
       "$type": "color",
-      "$description": "Intent:      Line colour (and highlight ring) for the first named company Career Path on the map — used when it isn't the followed path (categorical, like a chart series)\nUse when:    Drawing links and the legend swatch for the path assigned colour 1 in CareerMap\nDo not use:  UI status, brand, or any element outside Career Map\nUse instead: career-map/vision-edge for the employee's own draft\nStatus:      active"
+      "$description": "Intent:      Line and legend swatch of the followed company path while another route is selected — still green (it's your path), just lighter\nUse when:    The followed route in CareerMap when a different route is selected\nDo not use:  Text, success states or anything outside Career Map lines and swatches\nUse instead: career-map/followed-edge when the followed path is active (selected, or nothing selected)\nStatus:      active"
     },
-    "path-2": {
-      "$value": "{color.chart.2}",
+    "other-path-edge": {
+      "$value": "{color.zinc.600}",
       "$type": "color",
-      "$description": "Intent:      Line colour (and highlight ring) for the second named company Career Path on the map (categorical)\nUse when:    Drawing links and the legend swatch for the path assigned colour 2 in CareerMap\nDo not use:  UI status, brand, or any element outside Career Map\nUse instead: career-map/path-1 for the first path\nStatus:      active"
+      "$description": "Intent:      Line, arrow and route ring of any company path the employee doesn't follow, when it's the selected route. Colour means the path's role, not its identity — all other paths share it; the legend names them\nUse when:    A selected non-followed company path in CareerMap\nDo not use:  The followed path (green), Career visions (violet), text or anything outside Career Map\nUse instead: career-map/followed-edge, career-map/vision-edge, career-map/other-path-edge-inactive when not selected\nStatus:      active"
     },
-    "path-3": {
-      "$value": "{color.chart.1}",
+    "other-path-edge-inactive": {
+      "$value": "{color.zinc.400}",
       "$type": "color",
-      "$description": "Intent:      Line colour (and highlight ring) for the third named company Career Path on the map (categorical)\nUse when:    Drawing links and the legend swatch for the path assigned colour 3 in CareerMap\nDo not use:  UI status, brand, or any element outside Career Map\nUse instead: career-map/path-1 for the first path\nStatus:      active"
-    },
-    "edge-inactive-opacity": {
-      "$value": "{opacity.60}",
-      "$type": "number",
-      "$description": "Intent:      Fades the lines and legend swatches of routes that aren't active, so the active route reads darker as well as thicker\nUse when:    Stroke of a CareerMap connection and its legend swatch when the route is neither selected nor (with nothing selected) the followed path\nDo not use:  Text, cards, labels or anything outside Career Map lines and swatches — never dim text with opacity\nUse instead: color/text/secondary for de-emphasised text\nStatus:      active"
+      "$description": "Intent:      Line and legend swatch of a non-followed company path that isn't selected\nUse when:    Resting state of every company path the employee doesn't follow\nDo not use:  Text, borders or anything outside Career Map lines and swatches\nUse instead: career-map/other-path-edge when the path is selected\nStatus:      active"
     },
     "node-radius": {
       "$value": "{radius.surface}",

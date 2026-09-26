@@ -16,7 +16,7 @@ type Story = StoryObj<typeof meta>;
 // Routes: the followed company path (green), another company path, and a Career vision (dashed violet).
 const routes: CareerMapPath[] = [
   { id: 'engineering-growth', name: 'Engineering growth · you follow', followed: true },
-  { id: 'engineering-to-product', name: 'Engineering to product', color: 2 },
+  { id: 'engineering-to-product', name: 'Engineering to product' },
   { id: 'vision-1', name: 'Career vision 1', kind: 'vision' },
 ];
 
@@ -104,8 +104,8 @@ export const ThreePathsLongTitles: Story = {
     ],
     paths: [
       { id: 'growth', name: 'Engineering growth · you follow', followed: true },
-      { id: 'leadership', name: 'Engineering leadership', color: 2 },
-      { id: 'design', name: 'Design craft', color: 3 },
+      { id: 'leadership', name: 'Engineering leadership' },
+      { id: 'design', name: 'Design craft' },
     ],
     'aria-label': 'Career map with three company paths',
   },

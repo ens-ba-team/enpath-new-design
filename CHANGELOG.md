@@ -6,6 +6,21 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-26 — Career Map: route colour by role, no opacity
+
+### Removed — breaking
+- **`career-map/path-1 · path-2 · path-3`** and **`career-map/edge-inactive-opacity`**; `CareerMapPath.color`. Migrate: drop `color` from paths; every non-followed company path now draws in `career-map/other-path-edge`.
+
+### Added
+- **`career-map/other-path-edge`** → zinc/600 (6.4:1 on the canvas) — every company path the employee doesn't follow.
+- **`career-map/followed-edge-inactive`** → green/400 · **`other-path-edge-inactive`** → zinc/400 · **`vision-edge-inactive`** → violet/400 — lines, arrows and legend swatches of routes that aren't active.
+
+### Changed
+- `CareerMapLegend`: outline buttons (size sm) instead of ghost xs; active route = outline pressed fill + SemiBold; 20×3px swatch in the role colour. Only routes drawn on the map are listed.
+- `routeColor(path, active)` picks the token by role and state. Colour says a route's *role* (followed / other company path / Career vision), never its identity — the legend names routes. Why: per-path colours changed when the employee followed another path, ran out after three, and path-2/3 failed 3:1; opacity made faded lines drift per surface.
+
+---
+
 ## 2026-09-26 — Career Map card redesign (status band) and audit fixes
 
 ### Added

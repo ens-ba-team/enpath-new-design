@@ -263,7 +263,7 @@ function ExplorePositionForm({ starts, defaultFrom, nextVision, onMap, followedP
               ? `Part of ${move.path.name} · no approval needed`
               : start?.vision ? `Joins Career vision ${vision}` : `Becomes Career vision ${vision}`}
             note={move.path ? undefined : 'Private until you send it for approval.'}
-            color={move.path ? routeColor({ id: move.path.id, name: move.path.name, color: move.path.color, followed: move.path.id === followedPathId }) : routeColor({ id: 'vision', name: '', kind: 'vision' })}
+            color={move.path ? routeColor({ id: move.path.id, name: move.path.name, followed: move.path.id === followedPathId }) : routeColor({ id: 'vision', name: '', kind: 'vision' })}
             dashed={!move.path}
           />
         )}
