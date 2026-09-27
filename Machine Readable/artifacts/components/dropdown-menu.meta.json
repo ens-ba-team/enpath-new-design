@@ -32,7 +32,8 @@
   "constraints": [
     "Use for actions; use Select for picking a value.",
     "Put destructive items last, after a separator.",
-    "Icon-only triggers need an aria-label (\"More actions\")."
+    "Icon-only triggers need an aria-label (\"More actions\").",
+    "When a menu item opens a Dialog, AlertDialog or Sheet, set modal={false} on DropdownMenu. A modal menu sets body pointer-events: none; the overlay opened from it restores that value when it closes, leaving the whole page unclickable."
   ],
   "meta": {
     "storyFile": "src/stories/DropdownMenu.stories.tsx",
@@ -47,6 +48,11 @@
       {
         "date": "2026-09-22",
         "change": "Added (AI Elements install) and documented."
+      },
+      {
+        "date": "2026-09-27",
+        "change": "Documented: menus whose items open a Dialog / Sheet must be modal={false} — otherwise the page stays unclickable after the overlay closes (found in Setup → Duplicate position).",
+        "breaking": false
       }
     ]
   },
@@ -150,6 +156,10 @@
     {
       "wrong": "Hiding the only way to do a primary action in a menu",
       "correct": "A visible Button"
+    },
+    {
+      "wrong": "Open a Dialog or Sheet from an item of a modal DropdownMenu",
+      "correct": "Use <DropdownMenu modal={false}> for menus whose items open overlays (e.g. Setup's \"More actions\": History, Duplicate position)"
     }
   ]
 }

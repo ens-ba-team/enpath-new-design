@@ -255,7 +255,9 @@ function PositionDetail({ position, matrix, updateAvailable, onChange, onPublish
               </Button>
             </span>
           </Tip>
-          <DropdownMenu>
+          {/* Non-modal: its items open a Dialog / Sheet. A modal menu locks the page (body pointer-events:
+              none) and the dialog restores that lock on close, leaving the whole page unclickable. */}
+          <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="icon" aria-label="More actions"><DotsThreeIcon className="h-4 w-4" aria-hidden="true" /></Button>
             </DropdownMenuTrigger>
