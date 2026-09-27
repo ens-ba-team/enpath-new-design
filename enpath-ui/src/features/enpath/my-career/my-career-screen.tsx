@@ -245,7 +245,7 @@ export function MyCareerScreen() {
           open={dialog === 'request'}
           onOpenChange={(o) => !o && setDialog(null)}
           visionName={`Career vision ${visionOfRoute}`}
-          route={visionRoute(plan, visionOfRoute).map(levelName).join(' → ')}
+          route={visionRoute(plan, visionOfRoute).map(levelName)}
           initialNote={notes[visionOfRoute] ?? ''}
           onSend={(note) => {
             setNotes((n) => ({ ...n, [visionOfRoute]: note }));

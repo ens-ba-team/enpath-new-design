@@ -10,6 +10,7 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription,
   AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { InfoIcon } from '@phosphor-icons/react/ssr';
 import { Button } from '@/components/ui/button';
 import { routeColor } from '@/components/ui/career-map';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -72,8 +73,8 @@ export function VisionRequestDialog({ open, onOpenChange, visionName, route, ini
   /** "Career vision 2" */
   visionName: string;
   onOpenChange: (open: boolean) => void;
-  /** "Backend Engineer L2 · Mid → Product Designer L1 · Designer → …" */
-  route: string;
+  /** The vision's roles in order as names, starting from the card it branches from */
+  route: string[];
   initialNote: string;
   onSend: (note: string) => void;
 }) {
@@ -88,26 +89,28 @@ export function VisionRequestDialog({ open, onOpenChange, visionName, route, ini
 }
 
 function VisionRequestForm({ visionName, route, initialNote, onSend, onCancel }: {
-  visionName: string; route: string; initialNote: string; onSend: (note: string) => void; onCancel: () => void;
+  visionName: string; route: string[]; initialNote: string; onSend: (note: string) => void; onCancel: () => void;
 }) {
   const [note, setNote] = React.useState(initialNote);
+  // Minimal layout (option C, 2026-09-27): the route collapses to start → destination + a role count,
+  // so a long vision never turns back into a sentence.
+  const added = route.length - 1;
+  const summary = `${route[0]} → ${route[route.length - 1]} · ${added} new ${added === 1 ? 'role' : 'roles'}`;
   return (
       <>
         <DialogHeader>
-          <DialogTitle>Request manager approval</DialogTitle>
-          <DialogDescription>{visionName} leaves your company path, so your manager reviews it first. You can send one career vision at a time.</DialogDescription>
+          <DialogTitle>Send {visionName} for approval</DialogTitle>
+          <DialogDescription>{summary}</DialogDescription>
         </DialogHeader>
         <form className="flex flex-col gap-[var(--spacing-component-lg)]" onSubmit={(e) => { e.preventDefault(); onSend(note.trim()); }} noValidate>
-          <dl>
-            <Row label={visionName}>{route}</Row>
-          </dl>
           <div className="flex flex-col gap-[var(--spacing-component-xs)]">
             <Label htmlFor="vision-note">Note for your manager (optional)</Label>
             <Textarea id="vision-note" rows={3} value={note} onChange={(e) => setNote(e.target.value)}
               placeholder="I’ve enjoyed the onboarding research with the design team and want to grow into design." />
           </div>
-          <p className="text-sm text-[var(--color-text-secondary)]">
-            Your current role stays the same. You can withdraw the request while it’s waiting.
+          <p className="flex items-start gap-[var(--spacing-component-xs)] text-sm text-[var(--color-text-secondary)]">
+            <InfoIcon aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0" />
+            Your current role stays the same. You can withdraw it while it’s waiting.
           </p>
           <DialogFooter>
             <Button type="button" variant="outline" onClick={onCancel}>Cancel</Button>
