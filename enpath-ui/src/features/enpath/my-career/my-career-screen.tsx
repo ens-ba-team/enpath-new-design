@@ -85,9 +85,9 @@ export function MyCareerScreen() {
     const left = new Set(buildMap(next).steps.map((s) => s.id));
     const gone = steps.filter((s) => !left.has(s.id));
     const blocked = gone.some((s) => s.id === plan.targetId)
-      ? 'Your Active target is on it — set another target before removing it.'
+      ? 'Your Active target is on it. Set another target before removing it.'
       : request?.status === 'waiting' && !visionNumbers(next).includes(request.vision)
-        ? `Career vision ${request.vision} is waiting for approval — withdraw the request before removing it.`
+        ? `Career vision ${request.vision} is waiting for approval. Withdraw the request before removing it.`
         : undefined;
     return { next, gone, blocked };
   }, [plan, step, steps, request, visionOfRoute]);
@@ -99,9 +99,9 @@ export function MyCareerScreen() {
     const left = new Set(buildMap(next).steps.map((s) => s.id));
     const gone = steps.filter((s) => !left.has(s.id));
     const blocked = gone.some((s) => s.id === plan.targetId)
-      ? 'Your Active target is on this path — remove it or pick another target first.'
+      ? 'Your Active target is on this path. Remove it or pick another target first.'
       : request?.status === 'waiting' && !visionNumbers(next).includes(request.vision)
-        ? `Career vision ${request.vision} starts on this path and is waiting for approval — withdraw it first.`
+        ? `Career vision ${request.vision} starts on this path and is waiting for approval. Withdraw it first.`
         : undefined;
     return { next, gone, blocked };
   }, [plan, steps, request]);
@@ -116,7 +116,7 @@ export function MyCareerScreen() {
   const switchPreview = React.useMemo(() => {
     if (!switchTo) return null;
     const next = { ...plan, followedPathId: switchTo };
-    if (!plan.targetId) return { next, note: 'You have no target yet — pick one on the path when you’re ready.' };
+    if (!plan.targetId) return { next, note: 'You have no target yet. Pick one on the path when you’re ready.' };
     if (buildMap(next).steps.some((s) => s.id === plan.targetId)) return { next, note: undefined };
     const path = companyPaths.find((p) => p.id === switchTo)!;
     const newTarget = path.levels[path.levels.indexOf(employee.levelId) + 1] ?? employee.levelId;
@@ -164,7 +164,7 @@ export function MyCareerScreen() {
     >
       <SidebarFollowsChat chatOpen={chatOpen} />
       {page !== 'My Career' ? (
-        <Placeholder>{page} — not built yet. Go to My Career or Setup.</Placeholder>
+        <Placeholder>{page} isn’t built yet. Go to My Career or Setup.</Placeholder>
       ) : (
         <div className="flex h-full flex-col overflow-y-auto lg:overflow-hidden">
           <header className="flex items-start gap-[var(--spacing-layout-xs)] px-[var(--spacing-layout-sm)] py-[var(--spacing-layout-sm)]">
@@ -218,7 +218,7 @@ export function MyCareerScreen() {
                     onFollow: follow,
                     onUnfollow: () => setDialog('unfollow'),
                     onRequest: () => setDialog('request'),
-                    onWithdraw: () => { setRequest(null); toast(`Request withdrawn — Career vision ${visionOfRoute} is a draft again`); },
+                    onWithdraw: () => { setRequest(null); toast(`Request withdrawn. Career vision ${visionOfRoute} is a draft again.`); },
                     onRemoveVision: () => setDialog('remove'),
                     onSelectCard: selectCard,
                     onClose: clearSelection,
@@ -238,7 +238,7 @@ export function MyCareerScreen() {
         onConfirm={() => commit({ ...plan, targetId: actionStep.id }, `${levelName(actionStep.id)} is your new target`)} />
       {target && (
         <RemoveTargetDialog open={dialog === 'untarget'} onOpenChange={(o) => !o && setDialog(null)} target={levelName(target.id)}
-          onConfirm={() => commit({ ...plan, targetId: null }, 'Target removed — pick another any time')} />
+          onConfirm={() => commit({ ...plan, targetId: null }, 'Target removed. Pick another any time.')} />
       )}
       {visionOfRoute !== undefined && (
         <VisionRequestDialog

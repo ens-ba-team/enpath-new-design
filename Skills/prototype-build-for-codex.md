@@ -57,7 +57,7 @@ repository.
 
 Verification must cover all three layers:
 
-1. **Static:** run `npx tsc --noEmit -p .` in `enpath-ui`.
+1. **Static:** in `enpath-ui`, run `npx tsc --noEmit -p .` and `npm run lint:screens` — both must be clean (0 errors, 0 warnings).
 2. **System:** when components or tokens change, run drift check, artifact validation, contrast, and
    regenerate token/component output when required by the token skill.
 3. **Behavior:** run the exact user flow in a browser. Assert the meaningful result, not just that a

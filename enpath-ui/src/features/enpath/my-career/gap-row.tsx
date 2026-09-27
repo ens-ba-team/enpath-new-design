@@ -36,14 +36,14 @@ export const statusFill: Record<GapStatus, string> = {
 };
 
 function value(gap: Gap) {
-  if (gap.required == null) return '—';
+  if (gap.required == null) return 'Not set';
   if (gap.current == null) return String(gap.required); // the card's caption says "Needed"
   if (gap.status === 'ready') return String(gap.current);
   return `${gap.current} → ${gap.required}`;
 }
 
 function Detail({ gap }: { gap: Gap }) {
-  const comingNext = (where: string) => toast(`${where} is coming next — this will open it.`);
+  const comingNext = (where: string) => toast(`${where} is coming next. This button will open it.`);
   const label = (text: string) => <p className="text-sm font-semibold text-[var(--color-background-default-foreground)]">{text}</p>;
   const body = (text: string) => <p className="text-sm text-[var(--color-text-secondary)]">{text}</p>;
   const link = (text: string, where: string) => (

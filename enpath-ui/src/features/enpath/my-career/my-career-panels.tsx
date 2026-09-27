@@ -223,7 +223,7 @@ export function ProgressBoard({
             of {total}
           </span>
           <Tip
-            label={`Based on ${recordCount} acknowledged records. “Need evidence” means there are no records yet — it isn’t a gap.${
+            label={`Based on ${recordCount} acknowledged records. “Need evidence” means there are no records yet. It isn’t a gap.${
               n.unset > 0
                 ? ` ${n.unset} expectation${
                     n.unset === 1 ? " is" : "s are"
@@ -414,7 +414,7 @@ export function StepPanel({
       </div>
       {n.unset === gaps.length ? (
         note(
-          "No gap comparison yet — this level has no expectations set in Setup."
+          "No gap comparison yet. This level has no expectations set in Setup."
         )
       ) : (
         <GapList
@@ -516,31 +516,32 @@ export function RoutePanel({
   actions: RouteActions;
 }) {
   const color = routeColor(route);
-  const header = (label: string, title: string, sub?: string) => (
-    <div className="flex flex-col gap-[var(--spacing-component-xs)]">
-      <p className="flex items-center gap-[var(--spacing-component-sm)] text-xs font-semibold text-[var(--color-text-secondary)]">
-        <span
-          aria-hidden="true"
-          className={
-            route.kind === "vision"
-              ? "w-5 border-t-2 border-dashed"
-              : "h-0.5 w-5 rounded-[var(--radius-pill)]"
-          }
-          style={
-            route.kind === "vision"
-              ? { borderColor: color }
-              : { backgroundColor: color }
-          }
-        />
-        {label}
-      </p>
+  // Same pattern as the role-card header: title, then a badge (carrying the route's swatch) and one
+  // context line.
+  type BadgeVariant = "success" | "blue" | "secondary" | "dashed";
+  const header = (badge: { text: string; variant: BadgeVariant }, title: string, context: string) => (
+    <div className="flex flex-col gap-[var(--spacing-component-sm)]">
       <h2
         id="route-title"
         className="text-lg font-semibold text-[var(--color-background-default-foreground)]"
       >
         {title}
       </h2>
-      {sub && note(sub)}
+      <div className="flex flex-wrap items-center gap-x-[var(--spacing-component-sm)] gap-y-[var(--spacing-component-xs)]">
+        <Badge variant={badge.variant} shape="pill" size="md">
+          <span
+            aria-hidden="true"
+            className={
+              route.kind === "vision"
+                ? "w-3 border-t-[3px] border-dashed"
+                : "h-[3px] w-3 rounded-[var(--radius-pill)]"
+            }
+            style={route.kind === "vision" ? { borderColor: color } : { backgroundColor: color }}
+          />
+          {badge.text}
+        </Badge>
+        <span className="text-sm text-[var(--color-text-secondary)]">{context}</span>
+      </div>
     </div>
   );
 
@@ -560,7 +561,7 @@ export function RoutePanel({
     } else if (mine?.status === "approved") {
       hint = `Your manager agreed on this direction. Select a role in it to make it your target.`;
     } else if (request?.status === "waiting") {
-      hint = `Career vision ${request.vision} is waiting for approval. You can send one at a time — withdraw it to send this one.`;
+      hint = `Career vision ${request.vision} is waiting for approval. You can send one at a time. Withdraw it to send this one.`;
     } else {
       buttons.push(
         <Button key="request" onClick={actions.onRequest}>
@@ -596,9 +597,9 @@ export function RoutePanel({
         buttons={buttons}
       >
         {header(
-          "Your career vision",
+          mine ? requestBadge[mine.status] : { text: "Draft", variant: "dashed" },
           route.name,
-          mine ? requestBadge[mine.status].text : "Draft · only you can see it"
+          mine ? "Your own direction" : "Your own direction · private"
         )}
         <RouteSteps
           ids={ids}
@@ -654,11 +655,11 @@ export function RoutePanel({
       buttons={companyButtons}
     >
       {header(
-        followed ? "The company path you follow" : "Company path",
+        followed ? { text: "You follow", variant: "success" } : { text: "Company path", variant: "secondary" },
         path.name,
         followed
-          ? "Planned by your company"
-          : "Planned for your role by your company · no approval needed"
+          ? `Planned by your company · ${ids.length} levels`
+          : "For your role · no approval needed"
       )}
       <RouteSteps
         ids={ids}

@@ -23,7 +23,11 @@ node "Machine Readable/sync-doc-values.mjs" --write
 node "Machine Readable/drift-check.mjs"
 node "Machine Readable/validate-artifacts.mjs"
 cd Tokens && node validate-contrast.mjs
+cd enpath-ui && npx tsc --noEmit -p .    # 0 type errors
+cd enpath-ui && npm run lint:screens     # 0 lint errors or warnings in the product screens (src/features, src/app)
 ```
+
+`lint:screens` covers the screens, not the design-system components yet — `components/ui`, `components/ai-elements` and the stories still have known lint errors to clear before the gate widens to `npm run lint`.
 
 **Light mode only.** There are no dark-mode tokens and no `dark:` styles.
 

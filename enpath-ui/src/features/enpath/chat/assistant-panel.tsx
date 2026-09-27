@@ -123,7 +123,7 @@ export function AssistantPanel({ script, onClose }: { script: AssistantScript; o
         <Tip label="New chat">
           <Button variant="ghost" size="icon" aria-label="New chat" onClick={() => { stop(); setTurns([]); }}><PlusIcon className="h-4 w-4" /></Button>
         </Tip>
-        <Tip label="Chat history — coming next">
+        <Tip label="Chat history is coming next">
           <Button variant="ghost" size="icon" aria-label="Chat history"><ClockCounterClockwiseIcon className="h-4 w-4" /></Button>
         </Tip>
         <Tip label="Close chat (⌘I)">

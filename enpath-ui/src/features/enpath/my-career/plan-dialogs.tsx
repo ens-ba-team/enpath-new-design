@@ -56,7 +56,7 @@ export function SetTargetDialog({ open, onOpenChange, from, to, onConfirm }: {
           <Row label="To">{to}</Row>
         </dl>
         <p className="text-sm text-[var(--color-text-secondary)]">
-          {from ? `${from} stays on your map as Planned. ` : ''}Your official role doesn’t change — a target is your own goal, not a promotion or transfer.
+          {from ? `${from} stays on your map as Planned. ` : ''}Your official role doesn’t change. A target is your own goal, not a promotion or transfer.
         </p>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
@@ -130,7 +130,7 @@ export function RemoveTargetDialog({ open, onOpenChange, target, onConfirm }: {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Remove your target?</AlertDialogTitle>
-          <AlertDialogDescription>{target} stays on your map — you just stop tracking progress toward it.</AlertDialogDescription>
+          <AlertDialogDescription>{target} stays on your map. You just stop tracking progress toward it.</AlertDialogDescription>
         </AlertDialogHeader>
         <p className="text-sm text-[var(--color-text-secondary)]">
           Your progress strip stays empty until you choose another target. You can set it again any time.

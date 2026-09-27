@@ -13,8 +13,8 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Enpath Design System",
-  description: "Component library — Figma → tokens → shadcn/ui",
+  title: "Enpath",
+  description: "Enpath prototype: My Career (employee) and Setup (admin).",
 };
 
 export default function RootLayout({

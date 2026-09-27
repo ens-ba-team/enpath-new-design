@@ -19,10 +19,10 @@ function reply(input: string, mode: string | undefined, ctx: ChatContext, onRevi
   if (mode === 'Edit' || /\b(add|new)\b.*\blevel\b|principal/.test(q)) {
     return {
       tool: `Read ${ctx.positionName} (${ctx.levelNames.length} levels)`,
-      text: `${ctx.positionName} currently has **${levels}**.\n\nI drafted a new top level. Its expectations start as *Not set* — review it in the editor, then fill the grid and publish when ready.`,
+      text: `${ctx.positionName} currently has **${levels}**.\n\nI drafted a new top level. Its expectations start as *Not set*. Review it in the editor, then fill the grid and publish when ready.`,
       proposal: {
         label: 'Proposed change',
-        body: <><span className="font-semibold">+ L{ctx.levelNames.length + 1} · Principal</span> in {ctx.positionName} — expectations start Not set</>,
+        body: <><span className="font-semibold">+ L{ctx.levelNames.length + 1} · Principal</span> in {ctx.positionName} · expectations start Not set</>,
         accept: 'Review in editor',
         accepted: 'Opened in editor',
         onAccept: () => onReviewProposal({ levelName: 'Principal' }),
@@ -33,7 +33,7 @@ function reply(input: string, mode: string | undefined, ctx: ChatContext, onRevi
     return {
       tool: `Checked ${ctx.positionName} expectations`,
       text: ctx.unsetCells.length
-        ? `**${ctx.unsetCells.length} ${ctx.unsetCells.length === 1 ? 'cell is' : 'cells are'} not set** in ${ctx.positionName}:\n\n${ctx.unsetCells.map((c) => `- ${c}`).join('\n')}\n\nYou can still publish — employees see these as *Not set*.`
+        ? `**${ctx.unsetCells.length} ${ctx.unsetCells.length === 1 ? 'cell is' : 'cells are'} not set** in ${ctx.positionName}:\n\n${ctx.unsetCells.map((c) => `- ${c}`).join('\n')}\n\nYou can still publish. Employees see these as *Not set*.`
         : `Every expectation in ${ctx.positionName} is set. It's ready to publish.`,
     };
   }
@@ -50,7 +50,7 @@ export function ChatPanel({ context, onClose, onReviewProposal }: {
 }) {
   const script: AssistantScript = {
     emptyTitle: 'Ask about your career structure',
-    emptyText: 'I can explain positions and levels, find gaps, and draft changes. You review and publish — I never save on my own.',
+    emptyText: 'I can explain positions and levels, find gaps, and draft changes. You review and publish. I never save on my own.',
     suggestions: [`What levels does ${context.positionName} have?`, 'Which cells are not set?', 'Add a Principal level'],
     context: context.positionName,
     placeholder: (mode) => (mode === 'Edit' ? 'Describe a change to draft…' : 'Ask Enpath…'),

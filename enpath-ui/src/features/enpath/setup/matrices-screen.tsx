@@ -223,13 +223,15 @@ function CompetencyEditor({ competencies, scaleSize, editable, expandedReadOnly,
   onChangeCompetency: (id: string, patch: Partial<Competency>) => void;
   onRemoveCompetency: (id: string) => void; onAddCompetency: () => void;
 }) {
-  const [selected, setSelected] = React.useState(competencies[0]?.id ?? null);
-  const prevLength = React.useRef(competencies.length);
-  React.useEffect(() => {
-    if (competencies.length > prevLength.current) setSelected(competencies[competencies.length - 1].id);
-    else if (!competencies.some((c) => c.id === selected)) setSelected(competencies[0]?.id ?? null);
-    prevLength.current = competencies.length;
-  }, [competencies, selected]);
+  const [picked, setSelected] = React.useState(competencies[0]?.id ?? null);
+  // A newly added competency becomes the selection (adjusted during render, not in an effect).
+  const [seenLength, setSeenLength] = React.useState(competencies.length);
+  if (competencies.length !== seenLength) {
+    setSeenLength(competencies.length);
+    if (competencies.length > seenLength) setSelected(competencies[competencies.length - 1].id);
+  }
+  // If the picked one was removed, fall back to the first — derived, so it never lags a render.
+  const selected = competencies.some((c) => c.id === picked) ? picked : competencies[0]?.id ?? null;
 
   const current = competencies.find((c) => c.id === selected);
   const setBehavior = (i: number, patch: Partial<Behavior>) => {

@@ -29,7 +29,7 @@ Voice-neutral writing mechanics for any product built on the Enpath Design Syste
 
 ## General punctuation & formatting
 
-- No em dashes in copy — use a comma instead.
+- No em dashes (—) in UI copy: labels, messages, tooltips, toasts, aria-labels and AI chat text. Use a comma, a colon or a new sentence. A "no value" cell says "Not set", not "—". Enforced by `drift-check.mjs` #11.
 - Oxford comma in lists of three or more.
 - Use "select" or "choose" instead of "click" (covers touch and mouse).
 - Numbers: use numerals (3, not "three") in UI, except at the start of a sentence.

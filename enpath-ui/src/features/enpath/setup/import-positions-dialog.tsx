@@ -60,8 +60,20 @@ export function ImportPositionsDialog({ open, onOpenChange, matrices, existingCo
   open: boolean; onOpenChange: (o: boolean) => void; matrices: Matrix[]; existingCodes: Set<string>;
   onImport: (positions: Position[]) => void;
 }) {
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-[600px]">
+        {/* DialogContent unmounts when closed, so the pasted text starts empty every time it opens. */}
+        <ImportPositionsForm matrices={matrices} existingCodes={existingCodes} onImport={onImport} onCancel={() => onOpenChange(false)} />
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function ImportPositionsForm({ matrices, existingCodes, onImport, onCancel }: {
+  matrices: Matrix[]; existingCodes: Set<string>; onImport: (positions: Position[]) => void; onCancel: () => void;
+}) {
   const [text, setText] = React.useState('');
-  React.useEffect(() => { if (open) setText(''); }, [open]);
 
   const rows = React.useMemo(() => (text.trim() ? parseCsv(text, matrices, existingCodes) : []), [text, matrices, existingCodes]);
   const ready = rows.filter((r) => !r.error);
@@ -72,11 +84,10 @@ export function ImportPositionsDialog({ open, onOpenChange, matrices, existingCo
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[600px]">
+      <>
         <DialogHeader>
           <DialogTitle>Import positions</DialogTitle>
-          <DialogDescription>Paste CSV — one position per row. Header row optional.</DialogDescription>
+          <DialogDescription>Paste CSV, one position per row. The header row is optional.</DialogDescription>
         </DialogHeader>
 
         <div className="flex flex-col gap-[var(--spacing-component-lg)]">
@@ -102,9 +113,9 @@ export function ImportPositionsDialog({ open, onOpenChange, matrices, existingCo
                     <span className="min-w-0 flex-1">
                       <span className="font-medium">{r.name || `Row ${r.line}`}</span>
                       {r.error ? (
-                        <span className="text-[var(--color-status-warning-subtle-foreground)]"> — {r.error}</span>
+                        <span className="text-[var(--color-status-warning-subtle-foreground)]">: {r.error}</span>
                       ) : (
-                        <span className="text-[var(--color-text-secondary)]"> — {r.code} · {r.department} · {r.matrixName} · {r.levelNames.length} {r.levelNames.length === 1 ? 'level' : 'levels'}</span>
+                        <span className="text-[var(--color-text-secondary)]"> · {r.code} · {r.department} · {r.matrixName} · {r.levelNames.length} {r.levelNames.length === 1 ? 'level' : 'levels'}</span>
                       )}
                     </span>
                   </li>
@@ -115,12 +126,11 @@ export function ImportPositionsDialog({ open, onOpenChange, matrices, existingCo
         </div>
 
         <DialogFooter>
-          <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
+          <Button type="button" variant="outline" onClick={onCancel}>Cancel</Button>
           <Button type="button" disabled={ready.length === 0} onClick={confirm}>
             <UploadSimpleIcon className="h-4 w-4" aria-hidden="true" />Import {ready.length > 0 ? ready.length : ''} {ready.length === 1 ? 'position' : 'positions'}
           </Button>
         </DialogFooter>
-      </DialogContent>
-    </Dialog>
+      </>
   );
 }

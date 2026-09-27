@@ -16,6 +16,7 @@
  *   9. Component specs — every token named in a meta.json exists (component-token families included;
  *      meta.changelog is history and skipped)
  *  10. Component directory + quick reference — each entry starts with its meta.json description
+ *  11. No em dashes in UI copy (src/features/enpath, comments skipped)
  *
  * Exit code 1 if any drift is found (so CI can gate on it).
  */
@@ -343,6 +344,30 @@ section('10. Component directory + quick reference match meta.json descriptions'
     else if (!desc.startsWith(norm(what))) { bad(`component-quick-reference.md: ${name} "What it's for" differs from its meta.json`); bads++; }
   }
   if (bads === 0) ok(`${n} components — directory rows and quick-reference entries match meta.json`);
+}
+
+// ── 11. No em dashes in UI copy ────────────────────────────────────────────
+// content-guidelines.md: UI copy never uses "—". Scans the Enpath screens' source; comment lines are
+// skipped (code comments aren't copy).
+section('11. No em dashes in UI copy (src/features/enpath)');
+{
+  const base = path.join(root, 'enpath-ui/src/features/enpath');
+  let hits = 0;
+  (function walk(d) {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) { walk(p); continue; }
+      if (!/\.(tsx?|jsx?)$/.test(e.name)) continue;
+      fs.readFileSync(p, 'utf8').split('\n').forEach((line, i) => {
+        const t = line.trim();
+        if (!line.includes('—') || t.startsWith('//') || t.startsWith('*') || t.startsWith('/*') || t.startsWith('{/*')) return;
+        const code = line.replace(/\/\/.*$/, '').replace(/\{\/\*.*?\*\/\}/g, '');
+        if (!code.includes('—')) return;
+        bad(`${path.relative(root, p)}:${i + 1} has "—" in copy`); hits++;
+      });
+    }
+  })(base);
+  if (hits === 0) ok('no em dashes in Enpath UI copy');
 }
 
 // ── Summary ──────────────────────────────────────────────────────────────────

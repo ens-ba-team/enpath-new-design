@@ -38,7 +38,13 @@ export function PositionDialog({
   const selectableMatrices = matrices.filter((m) => m.status === 'Active' || m.id === initial.matrixId);
   const [dragId, setDragId] = React.useState<string | null>(null);
   const [tried, setTried] = React.useState(false);
-  React.useEffect(() => { if (open) { setDraft(initial); setTried(false); } }, [open, initial]);
+  // Start fresh when the dialog opens (or its starting draft changes while open): reset during render
+  // (React's "adjust state when a prop changes" pattern), not in an effect after it has already drawn.
+  const [seen, setSeen] = React.useState({ open, initial });
+  if (open !== seen.open || initial !== seen.initial) {
+    setSeen({ open, initial });
+    if (open) { setDraft(initial); setTried(false); }
+  }
 
   const setLevels = (levels: Level[]) => setDraft((d) => ({ ...d, levels }));
   const move = (from: number, to: number) => {
@@ -139,7 +145,7 @@ export function PositionDialog({
                         if (e.key === 'ArrowUp') { e.preventDefault(); move(i, i - 1); }
                         if (e.key === 'ArrowDown') { e.preventDefault(); move(i, i + 1); }
                       }}
-                      aria-label={`Reorder L${i + 1}${l.name ? ` ${l.name}` : ''} — use arrow keys`}
+                      aria-label={`Reorder L${i + 1}${l.name ? ` ${l.name}` : ''} with the arrow keys`}
                       className="flex h-8 w-6 cursor-grab items-center justify-center rounded-[var(--radius-sm)] text-[var(--color-icon-muted)] hover:text-[var(--color-icon-default)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)]"
                     >
                       <DotsSixVerticalIcon className="h-4 w-4" aria-hidden="true" />
@@ -161,7 +167,7 @@ export function PositionDialog({
                         </span>
                       </Tip>
                     )}
-                    <Tip label={blocked ? `${l.headcount} people are on this level — move them in Employee mapping first` : undefined}>
+                    <Tip label={blocked ? `${l.headcount} people are on this level. Move them in Employee mapping first.` : undefined}>
                       <span className="inline-flex">
                         <Button
                           type="button"
@@ -184,7 +190,7 @@ export function PositionDialog({
             <Button type="button" variant="ghost" size="sm" className="self-start" onClick={() => setLevels([...draft.levels, newLevel()])}>
               <PlusIcon className="h-4 w-4" aria-hidden="true" />Add level
             </Button>
-            {mode === 'edit' && <p className="text-xs text-[var(--color-text-secondary)]">Levels with people on them can't be removed — move the people first.</p>}
+            {mode === 'edit' && <p className="text-xs text-[var(--color-text-secondary)]">Levels with people on them can’t be removed. Move the people first.</p>}
           </fieldset>
 
           {matrixChanged && (

@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "lint:screens": "eslint src/features src/app --max-warnings 0",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },

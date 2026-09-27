@@ -29,7 +29,13 @@ export function MatrixDialog({
 }) {
   const [draft, setDraft] = React.useState(initial);
   const [tried, setTried] = React.useState(false);
-  React.useEffect(() => { if (open) { setDraft(initial); setTried(false); } }, [open, initial]);
+  // Start fresh when the dialog opens (or its starting draft changes while open): reset during render
+  // (React's "adjust state when a prop changes" pattern), not in an effect after it has already drawn.
+  const [seen, setSeen] = React.useState({ open, initial });
+  if (open !== seen.open || initial !== seen.initial) {
+    setSeen({ open, initial });
+    if (open) { setDraft(initial); setTried(false); }
+  }
 
   const nameMissing = !draft.name.trim();
   const descMissing = !draft.description.trim();
@@ -61,7 +67,7 @@ export function MatrixDialog({
       <DialogContent className="max-w-[520px]">
         <DialogHeader>
           <DialogTitle>{mode === 'add' ? 'Create matrix' : 'Edit matrix'}</DialogTitle>
-          <DialogDescription>A matrix is a reusable skill framework — one or more positions can use it.</DialogDescription>
+          <DialogDescription>A matrix is a reusable skill framework that one or more positions can use.</DialogDescription>
         </DialogHeader>
 
         <form className="flex flex-col gap-[var(--spacing-component-xl)]" onSubmit={(e) => { e.preventDefault(); save(); }} noValidate>
@@ -120,7 +126,7 @@ export function MatrixDialog({
                       <p className="font-semibold text-[var(--color-status-warning-subtle-foreground)]">{c.name}</p>
                       <ul className="flex flex-col gap-[var(--spacing-component-xxs)] pl-[var(--spacing-component-md)]">
                         {c.points.map(({ point, b }) => (
-                          <li key={point}>Point {point}{b?.title ? ` · ${b.title}` : ''}{b?.description ? ` — “${b.description}”` : ''}</li>
+                          <li key={point}>Point {point}{b?.title ? ` · ${b.title}` : ''}{b?.description ? `: “${b.description}”` : ''}</li>
                         ))}
                       </ul>
                     </li>

@@ -61,7 +61,7 @@ function EnpathUserRow() {
   return (
     <button
       type="button"
-      aria-label="Lan Nguyen, Admin — account menu"
+      aria-label="Account menu for Lan Nguyen, Admin"
       className={`flex w-full items-center gap-[var(--spacing-component-sm)] rounded-[var(--radius-md)] py-[var(--spacing-component-xs-plus)] text-left hover:bg-[var(--color-sidebar-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-sidebar-ring)] ${collapsed ? 'justify-center px-0' : 'px-[var(--spacing-component-sm)]'}`}
     >
       <Avatar size="sm" name="Lan Nguyen" fallback="LN" />
@@ -167,7 +167,7 @@ export function EnpathAppShell({ defaultCollapsed = false, active = 'Setup', onN
         </Sidebar>
         <main className="min-h-0 min-w-0 flex-1 overflow-hidden rounded-[var(--radius-panel)] border border-[var(--color-border-default)] bg-[var(--color-background-default)] shadow-[var(--shadow-surface)]">
           {children ?? (
-            <p className="p-[var(--spacing-component-xl)] text-sm text-[var(--color-text-secondary)]">Setup — page content. Collapse the sidebar with the toggle or ⌘B.</p>
+            <p className="p-[var(--spacing-component-xl)] text-sm text-[var(--color-text-secondary)]">Setup page content. Collapse the sidebar with the toggle or ⌘B.</p>
           )}
         </main>
         {rightPanel && <div className="hidden lg:contents">{rightPanel}</div>}

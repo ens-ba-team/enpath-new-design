@@ -415,6 +415,9 @@ function Placeholder({ children }: { children: React.ReactNode }) {
   return <p className="p-[var(--spacing-component-xl)] text-sm text-[var(--color-text-secondary)]">{children}</p>;
 }
 
+/** Prefix of placeholder level ids in a position draft — replaced with unique ids on save. */
+const DRAFT_LEVEL = 'draft-level-';
+
 export function SetupScreen({ sidebarClassName, initialTab = 'structure' }: { sidebarClassName?: string; initialTab?: 'structure' | 'matrices' | 'paths' } = {}) {
   const [page, setPage] = React.useState('Setup');
   const [positions, setPositions] = React.useState(initialPositions);
@@ -504,7 +507,6 @@ export function SetupScreen({ sidebarClassName, initialTab = 'structure' }: { si
   const unsetTotal = positions.reduce((n, p) => n + unsetCount(matrices, p), 0);
   const drafts = positions.filter((p) => p.status !== 'Published').length;
   const [tab, setTab] = React.useState(initialTab);
-  const tabUrlReady = React.useRef(false);
   const done = total === 0 ? 0 : Math.round(((total - positions.reduce((n, p) => n + unsetCount(matrices, p), 0)) / total) * 100);
 
   const [dialog, setDialog] = React.useState<'add' | 'edit' | null>(null);
@@ -514,20 +516,13 @@ export function SetupScreen({ sidebarClassName, initialTab = 'structure' }: { si
   const [duplicateSourceId, setDuplicateSourceId] = React.useState<string | null>(null);
   const duplicateSource = duplicateSourceId ? positions.find((p) => p.id === duplicateSourceId) ?? null : null;
   const [importOpen, setImportOpen] = React.useState(false);
+  // The page reads ?tab= on the server and passes it as initialTab; this only writes tab changes back
+  // to the URL and follows the browser's Back / Forward.
   React.useEffect(() => {
     const syncFromUrl = () => {
       const requested = new URLSearchParams(window.location.search).get('tab');
       if (requested === 'structure' || requested === 'matrices' || requested === 'paths') setTab(requested);
     };
-
-    if (!tabUrlReady.current) {
-      tabUrlReady.current = true;
-      const requested = new URLSearchParams(window.location.search).get('tab');
-      if ((requested === 'structure' || requested === 'matrices' || requested === 'paths') && requested !== tab) {
-        setTab(requested);
-        return;
-      }
-    }
 
     const url = new URL(window.location.href);
     url.searchParams.set('tab', tab);
@@ -546,13 +541,16 @@ export function SetupScreen({ sidebarClassName, initialTab = 'structure' }: { si
       return {
         name: `${duplicateSource.name} (copy)`, code: '', description: duplicateSource.description ?? '',
         matrixId: duplicateSource.matrixId, department: duplicateSource.department,
-        levels: duplicateSource.levels.map((l, i) => ({ id: `lvl-dup-${Date.now()}-${i}`, name: l.name, headcount: 0 })),
+        levels: duplicateSource.levels.map((l, i) => ({ id: `${DRAFT_LEVEL}${i}`, name: l.name, headcount: 0 })),
       };
     }
-    return { name: '', code: '', description: '', matrixId: 'eng', department: departments[0], levels: [{ id: `lvl-new-${Date.now()}`, name: '', headcount: 0 }] };
+    return { name: '', code: '', description: '', matrixId: 'eng', department: departments[0], levels: [{ id: `${DRAFT_LEVEL}0`, name: '', headcount: 0 }] };
   }, [dialog, duplicateSource]); // eslint-disable-line react-hooks/exhaustive-deps
-  const editDraft = React.useMemo<PositionDraft>(() => ({ name: current.name, code: current.code, description: current.description ?? '', matrixId: current.matrixId, department: current.department, levels: proposal ? [...current.levels, { id: `lvl-ai-${Date.now()}`, name: proposal.levelName, headcount: 0 }] : current.levels }), [current, proposal]);
-  const saveDialog = (d: PositionDraft) => {
+  const editDraft = React.useMemo<PositionDraft>(() => ({ name: current.name, code: current.code, description: current.description ?? '', matrixId: current.matrixId, department: current.department, levels: proposal ? [...current.levels, { id: `${DRAFT_LEVEL}ai`, name: proposal.levelName, headcount: 0 }] : current.levels }), [current, proposal]);
+  const saveDialog = (draft: PositionDraft) => {
+    // Drafts use placeholder level ids (rendering must be pure); real unique ids are made here, on save.
+    const stamp = Date.now();
+    const d = { ...draft, levels: draft.levels.map((l, i) => (l.id.startsWith(DRAFT_LEVEL) ? { ...l, id: `lvl-${stamp}-${i}` } : l)) };
     if (dialog === 'add') {
       const p: Position = { id: `pos-${Date.now()}`, ...d, status: 'Draft', changes: 1,
         expectations: duplicateSource ? remapExpectations(duplicateSource, d.levels) : emptyGrid(matrices, d.matrixId, d.levels),
@@ -593,7 +591,7 @@ export function SetupScreen({ sidebarClassName, initialTab = 'structure' }: { si
     >
       <SidebarFollowsChat chatOpen={chatOpen} />
       {page !== 'Setup' ? (
-        <Placeholder>{page} — not built yet. Go to Setup.</Placeholder>
+        <Placeholder>{page} isn’t built yet. Go to Setup.</Placeholder>
       ) : (
         <div className="flex h-full flex-col">
           <div className="flex flex-wrap items-center gap-[var(--spacing-layout-xs)] px-[var(--spacing-layout-sm)] pt-[var(--spacing-layout-sm)]">
