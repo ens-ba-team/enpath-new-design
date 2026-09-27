@@ -57,9 +57,9 @@
         }
       },
       "app-glow": {
-        "$value": "{color.brand.300}",
+        "$value": "{color.brand.400}",
         "$type": "color",
-        "$description": "Intent:      Soft brand glow painted on color/background/app for subtle depth\nUse when:    Radial gradients on the app shell background only\nDo not use:  Fills, text, borders or any component\nUse instead: color/background/app for the flat app background\nNote:        Brand/300. Glows sit at the right, behind the page panel — never behind sidebar text.\nStatus:      active"
+        "$description": "Intent:      Soft brand glow painted on color/background/app for subtle depth\nUse when:    Radial gradients on the app shell background only\nDo not use:  Fills, text, borders or any component\nUse instead: color/background/app for the flat app background\nNote:        Brand/400 (was brand/300 — the same colour as the Career Map dot grid, so shell and map blurred together). Glows sit at the right, behind the page panel — never behind sidebar text.\nStatus:      active"
       }
     },
     "text": {

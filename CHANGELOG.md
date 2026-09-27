@@ -6,6 +6,13 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-27 — Stronger app-shell glow
+
+### Changed
+- `color/background/app-glow` brand/300 → **brand/400**. The glow matched the Career Map's dot grid (also brand/300), so the shell and the map read as one tint; the stronger glow separates them. Colour only; the gradient shape in `app-shell.tsx` is unchanged.
+
+---
+
 ## 2026-09-26 — Career Map: route colour by role, no opacity
 
 ### Removed — breaking

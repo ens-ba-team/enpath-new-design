@@ -244,7 +244,7 @@ shadow/modal    → 2xl    dialogs, sheets
 The frame every page sits in: **a transparent sidebar and a white page panel on a light brand-tinted app background.**
 
 ```
-color/background/app (brand/50) + two soft color/background/app-glow (brand/300) glows on the right, behind the page panel — never behind sidebar text
+color/background/app (brand/50) + two soft color/background/app-glow (brand/400) glows on the right, behind the page panel — never behind sidebar text
   └ spacing/shell/inset 8px from the window edge
     [ sidebar ]  8px  [ page panel ]  8px  [ chat panel ]     ← spacing/shell/gap
      sidebar: no fill · page: white, border, shadow/surface · radius/panel 12px

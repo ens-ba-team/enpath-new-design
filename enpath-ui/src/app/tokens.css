@@ -328,10 +328,10 @@
    * Use when:    Radial gradients on the app shell background only
    * Do not use:  Fills, text, borders or any component
    * Use instead: color/background/app for the flat app background
-   * Note:        Brand/300. Glows sit at the right, behind the page panel — never behind sidebar text.
+   * Note:        Brand/400 (was brand/300 — the same colour as the Career Map dot grid, so shell and map blurred together). Glows sit at the right, behind the page panel — never behind sidebar text.
    * Status:      active
    */
-  --color-background-app-glow: oklch(85% 0.1 264.53);
+  --color-background-app-glow: oklch(70% 0.19 264.53);
   /**
    * Intent:      Subdued text for supporting information
    * Use when:    Captions, metadata, timestamps, helper text, secondary labels beneath a heading
