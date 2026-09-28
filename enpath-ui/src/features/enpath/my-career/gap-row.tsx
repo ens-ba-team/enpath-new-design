@@ -22,7 +22,7 @@ import { pointLabel, type Gap, type GapStatus } from './mock-data';
 /** `values` names the numbers on the right once per card, e.g. "You → Needed". */
 const groups: { status: GapStatus; title: string; collapsed: boolean; values?: string }[] = [
   { status: 'growth', title: 'Growth areas', collapsed: false, values: 'You → Needed' },
-  { status: 'evidence', title: 'Need evidence', collapsed: false, values: 'Needed' },
+  { status: 'evidence', title: 'Needs records', collapsed: false, values: 'Needed' },
   { status: 'ready', title: 'Ready', collapsed: true, values: 'You' },
   { status: 'unset', title: 'Not set in Setup', collapsed: true },
 ];
@@ -52,14 +52,14 @@ function Detail({ gap }: { gap: Gap }) {
   if (gap.status === 'growth') return (
     <>
       {label(`What ${pointLabel(gap.required!)} looks like`)}
-      {body(gap.meaning ?? 'Your records show a gap toward this level.')}
+      {body(gap.meaning ?? 'Your records show this is a growth area for this level.')}
       {link('Plan an action', 'My Actions')}
     </>
   );
   if (gap.status === 'evidence') return (
     <>
+      {/* "Why it doesn't count as a growth area" lives in the progress strip's ⓘ tooltip — the row only says what's needed. */}
       {label(`No records yet · needs ${pointLabel(gap.required!)}`)}
-      {body('This can’t be assessed until there’s evidence. It isn’t a gap.')}
       {link('Add a record', 'Records')}
     </>
   );

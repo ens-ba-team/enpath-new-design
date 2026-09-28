@@ -159,7 +159,7 @@ export function ProgressBoard({
         count: n.growth,
         label: n.growth === 1 ? "growth area" : "growth areas",
       },
-      { key: "evidence", count: n.evidence, label: "need evidence" },
+      { key: "evidence", count: n.evidence, label: "need records" },
     ] as const
   ).filter((g) => g.count > 0);
   const total = n.ready + n.growth + n.evidence;
@@ -223,7 +223,7 @@ export function ProgressBoard({
             of {total}
           </span>
           <Tip
-            label={`Based on ${recordCount} acknowledged records. “Need evidence” means there are no records yet. It isn’t a gap.${
+            label={`Records are examples of your work that your manager has acknowledged. “Needs records” means a competency has none yet, so it can’t be assessed. It doesn’t count as a growth area. Based on ${recordCount} records.${
               n.unset > 0
                 ? ` ${n.unset} expectation${
                     n.unset === 1 ? " is" : "s are"
@@ -414,7 +414,7 @@ export function StepPanel({
       </div>
       {n.unset === gaps.length ? (
         note(
-          "No gap comparison yet. This level has no expectations set in Setup."
+          "Nothing to compare yet. This level has no expectations set in Setup."
         )
       ) : (
         <GapList

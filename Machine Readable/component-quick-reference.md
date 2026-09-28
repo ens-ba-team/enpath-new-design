@@ -159,7 +159,7 @@ Each entry links to its artifact file and Storybook story — open those for ful
 ### `stat`
 **What it's for:** One labelled number with an optional one-line explanation, in a flat bordered tile.
 
-**Use when:** Showing 2–4 counts side by side — e.g. Ready · Growth area · Needs evidence on My Career's progress board.
+**Use when:** Showing 2–4 counts side by side — e.g. Ready · Growth area · Needs records on My Career's progress board.
 
 **Key rule:** Tone colours the icon only; never colour the number. Don't show a percentage built from missing data.
 

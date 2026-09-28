@@ -142,6 +142,11 @@
         "date": "2026-09-25",
         "change": "Created Stat for the My Career progress board.",
         "breaking": false
+      },
+      {
+        "date": "2026-09-28",
+        "change": "Story copy: \"Needs evidence\" → \"Needs records\" to match My Career (records are what employees add). No API or visual change.",
+        "breaking": false
       }
     ]
   },
