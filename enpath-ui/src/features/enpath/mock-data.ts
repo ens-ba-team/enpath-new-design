@@ -1,16 +1,16 @@
-// Enpath prototype mock data — shape from document/dev-logic.md §4 (repo root), content from the Northstar example.
+// Enpath prototype mock data — shape from the old dev code's data model, content from the Northstar example.
 // In memory only: a refresh resets everything.
 
 /** Draft = editable, not visible to employees · Published = live and read-only — Unpublish is the only way back to Draft (Lattice's model) */
 export type Status = 'Draft' | 'Published';
 
 /**
- * A Matrix has a 3rd state Positions don't (dev-logic.md §2): Draft (editable) → Active (read-only,
+ * A Matrix has a 3rd state Positions don't (rule from the old dev code): Draft (editable) → Active (read-only,
  * live) → Archived (read-only, restorable). There's no direct Active → Draft — Archive, then Restore.
  */
 export type MatrixStatus = 'Draft' | 'Active' | 'Archived';
 
-/** title + description, per dev-logic.md's ObservableBehavior — title defaults to the scale name but is editable per competency, not shared */
+/** title + description, per the old dev code's ObservableBehavior — title defaults to the scale name but is editable per competency, not shared */
 export interface Behavior { title: string; description: string }
 /** behaviors[i] = what scale level i+1 looks like for this competency; null = not written yet */
 export interface Competency { id: string; name: string; description: string; behaviors: (Behavior | null)[] }

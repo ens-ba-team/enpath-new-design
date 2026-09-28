@@ -37,7 +37,7 @@ function Placeholder({ children }: { children: React.ReactNode }) {
 
 // 'none' = nothing selected: the detail panel is closed and the map gets the full width.
 type Selection = { kind: 'card'; id: string } | { kind: 'route'; id: string } | { kind: 'none' };
-type DialogName = 'target' | 'untarget' | 'request' | 'add' | 'remove' | 'switch' | 'unfollow' | null;
+type DialogName = 'target' | 'untarget' | 'request' | 'add' | 'remove' | 'switch' | null;
 
 const NARROW = '(max-width: 1023px)';
 const subscribeNarrow = (onChange: () => void) => {
@@ -117,20 +117,6 @@ export function MyCareerScreen() {
         : undefined;
     return { next, gone, blocked };
   }, [plan, step, steps, request, visionOfRoute]);
-
-  // Stop following the core path: its cards leave the map (and anything added from them).
-  const unfollow = React.useMemo(() => {
-    if (!plan.followedPathId) return null;
-    const next = { ...plan, followedPathId: null };
-    const left = new Set(buildMap(next).steps.map((s) => s.id));
-    const gone = steps.filter((s) => !left.has(s.id));
-    const blocked = gone.some((s) => s.id === plan.targetId)
-      ? 'Your Active target is on this path. Remove it or pick another target first.'
-      : request?.status === 'waiting' && !visionNumbers(next).includes(request.vision)
-        ? `Career vision ${request.vision} starts on this path and is waiting for approval. Withdraw it first.`
-        : undefined;
-    return { next, gone, blocked };
-  }, [plan, steps, request]);
 
   const commit = (next: Plan, message: string) => {
     setPlan(next);
@@ -282,10 +268,9 @@ export function MyCareerScreen() {
             {(route || step) && (
             <aside aria-label={route ? 'Selected route' : 'Selected role'} className="flex shrink-0 flex-col border-t border-[var(--color-border-default)] lg:w-[400px] lg:overflow-y-auto lg:border-l lg:border-t-0">
               {route ? (
-                <RoutePanel route={route} plan={plan} steps={steps} request={request} removeBlocked={removal?.blocked} unfollowBlocked={unfollow?.blocked}
+                <RoutePanel route={route} plan={plan} steps={steps} request={request} removeBlocked={removal?.blocked}
                   actions={{
                     onFollow: follow,
-                    onUnfollow: () => setDialog('unfollow'),
                     onRequest: () => setDialog('request'),
                     onWithdraw: () => { setRequest(null); toast(`Request withdrawn. Career vision ${visionOfRoute} is a draft again.`); },
                     onRemoveVision: () => setDialog('remove'),
@@ -354,24 +339,6 @@ export function MyCareerScreen() {
                 selectCard(current.id);
                 commit(removal.next, visionOfRoute !== undefined ? `Career vision ${visionOfRoute} removed` : removal.gone.length === 1 ? `${levelName(removal.gone[0].id)} removed from your map` : `${removal.gone.length} cards removed from your map`);
               }}>Remove</AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      )}
-      {unfollow && (
-        <AlertDialog open={dialog === 'unfollow'} onOpenChange={(o) => !o && setDialog(null)}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Stop following {companyPaths.find((p) => p.id === plan.followedPathId)?.name}?</AlertDialogTitle>
-              <AlertDialogDescription>Your top row will show only your current role. These cards leave your map:</AlertDialogDescription>
-            </AlertDialogHeader>
-            <ul className="list-disc pl-[var(--spacing-component-lg)] text-sm text-[var(--color-background-default-foreground)]">
-              {unfollow.gone.map((s) => <li key={s.id}>{levelName(s.id)} · {stateName(s)}</li>)}
-            </ul>
-            <p className="text-sm text-[var(--color-text-secondary)]">You can follow a company path again any time from the map.</p>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={() => { selectCard(current.id); commit(unfollow.next, 'You no longer follow a company path'); }}>Stop following</AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

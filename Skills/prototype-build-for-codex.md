@@ -22,7 +22,7 @@ repository.
 ## Before changing anything
 
 1. Check the current Git branch and working tree. Preserve unrelated changes.
-2. Read the relevant product logic in `document/set-up-build.md` and `document/dev-logic.md`.
+2. Read the relevant product logic in `document/set-up-build.md` and `document/my-career-build.md`.
 3. Trace the full state path before editing: source data → shared state owner → child props → rendered
    page → related pages. Do not patch only the visible component when another tab consumes the data.
 4. If tokens, spacing, color, typography, or a design-system component are involved, read

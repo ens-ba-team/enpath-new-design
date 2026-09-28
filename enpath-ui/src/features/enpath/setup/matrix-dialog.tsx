@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import type { Competency } from '../mock-data';
 
 // Add / Edit matrix — name, description, scale size (2–5) and owners. Competencies and their behavior
-// text are edited on the Matrix page itself (dev-logic.md §2: name + description required to save;
+// text are edited on the Matrix page itself (rule from the old dev code: name + description required to save;
 // activation needs ≥1 owner, ≥1 competency, every competency's behaviors filled — checked on Publish).
 
 export interface MatrixDraft { name: string; description: string; scaleSize: number; owners: string[] }

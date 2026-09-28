@@ -3,7 +3,7 @@ title: Setup build
 created: 2026-09-18
 updated: 2026-09-25
 status: All 3 tabs built in the prototype (localhost:3000/setup) — Career structure, Matrices config, Career path; responsive pass in progress; Employee mapping not started
-related: ../../what should be done.md, glossary.md, dev-logic.md, market-research.md, explorer.contract.md, ../../document/original brief/prd-018-setup-module.md, ../enpath-tone-and-voice.md
+related: ../../what should be done.md, glossary.md, market-research.md, ../../document/original brief/prd-018-setup-module.md, ../enpath-tone-and-voice.md
 ---
 
 #enpath #setup #build
@@ -25,7 +25,7 @@ Code: `Enpath-design-system/enpath-ui/src/features/enpath/`. Mock data only.
 - **Career structure = Draft → Publish**, not view/edit mode: a Position is Draft (editable, hidden
   from employees) or Published (live, read-only) — Lattice's pattern. Unpublish is the only way
   back to Draft; it's never a side effect of editing.
-- **Matrices config has its own 3-state lifecycle** (dev-logic.md §2), not the 2 above: Draft
+- **Matrices config has its own 3-state lifecycle** (a rule from the old dev code), not the 2 above: Draft
   (editable) → Active (read-only, live) → Archived (read-only, restorable). No direct
   Active → Draft — Archive, then Restore. Publish is a **hard gate** (≥1 owner, ≥1 competency,
   every rating-scale point has a title + description) — unlike a Position's Publish, which only
@@ -117,7 +117,7 @@ deleted; switching matrix warns all expectations clear.
     circle = every point already has a title + description; active competency's label semibold).
     Right, name + description for the selected competency, then its **rating scale** as pill Tabs —
     one point open at a time, each with a **title** (defaults from the shared scale name, editable
-    per competency) and **description**, matching `dev-logic.md`'s `ObservableBehavior`.
+    per competency) and **description**, matching the old dev code's `ObservableBehavior`.
     **+ Add competency** while Draft (auto-selects the new one); **Remove competency** while Draft.
 
 **Create / Edit matrix dialog** — name · description (both required) · **Rating scale**, a Select,
@@ -179,7 +179,7 @@ Its own tab because:
 | Archived | Archived (grey) | Read-only, hidden. **Restore** — returns to Draft |
 
 **Career path — planned, not built yet**
-- **Rules not enforced:** 20-step maximum (`dev-logic.md`); within one Position, steps must go up in
+- **Rules not enforced:** 20-step maximum (old dev code); within one Position, steps must go up in
   Level (BR-12 — the dev code didn't enforce it either). A repeated Level (BR-11) is refused, but
   silently — Add step stays enabled and nothing happens.
 - **Compare two positions** side by side (from Progression) for designing cross-Position moves.

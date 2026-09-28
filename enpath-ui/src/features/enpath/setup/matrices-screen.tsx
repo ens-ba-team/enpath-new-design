@@ -20,7 +20,7 @@ import { Tip } from '../tip';
 // Matrices config tab (sketch, 2026-09-23; competency editor redesigned 2026-09-23 to master-detail
 // after the accordion version "spread the page" — every competency's every rating-scale point
 // stacked vertically at once). Same shell as Career structure — explorer left, one Matrix per page
-// on the right. Unlike Position's Draft/Published, a Matrix has a 3rd state (dev-logic.md §2): Draft
+// on the right. Unlike Position's Draft/Published, a Matrix has a 3rd state (rule from the old dev code): Draft
 // (editable) → Active (read-only, live) → Archived (read-only, restorable). There's no direct
 // Active → Draft — Archive, then Restore. Publishing is gated: ≥1 owner, ≥1 competency, every
 // competency's behaviors filled for every scale point — this is a hard block, unlike a Position's

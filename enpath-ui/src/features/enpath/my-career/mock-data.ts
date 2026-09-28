@@ -65,7 +65,7 @@ export function ladderMove(from: string, ladder: string[], vision: number) {
 }
 
 export interface Plan {
-  /** The company path the employee follows (the top row) — null when they stop following (my career.md #12) */
+  /** The company path the employee follows (the top row) — null when none is followed (no longer reachable from the UI: Stop following was removed 2026-09-28) */
   followedPathId: string | null;
   /** The Active target — null when the employee has removed it (my career.md #13) */
   targetId: string | null;

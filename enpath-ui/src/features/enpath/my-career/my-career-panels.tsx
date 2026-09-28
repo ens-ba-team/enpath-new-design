@@ -437,7 +437,6 @@ export function StepPanel({
 
 export interface RouteActions {
   onFollow: (pathId: string) => void;
-  onUnfollow: () => void;
   onRequest: () => void;
   onWithdraw: () => void;
   onRemoveVision: () => void;
@@ -509,7 +508,6 @@ export function RoutePanel({
   steps,
   request,
   removeBlocked,
-  unfollowBlocked,
   actions,
 }: {
   route: CareerMapPath;
@@ -517,8 +515,6 @@ export function RoutePanel({
   steps: PlanStep[];
   request: VisionRequest | null;
   removeBlocked?: string;
-  /** Why the followed path can't be unfollowed right now, if it can't */
-  unfollowBlocked?: string;
   actions: RouteActions;
 }) {
   const color = routeColor(route);
@@ -622,7 +618,6 @@ export function RoutePanel({
   const followed = route.id === plan.followedPathId;
   const canFollow = !followed && matchingPaths.some((p) => p.id === route.id);
   const target = steps.find((s) => s.state === "target");
-  const blockedByTarget = followed && Boolean(unfollowBlocked);
   const companyButtons: React.ReactNode[] = [];
   if (canFollow) {
     companyButtons.push(
@@ -638,18 +633,6 @@ export function RoutePanel({
         </Button>,
       );
     }
-    // Shown disabled when blocked, so the way out stays visible; the note says why.
-    companyButtons.push(
-      <Button
-        key="unfollow"
-        // Disabled red reads as pink-but-clickable; a disabled ghost reads as unavailable.
-        variant={blockedByTarget ? "ghost" : "ghost-destructive"}
-        disabled={blockedByTarget}
-        onClick={actions.onUnfollow}
-      >
-        Stop following this path
-      </Button>,
-    );
   }
   return (
     <Panel
@@ -657,7 +640,6 @@ export function RoutePanel({
       labelledBy="route-title"
       notes={[
         canFollow && "It becomes your main route, shown in the top row.",
-        followed && unfollowBlocked,
       ]}
       buttons={companyButtons}
     >
