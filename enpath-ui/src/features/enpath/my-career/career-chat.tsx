@@ -22,7 +22,7 @@ function reply(input: string, target: PlanStep | undefined, onMap: Set<string>, 
       tool: 'Read your assessment, your company paths and published roles',
       text: already
         ? `The direction I'd suggest, **${SUGGESTED_ROUTE.map(levelName).join(' → ')}**, is already on your map. Ask me to *compare* it with your target.`
-        : `Your code quality and delivery scores carry over well to frontend work, so here's a direction you could explore:\n\n**${[SUGGESTED_FROM, ...SUGGESTED_ROUTE].map(levelName).join(' → ')}**\n\n- It isn't on a company path for your role, so it would be a **career vision**. Only you see it until you send it to your manager.\n- Most of its competencies aren't assessed yet. Evidence from a frontend task would be a good first step.`,
+        : `Your code quality and delivery scores carry over well to frontend work, so here's a direction you could explore:\n\n**${[SUGGESTED_FROM, ...SUGGESTED_ROUTE].map(levelName).join(' → ')}**\n\n- It isn't on a company path for your role, so it would be a **career vision**. Only you see it until you send it to your manager.\n- Most of its competencies aren't assessed yet, so it's too early to say how far it is.`,
       proposal: already ? undefined : {
         label: 'Proposed career vision',
         body: <>{[SUGGESTED_FROM, ...SUGGESTED_ROUTE].map(levelName).join(' → ')}</>,
@@ -42,7 +42,7 @@ function reply(input: string, target: PlanStep | undefined, onMap: Set<string>, 
       text: `For **${levelName(target.id)}**:\n\n`
         + (growth.length ? `**Growth areas**\n${growth.map((g) => `- ${g.name}: ${pointLabel(g.current!)} → ${pointLabel(g.required!)}`).join('\n')}\n\n` : '')
         + (evidence.length ? `**Not assessed yet**: not growth areas, just no approved score yet\n${evidence.map((g) => `- ${g.name} (needs ${pointLabel(g.required!)})`).join('\n')}\n\n` : '')
-        + 'A good next step: add evidence from recent work for the ones not assessed yet, so they can be assessed next time.',
+        + 'Start with the growth areas. Your manager assesses the ones not assessed yet in a future assessment.',
     };
   }
 

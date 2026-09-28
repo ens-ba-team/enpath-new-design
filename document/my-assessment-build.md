@@ -29,7 +29,7 @@ Target → ASSESSMENT (scores) → Growth areas → Action plan → Evidence →
   matrix.
 - **Flow:** the employee **self-assesses** → the **line manager reviews** → **Completed** (approved,
   "ready for comparison").
-- **Evidence is the input.** Evidence added in the Action plan (or with "Add evidence" on a competency)
+- **Evidence is the input.** Evidence added in the Action plan (when an Action moves to Done)
   is gathered per competency for the self-assessment and shown to the manager at review. AI may
   summarise it; it never scores. There is no separate Records module.
 - **Completing a Level without holding it** (company-path changes, `my-career-build.md` → "When a
@@ -53,7 +53,8 @@ Target → ASSESSMENT (scores) → Growth areas → Action plan → Evidence →
 ## What it changes in My Career
 
 - Done 2026-09-28: "Needs records" → **"Not assessed yet"** for competencies with no Completed score;
-  the row's action is **Add evidence**. Open: also offer **Request an assessment**?
+  the row has **no button**: assessing is the manager's job, not the employee's ("Add evidence" was
+  tried and removed the same day, since evidence doesn't produce a score).
 - Ready rows name their source: "Based on H2 2026 assessment, approved {date}".
 - Mock data: today's mock "current points" become mock Assessments (period, approved date,
   competencies covered). Plan: `what should be done.md` → "Next steps — My Career".

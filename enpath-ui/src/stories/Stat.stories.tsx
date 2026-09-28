@@ -35,7 +35,7 @@ export const WithoutDescription: Story = {
 export const LongContent: Story = {
   render: () => (
     <div className="w-[min(240px,calc(100vw-2rem))]">
-      <Stat icon={<FileMagnifyingGlassIcon />} label="Competencies not assessed yet in your latest assessment" value={12} description="Add evidence from your recent projects so these can be assessed next time" />
+      <Stat icon={<FileMagnifyingGlassIcon />} label="Competencies not assessed yet in your latest assessment" value={12} description="Your manager assesses these in a future assessment" />
     </div>
   ),
 };

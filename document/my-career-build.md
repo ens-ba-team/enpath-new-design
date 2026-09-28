@@ -86,8 +86,8 @@ shell's footer still says "Admin" (not addressed — one user in the prototype).
   Backend Engineer L3 · Senior", a segmented bar, and clickable counts "2 ready · 2 growth areas · 2
   not assessed yet". Clicking the bar or a count opens the target in the side panel. The ⓘ tooltip holds
   the explanation: "Scores come from your latest approved assessment. 'Not assessed
-  yet' means a competency has no approved score yet, so it doesn't count as a growth area. Add
-  evidence so it can be assessed next time." (The employee UI never says "gap": the label is Growth areas.) The career-vision
+  yet' means a competency has no approved score yet, so it doesn't count as a growth area. Your
+  manager assesses it in a future assessment." (The employee UI never says "gap": the label is Growth areas.) The career-vision
   line was removed (the map and legend already show visions). Fixed to the Active target.
 - **Side panel — role card** (redesigned 2026-09-25): role + level; **one badge** (Completed / You
   are here / Active target / Planned / Career vision N · status) and one context line; a readiness
@@ -95,9 +95,9 @@ shell's footer still says "Admin" (not addressed — one user in the prototype).
   Growth areas → Not assessed yet → Ready (collapsed) → Not set (collapsed). Each row shows a short
   summary ("3 → 4 · Advanced", "needs 3 · Intermediate") and **expands**: a growth area shows what the
   level means (the Matrix's behavior text) + **Plan an action** (My Actions); not assessed yet says "No
-  approved score yet · needs {point}" + **Add evidence**, and nothing more (the "doesn't count as a growth area"
+  approved score yet · needs {point}" and has **no button** (assessing is the manager's job, 2026-09-28), and nothing more (the "doesn't count as a growth area"
   explanation lives in the ⓘ tooltip, 2026-09-28); ready shows the record it's based on.
-  Plan an action / Add evidence show a "coming next" toast until those modules exist (#8).
+  Plan an action shows a "coming next" toast until those modules exist (#8).
 
 **Lan's plan** (mock) — follows Engineering growth: Completed Backend Engineer L1 → **You are here** L2
 · Mid → **Active target** L3 · Senior → Planned L4 · Staff. Career vision 1: Backend Engineer L2 →
@@ -299,7 +299,7 @@ loop and terms: `glossary.md` → My Career terms. What they mean for My Career:
   area**, never "gap".
 - A growth row's **Plan an action** opens My Actions (the Action plan) for that growth area.
 - **Evidence** replaces Records (the Records module is dropped). Copy done 2026-09-28: "Not assessed
-  yet" and "Add evidence". Still planned: Ready rows say "Based on H2 2026 assessment, approved {date}"
+  yet", no button on the row (not the employee's job; "Add evidence" was tried and removed). Still planned: Ready rows say "Based on H2 2026 assessment, approved {date}"
   (with mock Assessments) — `what should be done.md` → "Next steps".
 
 ## When a company path changes (proposed 2026-09-28, from the dev team)

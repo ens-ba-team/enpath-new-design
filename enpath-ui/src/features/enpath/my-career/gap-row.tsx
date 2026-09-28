@@ -2,7 +2,8 @@
 // A role's competencies compared with Lan's assessed points, grouped by what to do next:
 // Growth areas → Not assessed yet → Ready (collapsed) → Not set (collapsed). Each row shows a short value
 // ("3 → 4", "needs 3", "3") and expands to say what the level looks like (or which record a Ready
-// point comes from) with a link to the next step: Plan an action (My Actions) / Add evidence.
+// point comes from). Growth areas link to the next step: Plan an action (My Actions).
+// Not assessed yet has no button: assessing is the manager's job, not the employee's.
 // Wording follows enpath-tone-and-voice.md: "Not assessed yet" means no approved Assessment score, never a gap.
 // Each group is a compact Card (spacing/component/md inside); the gap between cards is structure
 // (spacing/layout/xs — the panel is narrow). Rows are compact: trigger padding component/sm (8px)
@@ -60,7 +61,6 @@ function Detail({ gap }: { gap: Gap }) {
     <>
       {/* "Why it doesn't count as a growth area" lives in the progress strip's ⓘ tooltip — the row only says what's needed. */}
       {label(`No approved score yet · needs ${pointLabel(gap.required!)}`)}
-      {link('Add evidence', 'Evidence')}
     </>
   );
   if (gap.status === 'ready') return (

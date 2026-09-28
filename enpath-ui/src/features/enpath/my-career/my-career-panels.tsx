@@ -222,7 +222,7 @@ export function ProgressBoard({
             of {total}
           </span>
           <Tip
-            label={`Scores come from your latest approved assessment. “Not assessed yet” means a competency has no approved score yet, so it doesn’t count as a growth area. Add evidence so it can be assessed next time.${
+            label={`Scores come from your latest approved assessment. “Not assessed yet” means a competency has no approved score yet, so it doesn’t count as a growth area. Your manager assesses it in a future assessment.${
               n.unset > 0
                 ? ` ${n.unset} expectation${
                     n.unset === 1 ? " is" : "s are"
