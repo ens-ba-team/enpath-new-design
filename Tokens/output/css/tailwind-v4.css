@@ -2000,8 +2000,8 @@
   --career-map-grid: oklch(85% 0.1 264.53);
   /**
    * Intent:      Fill of one role card on the Career Map
-   * Use when:    Filling a CareerMapNode
-   * Do not use:  General cards or rows outside Career Map
+   * Use when:    Filling a CareerMapNode; the fill of a StepRail ring
+   * Do not use:  General cards or rows outside the Career Map family (CareerMap, CareerMapList, StepRail)
    * Use instead: color/surface/default for generic flat cards
    * Foreground:  career-map/node-foreground
    * Status:      active
@@ -2009,7 +2009,7 @@
   --career-map-node-surface: #ffffff;
   /**
    * Intent:      Resting border of a role card on the Career Map
-   * Use when:    Outlining a CareerMapNode that is a company-path, current or planned role
+   * Use when:    Outlining a CareerMapNode that is a company-path, current or planned role; the muted ring of a StepRail row (a role behind you, or context)
    * Do not use:  Career vision cards, the Active target card, selected or focused cards
    * Use instead: career-map/vision-border, career-map/target-border, career-map/node-selected
    * Status:      active
@@ -2025,8 +2025,8 @@
   --career-map-node-foreground: #0f172a;
   /**
    * Intent:      Supporting text inside a Career Map role card
-   * Use when:    Rendering the level ("L2 · Mid") and neutral state labels (Planned, Career vision) in a CareerMapNode
-   * Do not use:  Position titles, current or target labels, text outside Career Map
+   * Use when:    Rendering the level ("L2 · Mid") and neutral state labels (Planned, Career vision) in a CareerMapNode; muted titles and neutral statuses in StepRail rows
+   * Do not use:  Position titles, current or target labels, text outside the Career Map family (CareerMap, CareerMapList, StepRail)
    * Use instead: career-map/node-foreground for titles, career-map/current-label and career-map/target-label
    * Status:      active
    */
@@ -2041,24 +2041,24 @@
   --career-map-node-selected: oklch(50.4% 0.2782 264.53);
   /**
    * Intent:      "You are here" label and icon on the employee's current role card
-   * Use when:    The state label of the CareerMapNode in state current
-   * Do not use:  Other labels, links or any text outside Career Map
+   * Use when:    The state label of the CareerMapNode in state current; the current ring and the "You are here" status of a StepRail row
+   * Do not use:  Other labels, links or any text outside the Career Map family (CareerMap, CareerMapList, StepRail)
    * Use instead: color/text/link for links, career-map/node-description for neutral labels
    * Status:      active
    */
   --career-map-current-label: oklch(50.4% 0.2782 264.53);
   /**
    * Intent:      "Active target" label and icon on the target role card
-   * Use when:    The state label of the CareerMapNode in state target
-   * Do not use:  Success messages or any text outside Career Map
+   * Use when:    The state label of the CareerMapNode in state target; the "Active target" status of a StepRail row
+   * Do not use:  Success messages or any text outside the Career Map family (CareerMap, CareerMapList, StepRail)
    * Use instead: color/text/success for general success text
    * Status:      active
    */
   --career-map-target-label: #15803d;
   /**
    * Intent:      Border of the Active target role card — a non-colour-text signal for the target
-   * Use when:    Outlining the CareerMapNode in state target
-   * Do not use:  Validation borders or containers outside Career Map
+   * Use when:    Outlining the CareerMapNode in state target; the target ring in StepRail
+   * Do not use:  Validation borders or containers outside the Career Map family (CareerMap, CareerMapList, StepRail)
    * Use instead: color/border/success for validated inputs
    * Status:      active
    */
@@ -2074,8 +2074,8 @@
   --career-map-band-completed: #f1f5f9;
   /**
    * Intent:      Status band across the top of a Career Map card in state current
-   * Use when:    Filling the band that holds the state label (icon + text) of a CareerMapNode in state current
-   * Do not use:  Card bodies, badges, alerts or anything outside Career Map
+   * Use when:    Filling the band that holds the state label (icon + text) of a CareerMapNode in state current; the fill of the current ring in StepRail
+   * Do not use:  Card bodies, badges, alerts or anything outside the Career Map family (CareerMap, CareerMapList, StepRail)
    * Use instead: career-map/node-surface for the card body
    * Foreground:  career-map/current-label (4.8:1)
    * Status:      active
@@ -2083,8 +2083,8 @@
   --career-map-band-current: oklch(90% 0.05 264.53);
   /**
    * Intent:      Status band across the top of a Career Map card in state target
-   * Use when:    Filling the band that holds the state label (icon + text) of a CareerMapNode in state target
-   * Do not use:  Card bodies, badges, alerts or anything outside Career Map
+   * Use when:    Filling the band that holds the state label (icon + text) of a CareerMapNode in state target; the fill of the target ring in StepRail
+   * Do not use:  Card bodies, badges, alerts or anything outside the Career Map family (CareerMap, CareerMapList, StepRail)
    * Use instead: career-map/node-surface for the card body
    * Foreground:  career-map/target-label (4.6:1)
    * Status:      active
@@ -2118,8 +2118,8 @@
   --career-map-vision-border: #9063dd;
   /**
    * Intent:      Dashed line of a Career vision, and the ring on its cards when the vision is highlighted
-   * Use when:    Drawing links on a vision route in CareerMap; ringing that route's cards when it's selected
-   * Do not use:  Company-path lines, the card selection ring, or anything outside Career Map
+   * Use when:    Drawing links on a vision route in CareerMap; ringing that route's cards when it's selected; the dashed rail and route rings of StepRail tone vision
+   * Do not use:  Company-path lines, the card selection ring, or anything outside the Career Map family (CareerMap, CareerMapList, StepRail)
    * Use instead: career-map/followed-edge or career-map/other-path-edge for company paths, career-map/node-selected for a selected card
    * Status:      active
    */
@@ -2134,8 +2134,8 @@
   --career-map-vision-edge-inactive: #c5a9f8;
   /**
    * Intent:      Line of the company path the employee follows (their main route), and the ring on its cards when that path is highlighted
-   * Use when:    Drawing links on the route marked followed in CareerMap
-   * Do not use:  Other company paths, success messages, or anything outside Career Map
+   * Use when:    Drawing links on the route marked followed in CareerMap; the rail and route rings of StepRail tone followed
+   * Do not use:  Other company paths, success messages, or anything outside the Career Map family (CareerMap, CareerMapList, StepRail)
    * Use instead: career-map/other-path-edge for other company paths, color/border/success for validation
    * Status:      active
    */
@@ -2150,8 +2150,8 @@
   --career-map-followed-edge-inactive: #4ade80;
   /**
    * Intent:      Line, arrow and route ring of any company path the employee doesn't follow, when it's the selected route. Colour means the path's role, not its identity — all other paths share it; the legend names them
-   * Use when:    A selected non-followed company path in CareerMap
-   * Do not use:  The followed path (green), Career visions (violet), text or anything outside Career Map
+   * Use when:    A selected non-followed company path in CareerMap; the rail and route rings of StepRail tone other
+   * Do not use:  The followed path (green), Career visions (violet), text or anything outside the Career Map family (CareerMap, CareerMapList, StepRail)
    * Use instead: career-map/followed-edge, career-map/vision-edge, career-map/other-path-edge-inactive when not selected
    * Status:      active
    */

@@ -1,6 +1,6 @@
 # Component Quick Reference
 
-Scanned from all 54 component artifacts. Read before building any screen — covers what each component is for, the key usage rule, and the most common mistake.
+Scanned from all 55 component artifacts. Read before building any screen — covers what each component is for, the key usage rule, and the most common mistake.
 
 **Source of truth:** all information here is extracted from `Machine Readable/artifacts/components/[name].meta.json`.  
 Each entry links to its artifact file and Storybook story — open those for full token bindings, variant matrices, and accessibility specs.
@@ -399,6 +399,19 @@ Each entry links to its artifact file and Storybook story — open those for ful
 **vs `item`:** Ordered connected career progression → use `career-path-stepper`; independent repeatable rows → use `item`.
 
 → Artifact: `Machine Readable/artifacts/components/career-path-stepper.meta.json` · Storybook: `Navigation/Career Path Stepper`
+
+---
+
+### `step-rail`
+**What it's for:** One Career Map route as a vertical list: the roles in order, each a ring on a rail drawn in the route's role colour. Read-only, or selectable rows.
+
+**Use when:** One route of a Career Map needs to read as a list: a route panel, a list view card, or the preview of a move (Explore a position).
+
+**Key rule:** Tone comes from the route's role (followed · other · vision), never one colour per path; always say the state in `status` text, the ring only repeats it; the start row is muted and not selectable.
+
+**vs `career-path-stepper`:** Employee's read-only route → use `step-rail`; admin editing and ordering a path → use `career-path-stepper`.
+
+→ Artifact: `Machine Readable/artifacts/components/step-rail.meta.json` · Storybook: `Navigation/Step Rail`
 
 ---
 

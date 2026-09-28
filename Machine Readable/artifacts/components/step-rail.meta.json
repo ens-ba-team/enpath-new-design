@@ -1,0 +1,360 @@
+{
+  "name": "step-rail",
+  "type": "component",
+  "description": "One Career Map route as a vertical list: the roles in order, each a ring on a rail drawn in the route's role colour. Read-only, or selectable rows.",
+  "category": "navigation",
+  "shadcnBase": "custom",
+  "primitiveBase": "item",
+  "variants": {
+    "tone": {
+      "type": "enum",
+      "values": [
+        "followed",
+        "other",
+        "vision"
+      ],
+      "default": "followed",
+      "reactProp": "tone"
+    },
+    "marker": {
+      "type": "enum",
+      "values": [
+        "route",
+        "muted",
+        "current",
+        "target"
+      ],
+      "default": "route",
+      "reactProp": "marker",
+      "appliesTo": "StepRailItem"
+    },
+    "statusTone": {
+      "type": "enum",
+      "values": [
+        "neutral",
+        "current",
+        "target"
+      ],
+      "default": "neutral",
+      "reactProp": "statusTone",
+      "appliesTo": "StepRailItem"
+    }
+  },
+  "componentProperties": {
+    "title": {
+      "type": "SLOT",
+      "default": null,
+      "reactProp": "title"
+    },
+    "status": {
+      "type": "SLOT",
+      "default": null,
+      "reactProp": "status"
+    },
+    "muted": {
+      "type": "BOOLEAN",
+      "default": false,
+      "reactProp": "muted"
+    },
+    "selected": {
+      "type": "BOOLEAN",
+      "default": false,
+      "reactProp": "selected"
+    },
+    "onSelect": {
+      "type": "EVENT",
+      "default": null,
+      "reactProp": "onSelect"
+    }
+  },
+  "tokens": {
+    "rail": {
+      "followed": "career-map/followed-edge",
+      "other": "career-map/other-path-edge",
+      "vision": "career-map/vision-edge",
+      "strokeWeight": 2,
+      "style": {
+        "followed": "solid",
+        "other": "solid",
+        "vision": "dashed"
+      }
+    },
+    "ring": {
+      "size": "0.75rem",
+      "strokeWeight": 2,
+      "radius": "radius/pill",
+      "route": {
+        "fill": "career-map/node-surface",
+        "stroke": "the rail's tone token"
+      },
+      "muted": {
+        "fill": "career-map/node-surface",
+        "stroke": "career-map/node-border"
+      },
+      "current": {
+        "fill": "career-map/band-current",
+        "stroke": "career-map/current-label"
+      },
+      "target": {
+        "fill": "career-map/band-target",
+        "stroke": "career-map/target-border"
+      }
+    },
+    "row": {
+      "component": "item",
+      "size": "sm",
+      "padding": "spacing/component/sm",
+      "gap": "spacing/component/sm"
+    },
+    "text": {
+      "titleMuted": "career-map/node-description",
+      "statusNeutral": "career-map/node-description",
+      "statusCurrent": "career-map/current-label",
+      "statusTarget": "career-map/target-label"
+    },
+    "gaps": {
+      "rows": "0 (rows touch; the Item padding spaces them)",
+      "ringToTitle": "spacing/component/sm (Item gap)"
+    }
+  },
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Semantics",
+        "value": "An ordered list (ol / li): order is meaning. Give the list an aria-label naming the route (\"Roles on Engineering growth\")."
+      },
+      {
+        "property": "Decoration",
+        "value": "The rail and rings are aria-hidden; the status text says the state (\"You are here\", \"Active target\"), so colour and ring style are never the only signal."
+      },
+      {
+        "property": "Keyboard",
+        "value": "Selectable rows are Item buttons: Tab reaches each, Enter or Space selects; the selected row has aria-current. Read-only rows aren't focusable."
+      },
+      {
+        "property": "Contrast",
+        "value": "Status text uses career-map text tokens checked on white (current-label 4.8:1 on band-current, target-label AA)."
+      },
+      {
+        "property": "Touch target",
+        "value": "Selectable rows are full-width Items (≥ 24px tall at size sm, WCAG 2.2 AA)."
+      }
+    ]
+  },
+  "constraints": [
+    "Use for one route of a Career Map shown as a list: a route panel, a list view card, or the preview of a move (Explore a position).",
+    "Set tone from the route's role (the path the employee follows, another company path, a Career vision), never to tell paths apart.",
+    "Put the card a route starts from first, muted and without onSelect (context only).",
+    "Say the state in words in status; the marker only repeats it visually.",
+    "Keep it read-only or single-select; for editing and ordering a path use career-path-stepper."
+  ],
+  "doNot": [
+    {
+      "wrong": "A different colour per company path",
+      "correct": "Tone by role: followed (green), other (grey), vision (dashed violet); a legend or heading names the path"
+    },
+    {
+      "wrong": "Numbers, drag handles or edit actions on rows",
+      "correct": "Use career-path-stepper for admin editing"
+    },
+    {
+      "wrong": "Rely on the ring colour to say You are here or Active target",
+      "correct": "Always pass status text; the ring repeats it"
+    },
+    {
+      "wrong": "Make the start (context) row selectable",
+      "correct": "Leave onSelect off it and mark it muted"
+    }
+  ],
+  "composition": {
+    "structure": "StepRail ol > StepRailItem li > [rail segment] + Item (icon slot: ring · title: role + status)",
+    "slots": [
+      {
+        "name": "title",
+        "accepts": "open-ended",
+        "required": true,
+        "multiple": false,
+        "defaultContent": null
+      },
+      {
+        "name": "status",
+        "accepts": "text",
+        "required": false,
+        "multiple": false,
+        "defaultContent": null
+      }
+    ]
+  },
+  "behavior": {
+    "interactionModel": "stateless (selection is controlled by the consumer via selected + onSelect)",
+    "keyboardPattern": {
+      "Tab": "Moves between selectable rows",
+      "Enter / Space": "Selects the focused row"
+    }
+  },
+  "relationships": {
+    "subComponents": [
+      {
+        "name": "step-rail-item",
+        "role": "One role on the route: ring, rail segment and title",
+        "overrideRule": "Use props (marker, statusTone, muted); don't restyle the ring or rail"
+      }
+    ],
+    "usedBy": [],
+    "relatedComponents": [
+      {
+        "name": "career-map",
+        "reason": "Same family and tokens: the Career Map draws routes as lines between cards; Step Rail shows one route as a list."
+      },
+      {
+        "name": "career-path-stepper",
+        "reason": "Career Path Stepper is the admin editor of a path (numbers, actions, reordering); Step Rail is the employee's read-only view of a route."
+      },
+      {
+        "name": "item",
+        "reason": "Each row is an Item (size sm, type icon); Item alone has no rail."
+      }
+    ],
+    "mustBeChildOf": [],
+    "mustNotBeChildOf": [],
+    "composedWith": [
+      "item"
+    ],
+    "requires": [],
+    "triggers": [],
+    "blocksWhen": [],
+    "exposesState": [
+      "selected"
+    ]
+  },
+  "meta": {
+    "storyFile": "src/stories/StepRail.stories.tsx",
+    "artifactStatus": "needs review",
+    "version": "1.0",
+    "openQuestions": [
+      "Not used by any screen yet: CareerMapList rows, the route panel (RouteSteps) and the Explore preview (RoutePreview) still draw their own rails; replacing them is a separate decision."
+    ],
+    "notes": [
+      "Part of the Career Map family: it uses career-map/* tokens by design (their Use when names StepRail, 2026-09-28).",
+      "Geometry is tied to Item size sm (padding spacing/component/sm, a 1rem icon slot): changing Item sm padding moves the rail."
+    ],
+    "knownIssues": [],
+    "changelog": [
+      {
+        "date": "2026-09-28",
+        "change": "Created Step Rail (StepRail + StepRailItem) from the rails in CareerMapList and the Explore preview, as one shared component. Career-map token descriptions extended to name it. Not wired into screens yet.",
+        "breaking": false
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/step-rail.tsx",
+    "packageDeps": [],
+    "exports": [
+      "StepRail",
+      "StepRailItem",
+      "StepRailProps",
+      "StepRailItemProps",
+      "StepRailTone",
+      "StepRailMarker",
+      "StepRailStatusTone"
+    ],
+    "notes": [
+      "StepRail extends native ol attributes and requires aria-label; StepRailItem extends li attributes."
+    ]
+  },
+  "links": {
+    "shadcn": null,
+    "radix": null,
+    "storybook": "http://localhost:6006/?path=/docs/navigation-step-rail--docs"
+  },
+  "storybook": {
+    "file": "src/stories/StepRail.stories.tsx",
+    "title": "Navigation/Step Rail",
+    "stories": [
+      "FollowedPath",
+      "CareerVision",
+      "OtherCompanyPath",
+      "Selectable",
+      "PreviewWithExistingRoles",
+      "LongContent"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": "Verify at 390px and 1280px."
+  },
+  "docs": {
+    "intro": "# Step Rail\n\nOne Career Map route as a vertical list: the roles in order, each a ring on a rail drawn in the route's role colour. Read-only, or selectable rows.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "Variant Matrix",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "variants"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Structure",
+        "body": "\n```\nStepRail — ol, vertical list; tone sets the rail colour (vision = dashed)\n└─ StepRailItem ×n — li, relative\n   ├─ rail segment — absolute, 2px left border in the tone colour, ring centre → next ring centre (hidden on the last row)\n   └─ Item (type icon, size sm; a button when onSelect is set)\n      ├─ icon slot 1rem — the ring (0.75rem, 2px border, radius/pill), marker = route | muted | current | target\n      └─ title — the role + optional \" · status\" (statusTone neutral | current | target)\n```\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n| Frame | Property | Token |\n|---|---|---|\n| Rail — tone followed | Line (2px, solid) | `career-map/followed-edge` |\n| Rail — tone other | Line (2px, solid) | `career-map/other-path-edge` |\n| Rail — tone vision | Line (2px, dashed) | `career-map/vision-edge` |\n| Rail | Position | from the ring's centre to the next ring's centre: top = spacing/component/sm + half the icon slot, bottom = the same, negative; none on the last row |\n| Ring | Size / border / radius | 0.75rem · 2px · radius/pill |\n| Ring — route | Fill / border | career-map/node-surface · the rail's tone token |\n| Ring — muted | Fill / border | career-map/node-surface · career-map/node-border |\n| Ring — current | Fill / border | career-map/band-current · career-map/current-label |\n| Ring — target | Fill / border | career-map/band-target · career-map/target-border |\n| Row | Padding / gap | spacing/component/sm (Item size sm) |\n| Row | Hover / selected / focus | Item tokens (item/selected/*, color/border/focus) |\n| Title | Text | Item title (color/surface/default/foreground, medium) |\n| Title — muted | Text | career-map/node-description, regular |\n| Status — neutral | Text | career-map/node-description, regular |\n| Status — current | Text | career-map/current-label, regular |\n| Status — target | Text | career-map/target-label, regular |\n\n---\n\n"
+      },
+      {
+        "title": "Behavior",
+        "body": "\n- **Read-only by default.** Rows are plain Items; nothing is focusable.\n- **Selectable** when a row gets `onSelect`: the row becomes an Item button (hover, focus ring, selected fill and `aria-current`). Leave `onSelect` off the context row (the card a route starts from) so it's never shown selected.\n- **Line style follows the tone:** `vision` is dashed, company paths are solid. There is no per-path colour: the tone says the route's role (the path you follow, another company path, a Career vision).\n- **Markers say where the employee is:** `current` (You are here), `target` (Active target), `muted` (a role behind you, the start row, a role already on the map), `route` (everything else: a ring in the route's colour).\n- **Wrapping:** long titles wrap; the rail is drawn per row from ring to ring, so it stays joined.\n- **Not for editing.** No numbers, drag handles or actions: ordering an admin path is `career-path-stepper`.\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": "\n"
+          }
+        ]
+      }
+    ]
+  }
+}

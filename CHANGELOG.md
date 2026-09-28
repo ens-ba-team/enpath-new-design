@@ -6,6 +6,16 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-28 — Step Rail
+
+### Added
+- **`StepRail` + `StepRailItem`** (`Navigation/Step Rail`) — one Career Map route as a vertical list: roles in order, a ring per role on a rail in the route's role colour (`tone` followed · other · vision, vision dashed); `marker` route · muted · current · target; `status` text with `statusTone`; selectable rows via `onSelect` (Item). One shared version of the rails drawn by `CareerMapList` and the Explore preview. Not wired into screens yet.
+
+### Changed
+- Token descriptions only (no value change): `career-map/followed-edge`, `other-path-edge`, `vision-edge`, `node-surface`, `node-border`, `current-label`, `band-current`, `target-border`, `band-target`, `node-description`, `target-label` now name `StepRail` in *Use when*, and their *Do not use* reads "outside the Career Map family (CareerMap, CareerMapList, StepRail)". `tokens.css` regenerated.
+
+---
+
 ## 2026-09-28 — Career Map list view
 
 ### Added

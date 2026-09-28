@@ -1,6 +1,6 @@
 # Component Directory
 
-Generated from `artifacts/components/[name].meta.json` — 54 components with their Storybook title and source file. There's no generator: when a meta.json description changes, update its row here and its "What it's for" line in `component-quick-reference.md` — `drift-check.mjs` #10 fails until you do.
+Generated from `artifacts/components/[name].meta.json` — 55 components with their Storybook title and source file. There's no generator: when a meta.json description changes, update its row here and its "What it's for" line in `component-quick-reference.md` — `drift-check.mjs` #10 fails until you do.
 
 **Deep lookup:** read `artifacts/components/[name].meta.json` for tokens, behaviour, implementation notes, known issues and story names.
 
@@ -42,6 +42,7 @@ Generated from `artifacts/components/[name].meta.json` — 54 components with th
 | command | Searchable, keyboard-first list of items and actions (cmdk). | `Navigation/Command` | `command.tsx` |
 | navigation-menu | A horizontal site navigation bar with dropdown panels. | `Navigation/NavigationMenu` | `navigation-menu.tsx` |
 | pagination | A navigation control for moving through multi-page data sets. | `Navigation/Pagination` | `pagination.tsx` |
+| step-rail | One Career Map route as a vertical list: the roles in order, each a ring on a rail drawn in the route's role colour. Read-only, or selectable rows. | `Navigation/Step Rail` | `step-rail.tsx` |
 | sidebar | A composable, themeable application sidebar for primary navigation with collapsible state, mobile overlay, and keyboard shortcut. | `Navigation/Sidebar` | `sidebar.tsx` |
 | tabs | A navigation component for switching between content sections. | `Navigation/Tabs` | `tabs.tsx` |
 
