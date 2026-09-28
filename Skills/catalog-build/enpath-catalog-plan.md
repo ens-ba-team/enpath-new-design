@@ -15,6 +15,19 @@ as **its own Vercel site**, separate from the prototype.
 
 Nothing is built yet. Read the skill first; this file only records what's specific to Enpath.
 
+## Workflow (decided 2026-09-28)
+
+- **Text first:** `document/design-patterns.md` is the written catalog. Layouts, templates and
+  patterns are written there as **candidates**; the user approves them; **only approved items get an
+  ID** and go into `catalog-entries.json`. The catalog shows only items with an ID.
+- **Components are global.** A component's look changes only in the component (Storybook +
+  `meta.json`), never at a place of use; there's no "custom component" kind. Every component gets an
+  ID when the catalog is built (`ai-elements` = `agt`) and its card renders its **stories live** (not
+  screenshots, which go stale).
+- **Overrides found on screens are debt**, listed in design-patterns.md → "Needs a Storybook
+  update" (17 items on 2026-09-28), to become component variants / sizes.
+- Four kinds: Components · Patterns · Templates · Layouts.
+
 ---
 
 ## Should we do it
@@ -27,10 +40,10 @@ story for the first time (Accura found 25 errors in story files).
 Costs: rerun `build-catalog.mjs` after every component / story / pattern change (one more gate);
 nothing is verified yet, so every card will honestly show `draft` / `in-review`.
 
-**Recommendation: in two phases.**
-1. **Components first** (54 IDs + the page + the deploy). They're stable.
-2. **Patterns, layouts, templates later**, once My Career settles. IDs are permanent; giving them to
-   things still changing produces many `deprecated` entries.
+**Phases:**
+1. **Components** (54 IDs + the page + the deploy). They're stable.
+2. **Patterns, layouts, templates** as they get approved in `document/design-patterns.md`. IDs are
+   permanent; giving them to things still changing produces many `deprecated` entries.
 
 ## Fit check (done 2026-09-28)
 
@@ -113,8 +126,12 @@ them.
       components, a copied repo drifts), or (b) another Vercel **account / team** (it then needs
       GitHub access to the `ens-ba-team` org)? Is the prototype itself deployed anywhere yet
       (`enpath-ui` has no `.vercel`)?
+- [x] `ai-elements` components use `agt-` (2026-09-28).
 - [ ] **ID prefixes:** `agt-` for components inherited from Agentic, `enp-` for components made in
-      Enpath (career-map, stat, …)? Types `cmp` · `pat` · `lay` · `tpl`; a story after `#`
+      Enpath (career-map, stat, …)? The list of Enpath-made ones to be proposed from the meta.json
+      changelogs and approved, not guessed.
+- [ ] `label.tsx` has no `meta.json`: create one so it gets an ID? (`button.figma.tsx` is Figma Code
+      Connect, not a component: excluded.) Types `cmp` · `pat` · `lay` · `tpl`; a story after `#`
       (`agt-cmp-badge#success`).
 - [ ] **Statuses:** default `draft` / `in-review` / `stable` / `deprecated`, from
       `Tracking/Storybook Status.md` (so nothing is `stable` today)?
