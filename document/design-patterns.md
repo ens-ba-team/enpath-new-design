@@ -2,7 +2,7 @@
 title: Design patterns
 created: 2026-09-28
 updated: 2026-09-28
-status: First pass done (2026-09-28): 1 layout, 2 templates, 9 patterns as candidates, awaiting review. No IDs yet.
+status: First pass reviewed in part (2026-09-28): 1 layout, 1 template, 9 patterns as candidates. No IDs yet.
 related: glossary.md, my-career-build.md, set-up-build.md, ../Skills/catalog-build/enpath-catalog-plan.md, ../Prototype-build/composition/application-pattern-contracts.md, ../Tracking/Storybook Status.md
 ---
 
@@ -43,7 +43,8 @@ footer pattern") instead of repeating a pattern.
 candidate  ──review──▶  approved (gets its ID, goes into the catalog)  ──…──▶  deprecated (replacedBy)
 ```
 
-- **Candidate** when it appears in **2+ places**, or a design decision was made about it.
+- **Candidate** only when it **repeats**: it appears in **2+ places** (decided 2026-09-28). A one-off
+  screen's decisions stay in its build doc until something repeats them.
 - **Approved** only by the user. Then it gets a permanent ID and an entry in
   `Machine Readable/catalog-entries.json`; the catalog renders it. IDs never change or get reused.
 - Each entry follows the contract format in
@@ -62,14 +63,13 @@ entries get an ID and go into the catalog. Names are working names.
 |---|---|---|---|
 | L1 | Layout | App shell | every page |
 | T1 | Template | Master-detail | Setup: Career structure · Matrices config · Career path |
-| T2 | Template | Career workspace | My Career (one screen; qualifies by its decisions) |
 | P1 | Pattern | Page header | Setup · My Career |
-| P2 | Pattern | Detail header actions | Position · Matrix (Career path differs, see P2) |
+| P2 | Pattern | Detail header actions | Position · Matrix · Career path |
 | P3 | Pattern | History drawer | Position · Matrix · Career path · Path history (My Career) |
 | P4 | Pattern | Preview → Confirm dialog | 12 dialogs in Setup and My Career |
 | P5 | Pattern | Detail panel | My Career role panel · route panel |
-| P6 | Pattern | Step rail | Explore preview · List view · route panel |
-| P7 | Pattern | Competency status groups | every My Career role panel |
+| P6 | Pattern | Step rail | Explore preview · List view (route panel to join: **merge into one**, decided) |
+| P7 | Pattern | Competency status groups | My Career role panel only (**doesn't repeat yet**: keep or drop?) |
 | P8 | Pattern | Locked action with a reason | Position · Matrix · the rating grid |
 | P9 | Pattern | Ask AI chat panel | Setup · My Career |
 
@@ -127,21 +127,8 @@ entries get an ID and go into the catalog. Names are working names.
 - **Open:** Items use a local side padding (debt #11); the search Input pads itself instead of using
   InputGroup (debt #8); mobile for Matrices and Career path.
 
-### T2 · Career workspace — candidate
-
-- **Scope:** My Career (`/me/career`). One screen today; a candidate because of the decisions made
-  for it (`my-career-build.md`). Code: `my-career/my-career-screen.tsx`.
-- **Purpose:** where am I, where could I go, how am I doing: three questions, three places.
-- **Anatomy:** page header (P1) → **progress strip** fixed to the Active target (or the no-target
-  line) → **work area**: the map (canvas + toolbar + legend) **or** the list → **detail panel** (P5) on
-  the right when something is selected.
-- **Responsive:** ≥1024px panel on the right (400px), map by default; below 1024px panel below,
-  **List by default**, the user's Map / List choice wins for the session.
-- **States:** selection = card / route / nothing (panel closed); no target; path changed (header
-  Alert); Career vision request states.
-- **Components:** CareerMap, CareerMapLegend, CareerMapList, ButtonGroup, Select, Button, Alert, Tooltip.
-- **Rules / decisions:** progress never follows the selection (only the target); selecting = exploring;
-  Esc / empty-canvas click / × clears the selection. Full list: `my-career-build.md` §2–§6.
+_Career workspace (My Career) was proposed and **dropped** (2026-09-28): it doesn't repeat, so it's
+neither a template nor a pattern. Its decisions stay in `my-career-build.md`._
 
 ## Patterns
 
@@ -163,17 +150,18 @@ entries get an ID and go into the catalog. Names are working names.
 
 ### P2 · Detail header actions — candidate
 
-- **Scope:** Position detail, Matrix detail.
+- **Scope:** Position detail, Matrix detail, Career path detail.
 - **Anatomy (left → right):** **Edit** (outline; locked with a reason when not editable, P8) → **"…"**
   menu (History · separator · Duplicate position / Duplicate matrix) → the **lifecycle action**:
   Publish (primary, Draft) · Unpublish (outline, Published position) · Archive (outline, Active matrix)
   · Restore (primary, Archived matrix).
-- **Rules / decisions:** secondary → overflow → primary, so the main action sits last (2026-09-23);
-  the "…" menu is `modal={false}` because its items open a Sheet / Dialog (a modal menu left the page
-  unclickable). Duplicate opens the Create dialog prefilled (matrix name "A" → "A1").
+- **Rules / decisions:** secondary → overflow → primary, so the main action sits last (2026-09-23).
+  **Use a "…" menu only when there are many secondary actions** (2026-09-28): Position and Matrix
+  have History + Duplicate + Edit, so History and Duplicate go in the menu; **Career path has few, so
+  History stays its own outline button**. The "…" menu is `modal={false}` because its items open a
+  Sheet / Dialog (a modal menu left the page unclickable). Duplicate opens the Create dialog prefilled
+  (matrix name "A" → "A1").
 - **Components:** Button, DropdownMenu, Tooltip, AlertDialog.
-- **Open:** **Career path's header still has History as its own button**, not in a "…" menu: align it
-  with Position / Matrix?
 
 ### P3 · History drawer — candidate
 
@@ -185,7 +173,7 @@ entries get an ID and go into the catalog. Names are working names.
   when it matters ("New on your path", "Was your target").
 - **States:** empty ("No history yet").
 - **Components:** Sheet, Item, Badge, Empty.
-- **Open:** two forms of one drawer: keep both, or move Setup to the grouped form?
+- **Decided (2026-09-28): keep both forms**: text for Setup objects, grouped rows for Path history.
 
 ### P4 · Preview → Confirm dialog — candidate
 
@@ -211,16 +199,19 @@ entries get an ID and go into the catalog. Names are working names.
 - **Responsive:** right column 400px from 1024px; below that, under the work area.
 - **Components:** Badge, Button, plus the content (P7, P6).
 
-### P6 · Step rail — candidate
+### P6 · Step rail — candidate (**merge into one: decided 2026-09-28, not built**)
 
-- **Scope:** Explore a position preview (`RoutePreview` in `plan-dialogs.tsx`, **private helper**),
-  List view rows (`CareerMapList`), route panel steps (`RouteSteps`).
-- **Anatomy:** a vertical rail in the route's colour (solid green = path you follow, solid grey =
-  other company path, dashed violet = Career vision) with a ring per role; the start row is grey
+- **Scope today:** two rail implementations and one list with icons:
+  - Explore a position preview: `RoutePreview` in `my-career/plan-dialogs.tsx` (private helper);
+  - List view rows: `CareerMapList` in `components/ui/career-map.tsx`;
+  - route panel steps: `RouteSteps` in `my-career/my-career-panels.tsx` (not a rail: one Item per
+    role with a status icon ✓ · pin · flag · clock · compass).
+- **Anatomy (rails):** a vertical rail in the route's colour (solid green = path you follow, solid grey
+  = other company path, dashed violet = Career vision) with a ring per role; the start row is grey
   context ("Starts from …"); a role already on the map reads "· already on your map".
-- **Rules / decisions:** the map's line language turned on its side (2026-09-26); dots are solid
-  rings over the rail (a dashed ring breaks up).
-- **Open:** three implementations of one idea: one shared component?
+- **Rules / decisions:** the map's line language turned on its side (2026-09-26); dots are solid rings
+  over the rail (a dashed ring breaks up). **One implementation for all of them** (2026-09-28): plan
+  in the chat, to confirm before building.
 
 ### P7 · Competency status groups — candidate
 
