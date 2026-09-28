@@ -272,6 +272,10 @@ the route's colour (solid green / grey, dashed violet): "Backend Engineer L2 · 
 the Active target row adds its counts ("2 growth areas · 2 not assessed yet"); vision rows drop the
 repeated "Career vision" label. Selecting a row opens the same detail panel as a card. The toolbar
 ("Following…", Explore a position) sits in a bar above the list.
+The list **keeps the selection in view** (fixed 2026-09-28): a Career vision added from the list
+(or added on the map before switching to List) lands at the end, so the list scrolls itself to that
+route's card, or to the selected row if the card is taller than the list. It scrolls the list only,
+never the page, and doesn't move when the selection is already visible.
 
 ### Selection and the detail panel
 

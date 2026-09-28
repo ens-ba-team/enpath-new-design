@@ -156,7 +156,7 @@
       },
       {
         "property": "Fallback",
-        "value": "CareerMapList is the list view of the same plan: every row is a selectable Item (Tab, Enter), every section header a button that selects its route. My Career offers a Map / List switch and opens in List below 1024px."
+        "value": "CareerMapList is the list view of the same plan: every row is a selectable Item (Tab, Enter), every section header a button that selects its route. My Career offers a Map / List switch and opens in List below 1024px. The list keeps the selection in view: when selectedId or selectedRoute changes (or the list opens), it scrolls itself (never the page) to that route's Card, or to the selected row if the Card is taller than the list; nothing moves when it is already visible."
       },
       {
         "property": "Routes",
@@ -342,6 +342,11 @@
       {
         "date": "2026-09-28",
         "change": "CareerMapList: each route is a Card; route name text-base, note on its own line; start row reads \"Starts from {card}\" and is never shown selected.",
+        "breaking": false
+      },
+      {
+        "date": "2026-09-28",
+        "change": "CareerMapList scrolls the selection into view (route Card, or the selected row if the Card is taller than the list), so a Career vision added at the end of the list is visible. Scrolls the list only. Rows carry data-row, route Cards data-route. No API or visual change.",
         "breaking": false
       }
     ]

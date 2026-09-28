@@ -514,11 +514,42 @@ export function CareerMapList({ items, links, paths, selectedId, onSelect, selec
   // Cards on no route (e.g. "You are here" with no company path followed) go first, untitled.
   const loose = items.filter((i) => !listed.has(i.id));
 
-  const row = (it: CareerMapItem, path: CareerMapPath | undefined, last: boolean, start = false) => {
+  // Keep the selection in view (e.g. a new Career vision is added at the end of the list, or the
+  // list opens after one was added on the map): its whole route card if it fits, otherwise the
+  // selected row. Scrolls the list only, never the page; does nothing when it's already visible.
+  const listRef = React.useRef<HTMLDivElement>(null);
+  const mounted = React.useRef(false);
+  React.useEffect(() => {
+    const list = listRef.current;
+    const first = !mounted.current;
+    mounted.current = true;
+    if (!list || (!selectedRoute && !selectedId)) return;
+    // Measure after layout settles (the detail panel beside or below the list resizes it).
+    const frame = requestAnimationFrame(() => {
+      const rowEl = selectedId ? list.querySelector<HTMLElement>(`[data-row="${CSS.escape(selectedId)}"]`) : null;
+      const card = selectedRoute
+        ? list.querySelector<HTMLElement>(`[data-route="${CSS.escape(selectedRoute)}"]`)
+        : rowEl?.closest<HTMLElement>("[data-route]");
+      const el = card && card.offsetHeight <= list.clientHeight ? card : rowEl ?? card;
+      if (!el) return;
+      const box = list.getBoundingClientRect();
+      const r = el.getBoundingClientRect();
+      const pad = parseFloat(getComputedStyle(list).paddingTop) || 0;
+      let delta = 0;
+      if (r.top < box.top + pad) delta = r.top - box.top - pad;
+      else if (r.bottom > box.bottom - pad) delta = Math.min(r.bottom - box.bottom + pad, r.top - box.top - pad);
+      if (delta === 0) return;
+      const reduce = first || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      list.scrollBy({ top: delta, behavior: reduce ? "auto" : "smooth" });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [selectedId, selectedRoute]);
+
+  const row =(it: CareerMapItem, path: CareerMapPath | undefined, last: boolean, start = false) => {
     const color = path ? routeColor(path, true) : undefined;
     const label = it.label ?? stateLabel[it.state].text;
     return (
-      <li key={it.id} className="relative">
+      <li key={it.id} className="relative" data-row={start ? undefined : it.id}>
         {/* Rail segment from this dot's centre to the next row's dot centre (Item sm: 8px padding + 16px icon). */}
         {path && !last && (
           <span
@@ -552,7 +583,7 @@ export function CareerMapList({ items, links, paths, selectedId, onSelect, selec
   };
 
   return (
-    <div role="region" aria-label={ariaLabel} className={cn("flex flex-col gap-[var(--spacing-layout-xs)] overflow-y-auto p-[var(--spacing-layout-xs)]", className)}>
+    <div ref={listRef} role="region" aria-label={ariaLabel} className={cn("flex flex-col gap-[var(--spacing-layout-xs)] overflow-y-auto p-[var(--spacing-layout-xs)]", className)}>
       {loose.length > 0 && <ul className="flex flex-col">{loose.map((it) => row(it, undefined, true))}</ul>}
       {sections.map(({ path, start, rows }) => {
         const active = path.id === selectedRoute;
@@ -563,7 +594,7 @@ export function CareerMapList({ items, links, paths, selectedId, onSelect, selec
         const note = path.note;
         // One design-system Card per route (option B, 2026-09-28): the separation ladder's "card" step.
         return (
-          <Card key={path.id} role="region" aria-label={path.name} className="gap-[var(--spacing-component-xs)] p-[var(--spacing-component-md)]">
+          <Card key={path.id} data-route={path.id} role="region" aria-label={path.name} className="gap-[var(--spacing-component-xs)] p-[var(--spacing-component-md)]">
             <div className="flex flex-wrap items-center gap-x-[var(--spacing-component-sm)] gap-y-[var(--spacing-component-xs)]">
               {onSelectRoute ? (
                 <Button
