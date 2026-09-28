@@ -189,7 +189,8 @@ export function describeStep(step: PlanStep) {
 
 // ─── Evidence and gaps ───────────────────────────────────────────────────────
 // Lan's assessed point per competency, from acknowledged Records (stands in for Records, PRD-021).
-// A competency with no entry has no evidence yet — shown as "Needs evidence", never as a gap.
+// A competency with no entry has no approved score yet — shown as "Not assessed yet", never as a gap.
+// (Becomes mock Assessments in Next steps #3.)
 
 export interface Evidence { point: number; source: string }
 
@@ -200,8 +201,6 @@ export const evidence: Record<string, Evidence> = {
   ment: { point: 2, source: 'Onboarded one new engineer' },
   res: { point: 2, source: 'Onboarding interviews with the design team' },
 };
-
-export const recordCount = Object.keys(evidence).length;
 
 export type GapStatus = 'ready' | 'growth' | 'evidence' | 'unset';
 

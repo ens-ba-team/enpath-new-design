@@ -52,8 +52,8 @@ Target → ASSESSMENT (scores) → Growth areas → Action plan → Evidence →
 
 ## What it changes in My Career
 
-- "Needs records" → **"Not assessed yet"** for competencies with no Completed score; the row's action
-  becomes **Add evidence** (and possibly **Request an assessment**).
+- Done 2026-09-28: "Needs records" → **"Not assessed yet"** for competencies with no Completed score;
+  the row's action is **Add evidence**. Open: also offer **Request an assessment**?
 - Ready rows name their source: "Based on H2 2026 assessment, approved {date}".
 - Mock data: today's mock "current points" become mock Assessments (period, approved date,
   competencies covered). Plan: `what should be done.md` → "Next steps — My Career".

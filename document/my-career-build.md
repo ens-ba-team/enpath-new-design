@@ -62,8 +62,8 @@ the same. That is the main source of confusion this rebuild fixes.
 
 - **Company paths are always there.** An employee always sees the published Career Path(s) for their
   current role (PRD-020 RQ-03). A Career vision is drafted *on top of* that, not instead of it.
-- **Competency statuses: Ready · Growth area · Needs records** (renamed from "Needs evidence" 2026-09-28 — it names what the employee adds, matches the brief and the "Add a record" button). "Needs records" = not enough
-  acknowledged Records yet — never shown as a gap or a score (PRD-020 BR-13). **No readiness 0%.**
+- **Competency statuses: Ready · Growth area · Not assessed yet** (was "Needs evidence", then "Needs records"; renamed 2026-09-28 when Assessment became the only source of scores). "Not assessed yet" = no approved
+  Assessment score yet — never shown as a gap or a score (PRD-020 BR-13). **No readiness 0%.**
   Wording follows `enpath-tone-and-voice.md` (a gap is development information, not a verdict).
 - **Competency steps are "points," never "levels"** — "3 · Intermediate", not "L3". Same rule as
   Setup.
@@ -84,20 +84,20 @@ shell's footer still says "Admin" (not addressed — one user in the prototype).
   **How the map works**.
 - **Progress strip** (under the header, one line — replaced the three big tiles 2026-09-25): "Toward
   Backend Engineer L3 · Senior", a segmented bar, and clickable counts "2 ready · 2 growth areas · 2
-  need records". Clicking the bar or a count opens the target in the side panel. The ⓘ tooltip holds
-  the explanation: "Records are examples of your work that your manager has acknowledged. 'Needs
-  records' means a competency has none yet, so it can't be assessed. It doesn't count as a growth
-  area. Based on N records." (The employee UI never says "gap": the label is Growth areas.) The career-vision
+  not assessed yet". Clicking the bar or a count opens the target in the side panel. The ⓘ tooltip holds
+  the explanation: "Scores come from your latest approved assessment. 'Not assessed
+  yet' means a competency has no approved score yet, so it doesn't count as a growth area. Add
+  evidence so it can be assessed next time." (The employee UI never says "gap": the label is Growth areas.) The career-vision
   line was removed (the map and legend already show visions). Fixed to the Active target.
 - **Side panel — role card** (redesigned 2026-09-25): role + level; **one badge** (Completed / You
   are here / Active target / Planned / Career vision N · status) and one context line; a readiness
-  bar with "2 ready · 2 growth · 2 need records". Competencies are **grouped by what to do**:
-  Growth areas → Needs records → Ready (collapsed) → Not set (collapsed). Each row shows a short
+  bar with "2 ready · 2 growth · 2 not assessed yet". Competencies are **grouped by what to do**:
+  Growth areas → Not assessed yet → Ready (collapsed) → Not set (collapsed). Each row shows a short
   summary ("3 → 4 · Advanced", "needs 3 · Intermediate") and **expands**: a growth area shows what the
-  level means (the Matrix's behavior text) + **Plan an action** (My Actions); needs records says "No
-  records yet · needs {point}" + **Add a record** (Records), and nothing more (the "doesn't count as a growth area"
+  level means (the Matrix's behavior text) + **Plan an action** (My Actions); not assessed yet says "No
+  approved score yet · needs {point}" + **Add evidence**, and nothing more (the "doesn't count as a growth area"
   explanation lives in the ⓘ tooltip, 2026-09-28); ready shows the record it's based on.
-  Plan an action / Add a record show a "coming next" toast until those modules exist (#8).
+  Plan an action / Add evidence show a "coming next" toast until those modules exist (#8).
 
 **Lan's plan** (mock) — follows Engineering growth: Completed Backend Engineer L1 → **You are here** L2
 · Mid → **Active target** L3 · Senior → Planned L4 · Staff. Career vision 1: Backend Engineer L2 →
@@ -214,7 +214,7 @@ Senior" — it's what changes along a path) and the Position under it in small g
 | **Career vision** | violet/100 · compass · "Career vision" (numbered only when there are 2+) | dashed violet | Roles in one of Lan's own drafted paths | Role panel; Show Career vision N; Set as target only once approved |
 
 Selected card = 2px focus-blue outline. All role panels: badge + one context line, readiness bar,
-competencies grouped Growth areas → Needs records → Ready → Not set, **Explore a position from here**.
+competencies grouped Growth areas → Not assessed yet → Ready → Not set, **Explore a position from here**.
 
 ### Routes — lines between cards, coloured by role
 
@@ -269,7 +269,7 @@ Career vision: "Your own direction · private"). Every route but the followed on
 "Starts from Backend Engineer L2 · Mid" row (context only: never shown selected, so "You are here"
 appears once), like the Explore dialog's rail. The toolbar above the list is on plain white. Rows are selectable Items on a rail in
 the route's colour (solid green / grey, dashed violet): "Backend Engineer L2 · Mid · You are here";
-the Active target row adds its counts ("2 growth areas · 2 need records"); vision rows drop the
+the Active target row adds its counts ("2 growth areas · 2 not assessed yet"); vision rows drop the
 repeated "Career vision" label. Selecting a row opens the same detail panel as a card. The toolbar
 ("Following…", Explore a position) sits in a bar above the list.
 
@@ -298,9 +298,9 @@ loop and terms: `glossary.md` → My Career terms. What they mean for My Career:
 - Scores come from **Assessment** (latest Completed per competency). The employee UI says **Growth
   area**, never "gap".
 - A growth row's **Plan an action** opens My Actions (the Action plan) for that growth area.
-- **Evidence** replaces Records (the Records module is dropped). Planned copy: "Needs records" →
-  **"Not assessed yet"**, "Add a record" → **"Add evidence"**, Ready rows say "Based on H2 2026
-  assessment, approved {date}". Not built yet — plan in `what should be done.md` → "Next steps".
+- **Evidence** replaces Records (the Records module is dropped). Copy done 2026-09-28: "Not assessed
+  yet" and "Add evidence". Still planned: Ready rows say "Based on H2 2026 assessment, approved {date}"
+  (with mock Assessments) — `what should be done.md` → "Next steps".
 
 ## When a company path changes (proposed 2026-09-28, from the dev team)
 
@@ -355,9 +355,9 @@ Only one Career vision can be waiting at a time.
 ### Manager review (AI-assisted)
 The manager sees everything the employee sees, plus an **AI summary**:
 - per competency: current evidence vs the destination's expectation — Ready / Growth area /
-  Needs records, counted, not scored;
+  Not assessed yet, counted, not scored;
 - which evidence each line is based on (Records), and where there isn't enough;
-- a suggested focus ("2 growth areas; 3 need records before this can be judged").
+- a suggested focus ("2 growth areas; 3 not assessed yet").
 
 AI never recommends approve / decline outright — the manager decides. Declining needs a short note.
 
@@ -432,7 +432,7 @@ names and counts stay in one place. Built:
 
 - **Evidence** — Lan's assessed point per competency with its source (5 records: System design 3,
   Code quality 3, Delivery 3, Mentoring 2, Research 2); stands in for Records (PRD-021). No entry =
-  Needs records (code status `evidence`). `gapsFor(step)` compares it with the step's expectations from Setup.
+  Not assessed yet (code status `evidence`). `gapsFor(step)` compares it with the step's expectations from Setup.
 
 - **Career vision request** — which vision was sent, its status (Waiting · Approved · Declined), the employee's note and the manager's note. No request = every vision is a draft. A vision's route is read from its branches.
 
@@ -489,7 +489,7 @@ Moved here from session memory 2026-09-26.
 | Progression | Skills that unlock the next position; check-ins, wins | Evidence from check-ins | — |
 
 Where EnPath differs: explicit company paths **plus** the employee's own drafted Career vision
-across Positions, a manager approval step for it, and a "Needs records" state instead of treating
+across Positions, a manager approval step for it, and a "Not assessed yet" state instead of treating
 missing evidence as a gap.
 
 Sources: [Lattice — Employee Development Plans](https://lattice.com/platform/grow/individual-development-plans) ·

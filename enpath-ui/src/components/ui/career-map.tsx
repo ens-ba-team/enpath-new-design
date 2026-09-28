@@ -63,7 +63,7 @@ export interface CareerMapItem {
   /** Row on the map: 0 is the top row (the company path), higher numbers go down. Cards without a
    *  lane are stacked per column. A taken spot pushes a card to the next free row below. */
   lane?: number;
-  /** List view only: one short extra line on the row, e.g. "2 growth areas · 2 need records" */
+  /** List view only: one short extra line on the row, e.g. "2 growth areas · 2 not assessed yet" */
   detail?: string;
 }
 

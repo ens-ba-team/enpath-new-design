@@ -1,9 +1,9 @@
 'use client';
-// A role's competencies compared with Lan's evidence, grouped by what to do next:
-// Growth areas → Need evidence → Ready (collapsed) → Not set (collapsed). Each row shows a short value
+// A role's competencies compared with Lan's assessed points, grouped by what to do next:
+// Growth areas → Not assessed yet → Ready (collapsed) → Not set (collapsed). Each row shows a short value
 // ("3 → 4", "needs 3", "3") and expands to say what the level looks like (or which record a Ready
-// point comes from) with a link to the next step: Plan an action (My Actions) / Add a record (Records).
-// Wording follows enpath-tone-and-voice.md: "Need evidence" means no records yet, never a gap.
+// point comes from) with a link to the next step: Plan an action (My Actions) / Add evidence.
+// Wording follows enpath-tone-and-voice.md: "Not assessed yet" means no approved Assessment score, never a gap.
 // Each group is a compact Card (spacing/component/md inside); the gap between cards is structure
 // (spacing/layout/xs — the panel is narrow). Rows are compact: trigger padding component/sm (8px)
 // instead of the Accordion's 16px — local override until the Accordion gets a compact size. Built only from design-system components: Card,
@@ -22,7 +22,7 @@ import { pointLabel, type Gap, type GapStatus } from './mock-data';
 /** `values` names the numbers on the right once per card, e.g. "You → Needed". */
 const groups: { status: GapStatus; title: string; collapsed: boolean; values?: string }[] = [
   { status: 'growth', title: 'Growth areas', collapsed: false, values: 'You → Needed' },
-  { status: 'evidence', title: 'Needs records', collapsed: false, values: 'Needed' },
+  { status: 'evidence', title: 'Not assessed yet', collapsed: false, values: 'Needed' },
   { status: 'ready', title: 'Ready', collapsed: true, values: 'You' },
   { status: 'unset', title: 'Not set in Setup', collapsed: true },
 ];
@@ -52,21 +52,21 @@ function Detail({ gap }: { gap: Gap }) {
   if (gap.status === 'growth') return (
     <>
       {label(`What ${pointLabel(gap.required!)} looks like`)}
-      {body(gap.meaning ?? 'Your records show this is a growth area for this level.')}
+      {body(gap.meaning ?? 'Your assessment shows this is a growth area for this level.')}
       {link('Plan an action', 'My Actions')}
     </>
   );
   if (gap.status === 'evidence') return (
     <>
       {/* "Why it doesn't count as a growth area" lives in the progress strip's ⓘ tooltip — the row only says what's needed. */}
-      {label(`No records yet · needs ${pointLabel(gap.required!)}`)}
-      {link('Add a record', 'Records')}
+      {label(`No approved score yet · needs ${pointLabel(gap.required!)}`)}
+      {link('Add evidence', 'Evidence')}
     </>
   );
   if (gap.status === 'ready') return (
     <>
       {label(`You’re at ${pointLabel(gap.current!)}`)}
-      {body(gap.source ? `Based on: ${gap.source}.` : 'Your records meet this level.')}
+      {body(gap.source ? `Based on: ${gap.source}.` : 'Your assessment meets this level.')}
     </>
   );
   return body('Setup hasn’t set an expectation for this level yet, so there’s nothing to compare.');

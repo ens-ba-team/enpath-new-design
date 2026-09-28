@@ -97,7 +97,7 @@ export function MyCareerScreen() {
     // List view: the Active target's row carries its counts, like the progress strip.
     const n = s.state === 'target' ? countGaps(gapsFor(s)) : null;
     const plural = (k: number, one: string, many: string) => `${k} ${k === 1 ? one : many}`;
-    const detail = n ? [n.growth > 0 && plural(n.growth, 'growth area', 'growth areas'), n.evidence > 0 && `${n.evidence} need${n.evidence === 1 ? 's' : ''} records`].filter(Boolean).join(' · ') || undefined : undefined;
+    const detail = n ? [n.growth > 0 && plural(n.growth, 'growth area', 'growth areas'), n.evidence > 0 && `${n.evidence} not assessed yet`].filter(Boolean).join(' · ') || undefined : undefined;
     return { id: s.id, title: d.title, level: d.level, state: s.state, lane: s.lane, detail, label: s.state === 'vision' ? (visionCount > 1 ? `Career vision ${s.vision}` : 'Career vision') : undefined };
   });
   const starts: StartOption[] = steps.filter((s) => s.state !== 'completed').map((s) => ({ id: s.id, label: stateName(s), vision: s.vision }));

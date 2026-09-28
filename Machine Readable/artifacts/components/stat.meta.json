@@ -147,6 +147,11 @@
         "date": "2026-09-28",
         "change": "Story copy: \"Needs evidence\" → \"Needs records\" to match My Career (records are what employees add). No API or visual change.",
         "breaking": false
+      },
+      {
+        "date": "2026-09-28",
+        "change": "Story copy: \"Needs records\" → \"Not assessed yet\" (scores come from Assessment; the Records module was dropped). No API or visual change.",
+        "breaking": false
       }
     ]
   },

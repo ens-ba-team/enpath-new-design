@@ -6,7 +6,7 @@
 
 import * as React from 'react';
 import { AssistantPanel, type AssistantReply, type AssistantScript } from '../chat/assistant-panel';
-import { countGaps, gapsFor, pointLabel, recordCount, type PlanStep } from './mock-data';
+import { countGaps, gapsFor, pointLabel, type PlanStep } from './mock-data';
 import { levelName } from './plan-dialogs';
 
 /** The direction the mock assistant suggests: from the Active target toward full-stack work. */
@@ -19,10 +19,10 @@ function reply(input: string, target: PlanStep | undefined, onMap: Set<string>, 
   if (/vision|suggest|direction|idea|explore/.test(q)) {
     const already = SUGGESTED_ROUTE.every((id) => onMap.has(id));
     return {
-      tool: `Read your ${recordCount} records, your company paths and published roles`,
+      tool: 'Read your assessment, your company paths and published roles',
       text: already
         ? `The direction I'd suggest, **${SUGGESTED_ROUTE.map(levelName).join(' → ')}**, is already on your map. Ask me to *compare* it with your target.`
-        : `Your code quality and delivery records carry over well to frontend work, so here's a direction you could explore:\n\n**${[SUGGESTED_FROM, ...SUGGESTED_ROUTE].map(levelName).join(' → ')}**\n\n- It isn't on a company path for your role, so it would be a **career vision**. Only you see it until you send it to your manager.\n- Most of its competencies need records first. A record from a frontend task would be the first step.`,
+        : `Your code quality and delivery scores carry over well to frontend work, so here's a direction you could explore:\n\n**${[SUGGESTED_FROM, ...SUGGESTED_ROUTE].map(levelName).join(' → ')}**\n\n- It isn't on a company path for your role, so it would be a **career vision**. Only you see it until you send it to your manager.\n- Most of its competencies aren't assessed yet. Evidence from a frontend task would be a good first step.`,
       proposal: already ? undefined : {
         label: 'Proposed career vision',
         body: <>{[SUGGESTED_FROM, ...SUGGESTED_ROUTE].map(levelName).join(' → ')}</>,
@@ -38,11 +38,11 @@ function reply(input: string, target: PlanStep | undefined, onMap: Set<string>, 
     const growth = gaps.filter((g) => g.status === 'growth');
     const evidence = gaps.filter((g) => g.status === 'evidence');
     return {
-      tool: `Compared your records with ${levelName(target.id)}`,
+      tool: `Compared your assessment with ${levelName(target.id)}`,
       text: `For **${levelName(target.id)}**:\n\n`
         + (growth.length ? `**Growth areas**\n${growth.map((g) => `- ${g.name}: ${pointLabel(g.current!)} → ${pointLabel(g.required!)}`).join('\n')}\n\n` : '')
-        + (evidence.length ? `**Needs records**: not growth areas, just no records yet\n${evidence.map((g) => `- ${g.name} (needs ${pointLabel(g.required!)})`).join('\n')}\n\n` : '')
-        + 'A good next step: add a record from recent work for the ones that need records, so they can be assessed.',
+        + (evidence.length ? `**Not assessed yet**: not growth areas, just no approved score yet\n${evidence.map((g) => `- ${g.name} (needs ${pointLabel(g.required!)})`).join('\n')}\n\n` : '')
+        + 'A good next step: add evidence from recent work for the ones not assessed yet, so they can be assessed next time.',
     };
   }
 
@@ -50,13 +50,13 @@ function reply(input: string, target: PlanStep | undefined, onMap: Set<string>, 
     const a = countGaps(gapsFor(target));
     return {
       tool: `Compared ${levelName(target.id)} with Product Designer L2 · Senior`,
-      text: `**${levelName(target.id)}**: ${a.ready} ready, ${a.growth} growth areas, ${a.evidence} need records.\n\n**Product Designer L2 · Senior**: mostly *needs records*. You have a research record, but nothing yet for visual or interaction design.\n\nThe backend move builds on what you already have; the design move is a bigger change and would need your manager's approval as a career vision.`,
+      text: `**${levelName(target.id)}**: ${a.ready} ready, ${a.growth} growth areas, ${a.evidence} not assessed yet.\n\n**Product Designer L2 · Senior**: mostly *not assessed yet*. Your research has a score, but visual and interaction design haven't been assessed.\n\nThe backend move builds on what you already have; the design move is a bigger change and would need your manager's approval as a career vision.`,
     };
   }
 
   return {
     tool: 'Read your career map',
-    text: `I can **suggest a career vision**, explain **what your target needs**, or **compare two roles**. I use your records, your company paths and the published roles, and I never change your map on my own.`,
+    text: `I can **suggest a career vision**, explain **what your target needs**, or **compare two roles**. I use your assessment, your company paths and the published roles, and I never change your map on my own.`,
   };
 }
 
