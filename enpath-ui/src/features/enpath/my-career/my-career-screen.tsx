@@ -4,8 +4,9 @@
 // path) · side panel (the selected role card, or the selected route — a company path or a Career
 // vision). The map is derived from Lan's plan (mock-data.ts → buildMap). Every plan change is
 // Preview → Confirm, then a toast. Career visions are numbered; one can be sent to the manager at
-// a time. Map or List view (List by default below 1024px; the employee's choice wins). Not yet:
-// manager review.
+// a time. Map or List view (List by default below 1024px; the employee's choice wins). When the
+// followed company path changes, the plan follows the latest version: a line in the progress strip
+// opens Path history (my-career-build.md §8). Not yet: manager review.
 
 import * as React from 'react';
 import { toast } from 'sonner';
@@ -23,12 +24,13 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { EnpathAppShell } from '../app-shell';
 import { SidebarFollowsChat, useChatShortcut } from '../chat/sidebar-follows-chat';
 import { Tip } from '../tip';
+import { HistoryDrawer } from '../setup/history-drawer';
 import { CareerChat } from './career-chat';
 import {
-  buildMap, companyPaths, countGaps, describeStep, employee, gapsFor, initialPlan, matchingPaths, removeBranch, removeVision,
-  visionNumbers, visionRoute, visionRouteId, type Branch, type GapStatus, type Plan, type VisionRequest,
+  buildMap, companyPaths, countGaps, describeChange, describeStep, employee, gapsFor, initialPlan, matchingPaths, removeBranch, removeVision,
+  simulatePathChange, visionNumbers, visionRoute, visionRouteId, type Branch, type GapStatus, type Plan, type VisionRequest,
 } from './mock-data';
-import { NoTargetStrip, ProgressBoard, requestBadge, RoutePanel, stateName, StepPanel, visionLabel } from './my-career-panels';
+import { NoTargetStrip, PathChangeNotice, ProgressBoard, requestBadge, RoutePanel, stateName, StepPanel, visionLabel } from './my-career-panels';
 import { ExplorePositionDialog, levelName, RemoveTargetDialog, SetTargetDialog, SwitchPathDialog, VisionRequestDialog, type StartOption } from './plan-dialogs';
 
 function Placeholder({ children }: { children: React.ReactNode }) {
@@ -58,6 +60,10 @@ export function MyCareerScreen() {
   const [notes, setNotes] = React.useState<Record<number, string>>({});
   const [sel, setSel] = React.useState<Selection>({ kind: 'card', id: employee.levelId }); // opens on "You are here"
   const [dialog, setDialog] = React.useState<DialogName>(null);
+  // Path changes: the strip's notice shows until Path history is opened for the latest change.
+  const [seenChange, setSeenChange] = React.useState<string | null>(null);
+  const [historyOpen, setHistoryOpen] = React.useState(false);
+  const [lostTarget, setLostTarget] = React.useState<string | undefined>();
   const [switchTo, setSwitchTo] = React.useState('');
   const [chatOpen, setChatOpen] = React.useState(false);
   const [focusGroup, setFocusGroup] = React.useState<{ group: GapStatus; n: number } | undefined>();
@@ -100,7 +106,7 @@ export function MyCareerScreen() {
     const detail = n ? [n.growth > 0 && plural(n.growth, 'growth area', 'growth areas'), n.evidence > 0 && `${n.evidence} not assessed yet`].filter(Boolean).join(' · ') || undefined : undefined;
     return { id: s.id, title: d.title, level: d.level, state: s.state, lane: s.lane, detail, label: s.state === 'vision' ? (visionCount > 1 ? visionLabel(s) : 'Career vision') : undefined };
   });
-  const starts: StartOption[] = steps.filter((s) => s.state !== 'completed').map((s) => ({ id: s.id, label: stateName(s), vision: s.vision }));
+  const starts: StartOption[] = steps.filter((s) => s.state !== 'completed' && s.state !== 'new').map((s) => ({ id: s.id, label: stateName(s), vision: s.vision }));
 
   // What "Remove" takes away: a whole Career vision (route panel) or one company-path card you added.
   const removal = React.useMemo(() => {
@@ -118,8 +124,54 @@ export function MyCareerScreen() {
     return { next, gone, blocked };
   }, [plan, step, steps, request, visionOfRoute]);
 
+  const followedPath = companyPaths.find((p) => p.id === plan.followedPathId);
+  const latestChange = followedPath?.changes?.[0];
+  const openPathHistory = () => { setHistoryOpen(true); if (latestChange) setSeenChange(latestChange.date); };
+  const notice = followedPath && latestChange && seenChange !== latestChange.date
+    ? <PathChangeNotice path={followedPath.name} date={latestChange.date} onOpen={openPathHistory} />
+    : undefined;
+  // Path history in plain words: what changed, then what it did to Lan's plan.
+  const historyEntries = (followedPath?.changes ?? []).map((c, i, all) => {
+    const { added, removed } = describeChange(followedPath!, c, i === 0 ? followedPath!.levels : all[i - 1].before);
+    const after = i === 0 ? followedPath!.levels : all[i - 1].before;
+    const here = after.indexOf(employee.levelId);
+    const parts = [
+      ...added.map((id) => after.indexOf(id) < here
+        ? `Added ${levelName(id)} before your level. You haven't held it, so it isn't completed yet.`
+        : `Added ${levelName(id)} ahead. It's planned on your path.`),
+      ...removed.map((id) => `Removed ${levelName(id)}.`),
+      ...(c.effects ?? []),
+    ];
+    return { who: 'Your company', what: `${followedPath!.name} changed. ${parts.join(' ')}`, when: c.date };
+  });
+  // Prototype only: publish a mock change, then apply its rules to the plan (target, branches).
+  const simulateChange = () => {
+    const res = simulatePathChange();
+    if (!res) { toast('This demo change was already applied. Reload to start over.'); return; }
+    const after = buildMap(plan);
+    const effects: string[] = [];
+    let next = plan;
+    if (plan.targetId && !after.steps.some((s) => s.id === plan.targetId)) {
+      effects.push(`${levelName(plan.targetId)} was your target. Pick a new one.`);
+      setLostTarget(levelName(plan.targetId));
+      next = { ...plan, targetId: null };
+    }
+    for (const n of visionNumbers(plan)) {
+      const from = visionRoute(plan, n)[0];
+      if (from && !res.path.levels.includes(from) && res.change.before.includes(from)) {
+        const first = plan.branches.find((b) => b.kind === 'vision' && b.vision === n && b.from === from)!;
+        const now = after.links.find((l) => l.to === first.to && l.route === visionRouteId(n))?.from;
+        if (now) effects.push(`Career vision ${n} now starts from ${levelName(now)}. Its status is kept.`);
+      }
+    }
+    res.change.effects = effects;
+    setSeenChange(null);
+    commit({ ...next }, `${res.path.name} changed. See what's different in the progress strip.`);
+  };
+
   const commit = (next: Plan, message: string) => {
     setPlan(next);
+    if (next.targetId) setLostTarget(undefined);
     if (request && !visionNumbers(next).includes(request.vision)) setRequest(null);
     setDialog(null);
     toast.success(message);
@@ -228,7 +280,7 @@ export function MyCareerScreen() {
               </Tip>
             )}
           </header>
-          {target ? <ProgressBoard target={target} onOpenGroup={(group) => { selectCard(target.id); setFocusGroup((f) => ({ group, n: (f?.n ?? 0) + 1 })); }} /> : <NoTargetStrip />}
+          {target ? <ProgressBoard target={target} notice={notice} onOpenGroup={(group) => { selectCard(target.id); setFocusGroup((f) => ({ group, n: (f?.n ?? 0) + 1 })); }} /> : <NoTargetStrip lostTarget={lostTarget} notice={notice} />}
           <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
             <div className="flex min-h-[60dvh] flex-1 flex-col lg:min-h-0">
               {view === 'map' ? (
@@ -271,6 +323,8 @@ export function MyCareerScreen() {
                 <RoutePanel route={route} plan={plan} steps={steps} request={request} removeBlocked={removal?.blocked}
                   actions={{
                     onFollow: follow,
+                    onPathHistory: openPathHistory,
+                    onSimulateChange: simulateChange,
                     onRequest: () => setDialog('request'),
                     onWithdraw: () => { setRequest(null); toast(`Request withdrawn. Career vision ${visionOfRoute} is a draft again.`); },
                     onRemoveVision: () => setDialog('remove'),
@@ -314,7 +368,7 @@ export function MyCareerScreen() {
         open={dialog === 'add'}
         onOpenChange={(o) => !o && setDialog(null)}
         starts={starts}
-        defaultFrom={actionStep.state === 'completed' ? current.id : actionStep.id}
+        defaultFrom={actionStep.state === 'completed' || actionStep.state === 'new' ? current.id : actionStep.id}
         nextVision={(visions.at(-1) ?? 0) + 1}
         plan={plan}
         onMap={new Set(steps.map((s) => s.id))}
@@ -360,6 +414,7 @@ export function MyCareerScreen() {
       )}
       <Toaster />
     </EnpathAppShell>
+      {followedPath && <HistoryDrawer open={historyOpen} onOpenChange={setHistoryOpen} title="Path history" name={followedPath.name} entries={historyEntries} />}
     </TooltipProvider>
   );
 }

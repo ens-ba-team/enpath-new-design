@@ -10,11 +10,18 @@
 import type { CareerMapNodeState, CareerMapPath } from '@/components/ui/career-map';
 import { initialMatrices, initialPositions, levelLabel, scale } from '../mock-data';
 
-export const employee = { name: 'Lan Nguyen', levelId: 'BE-L2' };
+/** `heldLevels`: Levels Lan held before, from Employee Mapping history. Completed comes from this,
+ *  never from a level's place on a path (company paths can change). */
+export const employee = { name: 'Lan Nguyen', levelId: 'BE-L2', heldLevels: ['BE-L1'] };
+
+/** One published change to a company path: its levels before the change (now = `levels`). */
+export interface PathChange { date: string; before: string[]; /** What it did to Lan's plan, in plain words */ effects?: string[] }
 
 export interface CompanyPath extends CareerMapPath {
-  /** Level ids in order */
+  /** Level ids in order (the latest published version: the plan always follows it) */
   levels: string[];
+  /** Published changes, newest first (mock: stands in for Setup's path history) */
+  changes?: PathChange[];
 }
 
 /** Positions employees can see — Published in Setup (my career.md #16). */
@@ -24,7 +31,9 @@ const isPublishedLevel = (levelId: string) => publishedPositions.some((p) => p.l
 /** Company Career Paths (colour = career-map/path-N). Employees only see a path when every
  *  position on it is published. */
 const allCompanyPaths: CompanyPath[] = [
-  { id: 'engineering-growth', name: 'Engineering growth', levels: ['BE-L1', 'BE-L2', 'BE-L3', 'BE-L4'] },
+  // Changed on 27 Sep (mock, shown on load): a Frontend rotation added before Lan's level.
+  { id: 'engineering-growth', name: 'Engineering growth', levels: ['BE-L1', 'FE-L1', 'BE-L2', 'BE-L3', 'BE-L4'],
+    changes: [{ date: '27 Sep', before: ['BE-L1', 'BE-L2', 'BE-L3', 'BE-L4'] }] },
   { id: 'engineering-to-product', name: 'Engineering to product', levels: ['BE-L2', 'BE-L3', 'PM-L2', 'PM-L3'] },
   { id: 'design-craft', name: 'Design craft', levels: ['PD-L1', 'PD-L2', 'PD-L3'] },
 ];
@@ -33,6 +42,26 @@ export const companyPaths = allCompanyPaths.filter((p) => p.levels.every(isPubli
 
 /** Company paths planned for the employee's current role — the ones they can follow. */
 export const matchingPaths = companyPaths.filter((p) => p.levels.includes(employee.levelId));
+
+/** What a path change did, in plain terms: roles added and removed. */
+export function describeChange(path: CompanyPath, change: PathChange, after = path.levels) {
+  return {
+    added: after.filter((id) => !change.before.includes(id)),
+    removed: change.before.filter((id) => !after.includes(id)),
+  };
+}
+
+/** Prototype only: publish a bigger change to Engineering growth (the admin would do this in Setup):
+ *  BE L3 leaves the path (it's Lan's target) and Frontend Engineer L3 comes in ahead. Mutates the
+ *  mock path; the caller commits a plan update so the map re-derives. Returns the change. */
+export function simulatePathChange(): { path: CompanyPath; change: PathChange } | null {
+  const path = companyPaths.find((p) => p.id === 'engineering-growth');
+  if (!path || !path.levels.includes('BE-L3')) return null;
+  const change: PathChange = { date: '28 Sep', before: [...path.levels] };
+  path.levels = path.levels.flatMap((id) => (id === 'BE-L3' ? ['FE-L3'] : [id]));
+  path.changes = [change, ...(path.changes ?? [])];
+  return { path, change };
+}
 
 /** A role Lan added from a card: a move on a company path planned for Lan's role (Planned, no
  *  approval), or a role in a Career vision (needs the manager's approval to become the target). */
@@ -129,8 +158,10 @@ export function buildMap(plan: Plan) {
   const followed = companyPaths.find((p) => p.id === plan.followedPathId);
   const here = followed ? followed.levels.indexOf(employee.levelId) : -1;
   if (followed && here > 0) {
+    // Behind You are here: Completed only if Lan held it; a level the path added later is
+    // "New on your path" until an approved assessment meets it or the manager marks it.
     followed.levels.slice(0, here).forEach((levelId, i, done) => {
-      add(levelId, 'completed', 0);
+      add(levelId, employee.heldLevels.includes(levelId) ? 'completed' : 'new', 0);
       if (i > 0) link({ from: done[i - 1], to: levelId, route: followed.id });
     });
     link({ from: followed.levels[here - 1], to: employee.levelId, route: followed.id });
@@ -139,7 +170,15 @@ export function buildMap(plan: Plan) {
   if (followed) walk(followed, employee.levelId, here + 1, 0);
   const visions = visionNumbers(plan);
   let pathLane = visions.length + 1;
-  plan.branches.forEach((b, i) => {
+  // A branch whose start card left the followed path re-attaches to the nearest earlier level still
+  // on the map (by the path's previous order), or to You are here. Its status is kept.
+  const before = followed?.changes?.flatMap((c) => c.before) ?? [];
+  const reattach = (from: string) => {
+    for (let j = before.indexOf(from) - 1; j >= 0; j--) if (steps.has(before[j])) return before[j];
+    return employee.levelId;
+  };
+  plan.branches.forEach((raw, i) => {
+    const b = steps.has(raw.from) || !before.includes(raw.from) ? raw : { ...raw, from: reattach(raw.from) };
     if (!steps.has(b.from)) return; // its starting card was removed
     if (b.kind === 'path') {
       add(b.to, 'planned', pathLane++, { branch: i });

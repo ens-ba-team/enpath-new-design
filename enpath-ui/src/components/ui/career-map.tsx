@@ -41,6 +41,7 @@ import {
   MapPinIcon,
   MinusIcon,
   PlusIcon,
+  SparkleIcon,
 } from "@phosphor-icons/react/ssr";
 
 import { Badge } from "@/components/ui/badge";
@@ -49,7 +50,8 @@ import { Card } from "@/components/ui/card";
 import { Item } from "@/components/ui/item";
 import { cn } from "@/lib/utils";
 
-export type CareerMapNodeState = "completed" | "current" | "target" | "planned" | "vision";
+/** "new" = a level a company path added behind the employee that they never held ("New on your path"). */
+export type CareerMapNodeState = "completed" | "new" | "current" | "target" | "planned" | "vision";
 
 export interface CareerMapItem {
   id: string;
@@ -117,6 +119,7 @@ const stateLabel: Record<
   completed: { text: "Completed", icon: CheckCircleIcon, className: "bg-[var(--career-map-band-completed)] text-[var(--career-map-node-description)]" },
   current: { text: "You are here", icon: MapPinIcon, className: "bg-[var(--career-map-band-current)] text-[var(--career-map-current-label)]" },
   target: { text: "Active target", icon: FlagIcon, className: "bg-[var(--career-map-band-target)] text-[var(--career-map-target-label)]" },
+  new: { text: "New on your path", icon: SparkleIcon, className: "bg-[var(--career-map-band-planned)] text-[var(--career-map-node-description)]" },
   planned: { text: "Planned", icon: ClockIcon, className: "bg-[var(--career-map-band-planned)] text-[var(--career-map-node-description)]" },
   vision: { text: "Career vision", icon: CompassIcon, className: "bg-[var(--career-map-band-vision)] text-[var(--career-map-node-description)]" },
 };
@@ -247,7 +250,7 @@ function viewportFor(ids: string[], position: Positions, width: number, height: 
 /**
  * Opening view, set once the canvas has a size and again whenever cards are added or removed or
  * the canvas width changes noticeably, e.g. a side panel opens (not on selection): the whole map when it stays readable (zoom ≥ MIN_READABLE_ZOOM), otherwise
- * the current role and its next steps. Computed from the layout (card sizes are fixed), so it
+ * the role before the current one, the current role and its next steps. Computed from the layout (card sizes are fixed), so it
  * doesn't wait for React Flow to measure the cards.
  */
 function OpeningView({ items, links, position }: { items: CareerMapItem[]; links: CareerMapLink[]; position: Positions }) {
@@ -274,8 +277,10 @@ function OpeningView({ items, links, position }: { items: CareerMapItem[]; links
       setViewport(viewportFor([...from, ...added], position, width, height, MIN_READABLE_ZOOM).viewport, { duration });
       return;
     }
+    // The role just before (where you came from, or a level a path change added there) + the next steps.
+    const prev = links.filter((l) => l.to === current).map((l) => l.from);
     const next = links.filter((l) => l.from === current).map((l) => l.to);
-    setViewport(viewportFor([current, ...next], position, width, height, MIN_READABLE_ZOOM).viewport, { duration });
+    setViewport(viewportFor([...prev, current, ...next], position, width, height, MIN_READABLE_ZOOM).viewport, { duration });
   }, [cardsKey, width, height, position, items, links, setViewport]);
   return null;
 }
@@ -500,6 +505,7 @@ const listDot: Record<CareerMapNodeState, string> = {
   completed: "border-[var(--color-border-strong)] bg-[var(--career-map-node-surface)]",
   current: "border-[var(--career-map-current-label)] bg-[var(--career-map-band-current)]",
   target: "border-[var(--career-map-target-border)] bg-[var(--career-map-band-target)]",
+  new: "border-[var(--color-border-strong)] bg-[var(--career-map-node-surface)]",
   planned: "bg-[var(--career-map-node-surface)]",
   vision: "bg-[var(--career-map-node-surface)]",
 };

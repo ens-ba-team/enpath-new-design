@@ -2,7 +2,7 @@
 title: My Career build
 created: 2026-09-25
 updated: 2026-09-28
-status: Employee view built (localhost:3000/me/career): map + list, progress strip, detail panels, Set / Remove target, company-path picker, Explore a position, Career visions + approval request, Remove, Ask AI. Not built: manager review, company-path change handling, Assessment / Action plan screens
+status: Employee view built (localhost:3000/me/career): map + list, progress strip, detail panels, Set / Remove target, company-path picker, Explore a position, Career visions + approval request, Remove, Ask AI, company-path changes + Path history. Not built: manager review, Notifications panel, Assessment / Action plan screens
 related: ../../document/original brief/prd-020-my-career.md, ../../document/original brief/my career.md, my-actions-build.md, my-assessment-build.md, glossary.md, set-up-build.md, market-research.md, ../enpath-tone-and-voice.md
 ---
 
@@ -91,7 +91,8 @@ Progress strip ─ Toward {target} · bar · 2 ready · 2 growth areas · 2 not 
 
 | Status | Band (icon · label) | Border | Which roles | Panel badge · context line |
 |---|---|---|---|---|
-| **Completed** | grey · check · "Completed" | grey | Earlier levels of the followed path | "Completed" · "{path} · the path you follow". Level text grey, never ringed |
+| **Completed** | grey · check · "Completed" | grey | Earlier levels of the followed path **that Lan held** (Employee Mapping history) | "Completed" · "{path} · the path you follow". Level text grey, never ringed |
+| **New on your path** | light grey (Planned band) · sparkle · "New on your path" | grey | A level the path added **behind** You are here that Lan never held | "New on your path" · "Added to {path} on {date}". Note: "You haven't held this level, so it isn't completed yet. It becomes completed when an approved assessment meets it, or when your manager marks it." No buttons |
 | **You are here** | brand/200 · pin · "You are here" | grey | The employee's official role (Employee Mapping) | "You are here" (blue) · "Your official role · set by your admin" |
 | **Active target** | green/100 · flag · "Active target" | green | The one role the employee works toward | "Active target" (green) · "{path}" (+ " · the path you follow" on the followed path) |
 | **Planned** | light grey · clock · "Planned" | grey | Later levels of the followed path; steps added from another company path | "Planned" · "{path}" (+ " · the path you follow") |
@@ -141,7 +142,12 @@ Approve / decline can't happen yet (no manager screen), so a sent request stays 
   competency has no approved score yet, so it doesn't count as a growth area. Your manager assesses
   it in a future assessment." + "{n} expectations are not set in Setup." when any.
 - **No target** → `NoTargetStrip`: "**No target yet.** Pick a role on your map and choose Set as
-  target to track your progress."
+  target to track your progress." When a path change removed the target: "**Pick a new target.**
+  {role} is no longer on your path. Pick a role on your map and choose Set as target."
+- **Path change notice** (1B, 2026-09-28): the last line of the strip (also on the No-target strip)
+  while the followed path has a change Lan hasn't opened: a design-system **Alert (info)**, as wide as
+  its content (not full width): path icon · "{path} changed {date}" · link **See what's different**
+  → Path history. It goes once Path history is opened; no required acknowledgement.
 
 ### 5.2 Career map (design system: `CareerMap`)
 
@@ -163,8 +169,8 @@ Approve / decline can't happen yet (no manager screen), so a sent request stays 
   line** even where two routes share a stretch.
 - **Click** a card → selects it. Click a line → selects its route. Click empty canvas (not a drag) →
   clears. Tab reaches every card; Enter / Space selects.
-- **Opening view:** the whole map if it fits at ≥70% zoom, else the current role and its next
-  steps. When cards are added and the whole map isn't readable, it moves to the new cards. Zoom out /
+- **Opening view:** the whole map if it fits at ≥70% zoom, else the role before You are here, You
+  are here and its next steps (so a level a path change added just behind is visible on load). When cards are added and the whole map isn't readable, it moves to the new cards. Zoom out /
   in / Show whole map (down to 40%) top-right; drag to pan, pinch to zoom; mouse wheel scrolls the
   page. brand/100 canvas, brand/300 dot grid.
 
@@ -215,7 +221,7 @@ click opens that card) + footer:
 
 | Route | Badge · context | Buttons |
 |---|---|---|
-| Path you follow | "You follow" · "Planned by your company · N levels" | Open Active target (if there is one) |
+| Path you follow | "You follow" · "Planned by your company · N levels" | Open Active target (if there is one) · **Path history** (if the path changed) · "Simulate another change (prototype)" |
 | Other company path for the role | "Company path" · "For your role · no approval needed" | **Follow this path** (note: "It becomes your main route, shown in the top row.") |
 | Career vision | request status (§4.3) · "Your own direction · private" | per §4.3 + **Remove Career vision N** |
 
@@ -310,25 +316,39 @@ Assessment. Build docs: `my-assessment-build.md`, `my-actions-build.md`. For My 
 - Records: the module was dropped 2026-09-28, but keeping **My Records** (for AI) is being
   reconsidered: `what should be done.md` → 2b. Sidebar still shows Records.
 
-## 8. When a company path changes (proposed, not built)
+## 8. When a company path changes (built 2026-09-28)
 
-The plan **follows the latest version** of the path (PRD-020 OQ-09); nothing changes silently.
-Example: old A → B → C → D, Lan held A and B, is at C; the path becomes A → X → C → E.
+The plan **follows the latest version** of the path (PRD-020 OQ-09); nothing changes silently and
+every change is explained. Rules (example: old A → B → C → D, Lan held A and B, is at C; the path
+becomes A → X → C → E):
 
-| Case | What happens |
-|---|---|
-| A (held, still on the path) | Stays **Completed**: completion comes from history (Levels held in Employee Mapping), not path order |
-| B (held, removed) | Leaves the map; stays in history |
-| X (new, before You are here, never held) | Status band **"New on your path"**. Becomes Completed when a Completed Assessment meets it, or when the manager sets it |
-| C (You are here) | Never moves by itself. If the path drops C, C stays and Lan picks a path again |
-| E (new, ahead) | Planned |
-| D (removed, ahead) | Leaves the map. If it was the Active target → no target, the strip asks to pick one |
-| A branch starting from a removed card | Re-attaches to the nearest earlier Level still on the path, or You are here; status kept |
+| Case | What happens | Built |
+|---|---|---|
+| A (held, still on the path) | Stays **Completed**: completion comes from history (`employee.heldLevels`), not path order | yes |
+| B (held, removed) | Leaves the map; stays in history | yes (by the same rule) |
+| X (new, before You are here, never held) | Card status **New on your path**. Becomes Completed when a Completed Assessment meets it, or when the manager marks it | status yes; completing it no (needs Assessment / manager screen) |
+| C (You are here) | Never moves by itself. If the path drops C, C stays and Lan picks a path again | not built (no mock case) |
+| E (new, ahead) | Planned | yes |
+| D (removed, ahead) | Leaves the map. If it was the Active target → no target; the strip says "Pick a new target" | yes |
+| A branch starting from a removed card | Re-attaches to the nearest earlier level still on the map (by the path's previous order), or You are here; its status is kept | yes |
 
-Chosen UI (2026-09-28, **1B + 2A**): a line **inside the progress strip** ("{path} changed {date}" +
-"See what's different"; "Pick a new target" when the target went) and one Notifications item, both
-opening **Path history** (drawer reusing Setup's History drawer, from the followed path's route
-panel). Cards get the new status band "New on your path". Plan: `what should be done.md` → step 4.
+**How Lan is told** (1B + 2A, chosen 2026-09-28): the notice in the progress strip (§5.1) and the
+card status band (§4.1). **Path history** = the shared History drawer (title "Path history", the
+path's name), opened from the notice or the followed path's route panel: one entry per change,
+newest first, "Your company · {date}", in plain words: "Engineering growth changed. Added Frontend
+Engineer L1 · Junior before your level. You haven't held it, so it isn't completed yet." plus what it
+did to the plan ("Backend Engineer L3 · Senior was your target. Pick a new one." · "Career vision 2
+now starts from Backend Engineer L2 · Mid. Its status is kept.").
+
+**Mock on load:** Engineering growth changed on 27 Sep: Frontend Engineer L1 added before Lan's
+level (BE L1 → **FE L1** → BE L2 → BE L3 → BE L4). The map opens showing it; the notice is in the
+strip. **Prototype button** "Simulate another change (prototype)" (followed path's route panel)
+publishes a second change on 28 Sep: BE L3 (the target) leaves, FE L3 comes in ahead; the target is
+removed and any branch from BE L3 re-attaches. Reload to start over.
+
+**Not built:** the Notifications item (the sidebar's Notifications is a static link with a badge;
+there's no notifications panel yet) · the admin side (changing a path in Setup) · completing a
+New-on-your-path level.
 
 ## 9. Career vision: approval
 
@@ -361,7 +381,8 @@ Lattice / SAP (direction) vs Workday (job change). Sources in `market-research.m
 `my-career/mock-data.ts` (Positions, Levels, expectations and Matrices come from Setup's
 `initialPositions`):
 
-- **Employee** Lan Nguyen, `BE-L2`. **Company paths**: Engineering growth (BE L1–L4), Engineering to
+- **Employee** Lan Nguyen, `BE-L2`, `heldLevels: ['BE-L1']` (Completed comes from this). **Company paths**
+  carry `changes` (newest first, each with the levels `before` and optional `effects`): Engineering growth (BE L1–L4), Engineering to
   product (BE L2 → L3 → PM L2 → L3), Design craft (PD L1–L3); shown only when every position is
   Published. **Plan**: followed path, target (`BE-L3`), branches (company-path steps or Career-vision
   steps). Initial Career vision 1: BE L2 → PD L1 → PD L2.
@@ -374,6 +395,8 @@ Code notes:
   records every vision it's on (`visions`).
 - `classifyMove` → company-path step vs Career vision; `ladderMove` builds company-path steps;
   `visionMove` builds a Career vision move (joins / becomes, shared road, no loops).
+- `describeChange` (added / removed); `simulatePathChange()` mutates the mock path (prototype only).
+  `buildMap` marks unheld levels behind You are here `new` and re-attaches orphaned branches.
 - `visionRoute(plan, n)` = a vision's roles in order. `removeBranch` / `removeVision` drop dependants.
 - Selection lives in `MyCareerScreen` (`card` / `route` / `none`).
 - React Flow copies `fitViewOptions` each render, so the opening view is computed and applied with
@@ -382,7 +405,7 @@ Code notes:
 
 ## 11. Not built yet
 
-Manager review screen · company-path change handling (§8) · mock Assessments + "Based on …" Ready
+Manager review screen · Notifications panel (for §8) · mock Assessments + "Based on …" Ready
 rows · My Actions / Assessment screens · empty state for "no role assigned" · Records decision (§7).
 Mobile polish comes last.
 
@@ -393,7 +416,8 @@ Mobile polish comes last.
 - [ ] User-facing word "target" or "goal"?
 - [ ] Assessment: who creates one; which period wins (assumed: latest Completed)? No PRD.
 - [ ] Action plan: does the manager approve the plan or each Action?
-- [ ] Company-path change rules (§8): confirm with the team (re-attach rule is our proposal).
+- [ ] Company-path change rules (§8): confirm with the team (re-attach rule is our proposal; built
+      as proposed).
 - [ ] Core path "for my department" (brief) vs "the path that contains my current Level" (built).
 - [ ] Keep manager approval for Career visions? (Brief doesn't mention it; PRD-020 puts "job
       transfer approval" out of scope.)

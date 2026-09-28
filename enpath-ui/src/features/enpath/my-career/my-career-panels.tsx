@@ -6,16 +6,19 @@ import * as React from "react";
 import {
   ArrowRightIcon,
   CheckCircleIcon,
+  ClockCounterClockwiseIcon,
   ClockIcon,
   CompassIcon,
   FlagIcon,
   InfoIcon,
   MapPinIcon,
+  PathIcon,
   PlusIcon,
   TrashIcon,
   XIcon,
 } from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/button";
+import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Item } from "@/components/ui/item";
 import { routeColor, type CareerMapPath } from "@/components/ui/career-map";
@@ -56,6 +59,7 @@ const visionStatusText: Record<VisionStatus | "draft", string> = {
 export const stateName = (s: PlanStep) =>
   ({
     completed: "Completed",
+    new: "New on your path",
     current: "You are here",
     target: "Active target",
     planned: "Planned",
@@ -122,23 +126,51 @@ function Panel({
 
 // ─── Progress board ──────────────────────────────────────────────────────────
 
-/** Shown instead of the progress strip when there's no Active target. */
-export function NoTargetStrip() {
+/** A company path Lan follows changed (1B, 2026-09-28): one line inside the progress strip, not a
+ *  banner. Opens Path history; the strip drops it once opened (no required acknowledgement). */
+export function PathChangeNotice({ path, date, onOpen }: { path: string; date: string; onOpen: () => void }) {
+  return (
+    // Design-system Alert (info), as wide as its content, not full width (2026-09-28). Not urgent, so
+    // role=status instead of the Alert's default role=alert.
+    <Alert
+      variant="info"
+      role="status"
+      className="w-fit max-w-full flex-row flex-wrap items-center gap-x-[var(--spacing-component-md)] gap-y-[var(--spacing-component-xs)] py-[var(--spacing-component-sm)]"
+    >
+      <span className="flex items-center gap-[var(--spacing-component-sm)]">
+        <PathIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
+        <AlertTitle>{path} changed {date}</AlertTitle>
+      </span>
+      <Button variant="link" size="sm" className="h-auto px-0" onClick={onOpen}>
+        See what’s different
+      </Button>
+    </Alert>
+  );
+}
+
+/** Shown instead of the progress strip when there's no Active target. `lostTarget`: the path change
+ *  took the target off the map. */
+export function NoTargetStrip({ lostTarget, notice }: { lostTarget?: string; notice?: React.ReactNode }) {
   return (
     <section
       aria-label="Your progress"
-      className="flex items-center gap-[var(--spacing-component-sm)] border-b border-[var(--color-border-default)] px-[var(--spacing-layout-sm)] pb-[var(--spacing-layout-sm)] text-sm text-[var(--color-text-secondary)]"
+      className="flex flex-col gap-[var(--spacing-component-sm)] border-b border-[var(--color-border-default)] px-[var(--spacing-layout-sm)] pb-[var(--spacing-layout-sm)] text-sm text-[var(--color-text-secondary)]"
     >
-      <FlagIcon
-        className="h-4 w-4 shrink-0 text-[var(--color-icon-muted)]"
-        aria-hidden="true"
-      />
-      <span>
-        <span className="font-semibold text-[var(--color-background-default-foreground)]">
-          No target yet.
-        </span>{" "}
-        Pick a role on your map and choose Set as target to track your progress.
-      </span>
+      <div className="flex items-center gap-[var(--spacing-component-sm)]">
+        <FlagIcon
+          className="h-4 w-4 shrink-0 text-[var(--color-icon-muted)]"
+          aria-hidden="true"
+        />
+        <span>
+          <span className="font-semibold text-[var(--color-background-default-foreground)]">
+            {lostTarget ? "Pick a new target." : "No target yet."}
+          </span>{" "}
+          {lostTarget
+            ? `${lostTarget} is no longer on your path. Pick a role on your map and choose Set as target.`
+            : "Pick a role on your map and choose Set as target to track your progress."}
+        </span>
+      </div>
+      {notice}
     </section>
   );
 }
@@ -148,9 +180,12 @@ export function NoTargetStrip() {
 export function ProgressBoard({
   target,
   onOpenGroup,
+  notice,
 }: {
   target: PlanStep;
   onOpenGroup: (group: GapStatus) => void;
+  /** e.g. PathChangeNotice */
+  notice?: React.ReactNode;
 }) {
   const d = describeStep(target);
   const n = countGaps(gapsFor(target));
@@ -245,6 +280,7 @@ export function ProgressBoard({
           </Tip>
         </div>
       </div>
+      {notice}
     </section>
   );
 }
@@ -299,6 +335,7 @@ export function StepPanel({
     variant: "success" | "blue" | "secondary" | "dashed";
   } = {
     completed: { text: "Completed", variant: "secondary" as const },
+    new: { text: "New on your path", variant: "secondary" as const },
     current: { text: "You are here", variant: "blue" as const },
     target: { text: "Active target", variant: "success" as const },
     planned: { text: "Planned", variant: "secondary" as const },
@@ -307,8 +344,11 @@ export function StepPanel({
       variant: "dashed" as const,
     },
   }[step.state];
+  const added = step.state === "new" && path ? path.changes?.find((c) => !c.before.includes(step.id)) : undefined;
   const context =
-    step.state === "current"
+    step.state === "new" && path
+      ? `Added to ${path.name}${added ? ` on ${added.date}` : ""}`
+      : step.state === "current"
       ? "Your official role · set by your admin"
       : step.state === "vision"
       ? `Your own direction · ${visionStatusText[mine?.status ?? "draft"]}`
@@ -344,7 +384,10 @@ export function StepPanel({
     if (mine?.status !== "approved")
       hint = "Your manager approves career visions before they can become your target.";
   }
-  if (step.state !== "completed")
+  // A level the path added behind Lan: nothing to do but know it. It isn't counted as held.
+  if (step.state === "new")
+    hint = "You haven't held this level, so it isn't completed yet. It becomes completed when an approved assessment meets it, or when your manager marks it.";
+  if (step.state !== "completed" && step.state !== "new")
     buttons.push(
       <Button key="add" variant="outline" onClick={actions.onAdd}>
         <PlusIcon aria-hidden="true" />
@@ -437,6 +480,10 @@ export function StepPanel({
 
 export interface RouteActions {
   onFollow: (pathId: string) => void;
+  /** Path history drawer (the followed path, when it has changes) */
+  onPathHistory: () => void;
+  /** Prototype only: publish a mock change to the followed path */
+  onSimulateChange?: () => void;
   onRequest: () => void;
   onWithdraw: () => void;
   onRemoveVision: () => void;
@@ -633,6 +680,19 @@ export function RoutePanel({
         </Button>,
       );
     }
+    if (path.changes?.length)
+      companyButtons.push(
+        <Button key="history" variant="outline" onClick={actions.onPathHistory}>
+          <ClockCounterClockwiseIcon aria-hidden="true" />
+          Path history
+        </Button>,
+      );
+    if (actions.onSimulateChange)
+      companyButtons.push(
+        <Button key="simulate" variant="ghost" onClick={actions.onSimulateChange}>
+          Simulate another change (prototype)
+        </Button>,
+      );
   }
   return (
     <Panel
