@@ -249,7 +249,9 @@ not assessed yet in a future assessment"), compare two roles. It never changes t
 
 ### 6.1 Set / remove the target
 
-- **Set as target**: on Planned cards and on cards of an Approved vision. Dialog "Make this your
+- **Set as target**: on Planned cards and on cards of an Approved vision. The map enforces it: a
+  card shows as the Active target only if it's Planned or in an approved vision; a Draft or Waiting
+  vision card never does, whatever the plan says (`buildMap`, 2026-09-28). Dialog "Make this your
   target?" · "Your progress strip will track the new role instead." · From (or "No target yet") → To ·
   "{old} stays on your map as Planned. Your official role doesn't change. A target is your own goal,
   not a promotion or transfer." Old target becomes Planned. No approval.
@@ -340,7 +342,7 @@ becomes A → X → C → E):
 | C (You are here) **replaced** by C′ | Lan's **You are here becomes C′** automatically (decided 2026-09-28). The admin sees it first in Setup's preview ("N people at C move to C′") and confirms; only the path an employee **follows** moves them. C goes into Lan's held-levels history. The comparison is redone for C′ (below) | not built |
 | C (You are here) **removed**, nothing replaces it | Lan stays at C (C stays as its own card) and is asked to pick a path again | not built |
 | E (new, ahead) | Planned | yes (mock: FE L3) |
-| D (removed, ahead) | Leaves the map. If it was the Active target → no target; the strip says "Pick a new target" | yes (mock: BE L3, the target) |
+| D (removed, ahead) | Leaves the map. If it was the Active target → **no target**: the plan's target is cleared (the removed role is kept only for the "Pick a new target" line and Path history). Adding that role back later, e.g. in a Career vision, **doesn't make it the target again** (fixed 2026-09-28) | yes (mock: BE L3, the target) |
 | A branch starting from a removed card | Re-attaches to the nearest earlier level still on the map (by the path's previous order), or You are here; its status is kept | map rule yes; no mock case on load |
 
 **When You are here moves to C′** (decided 2026-09-28; detail in `my-assessment-build.md` → "When
@@ -415,8 +417,8 @@ Lattice / SAP (direction) vs Workday (job change). Sources in `market-research.m
 - **Employee** Lan Nguyen, `BE-L2`, `heldLevels: ['BE-L1']` (Completed comes from this). **Company paths**
   carry `changes` (newest first, each with the levels `before` and optional `effects`): Engineering growth (BE L1–L4), Engineering to
   product (BE L2 → L3 → PM L2 → L3), Design craft (PD L1–L3); shown only when every position is
-  Published. **Plan**: followed path, target (`BE-L3`), branches (company-path steps or Career-vision
-  steps). Initial Career vision 1: BE L2 → PD L1 → PD L2.
+  Published. **Plan**: followed path, target (`null` on load: the 27 Sep change removed `BE-L3`,
+  kept in `removedTarget` for the strip), branches (company-path steps or Career-vision steps). Initial Career vision 1: BE L2 → PD L1 → PD L2.
 - **Scores** (`evidence`): Lan's point + source per competency (stands in for Assessment until the
   mock Assessments step). No entry = Not assessed yet (code status `evidence`).
 - **Request**: which vision was sent, status, notes. None = every vision is Draft.

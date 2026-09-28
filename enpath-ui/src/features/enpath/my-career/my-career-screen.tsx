@@ -68,7 +68,9 @@ export function MyCareerScreen() {
   const [focusGroup, setFocusGroup] = React.useState<{ group: GapStatus; n: number } | undefined>();
   useChatShortcut(React.useCallback(() => setChatOpen((o) => !o), []));
 
-  const { steps, links } = React.useMemo(() => buildMap(plan), [plan]);
+  const approvedVisions = request?.status === 'approved' ? [request.vision] : [];
+  const approvedKey = approvedVisions.join(',');
+  const { steps, links } = React.useMemo(() => buildMap(plan, approvedKey ? approvedKey.split(',').map(Number) : []), [plan, approvedKey]);
   const current = steps.find((s) => s.state === 'current')!;
   const target = steps.find((s) => s.state === 'target');
   const visions = visionNumbers(plan);
@@ -130,8 +132,8 @@ export function MyCareerScreen() {
     // Header row with Map / List and Ask AI; on narrow screens it takes its own full-width row.
     ? <PathChangeNotice className="order-last w-full sm:order-none sm:w-fit" path={followedPath.name} date={latestChange.date} onOpen={openPathHistory} />
     : undefined;
-  // The plan still names a target that a path change took off the map: ask for a new one.
-  const lostTarget = plan.targetId && !target ? levelName(plan.targetId) : undefined;
+  // A company-path change removed the target and none has been picked since: ask for a new one.
+  const lostTarget = !target && plan.removedTarget ? levelName(plan.removedTarget.levelId) : undefined;
   // Path history (option A): per change, one row per role added or removed, in plain words, with a
   // badge when it matters to Lan (a level behind that isn't completed, the target that went).
   const historyChanges: PathHistoryChange[] = (followedPath?.changes ?? []).map((c, i, all) => {
@@ -147,15 +149,16 @@ export function MyCareerScreen() {
             ? { kind: 'added', role: levelName(id), note: 'Added before your level. Completed.' }
             : { kind: 'added', role: levelName(id), note: 'Added before your level. Not completed yet.', badge: { text: 'New on your path', variant: 'secondary' } }
           : { kind: 'added', role: levelName(id), note: 'Added ahead. Planned.' }),
-        ...removed.map((id): PathHistoryRow => id === plan.targetId && !target
-          ? { kind: 'removed', role: levelName(id), note: 'Removed. Pick a new target.', badge: { text: 'Was your target', variant: 'warning' } }
+        ...removed.map((id): PathHistoryRow => id === c.removedTargetId
+          ? { kind: 'removed', role: levelName(id), note: target ? 'Removed. It was your target.' : 'Removed. Pick a new target.', badge: { text: 'Was your target', variant: 'warning' } }
           : { kind: 'removed', role: levelName(id), note: 'Removed.' }),
       ],
     };
   });
 
   const commit = (next: Plan, message: string) => {
-    setPlan(next);
+    // Setting a target ends the "Pick a new target" state.
+    setPlan(next.targetId ? { ...next, removedTarget: null } : next);
     if (request && !visionNumbers(next).includes(request.vision)) setRequest(null);
     setDialog(null);
     toast.success(message);

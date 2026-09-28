@@ -14,8 +14,9 @@ import { initialMatrices, initialPositions, levelLabel, scale } from '../mock-da
  *  never from a level's place on a path (company paths can change). */
 export const employee = { name: 'Lan Nguyen', levelId: 'BE-L2', heldLevels: ['BE-L1'] };
 
-/** One published change to a company path: its levels before the change (now = `levels`). */
-export interface PathChange { date: string; before: string[] }
+/** One published change to a company path: its levels before the change (now = `levels`), and the
+ *  employee's target it removed, if any (kept for Path history). */
+export interface PathChange { date: string; before: string[]; removedTargetId?: string }
 
 export interface CompanyPath extends CareerMapPath {
   /** Level ids in order (the latest published version: the plan always follows it) */
@@ -35,7 +36,7 @@ const allCompanyPaths: CompanyPath[] = [
   // your path"), and Backend Engineer L3 (Lan's target) replaced by Frontend Engineer L3, so Lan has
   // to pick a target again. The plan still points at BE-L3; buildMap leaves it off the map.
   { id: 'engineering-growth', name: 'Engineering growth', levels: ['BE-L1', 'FE-L1', 'BE-L2', 'FE-L3', 'BE-L4'],
-    changes: [{ date: '27 Sep', before: ['BE-L1', 'BE-L2', 'BE-L3', 'BE-L4'] }] },
+    changes: [{ date: '27 Sep', before: ['BE-L1', 'BE-L2', 'BE-L3', 'BE-L4'], removedTargetId: 'BE-L3' }] },
   { id: 'engineering-to-product', name: 'Engineering to product', levels: ['BE-L2', 'BE-L3', 'PM-L2', 'PM-L3'] },
   { id: 'design-craft', name: 'Design craft', levels: ['PD-L1', 'PD-L2', 'PD-L3'] },
 ];
@@ -86,14 +87,21 @@ export function ladderMove(from: string, ladder: string[], vision: number) {
 export interface Plan {
   /** The company path the employee follows (the top row) — null when none is followed (no longer reachable from the UI: Stop following was removed 2026-09-28) */
   followedPathId: string | null;
-  /** The Active target — null when the employee has removed it (my career.md #13) */
+  /** The Active target — null when the employee has removed it (my career.md #13) or a company-path
+   *  change took it off the path */
   targetId: string | null;
+  /** The target a company-path change removed, for the "Pick a new target" line. Cleared when a new
+   *  target is set. It is no longer the target: adding that role again (e.g. in a Career vision)
+   *  doesn't bring it back. */
+  removedTarget?: { levelId: string; date: string } | null;
   branches: Branch[];
 }
 
 export const initialPlan: Plan = {
   followedPathId: 'engineering-growth',
-  targetId: 'BE-L3',
+  // The 27 Sep path change removed BE-L3, Lan's target: no target until Lan picks a new one.
+  targetId: null,
+  removedTarget: { levelId: 'BE-L3', date: '27 Sep' },
   branches: [
     { kind: 'vision', vision: 1, from: 'BE-L2', to: 'PD-L1' },
     { kind: 'vision', vision: 1, from: 'PD-L1', to: 'PD-L2' },
@@ -129,7 +137,7 @@ export const positionOfLevel = (levelId: string) => initialPositions.find((p) =>
 /** Derive the map from the plan. Steps already on the map are linked to, never duplicated.
  *  Row 0 is the followed company path in full: earlier levels Completed, then You are here, then
  *  Planned. Each Career vision gets its own row below, then each added company path. */
-export function buildMap(plan: Plan) {
+export function buildMap(plan: Plan, approvedVisions: number[] = []) {
   const steps = new Map<string, PlanStep>();
   const links: PlanLink[] = [];
   // One link per route: two Career visions can share a stretch of road, and each keeps its own line.
@@ -180,8 +188,11 @@ export function buildMap(plan: Plan) {
       link({ from: b.from, to: b.to, route: visionRouteId(b.vision) });
     }
   });
+  // Only a Planned role, or a role in an approved Career vision, can be the Active target (my-career-build
+  // §6.1). A Draft or Waiting vision card never shows as the target, even if the plan says so.
   const target = plan.targetId ? steps.get(plan.targetId) : undefined;
-  if (target && target.state !== 'current' && target.state !== 'completed') target.state = 'target';
+  const allowed = target && (target.state === 'planned' || (target.state === 'vision' && (target.visions ?? []).some((v) => approvedVisions.includes(v))));
+  if (target && allowed) target.state = 'target';
   return { steps: [...steps.values()], links };
 }
 
