@@ -152,7 +152,7 @@ Approve / decline can't happen yet (no manager screen), so a sent request stays 
 - **Path change notice** (2026-09-28; moved from the strip into the header the same day): while the
   followed path has a change Lan hasn't opened, a design-system **Alert (info)** sits in the page
   header **on the row of Map / List and Ask AI** (same place as Setup's progress Alert), as wide as
-  its content: path icon · "{path} changed {date}" · link **See what's different** → Path history.
+  its content: info icon · "{path} changed {date}" · link **See what's different** → Path history.
   Below 640px it takes its own full-width row under the title. It goes once Path history is opened;
   no required acknowledgement.
 

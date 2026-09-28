@@ -12,7 +12,6 @@ import {
   FlagIcon,
   InfoIcon,
   MapPinIcon,
-  PathIcon,
   PlusIcon,
   TrashIcon,
   XIcon,
@@ -140,7 +139,7 @@ export function PathChangeNotice({ path, date, onOpen, className }: { path: stri
       className={cn("w-fit max-w-full flex-row flex-wrap items-center gap-x-[var(--spacing-component-md)] gap-y-[var(--spacing-component-xs)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)]", className)}
     >
       <span className="flex items-center gap-[var(--spacing-component-sm)]">
-        <PathIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
+        <InfoIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
         <AlertTitle>{path} changed {date}</AlertTitle>
       </span>
       <Button variant="link" size="sm" className="h-auto px-0" onClick={onOpen}>
