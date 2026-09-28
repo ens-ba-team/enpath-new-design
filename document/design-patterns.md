@@ -2,7 +2,7 @@
 title: Design patterns
 created: 2026-09-28
 updated: 2026-09-28
-status: Started. Rules + the "Needs a Storybook update" list are filled; layouts, templates and patterns await the first pass.
+status: First pass done (2026-09-28): 1 layout, 2 templates, 9 patterns as candidates, awaiting review. No IDs yet.
 related: glossary.md, my-career-build.md, set-up-build.md, ../Skills/catalog-build/enpath-catalog-plan.md, ../Prototype-build/composition/application-pattern-contracts.md, ../Tracking/Storybook Status.md
 ---
 
@@ -53,17 +53,208 @@ candidate  ──review──▶  approved (gets its ID, goes into the catalog) 
 
 ---
 
+## Review status (first pass, 2026-09-28)
+
+All entries below are **candidates**: no IDs yet. For each one: approve, change or drop. Approved
+entries get an ID and go into the catalog. Names are working names.
+
+| # | Kind | Candidate | Appears in |
+|---|---|---|---|
+| L1 | Layout | App shell | every page |
+| T1 | Template | Master-detail | Setup: Career structure · Matrices config · Career path |
+| T2 | Template | Career workspace | My Career (one screen; qualifies by its decisions) |
+| P1 | Pattern | Page header | Setup · My Career |
+| P2 | Pattern | Detail header actions | Position · Matrix (Career path differs, see P2) |
+| P3 | Pattern | History drawer | Position · Matrix · Career path · Path history (My Career) |
+| P4 | Pattern | Preview → Confirm dialog | 12 dialogs in Setup and My Career |
+| P5 | Pattern | Detail panel | My Career role panel · route panel |
+| P6 | Pattern | Step rail | Explore preview · List view · route panel |
+| P7 | Pattern | Competency status groups | every My Career role panel |
+| P8 | Pattern | Locked action with a reason | Position · Matrix · the rating grid |
+| P9 | Pattern | Ask AI chat panel | Setup · My Career |
+
+---
+
 ## Layouts
 
-_First pass pending._
+### L1 · App shell — candidate
+
+- **Scope:** every page of the prototype. Code: `features/enpath/app-shell.tsx`,
+  `chat/sidebar-follows-chat.tsx`.
+- **Purpose:** keep navigation, the page and the AI chat side by side without competing.
+- **Anatomy:** app background (`color/background/app`, brand/50, plus two soft glows on the right,
+  never behind sidebar text) → **floating sidebar** (collapsible to icons) → **page panel** (white,
+  `radius/panel` 12px, border, `shadow/surface`) → optional **right panel** (the chat). Outer inset and
+  gaps `spacing/shell/*` (8px).
+  Sidebar: brand mark + "Enpath · Career intelligence" + collapse toggle; **Workspace** (My Career ·
+  My Actions · Records); **Operations** (Directory · Team · Reviews · Setup); footer (MCP access ·
+  Notifications with a count badge · user).
+- **Responsive:** ≥1024px sidebar + panel side by side; below 1024px a top bar with the brand and a
+  menu button opening the navigation in a left Sheet (max 320px); the right panel is hidden.
+- **Rules / decisions:**
+  - Sidebar collapses with its toggle or **⌘B**.
+  - Opening the chat **collapses the sidebar**; closing it restores what the user had
+    (`SidebarFollowsChat`). **⌘I** toggles the chat.
+  - Workspace order My Career · My Actions · Records, siblings (2026-09-28).
+  - Separation ladder: the page panel is the card step (white + border + `shadow/surface`).
+- **Components:** Sidebar family, Sheet, Separator, Avatar, Button.
+- **Open:** Notifications is a static link (no panel yet); "Admin" under the user while viewing as an
+  employee.
 
 ## Templates
 
-_First pass pending._
+### T1 · Master-detail — candidate
+
+- **Scope:** Setup's three tabs (`/setup?tab=structure|matrices|paths`). Code:
+  `setup/setup-screen.tsx` (PositionList / PositionDetail), `setup/matrices-screen.tsx`
+  (MatrixList / MatrixDetail), `setup/career-path-screen.tsx` (PathList / detail).
+- **Purpose:** pick one object from a list, work on it in full on the right.
+- **Anatomy:**
+  - **List (left, 280px, right border):** search Input with an icon · list of Items (name, one line of
+    meta, status Badge) with the selected one highlighted · add action pinned at the bottom
+    ("Add position" / "Add matrix", plus Import on positions).
+  - **Detail (right, fills):** header = title + status Badge, a row of meta (label · value), related
+    chips ("Used by", "Matrix"), actions on the right (P2) → scrolling content (matrix table,
+    competency editor, step list).
+- **Responsive:** desktop side by side. Career structure (only) switches to **list or detail** below
+  1024px, with a Back button in the detail. The other two tabs aren't responsive yet (Setup
+  responsive work is paused; plan in `../../what should be done.md`).
+- **States:** Draft / Published (positions) or Draft / Active / Archived (matrices, paths): read-only
+  when not Draft, with the reason on the locked action (P8). Empty list (not designed).
+- **Components:** Input, Item, Badge, Button, Tabs, DropdownMenu, Sheet (history), AlertDialog.
+- **Rules / decisions:** the open tab and selection are kept in the URL (`?tab=`). Preview → Confirm
+  for every save (P4).
+- **Open:** Items use a local side padding (debt #11); the search Input pads itself instead of using
+  InputGroup (debt #8); mobile for Matrices and Career path.
+
+### T2 · Career workspace — candidate
+
+- **Scope:** My Career (`/me/career`). One screen today; a candidate because of the decisions made
+  for it (`my-career-build.md`). Code: `my-career/my-career-screen.tsx`.
+- **Purpose:** where am I, where could I go, how am I doing: three questions, three places.
+- **Anatomy:** page header (P1) → **progress strip** fixed to the Active target (or the no-target
+  line) → **work area**: the map (canvas + toolbar + legend) **or** the list → **detail panel** (P5) on
+  the right when something is selected.
+- **Responsive:** ≥1024px panel on the right (400px), map by default; below 1024px panel below,
+  **List by default**, the user's Map / List choice wins for the session.
+- **States:** selection = card / route / nothing (panel closed); no target; path changed (header
+  Alert); Career vision request states.
+- **Components:** CareerMap, CareerMapLegend, CareerMapList, ButtonGroup, Select, Button, Alert, Tooltip.
+- **Rules / decisions:** progress never follows the selection (only the target); selecting = exploring;
+  Esc / empty-canvas click / × clears the selection. Full list: `my-career-build.md` §2–§6.
 
 ## Patterns
 
-_First pass pending._
+### P1 · Page header — candidate
+
+- **Scope:** Setup and My Career.
+- **Anatomy:** left: H1 (`text-2xl` SemiBold) + one secondary line (My Career: "Lan Nguyen ·
+  Backend Engineer L2 · Mid"). Right, on one row: an **Alert** as wide as its content (Setup:
+  success "Your setup is N% done" + progress bar; My Career: info "{path} changed {date}" + "See
+  what's different") → view switch (My Career: Map / List) → **Ask AI** (outline, hidden while the chat
+  is open, tooltip "Ask AI (⌘I)").
+- **Responsive:** wraps; below 640px the Alert takes its own full-width row under the title. Ask AI
+  shows from 1024px.
+- **Rules / decisions:** the status Alert belongs on the header row, not in the page body
+  (2026-09-28); never full width on desktop; `role="status"` (not urgent).
+- **Components:** Alert, Progress, ButtonGroup, Button, Tooltip.
+- **Open:** Alert padding is overridden in both places (debt #2); Map / List pressed look by hand
+  (debt #4).
+
+### P2 · Detail header actions — candidate
+
+- **Scope:** Position detail, Matrix detail.
+- **Anatomy (left → right):** **Edit** (outline; locked with a reason when not editable, P8) → **"…"**
+  menu (History · separator · Duplicate position / Duplicate matrix) → the **lifecycle action**:
+  Publish (primary, Draft) · Unpublish (outline, Published position) · Archive (outline, Active matrix)
+  · Restore (primary, Archived matrix).
+- **Rules / decisions:** secondary → overflow → primary, so the main action sits last (2026-09-23);
+  the "…" menu is `modal={false}` because its items open a Sheet / Dialog (a modal menu left the page
+  unclickable). Duplicate opens the Create dialog prefilled (matrix name "A" → "A1").
+- **Components:** Button, DropdownMenu, Tooltip, AlertDialog.
+- **Open:** **Career path's header still has History as its own button**, not in a "…" menu: align it
+  with Position / Matrix?
+
+### P3 · History drawer — candidate
+
+- **Scope:** Position, Matrix, Career path (text list, `setup/history-drawer.tsx`); Path history in
+  My Career (grouped rows, `my-career/path-history-drawer.tsx`).
+- **Anatomy:** right Sheet → title ("History" / "Path history") + the object's name → entries, newest
+  first. Text form: one Item per entry ("what" + "who · when"). Grouped form (2026-09-28, option A):
+  "{date} · by {who}", then one Item per changed role with a + / − icon, a one-line note and a Badge
+  when it matters ("New on your path", "Was your target").
+- **States:** empty ("No history yet").
+- **Components:** Sheet, Item, Badge, Empty.
+- **Open:** two forms of one drawer: keep both, or move Setup to the grouped form?
+
+### P4 · Preview → Confirm dialog — candidate
+
+- **Scope:** every change that saves: Publish / Unpublish position; Publish / Archive / Restore
+  matrix; Publish / Archive / Restore career path; Set as target; Remove target; Switch company path; Remove a
+  Career vision or added steps (12 dialogs).
+- **Anatomy:** AlertDialog → title as a question ("Publish Backend Engineer?") → one line on the
+  effect → optional **From → To** rows (My Career) or an impact list (positions a matrix change
+  touches, cards that leave the map) → optional warning Alert → Cancel + the action named by its verb
+  ("Publish", "Set as target", not "OK").
+- **Rules / decisions:** nothing saves without it (PRD-018 RQ-07, PRD-020 RQ-10); a toast confirms
+  after. A change that can't go ahead says why: the matrix Publish dialog lists what's not ready and disables Publish; Remove hides its button and shows the reason in the panel footer.
+- **Components:** AlertDialog, Alert, Toast.
+
+### P5 · Detail panel — candidate
+
+- **Scope:** My Career: role panel (a card) and route panel (a company path or Career vision). Code:
+  `Panel` in `my-career/my-career-panels.tsx` (**private helper: needs extracting before it can get an
+  ID**).
+- **Anatomy:** header: title (+ level in secondary) and × → **badge on its own line, the context line
+  under it** (same in every panel, 2026-09-28) → scrolling content → **footer pinned to the bottom**:
+  notes first, then full-width buttons (primary, outline, then red ghost).
+- **Responsive:** right column 400px from 1024px; below that, under the work area.
+- **Components:** Badge, Button, plus the content (P7, P6).
+
+### P6 · Step rail — candidate
+
+- **Scope:** Explore a position preview (`RoutePreview` in `plan-dialogs.tsx`, **private helper**),
+  List view rows (`CareerMapList`), route panel steps (`RouteSteps`).
+- **Anatomy:** a vertical rail in the route's colour (solid green = path you follow, solid grey =
+  other company path, dashed violet = Career vision) with a ring per role; the start row is grey
+  context ("Starts from …"); a role already on the map reads "· already on your map".
+- **Rules / decisions:** the map's line language turned on its side (2026-09-26); dots are solid
+  rings over the rail (a dashed ring breaks up).
+- **Open:** three implementations of one idea: one shared component?
+
+### P7 · Competency status groups — candidate
+
+- **Scope:** every My Career role panel. Code: `my-career/gap-row.tsx`.
+- **Anatomy:** one Card per group, in this order: **Growth areas** (You → Needed) · **Not assessed
+  yet** (Needed) · **Ready** (collapsed, Show) · **Not set in Setup** (collapsed). Rows are Accordion
+  items: name + short value; expanded: what the needed point looks like (+ Plan an action) / "No
+  approved score yet" / the source of a Ready score.
+- **Rules / decisions:** employee UI says "growth area", never "gap"; points never "levels"; "Not
+  assessed yet" has no button (2026-09-28); no readiness %.
+- **Components:** Card, Accordion, Collapsible, Button.
+- **Open:** Accordion and CardTitle are shrunk locally (debt #1, #13).
+
+### P8 · Locked action with a reason — candidate
+
+- **Scope:** Edit position ("Unpublish to edit"), Edit matrix ("Archive to edit" / "Restore to
+  edit"), fill ratings in the matrix table ("Unpublish to edit").
+- **Anatomy:** the action stays **visible but disabled**, with a Tooltip saying how to unlock it. The
+  disabled button sits inside `<span className="inline-flex">` so the tooltip still triggers.
+- **Rules / decisions:** disabled controls say why; a disabled destructive action uses a grey ghost,
+  not faded red (2026-09-26).
+- **Components:** Tooltip (`Tip`), Button.
+
+### P9 · Ask AI chat panel — candidate
+
+- **Scope:** Setup and My Career. Code: `chat/assistant-panel.tsx`, `my-career/career-chat.tsx`.
+- **Anatomy:** right panel 380px (page-panel look: `radius/panel`, border) → header (sparkle, title,
+  New chat · Chat history · Close) → conversation (empty state with suggestions) → prompt input with a
+  mode / model select.
+- **Rules / decisions:** closed by default; opening collapses the sidebar; **AI never saves**: a change
+  comes as a proposal card the person accepts ("Add to my map"); the answer shows what it read first
+  ("Read your assessment…").
+- **Components:** AI Elements (Conversation, Message, PromptInput, Suggestion, Tool), Button.
+- **Open:** fixed 380px, no mobile form (hidden below 1024px); select triggers restyled (debt #16).
 
 ---
 
