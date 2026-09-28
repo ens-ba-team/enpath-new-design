@@ -348,6 +348,11 @@
         "date": "2026-09-28",
         "change": "CareerMapList scrolls the selection into view (route Card, or the selected row if the Card is taller than the list), so a Career vision added at the end of the list is visible. Scrolls the list only. Rows carry data-row, route Cards data-route. No API or visual change.",
         "breaking": false
+      },
+      {
+        "date": "2026-09-28",
+        "change": "Routes can share a stretch of road (two Career visions through the same cards): each route keeps its own line (edge id includes the route), and CareerMapList lists every role of a route even if its data forks (after the main road) instead of leaving cards as untitled rows at the top. No API or visual change.",
+        "breaking": false
       }
     ]
   },

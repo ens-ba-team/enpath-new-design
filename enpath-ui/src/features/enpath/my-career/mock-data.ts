@@ -86,8 +86,10 @@ export interface PlanStep {
   positionId: string;
   levelId: string;
   state: CareerMapNodeState;
-  /** Career vision number, for vision steps */
+  /** Career vision number, for vision steps (the first one, when visions share the card) */
   vision?: number;
+  /** Every Career vision this card is on: visions can share a stretch of road */
+  visions?: number[];
   /** The branch that added this step (undefined for the current role and the followed path) */
   branch?: number;
   /** Map row: 0 = the company path Lan follows; each Career vision, then each added path, below */
@@ -111,7 +113,8 @@ export const positionOfLevel = (levelId: string) => initialPositions.find((p) =>
 export function buildMap(plan: Plan) {
   const steps = new Map<string, PlanStep>();
   const links: PlanLink[] = [];
-  const link = (l: PlanLink) => { if (!links.some((x) => x.from === l.from && x.to === l.to)) links.push(l); };
+  // One link per route: two Career visions can share a stretch of road, and each keeps its own line.
+  const link = (l: PlanLink) => { if (!links.some((x) => x.from === l.from && x.to === l.to && x.route === l.route)) links.push(l); };
   const add = (levelId: string, state: CareerMapNodeState, lane: number, extra: Partial<PlanStep> = {}) => {
     if (!steps.has(levelId)) steps.set(levelId, { id: levelId, positionId: positionOfLevel(levelId).id, levelId, state, lane, ...extra });
   };
@@ -142,13 +145,40 @@ export function buildMap(plan: Plan) {
       add(b.to, 'planned', pathLane++, { branch: i });
       link({ from: b.from, to: b.to, route: b.pathId });
     } else {
-      add(b.to, 'vision', visions.indexOf(b.vision) + 1, { vision: b.vision, branch: i });
+      add(b.to, 'vision', visions.indexOf(b.vision) + 1, { vision: b.vision, visions: [], branch: i });
+      const s = steps.get(b.to)!;
+      if (s.visions && !s.visions.includes(b.vision)) s.visions.push(b.vision);
       link({ from: b.from, to: b.to, route: visionRouteId(b.vision) });
     }
   });
   const target = plan.targetId ? steps.get(plan.targetId) : undefined;
   if (target && target.state !== 'current' && target.state !== 'completed') target.state = 'target';
   return { steps: [...steps.values()], links };
+}
+
+/** Explore a Position into a Career vision. A vision is one road, never a fork (2026-09-28):
+ *  - from the last card of a vision it extends that vision ("Joins Career vision N");
+ *  - from a card in the middle of a vision it starts a new vision that runs the whole way, sharing
+ *    that vision's cards up to the start card ("Becomes Career vision N");
+ *  - from any other card it starts a new vision there.
+ *  `ladder` is the position's levels from the entry level; levels already on the map are reused (one
+ *  card per level), so `route` lists every role after the start row. Null when nothing is new. */
+export function visionMove(plan: Plan, from: string, ladder: string[], nextVision: number) {
+  const routes = visionNumbers(plan).map((n) => ({ n, route: visionRoute(plan, n) }));
+  const extend = routes.find((r) => r.route.length > 1 && r.route.at(-1) === from);
+  const within = extend ? undefined : routes.find((r) => r.route.indexOf(from) > 0);
+  const vision = extend?.n ?? nextVision;
+  const shared = within ? within.route.slice(0, within.route.indexOf(from)) : [];
+  const { steps, links } = buildMap(plan);
+  // Never loop back: skip the road already behind (this vision's cards, You are here, Completed roles).
+  const behind = new Set([...(extend?.route ?? shared), from, employee.levelId, ...steps.filter((s) => s.state === 'completed').map((s) => s.id)]);
+  const levels = ladder.filter((id) => !behind.has(id));
+  if (levels.length === 0) return null;
+  const chain = [...shared, from, ...levels];
+  const branches: Branch[] = chain.slice(1).map((to, i) => ({ kind: 'vision', vision, from: chain[i], to }));
+  // Nothing new if every step is already a line on the map (e.g. the same road as another vision).
+  if (branches.every((b) => links.some((l) => l.from === b.from && l.to === b.to))) return null;
+  return { branches, vision, joins: !!extend, start: chain[0], route: chain.slice(1), levels, path: undefined };
 }
 
 /** A Career vision's roles in order, starting from the card it branches off. */

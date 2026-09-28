@@ -59,8 +59,12 @@ export const stateName = (s: PlanStep) =>
     current: "You are here",
     target: "Active target",
     planned: "Planned",
-    vision: `Career vision ${s.vision}`,
+    vision: visionLabel(s),
   }[s.state]);
+
+/** "Career vision 2", or "Career visions 1, 2" for a card two visions share. */
+export const visionLabel = (s: PlanStep) =>
+  (s.visions?.length ?? 0) > 1 ? `Career visions ${s.visions!.join(", ")}` : `Career vision ${s.vision}`;
 
 const note = (text: string) => (
   <p className="text-sm text-[var(--color-text-secondary)]">{text}</p>
@@ -286,7 +290,7 @@ export function StepPanel({
       ? companyPaths.find((p) => p.id === plan.followedPathId)
       : undefined);
   const mine =
-    step.vision !== undefined && request?.vision === step.vision
+    request && (step.visions ?? []).includes(request.vision)
       ? request
       : null;
   // One badge for what the card is, one line for where it comes from.
@@ -299,7 +303,7 @@ export function StepPanel({
     target: { text: "Active target", variant: "success" as const },
     planned: { text: "Planned", variant: "secondary" as const },
     vision: {
-      text: `Career vision ${step.vision} · ${mine ? mine.status : "draft"}`,
+      text: `${visionLabel(step)} · ${mine ? mine.status : "draft"}`,
       variant: "dashed" as const,
     },
   }[step.state];
@@ -325,16 +329,18 @@ export function StepPanel({
   if (step.state === "planned") buttons.push(setTarget);
   if (step.state === "vision") {
     if (mine?.status === "approved") buttons.push(setTarget);
-    buttons.push(
-      <Button
-        key="route"
-        variant="outline"
-        onClick={() => actions.onShowRoute(`vision-${step.vision}`)}
-      >
-        <CompassIcon aria-hidden="true" />
-        Show Career vision {step.vision}
-      </Button>
-    );
+    // One button per vision the card is on (visions can share a stretch of road).
+    for (const n of step.visions ?? [step.vision!])
+      buttons.push(
+        <Button
+          key={`route-${n}`}
+          variant="outline"
+          onClick={() => actions.onShowRoute(`vision-${n}`)}
+        >
+          <CompassIcon aria-hidden="true" />
+          Show Career vision {n}
+        </Button>
+      );
     if (mine?.status !== "approved")
       hint = "Your manager approves career visions before they can become your target.";
   }

@@ -327,7 +327,8 @@ function CareerMapCanvas({ items, links, paths, selectedId, onSelect, selectedRo
     const on = selectedRoute ? l.route === selectedRoute : route?.followed === true;
     const stroke = routeColor(route, on);
     return {
-      id: `${l.from}->${l.to}`,
+      // Routes can share a stretch (two Career visions): one line per route, keyed by route.
+      id: `${l.route}:${l.from}->${l.to}`,
       source: l.from,
       target: l.to,
       data: { route: l.route },
@@ -489,6 +490,9 @@ function routeOrder(routeId: string, links: CareerMapLink[]) {
     const at: string = next.to;
     next = own.find((l) => l.from === at);
   }
+  // Safety net: a route should be one road, but if its data forks, list every role anyway (after the
+  // main road) rather than leaving cards off the route as untitled rows at the top.
+  for (const l of own) if (!ids.includes(l.to)) ids.push(l.to);
   return ids;
 }
 

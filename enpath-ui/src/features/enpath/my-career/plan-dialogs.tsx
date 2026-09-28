@@ -18,7 +18,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { levelLabel } from '../mock-data';
-import { ladderMove, positionOfLevel, publishedPositions, type Branch } from './mock-data';
+import { ladderMove, positionOfLevel, publishedPositions, visionMove, type Branch, type Plan } from './mock-data';
 
 /** "Backend Engineer L3 · Senior" for a level id */
 export function levelName(levelId: string) {
@@ -161,7 +161,7 @@ export interface StartOption {
   vision?: number;
 }
 
-export function ExplorePositionDialog({ open, onOpenChange, starts, defaultFrom, nextVision, onMap, followedPathId, onAdd }: {
+export function ExplorePositionDialog({ open, onOpenChange, starts, defaultFrom, nextVision, plan, onMap, followedPathId, onAdd }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   /** Cards a move can start from, in map order */
@@ -169,6 +169,8 @@ export function ExplorePositionDialog({ open, onOpenChange, starts, defaultFrom,
   defaultFrom: string;
   /** Number a new Career vision would get */
   nextVision: number;
+  /** The saved plan: decides whether a Career vision move extends a vision or starts a new one */
+  plan: Plan;
   /** Level ids already on the map — a role can appear only once */
   onMap: Set<string>;
   /** The company path the employee follows — its steps preview green, like on the map */
@@ -178,14 +180,14 @@ export function ExplorePositionDialog({ open, onOpenChange, starts, defaultFrom,
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[560px]">
-        <ExplorePositionForm starts={starts} defaultFrom={defaultFrom} nextVision={nextVision} onMap={onMap} followedPathId={followedPathId} onAdd={onAdd} onCancel={() => onOpenChange(false)} />
+        <ExplorePositionForm starts={starts} defaultFrom={defaultFrom} nextVision={nextVision} plan={plan} onMap={onMap} followedPathId={followedPathId} onAdd={onAdd} onCancel={() => onOpenChange(false)} />
       </DialogContent>
     </Dialog>
   );
 }
 
-function ExplorePositionForm({ starts, defaultFrom, nextVision, onMap, followedPathId, onAdd, onCancel }: {
-  starts: StartOption[]; defaultFrom: string; nextVision: number; onMap: Set<string>; followedPathId: string | null;
+function ExplorePositionForm({ starts, defaultFrom, nextVision, plan, onMap, followedPathId, onAdd, onCancel }: {
+  starts: StartOption[]; defaultFrom: string; nextVision: number; plan: Plan; onMap: Set<string>; followedPathId: string | null;
   onAdd: (branches: Branch[], message: string, select: string) => void; onCancel: () => void;
 }) {
   const [from, setFrom] = React.useState(defaultFrom);
@@ -195,8 +197,6 @@ function ExplorePositionForm({ starts, defaultFrom, nextVision, onMap, followedP
   const [tried, setTried] = React.useState(false);
 
   const position = publishedPositions.find((p) => p.id === positionId);
-  const start = starts.find((s) => s.id === from);
-  const vision = start?.vision ?? nextVision;
   // Default "Join at": the next level up in your own position, otherwise the position's first level.
   const defaultEntry = (p: typeof position, fromId: string) => {
     if (!p) return '';
@@ -204,8 +204,12 @@ function ExplorePositionForm({ starts, defaultFrom, nextVision, onMap, followedP
     return (here >= 0 ? p.levels[here + 1] : p.levels[0])?.id ?? p.levels[0].id;
   };
   const entry = pickedEntry || defaultEntry(position, from);
-  const ladder = position && entry ? position.levels.slice(position.levels.findIndex((l) => l.id === entry)).map((l) => l.id).filter((id) => !onMap.has(id)) : [];
-  const move = ladderMove(from, ladder, vision);
+  const ladder = position && entry ? position.levels.slice(position.levels.findIndex((l) => l.id === entry)).map((l) => l.id) : [];
+  // Company-path steps add only roles not on the map yet (as before). Anything else is a Career
+  // vision: one road, reusing cards already on the map (visionMove).
+  const fresh = ladder.filter((id) => !onMap.has(id));
+  const pathMove = fresh.length ? ladderMove(from, fresh, nextVision) : null;
+  const move = pathMove?.path ? { ...pathMove, route: pathMove.levels, start: from, vision: undefined, joins: false } : visionMove(plan, from, ladder, nextVision);
   const error = !position ? 'Choose a position.' : !entry ? 'Choose where to join.' : !move ? `${position.name} from ${levelName(entry)} is already on your map.` : '';
   const departments = [...new Set(publishedPositions.map((p) => p.department))];
 
@@ -213,7 +217,7 @@ function ExplorePositionForm({ starts, defaultFrom, nextVision, onMap, followedP
     setTried(true);
     if (error || !move) return;
     const last = move.levels[move.levels.length - 1];
-    onAdd(move.branches, move.path ? `${position!.name} added as planned steps` : `${position!.name} added to Career vision ${vision}`, last);
+    onAdd(move.branches, move.path ? `${position!.name} added as planned steps` : `${position!.name} added to Career vision ${move.vision}`, last);
   };
 
   return (
@@ -259,12 +263,13 @@ function ExplorePositionForm({ starts, defaultFrom, nextVision, onMap, followedP
 
         {move && (
           <RoutePreview
-            from={from}
-            fromLabel={start?.label}
-            levels={move.levels}
+            from={move.start}
+            fromLabel={starts.find((s) => s.id === move.start)?.label}
+            levels={move.route}
+            onMap={onMap}
             heading={move.path
               ? `Part of ${move.path.name} · no approval needed`
-              : start?.vision ? `Joins Career vision ${vision}` : `Becomes Career vision ${vision}`}
+              : move.joins ? `Joins Career vision ${move.vision}` : `Becomes Career vision ${move.vision}`}
             note={move.path ? undefined : 'Private until you send it for approval.'}
             color={move.path ? routeColor({ id: move.path.id, name: move.path.name, followed: move.path.id === followedPathId }) : routeColor({ id: 'vision', name: '', kind: 'vision' })}
             dashed={!move.path}
@@ -282,8 +287,8 @@ function ExplorePositionForm({ starts, defaultFrom, nextVision, onMap, followedP
 
 // The route as a vertical step rail — the map's line language turned on its side: dashed violet for a
 // Career vision, solid in the path's colour for company-path steps. The start card is grey context.
-function RoutePreview({ from, fromLabel, levels, heading, note, color, dashed }: {
-  from: string; fromLabel?: string; levels: string[]; heading: string; note?: string; color: string; dashed: boolean;
+function RoutePreview({ from, fromLabel, levels, onMap, heading, note, color, dashed }: {
+  from: string; fromLabel?: string; levels: string[]; onMap: Set<string>; heading: string; note?: string; color: string; dashed: boolean;
 }) {
   // Dots are solid rings painted over the rail (a 12px dashed ring breaks into fragments); the rail's
   // dash carries the Career-vision signal.
@@ -310,7 +315,10 @@ function RoutePreview({ from, fromLabel, levels, heading, note, color, dashed }:
           {levels.map((id) => (
             <li key={id} className={row}>
               <span aria-hidden="true" className={dot} style={{ borderColor: color }} />
-              <span className="font-semibold text-[var(--color-background-default-foreground)]">{levelName(id)}</span>
+              {/* A role already on the map is reused (one card per role): it reads as context, not new. */}
+              {onMap.has(id)
+                ? <span className="text-[var(--color-text-secondary)]">{levelName(id)} · already on your map</span>
+                : <span className="font-semibold text-[var(--color-background-default-foreground)]">{levelName(id)}</span>}
             </li>
           ))}
         </ol>

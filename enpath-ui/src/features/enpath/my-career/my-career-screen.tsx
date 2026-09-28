@@ -28,7 +28,7 @@ import {
   buildMap, companyPaths, countGaps, describeStep, employee, gapsFor, initialPlan, matchingPaths, removeBranch, removeVision,
   visionNumbers, visionRoute, visionRouteId, type Branch, type GapStatus, type Plan, type VisionRequest,
 } from './mock-data';
-import { NoTargetStrip, ProgressBoard, requestBadge, RoutePanel, stateName, StepPanel } from './my-career-panels';
+import { NoTargetStrip, ProgressBoard, requestBadge, RoutePanel, stateName, StepPanel, visionLabel } from './my-career-panels';
 import { ExplorePositionDialog, levelName, RemoveTargetDialog, SetTargetDialog, SwitchPathDialog, VisionRequestDialog, type StartOption } from './plan-dialogs';
 
 function Placeholder({ children }: { children: React.ReactNode }) {
@@ -98,7 +98,7 @@ export function MyCareerScreen() {
     const n = s.state === 'target' ? countGaps(gapsFor(s)) : null;
     const plural = (k: number, one: string, many: string) => `${k} ${k === 1 ? one : many}`;
     const detail = n ? [n.growth > 0 && plural(n.growth, 'growth area', 'growth areas'), n.evidence > 0 && `${n.evidence} not assessed yet`].filter(Boolean).join(' · ') || undefined : undefined;
-    return { id: s.id, title: d.title, level: d.level, state: s.state, lane: s.lane, detail, label: s.state === 'vision' ? (visionCount > 1 ? `Career vision ${s.vision}` : 'Career vision') : undefined };
+    return { id: s.id, title: d.title, level: d.level, state: s.state, lane: s.lane, detail, label: s.state === 'vision' ? (visionCount > 1 ? visionLabel(s) : 'Career vision') : undefined };
   });
   const starts: StartOption[] = steps.filter((s) => s.state !== 'completed').map((s) => ({ id: s.id, label: stateName(s), vision: s.vision }));
 
@@ -331,6 +331,7 @@ export function MyCareerScreen() {
         starts={starts}
         defaultFrom={actionStep.state === 'completed' ? current.id : actionStep.id}
         nextVision={(visions.at(-1) ?? 0) + 1}
+        plan={plan}
         onMap={new Set(steps.map((s) => s.id))}
         onAdd={addBranches}
       />
@@ -344,7 +345,7 @@ export function MyCareerScreen() {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <ul className="list-disc pl-[var(--spacing-component-lg)] text-sm text-[var(--color-background-default-foreground)]">
-              {removal.gone.map((s) => <li key={s.id}>{levelName(s.id)}{s.vision !== undefined ? ` · Career vision ${s.vision}` : ''}</li>)}
+              {removal.gone.map((s) => <li key={s.id}>{levelName(s.id)}{s.vision !== undefined ? ` · ${visionLabel(s)}` : ''}</li>)}
             </ul>
             <p className="text-sm text-[var(--color-text-secondary)]">You can add {removal.gone.length === 1 ? 'it' : 'them'} back any time. Your current role and Active target stay.</p>
             <AlertDialogFooter>
