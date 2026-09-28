@@ -56,7 +56,7 @@ Per-component pipeline status for **Enpath**. Update after completing each phase
 | skeleton | ⚠️ | ✅ 7 stories | ❌ | |
 | slider | ⚠️ | ✅ 6 stories | ❌ | |
 | stat | ✅ | ✅ 4 stories | ❌ | added 2026-09-25; used on My Career, page checked in browser |
-| step-rail | ✅ | ✅ 6 stories | ❌ | added 2026-09-28; career-map/* tokens; not used by a screen yet |
+| step-rail | ✅ | ✅ 6 stories | ❌ | added 2026-09-28; career-map/* tokens; used by CareerMapList, the route panel and the Explore preview (checked in browser at 390 / 1280px) |
 | switch | ⚠️ | ✅ 13 stories | ❌ | |
 | table | ⚠️ | ✅ 5 stories | ❌ | |
 | tabs | ⚠️ | ✅ 8 stories | ❌ | |

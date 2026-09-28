@@ -200,7 +200,11 @@
         "overrideRule": "Use props (marker, statusTone, muted); don't restyle the ring or rail"
       }
     ],
-    "usedBy": [],
+    "usedBy": [
+      "career-map (CareerMapList)",
+      "my-career-panels (route panel)",
+      "plan-dialogs (Explore a position preview)"
+    ],
     "relatedComponents": [
       {
         "name": "career-map",
@@ -231,9 +235,7 @@
     "storyFile": "src/stories/StepRail.stories.tsx",
     "artifactStatus": "needs review",
     "version": "1.0",
-    "openQuestions": [
-      "Not used by any screen yet: CareerMapList rows, the route panel (RouteSteps) and the Explore preview (RoutePreview) still draw their own rails; replacing them is a separate decision."
-    ],
+    "openQuestions": [],
     "notes": [
       "Part of the Career Map family: it uses career-map/* tokens by design (their Use when names StepRail, 2026-09-28).",
       "Geometry is tied to Item size sm (padding spacing/component/sm, a 1rem icon slot): changing Item sm padding moves the rail."
@@ -243,6 +245,11 @@
       {
         "date": "2026-09-28",
         "change": "Created Step Rail (StepRail + StepRailItem) from the rails in CareerMapList and the Explore preview, as one shared component. Career-map token descriptions extended to name it. Not wired into screens yet.",
+        "breaking": false
+      },
+      {
+        "date": "2026-09-28",
+        "change": "Wired in: CareerMapList rows, the My Career route panel (was a list of status icons) and the Explore a position preview now render StepRail. No API change.",
         "breaking": false
       }
     ]

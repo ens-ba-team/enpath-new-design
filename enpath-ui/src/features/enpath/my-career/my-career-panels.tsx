@@ -4,14 +4,10 @@
 
 import * as React from "react";
 import {
-  ArrowRightIcon,
-  CheckCircleIcon,
   ClockCounterClockwiseIcon,
-  ClockIcon,
   CompassIcon,
   FlagIcon,
   InfoIcon,
-  MapPinIcon,
   PlusIcon,
   TrashIcon,
   XIcon,
@@ -19,8 +15,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
-import { Item } from "@/components/ui/item";
 import { routeColor, type CareerMapPath } from "@/components/ui/career-map";
+import { StepRail, StepRailItem, type StepRailMarker, type StepRailTone } from "@/components/ui/step-rail";
 import { GapList, statusFill } from "./gap-row";
 import { Tip } from "../tip";
 import { cn } from "@/lib/utils";
@@ -167,7 +163,7 @@ export function NoTargetStrip({ lostTarget }: { lostTarget?: string }) {
             {lostTarget ? "Pick a new target." : "No target yet."}
           </span>{" "}
           {lostTarget
-            ? `${lostTarget} is no longer on your path. Pick a role on your map and choose Set as target.`
+            ? `${lostTarget} is no longer on your path.`
             : "Pick a role on your map and choose Set as target to track your progress."}
         </span>
       </div>
@@ -485,61 +481,45 @@ export interface RouteActions {
   onClose?: () => void;
 }
 
-/** Roles on a route in order, as selectable Items. For a Career vision the first entry is the card it
- *  branches from (hollow dot) — not part of the vision itself. */
+/** Roles on a route in order, as a StepRail in the route's role colour (same look as a List view card).
+ *  For a Career vision the first entry is the card it branches from: grey "Starts from …" context,
+ *  not selectable. Other rows open that card. */
 function RouteSteps({
   ids,
   steps,
+  tone,
+  startsFrom = false,
   onSelectCard,
 }: {
   ids: string[];
   steps: PlanStep[];
+  tone: StepRailTone;
+  /** The first id is the card the route branches from (Career visions) */
+  startsFrom?: boolean;
   onSelectCard: (id: string) => void;
 }) {
   return (
-    <div
-      role="list"
-      aria-label="Roles on this route"
-      className="-mx-[var(--spacing-component-sm)] flex flex-col"
-    >
-      {ids.map((id) => {
+    <StepRail tone={tone} aria-label="Roles on this route" className="-mx-[var(--spacing-component-sm)]">
+      {ids.map((id, i) => {
         const s = steps.find((x) => x.id === id);
+        const start = startsFrom && i === 0;
         const state = s?.state;
-        const StatusIcon = state === "completed"
-          ? CheckCircleIcon
-          : state === "current"
-            ? MapPinIcon
-            : state === "target"
-              ? FlagIcon
-              : state === "planned"
-                ? ClockIcon
-                : CompassIcon;
-        const statusClass = state === "current"
-          ? "text-[var(--career-map-current-label)]"
-          : state === "target"
-            ? "text-[var(--career-map-target-label)]"
-            : "text-[var(--color-text-secondary)]";
+        const marker: StepRailMarker = start || state === "completed" || state === "new"
+          ? "muted"
+          : state === "current" ? "current" : state === "target" ? "target" : "route";
         return (
-          <div role="listitem" key={id}>
-            <Item
-              type="icon"
-              size="sm"
-              icon={
-                <StatusIcon aria-hidden="true" className={`h-4 w-4 ${statusClass}`} />
-              }
-              title={
-                <>
-                  <span className={state === "current" ? "font-semibold" : undefined}>{levelName(id)}</span>
-                  {s && <span className="font-normal text-[var(--color-text-secondary)]"> · {stateName(s)}</span>}
-                </>
-              }
-              action={<ArrowRightIcon aria-hidden="true" className="h-4 w-4 text-[var(--color-text-secondary)]" />}
-              onSelect={() => onSelectCard(id)}
-            />
-          </div>
+          <StepRailItem
+            key={id}
+            title={start ? `Starts from ${levelName(id)}` : levelName(id)}
+            status={!start && s && state !== "vision" ? stateName(s) : undefined}
+            statusTone={state === "current" ? "current" : state === "target" ? "target" : "neutral"}
+            marker={marker}
+            muted={start || state === "completed"}
+            onSelect={start ? undefined : () => onSelectCard(id)}
+          />
         );
       })}
-    </div>
+    </StepRail>
   );
 }
 
@@ -648,6 +628,8 @@ export function RoutePanel({
         <RouteSteps
           ids={ids}
           steps={steps}
+          tone="vision"
+          startsFrom
           onSelectCard={actions.onSelectCard}
         />
       </Panel>
@@ -701,6 +683,7 @@ export function RoutePanel({
       <RouteSteps
         ids={ids}
         steps={steps}
+        tone={followed ? "followed" : "other"}
         onSelectCard={actions.onSelectCard}
       />
     </Panel>

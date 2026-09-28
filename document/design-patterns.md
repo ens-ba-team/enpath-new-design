@@ -212,9 +212,8 @@ neither a template nor a pattern. Its decisions stay in `my-career-build.md`._
 - **Rules / decisions:** the map's line language turned on its side (2026-09-26); dots are solid rings
   over the rail (a dashed ring breaks up). **One implementation for all of them** (2026-09-28):
   the design-system component **`StepRail`** (`components/ui/step-rail.tsx`, `Navigation/Step Rail`,
-  spec `step-rail.meta.json`) now exists. **Screens are unchanged for now** (decided 2026-09-28):
-  CareerMapList, the route panel and the Explore preview still draw their own; switching them to
-  StepRail is a later decision.
+  spec `step-rail.meta.json`), **used by all three** (2026-09-28): List view rows (CareerMapList),
+  the route panel (was a list of status icons) and the Explore preview.
 
 ### P7 · Competency status groups — candidate
 

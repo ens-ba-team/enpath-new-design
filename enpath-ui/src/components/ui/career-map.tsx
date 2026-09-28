@@ -47,7 +47,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Item } from "@/components/ui/item";
+import { StepRail, StepRailItem, type StepRailMarker, type StepRailTone } from "@/components/ui/step-rail";
 import { cn } from "@/lib/utils";
 
 /** "new" = a level a company path added behind the employee that they never held ("New on your path"). */
@@ -501,14 +501,8 @@ function routeOrder(routeId: string, links: CareerMapLink[]) {
   return ids;
 }
 
-const listDot: Record<CareerMapNodeState, string> = {
-  completed: "border-[var(--color-border-strong)] bg-[var(--career-map-node-surface)]",
-  current: "border-[var(--career-map-current-label)] bg-[var(--career-map-band-current)]",
-  target: "border-[var(--career-map-target-border)] bg-[var(--career-map-band-target)]",
-  new: "border-[var(--color-border-strong)] bg-[var(--career-map-node-surface)]",
-  planned: "bg-[var(--career-map-node-surface)]",
-  vision: "bg-[var(--career-map-node-surface)]",
-};
+/** Rail tone for a route: its role (followed · other company path · Career vision). */
+const railTone = (p: CareerMapPath): StepRailTone => (p.kind === "vision" ? "vision" : p.followed ? "followed" : "other");
 
 export function CareerMapList({ items, links, paths, selectedId, onSelect, selectedRoute, onSelectRoute, "aria-label": ariaLabel, className }: CareerMapListProps) {
   const byId = new Map(items.map((i) => [i.id, i]));
@@ -555,46 +549,40 @@ export function CareerMapList({ items, links, paths, selectedId, onSelect, selec
     return () => cancelAnimationFrame(frame);
   }, [selectedId, selectedRoute]);
 
-  const row =(it: CareerMapItem, path: CareerMapPath | undefined, last: boolean, start = false) => {
-    const color = path ? routeColor(path, true) : undefined;
+  // One role as a StepRail row. The start row (the card another route begins from) is grey context,
+  // never selectable, so "You are here" appears once.
+  const row = (it: CareerMapItem, start = false) => {
     const label = it.label ?? stateLabel[it.state].text;
+    const marker: StepRailMarker = start || it.state === "completed" || it.state === "new"
+      ? "muted"
+      : it.state === "current" ? "current" : it.state === "target" ? "target" : "route";
+    // A vision row's section already says which Career vision it is.
+    const showLabel = !start && it.state !== "vision";
+    const status = start ? undefined : (showLabel || it.detail) ? (
+      <>
+        {showLabel && label}
+        {it.detail && <span className="text-[var(--career-map-node-description)]">{showLabel ? " · " : ""}{it.detail}</span>}
+      </>
+    ) : undefined;
     return (
-      <li key={it.id} className="relative" data-row={start ? undefined : it.id}>
-        {/* Rail segment from this dot's centre to the next row's dot centre (Item sm: 8px padding + 16px icon). */}
-        {path && !last && (
-          <span
-            aria-hidden="true"
-            className={cn("absolute bottom-[-16px] left-[15px] top-[16px] border-l-2", path.kind === "vision" ? "border-dashed" : "border-solid")}
-            style={{ borderColor: color }}
-          />
-        )}
-        <Item
-          type="icon"
-          size="sm"
-          icon={
-            <span aria-hidden="true" className="relative flex h-4 w-4 items-center justify-center">
-              <span className={cn("h-3 w-3 rounded-[var(--radius-pill)] border-2", start ? listDot.completed : listDot[it.state])} style={!start && (it.state === "planned" || it.state === "vision") ? { borderColor: color } : undefined} />
-            </span>
-          }
-          title={
-            <>
-              <span className={it.state === "completed" || start ? "font-normal text-[var(--color-text-secondary)]" : undefined}>{start ? `Starts from ${it.title} ${it.level}` : `${it.title} ${it.level}`}</span>
-              {/* A vision row's section already says which Career vision it is; the start row is context only. */}
-              {it.state !== "vision" && !start && <span className={cn("font-normal", it.state === "current" ? "text-[var(--career-map-current-label)]" : it.state === "target" ? "text-[var(--career-map-target-label)]" : "text-[var(--color-text-secondary)]")}> · {label}</span>}
-              {it.detail && !start && <span className="font-normal text-[var(--color-text-secondary)]"> · {it.detail}</span>}
-            </>
-          }
-          // The start row repeats a card listed in another route: context only, never shown selected.
-          selected={!start && it.id === selectedId}
-          onSelect={onSelect ? () => onSelect(it.id) : undefined}
-        />
-      </li>
+      <StepRailItem
+        key={it.id}
+        data-row={start ? undefined : it.id}
+        title={start ? `Starts from ${it.title} ${it.level}` : `${it.title} ${it.level}`}
+        status={status}
+        statusTone={it.state === "current" ? "current" : it.state === "target" ? "target" : "neutral"}
+        marker={marker}
+        muted={start || it.state === "completed"}
+        selected={!start && it.id === selectedId}
+        onSelect={onSelect && !start ? () => onSelect(it.id) : undefined}
+      />
     );
   };
 
   return (
     <div ref={listRef} role="region" aria-label={ariaLabel} className={cn("flex flex-col gap-[var(--spacing-layout-xs)] overflow-y-auto p-[var(--spacing-layout-xs)]", className)}>
-      {loose.length > 0 && <ul className="flex flex-col">{loose.map((it) => row(it, undefined, true))}</ul>}
+      {/* Cards on no route: one rail each, so no line joins unrelated roles. */}
+      {loose.map((it) => <StepRail key={it.id} aria-label={`${it.title} ${it.level}`}>{row(it)}</StepRail>)}
       {sections.map(({ path, start, rows }) => {
         const active = path.id === selectedRoute;
         const badgeVariant = path.kind === "vision" ? "dashed" : path.followed ? "success" : "secondary";
@@ -624,9 +612,9 @@ export function CareerMapList({ items, links, paths, selectedId, onSelect, selec
             </div>
             {/* Context line under the header, like the detail panels. */}
             {note && <p className="text-sm text-[var(--color-text-secondary)]">{note}</p>}
-            <ul className="flex flex-col">
-              {rows.map((id, i) => row(byId.get(id)!, path, i === rows.length - 1, id === start))}
-            </ul>
+            <StepRail tone={railTone(path)} aria-label={`Roles on ${path.name}`}>
+              {rows.map((id) => row(byId.get(id)!, id === start))}
+            </StepRail>
           </Card>
         );
       })}

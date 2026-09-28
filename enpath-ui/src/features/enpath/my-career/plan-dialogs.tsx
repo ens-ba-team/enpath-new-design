@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { InfoIcon } from '@phosphor-icons/react/ssr';
 import { Button } from '@/components/ui/button';
-import { routeColor } from '@/components/ui/career-map';
+import { StepRail, StepRailItem, type StepRailTone } from '@/components/ui/step-rail';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -271,8 +271,7 @@ function ExplorePositionForm({ starts, defaultFrom, nextVision, plan, onMap, fol
               ? `Part of ${move.path.name} · no approval needed`
               : move.joins ? `Joins Career vision ${move.vision}` : `Becomes Career vision ${move.vision}`}
             note={move.path ? undefined : 'Private until you send it for approval.'}
-            color={move.path ? routeColor({ id: move.path.id, name: move.path.name, followed: move.path.id === followedPathId }) : routeColor({ id: 'vision', name: '', kind: 'vision' })}
-            dashed={!move.path}
+            tone={move.path ? (move.path.id === followedPathId ? 'followed' : 'other') : 'vision'}
           />
         )}
 
@@ -285,44 +284,21 @@ function ExplorePositionForm({ starts, defaultFrom, nextVision, plan, onMap, fol
   );
 }
 
-// The route as a vertical step rail — the map's line language turned on its side: dashed violet for a
-// Career vision, solid in the path's colour for company-path steps. The start card is grey context.
-function RoutePreview({ from, fromLabel, levels, onMap, heading, note, color, dashed }: {
-  from: string; fromLabel?: string; levels: string[]; onMap: Set<string>; heading: string; note?: string; color: string; dashed: boolean;
+// The route as a StepRail — the map's line language turned on its side, in the route's role colour
+// (dashed violet for a Career vision). The start card is grey context; a role already on the map is
+// reused and reads "already on your map".
+function RoutePreview({ from, fromLabel, levels, onMap, heading, note, tone }: {
+  from: string; fromLabel?: string; levels: string[]; onMap: Set<string>; heading: string; note?: string; tone: StepRailTone;
 }) {
-  // Dots are solid rings painted over the rail (a 12px dashed ring breaks into fragments); the rail's
-  // dash carries the Career-vision signal.
-  const dot = 'relative h-3 w-3 shrink-0 rounded-[var(--radius-pill)] border-2 bg-[var(--color-background-default)]';
-  const row = 'relative flex min-h-[var(--height-control-md)] items-center gap-[var(--spacing-component-sm)] text-sm';
   return (
     <div role="status" className="flex flex-col gap-[var(--spacing-component-xs)]">
       <p className="text-xs font-semibold text-[var(--color-text-secondary)]">{heading}</p>
-      <div className="relative">
-        {/* The rail: from the first dot's centre to the last's. */}
-        <span
-          aria-hidden="true"
-          className={`absolute bottom-[calc(var(--height-control-md)/2)] left-[5px] top-[calc(var(--height-control-md)/2)] border-l-2 ${dashed ? 'border-dashed' : 'border-solid'}`}
-          style={{ borderColor: color }}
-        />
-        <ol aria-label="Route" className="flex flex-col">
-          <li className={row}>
-            <span aria-hidden="true" className={`${dot} border-[var(--color-border-strong)]`} />
-            <span className="text-[var(--color-text-secondary)]">
-              {levelName(from)}
-              {fromLabel && <> · <span className={fromLabel === 'You are here' ? 'text-[var(--career-map-current-label)]' : undefined}>{fromLabel}</span></>}
-            </span>
-          </li>
-          {levels.map((id) => (
-            <li key={id} className={row}>
-              <span aria-hidden="true" className={dot} style={{ borderColor: color }} />
-              {/* A role already on the map is reused (one card per role): it reads as context, not new. */}
-              {onMap.has(id)
-                ? <span className="text-[var(--color-text-secondary)]">{levelName(id)} · already on your map</span>
-                : <span className="font-semibold text-[var(--color-background-default-foreground)]">{levelName(id)}</span>}
-            </li>
-          ))}
-        </ol>
-      </div>
+      <StepRail tone={tone} aria-label="Route" className="-mx-[var(--spacing-component-sm)]">
+        <StepRailItem title={levelName(from)} status={fromLabel} statusTone={fromLabel === 'You are here' ? 'current' : 'neutral'} marker="muted" muted />
+        {levels.map((id) => onMap.has(id)
+          ? <StepRailItem key={id} title={levelName(id)} status="already on your map" marker="muted" muted />
+          : <StepRailItem key={id} title={levelName(id)} />)}
+      </StepRail>
       {note && <p className="text-sm text-[var(--color-text-secondary)]">{note}</p>}
     </div>
   );

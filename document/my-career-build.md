@@ -147,8 +147,7 @@ Approve / decline can't happen yet (no manager screen), so a sent request stays 
   it in a future assessment." + "{n} expectations are not set in Setup." when any.
 - **No target** → `NoTargetStrip`: "**No target yet.** Pick a role on your map and choose Set as
   target to track your progress." When a path change took the target off the map (the plan still
-  names it): "**Pick a new target.** {role} is no longer on your path. Pick a role on your map and
-  choose Set as target."
+  names it): "**Pick a new target.** {role} is no longer on your path." (shortened 2026-09-28)
 - **Path change notice** (2026-09-28; moved from the strip into the header the same day): while the
   followed path has a change Lan hasn't opened, a design-system **Alert (info)** sits in the page
   header **on the row of Map / List and Ask AI** (same place as Setup's progress Alert), as wide as
@@ -193,7 +192,7 @@ way to select a route (lines aren't focusable).
 - Same data as the map. **One Card per route**, in legend order: header = route button (selects the
   route) + badge ("You follow" / "Company path" / "Draft", "Waiting for approval"…), one context line
   under it.
-- Rows = selectable Items on a rail in the route's colour (solid green / grey, dashed violet):
+- Rows = design-system **StepRail** (selectable rows on a rail in the route's colour: solid green / grey, dashed violet):
   "Backend Engineer L2 · Mid · You are here". The Active target row adds its counts ("2 growth areas ·
   2 not assessed yet"). Vision rows don't repeat "Career vision".
 - Every route but the followed one starts with a grey **"Starts from {role}"** row: context only,
@@ -223,8 +222,9 @@ first, then full-width buttons (primary, outline, then red ghost).
 | Planned (added company path) | Set as target · Explore… · **Remove from my map** | the block reason, if any |
 | Career vision | (Set as target if its vision is Approved) · **Show Career vision N** (one per vision the card is on) · Explore… | "Your manager approves career visions before they can become your target." unless approved |
 
-**Route panel** (a route): its roles as one-line rows (status icon, "{role} · {status}", arrow;
-click opens that card) + footer:
+**Route panel** (a route): its roles as a **StepRail** in the route's colour, same look as a List
+view card (2026-09-28, was one row per role with a status icon): "{role} · {status}"; a Career vision
+starts with a grey "Starts from {card}" row (not selectable); click a row to open that card. Footer:
 
 | Route | Badge · context | Buttons |
 |---|---|---|
@@ -262,8 +262,9 @@ not assessed yet in a future assessment"), compare two roles. It never changes t
 Opened from the toolbar or "Explore a position from here" (defaults to the selected card).
 Fields: **Starting from** (any card but Completed) · **Position** (Published only, grouped by
 department) · **Join at** (default: the next level up in your own position, else the first level).
-The **whole ladder** from Join at to the top is explored. Preview = a vertical rail: grey start
-row, then one row per role; a role already on the map reads "{role} · already on your map" in grey.
+The **whole ladder** from Join at to the top is explored. Preview = a **StepRail** in the move's
+colour: grey start row, then one row per role; a role already on the map reads "{role} · already on
+your map" in grey.
 
 What the move becomes:
 
