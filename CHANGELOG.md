@@ -6,6 +6,17 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-28 — Career Map list view
+
+### Added
+- **`CareerMapList`** — the same plan as `CareerMap`, as a list: one section per route (route button, badge, note), roles as selectable `Item`s on a rail in the route's role colour. The keyboard, screen-reader and phone view.
+- Optional `CareerMapItem.detail` (one extra line on a list row) and `CareerMapPath.badge` / `note` (list section header).
+
+### Changed — breaking
+- `CareerMapLegend` appends "· you follow" to the followed path. Migrate: pass the plain route name (`name: "Engineering growth"`, `followed: true`).
+
+---
+
 ## 2026-09-27 — Stronger app-shell glow
 
 ### Changed

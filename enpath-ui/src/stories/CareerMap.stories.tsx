@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import * as React from 'react';
 
-import { CareerMap, CareerMapLegend, type CareerMapItem, type CareerMapLink, type CareerMapPath } from '@/components/ui/career-map';
+import { CareerMap, CareerMapLegend, CareerMapList, type CareerMapItem, type CareerMapLink, type CareerMapPath } from '@/components/ui/career-map';
 
 const meta = {
   title: 'Navigation/Career Map',
@@ -15,7 +15,7 @@ type Story = StoryObj<typeof meta>;
 
 // Routes: the followed company path (green), another company path, and a Career vision (dashed violet).
 const routes: CareerMapPath[] = [
-  { id: 'engineering-growth', name: 'Engineering growth · you follow', followed: true },
+  { id: 'engineering-growth', name: 'Engineering growth', followed: true },
   { id: 'engineering-to-product', name: 'Engineering to product' },
   { id: 'vision-1', name: 'Career vision 1', kind: 'vision' },
 ];
@@ -103,11 +103,37 @@ export const ThreePathsLongTitles: Story = {
       { from: 'a', to: 'd', route: 'design' },
     ],
     paths: [
-      { id: 'growth', name: 'Engineering growth · you follow', followed: true },
+      { id: 'growth', name: 'Engineering growth', followed: true },
       { id: 'leadership', name: 'Engineering leadership' },
       { id: 'design', name: 'Design craft' },
     ],
     'aria-label': 'Career map with three company paths',
   },
   render: (args) => <Interactive {...args} />,
+};
+
+/** List view: the same items, links and routes as a list — one section per route. */
+function ListView(props: React.ComponentProps<typeof CareerMap>) {
+  const [selected, setSelected] = React.useState<string | undefined>(props.selectedId);
+  const [route, setRoute] = React.useState<string | undefined>(props.selectedRoute);
+  return (
+    <div className="max-w-[640px] bg-[var(--color-background-default)]">
+      <CareerMapList
+        aria-label={props['aria-label']}
+        items={props.items}
+        links={props.links}
+        paths={props.paths.map((p) => ({ ...p, badge: p.kind === 'vision' ? 'Draft' : p.followed ? 'You follow' : 'Company path', note: p.kind === 'vision' ? 'Your own direction · private' : undefined }))}
+        selectedId={selected}
+        onSelect={(id) => { setSelected(id); setRoute(undefined); }}
+        selectedRoute={route}
+        onSelectRoute={(id) => { setRoute((r) => (r === id ? undefined : id)); setSelected(undefined); }}
+      />
+    </div>
+  );
+}
+
+export const ListViewStory: Story = {
+  name: 'List view',
+  args: Default.args,
+  render: (args) => <ListView {...args} />,
 };

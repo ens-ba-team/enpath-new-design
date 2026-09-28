@@ -1,7 +1,7 @@
 {
   "name": "career-map",
   "type": "component",
-  "description": "A read-only canvas of an employee's career plan — role cards joined by routes coloured by role: the followed company path green, other company paths grey, Career visions dashed violet. Clicking a line selects its whole route.",
+  "description": "A read-only canvas of an employee's career plan — role cards joined by routes coloured by role: the followed company path green, other company paths grey, Career visions dashed violet. Clicking a line selects its whole route. CareerMapList shows the same plan as a list.",
   "category": "navigation",
   "shadcnBase": "custom",
   "primitiveBase": "none",
@@ -56,6 +56,21 @@
       "type": "TEXT",
       "default": null,
       "reactProp": "onPaneClick"
+    },
+    "detail": {
+      "type": "TEXT",
+      "default": null,
+      "reactProp": "items[].detail"
+    },
+    "badge": {
+      "type": "TEXT",
+      "default": null,
+      "reactProp": "paths[].badge"
+    },
+    "note": {
+      "type": "TEXT",
+      "default": null,
+      "reactProp": "paths[].note"
     }
   },
   "tokens": {
@@ -141,7 +156,7 @@
       },
       {
         "property": "Fallback",
-        "value": "Freeform canvases are hard to use by keyboard and on phones. A list view of the same items is planned for My Career; until then every card is reachable by Tab."
+        "value": "CareerMapList is the list view of the same plan: every row is a selectable Item (Tab, Enter), every section header a button that selects its route. My Career offers a Map / List switch and opens in List below 1024px."
       },
       {
         "property": "Routes",
@@ -163,7 +178,9 @@
     "Mark exactly one company path followed — it's drawn green; every other company path is grey. Name routes in CareerMapLegend with the same list.",
     "Pass onSelectRoute to both the map and the legend: lines are clicked with a pointer, legend entries are the keyboard way to select a route.",
     "Selecting a card and selecting a route are exclusive — clear one when the other is set.",
-    "Pass onPaneClick to let a click on empty canvas clear the consumer's selection (a drag to pan never counts as a click)."
+    "Pass onPaneClick to let a click on empty canvas clear the consumer's selection (a drag to pan never counts as a click).",
+    "CareerMapList takes the same items, links and paths as CareerMap (plus optional item.detail, path.badge, path.note) and renders one section per route: every route lists its roles in order; each route is a design-system Card (header: route button · badge; note under it); any route but the followed one begins with a grey \"Starts from {card}\" row that is never shown selected. Offer it as the keyboard, screen-reader and phone view.",
+    "Pass the plain route name; CareerMapLegend adds \"· you follow\" to the followed path itself."
   ],
   "doNot": [
     {
@@ -213,6 +230,10 @@
     {
       "wrong": "List every company path in the legend",
       "correct": "Pass only routes drawn on the map; other company paths reach the map through Explore a position"
+    },
+    {
+      "wrong": "Put \"· you follow\" in a route's name",
+      "correct": "Set followed: true; the legend adds the suffix and the list shows a badge"
     }
   ],
   "relationships": {
@@ -249,7 +270,6 @@
     "artifactStatus": "needs review",
     "version": "1.0",
     "openQuestions": [
-      "List view fallback for keyboard and mobile is not built yet.",
       "How to show many company paths at once (legend grouping, show only followed + selected) — open in what should be done.md."
     ],
     "notes": [
@@ -313,6 +333,16 @@
         "date": "2026-09-26",
         "change": "CareerMapLegend entries are outline buttons (size sm) instead of ghost xs; the active route gets the outline pressed fill + SemiBold; swatches 20×3px in the role colour. The legend names only routes drawn on the map.",
         "breaking": false
+      },
+      {
+        "date": "2026-09-28",
+        "change": "Added CareerMapList (list view: one section per route, roles on a rail in the route's colour, selectable Items) and optional item.detail, path.badge, path.note. Breaking: CareerMapLegend now appends \"· you follow\" to the followed path — pass the plain name.",
+        "breaking": true
+      },
+      {
+        "date": "2026-09-28",
+        "change": "CareerMapList: each route is a Card; route name text-base, note on its own line; start row reads \"Starts from {card}\" and is never shown selected.",
+        "breaking": false
       }
     ]
   },
@@ -352,7 +382,8 @@
       "RouteSelected",
       "CompanyPathsOnly",
       "CurrentRoleOnly",
-      "ThreePathsLongTitles"
+      "ThreePathsLongTitles",
+      "ListViewStory"
     ],
     "decorators": [
       "none"
@@ -364,7 +395,7 @@
     "sections": [
       {
         "title": "Structure",
-        "body": "\n```\nCareerMap — group, fills its container; fill: career-map/canvas\n├─ grid — dot pattern: career-map/grid\n├─ toolbar — optional consumer slot, top-left; inset spacing/component/md, gap spacing/component/xs\n├─ controls — top-right; inset spacing/component/md, gap spacing/component/xs\n│  └─ Button ×3 (size icon) — Zoom out · Zoom in · Show whole map\n├─ CareerMapNode ×n — one per item, 176×104, shadow/surface; title wraps to 2 lines\n│  ├─ status band — full width, tinted per state; icon + text (Completed · You are here · Active target · Planned · Career vision)\n│  ├─ level — the card's title, \"L2 · Mid\" (secondary when completed)\n│  └─ Position — small secondary text, up to 2 lines\n└─ connection ×n — curved line + ~10px arrowhead in its route's role colour (followed = green, other company paths = grey, vision = dashed violet); the active route is thicker in the strong shade, others use the light (-inactive) shade\nCareerMapLegend — list below the map, one outline button per route drawn on the map (plain entries without onSelectRoute)\n```\n\n---\n\n"
+        "body": "\n```\nCareerMap — group, fills its container; fill: career-map/canvas\n├─ grid — dot pattern: career-map/grid\n├─ toolbar — optional consumer slot, top-left; inset spacing/component/md, gap spacing/component/xs\n├─ controls — top-right; inset spacing/component/md, gap spacing/component/xs\n│  └─ Button ×3 (size icon) — Zoom out · Zoom in · Show whole map\n├─ CareerMapNode ×n — one per item, 176×104, shadow/surface; title wraps to 2 lines\n│  ├─ status band — full width, tinted per state; icon + text (Completed · You are here · Active target · Planned · Career vision)\n│  ├─ level — the card's title, \"L2 · Mid\" (secondary when completed)\n│  └─ Position — small secondary text, up to 2 lines\n└─ connection ×n — curved line + ~10px arrowhead in its route's role colour (followed = green, other company paths = grey, vision = dashed violet); the active route is thicker in the strong shade, others use the light (-inactive) shade\nCareerMapLegend — list below the map, one outline button per route drawn on the map (plain entries without onSelectRoute); adds \"· you follow\" to the followed path\nCareerMapList — the same plan as a list: one Card per route (header: route button text-base · badge; note below), rows = Item sm on a rail in the route's colour; other routes open with a grey \"Starts from …\" row\n```\n\n---\n\n"
       },
       {
         "title": "Token Bindings",

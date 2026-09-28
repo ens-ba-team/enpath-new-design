@@ -385,7 +385,8 @@ export function StepPanel({
             {d.level}
           </span>
         </h2>
-        <div className="flex flex-wrap items-center gap-x-[var(--spacing-component-sm)] gap-y-[var(--spacing-component-xs)]">
+        {/* Badge on its own line, the context line always under it — same in every detail panel. */}
+        <div className="flex flex-col items-start gap-[var(--spacing-component-xs)]">
           <Badge variant={badge.variant} shape="pill" size="md">
             {badge.text}
           </Badge>
@@ -527,7 +528,8 @@ export function RoutePanel({
       >
         {title}
       </h2>
-      <div className="flex flex-wrap items-center gap-x-[var(--spacing-component-sm)] gap-y-[var(--spacing-component-xs)]">
+      {/* Badge on its own line, the context line always under it — same as the role panel. */}
+      <div className="flex flex-col items-start gap-[var(--spacing-component-xs)]">
         <Badge variant={badge.variant} shape="pill" size="md">
           <span
             aria-hidden="true"

@@ -4,17 +4,19 @@
 // path) · side panel (the selected role card, or the selected route — a company path or a Career
 // vision). The map is derived from Lan's plan (mock-data.ts → buildMap). Every plan change is
 // Preview → Confirm, then a toast. Career visions are numbered; one can be sent to the manager at
-// a time. Not yet: manager review, list view.
+// a time. Map or List view (List by default below 1024px; the employee's choice wins). Not yet:
+// manager review.
 
 import * as React from 'react';
 import { toast } from 'sonner';
-import { PlusIcon, SparkleIcon } from '@phosphor-icons/react/ssr';
+import { ListBulletsIcon, MapTrifoldIcon, PlusIcon, SparkleIcon } from '@phosphor-icons/react/ssr';
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription,
   AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { CareerMap, CareerMapLegend, type CareerMapItem, type CareerMapPath } from '@/components/ui/career-map';
+import { ButtonGroup } from '@/components/ui/button-group';
+import { CareerMap, CareerMapLegend, CareerMapList, type CareerMapItem, type CareerMapPath } from '@/components/ui/career-map';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Toaster } from '@/components/ui/toast';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -23,10 +25,10 @@ import { SidebarFollowsChat, useChatShortcut } from '../chat/sidebar-follows-cha
 import { Tip } from '../tip';
 import { CareerChat } from './career-chat';
 import {
-  buildMap, companyPaths, describeStep, employee, initialPlan, matchingPaths, removeBranch, removeVision,
+  buildMap, companyPaths, countGaps, describeStep, employee, gapsFor, initialPlan, matchingPaths, removeBranch, removeVision,
   visionNumbers, visionRoute, visionRouteId, type Branch, type GapStatus, type Plan, type VisionRequest,
 } from './mock-data';
-import { NoTargetStrip, ProgressBoard, RoutePanel, stateName, StepPanel } from './my-career-panels';
+import { NoTargetStrip, ProgressBoard, requestBadge, RoutePanel, stateName, StepPanel } from './my-career-panels';
 import { ExplorePositionDialog, levelName, RemoveTargetDialog, SetTargetDialog, SwitchPathDialog, VisionRequestDialog, type StartOption } from './plan-dialogs';
 
 function Placeholder({ children }: { children: React.ReactNode }) {
@@ -37,10 +39,22 @@ function Placeholder({ children }: { children: React.ReactNode }) {
 type Selection = { kind: 'card'; id: string } | { kind: 'route'; id: string } | { kind: 'none' };
 type DialogName = 'target' | 'untarget' | 'request' | 'add' | 'remove' | 'switch' | 'unfollow' | null;
 
+const NARROW = '(max-width: 1023px)';
+const subscribeNarrow = (onChange: () => void) => {
+  const mq = window.matchMedia(NARROW);
+  mq.addEventListener('change', onChange);
+  return () => mq.removeEventListener('change', onChange);
+};
+
 export function MyCareerScreen() {
   const [page, setPage] = React.useState('My Career');
   const [plan, setPlan] = React.useState<Plan>(initialPlan);
   const [request, setRequest] = React.useState<VisionRequest | null>(null);
+  // Map or List: List by default on narrow screens (no room to pan a canvas); a choice made with the
+  // toggle wins. Read with useSyncExternalStore so the server render (Map) never mismatches.
+  const narrow = React.useSyncExternalStore(subscribeNarrow, () => window.matchMedia(NARROW).matches, () => false);
+  const [viewChoice, setViewChoice] = React.useState<'map' | 'list' | null>(null);
+  const view = viewChoice ?? (narrow ? 'list' : 'map');
   const [notes, setNotes] = React.useState<Record<number, string>>({});
   const [sel, setSel] = React.useState<Selection>({ kind: 'card', id: employee.levelId }); // opens on "You are here"
   const [dialog, setDialog] = React.useState<DialogName>(null);
@@ -59,8 +73,16 @@ export function MyCareerScreen() {
     ...companyPaths
       .filter((p) => links.some((l) => l.route === p.id))
       .sort((a, b) => Number(b.id === plan.followedPathId) - Number(a.id === plan.followedPathId))
-      .map((p) => ({ id: p.id, name: p.id === plan.followedPathId ? `${p.name} · you follow` : p.name, followed: p.id === plan.followedPathId })),
-    ...visions.map((n): CareerMapPath => ({ id: visionRouteId(n), name: `Career vision ${n}`, kind: 'vision' })),
+      .map((p) => {
+        const followed = p.id === plan.followedPathId;
+        return followed
+          ? { id: p.id, name: p.name, followed, badge: 'You follow', note: `Planned by your company · ${p.levels.length} levels` }
+          : { id: p.id, name: p.name, followed, badge: 'Company path', note: 'For your role · no approval needed' };
+      }),
+    ...visions.map((n): CareerMapPath => {
+      const sent = request?.vision === n ? request : null;
+      return { id: visionRouteId(n), name: `Career vision ${n}`, kind: 'vision', badge: sent ? requestBadge[sent.status].text : 'Draft', note: sent ? 'Your own direction' : 'Your own direction · private' };
+    }),
   ];
   const route = sel.kind === 'route' ? routes.find((r) => r.id === sel.id) : undefined;
   const step = sel.kind === 'card' ? steps.find((s) => s.id === sel.id) : undefined;
@@ -72,7 +94,11 @@ export function MyCareerScreen() {
   const visionCount = new Set(steps.filter((s) => s.state === 'vision').map((s) => s.vision)).size;
   const items: CareerMapItem[] = steps.map((s) => {
     const d = describeStep(s);
-    return { id: s.id, title: d.title, level: d.level, state: s.state, lane: s.lane, label: s.state === 'vision' ? (visionCount > 1 ? `Career vision ${s.vision}` : 'Career vision') : undefined };
+    // List view: the Active target's row carries its counts, like the progress strip.
+    const n = s.state === 'target' ? countGaps(gapsFor(s)) : null;
+    const plural = (k: number, one: string, many: string) => `${k} ${k === 1 ? one : many}`;
+    const detail = n ? [n.growth > 0 && plural(n.growth, 'growth area', 'growth areas'), n.evidence > 0 && `${n.evidence} need${n.evidence === 1 ? 's' : ''} records`].filter(Boolean).join(' · ') || undefined : undefined;
+    return { id: s.id, title: d.title, level: d.level, state: s.state, lane: s.lane, detail, label: s.state === 'vision' ? (visionCount > 1 ? `Career vision ${s.vision}` : 'Career vision') : undefined };
   });
   const starts: StartOption[] = steps.filter((s) => s.state !== 'completed').map((s) => ({ id: s.id, label: stateName(s), vision: s.vision }));
 
@@ -147,6 +173,41 @@ export function MyCareerScreen() {
     setSel({ kind: 'route', id: visionRouteId(n) });
   };
 
+  // Map toolbar (on the canvas) and List toolbar (a bar above the list) share the same controls.
+  // Map / List: a design-system ButtonGroup of ghost buttons; the current view is pressed (ghost
+  // active fill + SemiBold).
+  const viewButton = (v: 'map' | 'list', icon: React.ReactNode, text: string) => (
+    <Button
+      variant="ghost"
+      aria-pressed={view === v}
+      onClick={() => setViewChoice(v)}
+      className={view === v ? 'bg-[var(--button-ghost-bg-active)] font-semibold' : 'font-normal'}
+    >
+      {icon}{text}
+    </Button>
+  );
+  const toolbar = (
+    <>
+      {(matchingPaths.length > 1 || !plan.followedPathId) && (
+        <Select value={plan.followedPathId ?? ''} onValueChange={follow}>
+          <SelectTrigger aria-label="Company path you follow" className="w-auto gap-[var(--spacing-component-xs)] bg-[var(--color-surface-default)]"><SelectValue placeholder="Choose a company path" /></SelectTrigger>
+          <SelectContent>{matchingPaths.map((p) => <SelectItem key={p.id} value={p.id}>Following: {p.name}</SelectItem>)}</SelectContent>
+        </Select>
+      )}
+      <Button variant="outline" className="bg-[var(--color-surface-default)]" onClick={() => setDialog('add')}>
+        <PlusIcon aria-hidden="true" />Explore a position
+      </Button>
+    </>
+  );
+  // The view switch lives in the page header, not the map toolbar: with the detail panel open the
+  // canvas is ~600px wide and the zoom controls would cover it.
+  const viewSwitch = (
+    <ButtonGroup role="group" aria-label="View">
+      {viewButton('map', <MapTrifoldIcon aria-hidden="true" />, 'Map')}
+      {viewButton('list', <ListBulletsIcon aria-hidden="true" />, 'List')}
+    </ButtonGroup>
+  );
+
   return (
     <TooltipProvider>
     <EnpathAppShell
@@ -172,6 +233,7 @@ export function MyCareerScreen() {
               <h1 className="text-2xl font-semibold text-[var(--color-background-default-foreground)]">My Career</h1>
               <p className="text-sm text-[var(--color-text-secondary)]">{employee.name} · {levelName(current.id)}</p>
             </div>
+            {viewSwitch}
             {!chatOpen && (
               <Tip label="Ask AI (⌘I)">
                 <Button variant="outline" className="hidden lg:inline-flex" onClick={() => setChatOpen(true)}>
@@ -183,32 +245,39 @@ export function MyCareerScreen() {
           {target ? <ProgressBoard target={target} onOpenGroup={(group) => { selectCard(target.id); setFocusGroup((f) => ({ group, n: (f?.n ?? 0) + 1 })); }} /> : <NoTargetStrip />}
           <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
             <div className="flex min-h-[60dvh] flex-1 flex-col lg:min-h-0">
-              <CareerMap
-                aria-label={`${employee.name}'s career map`}
-                items={items}
-                links={links}
-                paths={routes}
-                selectedId={step?.id}
-                onSelect={selectCard}
-                selectedRoute={route?.id}
-                onSelectRoute={selectRoute}
-                onPaneClick={clearSelection}
-                className="flex-1"
-                toolbar={
-                  <>
-                    {(matchingPaths.length > 1 || !plan.followedPathId) && (
-                      <Select value={plan.followedPathId ?? ''} onValueChange={follow}>
-                        <SelectTrigger aria-label="Company path you follow" className="w-auto gap-[var(--spacing-component-xs)] bg-[var(--color-surface-default)]"><SelectValue placeholder="Choose a company path" /></SelectTrigger>
-                        <SelectContent>{matchingPaths.map((p) => <SelectItem key={p.id} value={p.id}>Following: {p.name}</SelectItem>)}</SelectContent>
-                      </Select>
-                    )}
-                    <Button variant="outline" className="bg-[var(--color-surface-default)]" onClick={() => setDialog('add')}>
-                      <PlusIcon aria-hidden="true" />Explore a position
-                    </Button>
-                  </>
-                }
-              />
-              <CareerMapLegend paths={routes} selectedRoute={route?.id} onSelectRoute={selectRoute} className="border-t border-[var(--color-border-default)] px-[var(--spacing-layout-sm)] py-[var(--spacing-component-sm)]" />
+              {view === 'map' ? (
+                <>
+                  <CareerMap
+                    aria-label={`${employee.name}'s career map`}
+                    items={items}
+                    links={links}
+                    paths={routes}
+                    selectedId={step?.id}
+                    onSelect={selectCard}
+                    selectedRoute={route?.id}
+                    onSelectRoute={selectRoute}
+                    onPaneClick={clearSelection}
+                    className="flex-1"
+                    toolbar={toolbar}
+                  />
+                  <CareerMapLegend paths={routes} selectedRoute={route?.id} onSelectRoute={selectRoute} className="border-t border-[var(--color-border-default)] px-[var(--spacing-layout-sm)] py-[var(--spacing-component-sm)]" />
+                </>
+              ) : (
+                <>
+                  <div className="flex flex-wrap items-center gap-[var(--spacing-component-xs)] px-[var(--spacing-layout-xs)] pt-[var(--spacing-layout-xs)]">{toolbar}</div>
+                  <CareerMapList
+                    aria-label={`${employee.name}'s career plan`}
+                    items={items}
+                    links={links}
+                    paths={routes}
+                    selectedId={step?.id}
+                    onSelect={selectCard}
+                    selectedRoute={route?.id}
+                    onSelectRoute={selectRoute}
+                    className="flex-1"
+                  />
+                </>
+              )}
             </div>
             {(route || step) && (
             <aside aria-label={route ? 'Selected route' : 'Selected role'} className="flex shrink-0 flex-col border-t border-[var(--color-border-default)] lg:w-[400px] lg:overflow-y-auto lg:border-l lg:border-t-0">

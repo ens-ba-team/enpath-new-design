@@ -43,7 +43,10 @@ import {
   PlusIcon,
 } from "@phosphor-icons/react/ssr";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Item } from "@/components/ui/item";
 import { cn } from "@/lib/utils";
 
 export type CareerMapNodeState = "completed" | "current" | "target" | "planned" | "vision";
@@ -60,6 +63,8 @@ export interface CareerMapItem {
   /** Row on the map: 0 is the top row (the company path), higher numbers go down. Cards without a
    *  lane are stacked per column. A taken spot pushes a card to the next free row below. */
   lane?: number;
+  /** List view only: one short extra line on the row, e.g. "2 growth areas · 2 need records" */
+  detail?: string;
 }
 
 export interface CareerMapLink {
@@ -75,8 +80,11 @@ export interface CareerMapPath {
   name: string;
   /** "vision" routes are dashed violet; "company" (default) routes are solid */
   kind?: "company" | "vision";
-  /** The company path the employee follows — drawn green. Every other company path is grey. */
+  /** The company path the employee follows — drawn green (the legend adds "· you follow"). Every other company path is grey. */
   followed?: boolean;
+  /** List view section header: badge text ("You follow", "Draft") and one context line */
+  badge?: string;
+  note?: string;
 }
 
 /**
@@ -435,19 +443,152 @@ export function CareerMapLegend({ paths, selectedRoute, onSelectRoute, className
                 className={cn(quiet, pressed)}
               >
                 {swatch}
-                {p.name}
+                {p.name}{p.followed ? " · you follow" : ""}
               </Button>
             ) : (
               <span
                 className={cn(quiet, "inline-flex items-center gap-[var(--spacing-component-sm)] rounded-[var(--radius-control)] border border-[var(--button-outline-border-default)] px-[var(--spacing-component-md)] py-[var(--spacing-component-xs)]", pressed)}
               >
                 {swatch}
-                {p.name}
+                {p.name}{p.followed ? " · you follow" : ""}
               </span>
             )}
           </li>
         );
       })}
     </ul>
+  );
+}
+
+// ─── List view ───────────────────────────────────────────────────────────────
+// The same plan as CareerMap, as a vertical list: one section per route (in `paths` order), its roles
+// in route order on a rail in the route's colour. The keyboard, screen-reader and phone fallback for
+// the canvas — every row is a selectable Item, every section header selects its route.
+
+export interface CareerMapListProps {
+  items: CareerMapItem[];
+  links: CareerMapLink[];
+  paths: CareerMapPath[];
+  selectedId?: string;
+  onSelect?: (id: string) => void;
+  selectedRoute?: string;
+  onSelectRoute?: (id: string) => void;
+  "aria-label": string;
+  className?: string;
+}
+
+/** A route's roles in order, from the links. The first entry is where the route starts. */
+function routeOrder(routeId: string, links: CareerMapLink[]) {
+  const own = links.filter((l) => l.route === routeId);
+  const start = own.find((l) => !own.some((o) => o.to === l.from));
+  if (!start) return [];
+  const ids = [start.from];
+  let next: CareerMapLink | undefined = start;
+  while (next && !ids.includes(next.to)) {
+    ids.push(next.to);
+    const at: string = next.to;
+    next = own.find((l) => l.from === at);
+  }
+  return ids;
+}
+
+const listDot: Record<CareerMapNodeState, string> = {
+  completed: "border-[var(--color-border-strong)] bg-[var(--career-map-node-surface)]",
+  current: "border-[var(--career-map-current-label)] bg-[var(--career-map-band-current)]",
+  target: "border-[var(--career-map-target-border)] bg-[var(--career-map-band-target)]",
+  planned: "bg-[var(--career-map-node-surface)]",
+  vision: "bg-[var(--career-map-node-surface)]",
+};
+
+export function CareerMapList({ items, links, paths, selectedId, onSelect, selectedRoute, onSelectRoute, "aria-label": ariaLabel, className }: CareerMapListProps) {
+  const byId = new Map(items.map((i) => [i.id, i]));
+  const sections = paths
+    .map((p) => {
+      const order = routeOrder(p.id, links).filter((id) => byId.has(id));
+      // Every route lists its roles in order. Any route but the followed one starts from a card that
+      // belongs to another route (e.g. "You are here"): it's the first row, shown as grey context.
+      return { path: p, start: p.followed ? undefined : order[0], rows: order };
+    })
+    .filter((sec) => sec.rows.length > 0);
+  const listed = new Set(sections.flatMap((sec) => sec.rows.filter((id) => id !== sec.start)));
+  // Cards on no route (e.g. "You are here" with no company path followed) go first, untitled.
+  const loose = items.filter((i) => !listed.has(i.id));
+
+  const row = (it: CareerMapItem, path: CareerMapPath | undefined, last: boolean, start = false) => {
+    const color = path ? routeColor(path, true) : undefined;
+    const label = it.label ?? stateLabel[it.state].text;
+    return (
+      <li key={it.id} className="relative">
+        {/* Rail segment from this dot's centre to the next row's dot centre (Item sm: 8px padding + 16px icon). */}
+        {path && !last && (
+          <span
+            aria-hidden="true"
+            className={cn("absolute bottom-[-16px] left-[15px] top-[16px] border-l-2", path.kind === "vision" ? "border-dashed" : "border-solid")}
+            style={{ borderColor: color }}
+          />
+        )}
+        <Item
+          type="icon"
+          size="sm"
+          icon={
+            <span aria-hidden="true" className="relative flex h-4 w-4 items-center justify-center">
+              <span className={cn("h-3 w-3 rounded-[var(--radius-pill)] border-2", start ? listDot.completed : listDot[it.state])} style={!start && (it.state === "planned" || it.state === "vision") ? { borderColor: color } : undefined} />
+            </span>
+          }
+          title={
+            <>
+              <span className={it.state === "completed" || start ? "font-normal text-[var(--color-text-secondary)]" : undefined}>{start ? `Starts from ${it.title} ${it.level}` : `${it.title} ${it.level}`}</span>
+              {/* A vision row's section already says which Career vision it is; the start row is context only. */}
+              {it.state !== "vision" && !start && <span className={cn("font-normal", it.state === "current" ? "text-[var(--career-map-current-label)]" : it.state === "target" ? "text-[var(--career-map-target-label)]" : "text-[var(--color-text-secondary)]")}> · {label}</span>}
+              {it.detail && !start && <span className="font-normal text-[var(--color-text-secondary)]"> · {it.detail}</span>}
+            </>
+          }
+          // The start row repeats a card listed in another route: context only, never shown selected.
+          selected={!start && it.id === selectedId}
+          onSelect={onSelect ? () => onSelect(it.id) : undefined}
+        />
+      </li>
+    );
+  };
+
+  return (
+    <div role="region" aria-label={ariaLabel} className={cn("flex flex-col gap-[var(--spacing-layout-xs)] overflow-y-auto p-[var(--spacing-layout-xs)]", className)}>
+      {loose.length > 0 && <ul className="flex flex-col">{loose.map((it) => row(it, undefined, true))}</ul>}
+      {sections.map(({ path, start, rows }) => {
+        const active = path.id === selectedRoute;
+        const badgeVariant = path.kind === "vision" ? "dashed" : path.followed ? "success" : "secondary";
+        const swatch = path.kind === "vision"
+          ? <span aria-hidden="true" className="w-5 border-t-[3px] border-dashed" style={{ borderColor: routeColor(path, true) }} />
+          : <span aria-hidden="true" className="h-[3px] w-5 rounded-[var(--radius-pill)]" style={{ backgroundColor: routeColor(path, true) }} />;
+        const note = path.note;
+        // One design-system Card per route (option B, 2026-09-28): the separation ladder's "card" step.
+        return (
+          <Card key={path.id} role="region" aria-label={path.name} className="gap-[var(--spacing-component-xs)] p-[var(--spacing-component-md)]">
+            <div className="flex flex-wrap items-center gap-x-[var(--spacing-component-sm)] gap-y-[var(--spacing-component-xs)]">
+              {onSelectRoute ? (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  aria-pressed={active}
+                  onClick={() => onSelectRoute(path.id)}
+                  className={cn("-ml-[var(--spacing-component-sm)] text-base font-semibold", active && "bg-[var(--button-outline-bg-active)]")}
+                >
+                  {swatch}
+                  {path.name}
+                </Button>
+              ) : (
+                <span className="inline-flex items-center gap-[var(--spacing-component-sm)] text-base font-semibold">{swatch}{path.name}</span>
+              )}
+              {path.badge && <Badge variant={badgeVariant} shape="pill" size="md">{path.badge}</Badge>}
+            </div>
+            {/* Context line under the header, like the detail panels. */}
+            {note && <p className="text-sm text-[var(--color-text-secondary)]">{note}</p>}
+            <ul className="flex flex-col">
+              {rows.map((id, i) => row(byId.get(id)!, path, i === rows.length - 1, id === start))}
+            </ul>
+          </Card>
+        );
+      })}
+    </div>
   );
 }
