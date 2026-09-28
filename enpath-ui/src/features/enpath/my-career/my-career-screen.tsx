@@ -1,5 +1,5 @@
 'use client';
-// My Career — employee view (Lan Nguyen). Spec: Enpath/document/my-career-build.md.
+// My Career — employee view (Lan Nguyen). Spec: document/my-career-build.md (repo root).
 // Three jobs, three places: progress board (fixed to the Active target) · career map (build the
 // path) · side panel (the selected role card, or the selected route — a company path or a Career
 // vision). The map is derived from Lan's plan (mock-data.ts → buildMap). Every plan change is

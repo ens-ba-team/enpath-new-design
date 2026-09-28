@@ -60,6 +60,18 @@ Guides for designing full product screens using real components + Tailwind in St
 
 **Screen stories** live in `enpath-ui/src/stories/screens/` (title `Screens/Feature/Name`) and render the prototype's code — no duplicate. Current: `Screens/Setup/Career structure`.
 
+## Product documents
+
+- `document/`: product build docs (moved into the repo 2026-09-28). The PRDs are not in the repo: they stay in the Obsidian vault, in the Enpath folder's "original brief" folder.
+- `document/glossary.md`: terms, data model and the development loop (Target → Assessment → Growth areas → Action plan → Evidence). Use its vocabulary.
+- `document/set-up-build.md`: Setup — key decisions, what's built, open questions.
+- `document/my-career-build.md`: My Career — key decisions, what's built, How the map works, open questions.
+- `document/my-actions-build.md`: My Actions / Action plan (PRD-022) — decisions, not built.
+- `document/my-assessment-build.md`: Assessment (no PRD) — decisions, not built.
+- `document/dev-logic.md`: logic and data model captured from the deleted dev repo.
+- `document/explorer.contract.md`: pattern contract for the Career structure explorer.
+- `document/market-research.md`: Progression, Lattice, Leapsome, Culture Amp, Pave.
+
 ## Prototype (Next.js app)
 
 Run `cd enpath-ui && npm run dev` → `http://localhost:3000/setup`. Mock data only — a refresh resets it. Restart the dev server (and `rm -rf .next`) after `.tsx` or token changes.
@@ -67,9 +79,9 @@ Run `cd enpath-ui && npm run dev` → `http://localhost:3000/setup`. Mock data o
 - `enpath-ui/src/app/setup/page.tsx`: the Setup route.
 - `enpath-ui/src/app/me/career/page.tsx`: the My Career route.
 - `enpath-ui/src/features/enpath/app-shell.tsx`: app shell — transparent floating sidebar + page panel + optional right panel, on `color/background/app` Sidebar links to the two built routes, `/setup` and `/me/career`; other items show a placeholder.
-- `enpath-ui/src/features/enpath/mock-data.ts`: Positions, Levels (with headcount), Matrices, expectations — shape from the project note dev-logic.md (Enpath/document/).
+- `enpath-ui/src/features/enpath/mock-data.ts`: Positions, Levels (with headcount), Matrices, expectations — shape from `document/dev-logic.md`.
 - `enpath-ui/src/features/enpath/setup/`: `setup-screen.tsx` (Career structure tab, grid, Publish / Unpublish) · `position-dialog.tsx` (Create / Edit position).
-- `enpath-ui/src/features/enpath/my-career/`: `my-career-screen.tsx` (route `/me/career` — employee view for Lan: progress strip + Career Map (status-band cards, routes coloured by role, legend of routes on the map) + a detail panel that follows the selection, with gap rows, Set as target, company-path picker, Explore a position, Career visions + request, Remove) · `gap-row.tsx` · `plan-dialogs.tsx` · `mock-data.ts` (Lan's plan; Positions and Levels come from Setup's mock). Spec: project note my-career-build.md (Enpath/document).
+- `enpath-ui/src/features/enpath/my-career/`: `my-career-screen.tsx` (route `/me/career` — employee view for Lan: progress strip + Career Map (status-band cards, routes coloured by role, legend of routes on the map) + a detail panel that follows the selection, with gap rows, Set as target, company-path picker, Explore a position, Career visions + request, Remove) · `gap-row.tsx` · `plan-dialogs.tsx` · `mock-data.ts` (Lan's plan; Positions and Levels come from Setup's mock). Spec: `document/my-career-build.md`.
 - `enpath-ui/src/features/enpath/chat/chat-panel.tsx`: AI chat panel (mock streaming, Ask / Edit, proposal → Edit position).
 - `enpath-ui/src/components/ai-elements/`: [AI Elements](https://elements.ai-sdk.dev/) source (conversation, message, prompt-input, model-selector, suggestion, tool, reasoning, shimmer, code-block) — Phosphor icons, light only, bound to `chat/*` tokens. Documented like every component (meta.json → generated page, stories under `AI/…`), as are the ui primitives it added (collapsible, command, dropdown-menu, hover-card, input-group, scroll-area, spinner).
 

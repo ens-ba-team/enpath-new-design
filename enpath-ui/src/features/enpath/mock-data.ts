@@ -1,4 +1,4 @@
-// Enpath prototype mock data — shape from document/dev-logic.md §4, content from the Northstar example.
+// Enpath prototype mock data — shape from document/dev-logic.md §4 (repo root), content from the Northstar example.
 // In memory only: a refresh resets everything.
 
 /** Draft = editable, not visible to employees · Published = live and read-only — Unpublish is the only way back to Draft (Lattice's model) */
