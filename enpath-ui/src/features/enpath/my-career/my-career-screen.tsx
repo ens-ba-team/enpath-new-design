@@ -24,8 +24,8 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { EnpathAppShell } from '../app-shell';
 import { SidebarFollowsChat, useChatShortcut } from '../chat/sidebar-follows-chat';
 import { Tip } from '../tip';
-import { HistoryDrawer } from '../setup/history-drawer';
 import { CareerChat } from './career-chat';
+import { PathHistoryDrawer, type PathHistoryChange, type PathHistoryRow } from './path-history-drawer';
 import {
   buildMap, companyPaths, countGaps, describeChange, describeStep, employee, gapsFor, initialPlan, matchingPaths, removeBranch, removeVision,
   visionNumbers, visionRoute, visionRouteId, type Branch, type GapStatus, type Plan, type VisionRequest,
@@ -132,18 +132,26 @@ export function MyCareerScreen() {
     : undefined;
   // The plan still names a target that a path change took off the map: ask for a new one.
   const lostTarget = plan.targetId && !target ? levelName(plan.targetId) : undefined;
-  // Path history in plain words: what changed, then what it did to Lan's plan.
-  const historyEntries = (followedPath?.changes ?? []).map((c, i, all) => {
-    const { added, removed } = describeChange(followedPath!, c, i === 0 ? followedPath!.levels : all[i - 1].before);
+  // Path history (option A): per change, one row per role added or removed, in plain words, with a
+  // badge when it matters to Lan (a level behind that isn't completed, the target that went).
+  const historyChanges: PathHistoryChange[] = (followedPath?.changes ?? []).map((c, i, all) => {
     const after = i === 0 ? followedPath!.levels : all[i - 1].before;
+    const { added, removed } = describeChange(followedPath!, c, after);
     const here = after.indexOf(employee.levelId);
-    const parts = [
-      ...added.map((id) => after.indexOf(id) < here
-        ? `Added ${levelName(id)} before your level. You haven't held it, so it isn't completed yet.`
-        : `Added ${levelName(id)} ahead. It's planned on your path.`),
-      ...removed.map((id) => id === plan.targetId && !target ? `Removed ${levelName(id)}. It was your target, so pick a new one.` : `Removed ${levelName(id)}.`),
-    ];
-    return { who: 'Your company', what: `${followedPath!.name} changed. ${parts.join(' ')}`, when: c.date };
+    return {
+      date: c.date,
+      who: 'your company',
+      rows: [
+        ...added.map((id): PathHistoryRow => after.indexOf(id) < here
+          ? employee.heldLevels.includes(id)
+            ? { kind: 'added', role: levelName(id), note: 'Added before your level. Completed.' }
+            : { kind: 'added', role: levelName(id), note: 'Added before your level. Not completed yet.', badge: { text: 'New on your path', variant: 'secondary' } }
+          : { kind: 'added', role: levelName(id), note: 'Added ahead. Planned.' }),
+        ...removed.map((id): PathHistoryRow => id === plan.targetId && !target
+          ? { kind: 'removed', role: levelName(id), note: 'Removed. Pick a new target.', badge: { text: 'Was your target', variant: 'warning' } }
+          : { kind: 'removed', role: levelName(id), note: 'Removed.' }),
+      ],
+    };
   });
 
   const commit = (next: Plan, message: string) => {
@@ -390,7 +398,7 @@ export function MyCareerScreen() {
       )}
       <Toaster />
     </EnpathAppShell>
-      {followedPath && <HistoryDrawer open={historyOpen} onOpenChange={setHistoryOpen} title="Path history" name={followedPath.name} entries={historyEntries} />}
+      {followedPath && <PathHistoryDrawer open={historyOpen} onOpenChange={setHistoryOpen} path={followedPath.name} changes={historyChanges} />}
     </TooltipProvider>
   );
 }

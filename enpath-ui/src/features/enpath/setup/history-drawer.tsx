@@ -9,16 +9,14 @@ import type { HistoryEntry } from '../mock-data';
 // { who, what, when } shape. Entries are seeded mock data, not a live audit log: they don't grow
 // as you Publish/Archive/edit in this prototype.
 
-export function HistoryDrawer({ open, onOpenChange, name, entries, title = 'History' }: {
+export function HistoryDrawer({ open, onOpenChange, name, entries }: {
   open: boolean; onOpenChange: (o: boolean) => void; name: string; entries: HistoryEntry[];
-  /** e.g. "Path history" (My Career) */
-  title?: string;
 }) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="right">
         <SheetHeader>
-          <SheetTitle>{title}</SheetTitle>
+          <SheetTitle>History</SheetTitle>
           <SheetDescription>{name}</SheetDescription>
         </SheetHeader>
         <div className="flex-1 overflow-auto px-[var(--spacing-component-lg)] pt-[var(--spacing-component-lg)] pb-[var(--spacing-component-lg)]">

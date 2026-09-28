@@ -354,12 +354,16 @@ already meets at C′ and what not:
   Records stay in history and can count toward a later role with a similar competency.
 
 **How Lan is told** (2A + an Alert, 2026-09-28): the path-change Alert in the page header (§5.1),
-the "Pick a new target" strip when the target went, and the card status band (§4.1). **Path history** = the shared History drawer (title "Path history", the
-path's name), opened from the notice or the followed path's route panel: one entry per change,
-newest first, "Your company · {date}", in plain words: "Engineering growth changed. Added Frontend
-Engineer L1 · Junior before your level. You haven't held it, so it isn't completed yet." plus what it
-did to the plan ("Backend Engineer L3 · Senior was your target. Pick a new one." · "Career vision 2
-now starts from Backend Engineer L2 · Mid. Its status is kept.").
+the "Pick a new target" strip when the target went, and the card status band (§4.1). **Path history** (option A, 2026-09-28; `my-career/path-history-drawer.tsx`) = a right Sheet titled
+"Path history" with the path's name, opened from the header Alert or the followed path's route
+panel. Per change, newest first: "{date} · by your company", then **one Item per role** with a + (green)
+or − (red) icon, the role, a Badge when it matters to Lan, and a one-line note:
+- added behind You are here, not held: badge **New on your path** · "Added before your level. Not
+  completed yet." (held: "Added before your level. Completed.");
+- added ahead: "Added ahead. Planned.";
+- removed, and it was the target: badge **Was your target** (warning) · "Removed. Pick a new
+  target."; otherwise "Removed.".
+Setup's History drawer stays text-only and separate.
 
 **Mock on load:** Engineering growth changed on 27 Sep: BE L1 → BE L2 → BE L3 → BE L4 became
 BE L1 → **FE L1** → BE L2 → **FE L3** → BE L4. So on load: FE L1 is **New on your path**, BE L3 (Lan's
