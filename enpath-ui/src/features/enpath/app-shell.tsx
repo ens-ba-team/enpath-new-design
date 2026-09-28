@@ -19,8 +19,8 @@ import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTi
 
 const workspaceItems = [
   { icon: <PathIcon className="h-4 w-4" />, label: 'My Career' },
-  { icon: <ClipboardTextIcon className="h-4 w-4" />, label: 'Records' },
   { icon: <TargetIcon className="h-4 w-4" />, label: 'My Actions' },
+  { icon: <ClipboardTextIcon className="h-4 w-4" />, label: 'Records' },
 ];
 // Pages that exist as routes. Anything else is handled by the screen's onNavigate (a placeholder).
 const routes: Record<string, string> = { 'My Career': '/me/career', Setup: '/setup' };

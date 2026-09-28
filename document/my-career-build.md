@@ -322,8 +322,8 @@ Assessment. Build docs: `my-assessment-build.md`, `my-actions-build.md`. For My 
   Assessments).
 - **My Records is kept** (decided 2026-09-28, reversing the earlier drop): the employee's proof of
   work, the input to the next Assessment, and what AI reads to propose actions and suggest scores.
-  Sidebar keeps Records; its place (siblings My Career · My Actions · My Records, never Actions
-  inside Records) is still to confirm. Screen not designed yet.
+  Sidebar order (2026-09-28): My Career · My Actions · Records, siblings (Actions never inside
+  Records). Screen not designed yet.
 
 ## 8. When a company path changes (built 2026-09-28)
 
@@ -452,8 +452,7 @@ Mobile polish comes last.
 - [ ] Keep manager approval for Career visions? (Brief doesn't mention it; PRD-020 puts "job
       transfer approval" out of scope.)
 - [ ] Terms: brief "Core Career Path" / "Target Position" vs UI "company path" / "Active target".
-- [ ] Sidebar: My Career · My Actions · My Records as siblings? (Records is kept; Actions must not
-      sit inside Records: an Action produces a Record, not the other way round.)
+- [x] Sidebar: My Career · My Actions · Records, siblings (2026-09-28).
 - [ ] C → C′ when C is on several paths: only the followed path moves You are here (proposed).
 - [ ] Suggested scores: how "similar" is decided, and where the manager confirms them.
 - [ ] Competency library (shared competencies across Matrices): future, not built.
