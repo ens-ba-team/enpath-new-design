@@ -146,8 +146,7 @@ Approve / decline can't happen yet (no manager screen), so a sent request stays 
   competency has no approved score yet, so it doesn't count as a growth area. Your manager assesses
   it in a future assessment." + "{n} expectations are not set in Setup." when any.
 - **No target** → `NoTargetStrip`: "**No target yet.** Pick a role on your map and choose Set as
-  target to track your progress." When a path change removed the target: "**Pick a new target.**
-  {role} is no longer on your path. Pick a role on your map and choose Set as target."
+  target to track your progress."
 - **Path change notice** (1B, 2026-09-28): the last line of the strip (also on the No-target strip)
   while the followed path has a change Lan hasn't opened: a design-system **Alert (info)**, as wide as
   its content (not full width): path icon · "{path} changed {date}" · link **See what's different**
@@ -225,7 +224,7 @@ click opens that card) + footer:
 
 | Route | Badge · context | Buttons |
 |---|---|---|
-| Path you follow | "You follow" · "Planned by your company · N levels" | Open Active target (if there is one) · **Path history** (if the path changed) · "Simulate another change (prototype)" |
+| Path you follow | "You follow" · "Planned by your company · N levels" | Open Active target (if there is one) · **Path history** (if the path changed) |
 | Other company path for the role | "Company path" · "For your role · no approval needed" | **Follow this path** (note: "It becomes your main route, shown in the top row.") |
 | Career vision | request status (§4.3) · "Your own direction · private" | per §4.3 + **Remove Career vision N** |
 
@@ -336,8 +335,8 @@ becomes A → X → C → E):
 | C (You are here) **replaced** by C′ | Lan's **You are here becomes C′** automatically (decided 2026-09-28). The admin sees it first in Setup's preview ("N people at C move to C′") and confirms; only the path an employee **follows** moves them. C goes into Lan's held-levels history. The comparison is redone for C′ (below) | not built |
 | C (You are here) **removed**, nothing replaces it | Lan stays at C (C stays as its own card) and is asked to pick a path again | not built |
 | E (new, ahead) | Planned | yes |
-| D (removed, ahead) | Leaves the map. If it was the Active target → no target; the strip says "Pick a new target" | yes |
-| A branch starting from a removed card | Re-attaches to the nearest earlier level still on the map (by the path's previous order), or You are here; its status is kept | yes |
+| D (removed, ahead) | Leaves the map. If it was the Active target → no target (No-target strip) | map rule yes; no mock case on load |
+| A branch starting from a removed card | Re-attaches to the nearest earlier level still on the map (by the path's previous order), or You are here; its status is kept | map rule yes; no mock case on load |
 
 **When You are here moves to C′** (decided 2026-09-28; detail in `my-assessment-build.md` → "When
 You are here changes"): no new assessment is forced; the You are here panel shows at once what Lan
@@ -360,9 +359,9 @@ now starts from Backend Engineer L2 · Mid. Its status is kept.").
 
 **Mock on load:** Engineering growth changed on 27 Sep: Frontend Engineer L1 added before Lan's
 level (BE L1 → **FE L1** → BE L2 → BE L3 → BE L4). The map opens showing it; the notice is in the
-strip. **Prototype button** "Simulate another change (prototype)" (followed path's route panel)
-publishes a second change on 28 Sep: BE L3 (the target) leaves, FE L3 comes in ahead; the target is
-removed and any branch from BE L3 re-attaches. Reload to start over.
+strip. There is **no demo control** in the UI (a "Simulate another change" button was added without
+approval and removed 2026-09-28); other cases (target removed, re-attach) are rules in `buildMap`
+without a mock on load.
 
 **Not built:** C → C′ (You are here moves, Suggested scores) · C removed with no replacement · the
 Notifications item (the sidebar's Notifications is a static link with a badge; there's no
@@ -414,8 +413,7 @@ Code notes:
   records every vision it's on (`visions`).
 - `classifyMove` → company-path step vs Career vision; `ladderMove` builds company-path steps;
   `visionMove` builds a Career vision move (joins / becomes, shared road, no loops).
-- `describeChange` (added / removed); `simulatePathChange()` mutates the mock path (prototype only).
-  `buildMap` marks unheld levels behind You are here `new` and re-attaches orphaned branches.
+- `describeChange` (added / removed). `buildMap` marks unheld levels behind You are here `new` and re-attaches orphaned branches.
 - `visionRoute(plan, n)` = a vision's roles in order. `removeBranch` / `removeVision` drop dependants.
 - Selection lives in `MyCareerScreen` (`card` / `route` / `none`).
 - React Flow copies `fitViewOptions` each render, so the opening view is computed and applied with

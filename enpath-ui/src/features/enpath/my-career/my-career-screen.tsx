@@ -28,7 +28,7 @@ import { HistoryDrawer } from '../setup/history-drawer';
 import { CareerChat } from './career-chat';
 import {
   buildMap, companyPaths, countGaps, describeChange, describeStep, employee, gapsFor, initialPlan, matchingPaths, removeBranch, removeVision,
-  simulatePathChange, visionNumbers, visionRoute, visionRouteId, type Branch, type GapStatus, type Plan, type VisionRequest,
+  visionNumbers, visionRoute, visionRouteId, type Branch, type GapStatus, type Plan, type VisionRequest,
 } from './mock-data';
 import { NoTargetStrip, PathChangeNotice, ProgressBoard, requestBadge, RoutePanel, stateName, StepPanel, visionLabel } from './my-career-panels';
 import { ExplorePositionDialog, levelName, RemoveTargetDialog, SetTargetDialog, SwitchPathDialog, VisionRequestDialog, type StartOption } from './plan-dialogs';
@@ -63,7 +63,6 @@ export function MyCareerScreen() {
   // Path changes: the strip's notice shows until Path history is opened for the latest change.
   const [seenChange, setSeenChange] = React.useState<string | null>(null);
   const [historyOpen, setHistoryOpen] = React.useState(false);
-  const [lostTarget, setLostTarget] = React.useState<string | undefined>();
   const [switchTo, setSwitchTo] = React.useState('');
   const [chatOpen, setChatOpen] = React.useState(false);
   const [focusGroup, setFocusGroup] = React.useState<{ group: GapStatus; n: number } | undefined>();
@@ -140,38 +139,12 @@ export function MyCareerScreen() {
         ? `Added ${levelName(id)} before your level. You haven't held it, so it isn't completed yet.`
         : `Added ${levelName(id)} ahead. It's planned on your path.`),
       ...removed.map((id) => `Removed ${levelName(id)}.`),
-      ...(c.effects ?? []),
     ];
     return { who: 'Your company', what: `${followedPath!.name} changed. ${parts.join(' ')}`, when: c.date };
   });
-  // Prototype only: publish a mock change, then apply its rules to the plan (target, branches).
-  const simulateChange = () => {
-    const res = simulatePathChange();
-    if (!res) { toast('This demo change was already applied. Reload to start over.'); return; }
-    const after = buildMap(plan);
-    const effects: string[] = [];
-    let next = plan;
-    if (plan.targetId && !after.steps.some((s) => s.id === plan.targetId)) {
-      effects.push(`${levelName(plan.targetId)} was your target. Pick a new one.`);
-      setLostTarget(levelName(plan.targetId));
-      next = { ...plan, targetId: null };
-    }
-    for (const n of visionNumbers(plan)) {
-      const from = visionRoute(plan, n)[0];
-      if (from && !res.path.levels.includes(from) && res.change.before.includes(from)) {
-        const first = plan.branches.find((b) => b.kind === 'vision' && b.vision === n && b.from === from)!;
-        const now = after.links.find((l) => l.to === first.to && l.route === visionRouteId(n))?.from;
-        if (now) effects.push(`Career vision ${n} now starts from ${levelName(now)}. Its status is kept.`);
-      }
-    }
-    res.change.effects = effects;
-    setSeenChange(null);
-    commit({ ...next }, `${res.path.name} changed. See what's different in the progress strip.`);
-  };
 
   const commit = (next: Plan, message: string) => {
     setPlan(next);
-    if (next.targetId) setLostTarget(undefined);
     if (request && !visionNumbers(next).includes(request.vision)) setRequest(null);
     setDialog(null);
     toast.success(message);
@@ -280,7 +253,7 @@ export function MyCareerScreen() {
               </Tip>
             )}
           </header>
-          {target ? <ProgressBoard target={target} notice={notice} onOpenGroup={(group) => { selectCard(target.id); setFocusGroup((f) => ({ group, n: (f?.n ?? 0) + 1 })); }} /> : <NoTargetStrip lostTarget={lostTarget} notice={notice} />}
+          {target ? <ProgressBoard target={target} notice={notice} onOpenGroup={(group) => { selectCard(target.id); setFocusGroup((f) => ({ group, n: (f?.n ?? 0) + 1 })); }} /> : <NoTargetStrip notice={notice} />}
           <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
             <div className="flex min-h-[60dvh] flex-1 flex-col lg:min-h-0">
               {view === 'map' ? (
@@ -324,7 +297,6 @@ export function MyCareerScreen() {
                   actions={{
                     onFollow: follow,
                     onPathHistory: openPathHistory,
-                    onSimulateChange: simulateChange,
                     onRequest: () => setDialog('request'),
                     onWithdraw: () => { setRequest(null); toast(`Request withdrawn. Career vision ${visionOfRoute} is a draft again.`); },
                     onRemoveVision: () => setDialog('remove'),

@@ -148,9 +148,8 @@ export function PathChangeNotice({ path, date, onOpen }: { path: string; date: s
   );
 }
 
-/** Shown instead of the progress strip when there's no Active target. `lostTarget`: the path change
- *  took the target off the map. */
-export function NoTargetStrip({ lostTarget, notice }: { lostTarget?: string; notice?: React.ReactNode }) {
+/** Shown instead of the progress strip when there's no Active target. */
+export function NoTargetStrip({ notice }: { notice?: React.ReactNode }) {
   return (
     <section
       aria-label="Your progress"
@@ -163,11 +162,9 @@ export function NoTargetStrip({ lostTarget, notice }: { lostTarget?: string; not
         />
         <span>
           <span className="font-semibold text-[var(--color-background-default-foreground)]">
-            {lostTarget ? "Pick a new target." : "No target yet."}
+            No target yet.
           </span>{" "}
-          {lostTarget
-            ? `${lostTarget} is no longer on your path. Pick a role on your map and choose Set as target.`
-            : "Pick a role on your map and choose Set as target to track your progress."}
+          Pick a role on your map and choose Set as target to track your progress.
         </span>
       </div>
       {notice}
@@ -482,8 +479,6 @@ export interface RouteActions {
   onFollow: (pathId: string) => void;
   /** Path history drawer (the followed path, when it has changes) */
   onPathHistory: () => void;
-  /** Prototype only: publish a mock change to the followed path */
-  onSimulateChange?: () => void;
   onRequest: () => void;
   onWithdraw: () => void;
   onRemoveVision: () => void;
@@ -685,12 +680,6 @@ export function RoutePanel({
         <Button key="history" variant="outline" onClick={actions.onPathHistory}>
           <ClockCounterClockwiseIcon aria-hidden="true" />
           Path history
-        </Button>,
-      );
-    if (actions.onSimulateChange)
-      companyButtons.push(
-        <Button key="simulate" variant="ghost" onClick={actions.onSimulateChange}>
-          Simulate another change (prototype)
         </Button>,
       );
   }

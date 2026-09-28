@@ -15,7 +15,7 @@ import { initialMatrices, initialPositions, levelLabel, scale } from '../mock-da
 export const employee = { name: 'Lan Nguyen', levelId: 'BE-L2', heldLevels: ['BE-L1'] };
 
 /** One published change to a company path: its levels before the change (now = `levels`). */
-export interface PathChange { date: string; before: string[]; /** What it did to Lan's plan, in plain words */ effects?: string[] }
+export interface PathChange { date: string; before: string[] }
 
 export interface CompanyPath extends CareerMapPath {
   /** Level ids in order (the latest published version: the plan always follows it) */
@@ -49,18 +49,6 @@ export function describeChange(path: CompanyPath, change: PathChange, after = pa
     added: after.filter((id) => !change.before.includes(id)),
     removed: change.before.filter((id) => !after.includes(id)),
   };
-}
-
-/** Prototype only: publish a bigger change to Engineering growth (the admin would do this in Setup):
- *  BE L3 leaves the path (it's Lan's target) and Frontend Engineer L3 comes in ahead. Mutates the
- *  mock path; the caller commits a plan update so the map re-derives. Returns the change. */
-export function simulatePathChange(): { path: CompanyPath; change: PathChange } | null {
-  const path = companyPaths.find((p) => p.id === 'engineering-growth');
-  if (!path || !path.levels.includes('BE-L3')) return null;
-  const change: PathChange = { date: '28 Sep', before: [...path.levels] };
-  path.levels = path.levels.flatMap((id) => (id === 'BE-L3' ? ['FE-L3'] : [id]));
-  path.changes = [change, ...(path.changes ?? [])];
-  return { path, change };
 }
 
 /** A role Lan added from a card: a move on a company path planned for Lan's role (Planned, no
