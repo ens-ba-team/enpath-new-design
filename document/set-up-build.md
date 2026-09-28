@@ -37,10 +37,10 @@ Code: `Enpath-design-system/enpath-ui/src/features/enpath/`. Mock data only.
   step (L1, L2…) — the two must not be confused in copy, code, or comments.
 - **Preview → Confirm everywhere a save happens** (PRD-018 RQ-07, BR-14) — Publish, Unpublish,
   Archive and Restore each show what changes before confirming.
-- **A Position references a Matrix version; it never copies Matrix content.** Renames and content
-  therefore stay consistent across tabs. An Active Matrix is immutable: editing creates a Draft
-  revision, while Published Positions keep their current Active version until an admin explicitly
-  migrates them from the new revision's Publish preview.
+- **A Position references a Matrix; it never copies Matrix content.** Renames and content stay
+  consistent across tabs. **Matrices have no versions** (2026-09-28): to change an Active Matrix,
+  Archive → Restore (Draft) → edit → Publish, or **Duplicate** it into a new, independent Matrix and
+  move Positions to it.
 
 ---
 
@@ -110,8 +110,10 @@ deleted; switching matrix warns all expectations clear.
 - **Right: the selected Matrix**
   - Title + status badge · Scale · Owners · Last edited · **Used by** (chips → the Position,
     switches tab and selects it).
-  - Buttons: **History** (same shared drawer as Position's) · **Edit matrix** (disabled unless
-    Draft, title explains why) · **Publish** (Draft) / **Archive** (Active) / **Restore** (Archived).
+  - Buttons (same pattern as a Position, 2026-09-28): **Edit matrix** (disabled unless Draft,
+    tooltip "Archive to edit" / "Restore to edit") · **"…" menu** (History, the shared drawer ·
+    **Duplicate matrix**, every status) · **Publish** (Draft) / **Archive** (Active) / **Restore**
+    (Archived).
   - **Competency editor is master-detail**: left, competencies as a **vertical numbered stepper**
     (circles + solid grey connector line, not dashed — it's a list, not sequential progress; filled
     circle = every point already has a title + description; active competency's label semibold).
@@ -125,22 +127,20 @@ deleted; switching matrix warns all expectations clear.
 publish). Lowering the scale shows a detail breakdown of exactly which points would lose their
 title and description, grouped by competency.
 
-**Matrix revisions and Position consistency** (built 2026-09-24)
+**Duplicate matrix and Position consistency** (2026-09-28: replaced "Create draft" and versions)
 - Matrix name, competency names, behavior text and scale are read from the Position's `matrixId`;
   the Position stores only its expectations, keyed by stable competency and Level ids.
-- **Create draft** on an Active Matrix clones it as the next version. The Active version remains
-  unchanged for employees while the Draft is edited.
-- Publishing a revision previews every Position on the previous version and lets the admin choose
-  which ones migrate. Unselected Positions keep their current version.
-- Migration preserves scores for unchanged competency ids, adds `Not set` cells for new
-  competencies, and keeps removed-competency values in historical data rather than reassigning
-  them. A structural migration (competencies or scale changed) returns a Published Position to
-  Draft for review; a name/description-only revision does not.
-- When lowering the scale, the Publish preview counts ratings above the new maximum. Migrating a
-  Position clears those ratings to `Not set` and returns a Published Position to Draft for review;
-  it never silently caps several old ratings to the new maximum.
-- Position pages show **Update available** when a newer Active version in the same Matrix family
-  exists.
+- **Duplicate matrix** ("…" menu, any status) opens Create matrix filled from the current one. The
+  name gets a number: "A" → **"A1"** (then A2…), multi-word names get a space ("Northstar
+  Engineering 1"); everything is editable. Create → a **new, independent Draft**: its own copy of the
+  competencies and behaviors (resized to the chosen scale), same description, scale and owners; no
+  positions; no link to the original; History starts with "Duplicated from {name}".
+- Moving Positions to the copy is a normal Position edit (Competency matrix select; switching warns
+  that expectations clear). Nothing migrates automatically.
+- **Publishing** a Draft Matrix that Positions already use (e.g. restored and edited) applies its
+  content to them. The preview lists each Position: ratings above a smaller scale become `Not set`
+  (never capped), and a Published Position returns to Draft for review. Positions are untouched if
+  nothing changed.
 
 **AI chat panel** — VS Code-style (AI Elements). Ask / Edit mode · model picker (Claude Sonnet 5,
 mock) · context chip = current Position · suggestions. Edit drafts a **Proposed change** card →
@@ -213,8 +213,8 @@ Moved here from session memory 2026-09-26 — code facts that aren't obvious fro
   button or a non-forwardRef component (Badge) goes inside `<span className="inline-flex">` as the
   trigger. In Playwright read `data-state` — `getByRole('tooltip')` also finds Radix's hidden a11y twin.
 - Duplicate position: `remapExpectations()` copies scores by level **order**, not by id.
-- Matrix versions: `Matrix.familyId` + `version` + `previousVersionId`; a Position points at one
-  concrete version. `scaleSize` 2–5 per Matrix.
+- Matrices have no versions: a Position points at one Matrix by id. `scaleSize` 2–5 per Matrix.
+  Duplicate = `MatricesScreen` dialog mode `duplicate` + `copyName()`.
 - Ask AI: AI Elements (`components/ai-elements/`), mock streaming; opening it collapses the sidebar
   (`SidebarFollowsChat`).
 - Known bug (not fixed): `career-path-screen.tsx` dims a dragged step with
@@ -309,7 +309,8 @@ more in `market-research.md`.
       later.
 
 **Matrices config**
-- [ ] Matrix versioning: when does v3 become v4? (PRD-018 OQ-05)
+- [x] ~~Matrix versioning: when does v3 become v4? (PRD-018 OQ-05)~~ No versions (2026-09-28):
+      Duplicate makes an independent copy.
 - [ ] Matrix owners: approvers or contacts? Built as a plain name list with no functional role
       (no approval gate, no notifications) — the semantic question is still open.
 - [ ] Starter templates / skill library for Matrices — no PRD.

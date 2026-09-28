@@ -61,7 +61,7 @@ Steps can be done partially and out of order; the system warns, it does not bloc
 | **Level** | A step within a Position, ordered by sequence | Backend Engineer L3 | Belongs to exactly one Position. Also called a **Position-Level** |
 | **Employee Mapping** | Which Level a person is on today, inside EnPath | Minh Tran → Backend Engineer L3 | Changes only the EnPath assignment, never HR data |
 | **ID Service** | The company's HR system; owns names, titles, org units, managers | "Employment title: VP of Engineering" | Read-only in EnPath. Title ≠ Position |
-| **Competency Matrix** | A reusable skill framework with its own rating scale | Northstar Engineering Matrix | Must be Active to be used. One Position uses one Matrix; many Positions can share one |
+| **Competency Matrix** | A reusable skill framework with its own rating scale | Northstar Engineering Matrix | Must be Active to be used. One Position uses one Matrix; many Positions can share one. **No versions** (2026-09-28): Duplicate makes a new, independent Matrix ("A" → "A1") |
 | **Competency** | One skill in a Matrix | System Design | |
 | **Rating scale** | The score range for every Competency in a Matrix | 1 Awareness · 2 Working · 3 Proficient · 4 Advanced · 5 Expert | ⚠ PRD-018: 3, 4 or 5 named levels. PRD-001: any integer 1–10, locked after creation, names optional |
 | **Observable Behavior** | What a score looks like in practice, per **point** of the scale (never "level") | System Design at 4: "Can lead system design for complex services" | |

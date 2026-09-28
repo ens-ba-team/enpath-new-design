@@ -200,8 +200,8 @@ function Meta({ label, children }: { label: string; children: React.ReactNode })
 const edited = (p: Position, patch: Partial<Position>): Position =>
   ({ ...p, ...patch, status: 'Draft', changes: p.changes + 1, editedBy: 'Lan Nguyen', editedAt: 'just now' });
 
-function PositionDetail({ position, matrix, updateAvailable, onChange, onPublish, onUnpublish, onEdit, onDuplicate, onOpenMatrix, onBack, className = '' }: {
-  position: Position; matrix: Matrix; updateAvailable?: Matrix; onChange: (p: Position) => void; onPublish: () => void; onUnpublish: () => void; onEdit: () => void; onDuplicate: () => void; onOpenMatrix: () => void; onBack: () => void; className?: string;
+function PositionDetail({ position, matrix, onChange, onPublish, onUnpublish, onEdit, onDuplicate, onOpenMatrix, onBack, className = '' }: {
+  position: Position; matrix: Matrix; onChange: (p: Position) => void; onPublish: () => void; onUnpublish: () => void; onEdit: () => void; onDuplicate: () => void; onOpenMatrix: () => void; onBack: () => void; className?: string;
 }) {
   const [confirm, setConfirm] = React.useState(false);
   const [confirmUnpublish, setConfirmUnpublish] = React.useState(false);
@@ -243,7 +243,6 @@ function PositionDetail({ position, matrix, updateAvailable, onChange, onPublish
                 </button>
               </Tip>
             </Meta>
-            {updateAvailable && <Badge variant="blue">V{updateAvailable.version} update available</Badge>}
             <Meta label="Last edited">{position.editedBy} · {position.editedAt}</Meta>
           </dl>
         </div>
@@ -433,76 +432,38 @@ export function SetupScreen({ sidebarClassName, initialTab = 'structure' }: { si
   const [selectedMatrix, setSelectedMatrix] = React.useState(initialMatrices[0].id);
   const updateMatrix = (m: Matrix) => setMatrices((all) => all.map((x) => (x.id === m.id ? m : x)));
   const addMatrix = (m: Matrix) => setMatrices((all) => [...all, m]);
-  const createMatrixDraft = (source: Matrix) => {
-    const existingDraft = matrices.find((m) => m.familyId === source.familyId && m.status === 'Draft');
-    if (existingDraft) {
-      setSelectedMatrix(existingDraft.id);
-      return;
-    }
-    const version = Math.max(...matrices.filter((m) => m.familyId === source.familyId).map((m) => m.version)) + 1;
-    const draft: Matrix = {
-      ...source,
-      id: `${source.familyId}-v${version}-${Date.now()}`,
-      version,
-      previousVersionId: source.id,
-      status: 'Draft',
-      changes: 0,
-      editedBy: 'Lan Nguyen',
-      editedAt: 'just now',
-      competencies: source.competencies.map((c) => ({ ...c, behaviors: c.behaviors.map((b) => b ? { ...b } : null) })),
-      history: [{ who: 'Lan Nguyen', what: `Created Draft V${version} from V${source.version}`, when: 'just now' }],
-    };
-    setMatrices((all) => [...all, draft]);
-    setSelectedMatrix(draft.id);
-  };
-  const publishMatrix = (matrix: Matrix, positionIds: string[]) => {
-    const previous = matrix.previousVersionId ? matrices.find((m) => m.id === matrix.previousVersionId) : undefined;
-    const previousCompetencyIds = previous?.competencies.map((c) => c.id) ?? matrix.competencies.map((c) => c.id);
-    const structuralChange = !!previous && (
-      previous.scaleSize !== matrix.scaleSize ||
-      previousCompetencyIds.join('|') !== matrix.competencies.map((c) => c.id).join('|')
-    );
-    const migrating = new Set(positionIds);
-
-    setMatrices((all) => all.map((item) => {
-      if (item.id === matrix.id) return { ...item, status: 'Active', changes: 0, editedAt: 'just now' };
-      if (item.familyId === matrix.familyId && item.status === 'Active') {
-        return { ...item, status: 'Archived', editedAt: 'just now' };
-      }
-      return item;
+  // Publish a Matrix (no versions, 2026-09-28): it becomes Active. Positions already using it get its
+  // current content: ratings above a smaller scale become Not set, and a Published position returns
+  // to Draft for review if the matrix changed.
+  const publishMatrix = (matrix: Matrix) => {
+    setMatrices((all) => all.map((item) => (item.id === matrix.id ? { ...item, status: 'Active', changes: 0, editedAt: 'just now' } : item)));
+    setPositions((all) => all.map((position) => {
+      if (position.matrixId !== matrix.id) return position;
+      const clearsRatings = Object.values(position.expectations).some((row) =>
+        Object.values(row).some((value) => value != null && value > matrix.scaleSize),
+      );
+      if (!clearsRatings && matrix.changes === 0) return position;
+      const rows = Object.fromEntries(matrix.competencies.map((competency) => [
+        competency.id,
+        Object.fromEntries(position.levels.map((level) => {
+          const value = position.expectations[competency.id]?.[level.id] ?? null;
+          return [level.id, value != null && value > matrix.scaleSize ? null : value];
+        })),
+      ]));
+      return {
+        ...position,
+        expectations: { ...position.expectations, ...rows },
+        status: position.status === 'Published' ? 'Draft' : position.status,
+        changes: position.changes + 1,
+        editedBy: 'Lan Nguyen',
+        editedAt: 'just now',
+        history: [{ who: 'Lan Nguyen', what: `${matrix.name} was published with changes`, when: 'just now' }, ...position.history],
+      };
     }));
-    if (migrating.size > 0) {
-      setPositions((all) => all.map((position) => {
-        if (!migrating.has(position.id)) return position;
-        const clearsRatings = Object.values(position.expectations).some((row) =>
-          Object.values(row).some((value) => value != null && value > matrix.scaleSize),
-        );
-        const activeRows = Object.fromEntries(matrix.competencies.map((competency) => [
-          competency.id,
-          Object.fromEntries(position.levels.map((level) => {
-            const value = position.expectations[competency.id]?.[level.id] ?? null;
-            return [level.id, value != null && value > matrix.scaleSize ? null : value];
-          })),
-        ]));
-        return {
-          ...position,
-          matrixId: matrix.id,
-          expectations: { ...position.expectations, ...activeRows },
-          status: (structuralChange || clearsRatings || (!previous && matrix.changes > 0)) && position.status === 'Published' ? 'Draft' : position.status,
-          changes: position.changes + 1,
-          editedBy: 'Lan Nguyen',
-          editedAt: 'just now',
-          history: [{ who: 'Lan Nguyen', what: `Updated matrix to V${matrix.version}`, when: 'just now' }, ...position.history],
-        };
-      }));
-    }
   };
   const updatePath = (p: CareerPath) => setCareerPaths((all) => all.map((x) => (x.id === p.id ? p : x)));
   const addPath = (p: CareerPath) => setCareerPaths((all) => [...all, p]);
   const currentMatrix = matrices.find((m) => m.id === current.matrixId)!;
-  const availableMatrixUpdate = matrices
-    .filter((m) => m.familyId === currentMatrix.familyId && m.status === 'Active' && m.version > currentMatrix.version)
-    .sort((a, b) => b.version - a.version)[0];
 
   // Progress = share of expectation cells set across all positions.
   const total = positions.reduce((n, p) => n + p.levels.length * matrices.find((m) => m.id === p.matrixId)!.competencies.length, 0);
@@ -627,7 +588,7 @@ export function SetupScreen({ sidebarClassName, initialTab = 'structure' }: { si
             </div>
             <TabsContent value="structure" className="mt-0 flex min-h-0 flex-1 border-t border-[var(--color-border-default)]">
               <PositionList className={structurePane === 'list' ? 'flex' : 'hidden lg:flex'} positions={positions} selected={selected} onSelect={(id) => { setSelected(id); setStructurePane('detail'); }} onAdd={() => setDialog('add')} onImport={() => setImportOpen(true)} />
-              <PositionDetail className={structurePane === 'detail' ? 'flex' : 'hidden lg:flex'} key={current.id} position={current} matrix={currentMatrix} updateAvailable={availableMatrixUpdate} onChange={update} onEdit={() => setDialog('edit')} onBack={() => setStructurePane('list')}
+              <PositionDetail className={structurePane === 'detail' ? 'flex' : 'hidden lg:flex'} key={current.id} position={current} matrix={currentMatrix} onChange={update} onEdit={() => setDialog('edit')} onBack={() => setStructurePane('list')}
                 onDuplicate={() => { setDuplicateSourceId(current.id); setDialog('add'); }}
                 onOpenMatrix={() => { setSelectedMatrix(current.matrixId); setTab('matrices'); }}
                 onPublish={() => update({ ...current, status: 'Published', changes: 0, editedAt: 'just now' })}
@@ -635,7 +596,7 @@ export function SetupScreen({ sidebarClassName, initialTab = 'structure' }: { si
             </TabsContent>
             <TabsContent value="matrices" className="mt-0 flex min-h-0 flex-1 border-t border-[var(--color-border-default)]">
               <MatricesScreen matrices={matrices} positions={positions} selected={selectedMatrix} onSelect={setSelectedMatrix} onChange={updateMatrix} onAdd={addMatrix}
-                onPublish={publishMatrix} onCreateDraft={createMatrixDraft}
+                onPublish={publishMatrix}
                 onOpenPosition={(id) => { setSelected(id); setStructurePane('detail'); setTab('structure'); }} />
             </TabsContent>
             <TabsContent value="paths" className="mt-0 flex min-h-0 flex-1 border-t border-[var(--color-border-default)]">

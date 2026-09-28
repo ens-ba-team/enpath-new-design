@@ -1,11 +1,11 @@
 'use client';
 import * as React from 'react';
-import { ArchiveIcon, ArrowCounterClockwiseIcon, BriefcaseIcon, ClockCounterClockwiseIcon, CopyIcon, MagnifyingGlassIcon, PencilSimpleIcon, PlusIcon, RocketLaunchIcon, WarningIcon, XIcon } from '@phosphor-icons/react/ssr';
+import { ArchiveIcon, ArrowCounterClockwiseIcon, BriefcaseIcon, ClockCounterClockwiseIcon, CopyIcon, DotsThreeIcon, MagnifyingGlassIcon, PencilSimpleIcon, PlusIcon, RocketLaunchIcon, WarningIcon, XIcon } from '@phosphor-icons/react/ssr';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Item } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
@@ -66,7 +66,7 @@ function MatrixList({ matrices, selected, onSelect, onAdd }: { matrices: Matrix[
               size="sm"
               className="px-[var(--spacing-component-md)]"
               title={m.name}
-              description={<span className="text-xs">V{m.version} · {m.competencies.length} {m.competencies.length === 1 ? 'competency' : 'competencies'}</span>}
+              description={<span className="text-xs">{m.competencies.length} {m.competencies.length === 1 ? 'competency' : 'competencies'}</span>}
               action={<MatrixStatusBadge status={m.status} />}
               selected={m.id === selected}
               onSelect={() => onSelect(m.id)}
@@ -297,17 +297,15 @@ function CompetencyEditor({ competencies, scaleSize, editable, expandedReadOnly,
   );
 }
 
-function MatrixDetail({ matrix, matrices, positions, onChange, onPublish, onArchive, onRestore, onCreateDraft, onEdit, onOpenPosition }: {
-  matrix: Matrix; matrices: Matrix[]; positions: Position[]; onChange: (m: Matrix) => void;
-  onPublish: (positionIds: string[]) => void; onArchive: () => void; onRestore: () => void; onCreateDraft: () => void; onEdit: () => void; onOpenPosition: (id: string) => void;
+function MatrixDetail({ matrix, positions, onChange, onPublish, onArchive, onRestore, onDuplicate, onEdit, onOpenPosition }: {
+  matrix: Matrix; positions: Position[]; onChange: (m: Matrix) => void;
+  onPublish: () => void; onArchive: () => void; onRestore: () => void; onDuplicate: () => void; onEdit: () => void; onOpenPosition: (id: string) => void;
 }) {
   const editable = matrix.status === 'Draft';
   const linked = positions.filter((p) => p.matrixId === matrix.id);
-  const previousVersion = matrix.previousVersionId ? matrices.find((m) => m.id === matrix.previousVersionId) : undefined;
-  // Revisions migrate Positions from the previous version. A legacy/direct Draft may already be
-  // referenced by Positions, so it must run through the same impact preview instead of bypassing it.
-  const migrationCandidates = previousVersion ? positions.filter((p) => p.matrixId === previousVersion.id) : linked;
-  const ratingsAboveScale = new Map(migrationCandidates.map((p) => [
+  // No versions (2026-09-28): positions already using this matrix get its content when it's published,
+  // so the preview lists them and what happens to each.
+  const ratingsAboveScale = new Map(linked.map((p) => [
     p.id,
     Object.values(p.expectations).reduce((total, row) => total + Object.values(row).filter((value) => value != null && value > matrix.scaleSize).length, 0),
   ]));
@@ -316,7 +314,6 @@ function MatrixDetail({ matrix, matrices, positions, onChange, onPublish, onArch
   const [confirmArchive, setConfirmArchive] = React.useState(false);
   const [confirmRestore, setConfirmRestore] = React.useState(false);
   const [historyOpen, setHistoryOpen] = React.useState(false);
-  const [migrationIds, setMigrationIds] = React.useState<Set<string>>(() => new Set(migrationCandidates.map((p) => p.id)));
   const issues = activationIssues(matrix);
 
   const touch = (patch: Partial<Matrix>) => onChange({ ...matrix, ...patch, changes: matrix.changes + 1, editedBy: 'Lan Nguyen', editedAt: 'just now' });
@@ -334,7 +331,6 @@ function MatrixDetail({ matrix, matrices, positions, onChange, onPublish, onArch
             <MatrixStatusBadge status={matrix.status} />
           </div>
           <dl className="flex flex-wrap items-center gap-x-[var(--spacing-layout-sm)] gap-y-[var(--spacing-component-xs)] text-sm">
-            <Meta label="Version">V{matrix.version}</Meta>
             <Meta label="Scale">{matrix.scaleSize} points</Meta>
             <Meta label="Owners">{matrix.owners.length ? matrix.owners.join(', ') : 'None yet'}</Meta>
             <Meta label="Last edited">{matrix.editedBy} · {matrix.editedAt}</Meta>
@@ -354,7 +350,6 @@ function MatrixDetail({ matrix, matrices, positions, onChange, onPublish, onArch
           </div>
         </div>
         <div className="flex shrink-0 items-center gap-[var(--spacing-component-sm)]">
-          <Button variant="outline" onClick={() => setHistoryOpen(true)}><ClockCounterClockwiseIcon className="h-4 w-4" aria-hidden="true" />History</Button>
           <Tip label={!editable ? (matrix.status === 'Active' ? 'Archive to edit' : 'Restore to edit') : undefined}>
             <span className="inline-flex">
               <Button variant="outline" onClick={onEdit} disabled={!editable}>
@@ -362,14 +357,23 @@ function MatrixDetail({ matrix, matrices, positions, onChange, onPublish, onArch
               </Button>
             </span>
           </Tip>
+          {/* Same "…" menu as a Position (2026-09-28). Non-modal: its items open a Dialog / Sheet, and a
+              modal menu would leave the page unclickable after they close. */}
+          <DropdownMenu modal={false}>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="icon" aria-label="More actions"><DotsThreeIcon className="h-4 w-4" aria-hidden="true" /></Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => setHistoryOpen(true)}><ClockCounterClockwiseIcon className="h-4 w-4" aria-hidden="true" />History</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={onDuplicate}><CopyIcon className="h-4 w-4" aria-hidden="true" />Duplicate matrix</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           {matrix.status === 'Draft' && (
             <Button onClick={() => setConfirmPublish(true)}><RocketLaunchIcon className="h-4 w-4" aria-hidden="true" />Publish</Button>
           )}
           {matrix.status === 'Active' && (
-            <>
-              <Button variant="outline" onClick={onCreateDraft}><CopyIcon className="h-4 w-4" aria-hidden="true" />Create draft</Button>
-              <Button variant="outline" onClick={() => setConfirmArchive(true)}><ArchiveIcon className="h-4 w-4" aria-hidden="true" />Archive</Button>
-            </>
+            <Button variant="outline" onClick={() => setConfirmArchive(true)}><ArchiveIcon className="h-4 w-4" aria-hidden="true" />Archive</Button>
           )}
           {matrix.status === 'Archived' && (
             <Button onClick={() => setConfirmRestore(true)}><ArrowCounterClockwiseIcon className="h-4 w-4" aria-hidden="true" />Restore</Button>
@@ -395,9 +399,7 @@ function MatrixDetail({ matrix, matrices, positions, onChange, onPublish, onArch
             <AlertDialogTitle>Publish {matrix.name}?</AlertDialogTitle>
             <AlertDialogDescription>
               {issues.length === 0
-                ? previousVersion
-                  ? `Publishing V${matrix.version} makes it Active and archives V${previousVersion.version}. Choose which positions move to V${matrix.version}; unselected positions stay linked to archived V${previousVersion.version}.`
-                  : `Positions can start using this matrix.${linked.length > 0 ? ` ${linked.length} already ${linked.length === 1 ? 'does' : 'do'}.` : ''}`
+                ? `Positions can start using this matrix.${linked.length > 0 ? ` ${linked.length} already ${linked.length === 1 ? 'does' : 'do'}.` : ''}`
                 : "This matrix isn't ready to publish yet."}
             </AlertDialogDescription>
           </AlertDialogHeader>
@@ -412,9 +414,9 @@ function MatrixDetail({ matrix, matrices, positions, onChange, onPublish, onArch
               </div>
             </Alert>
           )}
-          {issues.length === 0 && migrationCandidates.length > 0 && (
+          {issues.length === 0 && linked.length > 0 && (matrix.changes > 0 || invalidRatingTotal > 0) && (
             <div className="flex flex-col gap-[var(--spacing-component-sm)]">
-              <p className="text-sm font-semibold text-[var(--color-background-default-foreground)]">Update positions from V{previousVersion?.version}</p>
+              <p className="text-sm font-semibold text-[var(--color-background-default-foreground)]">Positions using it get these changes</p>
               {invalidRatingTotal > 0 && (
                 <Alert variant="warning" role="status" className="flex-row items-start gap-[var(--spacing-component-sm)]">
                   <WarningIcon className="mt-[var(--spacing-component-xxs)] h-4 w-4 shrink-0" aria-hidden="true" />
@@ -425,28 +427,16 @@ function MatrixDetail({ matrix, matrices, positions, onChange, onPublish, onArch
                 </Alert>
               )}
               <div className="flex max-h-[180px] flex-col gap-[var(--spacing-component-sm)] overflow-auto rounded-[var(--radius-md)] border border-[var(--color-border-default)] p-[var(--spacing-component-md)]">
-                {migrationCandidates.map((position) => {
+                {linked.map((position) => {
                   const invalidCount = ratingsAboveScale.get(position.id) ?? 0;
                   return (
-                    <label key={position.id} className="flex items-start gap-[var(--spacing-component-sm)] text-sm">
-                      <Checkbox
-                        checked={migrationIds.has(position.id)}
-                        onCheckedChange={(checked) => setMigrationIds((current) => {
-                          const next = new Set(current);
-                          if (checked) next.add(position.id); else next.delete(position.id);
-                          return next;
-                        })}
-                        aria-label={`Update ${position.name}`}
-                      />
-                      <span className="flex flex-1 flex-col gap-[var(--spacing-component-xxs)]">
-                        <span className="font-semibold text-[var(--color-background-default-foreground)]">{position.name}</span>
-                        <span className="text-xs text-[var(--color-text-secondary)]">
-                          {invalidCount > 0
-                            ? `${invalidCount} ${invalidCount === 1 ? 'rating' : 'ratings'} will become Not set · Returns to Draft`
-                            : position.status === 'Published' ? 'Returns to Draft if the structure changed' : 'Preserves matching ratings'}
-                        </span>
+                    <div key={position.id} className="flex flex-col gap-[var(--spacing-component-xxs)] text-sm">
+                      <span className="font-semibold text-[var(--color-background-default-foreground)]">{position.name}</span>
+                      <span className="text-xs text-[var(--color-text-secondary)]">
+                        {[invalidCount > 0 && `${invalidCount} ${invalidCount === 1 ? 'rating' : 'ratings'} will become Not set`,
+                          position.status === 'Published' && 'Returns to Draft for review'].filter(Boolean).join(' · ') || 'Keeps its ratings'}
                       </span>
-                    </label>
+                    </div>
                   );
                 })}
               </div>
@@ -454,7 +444,7 @@ function MatrixDetail({ matrix, matrices, positions, onChange, onPublish, onArch
           )}
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction disabled={issues.length > 0} onClick={() => onPublish([...migrationIds])}>Publish</AlertDialogAction>
+            <AlertDialogAction disabled={issues.length > 0} onClick={onPublish}>Publish</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
@@ -493,22 +483,41 @@ function MatrixDetail({ matrix, matrices, positions, onChange, onPublish, onArch
   );
 }
 
-export function MatricesScreen({ matrices, positions, selected, onSelect, onChange, onAdd, onPublish, onCreateDraft, onOpenPosition }: {
+/** Name for a duplicate: "A" → "A1" (then A2…); multi-word names get a space: "Northstar Engineering 1". */
+function copyName(name: string, taken: string[]) {
+  const sep = /\s/.test(name) ? ' ' : '';
+  let n = 1;
+  while (taken.includes(`${name}${sep}${n}`)) n++;
+  return `${name}${sep}${n}`;
+}
+
+export function MatricesScreen({ matrices, positions, selected, onSelect, onChange, onAdd, onPublish, onOpenPosition }: {
   matrices: Matrix[]; positions: Position[]; selected: string; onSelect: (id: string) => void;
-  onChange: (m: Matrix) => void; onAdd: (m: Matrix) => void; onPublish: (m: Matrix, positionIds: string[]) => void;
-  onCreateDraft: (m: Matrix) => void; onOpenPosition: (id: string) => void;
+  onChange: (m: Matrix) => void; onAdd: (m: Matrix) => void; onPublish: (m: Matrix) => void;
+  onOpenPosition: (id: string) => void;
 }) {
   const current = matrices.find((m) => m.id === selected) ?? matrices[0];
-  const [dialog, setDialog] = React.useState<'add' | 'edit' | null>(null);
+  // 'duplicate' = Create matrix, filled from the current one (same pattern as Duplicate position).
+  const [dialog, setDialog] = React.useState<'add' | 'edit' | 'duplicate' | null>(null);
 
   const emptyDraft: MatrixDraft = { name: '', description: '', scaleSize: 5, owners: [] };
   const editDraft: MatrixDraft = { name: current.name, description: current.description, scaleSize: current.scaleSize, owners: current.owners };
+  const duplicateDraft: MatrixDraft = { ...editDraft, name: copyName(current.name, matrices.map((m) => m.name)) };
 
   const saveDialog = (d: MatrixDraft) => {
-    if (dialog === 'add') {
-      const id = `mx-${Date.now()}`;
-      const m: Matrix = { id, familyId: id, version: 1, ...d, status: 'Draft', changes: 1,
-        competencies: [], editedBy: 'Lan Nguyen', editedAt: 'just now', history: [] };
+    if (dialog === 'add' || dialog === 'duplicate') {
+      // A duplicate is a new, independent Draft matrix: its own copy of the competencies and behaviors
+      // (resized to the chosen scale), no positions, no link to the original.
+      const competencies = dialog === 'duplicate'
+        ? current.competencies.map((c, i) => ({
+            ...c,
+            id: `comp-${Date.now()}-${i}`,
+            behaviors: Array.from({ length: d.scaleSize }, (_, k) => (c.behaviors[k] ? { ...c.behaviors[k]! } : null)),
+          }))
+        : [];
+      const m: Matrix = { id: `mx-${Date.now()}`, ...d, status: 'Draft', changes: 1, competencies,
+        editedBy: 'Lan Nguyen', editedAt: 'just now',
+        history: dialog === 'duplicate' ? [{ who: 'Lan Nguyen', what: `Duplicated from ${current.name}`, when: 'just now' }] : [] };
       onAdd(m);
       onSelect(m.id);
     } else {
@@ -528,21 +537,20 @@ export function MatricesScreen({ matrices, positions, selected, onSelect, onChan
       <MatrixDetail
         key={current.id}
         matrix={current}
-        matrices={matrices}
         positions={positions}
         onChange={onChange}
         onEdit={() => setDialog('edit')}
         onOpenPosition={onOpenPosition}
-        onPublish={(positionIds) => onPublish(current, positionIds)}
-        onCreateDraft={() => onCreateDraft(current)}
+        onPublish={() => onPublish(current)}
+        onDuplicate={() => setDialog('duplicate')}
         onArchive={() => onChange({ ...current, status: 'Archived', editedBy: 'Lan Nguyen', editedAt: 'just now' })}
         onRestore={() => onChange({ ...current, status: 'Draft', editedBy: 'Lan Nguyen', editedAt: 'just now' })}
       />
       <MatrixDialog
         open={dialog !== null}
         onOpenChange={(o) => { if (!o) setDialog(null); }}
-        mode={dialog ?? 'add'}
-        initial={dialog === 'edit' ? editDraft : emptyDraft}
+        mode={dialog === 'edit' ? 'edit' : 'add'}
+        initial={dialog === 'edit' ? editDraft : dialog === 'duplicate' ? duplicateDraft : emptyDraft}
         competencies={current.competencies}
         onSave={saveDialog}
       />
