@@ -127,8 +127,11 @@ export function MyCareerScreen() {
   const latestChange = followedPath?.changes?.[0];
   const openPathHistory = () => { setHistoryOpen(true); if (latestChange) setSeenChange(latestChange.date); };
   const notice = followedPath && latestChange && seenChange !== latestChange.date
-    ? <PathChangeNotice path={followedPath.name} date={latestChange.date} onOpen={openPathHistory} />
+    // Header row with Map / List and Ask AI; on narrow screens it takes its own full-width row.
+    ? <PathChangeNotice className="order-last w-full sm:order-none sm:w-fit" path={followedPath.name} date={latestChange.date} onOpen={openPathHistory} />
     : undefined;
+  // The plan still names a target that a path change took off the map: ask for a new one.
+  const lostTarget = plan.targetId && !target ? levelName(plan.targetId) : undefined;
   // Path history in plain words: what changed, then what it did to Lan's plan.
   const historyEntries = (followedPath?.changes ?? []).map((c, i, all) => {
     const { added, removed } = describeChange(followedPath!, c, i === 0 ? followedPath!.levels : all[i - 1].before);
@@ -138,7 +141,7 @@ export function MyCareerScreen() {
       ...added.map((id) => after.indexOf(id) < here
         ? `Added ${levelName(id)} before your level. You haven't held it, so it isn't completed yet.`
         : `Added ${levelName(id)} ahead. It's planned on your path.`),
-      ...removed.map((id) => `Removed ${levelName(id)}.`),
+      ...removed.map((id) => id === plan.targetId && !target ? `Removed ${levelName(id)}. It was your target, so pick a new one.` : `Removed ${levelName(id)}.`),
     ];
     return { who: 'Your company', what: `${followedPath!.name} changed. ${parts.join(' ')}`, when: c.date };
   });
@@ -239,11 +242,12 @@ export function MyCareerScreen() {
         <Placeholder>{page} isn’t built yet. Go to My Career or Setup.</Placeholder>
       ) : (
         <div className="flex h-full flex-col overflow-y-auto lg:overflow-hidden">
-          <header className="flex items-start gap-[var(--spacing-layout-xs)] px-[var(--spacing-layout-sm)] py-[var(--spacing-layout-sm)]">
+          <header className="flex flex-wrap items-center gap-[var(--spacing-layout-xs)] px-[var(--spacing-layout-sm)] py-[var(--spacing-layout-sm)]">
             <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xs)]">
               <h1 className="text-2xl font-semibold text-[var(--color-background-default-foreground)]">My Career</h1>
               <p className="text-sm text-[var(--color-text-secondary)]">{employee.name} · {levelName(current.id)}</p>
             </div>
+            {notice}
             {viewSwitch}
             {!chatOpen && (
               <Tip label="Ask AI (⌘I)">
@@ -253,7 +257,7 @@ export function MyCareerScreen() {
               </Tip>
             )}
           </header>
-          {target ? <ProgressBoard target={target} notice={notice} onOpenGroup={(group) => { selectCard(target.id); setFocusGroup((f) => ({ group, n: (f?.n ?? 0) + 1 })); }} /> : <NoTargetStrip notice={notice} />}
+          {target ? <ProgressBoard target={target} onOpenGroup={(group) => { selectCard(target.id); setFocusGroup((f) => ({ group, n: (f?.n ?? 0) + 1 })); }} /> : <NoTargetStrip lostTarget={lostTarget} />}
           <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
             <div className="flex min-h-[60dvh] flex-1 flex-col lg:min-h-0">
               {view === 'map' ? (

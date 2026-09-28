@@ -31,8 +31,10 @@ const isPublishedLevel = (levelId: string) => publishedPositions.some((p) => p.l
 /** Company Career Paths (colour = career-map/path-N). Employees only see a path when every
  *  position on it is published. */
 const allCompanyPaths: CompanyPath[] = [
-  // Changed on 27 Sep (mock, shown on load): a Frontend rotation added before Lan's level.
-  { id: 'engineering-growth', name: 'Engineering growth', levels: ['BE-L1', 'FE-L1', 'BE-L2', 'BE-L3', 'BE-L4'],
+  // Changed on 27 Sep (mock, shown on load): a Frontend rotation added before Lan's level ("New on
+  // your path"), and Backend Engineer L3 (Lan's target) replaced by Frontend Engineer L3, so Lan has
+  // to pick a target again. The plan still points at BE-L3; buildMap leaves it off the map.
+  { id: 'engineering-growth', name: 'Engineering growth', levels: ['BE-L1', 'FE-L1', 'BE-L2', 'FE-L3', 'BE-L4'],
     changes: [{ date: '27 Sep', before: ['BE-L1', 'BE-L2', 'BE-L3', 'BE-L4'] }] },
   { id: 'engineering-to-product', name: 'Engineering to product', levels: ['BE-L2', 'BE-L3', 'PM-L2', 'PM-L3'] },
   { id: 'design-craft', name: 'Design craft', levels: ['PD-L1', 'PD-L2', 'PD-L3'] },

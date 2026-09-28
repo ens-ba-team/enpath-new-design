@@ -24,6 +24,7 @@ import { Item } from "@/components/ui/item";
 import { routeColor, type CareerMapPath } from "@/components/ui/career-map";
 import { GapList, statusFill } from "./gap-row";
 import { Tip } from "../tip";
+import { cn } from "@/lib/utils";
 import {
   companyPaths,
   countGaps,
@@ -126,16 +127,17 @@ function Panel({
 
 // ─── Progress board ──────────────────────────────────────────────────────────
 
-/** A company path Lan follows changed (1B, 2026-09-28): one line inside the progress strip, not a
- *  banner. Opens Path history; the strip drops it once opened (no required acknowledgement). */
-export function PathChangeNotice({ path, date, onOpen }: { path: string; date: string; onOpen: () => void }) {
+/** A company path Lan follows changed (2026-09-28): an info Alert in the page header, on the row of
+ *  Map / List and Ask AI (same place as Setup's progress Alert). Opens Path history; it goes once
+ *  opened (no required acknowledgement). */
+export function PathChangeNotice({ path, date, onOpen, className }: { path: string; date: string; onOpen: () => void; className?: string }) {
   return (
     // Design-system Alert (info), as wide as its content, not full width (2026-09-28). Not urgent, so
     // role=status instead of the Alert's default role=alert.
     <Alert
       variant="info"
       role="status"
-      className="w-fit max-w-full flex-row flex-wrap items-center gap-x-[var(--spacing-component-md)] gap-y-[var(--spacing-component-xs)] py-[var(--spacing-component-sm)]"
+      className={cn("w-fit max-w-full flex-row flex-wrap items-center gap-x-[var(--spacing-component-md)] gap-y-[var(--spacing-component-xs)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)]", className)}
     >
       <span className="flex items-center gap-[var(--spacing-component-sm)]">
         <PathIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
@@ -148,26 +150,28 @@ export function PathChangeNotice({ path, date, onOpen }: { path: string; date: s
   );
 }
 
-/** Shown instead of the progress strip when there's no Active target. */
-export function NoTargetStrip({ notice }: { notice?: React.ReactNode }) {
+/** Shown instead of the progress strip when there's no Active target. `lostTarget`: the target a
+ *  company path change took off the map (the plan still names it). */
+export function NoTargetStrip({ lostTarget }: { lostTarget?: string }) {
   return (
     <section
       aria-label="Your progress"
       className="flex flex-col gap-[var(--spacing-component-sm)] border-b border-[var(--color-border-default)] px-[var(--spacing-layout-sm)] pb-[var(--spacing-layout-sm)] text-sm text-[var(--color-text-secondary)]"
     >
-      <div className="flex items-center gap-[var(--spacing-component-sm)]">
+      <div className="flex items-start gap-[var(--spacing-component-sm)]">
         <FlagIcon
-          className="h-4 w-4 shrink-0 text-[var(--color-icon-muted)]"
+          className="mt-[var(--spacing-component-xxs)] h-4 w-4 shrink-0 text-[var(--color-icon-muted)]"
           aria-hidden="true"
         />
         <span>
           <span className="font-semibold text-[var(--color-background-default-foreground)]">
-            No target yet.
+            {lostTarget ? "Pick a new target." : "No target yet."}
           </span>{" "}
-          Pick a role on your map and choose Set as target to track your progress.
+          {lostTarget
+            ? `${lostTarget} is no longer on your path. Pick a role on your map and choose Set as target.`
+            : "Pick a role on your map and choose Set as target to track your progress."}
         </span>
       </div>
-      {notice}
     </section>
   );
 }
@@ -177,12 +181,9 @@ export function NoTargetStrip({ notice }: { notice?: React.ReactNode }) {
 export function ProgressBoard({
   target,
   onOpenGroup,
-  notice,
 }: {
   target: PlanStep;
   onOpenGroup: (group: GapStatus) => void;
-  /** e.g. PathChangeNotice */
-  notice?: React.ReactNode;
 }) {
   const d = describeStep(target);
   const n = countGaps(gapsFor(target));
@@ -277,7 +278,6 @@ export function ProgressBoard({
           </Tip>
         </div>
       </div>
-      {notice}
     </section>
   );
 }

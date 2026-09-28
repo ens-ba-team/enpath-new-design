@@ -74,7 +74,7 @@ and "what this role would need" looked the same. Keeping them apart is the main 
 ## 3. The screen
 
 ```
-Header ─ "My Career" · "Lan Nguyen · Backend Engineer L2 · Mid"      [Map | List]  [Ask AI]
+Header ─ "My Career" · "Lan Nguyen · Backend Engineer L2 · Mid"   [path-change Alert] [Map | List] [Ask AI]
 Progress strip ─ Toward {target} · bar · 2 ready · 2 growth areas · 2 not assessed yet · of 6 · ⓘ
 ┌ Map or List ───────────────────────────────────────────┐┌ Detail panel (when selected) ┐
 │ toolbar: [Following: {path} ▾]  [+ Explore a position]  ││ role panel or route panel    │
@@ -146,11 +146,15 @@ Approve / decline can't happen yet (no manager screen), so a sent request stays 
   competency has no approved score yet, so it doesn't count as a growth area. Your manager assesses
   it in a future assessment." + "{n} expectations are not set in Setup." when any.
 - **No target** → `NoTargetStrip`: "**No target yet.** Pick a role on your map and choose Set as
-  target to track your progress."
-- **Path change notice** (1B, 2026-09-28): the last line of the strip (also on the No-target strip)
-  while the followed path has a change Lan hasn't opened: a design-system **Alert (info)**, as wide as
-  its content (not full width): path icon · "{path} changed {date}" · link **See what's different**
-  → Path history. It goes once Path history is opened; no required acknowledgement.
+  target to track your progress." When a path change took the target off the map (the plan still
+  names it): "**Pick a new target.** {role} is no longer on your path. Pick a role on your map and
+  choose Set as target."
+- **Path change notice** (2026-09-28; moved from the strip into the header the same day): while the
+  followed path has a change Lan hasn't opened, a design-system **Alert (info)** sits in the page
+  header **on the row of Map / List and Ask AI** (same place as Setup's progress Alert), as wide as
+  its content: path icon · "{path} changed {date}" · link **See what's different** → Path history.
+  Below 640px it takes its own full-width row under the title. It goes once Path history is opened;
+  no required acknowledgement.
 
 ### 5.2 Career map (design system: `CareerMap`)
 
@@ -334,8 +338,8 @@ becomes A → X → C → E):
 | X (new, before You are here, never held) | Card status **New on your path**. Becomes Completed when a Completed Assessment meets it, or when the manager marks it | status yes; completing it no (needs Assessment / manager screen) |
 | C (You are here) **replaced** by C′ | Lan's **You are here becomes C′** automatically (decided 2026-09-28). The admin sees it first in Setup's preview ("N people at C move to C′") and confirms; only the path an employee **follows** moves them. C goes into Lan's held-levels history. The comparison is redone for C′ (below) | not built |
 | C (You are here) **removed**, nothing replaces it | Lan stays at C (C stays as its own card) and is asked to pick a path again | not built |
-| E (new, ahead) | Planned | yes |
-| D (removed, ahead) | Leaves the map. If it was the Active target → no target (No-target strip) | map rule yes; no mock case on load |
+| E (new, ahead) | Planned | yes (mock: FE L3) |
+| D (removed, ahead) | Leaves the map. If it was the Active target → no target; the strip says "Pick a new target" | yes (mock: BE L3, the target) |
 | A branch starting from a removed card | Re-attaches to the nearest earlier level still on the map (by the path's previous order), or You are here; its status is kept | map rule yes; no mock case on load |
 
 **When You are here moves to C′** (decided 2026-09-28; detail in `my-assessment-build.md` → "When
@@ -349,19 +353,23 @@ already meets at C′ and what not:
 - competencies C had and C′ doesn't → gone from the comparison, but their scores, Actions and
   Records stay in history and can count toward a later role with a similar competency.
 
-**How Lan is told** (1B + 2A, chosen 2026-09-28): the notice in the progress strip (§5.1) and the
-card status band (§4.1). **Path history** = the shared History drawer (title "Path history", the
+**How Lan is told** (2A + an Alert, 2026-09-28): the path-change Alert in the page header (§5.1),
+the "Pick a new target" strip when the target went, and the card status band (§4.1). **Path history** = the shared History drawer (title "Path history", the
 path's name), opened from the notice or the followed path's route panel: one entry per change,
 newest first, "Your company · {date}", in plain words: "Engineering growth changed. Added Frontend
 Engineer L1 · Junior before your level. You haven't held it, so it isn't completed yet." plus what it
 did to the plan ("Backend Engineer L3 · Senior was your target. Pick a new one." · "Career vision 2
 now starts from Backend Engineer L2 · Mid. Its status is kept.").
 
-**Mock on load:** Engineering growth changed on 27 Sep: Frontend Engineer L1 added before Lan's
-level (BE L1 → **FE L1** → BE L2 → BE L3 → BE L4). The map opens showing it; the notice is in the
-strip. There is **no demo control** in the UI (a "Simulate another change" button was added without
-approval and removed 2026-09-28); other cases (target removed, re-attach) are rules in `buildMap`
-without a mock on load.
+**Mock on load:** Engineering growth changed on 27 Sep: BE L1 → BE L2 → BE L3 → BE L4 became
+BE L1 → **FE L1** → BE L2 → **FE L3** → BE L4. So on load: FE L1 is **New on your path**, BE L3 (Lan's
+Active target) is gone and the strip asks to **pick a new target**, FE L3 is Planned, and the header
+shows the Alert. Path history: "Engineering growth changed. Added Frontend Engineer L1 · Junior
+before your level. You haven't held it, so it isn't completed yet. Added Frontend Engineer L3 ·
+Senior ahead. It's planned on your path. Removed Backend Engineer L3 · Senior. It was your target, so
+pick a new one." There is **no demo control** in the UI (a "Simulate another change" button was
+added without approval and removed 2026-09-28). Re-attaching branches is a `buildMap` rule without a
+mock case.
 
 **Not built:** C → C′ (You are here moves, Suggested scores) · C removed with no replacement · the
 Notifications item (the sidebar's Notifications is a static link with a badge; there's no
