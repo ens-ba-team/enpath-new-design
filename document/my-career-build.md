@@ -61,7 +61,11 @@ and "what this role would need" looked the same. Keeping them apart is the main 
   job. **No readiness %.** Employee UI says **growth area**, never "gap".
 - **Competency steps are "points", never "levels"**: "3 · Intermediate", not "L3".
 - **Preview → Confirm** for every plan change (RQ-10); a toast confirms it.
-- **AI proposes, people decide.** Ask AI can add a Career vision only after the employee accepts it.
+- **AI proposes, people decide.** Ask AI can add a Career vision only after the employee accepts it;
+  AI can suggest a score across Matrices, but it counts only after the manager confirms (B1).
+- **History is never lost.** Scores, Actions and Records belong to the employee and the competency,
+  not to a path step. **My Records is kept** (2026-09-28). When a role changes, old work stays in
+  My Actions / My Records / Assessment history and can count toward a later role.
 - **Copy:** no em dash in UI; no manager name ("your manager", "for approval"); colour carries a
   route's role, never its identity; inactive = `-inactive` tokens, never opacity.
 
@@ -313,8 +317,10 @@ Assessment. Build docs: `my-assessment-build.md`, `my-actions-build.md`. For My 
 - A growth row's Plan an action will open My Actions for that growth area.
 - Still planned: Ready rows say "Based on H2 2026 assessment, approved {date}" (with mock
   Assessments).
-- Records: the module was dropped 2026-09-28, but keeping **My Records** (for AI) is being
-  reconsidered: `what should be done.md` → 2b. Sidebar still shows Records.
+- **My Records is kept** (decided 2026-09-28, reversing the earlier drop): the employee's proof of
+  work, the input to the next Assessment, and what AI reads to propose actions and suggest scores.
+  Sidebar keeps Records; its place (siblings My Career · My Actions · My Records, never Actions
+  inside Records) is still to confirm. Screen not designed yet.
 
 ## 8. When a company path changes (built 2026-09-28)
 
@@ -327,10 +333,22 @@ becomes A → X → C → E):
 | A (held, still on the path) | Stays **Completed**: completion comes from history (`employee.heldLevels`), not path order | yes |
 | B (held, removed) | Leaves the map; stays in history | yes (by the same rule) |
 | X (new, before You are here, never held) | Card status **New on your path**. Becomes Completed when a Completed Assessment meets it, or when the manager marks it | status yes; completing it no (needs Assessment / manager screen) |
-| C (You are here) | Never moves by itself. If the path drops C, C stays and Lan picks a path again | not built (no mock case) |
+| C (You are here) **replaced** by C′ | Lan's **You are here becomes C′** automatically (decided 2026-09-28). The admin sees it first in Setup's preview ("N people at C move to C′") and confirms; only the path an employee **follows** moves them. C goes into Lan's held-levels history. The comparison is redone for C′ (below) | not built |
+| C (You are here) **removed**, nothing replaces it | Lan stays at C (C stays as its own card) and is asked to pick a path again | not built |
 | E (new, ahead) | Planned | yes |
 | D (removed, ahead) | Leaves the map. If it was the Active target → no target; the strip says "Pick a new target" | yes |
 | A branch starting from a removed card | Re-attaches to the nearest earlier level still on the map (by the path's previous order), or You are here; its status is kept | yes |
+
+**When You are here moves to C′** (decided 2026-09-28; detail in `my-assessment-build.md` → "When
+You are here changes"): no new assessment is forced; the You are here panel shows at once what Lan
+already meets at C′ and what not:
+- same competency → the approved score carries over (Ready / Growth area);
+- new competency with a similar one scored in another Matrix → **Suggested** score from AI
+  (based on that competency + Lan's records and actions), counted after the **manager confirms**
+  (B1);
+- new competency with nothing similar → Not assessed yet;
+- competencies C had and C′ doesn't → gone from the comparison, but their scores, Actions and
+  Records stay in history and can count toward a later role with a similar competency.
 
 **How Lan is told** (1B + 2A, chosen 2026-09-28): the notice in the progress strip (§5.1) and the
 card status band (§4.1). **Path history** = the shared History drawer (title "Path history", the
@@ -346,9 +364,10 @@ strip. **Prototype button** "Simulate another change (prototype)" (followed path
 publishes a second change on 28 Sep: BE L3 (the target) leaves, FE L3 comes in ahead; the target is
 removed and any branch from BE L3 re-attaches. Reload to start over.
 
-**Not built:** the Notifications item (the sidebar's Notifications is a static link with a badge;
-there's no notifications panel yet) · the admin side (changing a path in Setup) · completing a
-New-on-your-path level.
+**Not built:** C → C′ (You are here moves, Suggested scores) · C removed with no replacement · the
+Notifications item (the sidebar's Notifications is a static link with a badge; there's no
+notifications panel yet) · the admin side (changing a path in Setup, with the "N people move"
+preview) · completing a New-on-your-path level.
 
 ## 9. Career vision: approval
 
@@ -405,7 +424,8 @@ Code notes:
 
 ## 11. Not built yet
 
-Manager review screen · Notifications panel (for §8) · mock Assessments + "Based on …" Ready
+Manager review screen · C → C′ and Suggested scores (§8) · My Records screen · Notifications
+panel (for §8) · mock Assessments + "Based on …" Ready
 rows · My Actions / Assessment screens · empty state for "no role assigned" · Records decision (§7).
 Mobile polish comes last.
 
@@ -422,6 +442,13 @@ Mobile polish comes last.
 - [ ] Keep manager approval for Career visions? (Brief doesn't mention it; PRD-020 puts "job
       transfer approval" out of scope.)
 - [ ] Terms: brief "Core Career Path" / "Target Position" vs UI "company path" / "Active target".
+- [ ] Sidebar: My Career · My Actions · My Records as siblings? (Records is kept; Actions must not
+      sit inside Records: an Action produces a Record, not the other way round.)
+- [ ] C → C′ when C is on several paths: only the followed path moves You are here (proposed).
+- [ ] Suggested scores: how "similar" is decided, and where the manager confirms them.
+- [ ] Competency library (shared competencies across Matrices): future, not built.
+- [x] Keep My Records: **yes** (2026-09-28).
+- [x] Cross-Matrix scores: AI suggests, manager confirms (B1, 2026-09-28).
 - [x] Setting a target on a company path needs no approval.
 - [x] Scores come from Assessment (2026-09-28); evidence is input, AI only summarises it.
 - [x] Company path changes: follow the latest version, with §8's rules.

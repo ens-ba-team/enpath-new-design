@@ -179,6 +179,13 @@ Its own tab because:
 | Archived | Archived (grey) | Read-only, hidden. **Restore** — returns to Draft |
 
 **Career path — planned, not built yet**
+- **Editing a published path moves people** (decided 2026-09-28, from My Career §8): employees'
+  plans follow the latest version. When a step is **replaced** (C → C′), everyone who **follows**
+  this path and is mapped to C moves to C′ (their Employee Mapping changes; HR data doesn't). The
+  Publish preview must say it: "3 people at Backend Engineer L3 move to Frontend Engineer L3" +
+  targets that leave the path + Career visions that re-attach. A step **removed** with no
+  replacement moves nobody. Each change is written to the path's history (employees see it as Path
+  history in My Career).
 - **Rules not enforced:** 20-step maximum (old dev code); within one Position, steps must go up in
   Level (BR-12 — the dev code didn't enforce it either). A repeated Level (BR-11) is refused, but
   silently — Add step stays enabled and nothing happens.

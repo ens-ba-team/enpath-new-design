@@ -17,7 +17,7 @@ PRD-022 only mentions "Competency Assessment Updated"). Source so far: decisions
 Where it sits in the development loop (`glossary.md` → "How the pieces fit"):
 
 ```
-Target → ASSESSMENT (scores) → Growth areas → Action plan → Evidence → next ASSESSMENT
+Target → ASSESSMENT (scores) → Growth areas → Action plan → Records → next ASSESSMENT
 ```
 
 ## Decisions (2026-09-28)
@@ -29,12 +29,34 @@ Target → ASSESSMENT (scores) → Growth areas → Action plan → Evidence →
   matrix.
 - **Flow:** the employee **self-assesses** → the **line manager reviews** → **Completed** (approved,
   "ready for comparison").
-- **Evidence is the input.** Evidence added in the Action plan (when an Action moves to Done)
-  is gathered per competency for the self-assessment and shown to the manager at review. AI may
-  summarise it; it never scores. There is no separate Records module.
+- **Records are the input** (My Records is **kept**, 2026-09-28). Records added in the Action plan
+  (when an Action moves to Done) or on their own are gathered per competency for the
+  self-assessment and shown to the manager at review. A record is never a score by itself.
+- **AI proposes, the manager decides (B1, 2026-09-28).** AI may summarise records, and may
+  **suggest** a score where there's no approved one (see "When You are here changes" below). A
+  suggested score is labelled "Suggested", shows what it's based on, and **counts only after the
+  manager confirms it** (one by one or in bulk). AI never sets a score on its own.
+- **Scores belong to the employee × competency, not to a path step.** Old scores, including for
+  competencies a role no longer uses, stay in the Assessment history and are never deleted.
 - **Completing a Level without holding it** (company-path changes, `my-career-build.md` → "When a
   company path changes"): a Level tagged "New on your path" becomes Completed when a Completed
   Assessment meets its expectations, or when the manager sets it.
+
+## When You are here changes (C → C′, decided 2026-09-28)
+
+A company path can **replace** Lan's level C with C′; Lan's You are here then becomes C′
+(`my-career-build.md` §8). Nothing is re-assessed from scratch; the comparison is redone against C′:
+
+| Competency at C′ | Its score at C′ |
+|---|---|
+| Same competency as before (same Matrix) | The latest approved score carries over → Ready or Growth area against C′'s expectation |
+| New competency, and a **similar** competency was scored in another Matrix | AI **suggests** a score from that competency + Lan's records and actions ("Design systems: suggested 1 · Awareness, based on 'Learn design system basics', done 12 Sep"). Counts after the manager confirms |
+| New competency, nothing similar | **Not assessed yet**, until the next Assessment |
+| A competency C had but C′ doesn't | Not shown for C′; its scores, actions and records stay in history and can count toward a later role with a similar competency |
+
+Why AI matching: each Matrix has its own competencies (Duplicate matrix makes new ones), so the same
+skill in two Matrices has two identities. A shared **competency library** would fix that; it's the
+future direction, **not built**.
 
 ## The dev team's "Managed assessments" screen (manager view)
 
@@ -76,3 +98,6 @@ Target → ASSESSMENT (scores) → Growth areas → Action plan → Evidence →
 - [ ] Does an Assessment always follow the Active target, or can it cover any role (a Career vision's)?
 - [ ] Where does the employee self-assess: its own page, or inside My Career?
 - [ ] Needs a PRD: statuses, periods, who sees what, notifications.
+- [ ] Suggested scores: how "similar" is decided (AI confidence threshold? always shown?), and where
+      the manager confirms them (in the Assessment review, or a separate queue).
+- [ ] Competency library (shared competencies across Matrices): future; scope and timing open.
