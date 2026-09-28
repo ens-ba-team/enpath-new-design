@@ -3,7 +3,7 @@ import { Empty } from '@/components/ui/empty';
 import { Button } from '@/components/ui/button';
 import { BellIcon, CalendarBlankIcon, FolderIcon, MagnifyingGlassIcon, TrayIcon, UsersIcon } from "@phosphor-icons/react/ssr";
 
-// Source: empty.meta.json — Figma verified 97:34667
+// Source: empty.meta.json
 // Custom component — no shadcn/Radix base. Purely presentational.
 //
 // Tokens:

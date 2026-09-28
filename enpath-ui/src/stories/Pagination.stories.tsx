@@ -10,9 +10,9 @@ import {
 } from '@/components/ui/pagination';
 
 // Source: pagination.meta.json (category, variants, tokens)
-// Spec: Component markdown/Pagination.md — verified against Figma 59:17863 / 59:18253
+// Spec: Component markdown/Pagination.md
 // All items: 32×32px (h-8 w-8), radius/md.
-// Prev/Next: icon-only (Figma spec) — "Previous"/"Next" text is sr-only.
+// Prev/Next: icon-only — "Previous"/"Next" text is sr-only.
 
 const meta = {
   title: 'Navigation/Pagination',

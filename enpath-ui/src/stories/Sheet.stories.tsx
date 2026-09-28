@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-// Source: sheet.meta.json — verified against Figma 98:57748
+// Source: sheet.meta.json
 // Built on Radix UI Dialog (NOT Vaul). No swipe-to-dismiss, no drag handle.
 // Key difference from Drawer: Sheet = Radix Dialog, Drawer = Vaul (gesture library).
 //

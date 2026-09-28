@@ -11,7 +11,7 @@ import {
 import { HouseIcon } from "@phosphor-icons/react/ssr";
 
 // Source: breadcrumb.meta.json (category, variants, tokens)
-// Spec: Component markdown/Breadcrumb.md — verified against Figma 291:223 / 52:13919
+// Spec: Component markdown/Breadcrumb.md
 // Note: Breadcrumb is a composition — no fixed composite component.
 //   Assembly: item → separator → item → separator → item(current)
 //   Last item always BreadcrumbPage (Current=True). Separator never at start or end.
@@ -77,7 +77,7 @@ export const WithIcon: Story = {
 
 // ─── Slash separator — Type=Slash ─────────────────────────────────────────────
 // "/" as children to BreadcrumbSeparator.
-// Fill: color/background/muted/foreground (confirmed Figma 52:13919).
+// Fill: color/background/muted/foreground.
 
 export const SlashSeparator: Story = {
   render: () => (
@@ -101,7 +101,7 @@ export const SlashSeparator: Story = {
 
 // ─── Dot separator — Type=Dot ─────────────────────────────────────────────────
 // "·" as children to BreadcrumbSeparator.
-// Fill: color/background/muted/foreground (confirmed Figma 52:13919).
+// Fill: color/background/muted/foreground.
 
 export const DotSeparator: Story = {
   render: () => (

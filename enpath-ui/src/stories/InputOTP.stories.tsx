@@ -9,10 +9,10 @@ import {
 } from '@/components/ui/input-otp';
 import { Label } from '@/components/ui/label';
 
-// Source: input-otp.meta.json — Figma verified 58:17340 / 58:17437
+// Source: input-otp.meta.json
 // Built on input-otp library + shadcn wrapper. Single hidden <input> underneath.
 //
-// Tokens (slot states, Figma confirmed):
+// Tokens (slot states):
 //   Empty:    background/default · border/default
 //   Active:   background/default · border/focus + ring glow
 //   Filled:   background/default · border/default · digit foreground

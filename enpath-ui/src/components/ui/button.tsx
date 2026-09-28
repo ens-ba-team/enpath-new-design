@@ -15,7 +15,7 @@ const buttonVariants = cva(
         default:
           "bg-[var(--button-primary-bg-bg)] text-[var(--button-primary-fg-fg)] hover:bg-[var(--button-primary-bg-hover)] active:bg-[var(--button-primary-bg-active)]",
         destructive:
-          // focus/destructive: red @ 40% opacity, 3px spread (Figma effect style)
+          // focus/destructive: red @ 40% opacity, 3px spread
           // ring-0 cancels the base ring-2; explicit box-shadow gives correct 3px spread
           "bg-[var(--button-destructive-bg-bg)] text-[var(--button-destructive-fg-fg)] hover:bg-[var(--button-destructive-bg-hover)] active:bg-[var(--button-destructive-bg-active)] focus-visible:ring-0 focus-visible:[box-shadow:0_0_0_3px_color-mix(in_srgb,var(--color-brand-destructive)_40%,transparent)]",
         outline:

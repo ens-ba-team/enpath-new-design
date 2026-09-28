@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { ComboboxField } from '@/components/ui/combobox';
 
-// Source: combobox.meta.json — Figma 75:9166 / 148:2191
+// Source: combobox.meta.json
 // Built on @base-ui/react Combobox
 //
 // Variants covered:

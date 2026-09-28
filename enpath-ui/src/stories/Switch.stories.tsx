@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 
-// Source: switch.meta.json — verified against Figma 67:88 (switch) + 270:110 (switch-item)
+// Source: switch.meta.json
 // shadcn provides only the raw Switch toggle. switch-item patterns are composed inline.
 //
 // Cross-check (meta.json variants):

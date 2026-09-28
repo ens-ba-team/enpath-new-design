@@ -13,7 +13,7 @@ const meta = {
     variant: {
       control: 'select',
       options: ['default', 'secondary', 'destructive', 'outline', 'dashed', 'success', 'error', 'warning', 'blue', 'online', 'offline', 'notification'],
-      description: 'Visual style — maps to Figma Variant property',
+      description: 'Visual style',
     },
     shape: {
       control: 'select',

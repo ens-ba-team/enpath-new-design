@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils"
 
 // ─── Skeleton ─────────────────────────────────────────────────────────────────
-// Code-only component — no Figma component set (figmaNodeId: null).
+// Code-only component.
 // A single <div> with three properties:
 //   background: color/background/muted — page canvas muted surface (NOT surface/muted)
 //   animation:  animate-pulse — respects prefers-reduced-motion via Tailwind

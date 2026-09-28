@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 
-// Source: select.meta.json — verified against Figma 74:757 (select-trigger) + 146:3751 (select-field)
+// Source: select.meta.json
 // shadcn has no SelectField wrapper — select-field is composed: Label + Select + description <p>.
 //
 // Cross-check (meta.json State variants):
@@ -67,7 +67,7 @@ export const Filled: Story = {
 
 // ─── Disabled — State=Disabled ────────────────────────────────────────────────
 // Fill: color/background/muted · Border: color/border/disabled.
-// No opacity — disabled uses explicit fill/border tokens (Figma confirmed).
+// No opacity — disabled uses explicit fill/border tokens.
 
 export const Disabled: Story = {
   render: () => (

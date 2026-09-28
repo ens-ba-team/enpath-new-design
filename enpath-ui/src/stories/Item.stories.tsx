@@ -4,7 +4,7 @@ import { Item } from '@/components/ui/item';
 import { Button } from '@/components/ui/button';
 import { BellRingingIcon, CaretRightIcon, ChartBarIcon, FileTextIcon, FolderIcon, GearIcon, HouseIcon, UserIcon } from "@phosphor-icons/react/ssr";
 
-// Source: item.meta.json — Figma verified 65:815
+// Source: item.meta.json
 // Custom component — no shadcn base.
 //
 // Tokens:
@@ -61,7 +61,7 @@ export const TypeDefault: Story = {
 };
 
 // ─── Type=Icon ─────────────────────────────────────────────────────────────────
-// 16×16 icon precedes content. items-start (Figma: align=MIN).
+// 16×16 icon precedes content. items-start.
 
 export const TypeIcon: Story = {
   render: () => (
@@ -131,7 +131,7 @@ export const TypeImage: Story = {
         type="image"
         imageAlt="Design file"
         title="design-system-v2.fig"
-        description="48 MB · Figma"
+        description="48 MB · Design file"
         action={<Button size="sm" variant="outline">Open</Button>}
       />
     </div>

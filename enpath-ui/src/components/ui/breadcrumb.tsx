@@ -5,7 +5,7 @@ import { CaretRightIcon, DotsThreeIcon } from "@phosphor-icons/react/ssr"
 import { cn } from "@/lib/utils"
 
 // ─── Breadcrumb ───────────────────────────────────────────────────────────────
-// Tokens (from Breadcrumb.md — verified against Figma 291:223 / 52:13919):
+// Tokens (from Breadcrumb.md):
 //   BreadcrumbLink default    = color/text/secondary
 //   BreadcrumbLink hover      = color/background/default/foreground
 //   BreadcrumbLink focus ring = color/ring, 2px, radius/sm

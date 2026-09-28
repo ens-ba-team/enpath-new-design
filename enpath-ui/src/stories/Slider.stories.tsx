@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
 
-// Source: slider.meta.json — Figma verified 67:9199
+// Source: slider.meta.json
 //
 // Tokens:
 //   Track:  color/surface/muted · h-2 (8px) · radius/full
@@ -83,7 +83,7 @@ export const Vertical: Story = {
 };
 
 // ─── Range — two thumbs ───────────────────────────────────────────────────────
-// Pass an array of two values to defaultValue. Not a Figma variant — code feature.
+// Pass an array of two values to defaultValue. A code feature.
 
 export const Range: Story = {
   render: () => (

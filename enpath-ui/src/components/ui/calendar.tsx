@@ -8,7 +8,7 @@ import * as Popover from "@radix-ui/react-popover"
 import { cn } from "@/lib/utils"
 
 // ─── Calendar ─────────────────────────────────────────────────────────────────
-// Tokens (from Calendar.md — Figma 28:4073):
+// Tokens (from Calendar.md):
 //
 // Container: surface/default · border/default · radius/lg · spacing/component/md pad
 // Day Default:      transparent · background/default/foreground

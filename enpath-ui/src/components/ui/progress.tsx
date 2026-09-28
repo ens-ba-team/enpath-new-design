@@ -7,18 +7,18 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 // ─── Progress ─────────────────────────────────────────────────────────────────
-// Tokens (from Progress.md — verified against Figma 110:8283):
+// Tokens (from Progress.md):
 //
 // Track:  color/background/muted · radius/full
 // Fill (Loading/Indeterminate): color/brand/primary · radius/full
 // Fill (Complete, value=100):   color/status/success · radius/full
 //
-// Sizes (Figma confirmed):
+// Sizes:
 //   SM → h-1 (4px)   MD → h-2 (8px, default)   LG → h-3 (12px)
 //
 // State in code is driven by value prop only:
 //   value 0–99 → Loading    value=100 → Complete    value=null → Indeterminate
-// Figma State/Size props are design documentation — no separate state prop in code.
+// No separate state prop in code.
 
 const progressVariants = cva(
   "relative w-full overflow-hidden rounded-full bg-[var(--color-background-muted)]",

@@ -9,14 +9,14 @@ import { cn } from "@/lib/utils"
 
 // ─── Sheet ────────────────────────────────────────────────────────────────────
 // Built on Radix UI Dialog (same primitive as Dialog — NOT Vaul like Drawer).
-// Tokens (from Sheet.md — verified against Figma 98:57748):
+// Tokens (from Sheet.md):
 //
 // Shell:
 //   fill:    color/surface/overlay
 //   stroke:  color/border/default · 1px
 //   radius:  radius/lg on exposed edge only (screen-edge corners = 0)
 //   padding: none on root — each section owns its spacing
-//   shadow:  none (Figma: 0 effects)
+//   shadow:  none
 //
 // sheet-header (H layout):
 //   padding: spacing/component/lg (16px) all sides
@@ -64,7 +64,7 @@ SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 const sheetVariants = cva(
   [
     "fixed z-50 flex flex-col",
-    // Surface — no shadow (Figma: 0 effects)
+    // Surface — no shadow
     "bg-[var(--color-surface-overlay)]",
     "border border-[var(--color-border-default)]",
     // Animation
@@ -147,7 +147,7 @@ const SheetContent = React.forwardRef<
 SheetContent.displayName = SheetPrimitive.Content.displayName
 
 // ─── SheetHeader ──────────────────────────────────────────────────────────────
-// Figma: H layout — [text-block (title + description)] + [close-button]
+// H layout — [text-block (title + description)] + [close-button]
 // In code: close button is absolute in SheetContent; header holds text-block only.
 // padding: spacing/component/lg · gap: spacing/component/sm (title → description in text-block)
 
@@ -170,7 +170,7 @@ const SheetHeader = ({
 SheetHeader.displayName = "SheetHeader"
 
 // ─── SheetFooter ──────────────────────────────────────────────────────────────
-// Figma: V layout (stacked buttons — VERTICAL confirmed), top separator border.
+// V layout (stacked buttons — VERTICAL confirmed), top separator border.
 // padding: spacing/component/lg · gap: spacing/component/sm
 
 const SheetFooter = ({

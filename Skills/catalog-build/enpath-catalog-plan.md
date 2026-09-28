@@ -129,10 +129,9 @@ them.
 - [x] `ai-elements` components use `agt-` (2026-09-28).
 - [ ] **ID prefixes:** `agt-` for components inherited from Agentic, `enp-` for components made in
       Enpath (career-map, stat, …)? The list of Enpath-made ones to be proposed from the meta.json
-      changelogs and approved, not guessed.
-- [ ] `label.tsx` has no `meta.json`: create one so it gets an ID?
-- `button.figma.tsx` is excluded: a leftover code-connect file, not a component (Enpath uses no Figma). Types `cmp` · `pat` · `lay` · `tpl`; a story after `#`
+      changelogs and approved, not guessed. Types `cmp` · `pat` · `lay` · `tpl`; a story after `#`
       (`agt-cmp-badge#success`).
+- [ ] `label.tsx` has no `meta.json`: create one so it gets an ID?
 - [ ] **Statuses:** default `draft` / `in-review` / `stable` / `deprecated`, from
       `Tracking/Storybook Status.md` (so nothing is `stable` today)?
 - [ ] **Templates:** just master-detail (Setup) and career workspace (My Career)?

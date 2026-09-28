@@ -2,12 +2,12 @@ import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Progress } from '@/components/ui/progress';
 
-// Source: progress.meta.json — Figma verified 110:8283
+// Source: progress.meta.json
 //
 // Tokens:
 //   Track: color/background/muted · radius/full
 //   Fill (Loading/Indeterminate): color/brand/primary
-//   Fill (Complete, value=100):   color/status/success  ← Figma confirmed, spec corrected
+//   Fill (Complete, value=100):   color/status/success  (spec corrected)
 //
 // Sizes: sm=4px · md=8px (default) · lg=12px
 // State is driven by value: 0–99=Loading · 100=Complete · null=Indeterminate
@@ -49,7 +49,7 @@ export const Loading: Story = {
 };
 
 // ─── State=Complete (value=100) ────────────────────────────────────────────────
-// Indicator: color/status/success (confirmed Figma — spec corrected from brand/primary).
+// Indicator: color/status/success (spec corrected from brand/primary).
 
 export const Complete: Story = {
   render: () => (

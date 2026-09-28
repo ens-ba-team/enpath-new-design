@@ -9,7 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Avatar } from '@/components/ui/avatar';
 import { ArrowDownIcon, ArrowUpIcon, DotsThreeIcon, TrendDownIcon, TrendUpIcon } from "@phosphor-icons/react/ssr";
 
-// Source: table.meta.json — Figma verified 124:8531 / 105:25960 / 105:29158
+// Source: table.meta.json
 //
 // Tokens:
 //   Container: border/default · radius/base · overflow-hidden (caller wraps Table)

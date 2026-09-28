@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { DatePicker } from '@/components/ui/date-picker';
 
-// Source: date-picker.meta.json — Figma 58:15976
+// Source: date-picker.meta.json
 //
 // Tokens:
 //   trigger Closed:  bg/default · input/border

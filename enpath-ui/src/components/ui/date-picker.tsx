@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
 import { Calendar as CalendarComponent } from "@/components/ui/calendar"
 
 // ─── Date Picker ──────────────────────────────────────────────────────────────
-// Tokens (from Date-picker.md — Figma 58:15976):
+// Tokens (from Date-picker.md):
 //
 // trigger states:
 //   Closed:  bg/default · input/border  1px

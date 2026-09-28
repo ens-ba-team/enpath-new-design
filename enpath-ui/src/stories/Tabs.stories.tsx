@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { GearIcon, PulseIcon, SquaresFourIcon } from "@phosphor-icons/react/ssr";
 
 // Source: tabs.meta.json (category, variants, tokens)
-// Spec: Component markdown/Tabs.md — verified against Figma 59:17766 / 59:17793
+// Spec: Component markdown/Tabs.md
 //
 // Two visual types — pass variant to both TabsList and TabsTrigger:
 //   variant="default" — pill/background style (primary nav)
@@ -53,7 +53,7 @@ export const Default: Story = {
 // ─── Line — Type=Line, Horizontal ─────────────────────────────────────────────
 // TabsList: transparent · border-b color/border/default · no padding.
 // Trigger: transparent at all states. Active: 2px brand/primary bottom indicator.
-// No hover state — Type=Line has no hover (Figma confirmed: no Hover variant exists).
+// No hover state — Type=Line has no hover.
 
 export const Line: Story = {
   render: () => (
@@ -80,8 +80,8 @@ export const Line: Story = {
 // Paired icon rule (Rule A): the icon tracks the label's color per state.
 // Lucide icons render stroke="currentColor", so they inherit the trigger's text
 // color automatically — secondary at rest, surface/default/foreground when active,
-// text/disabled when disabled. No icon color class needed. Size 14px (size-3.5)
-// matches the Figma spec; gap is owned by the component (6px Default / 4px Line).
+// text/disabled when disabled. No icon color class needed. Size 14px (size-3.5);
+// gap is owned by the component (6px Default / 4px Line).
 
 export const WithIcon: Story = {
   render: () => (

@@ -6,7 +6,7 @@ import * as SliderPrimitive from "@radix-ui/react-slider"
 import { cn } from "@/lib/utils"
 
 // ─── Slider ───────────────────────────────────────────────────────────────────
-// Tokens (from Slider.md — verified against Figma 67:9199):
+// Tokens (from Slider.md):
 //   Track:  color/surface/muted  · h-2 (8px) · radius/full
 //   Range:  color/brand/primary  · h-2 (8px) · radius/full
 //   Thumb:  color/background/default fill
@@ -35,7 +35,7 @@ const Slider = React.forwardRef<
     </SliderPrimitive.Track>
     <SliderPrimitive.Thumb
       className={cn(
-        // Shape — 20×20px circle (Figma confirmed)
+        // Shape — 20×20px circle
         "relative block h-5 w-5 rounded-full",
         // Touch hit area — invisible, ≥ 44×44 on coarse pointers (height/target/touch). Visual size unchanged.
         "after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:content-['']",

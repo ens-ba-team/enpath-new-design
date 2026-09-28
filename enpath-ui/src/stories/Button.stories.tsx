@@ -30,7 +30,7 @@ const meta = {
     variant: {
       control: 'select',
       options: ['default', 'outline', 'secondary', 'ghost', 'link', 'destructive'],
-      description: 'Visual style — maps to Figma Type property',
+      description: 'Visual style',
     },
     size: {
       control: 'select',

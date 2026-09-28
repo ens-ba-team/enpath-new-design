@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 
-// Source: radio.meta.json — verified against Figma 96:33420 (radio) + 96:33437 (radio-item)
+// Source: radio.meta.json
 // shadcn has no RadioItem wrapper — all radio-item patterns composed inline.
 //
 // Cross-check (meta.json variants):

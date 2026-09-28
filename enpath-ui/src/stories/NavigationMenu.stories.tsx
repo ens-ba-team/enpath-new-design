@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/navigation-menu';
 import { BookOpenIcon, CurrencyDollarIcon, SquaresFourIcon, StarIcon, UsersIcon } from "@phosphor-icons/react/ssr";
 
-// Source: navigation-menu.meta.json — Figma 127:193 / 127:353 / 127:157
+// Source: navigation-menu.meta.json
 //
 // Tokens:
 //   nav-button: bg/default · hover: bg/accent · focus: ring · label/icon: bg/default/fg
@@ -61,7 +61,7 @@ export const ListPanel: Story = {
               />
               <NavigationMenuPanelLink
                 href="#"
-                title="Figma kit"
+                title="UI kit"
                 description="Design tokens and component library"
               />
             </div>
@@ -175,7 +175,7 @@ export const FullNavBar: Story = {
             <div className="flex flex-col gap-1 p-[var(--spacing-component-lg)] w-56">
               <NavigationMenuPanelLink href="#" title="Components" description="Design system building blocks" />
               <NavigationMenuPanelLink href="#" title="Templates" description="Ready-made layouts" />
-              <NavigationMenuPanelLink href="#" title="Figma kit" description="Tokens and component library" />
+              <NavigationMenuPanelLink href="#" title="UI kit" description="Tokens and component library" />
             </div>
           </NavigationMenuContent>
         </NavigationMenuItem>

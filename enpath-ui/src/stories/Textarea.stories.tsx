@@ -5,9 +5,8 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { CheckCircleIcon, MagnifyingGlassIcon } from "@phosphor-icons/react/ssr";
 
-// Source: input.meta.json (Textarea = Type=Textarea in the Figma input component set)
+// Source: input.meta.json
 // Spec: Component markdown/Input.md — Token Bindings section
-// Note: Figma combines Input + Textarea into one component set.
 //   shadcn ships them as two separate components: input.tsx + textarea.tsx.
 //   This is the Textarea story — see Input.stories.tsx for the Input story.
 
@@ -166,7 +165,7 @@ export const WithHeader: Story = {
 
 // ─── With footer (counter + action button) ────────────────────────────────────
 // footer slot: counter text (color/text/secondary) + action primary Button.
-// Matches the user's Figma design — "0/280" counter on left, primary button on right.
+// "0/280" counter on left, primary button on right.
 // In HTML, footer sits below <textarea>. Wrapper owns border; textarea strips bottom border.
 
 export const WithFooter: Story = {
@@ -234,7 +233,7 @@ export const WithHeaderAndFooter: Story = {
 };
 
 // ─── With character counter ────────────────────────────────────────────────────
-// Covers the Figma `counter` slot — shows current / max character count.
+// Counter slot — shows current / max character count.
 // Positioned at bottom-right inside the textarea using absolute positioning.
 // Textarea gets extra bottom padding to avoid text overlapping the counter.
 

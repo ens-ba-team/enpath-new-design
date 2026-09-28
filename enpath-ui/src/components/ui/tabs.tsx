@@ -6,7 +6,7 @@ import * as TabsPrimitive from "@radix-ui/react-tabs"
 import { cn } from "@/lib/utils"
 
 // ─── Tabs ─────────────────────────────────────────────────────────────────────
-// Tokens (from Tabs.md — verified against Figma 59:17766 / 59:17793):
+// Tokens (from Tabs.md):
 //
 // TabsList — Variant=Default:
 //   fill: color/surface/raised · radius: radius/lg · padding: spacing/component/xxs · gap: spacing/component/xxs
@@ -101,7 +101,7 @@ const TabsTrigger = React.forwardRef<
 
       // ── Type=Line ─────────────────────────────────────────────────────────
       // Indicator: 2px bottom border always present (transparent → brand/primary on active).
-      // Keeps all Line states at consistent height — matches Figma indicator at opacity 0/1.
+      // Keeps all Line states at consistent height (indicator at opacity 0/1).
       variant === "line" && [
         "rounded-none",
         "px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)]",

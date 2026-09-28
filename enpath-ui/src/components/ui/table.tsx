@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils"
 
 // ─── Table ────────────────────────────────────────────────────────────────────
 // shadcn Table — semantic HTML elements, token-correct styling.
-// Tokens (from Table.md — Figma 124:8531 / 105:25960):
+// Tokens (from Table.md):
 //
 // Container (caller wraps): border/default · radius/base · overflow-hidden
 // TableHeader / TableFooter: bg color/surface/raised

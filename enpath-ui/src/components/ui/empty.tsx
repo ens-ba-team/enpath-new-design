@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 
 // ─── Empty ────────────────────────────────────────────────────────────────────
 // Custom component — no shadcn/Radix base. Purely presentational.
-// Tokens (from Empty.md — verified against Figma 97:34667):
+// Tokens (from Empty.md):
 //
 // Container — per Variant:
 //   Default:    transparent · no stroke · no radius
@@ -77,7 +77,7 @@ const Empty = React.forwardRef<HTMLDivElement, EmptyProps>(
               {icon}
             </div>
           )}
-          {/* heading/sm — 16px / Semi Bold / leading-snug (Figma confirmed) */}
+          {/* heading/sm — 16px / Semi Bold / leading-snug */}
           <p className="text-base font-semibold leading-snug text-[var(--color-background-default-foreground)]">
             {title}
           </p>

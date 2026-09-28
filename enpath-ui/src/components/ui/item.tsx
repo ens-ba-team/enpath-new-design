@@ -6,19 +6,19 @@ import { Avatar } from "@/components/ui/avatar"
 
 // ─── Item ─────────────────────────────────────────────────────────────────────
 // Custom component — no shadcn base.
-// Tokens (from Item.md — verified against Figma 65:815):
+// Tokens (from Item.md):
 //
 // Container — per Variant:
 //   Default:  transparent · no stroke · radius/lg
 //   Outline:  color/surface/default · color/border/default 1px · radius/lg
 //   Muted:    color/surface/muted · no stroke · radius/lg
 //
-// Container — padding + gap per Size (Figma confirmed):
+// Container — padding + gap per Size:
 //   Default: spacing/component/md (12px) all sides + gap
 //   Sm:      spacing/component/sm  (8px)  all sides + gap
 //   Xs:      spacing/component/xs-plus (6px) all sides + gap
 //
-// Alignment (Figma confirmed):
+// Alignment:
 //   items-start: Type=Icon (16px icon vs 37px content) · Type=Link (chevron anchors to title)
 //   items-center: Default · Avatar · Image · Header
 //

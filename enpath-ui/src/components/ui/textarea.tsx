@@ -3,7 +3,7 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 // ─── Textarea ─────────────────────────────────────────────────────────────────
-// Tokens (from Input.md — Textarea is Type=Textarea in the Figma input component set):
+// Tokens (from Input.md):
 //   fill         = color/input/bg (all states except Disabled)
 //   fill         = color/surface/muted (Disabled)
 //   stroke       = color/input/border (Default, Filled)

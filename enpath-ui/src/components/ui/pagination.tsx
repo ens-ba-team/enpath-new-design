@@ -4,7 +4,7 @@ import { CaretLeftIcon, CaretRightIcon, DotsThreeIcon } from "@phosphor-icons/re
 import { cn } from "@/lib/utils"
 
 // ─── Pagination ───────────────────────────────────────────────────────────────
-// Tokens (from Pagination.md — verified against Figma 59:17863):
+// Tokens (from Pagination.md):
 //
 // _pagination-item sizes: 32×32px fixed (h-8 w-8), radius: radius/md
 //
@@ -94,7 +94,7 @@ const PaginationLink = ({
 PaginationLink.displayName = "PaginationLink"
 
 // ─── PaginationPrevious ───────────────────────────────────────────────────────
-// Icon-only 32×32px (Figma: chevron-left only, no text).
+// Icon-only 32×32px (chevron-left only, no text).
 // "Previous" label is sr-only for screen readers.
 // Disabled via aria-disabled="true" — <a> does not support the disabled attribute.
 

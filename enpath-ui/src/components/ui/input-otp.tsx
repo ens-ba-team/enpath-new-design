@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
 
 // ─── InputOTP ─────────────────────────────────────────────────────────────────
 // Built on input-otp by Guilherme Rodz, wrapped by shadcn.
-// Tokens (from Input-OTP.md — verified against Figma 58:17340):
+// Tokens (from Input-OTP.md):
 //
 // _input-otp-slot — 40×40px, no radius (radius is on otp-group):
 //   Empty:    fill background/default · stroke border/default 1px INSIDE

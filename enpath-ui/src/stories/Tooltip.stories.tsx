@@ -8,7 +8,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { ArchiveIcon, ShareNetworkIcon, TrashIcon } from "@phosphor-icons/react/ssr";
 
-// Source: tooltip.meta.json — Figma 74:1682 (bubble) + 74:1699 (tooltip)
+// Source: tooltip.meta.json
 //
 // Tokens:
 //   tooltip/bg → --tooltip-bg: #18181b — always dark, fixed regardless of theme

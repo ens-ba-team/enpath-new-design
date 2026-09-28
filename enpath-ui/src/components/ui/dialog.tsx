@@ -7,7 +7,7 @@ import { XIcon } from "@phosphor-icons/react/ssr"
 import { cn } from "@/lib/utils"
 
 // ─── Dialog ───────────────────────────────────────────────────────────────────
-// Tokens (from Dialog.md — verified against Figma 266:131):
+// Tokens (from Dialog.md):
 //
 // DialogOverlay (backdrop):
 //   fill: color/background/inverted @ opacity/overlay (50%)

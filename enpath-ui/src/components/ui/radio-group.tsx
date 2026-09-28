@@ -22,9 +22,9 @@ const RadioGroup = React.forwardRef<
 RadioGroup.displayName = RadioGroupPrimitive.Root.displayName
 
 // ─── RadioGroupItem ───────────────────────────────────────────────────────────
-// Maps to Figma `radio` sub-component (96:33420) — the 16×16 indicator circle.
+// The 16×16 indicator circle.
 //
-// Tokens (Figma confirmed):
+// Tokens:
 //   Unchecked border:  color/input/border (zinc/300 — one step darker than border/default)
 //   Checked border:    color/brand/primary
 //   Disabled border:   color/border/disabled
@@ -33,7 +33,7 @@ RadioGroup.displayName = RadioGroupPrimitive.Root.displayName
 //   Disabled opacity:  opacity/disabled (0.6)
 //
 //   Dot (Checked only): 8×8px div · fill color/brand/primary · radius/full
-//   The dot is a plain <div> — Figma shows it as a filled FRAME, not an SVG icon.
+//   The dot is a plain <div> (a filled frame, not an SVG icon).
 
 const RadioGroupItem = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Item>,

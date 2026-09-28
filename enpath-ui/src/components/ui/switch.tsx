@@ -7,7 +7,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 // ─── Switch ───────────────────────────────────────────────────────────────────
-// Tokens (from Switch.md — verified against Figma 67:88):
+// Tokens (from Switch.md):
 //
 // Track — Checked=False: color/border/default
 // Track — Checked=True:  color/brand/primary
@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils"
 // Focus ring:            color/ring · 2px · OUTSIDE
 // Disabled:              opacity/disabled (0.6) on entire component — no fill change
 //
-// Sizes (Figma confirmed):
+// Sizes:
 //   Default: track 44×24px · thumb 20×20px · checked translate-x-5 (20px)
 //   Sm:      track 28×16px · thumb 12×12px · checked translate-x-3 (12px)
 //

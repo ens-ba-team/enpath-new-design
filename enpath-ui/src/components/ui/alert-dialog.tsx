@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 
 // ─── AlertDialog ──────────────────────────────────────────────────────────────
-// Tokens (from Alert.md — Figma 152:3240):
+// Tokens (from Alert.md):
 //
 // AlertDialogOverlay (backdrop):
 //   fill: color/background/inverted @ opacity/overlay (50%)

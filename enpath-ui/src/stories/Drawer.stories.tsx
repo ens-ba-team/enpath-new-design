@@ -37,13 +37,13 @@ function useIsDesktop() {
   return isDesktop;
 }
 
-// Source: drawer.meta.json — verified against Figma 74:691
+// Source: drawer.meta.json
 //
 // Tokens:
 //   Panel fill: color/surface/overlay · border: color/border/default
 //   Handle: 100×8px · color/background/muted · radius/full
 //   handle-bar padding T/B: spacing/component/lg (16px)
-//   Header padding: spacing/component/lg · gap: spacing/component/xxs (2px — Figma confirmed)
+//   Header padding: spacing/component/lg · gap: spacing/component/xxs (2px)
 //   Footer layout: VERTICAL (stacked) · padding: spacing/component/lg · gap: spacing/component/sm
 //   Title: color/background/default/foreground
 //   Description: color/background/muted/foreground

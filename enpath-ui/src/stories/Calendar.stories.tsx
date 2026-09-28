@@ -4,7 +4,7 @@ import { DateRange } from 'react-day-picker';
 import { addDays } from 'date-fns';
 import { Calendar, CalendarWithPresets, CalendarWithTime } from '@/components/ui/calendar';
 
-// Source: calendar.meta.json — Figma 28:4073 / 27:3095 / 159:15346 / 159:15381
+// Source: calendar.meta.json
 //
 // Tokens:
 //   Container: surface/default fill · border/default · radius/lg

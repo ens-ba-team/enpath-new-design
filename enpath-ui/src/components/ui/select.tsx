@@ -7,7 +7,7 @@ import { CaretDownIcon, CaretUpIcon } from "@phosphor-icons/react/ssr"
 import { cn } from "@/lib/utils"
 
 // ─── Select ───────────────────────────────────────────────────────────────────
-// Tokens (from Select.md — verified against Figma 74:757):
+// Tokens (from Select.md):
 //
 // SelectTrigger — per state (all 36px touch / 32px from sm up — height/control-touch/md · height/control/md):
 //   Default:  fill color/background/default · stroke color/input/border

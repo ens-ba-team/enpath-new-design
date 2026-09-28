@@ -3,7 +3,7 @@ import { ButtonGroup } from '@/components/ui/button-group';
 import { Button } from '@/components/ui/button';
 import { ListIcon, MagnifyingGlassMinusIcon, MagnifyingGlassPlusIcon, SquaresFourIcon, TextAlignCenterIcon, TextAlignLeftIcon, TextAlignRightIcon, TextBIcon, TextItalicIcon, TextUnderlineIcon } from "@phosphor-icons/react/ssr";
 
-// Source: button-group.meta.json — Figma verified 52:11151
+// Source: button-group.meta.json
 // Custom component — no shadcn base.
 // Composable API: put <Button variant="ghost"> children directly inside <ButtonGroup>.
 // Separators are CSS divide-x / divide-y — no explicit separator elements needed.

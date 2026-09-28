@@ -6,7 +6,7 @@ import { Drawer as DrawerPrimitive } from "vaul"
 import { cn } from "@/lib/utils"
 
 // ─── Drawer ───────────────────────────────────────────────────────────────────
-// Tokens (from Drawer.md — verified against Figma 74:691):
+// Tokens (from Drawer.md):
 //
 // DrawerOverlay (backdrop):
 //   fill: color/background/inverted @ opacity/overlay (50%)
@@ -24,12 +24,12 @@ import { cn } from "@/lib/utils"
 //
 // DrawerHeader:
 //   padding: spacing/component/lg (16px) all sides
-//   gap: spacing/component/xxs (2px) — Figma confirmed
+//   gap: spacing/component/xxs (2px)
 //   title fill:       color/background/default/foreground
 //   description fill: color/background/muted/foreground
 //
 // DrawerFooter:
-//   layout: VERTICAL (buttons stacked — Figma confirmed)
+//   layout: VERTICAL (buttons stacked)
 //   padding: spacing/component/lg (16px) all sides
 //   gap: spacing/component/sm (8px) between buttons
 
@@ -130,7 +130,7 @@ const DrawerHeader = ({
 DrawerHeader.displayName = "DrawerHeader"
 
 // ─── DrawerFooter ─────────────────────────────────────────────────────────────
-// Layout: VERTICAL (stacked buttons — Figma confirmed).
+// Layout: VERTICAL (stacked buttons).
 // Padding: spacing/component/lg (16px). Gap: spacing/component/sm (8px).
 // Order: btn-primary first (top), btn-outline second (bottom).
 

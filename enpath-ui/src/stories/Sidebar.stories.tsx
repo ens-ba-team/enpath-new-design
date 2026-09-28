@@ -18,7 +18,7 @@ import { Avatar } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { EnpathAppShell } from '@/features/enpath/app-shell';
 
-// Source: sidebar.meta.json — Figma 95:18202 / 95:15354 / 95:15549 / 95:14510 / 95:14511
+// Source: sidebar.meta.json
 //
 // Tokens:
 //   Panel: sidebar/background · sidebar/border (right edge)

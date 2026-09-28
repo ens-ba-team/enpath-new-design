@@ -131,7 +131,7 @@ export const Border: Story = {
 };
 
 // ─── Item / settings variant ──────────────────────────────────────────────────
-// NOTE: The Figma Item variant uses the `item` sub-component for each row.
+// NOTE: each row uses the `item` sub-component.
 // `item` has no implementation yet — rows below are plain divs as placeholders.
 // Revisit once Item is built.
 

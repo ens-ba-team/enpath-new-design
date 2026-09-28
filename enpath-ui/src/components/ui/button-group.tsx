@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 
 // ─── ButtonGroup ──────────────────────────────────────────────────────────────
 // Custom component — no shadcn base.
-// Tokens (from Button-group.md — verified against Figma 52:11151):
+// Tokens (from Button-group.md):
 //
 // Container: color/surface/default · color/border/default 1px · radius/md
 // Separators: 1px divider divs auto-injected between children via inline style

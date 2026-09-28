@@ -5,7 +5,7 @@ import { CaretLineLeftIcon, CaretLineRightIcon } from "@phosphor-icons/react/ssr
 import { cn } from "@/lib/utils"
 
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
-// Tokens (from Sidebar.md — Figma 95:18202):
+// Tokens (from Sidebar.md):
 //
 // Container:
 //   Default/Inset fill:  color/sidebar/background · border: color/sidebar/border (right only)

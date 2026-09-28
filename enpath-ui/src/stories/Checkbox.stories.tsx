@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 
-// Source: checkbox.meta.json — verified against Figma 59:18266 (checkbox-box) + 59:18336 (checkbox-item)
+// Source: checkbox.meta.json
 // shadcn ships only Checkbox — no CheckboxItem wrapper. Compose: Checkbox + Label + description p.
 //
 // Tokens (all 8 states):

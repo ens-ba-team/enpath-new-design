@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button, buttonVariants } from '@/components/ui/button';
 
-// Source: Alert.md (alert-dialog section) — Figma 152:3240
+// Source: Alert.md (alert-dialog section)
 // Separate shadcn component from Alert (inline banner) — follows one-story-per-component rule.
 //
 // Tokens: fill color/surface/overlay · border color/border/default · radius/lg
