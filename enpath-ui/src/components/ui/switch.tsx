@@ -7,7 +7,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 // ─── Switch ───────────────────────────────────────────────────────────────────
-// Tokens (from Switch.md):
+// Tokens (from switch.meta.json):
 //
 // Track — Checked=False: color/border/default
 // Track — Checked=True:  color/brand/primary

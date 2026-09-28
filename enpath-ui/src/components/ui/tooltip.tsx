@@ -6,7 +6,7 @@ import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 import { cn } from "@/lib/utils"
 
 // ─── Tooltip ──────────────────────────────────────────────────────────────────
-// Tokens (from Tooltip.md):
+// Tokens (from tooltip.meta.json):
 //
 // Component tokens alias the semantic inverted surface (auto-inverts per mode):
 //   tooltip/bg → color/background/inverted → Light: zinc/900 #18181b · Dark: zinc/50 #fafafa

@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
 
 // ─── Sheet ────────────────────────────────────────────────────────────────────
 // Built on Radix UI Dialog (same primitive as Dialog — NOT Vaul like Drawer).
-// Tokens (from Sheet.md):
+// Tokens (from sheet.meta.json):
 //
 // Shell:
 //   fill:    color/surface/overlay

@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 
 // ─── AlertDialog ──────────────────────────────────────────────────────────────
-// Tokens (from Alert.md):
+// Tokens (from alert-dialog.meta.json):
 //
 // AlertDialogOverlay (backdrop):
 //   fill: color/background/inverted @ opacity/overlay (50%)

@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 
 // ─── ButtonGroup ──────────────────────────────────────────────────────────────
 // Custom component — no shadcn base.
-// Tokens (from Button-group.md):
+// Tokens (from button-group.meta.json):
 //
 // Container: color/surface/default · color/border/default 1px · radius/md
 // Separators: 1px divider divs auto-injected between children via inline style

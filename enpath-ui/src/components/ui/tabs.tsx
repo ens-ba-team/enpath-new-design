@@ -6,7 +6,7 @@ import * as TabsPrimitive from "@radix-ui/react-tabs"
 import { cn } from "@/lib/utils"
 
 // ─── Tabs ─────────────────────────────────────────────────────────────────────
-// Tokens (from Tabs.md):
+// Tokens (from tabs.meta.json):
 //
 // TabsList — Variant=Default:
 //   fill: color/surface/raised · radius: radius/lg · padding: spacing/component/xxs · gap: spacing/component/xxs

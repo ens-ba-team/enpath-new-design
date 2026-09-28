@@ -7,7 +7,7 @@ import { CheckIcon, MinusIcon } from "@phosphor-icons/react/ssr"
 import { cn } from "@/lib/utils"
 
 // ─── Checkbox ─────────────────────────────────────────────────────────────────
-// Tokens (from Checkbox.md):
+// Tokens (from checkbox.meta.json):
 //   16×16px · radius/md (6px)
 //
 // State       | Fill                      | Stroke

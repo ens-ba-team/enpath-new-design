@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
 
 // ─── InputOTP ─────────────────────────────────────────────────────────────────
 // Built on input-otp by Guilherme Rodz, wrapped by shadcn.
-// Tokens (from Input-OTP.md):
+// Tokens (from input-otp.meta.json):
 //
 // _input-otp-slot — 40×40px, no radius (radius is on otp-group):
 //   Empty:    fill background/default · stroke border/default 1px INSIDE

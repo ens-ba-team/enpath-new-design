@@ -6,7 +6,7 @@ import { CaretDownIcon } from "@phosphor-icons/react/ssr"
 import { cn } from "@/lib/utils"
 
 // ─── Navigation Menu ───────────────────────────────────────────────────────────
-// Tokens (from Navigation Menu.md):
+// Tokens (from navigation-menu.meta.json):
 //
 // nav-button:
 //   container fill: color/background/default (all states)

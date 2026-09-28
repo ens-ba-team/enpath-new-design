@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 
-// Source: radio.meta.json
+// Source: radio-group.meta.json
 // shadcn has no RadioItem wrapper — all radio-item patterns composed inline.
 //
 // Cross-check (meta.json variants):

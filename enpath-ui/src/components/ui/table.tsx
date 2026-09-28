@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils"
 
 // ─── Table ────────────────────────────────────────────────────────────────────
 // shadcn Table — semantic HTML elements, token-correct styling.
-// Tokens (from Table.md):
+// Tokens (from table.meta.json):
 //
 // Container (caller wraps): border/default · radius/base · overflow-hidden
 // TableHeader / TableFooter: bg color/surface/raised

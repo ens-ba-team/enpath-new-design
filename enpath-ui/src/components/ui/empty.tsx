@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 
 // ─── Empty ────────────────────────────────────────────────────────────────────
 // Custom component — no shadcn/Radix base. Purely presentational.
-// Tokens (from Empty.md):
+// Tokens (from empty.meta.json):
 //
 // Container — per Variant:
 //   Default:    transparent · no stroke · no radius

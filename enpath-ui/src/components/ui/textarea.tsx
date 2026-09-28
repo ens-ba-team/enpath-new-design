@@ -3,7 +3,7 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 // ─── Textarea ─────────────────────────────────────────────────────────────────
-// Tokens (from Input.md):
+// Tokens (from textarea.meta.json):
 //   fill         = color/input/bg (all states except Disabled)
 //   fill         = color/surface/muted (Disabled)
 //   stroke       = color/input/border (Default, Filled)

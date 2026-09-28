@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
 import { Calendar as CalendarComponent } from "@/components/ui/calendar"
 
 // ─── Date Picker ──────────────────────────────────────────────────────────────
-// Tokens (from Date-picker.md):
+// Tokens (from date-picker.meta.json):
 //
 // trigger states:
 //   Closed:  bg/default · input/border  1px

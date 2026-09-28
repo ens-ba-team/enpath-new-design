@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/pagination';
 
 // Source: pagination.meta.json (category, variants, tokens)
-// Spec: Component markdown/Pagination.md
+// Spec: pagination.meta.json
 // All items: 32×32px (h-8 w-8), radius/md.
 // Prev/Next: icon-only — "Previous"/"Next" text is sr-only.
 

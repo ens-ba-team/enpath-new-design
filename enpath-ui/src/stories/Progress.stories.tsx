@@ -65,7 +65,7 @@ export const Complete: Story = {
 
 // ─── State=Indeterminate (value=null) ─────────────────────────────────────────
 // Radix sets data-state="indeterminate". CSS animation needed for the sweep.
-// See Progress.md for the keyframe pattern.
+// See progress.meta.json for the keyframe pattern.
 
 export const Indeterminate: Story = {
   render: () => (

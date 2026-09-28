@@ -6,7 +6,7 @@ import { Drawer as DrawerPrimitive } from "vaul"
 import { cn } from "@/lib/utils"
 
 // ─── Drawer ───────────────────────────────────────────────────────────────────
-// Tokens (from Drawer.md):
+// Tokens (from drawer.meta.json):
 //
 // DrawerOverlay (backdrop):
 //   fill: color/background/inverted @ opacity/overlay (50%)

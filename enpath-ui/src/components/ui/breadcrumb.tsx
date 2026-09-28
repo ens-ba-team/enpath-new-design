@@ -5,7 +5,7 @@ import { CaretRightIcon, DotsThreeIcon } from "@phosphor-icons/react/ssr"
 import { cn } from "@/lib/utils"
 
 // ─── Breadcrumb ───────────────────────────────────────────────────────────────
-// Tokens (from Breadcrumb.md):
+// Tokens (from breadcrumb.meta.json):
 //   BreadcrumbLink default    = color/text/secondary
 //   BreadcrumbLink hover      = color/background/default/foreground
 //   BreadcrumbLink focus ring = color/ring, 2px, radius/sm
@@ -121,7 +121,7 @@ const BreadcrumbSeparator = ({
 BreadcrumbSeparator.displayName = "BreadcrumbSeparator"
 
 // ─── BreadcrumbEllipsis ───────────────────────────────────────────────────────
-// Display-only — no built-in expand/collapse logic (see Breadcrumb.md Behavior)
+// Display-only — no built-in expand/collapse logic (see breadcrumb.meta.json → Behavior)
 
 const BreadcrumbEllipsis = ({
   className,

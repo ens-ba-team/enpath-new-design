@@ -7,7 +7,7 @@ import { XIcon } from "@phosphor-icons/react/ssr"
 import { cn } from "@/lib/utils"
 
 // ─── Dialog ───────────────────────────────────────────────────────────────────
-// Tokens (from Dialog.md):
+// Tokens (from dialog.meta.json):
 //
 // DialogOverlay (backdrop):
 //   fill: color/background/inverted @ opacity/overlay (50%)

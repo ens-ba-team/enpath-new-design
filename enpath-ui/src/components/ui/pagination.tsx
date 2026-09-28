@@ -4,7 +4,7 @@ import { CaretLeftIcon, CaretRightIcon, DotsThreeIcon } from "@phosphor-icons/re
 import { cn } from "@/lib/utils"
 
 // ─── Pagination ───────────────────────────────────────────────────────────────
-// Tokens (from Pagination.md):
+// Tokens (from pagination.meta.json):
 //
 // _pagination-item sizes: 32×32px fixed (h-8 w-8), radius: radius/md
 //

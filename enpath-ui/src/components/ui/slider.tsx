@@ -6,7 +6,7 @@ import * as SliderPrimitive from "@radix-ui/react-slider"
 import { cn } from "@/lib/utils"
 
 // ─── Slider ───────────────────────────────────────────────────────────────────
-// Tokens (from Slider.md):
+// Tokens (from slider.meta.json):
 //   Track:  color/surface/muted  · h-2 (8px) · radius/full
 //   Range:  color/brand/primary  · h-2 (8px) · radius/full
 //   Thumb:  color/background/default fill

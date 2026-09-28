@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button, buttonVariants } from '@/components/ui/button';
 
-// Source: Alert.md (alert-dialog section)
+// Source: alert-dialog.meta.json
 // Separate shadcn component from Alert (inline banner) — follows one-story-per-component rule.
 //
 // Tokens: fill color/surface/overlay · border color/border/default · radius/lg
@@ -22,7 +22,7 @@ import { Button, buttonVariants } from '@/components/ui/button';
 // Use AlertDialog for: "Are you sure?" confirmations, destructive action gates,
 //   mandatory acknowledgements. Never use Dialog for simple confirmations.
 //
-// Cross-check (Alert.md alert-dialog variant matrix):
+// Cross-check (alert-dialog.meta.json → Variant Matrix):
 //   Type: Default ✓  Destructive ✓
 //   Align: Left ✓  Center ✓
 //   Footer: Inline ✓  Full-width ✓

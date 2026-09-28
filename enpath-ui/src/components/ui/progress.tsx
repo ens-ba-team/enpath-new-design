@@ -7,7 +7,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 // ─── Progress ─────────────────────────────────────────────────────────────────
-// Tokens (from Progress.md):
+// Tokens (from progress.meta.json):
 //
 // Track:  color/background/muted · radius/full
 // Fill (Loading/Indeterminate): color/brand/primary · radius/full

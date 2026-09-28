@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { GearIcon, PulseIcon, SquaresFourIcon } from "@phosphor-icons/react/ssr";
 
 // Source: tabs.meta.json (category, variants, tokens)
-// Spec: Component markdown/Tabs.md
+// Spec: tabs.meta.json
 //
 // Two visual types — pass variant to both TabsList and TabsTrigger:
 //   variant="default" — pill/background style (primary nav)

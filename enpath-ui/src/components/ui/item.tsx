@@ -6,7 +6,7 @@ import { Avatar } from "@/components/ui/avatar"
 
 // ─── Item ─────────────────────────────────────────────────────────────────────
 // Custom component — no shadcn base.
-// Tokens (from Item.md):
+// Tokens (from item.meta.json):
 //
 // Container — per Variant:
 //   Default:  transparent · no stroke · radius/lg
