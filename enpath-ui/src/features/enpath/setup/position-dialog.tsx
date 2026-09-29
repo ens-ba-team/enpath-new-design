@@ -87,13 +87,13 @@ export function PositionDialog({
               <Label htmlFor="pos-name">Position name</Label>
               <Input id="pos-name" value={draft.name} placeholder="e.g. Backend Engineer" aria-invalid={(tried && nameMissing) || undefined}
                 onChange={(e) => setDraft((d) => ({ ...d, name: e.target.value }))} autoFocus />
-              {tried && nameMissing && <p className="text-xs text-[var(--color-text-invalid)]">Enter a name.</p>}
+              {tried && nameMissing && <p className="text-body-xs text-[var(--color-text-invalid)]">Enter a name.</p>}
             </div>
             <div className="flex w-[112px] flex-col gap-[var(--spacing-component-xs)]">
               <Label htmlFor="pos-code">Position code</Label>
               <Input id="pos-code" value={draft.code} placeholder="BE" maxLength={6} aria-invalid={(tried && codeMissing) || undefined}
                 onChange={(e) => setDraft((d) => ({ ...d, code: e.target.value.toUpperCase() }))} />
-              {tried && codeMissing && <p className="text-xs text-[var(--color-text-invalid)]">Enter a code.</p>}
+              {tried && codeMissing && <p className="text-body-xs text-[var(--color-text-invalid)]">Enter a code.</p>}
             </div>
           </div>
 
@@ -125,8 +125,8 @@ export function PositionDialog({
           </div>
 
           <fieldset className="flex flex-col gap-[var(--spacing-component-sm)]">
-            <legend className="text-sm font-semibold">Levels</legend>
-            <p className="-mt-[var(--spacing-component-xs)] mb-[var(--spacing-component-xs)] text-xs text-[var(--color-text-secondary)]">Lowest first. Drag to reorder.</p>
+            <legend className="text-label-md">Levels</legend>
+            <p className="-mt-[var(--spacing-component-xs)] mb-[var(--spacing-component-xs)] text-body-xs text-[var(--color-text-secondary)]">Lowest first. Drag to reorder.</p>
             <ol className="flex flex-col gap-[var(--spacing-component-xs)]">
               {draft.levels.map((l, i) => {
                 const blocked = l.headcount > 0;
@@ -150,7 +150,7 @@ export function PositionDialog({
                     >
                       <DotsSixVerticalIcon className="h-4 w-4" aria-hidden="true" />
                     </button>
-                    <span className="w-7 text-sm font-semibold text-[var(--color-text-secondary)]">L{i + 1}</span>
+                    <span className="w-7 text-heading-xs text-[var(--color-text-secondary)]">L{i + 1}</span>
                     <Input
                       value={l.name}
                       placeholder="Level name, e.g. Senior"
@@ -161,7 +161,7 @@ export function PositionDialog({
                     />
                     {mode === 'edit' && (
                       <Tip label={`${l.headcount} people mapped`}>
-                        <span className="flex w-12 items-center gap-[var(--spacing-component-xs)] text-xs text-[var(--color-text-secondary)]">
+                        <span className="flex w-12 items-center gap-[var(--spacing-component-xs)] text-body-xs text-[var(--color-text-secondary)]">
                           <UsersIcon className="h-4 w-4" aria-hidden="true" />{l.headcount}
                           <span className="sr-only">people mapped</span>
                         </span>
@@ -185,21 +185,21 @@ export function PositionDialog({
                 );
               })}
             </ol>
-            {tried && emptyLevel && <p className="text-xs text-[var(--color-text-invalid)]">Every level needs a name.</p>}
-            {tried && draft.levels.length === 0 && <p className="text-xs text-[var(--color-text-invalid)]">Add at least one level.</p>}
+            {tried && emptyLevel && <p className="text-body-xs text-[var(--color-text-invalid)]">Every level needs a name.</p>}
+            {tried && draft.levels.length === 0 && <p className="text-body-xs text-[var(--color-text-invalid)]">Add at least one level.</p>}
             <Button type="button" variant="ghost" size="sm" className="self-start" onClick={() => setLevels([...draft.levels, newLevel()])}>
               <PlusIcon className="h-4 w-4" aria-hidden="true" />Add level
             </Button>
-            {mode === 'edit' && <p className="text-xs text-[var(--color-text-secondary)]">Levels with people on them can’t be removed. Move the people first.</p>}
+            {mode === 'edit' && <p className="text-body-xs text-[var(--color-text-secondary)]">Levels with people on them can’t be removed. Move the people first.</p>}
           </fieldset>
 
           {matrixChanged && (
-            <p role="status" className="rounded-[var(--radius-md)] bg-[var(--color-status-warning-subtle)] p-[var(--spacing-component-md)] text-sm text-[var(--color-status-warning-subtle-foreground)]">
+            <p role="status" className="rounded-[var(--radius-md)] bg-[var(--color-status-warning-subtle)] p-[var(--spacing-component-md)] text-body-sm text-[var(--color-status-warning-subtle-foreground)]">
               Switching matrix clears all {setCount} expectations of this position.
             </p>
           )}
           {removed.length > 0 && !matrixChanged && (
-            <p role="status" className="rounded-[var(--radius-md)] bg-[var(--color-status-warning-subtle)] p-[var(--spacing-component-md)] text-sm text-[var(--color-status-warning-subtle-foreground)]">
+            <p role="status" className="rounded-[var(--radius-md)] bg-[var(--color-status-warning-subtle)] p-[var(--spacing-component-md)] text-body-sm text-[var(--color-status-warning-subtle-foreground)]">
               Removing {removed.map((l) => l.name || 'an unnamed level').join(', ')} also deletes {removed.length === 1 ? 'its' : 'their'} expectations.
             </p>
           )}

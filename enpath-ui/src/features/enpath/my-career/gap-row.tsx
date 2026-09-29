@@ -45,8 +45,8 @@ function value(gap: Gap) {
 
 function Detail({ gap }: { gap: Gap }) {
   const comingNext = (where: string) => toast(`${where} is coming next. This button will open it.`);
-  const label = (text: string) => <p className="text-sm font-semibold text-[var(--color-background-default-foreground)]">{text}</p>;
-  const body = (text: string) => <p className="text-sm text-[var(--color-text-secondary)]">{text}</p>;
+  const label = (text: string) => <p className="text-heading-xs text-[var(--color-background-default-foreground)]">{text}</p>;
+  const body = (text: string) => <p className="text-body-sm text-[var(--color-text-secondary)]">{text}</p>;
   const link = (text: string, where: string) => (
     <Button variant="outline" size="sm" className="mt-[var(--spacing-component-xs)] self-start" onClick={() => comingNext(where)}>{text}<ArrowRightIcon aria-hidden="true" /></Button>
   );
@@ -96,7 +96,7 @@ function GapGroup({ group, rows, focused }: { group: (typeof groups)[number]; ro
       <Card ref={ref} role="region" aria-label={group.title} className={cn('gap-[var(--spacing-component-sm)] p-[var(--spacing-component-md)]', !open && 'gap-0')}>
         <CardHeader className="flex-row items-center gap-[var(--spacing-component-sm)]">
           <span aria-hidden="true" className={cn('h-2 w-2 shrink-0 rounded-[var(--radius-pill)]', statusFill[group.status])} />
-          <CardTitle className="flex-1 text-sm" role="heading" aria-level={3}>{group.title} <span className="font-normal text-[var(--color-text-secondary)]">· {rows.length}</span></CardTitle>
+          <CardTitle className="flex-1 text-heading-xs" role="heading" aria-level={3}>{group.title} <span className="font-normal text-[var(--color-text-secondary)]">· {rows.length}</span></CardTitle>
           {group.collapsed && (
             <CollapsibleTrigger asChild>
               <Button variant="ghost" size="xs">{open ? 'Hide' : 'Show'}</Button>
@@ -105,16 +105,16 @@ function GapGroup({ group, rows, focused }: { group: (typeof groups)[number]; ro
         </CardHeader>
         <CollapsibleContent className="flex flex-col">
           {group.values && (
-            <p className="flex justify-between pr-[var(--spacing-component-xl)] text-xs text-[var(--color-text-secondary)]">
+            <p className="flex justify-between pr-[var(--spacing-component-xl)] text-body-xs text-[var(--color-text-secondary)]">
               <span>Competency</span><span>{group.values}</span>
             </p>
           )}
           <Accordion type="single" collapsible>
             {rows.map((gap) => (
               <AccordionItem key={gap.id} value={gap.id} className="last:border-b-0">
-                <AccordionTrigger className="py-[var(--spacing-component-sm)] font-normal [&[data-state=open]>span:first-child]:font-semibold">
+                <AccordionTrigger className="py-[var(--spacing-component-sm)] text-body-sm [&[data-state=open]>span:first-child]:font-semibold">
                   <span className="min-w-0 flex-1 text-left">{gap.name}</span>
-                  <span className="shrink-0 tabular-nums font-normal text-[var(--color-text-secondary)]">{value(gap)}</span>
+                  <span className="shrink-0 tabular-nums text-[var(--color-text-secondary)]">{value(gap)}</span>
                 </AccordionTrigger>
                 <AccordionContent className="flex flex-col gap-[var(--spacing-component-xs)] pb-[var(--spacing-component-md)]">
                   <Detail gap={gap} />

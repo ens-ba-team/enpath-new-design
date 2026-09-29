@@ -30,7 +30,7 @@ export function HistoryDrawer({ open, onOpenChange, name, entries }: {
             <ul className="flex flex-col divide-y divide-[var(--color-border-default)]" aria-label="History">
               {entries.map((h, i) => (
                 <li key={i} className="py-[var(--spacing-component-sm)] first:pt-0 last:pb-0">
-                  <Item size="sm" title={h.what} description={<span className="text-xs">{h.who} · {h.when}</span>} />
+                  <Item size="sm" title={h.what} description={<span className="text-body-xs">{h.who} · {h.when}</span>} />
                 </li>
               ))}
             </ul>

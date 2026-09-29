@@ -6,6 +6,23 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-29 — Sidebar group label spacing
+
+### Fixed
+- `SidebarGroupLabel` (and the two hand-built group labels in the mobile navigation sheet, `app-shell.tsx`) get `spacing/component/xxs` padding top and bottom. With `text-label-sm` (line height = size) the label box had shrunk by 4px, so the label sat closer to the divider above than to its own items. No text-style change.
+
+---
+
+## 2026-09-29 — Screens use text styles
+
+### Changed (visual)
+- `src/features` and `src/app` (15 files): mixed `text-*` / `font-*` classes replaced by text styles. Page titles are `text-heading-xl`, detail titles `text-heading-lg`, panel titles `text-heading-md`, list titles `text-heading-sm`, form labels `text-label-md`, group labels `text-label-sm`, body and meta text `text-body-sm` / `text-body-xs`, pasted CSV `text-code-sm`. Measured on Setup (3 tabs) and My Career (map, list) at 390 and 1280 px: no element added or lost; changes are the agreed weights (titles 500), fonts (page, detail and panel titles, form labels in Nunito) and label line heights.
+- Fixed on the way: the My Career group card titles ("Ready · 4") lost their weight because a size-only override dropped the card title style; they now use `text-heading-xs`.
+- Inline emphasis inside `text-body-sm` text uses `text-heading-xs` (same font and line height, heavier): "Pick a new target.", the progress-strip counts, the chat proposal.
+- Left as lone weights (open decision): progress-strip "Toward …", detail-panel level, "(optional)" / "(needed before publishing)" in labels, group card count, Map/List pressed state.
+
+---
+
 ## 2026-09-29 — label-lg/md in Nunito; fonts named only by the tokens
 
 ### Changed (visual)

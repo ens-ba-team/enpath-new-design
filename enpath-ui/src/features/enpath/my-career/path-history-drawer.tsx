@@ -37,7 +37,7 @@ export function PathHistoryDrawer({ open, onOpenChange, path, changes }: {
         <div className="flex flex-1 flex-col gap-[var(--spacing-layout-xs)] overflow-auto px-[var(--spacing-component-lg)] pb-[var(--spacing-component-lg)]">
           {changes.map((c) => (
             <section key={c.date} aria-label={`Changes on ${c.date}`} className="flex flex-col gap-[var(--spacing-component-xs)]">
-              <h3 className="text-xs font-semibold text-[var(--color-text-secondary)]">{c.date} · by {c.who}</h3>
+              <h3 className="text-label-sm text-[var(--color-text-secondary)]">{c.date} · by {c.who}</h3>
               <ul className="flex flex-col divide-y divide-[var(--color-border-default)]">
                 {c.rows.map((r) => (
                   <li key={`${r.kind}-${r.role}`}>

@@ -84,7 +84,7 @@ function LevelCell({ id, value, onChange, label, readOnly, max }: { id?: string;
     </div>
   );
   const valueLabel = (
-    <span className={`text-xs ${value ? 'text-[var(--color-background-default-foreground)]' : 'text-[var(--color-text-secondary)]'}`}>
+    <span className={`text-body-xs ${value ? 'text-[var(--color-background-default-foreground)]' : 'text-[var(--color-text-secondary)]'}`}>
       {value ? `${value} · ${scale[value - 1]}` : 'Not set'}
     </span>
   );
@@ -142,7 +142,7 @@ function PositionList({ positions, selected, onSelect, onAdd, onImport, classNam
   return (
     <aside className={`w-full shrink-0 flex-col border-[var(--color-border-default)] lg:w-[280px] lg:border-r ${className}`}>
       <div className="flex flex-col gap-[var(--spacing-component-md)] p-[var(--spacing-component-lg)]">
-        <h2 className="text-base font-semibold text-[var(--color-background-default-foreground)]">Positions</h2>
+        <h2 className="text-heading-sm text-[var(--color-background-default-foreground)]">Positions</h2>
         <div className="relative">
           <MagnifyingGlassIcon className="pointer-events-none absolute left-[var(--spacing-component-sm)] top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--color-text-secondary)]" aria-hidden="true" />
           <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search positions" aria-label="Search positions" className="pl-[var(--spacing-component-xl)]!" />
@@ -152,7 +152,7 @@ function PositionList({ positions, selected, onSelect, onAdd, onImport, classNam
         {groups.map((g) => (
           <Collapsible key={g.department} open={!collapsedGroups.has(g.department)} onOpenChange={() => toggleGroup(g.department)}>
             <CollapsibleTrigger className="flex w-full items-center justify-between gap-[var(--spacing-component-xs)] rounded-[var(--radius-sm)] px-[var(--spacing-component-xs)] py-[var(--spacing-component-sm)] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)]">
-              <span className="text-xs font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]">{g.department} · {g.items.length}</span>
+              <span className="text-label-sm uppercase tracking-wide text-[var(--color-text-secondary)]">{g.department} · {g.items.length}</span>
               <CaretDownIcon className={`h-3 w-3 shrink-0 text-[var(--color-text-secondary)] transition-transform ${collapsedGroups.has(g.department) ? '-rotate-90' : ''}`} aria-hidden="true" />
             </CollapsibleTrigger>
             <CollapsibleContent>
@@ -163,7 +163,7 @@ function PositionList({ positions, selected, onSelect, onAdd, onImport, classNam
                       size="sm"
                       className="px-[var(--spacing-component-md)]"
                       title={p.name}
-                      description={<span className="text-xs">{p.code} · {p.levels.length} {p.levels.length === 1 ? 'level' : 'levels'}</span>}
+                      description={<span className="text-body-xs">{p.code} · {p.levels.length} {p.levels.length === 1 ? 'level' : 'levels'}</span>}
                       action={<StatusBadge status={p.status} />}
                       selected={p.id === selected}
                       onSelect={() => onSelect(p.id)}
@@ -174,7 +174,7 @@ function PositionList({ positions, selected, onSelect, onAdd, onImport, classNam
             </CollapsibleContent>
           </Collapsible>
         ))}
-        {groups.length === 0 && <p className="p-[var(--spacing-component-sm)] text-sm text-[var(--color-text-secondary)]">No positions match “{query}”.</p>}
+        {groups.length === 0 && <p className="p-[var(--spacing-component-sm)] text-body-sm text-[var(--color-text-secondary)]">No positions match “{query}”.</p>}
       </div>
       <div className="flex gap-[var(--spacing-component-sm)] border-t border-[var(--color-border-default)] p-[var(--spacing-component-lg)]">
         <Button variant="outline" className="flex-1" onClick={onAdd}><PlusIcon className="h-4 w-4" aria-hidden="true" />Add position</Button>
@@ -227,17 +227,17 @@ function PositionDetail({ position, matrix, onChange, onPublish, onUnpublish, on
         <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xs)]">
           <div className="flex items-center gap-[var(--spacing-component-sm)]">
             <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Back to positions" onClick={onBack}><ArrowLeftIcon /></Button>
-            <h2 className="min-w-0 text-xl font-semibold text-[var(--color-background-default-foreground)]">{position.name}</h2>
+            <h2 className="min-w-0 text-heading-lg text-[var(--color-background-default-foreground)]">{position.name}</h2>
             <StatusBadge status={position.status} />
           </div>
-          <dl className="flex flex-wrap items-center gap-x-[var(--spacing-layout-sm)] gap-y-[var(--spacing-component-xs)] text-sm">
+          <dl className="flex flex-wrap items-center gap-x-[var(--spacing-layout-sm)] gap-y-[var(--spacing-component-xs)] text-body-sm">
             <Meta label="Matrix">
               {/* Neutral chip, not a link: information first, a shortcut to Matrices config second */}
               <Tip label="Open in Matrices config">
                 <button
                   type="button"
                   onClick={onOpenMatrix}
-                  className="inline-flex items-center gap-[var(--spacing-component-xs)] rounded-[var(--radius-full)] border border-[var(--color-border-default)] bg-[var(--color-surface-raised)] px-[var(--spacing-component-sm)] py-[var(--spacing-component-xxs)] text-xs font-semibold text-[var(--color-surface-raised-foreground)] hover:border-[var(--color-border-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)]"
+                  className="inline-flex items-center gap-[var(--spacing-component-xs)] rounded-[var(--radius-full)] border border-[var(--color-border-default)] bg-[var(--color-surface-raised)] px-[var(--spacing-component-sm)] py-[var(--spacing-component-xxs)] text-label-sm text-[var(--color-surface-raised-foreground)] hover:border-[var(--color-border-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)]"
                 >
                   <SquaresFourIcon className="h-4 w-4" aria-hidden="true" />{matrix.name}
                 </button>
@@ -276,16 +276,16 @@ function PositionDetail({ position, matrix, onChange, onPublish, onUnpublish, on
       </header>
 
       <div className="relative flex-1 overflow-auto p-[var(--spacing-layout-sm)]">
-        <table className="min-w-max border-separate border-spacing-0 text-sm">
+        <table className="min-w-max border-separate border-spacing-0 text-body-sm">
           <thead>
             <tr>
-              <th scope="col" className="sticky left-0 z-20 w-[160px] min-w-[160px] border-b border-[var(--color-border-default)] bg-[var(--color-background-default)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)] text-left font-semibold">Competency</th>
+              <th scope="col" className="sticky left-0 z-20 w-[160px] min-w-[160px] border-b border-[var(--color-border-default)] bg-[var(--color-background-default)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)] text-left text-heading-xs">Competency</th>
               {position.levels.map((l) => {
                 const label = levelLabel(position.levels, l);
                 const unsetInLevel = matrix.competencies.filter((c) => position.expectations[c.id]?.[l.id] == null).length;
                 const readOnly = position.status === 'Published';
                 return (
-                  <th key={l.id} scope="col" className="min-w-[144px] border-b border-[var(--color-border-default)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)] text-left font-semibold">
+                  <th key={l.id} scope="col" className="min-w-[144px] border-b border-[var(--color-border-default)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)] text-left text-heading-xs">
                     <div className="flex items-center justify-between gap-[var(--spacing-component-sm)]">
                       <span>{label}</span>
                       <DropdownMenu>
@@ -303,7 +303,7 @@ function PositionDetail({ position, matrix, onChange, onPublish, onUnpublish, on
                           <DropdownMenuSub>
                             <DropdownMenuSubTrigger disabled={unsetInLevel === 0}>
                               Fill unset cells only
-                              <span className="ml-auto text-xs font-normal text-[var(--color-text-secondary)]">{unsetInLevel}</span>
+                              <span className="ml-auto text-body-xs text-[var(--color-text-secondary)]">{unsetInLevel}</span>
                             </DropdownMenuSubTrigger>
                             <DropdownMenuSubContent>
                               {scale.slice(0, matrix.scaleSize).map((rating, index) => (
@@ -336,7 +336,7 @@ function PositionDetail({ position, matrix, onChange, onPublish, onUnpublish, on
           <tbody>
             {matrix.competencies.map((c) => (
               <tr key={c.id}>
-                <th scope="row" className="sticky left-0 z-10 w-[160px] min-w-[160px] max-w-[160px] border-b border-[var(--color-border-subtle)] bg-[var(--color-background-default)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)] text-left font-normal [overflow-wrap:anywhere]">{c.name}</th>
+                <th scope="row" className="sticky left-0 z-10 w-[160px] min-w-[160px] max-w-[160px] border-b border-[var(--color-border-subtle)] bg-[var(--color-background-default)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)] text-left text-body-sm [overflow-wrap:anywhere]">{c.name}</th>
                 {position.levels.map((l) => (
                   <td key={l.id} className="border-b border-[var(--color-border-subtle)] p-[var(--spacing-component-xs)]">
                     <LevelCell id={`cell-${c.id}-${l.id}`} label={`${c.name}, ${levelLabel(position.levels, l)}`} value={position.expectations[c.id]?.[l.id] ?? null} onChange={(v) => setCell(c.id, l.id, v)} readOnly={position.status === 'Published'} max={matrix.scaleSize} />
@@ -370,7 +370,7 @@ function PositionDetail({ position, matrix, onChange, onPublish, onUnpublish, on
                       </Button>
                     </li>
                   ))}
-                  {unsetCells.length > 6 && <li className="self-center text-xs">+{unsetCells.length - 6} more</li>}
+                  {unsetCells.length > 6 && <li className="self-center text-body-xs">+{unsetCells.length - 6} more</li>}
                 </ul>
               </div>
             </Alert>
@@ -413,7 +413,7 @@ function SidebarFollowsChat({ chatOpen }: { chatOpen: boolean }) {
 }
 
 function Placeholder({ children }: { children: React.ReactNode }) {
-  return <p className="p-[var(--spacing-component-xl)] text-sm text-[var(--color-text-secondary)]">{children}</p>;
+  return <p className="p-[var(--spacing-component-xl)] text-body-sm text-[var(--color-text-secondary)]">{children}</p>;
 }
 
 /** Prefix of placeholder level ids in a position draft — replaced with unique ids on save. */
@@ -558,7 +558,7 @@ export function SetupScreen({ sidebarClassName, initialTab = 'structure' }: { si
       ) : (
         <div className="flex h-full flex-col">
           <div className="flex flex-wrap items-center gap-[var(--spacing-layout-xs)] px-[var(--spacing-layout-sm)] pt-[var(--spacing-layout-sm)]">
-            <h1 className="text-2xl font-semibold text-[var(--color-background-default-foreground)]">Setup</h1>
+            <h1 className="text-heading-xl text-[var(--color-background-default-foreground)]">Setup</h1>
             <Alert
               variant="success"
               role="status"

@@ -67,7 +67,7 @@ export const visionLabel = (s: PlanStep) =>
   (s.visions?.length ?? 0) > 1 ? `Career visions ${s.visions!.join(", ")}` : `Career vision ${s.vision}`;
 
 const note = (text: string) => (
-  <p className="text-sm text-[var(--color-text-secondary)]">{text}</p>
+  <p className="text-body-sm text-[var(--color-text-secondary)]">{text}</p>
 );
 
 /** Panel layout: content scrolls, actions sit in a footer pinned to the bottom — explanation first,
@@ -151,7 +151,7 @@ export function NoTargetStrip({ lostTarget }: { lostTarget?: string }) {
   return (
     <section
       aria-label="Your progress"
-      className="flex flex-col gap-[var(--spacing-component-sm)] border-b border-[var(--color-border-default)] px-[var(--spacing-layout-sm)] pb-[var(--spacing-layout-sm)] text-sm text-[var(--color-text-secondary)]"
+      className="flex flex-col gap-[var(--spacing-component-sm)] border-b border-[var(--color-border-default)] px-[var(--spacing-layout-sm)] pb-[var(--spacing-layout-sm)] text-body-sm text-[var(--color-text-secondary)]"
     >
       <div className="flex items-start gap-[var(--spacing-component-sm)]">
         <FlagIcon
@@ -159,7 +159,7 @@ export function NoTargetStrip({ lostTarget }: { lostTarget?: string }) {
           aria-hidden="true"
         />
         <span>
-          <span className="font-semibold text-[var(--color-background-default-foreground)]">
+          <span className="text-heading-xs text-[var(--color-background-default-foreground)]">
             {lostTarget ? "Pick a new target." : "No target yet."}
           </span>{" "}
           {lostTarget
@@ -202,7 +202,7 @@ export function ProgressBoard({
       {/* The goal reads as a heading (font-size/lg — small heading, two steps under the page’s 2xl). */}
       <h2
         id="progress-title"
-        className="flex items-center gap-[var(--spacing-component-sm)] text-lg text-[var(--color-background-default-foreground)]"
+        className="flex items-center gap-[var(--spacing-component-sm)] text-body-lg text-[var(--color-background-default-foreground)]"
       >
         <FlagIcon
           weight="fill"
@@ -236,7 +236,7 @@ export function ProgressBoard({
               key={g.key}
               variant="outline"
               size="sm"
-              className="font-normal"
+              className="text-body-sm"
               onClick={() => onOpenGroup(g.key)}
             >
               <span
@@ -246,11 +246,11 @@ export function ProgressBoard({
                 }`}
               />
               <span>
-                <span className="font-semibold">{g.count}</span> {g.label}
+                <span className="text-heading-xs">{g.count}</span> {g.label}
               </span>
             </Button>
           ))}
-          <span className="px-[var(--spacing-component-xs)] text-sm text-[var(--color-text-secondary)]">
+          <span className="px-[var(--spacing-component-xs)] text-body-sm text-[var(--color-text-secondary)]">
             of {total}
           </span>
           <Tip
@@ -418,7 +418,7 @@ export function StepPanel({
       <div className="flex flex-col gap-[var(--spacing-component-sm)]">
         <h2
           id="step-title"
-          className="text-lg font-semibold text-[var(--color-background-default-foreground)]"
+          className="text-heading-md text-[var(--color-background-default-foreground)]"
         >
           {d.title}{" "}
           <span className="font-normal text-[var(--color-text-secondary)]">
@@ -431,7 +431,7 @@ export function StepPanel({
             {badge.text}
           </Badge>
           {context && (
-            <span className="text-sm text-[var(--color-text-secondary)]">
+            <span className="text-body-sm text-[var(--color-text-secondary)]">
               {context}
             </span>
           )}
@@ -546,7 +546,7 @@ export function RoutePanel({
     <div className="flex flex-col gap-[var(--spacing-component-sm)]">
       <h2
         id="route-title"
-        className="text-lg font-semibold text-[var(--color-background-default-foreground)]"
+        className="text-heading-md text-[var(--color-background-default-foreground)]"
       >
         {title}
       </h2>
@@ -564,7 +564,7 @@ export function RoutePanel({
           />
           {badge.text}
         </Badge>
-        <span className="text-sm text-[var(--color-text-secondary)]">{context}</span>
+        <span className="text-body-sm text-[var(--color-text-secondary)]">{context}</span>
       </div>
     </div>
   );

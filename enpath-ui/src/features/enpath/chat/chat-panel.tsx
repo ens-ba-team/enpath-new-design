@@ -22,7 +22,7 @@ function reply(input: string, mode: string | undefined, ctx: ChatContext, onRevi
       text: `${ctx.positionName} currently has **${levels}**.\n\nI drafted a new top level. Its expectations start as *Not set*. Review it in the editor, then fill the grid and publish when ready.`,
       proposal: {
         label: 'Proposed change',
-        body: <><span className="font-semibold">+ L{ctx.levelNames.length + 1} · Principal</span> in {ctx.positionName} · expectations start Not set</>,
+        body: <><span className="text-heading-xs">+ L{ctx.levelNames.length + 1} · Principal</span> in {ctx.positionName} · expectations start Not set</>,
         accept: 'Review in editor',
         accepted: 'Opened in editor',
         onAccept: () => onReviewProposal({ levelName: 'Principal' }),

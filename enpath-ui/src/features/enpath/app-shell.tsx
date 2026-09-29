@@ -68,8 +68,8 @@ function EnpathUserRow() {
       {!collapsed && (
         <>
           <span className="flex min-w-0 flex-1 flex-col">
-            <span className="truncate text-sm font-semibold text-[var(--color-sidebar-foreground)]">Lan Nguyen</span>
-            <span className="truncate text-xs text-[var(--color-text-secondary)]">Admin</span>
+            <span className="truncate text-heading-xs text-[var(--color-sidebar-foreground)]">Lan Nguyen</span>
+            <span className="truncate text-body-xs text-[var(--color-text-secondary)]">Admin</span>
           </span>
           <CaretDownIcon className="h-4 w-4 shrink-0 text-[var(--color-sidebar-foreground)]" aria-hidden="true" />
         </>
@@ -113,7 +113,7 @@ export function EnpathAppShell({ defaultCollapsed = false, active = 'Setup', onN
         <div className="flex items-center justify-between lg:hidden">
           <div className="flex items-center gap-[var(--spacing-component-sm)]">
             <EnpathLogo />
-            <span className="text-base font-semibold text-[var(--color-sidebar-foreground)]">Enpath</span>
+            <span className="text-heading-sm text-[var(--color-sidebar-foreground)]">Enpath</span>
           </div>
           <Sheet>
             <SheetTrigger asChild>
@@ -126,7 +126,7 @@ export function EnpathAppShell({ defaultCollapsed = false, active = 'Setup', onN
               </SheetHeader>
               <nav className="flex flex-1 flex-col gap-[var(--spacing-layout-xs)] overflow-y-auto p-[var(--spacing-component-lg)]" aria-label="Mobile navigation">
                 <div className="flex flex-col gap-[var(--spacing-component-xs)]">
-                  <p className="px-[var(--spacing-component-sm)] text-xs font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]">Workspace</p>
+                  <p className="px-[var(--spacing-component-sm)] py-[var(--spacing-component-xxs)] text-label-sm uppercase tracking-wide text-[var(--color-text-secondary)]">Workspace</p>
                   {workspaceItems.map((entry) => (
                     <SheetClose asChild key={entry.label}>
                       <Button variant={entry.label === active ? 'secondary' : 'ghost'} className="justify-start" onClick={() => go(entry.label)}>{entry.icon}{entry.label}</Button>
@@ -135,7 +135,7 @@ export function EnpathAppShell({ defaultCollapsed = false, active = 'Setup', onN
                 </div>
                 <Separator />
                 <div className="flex flex-col gap-[var(--spacing-component-xs)]">
-                  <p className="px-[var(--spacing-component-sm)] text-xs font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]">Operations</p>
+                  <p className="px-[var(--spacing-component-sm)] py-[var(--spacing-component-xxs)] text-label-sm uppercase tracking-wide text-[var(--color-text-secondary)]">Operations</p>
                   {operationsItems.map((entry) => (
                     <SheetClose asChild key={entry.label}>
                       <Button variant={entry.label === active ? 'secondary' : 'ghost'} className="justify-start" onClick={() => go(entry.label)}>{entry.icon}{entry.label}</Button>
@@ -167,7 +167,7 @@ export function EnpathAppShell({ defaultCollapsed = false, active = 'Setup', onN
         </Sidebar>
         <main className="min-h-0 min-w-0 flex-1 overflow-hidden rounded-[var(--radius-panel)] border border-[var(--color-border-default)] bg-[var(--color-background-default)] shadow-[var(--shadow-surface)]">
           {children ?? (
-            <p className="p-[var(--spacing-component-xl)] text-sm text-[var(--color-text-secondary)]">Setup page content. Collapse the sidebar with the toggle or ⌘B.</p>
+            <p className="p-[var(--spacing-component-xl)] text-body-sm text-[var(--color-text-secondary)]">Setup page content. Collapse the sidebar with the toggle or ⌘B.</p>
           )}
         </main>
         {rightPanel && <div className="hidden lg:contents">{rightPanel}</div>}

@@ -34,7 +34,7 @@ import { NoTargetStrip, PathChangeNotice, ProgressBoard, requestBadge, RoutePane
 import { ExplorePositionDialog, levelName, RemoveTargetDialog, SetTargetDialog, SwitchPathDialog, VisionRequestDialog, type StartOption } from './plan-dialogs';
 
 function Placeholder({ children }: { children: React.ReactNode }) {
-  return <p className="p-[var(--spacing-layout-sm)] text-sm text-[var(--color-text-secondary)]">{children}</p>;
+  return <p className="p-[var(--spacing-layout-sm)] text-body-sm text-[var(--color-text-secondary)]">{children}</p>;
 }
 
 // 'none' = nothing selected: the detail panel is closed and the map gets the full width.
@@ -255,8 +255,8 @@ export function MyCareerScreen() {
         <div className="flex h-full flex-col overflow-y-auto lg:overflow-hidden">
           <header className="flex flex-wrap items-center gap-[var(--spacing-layout-xs)] px-[var(--spacing-layout-sm)] py-[var(--spacing-layout-sm)]">
             <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xs)]">
-              <h1 className="text-2xl font-semibold text-[var(--color-background-default-foreground)]">My Career</h1>
-              <p className="text-sm text-[var(--color-text-secondary)]">{employee.name} · {levelName(current.id)}</p>
+              <h1 className="text-heading-xl text-[var(--color-background-default-foreground)]">My Career</h1>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">{employee.name} · {levelName(current.id)}</p>
             </div>
             {notice}
             {viewSwitch}
@@ -370,10 +370,10 @@ export function MyCareerScreen() {
                 {removal.gone.length === 1 ? 'This card goes:' : `These ${removal.gone.length} cards go, including anything added from them:`}
               </AlertDialogDescription>
             </AlertDialogHeader>
-            <ul className="list-disc pl-[var(--spacing-component-lg)] text-sm text-[var(--color-background-default-foreground)]">
+            <ul className="list-disc pl-[var(--spacing-component-lg)] text-body-sm text-[var(--color-background-default-foreground)]">
               {removal.gone.map((s) => <li key={s.id}>{levelName(s.id)}{s.vision !== undefined ? ` · ${visionLabel(s)}` : ''}</li>)}
             </ul>
-            <p className="text-sm text-[var(--color-text-secondary)]">You can add {removal.gone.length === 1 ? 'it' : 'them'} back any time. Your current role and Active target stay.</p>
+            <p className="text-body-sm text-[var(--color-text-secondary)]">You can add {removal.gone.length === 1 ? 'it' : 'them'} back any time. Your current role and Active target stay.</p>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
               <AlertDialogAction onClick={() => {

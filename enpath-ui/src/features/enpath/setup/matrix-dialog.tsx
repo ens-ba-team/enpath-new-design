@@ -75,7 +75,7 @@ export function MatrixDialog({
             <Label htmlFor="mx-name">Matrix name</Label>
             <Input id="mx-name" value={draft.name} placeholder="e.g. Northstar Engineering" aria-invalid={(tried && nameMissing) || undefined}
               onChange={(e) => setDraft((d) => ({ ...d, name: e.target.value }))} autoFocus />
-            {tried && nameMissing && <p className="text-xs text-[var(--color-text-invalid)]">Enter a name.</p>}
+            {tried && nameMissing && <p className="text-body-xs text-[var(--color-text-invalid)]">Enter a name.</p>}
           </div>
 
           <div className="flex flex-col gap-[var(--spacing-component-xs)]">
@@ -83,7 +83,7 @@ export function MatrixDialog({
             <Textarea id="mx-desc" rows={3} value={draft.description} placeholder="What this framework covers"
               aria-invalid={(tried && descMissing) || undefined}
               onChange={(e) => setDraft((d) => ({ ...d, description: e.target.value }))} />
-            {tried && descMissing && <p className="text-xs text-[var(--color-text-invalid)]">Enter a description.</p>}
+            {tried && descMissing && <p className="text-body-xs text-[var(--color-text-invalid)]">Enter a description.</p>}
           </div>
 
           <div className="flex flex-col gap-[var(--spacing-component-xs)]">
@@ -97,7 +97,7 @@ export function MatrixDialog({
           </div>
 
           <fieldset className="flex flex-col gap-[var(--spacing-component-sm)]">
-            <legend className="text-sm font-semibold">Owners <span className="font-normal text-[var(--color-text-secondary)]">(needed before publishing)</span></legend>
+            <legend className="text-label-md">Owners <span className="font-normal text-[var(--color-text-secondary)]">(needed before publishing)</span></legend>
             <ol className="flex flex-col gap-[var(--spacing-component-xs)]">
               {draft.owners.map((o, i) => (
                 <li key={i} className="flex items-center gap-[var(--spacing-component-sm)]">
@@ -120,10 +120,10 @@ export function MatrixDialog({
               <WarningIcon className="mt-[var(--spacing-component-xxs)] h-4 w-4 shrink-0" aria-hidden="true" />
               <div className="flex flex-col gap-[var(--spacing-component-sm)]">
                 <AlertTitle>Lowering the scale to {draft.scaleSize} points removes this behavior text</AlertTitle>
-                <ul className="flex max-h-[160px] flex-col gap-[var(--spacing-component-sm)] overflow-auto text-sm">
+                <ul className="flex max-h-[160px] flex-col gap-[var(--spacing-component-sm)] overflow-auto text-body-sm">
                   {droppedDetail.map((c) => (
                     <li key={c.name}>
-                      <p className="font-semibold text-[var(--color-status-warning-subtle-foreground)]">{c.name}</p>
+                      <p className="text-heading-xs text-[var(--color-status-warning-subtle-foreground)]">{c.name}</p>
                       <ul className="flex flex-col gap-[var(--spacing-component-xxs)] pl-[var(--spacing-component-md)]">
                         {c.points.map(({ point, b }) => (
                           <li key={point}>Point {point}{b?.title ? ` · ${b.title}` : ''}{b?.description ? `: “${b.description}”` : ''}</li>

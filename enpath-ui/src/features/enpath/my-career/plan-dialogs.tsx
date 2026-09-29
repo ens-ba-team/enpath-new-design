@@ -30,8 +30,8 @@ export function levelName(levelId: string) {
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-[var(--spacing-component-xxs)] border-t border-[var(--color-border-default)] py-[var(--spacing-component-sm)] sm:flex-row sm:justify-between sm:gap-[var(--spacing-component-lg)]">
-      <dt className="text-sm text-[var(--color-text-secondary)]">{label}</dt>
-      <dd className="text-sm text-[var(--color-background-default-foreground)] sm:text-right">{children}</dd>
+      <dt className="text-body-sm text-[var(--color-text-secondary)]">{label}</dt>
+      <dd className="text-body-sm text-[var(--color-background-default-foreground)] sm:text-right">{children}</dd>
     </div>
   );
 }
@@ -56,7 +56,7 @@ export function SetTargetDialog({ open, onOpenChange, from, to, onConfirm }: {
           <Row label="From">{from ?? 'No target yet'}</Row>
           <Row label="To">{to}</Row>
         </dl>
-        <p className="text-sm text-[var(--color-text-secondary)]">
+        <p className="text-body-sm text-[var(--color-text-secondary)]">
           {from ? `${from} stays on your map as Planned. ` : ''}Your official role doesn’t change. A target is your own goal, not a promotion or transfer.
         </p>
         <AlertDialogFooter>
@@ -108,7 +108,7 @@ function VisionRequestForm({ visionName, route, initialNote, onSend, onCancel }:
             <Textarea id="vision-note" rows={3} value={note} onChange={(e) => setNote(e.target.value)}
               placeholder="I’ve enjoyed the onboarding research with the design team and want to grow into design." />
           </div>
-          <p className="flex items-start gap-[var(--spacing-component-xs)] text-sm text-[var(--color-text-secondary)]">
+          <p className="flex items-start gap-[var(--spacing-component-xs)] text-body-sm text-[var(--color-text-secondary)]">
             <InfoIcon aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0" />
             Your current role stays the same. You can withdraw it while it’s waiting.
           </p>
@@ -135,7 +135,7 @@ export function RemoveTargetDialog({ open, onOpenChange, target, onConfirm }: {
           <AlertDialogTitle>Remove your target?</AlertDialogTitle>
           <AlertDialogDescription>{target} stays on your map. You just stop tracking progress toward it.</AlertDialogDescription>
         </AlertDialogHeader>
-        <p className="text-sm text-[var(--color-text-secondary)]">
+        <p className="text-body-sm text-[var(--color-text-secondary)]">
           Your progress strip stays empty until you choose another target. You can set it again any time.
         </p>
         <AlertDialogFooter>
@@ -259,7 +259,7 @@ function ExplorePositionForm({ starts, defaultFrom, nextVision, plan, onMap, fol
           </div>
         </div>
 
-        {tried && error && <p role="alert" className="text-sm text-[var(--color-text-invalid)]">{error}</p>}
+        {tried && error && <p role="alert" className="text-body-sm text-[var(--color-text-invalid)]">{error}</p>}
 
         {move && (
           <RoutePreview
@@ -292,14 +292,14 @@ function RoutePreview({ from, fromLabel, levels, onMap, heading, note, tone }: {
 }) {
   return (
     <div role="status" className="flex flex-col gap-[var(--spacing-component-xs)]">
-      <p className="text-xs font-semibold text-[var(--color-text-secondary)]">{heading}</p>
+      <p className="text-label-sm text-[var(--color-text-secondary)]">{heading}</p>
       <StepRail tone={tone} aria-label="Route" className="-mx-[var(--spacing-component-sm)]">
         <StepRailItem title={levelName(from)} status={fromLabel} statusTone={fromLabel === 'You are here' ? 'current' : 'neutral'} marker="muted" muted />
         {levels.map((id) => onMap.has(id)
           ? <StepRailItem key={id} title={levelName(id)} status="already on your map" marker="muted" muted />
           : <StepRailItem key={id} title={levelName(id)} />)}
       </StepRail>
-      {note && <p className="text-sm text-[var(--color-text-secondary)]">{note}</p>}
+      {note && <p className="text-body-sm text-[var(--color-text-secondary)]">{note}</p>}
     </div>
   );
 }
@@ -327,7 +327,7 @@ export function SwitchPathDialog({ open, onOpenChange, from, to, targetNote, onC
           <Row label="From">{from ?? 'No company path'}</Row>
           <Row label="To">{to}</Row>
         </dl>
-        <p className="text-sm text-[var(--color-text-secondary)]">
+        <p className="text-body-sm text-[var(--color-text-secondary)]">
           {targetNote ?? 'Your Active target stays the same.'} Paths and career visions you added stay on your map.
         </p>
         <AlertDialogFooter>

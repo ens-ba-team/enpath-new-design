@@ -119,7 +119,7 @@ export function AssistantPanel({ script, onClose }: { script: AssistantScript; o
     >
       <header className="flex items-center gap-[var(--spacing-component-xs)] border-b border-[var(--color-border-default)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)]">
         <SparkleIcon className="h-4 w-4 text-[var(--color-icon-brand)]" aria-hidden="true" />
-        <h2 className="flex-1 text-sm font-semibold text-[var(--color-background-default-foreground)]">Chat</h2>
+        <h2 className="flex-1 text-heading-xs text-[var(--color-background-default-foreground)]">Chat</h2>
         <Tip label="New chat">
           <Button variant="ghost" size="icon" aria-label="New chat" onClick={() => { stop(); setTurns([]); }}><PlusIcon className="h-4 w-4" /></Button>
         </Tip>
@@ -137,15 +137,15 @@ export function AssistantPanel({ script, onClose }: { script: AssistantScript; o
             <ConversationEmptyState className="gap-[var(--spacing-component-lg)] p-[var(--spacing-component-lg)]">
               <SparkleIcon className="h-8 w-8 text-[var(--color-icon-brand)]" aria-hidden="true" />
               <div className="flex flex-col gap-[var(--spacing-component-xs)]">
-                <h3 className="text-sm font-semibold text-[var(--color-background-default-foreground)]">{script.emptyTitle}</h3>
-                <p className="text-sm text-[var(--color-text-secondary)]">{script.emptyText}</p>
+                <h3 className="text-heading-xs text-[var(--color-background-default-foreground)]">{script.emptyTitle}</h3>
+                <p className="text-body-sm text-[var(--color-text-secondary)]">{script.emptyText}</p>
               </div>
             </ConversationEmptyState>
           ) : (
             turns.map((t) => (
               <Message key={t.id} from={t.role}>
                 {t.role === 'assistant' && t.tool && (
-                  <p className="flex items-center gap-[var(--spacing-component-xs)] text-xs text-[var(--color-text-secondary)]">
+                  <p className="flex items-center gap-[var(--spacing-component-xs)] text-body-xs text-[var(--color-text-secondary)]">
                     <MagnifyingGlassIcon className="h-3 w-3" aria-hidden="true" />{t.tool}
                   </p>
                 )}
@@ -154,8 +154,8 @@ export function AssistantPanel({ script, onClose }: { script: AssistantScript; o
                 </MessageContent>
                 {t.proposal && t.proposal.state !== 'discarded' && (
                   <div className="flex flex-col gap-[var(--spacing-component-sm)] rounded-[var(--radius-surface)] border border-[var(--color-border-default)] bg-[var(--color-surface-overlay)] p-[var(--spacing-component-md)] shadow-[var(--shadow-surface)]">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]">{t.proposal.label}</p>
-                    <div className="text-sm text-[var(--color-background-default-foreground)]">{t.proposal.body}</div>
+                    <p className="text-label-sm uppercase tracking-wide text-[var(--color-text-secondary)]">{t.proposal.label}</p>
+                    <div className="text-body-sm text-[var(--color-background-default-foreground)]">{t.proposal.body}</div>
                     <div className="flex justify-end gap-[var(--spacing-component-sm)]">
                       {t.proposal.state === 'accepted' ? (
                         <Badge variant="secondary">{t.proposal.accepted}</Badge>
@@ -200,14 +200,14 @@ export function AssistantPanel({ script, onClose }: { script: AssistantScript; o
             <PromptInputTools>
               {script.modes && mode && (
                 <PromptInputSelect value={mode} onValueChange={setMode}>
-                  <PromptInputSelectTrigger aria-label="Mode" className="h-7 w-auto gap-[var(--spacing-component-xs)] border-none px-[var(--spacing-component-sm)] text-xs shadow-none"><PromptInputSelectValue /></PromptInputSelectTrigger>
+                  <PromptInputSelectTrigger aria-label="Mode" className="h-7 w-auto gap-[var(--spacing-component-xs)] border-none px-[var(--spacing-component-sm)] text-body-xs shadow-none"><PromptInputSelectValue /></PromptInputSelectTrigger>
                   <PromptInputSelectContent>
                     {script.modes.map((m) => <PromptInputSelectItem key={m} value={m}>{m}</PromptInputSelectItem>)}
                   </PromptInputSelectContent>
                 </PromptInputSelect>
               )}
               <PromptInputSelect value={model} onValueChange={setModel}>
-                <PromptInputSelectTrigger aria-label="Model" className="h-7 w-auto gap-[var(--spacing-component-xs)] border-none px-[var(--spacing-component-sm)] text-xs shadow-none"><PromptInputSelectValue /></PromptInputSelectTrigger>
+                <PromptInputSelectTrigger aria-label="Model" className="h-7 w-auto gap-[var(--spacing-component-xs)] border-none px-[var(--spacing-component-sm)] text-body-xs shadow-none"><PromptInputSelectValue /></PromptInputSelectTrigger>
                 <PromptInputSelectContent>
                   {MODELS.map((m) => <PromptInputSelectItem key={m.id} value={m.id}>{m.name}</PromptInputSelectItem>)}
                 </PromptInputSelectContent>

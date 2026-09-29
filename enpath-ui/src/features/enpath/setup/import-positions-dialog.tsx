@@ -93,16 +93,16 @@ function ImportPositionsForm({ matrices, existingCodes, onImport, onCancel }: {
         <div className="flex flex-col gap-[var(--spacing-component-lg)]">
           <div className="flex flex-col gap-[var(--spacing-component-xs)]">
             <Label htmlFor="csv-text">CSV</Label>
-            <Textarea id="csv-text" rows={5} value={text} placeholder={SAMPLE} onChange={(e) => setText(e.target.value)} className="font-mono text-xs" />
-            <p className="text-xs text-[var(--color-text-secondary)]">
+            <Textarea id="csv-text" rows={5} value={text} placeholder={SAMPLE} onChange={(e) => setText(e.target.value)} className="text-code-sm" />
+            <p className="text-body-xs text-[var(--color-text-secondary)]">
               Columns: name, code, department, matrix, levels (levels separated by <code>;</code>). Matrix must match an existing Active matrix by name.
             </p>
           </div>
 
           {rows.length > 0 && (
             <div className="flex flex-col gap-[var(--spacing-component-xs)]">
-              <p className="text-sm font-semibold">{ready.length} of {rows.length} ready to import</p>
-              <ul className="flex max-h-[220px] flex-col gap-[var(--spacing-component-xs)] overflow-auto rounded-[var(--radius-md)] border border-[var(--color-border-default)] p-[var(--spacing-component-sm)] text-sm">
+              <p className="text-heading-xs">{ready.length} of {rows.length} ready to import</p>
+              <ul className="flex max-h-[220px] flex-col gap-[var(--spacing-component-xs)] overflow-auto rounded-[var(--radius-md)] border border-[var(--color-border-default)] p-[var(--spacing-component-sm)] text-body-sm">
                 {rows.map((r) => (
                   <li key={r.line} className="flex items-start gap-[var(--spacing-component-xs)]">
                     {r.error ? (
@@ -111,7 +111,7 @@ function ImportPositionsForm({ matrices, existingCodes, onImport, onCancel }: {
                       <CheckCircleIcon className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-status-success-subtle-foreground)]" aria-hidden="true" />
                     )}
                     <span className="min-w-0 flex-1">
-                      <span className="font-medium">{r.name || `Row ${r.line}`}</span>
+                      <span className="text-heading-xs">{r.name || `Row ${r.line}`}</span>
                       {r.error ? (
                         <span className="text-[var(--color-status-warning-subtle-foreground)]">: {r.error}</span>
                       ) : (

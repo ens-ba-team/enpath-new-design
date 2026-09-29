@@ -53,7 +53,7 @@ function MatrixList({ matrices, selected, onSelect, onAdd }: { matrices: Matrix[
   return (
     <aside className="flex w-[280px] shrink-0 flex-col border-r border-[var(--color-border-default)]">
       <div className="flex flex-col gap-[var(--spacing-component-md)] p-[var(--spacing-component-lg)]">
-        <h2 className="text-base font-semibold text-[var(--color-background-default-foreground)]">Matrices</h2>
+        <h2 className="text-heading-sm text-[var(--color-background-default-foreground)]">Matrices</h2>
         <div className="relative">
           <MagnifyingGlassIcon className="pointer-events-none absolute left-[var(--spacing-component-sm)] top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--color-text-secondary)]" aria-hidden="true" />
           <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search matrices" aria-label="Search matrices" className="pl-[var(--spacing-component-xl)]!" />
@@ -66,14 +66,14 @@ function MatrixList({ matrices, selected, onSelect, onAdd }: { matrices: Matrix[
               size="sm"
               className="px-[var(--spacing-component-md)]"
               title={m.name}
-              description={<span className="text-xs">{m.competencies.length} {m.competencies.length === 1 ? 'competency' : 'competencies'}</span>}
+              description={<span className="text-body-xs">{m.competencies.length} {m.competencies.length === 1 ? 'competency' : 'competencies'}</span>}
               action={<MatrixStatusBadge status={m.status} />}
               selected={m.id === selected}
               onSelect={() => onSelect(m.id)}
             />
           </li>
         ))}
-        {shown.length === 0 && <li className="p-[var(--spacing-component-sm)] text-sm text-[var(--color-text-secondary)]">No matrices match “{query}”.</li>}
+        {shown.length === 0 && <li className="p-[var(--spacing-component-sm)] text-body-sm text-[var(--color-text-secondary)]">No matrices match “{query}”.</li>}
       </ul>
       <div className="border-t border-[var(--color-border-default)] p-[var(--spacing-component-lg)]">
         <Button variant="outline" className="w-full" onClick={onAdd}><PlusIcon className="h-4 w-4" aria-hidden="true" />Add matrix</Button>
@@ -114,7 +114,7 @@ function CompetencyStepper({ competencies, scaleSize, active, onSelect }: {
             className="flex items-stretch gap-[var(--spacing-component-sm)] rounded-[var(--radius-md)] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)]"
           >
             <span className="flex flex-col items-center">
-              <span className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-[var(--radius-full)] border text-xs ${
+              <span className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-[var(--radius-full)] border text-body-xs ${
                 filled
                   ? 'border-[var(--color-border-strong)] bg-[var(--color-surface-raised)] text-[var(--color-background-default-foreground)]'
                   : 'border-[var(--color-border-default)] bg-[var(--color-background-default)] text-[var(--color-text-secondary)]'
@@ -124,10 +124,10 @@ function CompetencyStepper({ competencies, scaleSize, active, onSelect }: {
               {!isLast && <span className="w-px flex-1 bg-[var(--color-border-default)]" aria-hidden="true" />}
             </span>
             <span className="flex flex-col gap-0.5 pb-[var(--spacing-component-lg)] pt-[var(--spacing-component-xxs)]">
-              <span className={`text-sm ${isActive ? 'font-semibold text-[var(--color-background-default-foreground)]' : 'text-[var(--color-text-secondary)]'}`}>
+              <span className={`text-body-sm ${isActive ? 'font-semibold text-[var(--color-background-default-foreground)]' : 'text-[var(--color-text-secondary)]'}`}>
                 {c.name || 'Untitled competency'}
               </span>
-              <span className="text-xs text-[var(--color-text-secondary)]">{filledCount} of {scaleSize} filled</span>
+              <span className="text-body-xs text-[var(--color-text-secondary)]">{filledCount} of {scaleSize} filled</span>
             </span>
           </button>
         );
@@ -139,7 +139,7 @@ function CompetencyStepper({ competencies, scaleSize, active, onSelect }: {
 function ReadonlyRatingScale({ competency, scaleSize }: { competency: Competency; scaleSize: number }) {
   return (
     <section className="flex flex-col gap-[var(--spacing-layout-xs)]" aria-labelledby={`rating-scale-${competency.id}`}>
-      <h4 id={`rating-scale-${competency.id}`} className="text-sm font-semibold text-[var(--color-background-default-foreground)]">
+      <h4 id={`rating-scale-${competency.id}`} className="text-heading-xs text-[var(--color-background-default-foreground)]">
         Rating scale
       </h4>
       <ol>
@@ -149,14 +149,14 @@ function ReadonlyRatingScale({ competency, scaleSize }: { competency: Competency
             <React.Fragment key={i}>
               {i > 0 && <Separator className="bg-[var(--color-border-subtle)]" />}
               <li className="flex flex-col gap-[var(--spacing-component-sm)] py-[var(--spacing-component-lg)] first:pt-0 last:pb-0">
-                <h5 className="text-sm font-semibold text-[var(--color-background-default-foreground)]">
-                  <span className="font-medium text-[var(--color-text-secondary)]">Scale {i + 1}</span>
+                <h5 className="text-heading-xs text-[var(--color-background-default-foreground)]">
+                  <span className="text-[var(--color-text-secondary)]">Scale {i + 1}</span>
                   <span aria-hidden="true"> · </span>
                   <span className={behavior?.title ? undefined : 'text-[var(--color-text-secondary)]'}>{behavior?.title || 'Not set'}</span>
                 </h5>
                 <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
-                  <span className="text-xs font-medium text-[var(--color-text-secondary)]">Description</span>
-                  <p className={`text-sm ${behavior?.description ? 'text-[var(--color-background-default-foreground)]' : 'text-[var(--color-text-secondary)]'}`}>
+                  <span className="text-label-sm text-[var(--color-text-secondary)]">Description</span>
+                  <p className={`text-body-sm ${behavior?.description ? 'text-[var(--color-background-default-foreground)]' : 'text-[var(--color-text-secondary)]'}`}>
                     {behavior?.description || 'Not set'}
                   </p>
                 </div>
@@ -195,7 +195,7 @@ function RatingScalePanel({ competency, scaleSize, editable, expandedReadOnly, o
                 <Input id={`c-title-${competency.id}-${i}`} value={b?.title ?? ''} placeholder={`e.g. ${scale[i] ?? 'Point ' + (i + 1)}`}
                   onChange={(e) => onChangeBehavior(i, { title: e.target.value })} />
               ) : (
-                <p className={`text-sm ${b?.title ? 'text-[var(--color-background-default-foreground)]' : 'text-[var(--color-text-secondary)]'}`}>{b?.title || 'Not set'}</p>
+                <p className={`text-body-sm ${b?.title ? 'text-[var(--color-background-default-foreground)]' : 'text-[var(--color-text-secondary)]'}`}>{b?.title || 'Not set'}</p>
               )}
             </div>
             <div className="flex flex-col gap-[var(--spacing-component-xs)]">
@@ -204,7 +204,7 @@ function RatingScalePanel({ competency, scaleSize, editable, expandedReadOnly, o
                 <Textarea id={`c-desc-${competency.id}-${i}`} rows={3} value={b?.description ?? ''} placeholder="What this looks like in practice"
                   onChange={(e) => onChangeBehavior(i, { description: e.target.value })} />
               ) : (
-                <p className={`text-sm ${b?.description ? 'text-[var(--color-background-default-foreground)]' : 'text-[var(--color-text-secondary)]'}`}>{b?.description || 'Not set'}</p>
+                <p className={`text-body-sm ${b?.description ? 'text-[var(--color-background-default-foreground)]' : 'text-[var(--color-text-secondary)]'}`}>{b?.description || 'Not set'}</p>
               )}
             </div>
           </TabsContent>
@@ -245,7 +245,7 @@ function CompetencyEditor({ competencies, scaleSize, editable, expandedReadOnly,
   if (competencies.length === 0) {
     return (
       <div className="flex flex-col gap-[var(--spacing-component-md)]">
-        <p className="text-sm text-[var(--color-text-secondary)]">No competencies yet.</p>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">No competencies yet.</p>
         {editable && (
           <Button type="button" variant="ghost" size="sm" className="self-start" onClick={onAddCompetency}>
             <PlusIcon className="h-4 w-4" aria-hidden="true" />Add competency
@@ -273,14 +273,14 @@ function CompetencyEditor({ competencies, scaleSize, editable, expandedReadOnly,
           {editable ? (
             <div className="flex flex-col gap-[var(--spacing-component-sm)]">
               <Input value={current.name} placeholder="Competency name, e.g. System design"
-                className="text-base font-semibold" onChange={(e) => onChangeCompetency(current.id, { name: e.target.value })} />
+                className="text-heading-sm" onChange={(e) => onChangeCompetency(current.id, { name: e.target.value })} />
               <Textarea rows={2} value={current.description} placeholder="What this competency covers"
                 onChange={(e) => onChangeCompetency(current.id, { description: e.target.value })} />
             </div>
           ) : (
             <div>
-              <h3 className="text-base font-semibold text-[var(--color-background-default-foreground)]">{current.name || 'Untitled competency'}</h3>
-              {current.description && <p className="mt-[var(--spacing-component-xxs)] text-sm text-[var(--color-text-secondary)]">{current.description}</p>}
+              <h3 className="text-heading-sm text-[var(--color-background-default-foreground)]">{current.name || 'Untitled competency'}</h3>
+              {current.description && <p className="mt-[var(--spacing-component-xxs)] text-body-sm text-[var(--color-text-secondary)]">{current.description}</p>}
             </div>
           )}
 
@@ -327,22 +327,22 @@ function MatrixDetail({ matrix, positions, onChange, onPublish, onArchive, onRes
       <header className="flex items-center gap-[var(--spacing-layout-xs)] border-b border-[var(--color-border-default)] p-[var(--spacing-layout-sm)]">
         <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xs)]">
           <div className="flex items-center gap-[var(--spacing-component-sm)]">
-            <h2 className="text-xl font-semibold text-[var(--color-background-default-foreground)]">{matrix.name}</h2>
+            <h2 className="text-heading-lg text-[var(--color-background-default-foreground)]">{matrix.name}</h2>
             <MatrixStatusBadge status={matrix.status} />
           </div>
-          <dl className="flex flex-wrap items-center gap-x-[var(--spacing-layout-sm)] gap-y-[var(--spacing-component-xs)] text-sm">
+          <dl className="flex flex-wrap items-center gap-x-[var(--spacing-layout-sm)] gap-y-[var(--spacing-component-xs)] text-body-sm">
             <Meta label="Scale">{matrix.scaleSize} points</Meta>
             <Meta label="Owners">{matrix.owners.length ? matrix.owners.join(', ') : 'None yet'}</Meta>
             <Meta label="Last edited">{matrix.editedBy} · {matrix.editedAt}</Meta>
           </dl>
           <div className="flex flex-wrap items-center gap-[var(--spacing-component-sm)] pt-[var(--spacing-component-xs)]">
-            <span className="text-xs text-[var(--color-text-secondary)]">{linked.length > 0 ? 'Used by' : 'Not used by any position yet'}</span>
+            <span className="text-body-xs text-[var(--color-text-secondary)]">{linked.length > 0 ? 'Used by' : 'Not used by any position yet'}</span>
             {linked.map((p) => (
               <button
                 key={p.id}
                 type="button"
                 onClick={() => onOpenPosition(p.id)}
-                className="inline-flex items-center gap-[var(--spacing-component-xs)] rounded-[var(--radius-full)] border border-[var(--color-border-default)] bg-[var(--color-surface-raised)] px-[var(--spacing-component-sm)] py-[var(--spacing-component-xxs)] text-xs font-semibold text-[var(--color-surface-raised-foreground)] hover:border-[var(--color-border-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)]"
+                className="inline-flex items-center gap-[var(--spacing-component-xs)] rounded-[var(--radius-full)] border border-[var(--color-border-default)] bg-[var(--color-surface-raised)] px-[var(--spacing-component-sm)] py-[var(--spacing-component-xxs)] text-label-sm text-[var(--color-surface-raised-foreground)] hover:border-[var(--color-border-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)]"
               >
                 <BriefcaseIcon className="h-4 w-4" aria-hidden="true" />{p.name}
               </button>
@@ -408,7 +408,7 @@ function MatrixDetail({ matrix, positions, onChange, onPublish, onArchive, onRes
               <WarningIcon className="mt-[var(--spacing-component-xxs)] h-4 w-4 shrink-0" aria-hidden="true" />
               <div className="flex flex-col gap-[var(--spacing-component-xs)]">
                 <AlertTitle>Not ready</AlertTitle>
-                <ul className="flex list-disc flex-col gap-[var(--spacing-component-xxs)] pl-[var(--spacing-component-lg)] text-sm">
+                <ul className="flex list-disc flex-col gap-[var(--spacing-component-xxs)] pl-[var(--spacing-component-lg)] text-body-sm">
                   {issues.map((i) => <li key={i}>{i}</li>)}
                 </ul>
               </div>
@@ -416,7 +416,7 @@ function MatrixDetail({ matrix, positions, onChange, onPublish, onArchive, onRes
           )}
           {issues.length === 0 && linked.length > 0 && (matrix.changes > 0 || invalidRatingTotal > 0) && (
             <div className="flex flex-col gap-[var(--spacing-component-sm)]">
-              <p className="text-sm font-semibold text-[var(--color-background-default-foreground)]">Positions using it get these changes</p>
+              <p className="text-heading-xs text-[var(--color-background-default-foreground)]">Positions using it get these changes</p>
               {invalidRatingTotal > 0 && (
                 <Alert variant="warning" role="status" className="flex-row items-start gap-[var(--spacing-component-sm)]">
                   <WarningIcon className="mt-[var(--spacing-component-xxs)] h-4 w-4 shrink-0" aria-hidden="true" />
@@ -430,9 +430,9 @@ function MatrixDetail({ matrix, positions, onChange, onPublish, onArchive, onRes
                 {linked.map((position) => {
                   const invalidCount = ratingsAboveScale.get(position.id) ?? 0;
                   return (
-                    <div key={position.id} className="flex flex-col gap-[var(--spacing-component-xxs)] text-sm">
-                      <span className="font-semibold text-[var(--color-background-default-foreground)]">{position.name}</span>
-                      <span className="text-xs text-[var(--color-text-secondary)]">
+                    <div key={position.id} className="flex flex-col gap-[var(--spacing-component-xxs)] text-body-sm">
+                      <span className="text-heading-xs text-[var(--color-background-default-foreground)]">{position.name}</span>
+                      <span className="text-body-xs text-[var(--color-text-secondary)]">
                         {[invalidCount > 0 && `${invalidCount} ${invalidCount === 1 ? 'rating' : 'ratings'} will become Not set`,
                           position.status === 'Published' && 'Returns to Draft for review'].filter(Boolean).join(' · ') || 'Keeps its ratings'}
                       </span>

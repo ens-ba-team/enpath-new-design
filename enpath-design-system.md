@@ -317,7 +317,7 @@ Values live in `Tokens/semantics.tokens.json` → `typography/*` (each with its 
 - **Labels never wrap:** `label-*` has line height = size, so two lines collide. Text that can wrap uses `body-*` or `heading-*`.
 - **Mono:** `text-code-md` / `text-code-sm`, machine text only (R-ENP-03). They are generated as `@utility` classes because Tailwind's text theme can't carry a font family.
 - **New style:** add it to `typography/*` in the tokens and rebuild. `cn()` (`lib/utils.ts`) already recognises `display|heading|body|label|code-(xs…xl)` names; without that, tailwind-merge drops the style when a colour class follows.
-- **Migration:** components (`components/ui`, `components/ai-elements`) use styles. Screens (`src/features`, `src/app`) and stories still use the old mixed classes and move next; until then `text-*` + `font-*` still renders from tokens.
+- **Migration:** components (`components/ui`, `components/ai-elements`) and screens (`src/features`, `src/app`) use styles. Stories still use the old mixed classes and move next. Inline emphasis inside a styled line (a bold name in a sentence, a quiet "(optional)" in a label) still uses a lone `font-semibold` / `font-normal`: open decision.
 
 ---
 

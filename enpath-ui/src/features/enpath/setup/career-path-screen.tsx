@@ -76,7 +76,7 @@ function PathList({
   return (
     <aside className="flex w-[280px] shrink-0 flex-col border-r border-[var(--color-border-default)]">
       <div className="flex flex-col gap-[var(--spacing-component-md)] p-[var(--spacing-component-lg)]">
-        <h2 className="text-base font-semibold text-[var(--color-background-default-foreground)]">
+        <h2 className="text-heading-sm text-[var(--color-background-default-foreground)]">
           Career paths
         </h2>
         <Input
@@ -103,7 +103,7 @@ function PathList({
           />
         ))}
         {shown.length === 0 && (
-          <p className="p-[var(--spacing-component-sm)] text-sm text-[var(--color-text-secondary)]">
+          <p className="p-[var(--spacing-component-sm)] text-body-sm text-[var(--color-text-secondary)]">
             No paths match “{query}”.
           </p>
         )}
@@ -349,15 +349,15 @@ export function CareerPathScreen({
         <header className="flex items-center gap-[var(--spacing-layout-xs)] border-b border-[var(--color-border-default)] p-[var(--spacing-layout-sm)]">
           <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xs)]">
             <div className="flex items-center gap-[var(--spacing-component-sm)]">
-              <h2 className="text-xl font-semibold text-[var(--color-background-default-foreground)]">
+              <h2 className="text-heading-lg text-[var(--color-background-default-foreground)]">
                 {current.name}
               </h2>
               <PathStatus status={current.status} />
             </div>
-            <p className="text-sm text-[var(--color-text-secondary)]">
+            <p className="text-body-sm text-[var(--color-text-secondary)]">
               {current.description}
             </p>
-            <dl className="flex flex-wrap items-center gap-x-[var(--spacing-layout-sm)] gap-y-[var(--spacing-component-xs)] text-sm">
+            <dl className="flex flex-wrap items-center gap-x-[var(--spacing-layout-sm)] gap-y-[var(--spacing-component-xs)] text-body-sm">
               <div>
                 <dt className="inline text-[var(--color-text-secondary)]">
                   Owner{" "}
@@ -408,8 +408,8 @@ export function CareerPathScreen({
         <div className="flex-1 overflow-auto p-[var(--spacing-layout-sm)]">
           <div className="w-full max-w-[760px]">
             <div className="mb-[var(--spacing-layout-xs)]">
-              <h3 className="font-semibold">Progression steps</h3>
-              <p className="text-sm text-[var(--color-text-secondary)]">
+              <h3 className="text-heading-sm">Progression steps</h3>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
                 Arrange Position–Level steps into a direction employees can
                 follow.
               </p>
@@ -505,7 +505,7 @@ export function CareerPathScreen({
             {!readOnly && (
               <div className="mt-[var(--spacing-layout-xs)] flex flex-wrap items-end gap-[var(--spacing-layout-xs)] rounded-[var(--radius-surface)] border border-[var(--color-border-default)] bg-[var(--color-surface-default)] p-[var(--spacing-component-md)]">
                 <div className="min-w-[220px] flex-1">
-                  <label className="mb-[var(--spacing-component-xs)] block text-sm font-semibold">
+                  <label className="mb-[var(--spacing-component-xs)] block text-label-md">
                     Position
                   </label>
                   <Select
@@ -528,7 +528,7 @@ export function CareerPathScreen({
                   </Select>
                 </div>
                 <div className="min-w-[180px] flex-1">
-                  <label className="mb-[var(--spacing-component-xs)] block text-sm font-semibold">
+                  <label className="mb-[var(--spacing-component-xs)] block text-label-md">
                     Level
                   </label>
                   <Select
@@ -609,11 +609,11 @@ export function CareerPathScreen({
           </AlertDialogHeader>
           <div className="flex flex-col gap-[var(--spacing-component-md)]">
             <div>
-              <label className="mb-1 block text-sm font-semibold">Name</label>
+              <label className="mb-1 block text-label-md">Name</label>
               <Input value={name} onChange={(e) => setName(e.target.value)} />
             </div>
             <div>
-              <label className="mb-1 block text-sm font-semibold">
+              <label className="mb-1 block text-label-md">
                 Description
               </label>
               <Input

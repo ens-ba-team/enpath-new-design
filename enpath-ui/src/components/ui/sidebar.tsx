@@ -253,7 +253,9 @@ export function SidebarGroupLabel({
       className={cn(
         "text-label-sm uppercase tracking-wide",
         "text-[var(--color-text-secondary)]",
-        "px-[var(--spacing-component-sm)]",
+        // label-* has line height = size; the xxs padding gives the label its 16px box back so it
+        // sits with its group instead of drifting toward the divider above.
+        "px-[var(--spacing-component-sm)] py-[var(--spacing-component-xxs)]",
         className
       )}
       {...props}

@@ -261,22 +261,22 @@ Found by scanning `src/features` and `src/app` for visual classes on design-syst
 
 | # | Component | Where | What the screen overrides | Proposed change in the component |
 |---|---|---|---|---|
-| 1 | **Accordion** | `my-career/gap-row.tsx:114–119` | trigger padding 16 → 8px, trigger weight normal, content bottom padding, last item without border | `size="compact"` (the code already says "local override until the Accordion gets a compact size") |
+| 1 | **Accordion** | `my-career/gap-row.tsx:114–119` | trigger padding `spacing/component/lg` → `spacing/component/sm`, trigger `text-body-sm` instead of the component's style, content bottom padding, last item without border | `size="compact"` (the code already says "local override until the Accordion gets a compact size") |
 | 2 | **Alert** | `setup/setup-screen.tsx:562`, `my-career/my-career-panels.tsx:136` | padding lg → `px md / py sm` (one-line Alert in a page header) | `size="sm"` (compact, one line) |
 | 3 | **Button** (link) | `my-career/my-career-panels.tsx:145` | `h-auto px-0` so a link button sits inline | the `link` variant has no control height / side padding by default |
 | 4 | **Button** (pressed) | `my-career/my-career-screen.tsx:206` (Map / List switch) | pressed look by hand: `bg-[--button-ghost-bg-active]` + `font-semibold` when `aria-pressed` | Button styles `aria-pressed` itself (or a Toggle Group component) |
-| 5 | **Button** (outline, count) | `my-career/my-career-panels.tsx:239` (progress-strip counts) | `font-normal` | decide: a normal-weight option, or accept the default weight |
+| 5 | **Button** (outline, count) | `my-career/my-career-panels.tsx:239` (progress-strip counts) | `text-body-sm` instead of the button's label style | decide: a quieter button option, or accept the default style |
 | 6 | **Button** (icon, muted) | `my-career/my-career-panels.tsx:269` (ⓘ) | icon colour `--color-icon-muted` | a muted icon-button option, or accept the default colour |
 | 7 | **Button / SelectTrigger** on the map | `my-career/my-career-screen.tsx:215, 219` | background `--color-surface-default` (controls over the canvas) | check the outline defaults; if they're transparent, an opaque "on canvas" option |
 | 8 | **Input** with a search icon | `setup/setup-screen.tsx:148`, `setup/matrices-screen.tsx:59` | `pl-[xl]!` to make room for the icon | use **InputGroup** (exists) with a leading icon |
-| 9 | **Input** as an inline title | `setup/matrices-screen.tsx:275` | `text-base font-semibold` | a title size, or a separate inline-edit component |
-| 10 | **Textarea** for pasted data | `setup/import-positions-dialog.tsx:96` | `font-mono text-xs` | a monospace option (machine text, allowed by the mono rule) |
+| 9 | **Input** as an inline title | `setup/matrices-screen.tsx:275` | `text-heading-sm` instead of the input's style | a title size, or a separate inline-edit component |
+| 10 | **Textarea** for pasted data | `setup/import-positions-dialog.tsx:96` | `text-code-sm` | a monospace option (machine text, allowed by the mono rule) |
 | 11 | **Item** in master lists | `setup/setup-screen.tsx:162`, `setup/matrices-screen.tsx:65`, `setup/career-path-screen.tsx:94` | side padding → md | a list-row padding option (same in all three Setup lists) |
-| 12 | **Item** description | `setup/history-drawer.tsx:33` | description `text-xs` | check Item `size="sm"` description size |
-| 13 | **CardTitle** | `my-career/gap-row.tsx:99` | `text-sm` | Card compact size (goes with #1) |
+| 12 | **Item** description | `setup/history-drawer.tsx:33` | description `text-body-xs` | check Item `size="sm"` description size |
+| 13 | **CardTitle** | `my-career/gap-row.tsx:99` | `text-heading-xs` instead of the card title's style | Card compact size (goes with #1) |
 | 14 | **Separator** | `app-shell.tsx:89, 158` (sidebar), `setup/matrices-screen.tsx:150` | colour `--color-sidebar-border` / `--color-border-subtle` | `tone` option (default / subtle / sidebar) |
 | 15 | **Progress** | `setup/setup-screen.tsx:571` | track `--color-background-default`, fill green (`[&>div]:bg-success`) | `tone="success"` |
-| 16 | **PromptInputSelectTrigger** (AI Elements) | `chat/assistant-panel.tsx:203, 210` | `h-7`, no border, no shadow, `text-xs` | a compact / borderless trigger option |
+| 16 | **PromptInputSelectTrigger** (AI Elements) | `chat/assistant-panel.tsx:203, 210` | `h-7`, no border, no shadow, `text-body-xs` | a compact / borderless trigger option |
 | 17 | **CollapsibleTrigger** | `setup/setup-screen.tsx:154` (department group header) | radius, padding on a bare trigger | check: a styled group-header component, or a pattern built from Button |
 
 **Label weight (resolved 2026-09-29):** labels (`label-*`) and small headings take their weight from the text-style tokens, so the old `font-medium` places match once they move to text styles. A selected state adds `font-semibold` (Sidebar, Item).
