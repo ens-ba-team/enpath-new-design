@@ -1118,6 +1118,7 @@
    * Use when: Captions, timestamps, helper text below inputs, legal footnotes, badge labels.
    * Do not use: For body copy or any text that requires sustained reading — too small for comfort.
    * Use instead: font-size/sm for secondary body text.
+   * Code: Tailwind text-xs reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-xs with it.
    * Status: Stable
    */
   --font-size-xs: 12;
@@ -1125,6 +1126,7 @@
    * Intent: Secondary text size; slightly smaller than body.
    * Use when: Supporting copy, table cell content, sidebar labels, secondary descriptions, input helper text.
    * Do not use: For primary headings or hero content.
+   * Code: Tailwind text-sm reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-sm with it.
    * Status: Stable
    */
   --font-size-sm: 14;
@@ -1132,6 +1134,7 @@
    * Intent: Default body text size — the readable baseline for the system.
    * Use when: Main body copy, paragraph text, form labels, default UI text.
    * Do not use: For headings — use font-size/lg and above.
+   * Code: Tailwind text-base reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-base with it.
    * Status: Stable
    */
   --font-size-base: 16;
@@ -1139,6 +1142,7 @@
    * Intent: Slightly emphasised text; between body and heading.
    * Use when: Subheadings, lead paragraphs, card titles on smaller cards, section intros.
    * Do not use: For primary page headings — use font-size/xl or above.
+   * Code: Tailwind text-lg reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-lg with it.
    * Status: Stable
    */
   --font-size-lg: 18;
@@ -1146,6 +1150,7 @@
    * Intent: Small heading size.
    * Use when: Panel headers, dialog titles, section headings in sidebars or compact layouts.
    * Do not use: For body text — will feel too large and reduce density.
+   * Code: Tailwind text-xl reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-xl with it.
    * Status: Stable
    */
   --font-size-xl: 20;
@@ -1153,6 +1158,7 @@
    * Intent: Medium heading size.
    * Use when: Card group headings, page section titles, modal headers.
    * Do not use: For body or supporting text.
+   * Code: Tailwind text-2xl reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-2xl with it.
    * Status: Stable
    */
   --font-size-2xl: 24;
@@ -1160,6 +1166,7 @@
    * Intent: Large heading; primary content section titles.
    * Use when: Page-level h2 headings, feature section titles, prominent labels.
    * Do not use: Below 600px viewport — scale down to font-size/2xl on mobile.
+   * Code: Tailwind text-3xl reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-3xl with it.
    * Status: Stable
    */
   --font-size-3xl: 30;
@@ -1167,6 +1174,7 @@
    * Intent: Major display heading.
    * Use when: Page h1 titles, onboarding screen headings, large dashboard figures.
    * Do not use: For anything other than the primary heading on a view.
+   * Code: Tailwind text-4xl reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-4xl with it.
    * Status: Stable
    */
   --font-size-4xl: 36;
@@ -1175,16 +1183,28 @@
    * Use when: Marketing hero headings, splash screens, empty state primary messages.
    * Do not use: In dense product UI or data-heavy screens — too dominant for functional layouts.
    * Use instead: font-size/4xl for product UI headings.
+   * Code: Tailwind text-5xl reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-5xl with it.
    * Status: Stable
    */
   --font-size-5xl: 48;
+  /**
+   * Intent: Display size between its neighbours on the scale.
+   * Code: Tailwind text-6xl reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-6xl with it.
+   * Status: Stable
+   */
   --font-size-6xl: 60;
+  /**
+   * Intent: Display size between its neighbours on the scale.
+   * Code: Tailwind text-7xl reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-7xl with it.
+   * Status: Stable
+   */
   --font-size-7xl: 72;
   /**
    * Intent: Oversized display text for maximum visual impact.
    * Use when: Large hero numbers (pricing, statistics), splash screen numerals, bold marketing headlines where 7xl is not dominant enough.
    * Do not use: In product UI or anywhere text needs to coexist with other content — this size dominates everything around it.
    * Use instead: font-size/7xl or font-size/6xl for standard hero headings.
+   * Code: Tailwind text-8xl reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-8xl with it.
    * Status: Stable
    */
   --font-size-8xl: 96;
@@ -1193,6 +1213,7 @@
    * Use when: Full-screen typographic art direction, giant background numerals, editorial splash layouts where the number or letter itself is the visual.
    * Do not use: Anywhere legibility of surrounding content matters — at 128px a single word fills a viewport.
    * Use instead: font-size/8xl for large but still functional display text.
+   * Code: Tailwind text-9xl reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-9xl with it.
    * Status: Stable
    */
   --font-size-9xl: 128;
@@ -1268,47 +1289,138 @@
    */
   --font-weight-black: 900;
   /**
-   * CSS reference value: 1 (unitless) = leading-none in Tailwind.
-   * Use when (CSS/export only): Single-line UI elements — buttons, badges, nav labels.
+   * Unitless ratio 1 (value / 100). Code: Tailwind leading-none reads this token (globals.css @theme).
+   * Use when: Single-line UI elements — buttons, badges, nav labels.
    * Do not use: Multi-line text — lines will collide.
    * Status: Stable
    */
   --line-height-none: 100;
   /**
-   * CSS reference value: 1.25 (unitless) = leading-tight in Tailwind.
-   * Use when (CSS/export only): Display headings, hero titles, large typographic elements.
+   * Unitless ratio 1.25 (value / 100). Code: Tailwind leading-tight reads this token (globals.css @theme).
+   * Use when: Display headings, hero titles, large typographic elements.
    * Do not use: Body copy at small sizes — strains readability.
    * Status: Stable
    */
   --line-height-tight: 125;
   /**
-   * CSS reference value: 1.375 (unitless) = leading-snug in Tailwind.
-   * Use when (CSS/export only): h2–h4 subheadings, card titles, compact multi-line headings.
+   * Unitless ratio 1.375 (value / 100). Code: Tailwind leading-snug reads this token (globals.css @theme).
+   * Use when: h2–h4 subheadings, card titles, compact multi-line headings.
    * Do not use: Long-form paragraph text.
    * Status: Stable
    */
   --line-height-snug: 137.5;
   /**
-   * CSS reference value: 1.5 (unitless) = leading-normal in Tailwind.
-   * Use when (CSS/export only): Paragraphs, descriptions, form helper text, any sustained reading.
+   * Unitless ratio 1.5 (value / 100). Code: Tailwind leading-normal reads this token (globals.css @theme).
+   * Use when: Paragraphs, descriptions, form helper text, any sustained reading.
    * Do not use: Headings — will feel too loose.
    * Status: Stable
    */
   --line-height-normal: 150;
   /**
-   * CSS reference value: 1.625 (unitless) = leading-relaxed in Tailwind.
-   * Use when (CSS/export only): Long-form articles, documentation, editorial content.
+   * Unitless ratio 1.625 (value / 100). Code: Tailwind leading-relaxed reads this token (globals.css @theme).
+   * Use when: Long-form articles, documentation, editorial content.
    * Do not use: Dense product UI — wastes vertical space.
    * Status: Stable
    */
   --line-height-relaxed: 162.5;
   /**
-   * CSS reference value: 2 (unitless) = leading-loose in Tailwind.
-   * Use when (CSS/export only): Poetry, pull quotes, highly stylised marketing layouts.
+   * Unitless ratio 2 (value / 100). Code: Tailwind leading-loose reads this token (globals.css @theme).
+   * Use when: Poetry, pull quotes, highly stylised marketing layouts.
    * Do not use: Product UI or data-heavy screens.
    * Status: Stable
    */
   --line-height-loose: 200;
+  /**
+   * Line height paired with font-size/xs, in px (Tailwind's default pair: 12/16).
+   * Code: text-xs applies it automatically (globals.css @theme: --text-xs--line-height = this / font-size/xs).
+   * Do not use: On its own. To change the leading of one element use a leading-* ratio.
+   * Status: Stable
+   */
+  --line-height-text-xs: 16;
+  /**
+   * Line height paired with font-size/sm, in px (Tailwind's default pair: 14/20).
+   * Code: text-sm applies it automatically (globals.css @theme: --text-sm--line-height = this / font-size/sm).
+   * Do not use: On its own. To change the leading of one element use a leading-* ratio.
+   * Status: Stable
+   */
+  --line-height-text-sm: 20;
+  /**
+   * Line height paired with font-size/base, in px (Tailwind's default pair: 16/24).
+   * Code: text-base applies it automatically (globals.css @theme: --text-base--line-height = this / font-size/base).
+   * Do not use: On its own. To change the leading of one element use a leading-* ratio.
+   * Status: Stable
+   */
+  --line-height-text-base: 24;
+  /**
+   * Line height paired with font-size/lg, in px (Tailwind's default pair: 18/28).
+   * Code: text-lg applies it automatically (globals.css @theme: --text-lg--line-height = this / font-size/lg).
+   * Do not use: On its own. To change the leading of one element use a leading-* ratio.
+   * Status: Stable
+   */
+  --line-height-text-lg: 28;
+  /**
+   * Line height paired with font-size/xl, in px (Tailwind's default pair: 20/28).
+   * Code: text-xl applies it automatically (globals.css @theme: --text-xl--line-height = this / font-size/xl).
+   * Do not use: On its own. To change the leading of one element use a leading-* ratio.
+   * Status: Stable
+   */
+  --line-height-text-xl: 28;
+  /**
+   * Line height paired with font-size/2xl, in px (Tailwind's default pair: 24/32).
+   * Code: text-2xl applies it automatically (globals.css @theme: --text-2xl--line-height = this / font-size/2xl).
+   * Do not use: On its own. To change the leading of one element use a leading-* ratio.
+   * Status: Stable
+   */
+  --line-height-text-2xl: 32;
+  /**
+   * Line height paired with font-size/3xl, in px (Tailwind's default pair: 30/36).
+   * Code: text-3xl applies it automatically (globals.css @theme: --text-3xl--line-height = this / font-size/3xl).
+   * Do not use: On its own. To change the leading of one element use a leading-* ratio.
+   * Status: Stable
+   */
+  --line-height-text-3xl: 36;
+  /**
+   * Line height paired with font-size/4xl, in px (Tailwind's default pair: 36/40).
+   * Code: text-4xl applies it automatically (globals.css @theme: --text-4xl--line-height = this / font-size/4xl).
+   * Do not use: On its own. To change the leading of one element use a leading-* ratio.
+   * Status: Stable
+   */
+  --line-height-text-4xl: 40;
+  /**
+   * Line height paired with font-size/5xl, in px (Tailwind's default pair: 48/48).
+   * Code: text-5xl applies it automatically (globals.css @theme: --text-5xl--line-height = this / font-size/5xl).
+   * Do not use: On its own. To change the leading of one element use a leading-* ratio.
+   * Status: Stable
+   */
+  --line-height-text-5xl: 48;
+  /**
+   * Line height paired with font-size/6xl, in px (Tailwind's default pair: 60/60).
+   * Code: text-6xl applies it automatically (globals.css @theme: --text-6xl--line-height = this / font-size/6xl).
+   * Do not use: On its own. To change the leading of one element use a leading-* ratio.
+   * Status: Stable
+   */
+  --line-height-text-6xl: 60;
+  /**
+   * Line height paired with font-size/7xl, in px (Tailwind's default pair: 72/72).
+   * Code: text-7xl applies it automatically (globals.css @theme: --text-7xl--line-height = this / font-size/7xl).
+   * Do not use: On its own. To change the leading of one element use a leading-* ratio.
+   * Status: Stable
+   */
+  --line-height-text-7xl: 72;
+  /**
+   * Line height paired with font-size/8xl, in px (Tailwind's default pair: 96/96).
+   * Code: text-8xl applies it automatically (globals.css @theme: --text-8xl--line-height = this / font-size/8xl).
+   * Do not use: On its own. To change the leading of one element use a leading-* ratio.
+   * Status: Stable
+   */
+  --line-height-text-8xl: 96;
+  /**
+   * Line height paired with font-size/9xl, in px (Tailwind's default pair: 128/128).
+   * Code: text-9xl applies it automatically (globals.css @theme: --text-9xl--line-height = this / font-size/9xl).
+   * Do not use: On its own. To change the leading of one element use a leading-* ratio.
+   * Status: Stable
+   */
+  --line-height-text-9xl: 128;
   /**
    * Intent: Tightened tracking for large display text.
    * Use when: Hero headings and large display type (font-size/4xl and above) where default tracking looks too loose.

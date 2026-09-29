@@ -6,6 +6,17 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-29 — Type scale reads Enpath tokens
+
+### Added
+- **`line-height/text-xs … text-9xl`** (px): the line height paired with each `font-size/*`, equal to Tailwind's defaults (xs 16 · sm 20 · base 24 · lg 28 · xl 28 · 2xl 32 · 3xl 36 · 4xl 40 · 5xl–9xl = the size).
+
+### Changed
+- `globals.css` `@theme inline` maps Tailwind's `--text-*` (size as rem + paired line height) and `--leading-*` to Enpath tokens. Before, `text-sm`, `text-xs`, `leading-snug` … used Tailwind's built-in values, so editing `font-size/*` or `line-height/*` changed nothing on screen. `font-*` weights already read `font-weight/*`. No value change: 970 text elements on Setup and My Career measured at 390 and 1280 px, 0 differences. No migration.
+- `line-height/*` ratio descriptions: "CSS reference only" removed; they now drive `leading-*`. `font-size/*` descriptions name the `text-*` class that reads them. `tokens.css` regenerated.
+
+---
+
 ## 2026-09-28 — Step Rail
 
 ### Added

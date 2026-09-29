@@ -49,6 +49,39 @@
   --radius-2xl: calc(var(--radius-base) * 1.8);
   --radius-3xl: calc(var(--radius-base) * 2.2);
   --radius-4xl: calc(var(--radius-base) * 2.6);
+  /* Type scale → font-size/* (px → rem) + line-height/text-* pair; leading-* → line-height/* ratios */
+  --text-xs: calc(var(--font-size-xs) / 16 * 1rem);
+  --text-xs--line-height: calc(var(--line-height-text-xs) / var(--font-size-xs));
+  --text-sm: calc(var(--font-size-sm) / 16 * 1rem);
+  --text-sm--line-height: calc(var(--line-height-text-sm) / var(--font-size-sm));
+  --text-base: calc(var(--font-size-base) / 16 * 1rem);
+  --text-base--line-height: calc(var(--line-height-text-base) / var(--font-size-base));
+  --text-lg: calc(var(--font-size-lg) / 16 * 1rem);
+  --text-lg--line-height: calc(var(--line-height-text-lg) / var(--font-size-lg));
+  --text-xl: calc(var(--font-size-xl) / 16 * 1rem);
+  --text-xl--line-height: calc(var(--line-height-text-xl) / var(--font-size-xl));
+  --text-2xl: calc(var(--font-size-2xl) / 16 * 1rem);
+  --text-2xl--line-height: calc(var(--line-height-text-2xl) / var(--font-size-2xl));
+  --text-3xl: calc(var(--font-size-3xl) / 16 * 1rem);
+  --text-3xl--line-height: calc(var(--line-height-text-3xl) / var(--font-size-3xl));
+  --text-4xl: calc(var(--font-size-4xl) / 16 * 1rem);
+  --text-4xl--line-height: calc(var(--line-height-text-4xl) / var(--font-size-4xl));
+  --text-5xl: calc(var(--font-size-5xl) / 16 * 1rem);
+  --text-5xl--line-height: calc(var(--line-height-text-5xl) / var(--font-size-5xl));
+  --text-6xl: calc(var(--font-size-6xl) / 16 * 1rem);
+  --text-6xl--line-height: calc(var(--line-height-text-6xl) / var(--font-size-6xl));
+  --text-7xl: calc(var(--font-size-7xl) / 16 * 1rem);
+  --text-7xl--line-height: calc(var(--line-height-text-7xl) / var(--font-size-7xl));
+  --text-8xl: calc(var(--font-size-8xl) / 16 * 1rem);
+  --text-8xl--line-height: calc(var(--line-height-text-8xl) / var(--font-size-8xl));
+  --text-9xl: calc(var(--font-size-9xl) / 16 * 1rem);
+  --text-9xl--line-height: calc(var(--line-height-text-9xl) / var(--font-size-9xl));
+  --leading-none: calc(var(--line-height-none) / 100);
+  --leading-tight: calc(var(--line-height-tight) / 100);
+  --leading-snug: calc(var(--line-height-snug) / 100);
+  --leading-normal: calc(var(--line-height-normal) / 100);
+  --leading-relaxed: calc(var(--line-height-relaxed) / 100);
+  --leading-loose: calc(var(--line-height-loose) / 100);
 }
 
 :root {

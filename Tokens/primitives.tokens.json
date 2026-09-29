@@ -572,65 +572,67 @@
     "xs": {
       "$value": 12,
       "$type": "number",
-      "$description": "Intent: Smallest readable text size; used for supplementary information.\nUse when: Captions, timestamps, helper text below inputs, legal footnotes, badge labels.\nDo not use: For body copy or any text that requires sustained reading — too small for comfort.\nUse instead: font-size/sm for secondary body text.\nStatus: Stable"
+      "$description": "Intent: Smallest readable text size; used for supplementary information.\nUse when: Captions, timestamps, helper text below inputs, legal footnotes, badge labels.\nDo not use: For body copy or any text that requires sustained reading — too small for comfort.\nUse instead: font-size/sm for secondary body text.\nCode: Tailwind text-xs reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-xs with it.\nStatus: Stable"
     },
     "sm": {
       "$value": 14,
       "$type": "number",
-      "$description": "Intent: Secondary text size; slightly smaller than body.\nUse when: Supporting copy, table cell content, sidebar labels, secondary descriptions, input helper text.\nDo not use: For primary headings or hero content.\nStatus: Stable"
+      "$description": "Intent: Secondary text size; slightly smaller than body.\nUse when: Supporting copy, table cell content, sidebar labels, secondary descriptions, input helper text.\nDo not use: For primary headings or hero content.\nCode: Tailwind text-sm reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-sm with it.\nStatus: Stable"
     },
     "base": {
       "$value": 16,
       "$type": "number",
-      "$description": "Intent: Default body text size — the readable baseline for the system.\nUse when: Main body copy, paragraph text, form labels, default UI text.\nDo not use: For headings — use font-size/lg and above.\nStatus: Stable"
+      "$description": "Intent: Default body text size — the readable baseline for the system.\nUse when: Main body copy, paragraph text, form labels, default UI text.\nDo not use: For headings — use font-size/lg and above.\nCode: Tailwind text-base reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-base with it.\nStatus: Stable"
     },
     "lg": {
       "$value": 18,
       "$type": "number",
-      "$description": "Intent: Slightly emphasised text; between body and heading.\nUse when: Subheadings, lead paragraphs, card titles on smaller cards, section intros.\nDo not use: For primary page headings — use font-size/xl or above.\nStatus: Stable"
+      "$description": "Intent: Slightly emphasised text; between body and heading.\nUse when: Subheadings, lead paragraphs, card titles on smaller cards, section intros.\nDo not use: For primary page headings — use font-size/xl or above.\nCode: Tailwind text-lg reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-lg with it.\nStatus: Stable"
     },
     "xl": {
       "$value": 20,
       "$type": "number",
-      "$description": "Intent: Small heading size.\nUse when: Panel headers, dialog titles, section headings in sidebars or compact layouts.\nDo not use: For body text — will feel too large and reduce density.\nStatus: Stable"
+      "$description": "Intent: Small heading size.\nUse when: Panel headers, dialog titles, section headings in sidebars or compact layouts.\nDo not use: For body text — will feel too large and reduce density.\nCode: Tailwind text-xl reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-xl with it.\nStatus: Stable"
     },
     "2xl": {
       "$value": 24,
       "$type": "number",
-      "$description": "Intent: Medium heading size.\nUse when: Card group headings, page section titles, modal headers.\nDo not use: For body or supporting text.\nStatus: Stable"
+      "$description": "Intent: Medium heading size.\nUse when: Card group headings, page section titles, modal headers.\nDo not use: For body or supporting text.\nCode: Tailwind text-2xl reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-2xl with it.\nStatus: Stable"
     },
     "3xl": {
       "$value": 30,
       "$type": "number",
-      "$description": "Intent: Large heading; primary content section titles.\nUse when: Page-level h2 headings, feature section titles, prominent labels.\nDo not use: Below 600px viewport — scale down to font-size/2xl on mobile.\nStatus: Stable"
+      "$description": "Intent: Large heading; primary content section titles.\nUse when: Page-level h2 headings, feature section titles, prominent labels.\nDo not use: Below 600px viewport — scale down to font-size/2xl on mobile.\nCode: Tailwind text-3xl reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-3xl with it.\nStatus: Stable"
     },
     "4xl": {
       "$value": 36,
       "$type": "number",
-      "$description": "Intent: Major display heading.\nUse when: Page h1 titles, onboarding screen headings, large dashboard figures.\nDo not use: For anything other than the primary heading on a view.\nStatus: Stable"
+      "$description": "Intent: Major display heading.\nUse when: Page h1 titles, onboarding screen headings, large dashboard figures.\nDo not use: For anything other than the primary heading on a view.\nCode: Tailwind text-4xl reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-4xl with it.\nStatus: Stable"
     },
     "5xl": {
       "$value": 48,
       "$type": "number",
-      "$description": "Intent: Hero display text; the largest regular text size.\nUse when: Marketing hero headings, splash screens, empty state primary messages.\nDo not use: In dense product UI or data-heavy screens — too dominant for functional layouts.\nUse instead: font-size/4xl for product UI headings.\nStatus: Stable"
+      "$description": "Intent: Hero display text; the largest regular text size.\nUse when: Marketing hero headings, splash screens, empty state primary messages.\nDo not use: In dense product UI or data-heavy screens — too dominant for functional layouts.\nUse instead: font-size/4xl for product UI headings.\nCode: Tailwind text-5xl reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-5xl with it.\nStatus: Stable"
     },
     "6xl": {
       "$value": 60,
-      "$type": "number"
+      "$type": "number",
+      "$description": "Intent: Display size between its neighbours on the scale.\nCode: Tailwind text-6xl reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-6xl with it.\nStatus: Stable"
     },
     "7xl": {
       "$value": 72,
-      "$type": "number"
+      "$type": "number",
+      "$description": "Intent: Display size between its neighbours on the scale.\nCode: Tailwind text-7xl reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-7xl with it.\nStatus: Stable"
     },
     "8xl": {
       "$value": 96,
       "$type": "number",
-      "$description": "Intent: Oversized display text for maximum visual impact.\nUse when: Large hero numbers (pricing, statistics), splash screen numerals, bold marketing headlines where 7xl is not dominant enough.\nDo not use: In product UI or anywhere text needs to coexist with other content — this size dominates everything around it.\nUse instead: font-size/7xl or font-size/6xl for standard hero headings.\nStatus: Stable"
+      "$description": "Intent: Oversized display text for maximum visual impact.\nUse when: Large hero numbers (pricing, statistics), splash screen numerals, bold marketing headlines where 7xl is not dominant enough.\nDo not use: In product UI or anywhere text needs to coexist with other content — this size dominates everything around it.\nUse instead: font-size/7xl or font-size/6xl for standard hero headings.\nCode: Tailwind text-8xl reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-8xl with it.\nStatus: Stable"
     },
     "9xl": {
       "$value": 128,
       "$type": "number",
-      "$description": "Intent: Maximum display size; purely decorative or typographic statement.\nUse when: Full-screen typographic art direction, giant background numerals, editorial splash layouts where the number or letter itself is the visual.\nDo not use: Anywhere legibility of surrounding content matters — at 128px a single word fills a viewport.\nUse instead: font-size/8xl for large but still functional display text.\nStatus: Stable"
+      "$description": "Intent: Maximum display size; purely decorative or typographic statement.\nUse when: Full-screen typographic art direction, giant background numerals, editorial splash layouts where the number or letter itself is the visual.\nDo not use: Anywhere legibility of surrounding content matters — at 128px a single word fills a viewport.\nUse instead: font-size/8xl for large but still functional display text.\nCode: Tailwind text-9xl reads this token (globals.css @theme, as rem = value / 16) and sets line-height/text-9xl with it.\nStatus: Stable"
     }
   },
   "font-weight": {
@@ -684,32 +686,97 @@
     "none": {
       "$value": 100,
       "$type": "number",
-      "$description": "CSS reference value: 1 (unitless) = leading-none in Tailwind.\nUse when (CSS/export only): Single-line UI elements — buttons, badges, nav labels.\nDo not use: Multi-line text — lines will collide.\nStatus: Stable"
+      "$description": "Unitless ratio 1 (value / 100). Code: Tailwind leading-none reads this token (globals.css @theme).\nUse when: Single-line UI elements — buttons, badges, nav labels.\nDo not use: Multi-line text — lines will collide.\nStatus: Stable"
     },
     "tight": {
       "$value": 125,
       "$type": "number",
-      "$description": "CSS reference value: 1.25 (unitless) = leading-tight in Tailwind.\nUse when (CSS/export only): Display headings, hero titles, large typographic elements.\nDo not use: Body copy at small sizes — strains readability.\nStatus: Stable"
+      "$description": "Unitless ratio 1.25 (value / 100). Code: Tailwind leading-tight reads this token (globals.css @theme).\nUse when: Display headings, hero titles, large typographic elements.\nDo not use: Body copy at small sizes — strains readability.\nStatus: Stable"
     },
     "snug": {
       "$value": 137.5,
       "$type": "number",
-      "$description": "CSS reference value: 1.375 (unitless) = leading-snug in Tailwind.\nUse when (CSS/export only): h2–h4 subheadings, card titles, compact multi-line headings.\nDo not use: Long-form paragraph text.\nStatus: Stable"
+      "$description": "Unitless ratio 1.375 (value / 100). Code: Tailwind leading-snug reads this token (globals.css @theme).\nUse when: h2–h4 subheadings, card titles, compact multi-line headings.\nDo not use: Long-form paragraph text.\nStatus: Stable"
     },
     "normal": {
       "$value": 150,
       "$type": "number",
-      "$description": "CSS reference value: 1.5 (unitless) = leading-normal in Tailwind.\nUse when (CSS/export only): Paragraphs, descriptions, form helper text, any sustained reading.\nDo not use: Headings — will feel too loose.\nStatus: Stable"
+      "$description": "Unitless ratio 1.5 (value / 100). Code: Tailwind leading-normal reads this token (globals.css @theme).\nUse when: Paragraphs, descriptions, form helper text, any sustained reading.\nDo not use: Headings — will feel too loose.\nStatus: Stable"
     },
     "relaxed": {
       "$value": 162.5,
       "$type": "number",
-      "$description": "CSS reference value: 1.625 (unitless) = leading-relaxed in Tailwind.\nUse when (CSS/export only): Long-form articles, documentation, editorial content.\nDo not use: Dense product UI — wastes vertical space.\nStatus: Stable"
+      "$description": "Unitless ratio 1.625 (value / 100). Code: Tailwind leading-relaxed reads this token (globals.css @theme).\nUse when: Long-form articles, documentation, editorial content.\nDo not use: Dense product UI — wastes vertical space.\nStatus: Stable"
     },
     "loose": {
       "$value": 200,
       "$type": "number",
-      "$description": "CSS reference value: 2 (unitless) = leading-loose in Tailwind.\nUse when (CSS/export only): Poetry, pull quotes, highly stylised marketing layouts.\nDo not use: Product UI or data-heavy screens.\nStatus: Stable"
+      "$description": "Unitless ratio 2 (value / 100). Code: Tailwind leading-loose reads this token (globals.css @theme).\nUse when: Poetry, pull quotes, highly stylised marketing layouts.\nDo not use: Product UI or data-heavy screens.\nStatus: Stable"
+    },
+    "text-xs": {
+      "$value": 16,
+      "$type": "number",
+      "$description": "Line height paired with font-size/xs, in px (Tailwind's default pair: 12/16).\nCode: text-xs applies it automatically (globals.css @theme: --text-xs--line-height = this / font-size/xs).\nDo not use: On its own. To change the leading of one element use a leading-* ratio.\nStatus: Stable"
+    },
+    "text-sm": {
+      "$value": 20,
+      "$type": "number",
+      "$description": "Line height paired with font-size/sm, in px (Tailwind's default pair: 14/20).\nCode: text-sm applies it automatically (globals.css @theme: --text-sm--line-height = this / font-size/sm).\nDo not use: On its own. To change the leading of one element use a leading-* ratio.\nStatus: Stable"
+    },
+    "text-base": {
+      "$value": 24,
+      "$type": "number",
+      "$description": "Line height paired with font-size/base, in px (Tailwind's default pair: 16/24).\nCode: text-base applies it automatically (globals.css @theme: --text-base--line-height = this / font-size/base).\nDo not use: On its own. To change the leading of one element use a leading-* ratio.\nStatus: Stable"
+    },
+    "text-lg": {
+      "$value": 28,
+      "$type": "number",
+      "$description": "Line height paired with font-size/lg, in px (Tailwind's default pair: 18/28).\nCode: text-lg applies it automatically (globals.css @theme: --text-lg--line-height = this / font-size/lg).\nDo not use: On its own. To change the leading of one element use a leading-* ratio.\nStatus: Stable"
+    },
+    "text-xl": {
+      "$value": 28,
+      "$type": "number",
+      "$description": "Line height paired with font-size/xl, in px (Tailwind's default pair: 20/28).\nCode: text-xl applies it automatically (globals.css @theme: --text-xl--line-height = this / font-size/xl).\nDo not use: On its own. To change the leading of one element use a leading-* ratio.\nStatus: Stable"
+    },
+    "text-2xl": {
+      "$value": 32,
+      "$type": "number",
+      "$description": "Line height paired with font-size/2xl, in px (Tailwind's default pair: 24/32).\nCode: text-2xl applies it automatically (globals.css @theme: --text-2xl--line-height = this / font-size/2xl).\nDo not use: On its own. To change the leading of one element use a leading-* ratio.\nStatus: Stable"
+    },
+    "text-3xl": {
+      "$value": 36,
+      "$type": "number",
+      "$description": "Line height paired with font-size/3xl, in px (Tailwind's default pair: 30/36).\nCode: text-3xl applies it automatically (globals.css @theme: --text-3xl--line-height = this / font-size/3xl).\nDo not use: On its own. To change the leading of one element use a leading-* ratio.\nStatus: Stable"
+    },
+    "text-4xl": {
+      "$value": 40,
+      "$type": "number",
+      "$description": "Line height paired with font-size/4xl, in px (Tailwind's default pair: 36/40).\nCode: text-4xl applies it automatically (globals.css @theme: --text-4xl--line-height = this / font-size/4xl).\nDo not use: On its own. To change the leading of one element use a leading-* ratio.\nStatus: Stable"
+    },
+    "text-5xl": {
+      "$value": 48,
+      "$type": "number",
+      "$description": "Line height paired with font-size/5xl, in px (Tailwind's default pair: 48/48).\nCode: text-5xl applies it automatically (globals.css @theme: --text-5xl--line-height = this / font-size/5xl).\nDo not use: On its own. To change the leading of one element use a leading-* ratio.\nStatus: Stable"
+    },
+    "text-6xl": {
+      "$value": 60,
+      "$type": "number",
+      "$description": "Line height paired with font-size/6xl, in px (Tailwind's default pair: 60/60).\nCode: text-6xl applies it automatically (globals.css @theme: --text-6xl--line-height = this / font-size/6xl).\nDo not use: On its own. To change the leading of one element use a leading-* ratio.\nStatus: Stable"
+    },
+    "text-7xl": {
+      "$value": 72,
+      "$type": "number",
+      "$description": "Line height paired with font-size/7xl, in px (Tailwind's default pair: 72/72).\nCode: text-7xl applies it automatically (globals.css @theme: --text-7xl--line-height = this / font-size/7xl).\nDo not use: On its own. To change the leading of one element use a leading-* ratio.\nStatus: Stable"
+    },
+    "text-8xl": {
+      "$value": 96,
+      "$type": "number",
+      "$description": "Line height paired with font-size/8xl, in px (Tailwind's default pair: 96/96).\nCode: text-8xl applies it automatically (globals.css @theme: --text-8xl--line-height = this / font-size/8xl).\nDo not use: On its own. To change the leading of one element use a leading-* ratio.\nStatus: Stable"
+    },
+    "text-9xl": {
+      "$value": 128,
+      "$type": "number",
+      "$description": "Line height paired with font-size/9xl, in px (Tailwind's default pair: 128/128).\nCode: text-9xl applies it automatically (globals.css @theme: --text-9xl--line-height = this / font-size/9xl).\nDo not use: On its own. To change the leading of one element use a leading-* ratio.\nStatus: Stable"
     }
   },
   "letter-spacing": {

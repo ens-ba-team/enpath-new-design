@@ -121,10 +121,12 @@ font-family/sans   Nunito
 font-family/mono   Roboto Mono
 font-size          xs 12 · sm 14 · base 16 · lg 18 · xl 20 · 2xl 24 · 3xl 30 · 4xl 36 · 5xl 48 · 6xl 60 · 7xl 72 · 8xl 96 · 9xl 128
 font-weight        thin 100 → black 900 (normal 400 · medium 500 · semibold 600 · bold 700 in use)
-line-height        none 1 · tight 1.25 · snug 1.375 · normal 1.5 · relaxed 1.625 · loose 2  (CSS reference only)
+line-height        none 1 · tight 1.25 · snug 1.375 · normal 1.5 · relaxed 1.625 · loose 2  (ratios → leading-*)
+line-height/text-*  xs 16 · sm 20 · base 24 · lg 28 · xl 28 · 2xl 32 · 3xl 36 · 4xl 40 · 5xl–9xl = size  (px, paired with font-size)
 letter-spacing     tighter −2.5 · tight −1.5 · normal 0 · wide 2.5 · wider 5 · widest 10  (px)
 ```
 Font-family values are clean names (`Nunito`), not CSS stacks.
+Tailwind's type utilities read these tokens (`globals.css` `@theme inline`): `text-{size}` = `font-size/{size}` (as rem) + `line-height/text-{size}`; `leading-*` = the `line-height/*` ratios; `font-{weight}` = `font-weight/*`. The values equal Tailwind's defaults, so the classes look the same; change a value in `Tokens/`, never in CSS.
 
 ### Shadow
 
