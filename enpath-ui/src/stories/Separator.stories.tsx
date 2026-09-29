@@ -28,9 +28,9 @@ type Story = StoryObj<typeof meta>;
 export const Horizontal: Story = {
   render: () => (
     <div className="w-64">
-      <p className="text-sm text-[var(--color-background-default-foreground)]">Above the separator</p>
+      <p className="text-body-sm text-[var(--color-background-default-foreground)]">Above the separator</p>
       <Separator className="my-[var(--spacing-component-lg)]" />
-      <p className="text-sm text-[var(--color-background-default-foreground)]">Below the separator</p>
+      <p className="text-body-sm text-[var(--color-background-default-foreground)]">Below the separator</p>
     </div>
   ),
 };
@@ -41,11 +41,11 @@ export const Horizontal: Story = {
 export const Vertical: Story = {
   render: () => (
     <div className="flex h-8 items-center gap-[var(--spacing-component-md)]">
-      <span className="text-sm text-[var(--color-background-default-foreground)]">Overview</span>
+      <span className="text-body-sm text-[var(--color-background-default-foreground)]">Overview</span>
       <Separator orientation="vertical" />
-      <span className="text-sm text-[var(--color-background-default-foreground)]">Activity</span>
+      <span className="text-body-sm text-[var(--color-background-default-foreground)]">Activity</span>
       <Separator orientation="vertical" />
-      <span className="text-sm text-[var(--color-background-default-foreground)]">Settings</span>
+      <span className="text-body-sm text-[var(--color-background-default-foreground)]">Settings</span>
     </div>
   ),
 };
@@ -57,7 +57,7 @@ export const InFormSections: Story = {
   render: () => (
     <div className="w-80 flex flex-col gap-[var(--spacing-component-lg)]">
       <div>
-        <p className="text-xs font-medium text-[var(--color-text-secondary)] mb-[var(--spacing-component-sm)]">Personal info</p>
+        <p className="text-label-sm text-[var(--color-text-secondary)] mb-[var(--spacing-component-sm)]">Personal info</p>
         <div className="flex flex-col gap-[var(--spacing-component-sm)]">
           <div className="h-9 rounded-[var(--radius-md)] border border-[var(--color-input-border)] bg-[var(--color-background-default)]" />
           <div className="h-9 rounded-[var(--radius-md)] border border-[var(--color-input-border)] bg-[var(--color-background-default)]" />
@@ -65,7 +65,7 @@ export const InFormSections: Story = {
       </div>
       <Separator />
       <div>
-        <p className="text-xs font-medium text-[var(--color-text-secondary)] mb-[var(--spacing-component-sm)]">Contact details</p>
+        <p className="text-label-sm text-[var(--color-text-secondary)] mb-[var(--spacing-component-sm)]">Contact details</p>
         <div className="flex flex-col gap-[var(--spacing-component-sm)]">
           <div className="h-9 rounded-[var(--radius-md)] border border-[var(--color-input-border)] bg-[var(--color-background-default)]" />
         </div>
@@ -80,11 +80,11 @@ export const InFormSections: Story = {
 export const InMetadataRow: Story = {
   render: () => (
     <div className="flex items-center gap-[var(--spacing-component-sm)]">
-      <span className="text-sm text-[var(--color-text-secondary)]">Phuong Lam</span>
+      <span className="text-body-sm text-[var(--color-text-secondary)]">Phuong Lam</span>
       <Separator orientation="vertical" className="h-4" />
-      <span className="text-sm text-[var(--color-text-secondary)]">Jun 2 2026</span>
+      <span className="text-body-sm text-[var(--color-text-secondary)]">Jun 2 2026</span>
       <Separator orientation="vertical" className="h-4" />
-      <span className="text-sm text-[var(--color-text-secondary)]">5 min read</span>
+      <span className="text-body-sm text-[var(--color-text-secondary)]">5 min read</span>
     </div>
   ),
 };
@@ -95,11 +95,11 @@ export const InCard: Story = {
   render: () => (
     <div className="w-72 rounded-[var(--radius-lg)] border border-[var(--color-border-default)] bg-[var(--color-surface-overlay)]">
       <div className="p-[var(--spacing-component-lg)]">
-        <p className="text-sm font-semibold text-[var(--color-surface-overlay-foreground)]">Card header</p>
+        <p className="text-heading-xs text-[var(--color-surface-overlay-foreground)]">Card header</p>
       </div>
       <Separator />
       <div className="p-[var(--spacing-component-lg)]">
-        <p className="text-sm text-[var(--color-text-secondary)]">Card body content sits below the separator.</p>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">Card body content sits below the separator.</p>
       </div>
     </div>
   ),

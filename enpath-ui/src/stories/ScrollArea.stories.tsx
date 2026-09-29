@@ -9,7 +9,7 @@ type Story = StoryObj<typeof meta>;
 export const Vertical: Story = {
   render: () => (
     <ScrollArea className="h-48 w-64 rounded-[var(--radius-surface)] border border-[var(--color-border-default)]">
-      <ul className="p-[var(--spacing-component-md)] text-sm">
+      <ul className="p-[var(--spacing-component-md)] text-body-sm">
         {Array.from({ length: 20 }, (_, i) => <li key={i} className="py-[var(--spacing-component-xs)]">Position {i + 1}</li>)}
       </ul>
     </ScrollArea>

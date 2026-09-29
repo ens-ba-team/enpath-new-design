@@ -216,6 +216,10 @@
       {
         "date": "2026-09-29",
         "change": "Title uses text-heading-xs (Medium 500); the selected title adds font-semibold (600), as before the text styles, on top of item/selected/bg, border and fg."
+      },
+      {
+        "date": "2026-09-29",
+        "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
       }
     ]
   },

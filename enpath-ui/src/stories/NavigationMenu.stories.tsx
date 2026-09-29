@@ -86,7 +86,7 @@ export const GridPanel: Story = {
           <NavigationMenuContent>
             <div className="grid grid-cols-2 gap-1 p-[var(--spacing-component-lg)] w-[480px]">
               <div className="flex flex-col gap-1">
-                <p className="text-xs font-medium text-[var(--color-text-secondary)] px-[var(--spacing-component-md)] py-1">
+                <p className="text-label-sm text-[var(--color-text-secondary)] px-[var(--spacing-component-md)] py-1">
                   Learn
                 </p>
                 <NavigationMenuPanelLink href="#" title="Documentation" description="Component API and usage guides" />
@@ -94,7 +94,7 @@ export const GridPanel: Story = {
                 <NavigationMenuPanelLink href="#" title="Changelog" description="What's new in each release" />
               </div>
               <div className="flex flex-col gap-1">
-                <p className="text-xs font-medium text-[var(--color-text-secondary)] px-[var(--spacing-component-md)] py-1">
+                <p className="text-label-sm text-[var(--color-text-secondary)] px-[var(--spacing-component-md)] py-1">
                   Community
                 </p>
                 <NavigationMenuPanelLink href="#" title="GitHub" description="Source code and contributions" />
@@ -124,7 +124,7 @@ export const FeaturedPanel: Story = {
             <div className="flex gap-4 p-[var(--spacing-component-lg)] w-[560px]">
               {/* Featured SLOT — 160px */}
               <div className="w-40 shrink-0 rounded-[var(--radius-md)] bg-[var(--color-background-muted)] flex items-center justify-center min-h-[120px]">
-                <span className="text-xs text-[var(--color-text-secondary)]">Featured</span>
+                <span className="text-body-xs text-[var(--color-text-secondary)]">Featured</span>
               </div>
               <div className="flex flex-col gap-1 flex-1">
                 <NavigationMenuPanelLink href="#" title="What's new in v2" description="Everything that changed in our latest release" />
@@ -148,7 +148,7 @@ export const LinkType: Story = {
         <NavigationMenuItem>
           <NavigationMenuLink
             href="#"
-            className="inline-flex items-center gap-[var(--spacing-component-xs)] rounded-[var(--radius-md)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)] text-sm font-medium text-[var(--color-background-default-foreground)] hover:bg-[var(--color-background-accent)] hover:text-[var(--color-background-accent-foreground)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ring)]"
+            className="inline-flex items-center gap-[var(--spacing-component-xs)] rounded-[var(--radius-md)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)] text-heading-xs text-[var(--color-background-default-foreground)] hover:bg-[var(--color-background-accent)] hover:text-[var(--color-background-accent-foreground)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ring)]"
           >
             <CurrencyDollarIcon className="h-4 w-4" />
             Pricing
@@ -204,7 +204,7 @@ export const FullNavBar: Story = {
         <NavigationMenuItem>
           <NavigationMenuLink
             href="#"
-            className="inline-flex items-center gap-[var(--spacing-component-xs)] rounded-[var(--radius-md)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)] text-sm font-medium text-[var(--color-background-default-foreground)] hover:bg-[var(--color-background-accent)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ring)]"
+            className="inline-flex items-center gap-[var(--spacing-component-xs)] rounded-[var(--radius-md)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)] text-heading-xs text-[var(--color-background-default-foreground)] hover:bg-[var(--color-background-accent)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ring)]"
           >
             <CurrencyDollarIcon className="h-4 w-4" />
             Pricing

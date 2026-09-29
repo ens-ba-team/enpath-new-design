@@ -311,6 +311,10 @@
       {
         "date": "2026-09-29",
         "change": "SidebarGroupLabel gets spacing/component/xxs padding top and bottom. text-label-sm has line height = size, so the label lost 4px of height and drifted away from its group; the padding restores its earlier box."
+      },
+      {
+        "date": "2026-09-29",
+        "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
       }
     ]
   },

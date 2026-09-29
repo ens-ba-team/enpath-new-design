@@ -118,7 +118,7 @@ export const WithField: Story = {
           <SelectItem value="published">Published</SelectItem>
         </SelectContent>
       </Select>
-      <p className="text-sm text-[var(--color-text-secondary)]">
+      <p className="text-body-sm text-[var(--color-text-secondary)]">
         Choose the current workflow state.
       </p>
     </div>
@@ -145,7 +145,7 @@ export const WithFieldInvalid: Story = {
           <SelectItem value="viewer">Viewer</SelectItem>
         </SelectContent>
       </Select>
-      <p className="text-sm text-[var(--color-text-secondary)]">
+      <p className="text-body-sm text-[var(--color-text-secondary)]">
         Please select a role to continue.
       </p>
     </div>
@@ -168,7 +168,7 @@ export const WithFieldDisabled: Story = {
           <SelectItem value="us">United States</SelectItem>
         </SelectContent>
       </Select>
-      <p className="text-sm text-[var(--color-text-disabled)]">
+      <p className="text-body-sm text-[var(--color-text-disabled)]">
         Managed by your organization.
       </p>
     </div>

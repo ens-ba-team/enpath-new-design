@@ -151,7 +151,7 @@ export const InsideCard: Story = {
   render: () => (
     <div className="w-80 rounded-[var(--radius-lg)] border border-[var(--color-border-default)] bg-[var(--color-surface-overlay)]">
       <div className="p-[var(--spacing-component-lg)] border-b border-[var(--color-border-default)]">
-        <p className="text-sm font-semibold text-[var(--color-surface-overlay-foreground)]">Team members</p>
+        <p className="text-heading-xs text-[var(--color-surface-overlay-foreground)]">Team members</p>
       </div>
       <Empty
         variant="default"

@@ -6,6 +6,15 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-29 — Stories use text styles
+
+### Changed
+- 28 story files: example text uses text styles (`text-body-sm` / `text-body-xs` for copy, `text-heading-xs` for emphasised cells and titles, `text-label-sm` for small labels, `text-display-sm` for the big Card figures).
+- Removed overrides that replaced a component's own style: `Label` in Checkbox, RadioGroup and other form stories passed `text-sm font-medium`, which made `cn()` drop `text-label-md` (the story showed Inter 14/20 instead of the real label). Stories now show the component as the app renders it.
+- Each touched component's `meta.json` changelog notes the story change.
+
+---
+
 ## 2026-09-29 — Sidebar group label spacing
 
 ### Fixed

@@ -45,6 +45,10 @@
       {
         "date": "2026-09-22",
         "change": "Added (AI Elements install) and documented."
+      },
+      {
+        "date": "2026-09-29",
+        "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
       }
     ]
   },

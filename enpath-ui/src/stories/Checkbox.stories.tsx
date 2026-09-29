@@ -82,7 +82,7 @@ export const WithLabel: Story = {
   render: () => (
     <div className="flex min-h-[44px] items-center gap-[var(--spacing-component-sm)]">
       <Checkbox id="terms" />
-      <Label htmlFor="terms" className="cursor-pointer text-sm font-medium text-[var(--color-background-default-foreground)]">
+      <Label htmlFor="terms" className="cursor-pointer text-[var(--color-background-default-foreground)]">
         Accept terms and conditions
       </Label>
     </div>
@@ -98,10 +98,10 @@ export const WithDescription: Story = {
     <div className="flex min-h-[44px] items-start gap-[var(--spacing-component-sm)]">
       <Checkbox id="marketing" className="mt-0.5 shrink-0" />
       <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
-        <Label htmlFor="marketing" className="cursor-pointer text-sm font-medium text-[var(--color-background-default-foreground)]">
+        <Label htmlFor="marketing" className="cursor-pointer text-[var(--color-background-default-foreground)]">
           Marketing emails
         </Label>
-        <p className="text-sm text-[var(--color-background-muted-foreground)]">
+        <p className="text-body-sm text-[var(--color-background-muted-foreground)]">
           Receive occasional product updates and promotions.
         </p>
       </div>
@@ -117,10 +117,10 @@ export const DisabledWithDescription: Story = {
     <div className="flex min-h-[44px] items-start gap-[var(--spacing-component-sm)]">
       <Checkbox id="locked" disabled className="mt-0.5 shrink-0" />
       <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
-        <Label htmlFor="locked" className="text-sm font-medium text-[var(--color-text-disabled)]">
+        <Label htmlFor="locked" className="text-[var(--color-text-disabled)]">
           Required setting
         </Label>
-        <p className="text-sm text-[var(--color-text-disabled)]">
+        <p className="text-body-sm text-[var(--color-text-disabled)]">
           This option is managed by your organization.
         </p>
       </div>
@@ -136,10 +136,10 @@ export const InvalidWithDescription: Story = {
     <div className="flex min-h-[44px] items-start gap-[var(--spacing-component-sm)]">
       <Checkbox id="consent" aria-invalid="true" className="mt-0.5 shrink-0" />
       <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
-        <Label htmlFor="consent" className="text-sm font-medium text-[var(--color-text-invalid)]">
+        <Label htmlFor="consent" className="text-[var(--color-text-invalid)]">
           Consent required
         </Label>
-        <p className="text-sm text-[var(--color-text-invalid)]">
+        <p className="text-body-sm text-[var(--color-text-invalid)]">
           You must accept before continuing.
         </p>
       </div>
@@ -161,10 +161,10 @@ export const Group: Story = {
         <div key={id} className="flex min-h-[44px] items-start gap-[var(--spacing-component-sm)]">
           <Checkbox id={id} className="mt-0.5 shrink-0" />
           <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
-            <Label htmlFor={id} className="cursor-pointer text-sm font-medium text-[var(--color-background-default-foreground)]">
+            <Label htmlFor={id} className="cursor-pointer text-[var(--color-background-default-foreground)]">
               {label}
             </Label>
-            <p className="text-sm text-[var(--color-background-muted-foreground)]">{description}</p>
+            <p className="text-body-sm text-[var(--color-background-muted-foreground)]">{description}</p>
           </div>
         </div>
       ))}
@@ -187,7 +187,7 @@ export const AllStates: Story = {
       ].map(({ label, props }) => (
         <div key={label} className="flex flex-col items-center gap-2">
           <Checkbox {...props} />
-          <span className="text-xs text-[var(--color-text-secondary)]">{label}</span>
+          <span className="text-body-xs text-[var(--color-text-secondary)]">{label}</span>
         </div>
       ))}
     </div>

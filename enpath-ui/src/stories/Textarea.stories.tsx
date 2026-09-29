@@ -69,7 +69,7 @@ export const WithField: Story = {
     <div className="flex flex-col gap-[var(--spacing-component-xs)] w-80">
       <Label htmlFor="notes-story">Notes</Label>
       <Textarea id="notes-story" placeholder="Write a short note…" />
-      <p className="text-sm text-[var(--color-text-secondary)]">
+      <p className="text-body-sm text-[var(--color-text-secondary)]">
         Add context for reviewers.
       </p>
     </div>
@@ -87,7 +87,7 @@ export const WithFieldInvalid: Story = {
         defaultValue="Too short."
         aria-invalid="true"
       />
-      <p className="text-sm text-[var(--color-text-invalid)]">
+      <p className="text-body-sm text-[var(--color-text-invalid)]">
         Must be at least 20 characters.
       </p>
     </div>
@@ -105,7 +105,7 @@ export const WithFieldDisabled: Story = {
         defaultValue="This field is locked."
         disabled
       />
-      <p className="text-sm text-[var(--color-text-disabled)]">
+      <p className="text-body-sm text-[var(--color-text-disabled)]">
         Managed by your organization.
       </p>
     </div>
@@ -156,7 +156,7 @@ export const WithHeader: Story = {
     >
       <div className="flex shrink-0 items-center gap-[var(--spacing-component-sm)] px-[var(--spacing-component-md)] py-[var(--spacing-component-xs)]">
         <MagnifyingGlassIcon className="h-4 w-4 shrink-0 text-[var(--color-icon-default)]" aria-hidden="true" />
-        <span className="text-sm text-[var(--color-background-default-foreground)]">Notes</span>
+        <span className="text-body-sm text-[var(--color-background-default-foreground)]">Notes</span>
       </div>
       <Textarea className="flex-1 resize-none rounded-none border-0 bg-transparent focus-visible:outline-none focus-visible:[box-shadow:none]" placeholder="Type your message here." />
     </div>
@@ -188,7 +188,7 @@ export const WithFooter: Story = {
           maxLength={max}
         />
         <div className="flex shrink-0 items-center justify-between px-[var(--spacing-component-md)] py-[var(--spacing-component-xs)]">
-          <span className="text-sm text-[var(--color-text-secondary)]">
+          <span className="text-body-sm text-[var(--color-text-secondary)]">
             {value.length}/{max}
           </span>
           <Button size="sm">Label</Button>
@@ -212,7 +212,7 @@ export const WithHeaderAndFooter: Story = {
       >
         <div className="flex shrink-0 items-center gap-[var(--spacing-component-sm)] px-[var(--spacing-component-md)] py-[var(--spacing-component-xs)]">
           <MagnifyingGlassIcon className="h-4 w-4 shrink-0 text-[var(--color-icon-default)]" aria-hidden="true" />
-          <span className="text-sm text-[var(--color-background-default-foreground)]">Notes</span>
+          <span className="text-body-sm text-[var(--color-background-default-foreground)]">Notes</span>
         </div>
         <Textarea
           className="flex-1 resize-none rounded-none border-0 bg-transparent focus-visible:outline-none focus-visible:[box-shadow:none]"
@@ -222,7 +222,7 @@ export const WithHeaderAndFooter: Story = {
           maxLength={max}
         />
         <div className="flex shrink-0 items-center justify-between px-[var(--spacing-component-md)] py-[var(--spacing-component-xs)]">
-          <span className="text-sm text-[var(--color-text-secondary)]">
+          <span className="text-body-sm text-[var(--color-text-secondary)]">
             {value.length}/{max}
           </span>
           <Button size="sm">Label</Button>
@@ -253,7 +253,7 @@ export const WithCharacterCount: Story = {
             maxLength={max}
             className="pb-8"
           />
-          <span className="pointer-events-none absolute bottom-[var(--spacing-component-sm)] right-[var(--spacing-component-md)] text-xs text-[var(--color-text-secondary)]">
+          <span className="pointer-events-none absolute bottom-[var(--spacing-component-sm)] right-[var(--spacing-component-md)] text-body-xs text-[var(--color-text-secondary)]">
             {value.length} / {max}
           </span>
         </div>

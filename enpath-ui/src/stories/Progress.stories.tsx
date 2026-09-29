@@ -40,8 +40,8 @@ export const Loading: Story = {
   render: () => (
     <div className="flex flex-col gap-[var(--spacing-component-xs)] w-80">
       <div className="flex justify-between">
-        <span className="text-sm text-[var(--color-background-default-foreground)]">Uploading file…</span>
-        <span className="text-sm text-[var(--color-text-secondary)]">60%</span>
+        <span className="text-body-sm text-[var(--color-background-default-foreground)]">Uploading file…</span>
+        <span className="text-body-sm text-[var(--color-text-secondary)]">60%</span>
       </div>
       <Progress value={60} />
     </div>
@@ -55,8 +55,8 @@ export const Complete: Story = {
   render: () => (
     <div className="flex flex-col gap-[var(--spacing-component-xs)] w-80">
       <div className="flex justify-between">
-        <span className="text-sm text-[var(--color-background-default-foreground)]">Upload complete</span>
-        <span className="text-sm text-[var(--color-text-secondary)]">100%</span>
+        <span className="text-body-sm text-[var(--color-background-default-foreground)]">Upload complete</span>
+        <span className="text-body-sm text-[var(--color-text-secondary)]">100%</span>
       </div>
       <Progress value={100} />
     </div>
@@ -70,7 +70,7 @@ export const Complete: Story = {
 export const Indeterminate: Story = {
   render: () => (
     <div className="flex flex-col gap-[var(--spacing-component-xs)] w-80">
-      <span className="text-sm text-[var(--color-background-default-foreground)]">Processing files…</span>
+      <span className="text-body-sm text-[var(--color-background-default-foreground)]">Processing files…</span>
       <Progress value={null} />
     </div>
   ),
@@ -82,15 +82,15 @@ export const Sizes: Story = {
   render: () => (
     <div className="flex flex-col gap-[var(--spacing-component-lg)] w-80">
       <div className="flex flex-col gap-[var(--spacing-component-xs)]">
-        <span className="text-xs text-[var(--color-text-secondary)]">SM — 4px</span>
+        <span className="text-body-xs text-[var(--color-text-secondary)]">SM — 4px</span>
         <Progress value={60} size="sm" />
       </div>
       <div className="flex flex-col gap-[var(--spacing-component-xs)]">
-        <span className="text-xs text-[var(--color-text-secondary)]">MD — 8px (default)</span>
+        <span className="text-body-xs text-[var(--color-text-secondary)]">MD — 8px (default)</span>
         <Progress value={60} size="md" />
       </div>
       <div className="flex flex-col gap-[var(--spacing-component-xs)]">
-        <span className="text-xs text-[var(--color-text-secondary)]">LG — 12px</span>
+        <span className="text-body-xs text-[var(--color-text-secondary)]">LG — 12px</span>
         <Progress value={60} size="lg" />
       </div>
     </div>
@@ -103,8 +103,8 @@ export const StepTracker: Story = {
   render: () => (
     <div className="flex flex-col gap-[var(--spacing-component-xs)] w-80">
       <div className="flex justify-between">
-        <span className="text-sm text-[var(--color-background-default-foreground)]">Step 2 of 5</span>
-        <span className="text-sm text-[var(--color-text-secondary)]">40%</span>
+        <span className="text-body-sm text-[var(--color-background-default-foreground)]">Step 2 of 5</span>
+        <span className="text-body-sm text-[var(--color-text-secondary)]">40%</span>
       </div>
       <Progress value={2} max={5} size="lg" />
     </div>
@@ -128,10 +128,10 @@ export const Animated: Story = {
     return (
       <div className="flex flex-col gap-[var(--spacing-component-xs)] w-80">
         <div className="flex justify-between">
-          <span className="text-sm text-[var(--color-background-default-foreground)]">
+          <span className="text-body-sm text-[var(--color-background-default-foreground)]">
             {value === 100 ? 'Upload complete' : 'Uploading…'}
           </span>
-          <span className="text-sm text-[var(--color-text-secondary)]">{value}%</span>
+          <span className="text-body-sm text-[var(--color-text-secondary)]">{value}%</span>
         </div>
         <Progress value={value} />
       </div>

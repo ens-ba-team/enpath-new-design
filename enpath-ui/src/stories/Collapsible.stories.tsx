@@ -14,7 +14,7 @@ export const Default: Story = {
       <CollapsibleTrigger asChild>
         <Button variant="ghost" size="sm">Show details <CaretDownIcon className="h-4 w-4" /></Button>
       </CollapsibleTrigger>
-      <CollapsibleContent className="pt-[var(--spacing-component-sm)] text-sm text-[var(--color-text-secondary)]">
+      <CollapsibleContent className="pt-[var(--spacing-component-sm)] text-body-sm text-[var(--color-text-secondary)]">
         Levels are ordered lowest first. Removing a level deletes its expectations.
       </CollapsibleContent>
     </Collapsible>

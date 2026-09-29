@@ -110,15 +110,15 @@ export const IndicatorSizes: Story = {
     <div className="flex items-center gap-6">
       <div className="flex flex-col items-center gap-2">
         <Avatar size="sm"      fallback="SM" name="Small" badge="online"  badgeLabel="Online" />
-        <span className="text-xs text-[var(--color-surface-muted-foreground)]">SM · 8px dot</span>
+        <span className="text-body-xs text-[var(--color-surface-muted-foreground)]">SM · 8px dot</span>
       </div>
       <div className="flex flex-col items-center gap-2">
         <Avatar size="default" fallback="MD" name="Default" badge="online" badgeLabel="Online" />
-        <span className="text-xs text-[var(--color-surface-muted-foreground)]">Default · 12px dot</span>
+        <span className="text-body-xs text-[var(--color-surface-muted-foreground)]">Default · 12px dot</span>
       </div>
       <div className="flex flex-col items-center gap-2">
         <Avatar size="lg"      fallback="LG" name="Large" badge="online"  badgeLabel="Online" />
-        <span className="text-xs text-[var(--color-surface-muted-foreground)]">LG · 12px dot</span>
+        <span className="text-body-xs text-[var(--color-surface-muted-foreground)]">LG · 12px dot</span>
       </div>
     </div>
   ),

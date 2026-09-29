@@ -90,7 +90,7 @@ export const ItemDescription: Story = {
         <Label htmlFor="sync" className="cursor-pointer">
           Share across devices
         </Label>
-        <p className="text-sm text-[var(--color-background-muted-foreground)]">
+        <p className="text-body-sm text-[var(--color-background-muted-foreground)]">
           Sync your focus session to all signed-in devices.
         </p>
       </div>
@@ -110,7 +110,7 @@ export const ItemChoiceCard: Story = {
         <Label htmlFor="advanced" className="cursor-pointer">
           Advanced mode
         </Label>
-        <p className="text-sm text-[var(--color-background-muted-foreground)]">
+        <p className="text-body-sm text-[var(--color-background-muted-foreground)]">
           Show advanced configuration controls.
         </p>
       </div>
@@ -129,7 +129,7 @@ export const ItemDisabled: Story = {
         <Label htmlFor="locked" className="text-[var(--color-text-disabled)]">
           Locked setting
         </Label>
-        <p className="text-sm text-[var(--color-text-disabled)]">
+        <p className="text-body-sm text-[var(--color-text-disabled)]">
           Managed by your organization.
         </p>
       </div>
@@ -148,7 +148,7 @@ export const ItemInvalid: Story = {
         <Label htmlFor="terms" className="text-[var(--color-text-invalid)]">
           Accept terms
         </Label>
-        <p className="text-sm text-[var(--color-text-secondary)]">
+        <p className="text-body-sm text-[var(--color-text-secondary)]">
           You must accept the terms to continue.
         </p>
       </div>
@@ -167,7 +167,7 @@ export const ItemChoiceCardInvalid: Story = {
         <Label htmlFor="terms-card" className="text-[var(--color-text-invalid)]">
           Accept terms
         </Label>
-        <p className="text-sm text-[var(--color-text-secondary)]">
+        <p className="text-body-sm text-[var(--color-text-secondary)]">
           Required before continuing.
         </p>
       </div>
@@ -182,14 +182,14 @@ export const AllSizes: Story = {
   render: () => (
     <div className="flex items-center gap-6">
       <div className="flex flex-col items-center gap-2">
-        <p className="text-xs text-[var(--color-text-secondary)]">Default</p>
+        <p className="text-body-xs text-[var(--color-text-secondary)]">Default</p>
         <div className="flex items-center gap-3">
           <Switch aria-label="Default unchecked" />
           <Switch defaultChecked aria-label="Default checked" />
         </div>
       </div>
       <div className="flex flex-col items-center gap-2">
-        <p className="text-xs text-[var(--color-text-secondary)]">Sm</p>
+        <p className="text-body-xs text-[var(--color-text-secondary)]">Sm</p>
         <div className="flex items-center gap-3">
           <Switch size="sm" aria-label="Small unchecked" />
           <Switch size="sm" defaultChecked aria-label="Small checked" />

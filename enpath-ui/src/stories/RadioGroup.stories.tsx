@@ -43,7 +43,7 @@ export const Basic: Story = {
           <RadioGroupItem value={value} id={`basic-${value}`} />
           <Label
             htmlFor={`basic-${value}`}
-            className="cursor-pointer text-sm font-medium text-[var(--color-surface-default-foreground)]"
+            className="cursor-pointer text-[var(--color-surface-default-foreground)]"
           >
             {label}
           </Label>
@@ -70,11 +70,11 @@ export const BasicWithDescription: Story = {
           <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
             <Label
               htmlFor={`desc-${value}`}
-              className="cursor-pointer text-sm font-medium text-[var(--color-surface-default-foreground)]"
+              className="cursor-pointer text-[var(--color-surface-default-foreground)]"
             >
               {label}
             </Label>
-            <p className="text-sm text-[var(--color-text-secondary)]">{description}</p>
+            <p className="text-body-sm text-[var(--color-text-secondary)]">{description}</p>
           </div>
         </div>
       ))}
@@ -102,10 +102,10 @@ export const ChoiceCard: Story = {
         >
           <RadioGroupItem value={value} id={`card-${value}`} className="mt-0.5 shrink-0" />
           <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
-            <span className="text-sm font-medium text-[var(--color-surface-default-foreground)]">
+            <span className="text-heading-xs text-[var(--color-surface-default-foreground)]">
               {label}
             </span>
-            <span className="text-sm text-[var(--color-text-secondary)]">{description}</span>
+            <span className="text-body-sm text-[var(--color-text-secondary)]">{description}</span>
           </div>
         </label>
       ))}
@@ -127,10 +127,10 @@ export const Disabled: Story = {
         <div key={value} className="flex min-h-[44px] items-start gap-[var(--spacing-component-md)] py-1">
           <RadioGroupItem value={value} id={`dis-${value}`} className="mt-0.5 shrink-0" />
           <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
-            <Label htmlFor={`dis-${value}`} className="text-sm font-medium text-[var(--color-text-disabled)]">
+            <Label htmlFor={`dis-${value}`} className="text-[var(--color-text-disabled)]">
               {label}
             </Label>
-            <p className="text-sm text-[var(--color-text-disabled)]">{description}</p>
+            <p className="text-body-sm text-[var(--color-text-disabled)]">{description}</p>
           </div>
         </div>
       ))}
@@ -156,10 +156,10 @@ export const ChoiceCardDisabled: Story = {
         >
           <RadioGroupItem value={value} id={`dis-card-${value}`} className="mt-0.5 shrink-0" />
           <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
-            <span className="text-sm font-medium text-[var(--color-surface-default-foreground)]">
+            <span className="text-heading-xs text-[var(--color-surface-default-foreground)]">
               {label}
             </span>
-            <span className="text-sm text-[var(--color-text-secondary)]">{description}</span>
+            <span className="text-body-sm text-[var(--color-text-secondary)]">{description}</span>
           </div>
         </label>
       ))}
@@ -186,14 +186,14 @@ export const Invalid: Story = {
             className="mt-0.5 shrink-0"
           />
           <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
-            <Label htmlFor={`inv-${value}`} className="text-sm font-medium text-[var(--color-text-invalid)]">
+            <Label htmlFor={`inv-${value}`} className="text-[var(--color-text-invalid)]">
               {label}
             </Label>
-            <p className="text-sm text-[var(--color-text-secondary)]">{description}</p>
+            <p className="text-body-sm text-[var(--color-text-secondary)]">{description}</p>
           </div>
         </div>
       ))}
-      <p className="mt-1 text-sm text-[var(--color-text-invalid)]">Please select one option.</p>
+      <p className="mt-1 text-body-sm text-[var(--color-text-invalid)]">Please select one option.</p>
     </RadioGroup>
   ),
 };
@@ -220,12 +220,12 @@ export const ChoiceCardInvalid: Story = {
             className="mt-0.5 shrink-0"
           />
           <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
-            <span className="text-sm font-medium text-[var(--color-text-invalid)]">{label}</span>
-            <span className="text-sm text-[var(--color-text-secondary)]">{description}</span>
+            <span className="text-heading-xs text-[var(--color-text-invalid)]">{label}</span>
+            <span className="text-body-sm text-[var(--color-text-secondary)]">{description}</span>
           </div>
         </label>
       ))}
-      <p className="text-sm text-[var(--color-text-invalid)]">Please select a plan.</p>
+      <p className="text-body-sm text-[var(--color-text-invalid)]">Please select a plan.</p>
     </RadioGroup>
   ),
 };
@@ -240,7 +240,7 @@ export const Horizontal: Story = {
           <RadioGroupItem value={label.toLowerCase()} id={`h-${label}`} />
           <Label
             htmlFor={`h-${label}`}
-            className="cursor-pointer text-sm font-medium text-[var(--color-surface-default-foreground)]"
+            className="cursor-pointer text-[var(--color-surface-default-foreground)]"
           >
             {label}
           </Label>

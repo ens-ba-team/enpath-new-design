@@ -75,7 +75,7 @@ export const Simple: Story = {
       <PaginationContent className="gap-[var(--spacing-component-sm)]">
         <PaginationItem><PaginationPrevious href="#" /></PaginationItem>
         <PaginationItem>
-          <div className="flex h-8 items-center gap-[var(--spacing-component-xs-plus)] rounded-[var(--radius-md)] border border-[var(--color-border-default)] bg-[var(--color-background-default)] px-[var(--spacing-component-sm)] text-sm">
+          <div className="flex h-8 items-center gap-[var(--spacing-component-xs-plus)] rounded-[var(--radius-md)] border border-[var(--color-border-default)] bg-[var(--color-background-default)] px-[var(--spacing-component-sm)] text-body-sm">
             <span className="text-[var(--color-background-default-foreground)]">1</span>
             <span className="text-[var(--color-background-muted-foreground)]">/</span>
             <span className="text-[var(--color-background-muted-foreground)]">10</span>
@@ -125,7 +125,7 @@ export const WithTotal: Story = {
   render: () => (
     <Pagination className="justify-start">
       <div className="flex items-center gap-[var(--spacing-component-lg)]">
-        <span className="text-sm text-[var(--color-background-muted-foreground)]">
+        <span className="text-body-sm text-[var(--color-background-muted-foreground)]">
           Total 100 items
         </span>
         <PaginationContent>
@@ -200,7 +200,7 @@ export const WithChanger: Story = {
           <PaginationItem><PaginationLink href="#">5</PaginationLink></PaginationItem>
           <PaginationItem><PaginationNext href="#" /></PaginationItem>
         </PaginationContent>
-        <select className="flex h-8 cursor-pointer appearance-none items-center rounded-[var(--radius-md)] border border-[var(--color-border-default)] bg-[var(--color-background-default)] px-[var(--spacing-component-sm)] text-sm text-[var(--color-background-default-foreground)] focus-visible:outline-none focus-visible:border-[var(--color-border-focus)]">
+        <select className="flex h-8 cursor-pointer appearance-none items-center rounded-[var(--radius-md)] border border-[var(--color-border-default)] bg-[var(--color-background-default)] px-[var(--spacing-component-sm)] text-body-sm text-[var(--color-background-default-foreground)] focus-visible:outline-none focus-visible:border-[var(--color-border-focus)]">
           <option>10 / page</option>
           <option>25 / page</option>
           <option>50 / page</option>
@@ -219,7 +219,7 @@ export const ShowAll: Story = {
   render: () => (
     <Pagination className="justify-start">
       <div className="flex items-center gap-[var(--spacing-component-md)]">
-        <span className="text-sm text-[var(--color-background-muted-foreground)]">
+        <span className="text-body-sm text-[var(--color-background-muted-foreground)]">
           Total 85 items
         </span>
         <PaginationContent>
@@ -231,16 +231,16 @@ export const ShowAll: Story = {
           <PaginationItem><PaginationLink href="#">5</PaginationLink></PaginationItem>
           <PaginationItem><PaginationNext href="#" /></PaginationItem>
         </PaginationContent>
-        <select className="flex h-8 cursor-pointer appearance-none items-center rounded-[var(--radius-md)] border border-[var(--color-border-default)] bg-[var(--color-background-default)] px-[var(--spacing-component-sm)] text-sm text-[var(--color-background-default-foreground)] focus-visible:outline-none focus-visible:border-[var(--color-border-focus)]">
+        <select className="flex h-8 cursor-pointer appearance-none items-center rounded-[var(--radius-md)] border border-[var(--color-border-default)] bg-[var(--color-background-default)] px-[var(--spacing-component-sm)] text-body-sm text-[var(--color-background-default-foreground)] focus-visible:outline-none focus-visible:border-[var(--color-border-focus)]">
           <option>10 / page</option>
           <option>25 / page</option>
           <option>50 / page</option>
         </select>
-        <div className="flex items-center gap-[var(--spacing-component-sm)] text-sm">
+        <div className="flex items-center gap-[var(--spacing-component-sm)] text-body-sm">
           <span className="text-[var(--color-background-muted-foreground)]">Go to</span>
           <input
             type="number"
-            className="h-8 w-12 rounded-[var(--radius-md)] border border-[var(--color-border-default)] bg-[var(--color-background-default)] px-[var(--spacing-component-sm)] text-center text-sm text-[var(--color-background-default-foreground)] focus-visible:outline-none focus-visible:border-[var(--color-border-focus)] focus-visible:[box-shadow:0_0_0_3px_color-mix(in_srgb,var(--color-ring)_20%,transparent)]"
+            className="h-8 w-12 rounded-[var(--radius-md)] border border-[var(--color-border-default)] bg-[var(--color-background-default)] px-[var(--spacing-component-sm)] text-center text-body-sm text-[var(--color-background-default-foreground)] focus-visible:outline-none focus-visible:border-[var(--color-border-focus)] focus-visible:[box-shadow:0_0_0_3px_color-mix(in_srgb,var(--color-ring)_20%,transparent)]"
             placeholder="3"
           />
           <span className="text-[var(--color-background-muted-foreground)]">page</span>
@@ -267,11 +267,11 @@ export const WithJumper: Story = {
           <PaginationItem><PaginationLink href="#">5</PaginationLink></PaginationItem>
           <PaginationItem><PaginationNext href="#" /></PaginationItem>
         </PaginationContent>
-        <div className="flex items-center gap-[var(--spacing-component-sm)] text-sm">
+        <div className="flex items-center gap-[var(--spacing-component-sm)] text-body-sm">
           <span className="text-[var(--color-background-muted-foreground)]">Go to</span>
           <input
             type="number"
-            className="h-8 w-12 rounded-[var(--radius-md)] border border-[var(--color-border-default)] bg-[var(--color-background-default)] px-[var(--spacing-component-sm)] text-center text-sm text-[var(--color-background-default-foreground)] focus-visible:outline-none focus-visible:border-[var(--color-border-focus)] focus-visible:[box-shadow:0_0_0_3px_color-mix(in_srgb,var(--color-ring)_20%,transparent)]"
+            className="h-8 w-12 rounded-[var(--radius-md)] border border-[var(--color-border-default)] bg-[var(--color-background-default)] px-[var(--spacing-component-sm)] text-center text-body-sm text-[var(--color-background-default-foreground)] focus-visible:outline-none focus-visible:border-[var(--color-border-focus)] focus-visible:[box-shadow:0_0_0_3px_color-mix(in_srgb,var(--color-ring)_20%,transparent)]"
             placeholder="3"
           />
           <span className="text-[var(--color-background-muted-foreground)]">page</span>

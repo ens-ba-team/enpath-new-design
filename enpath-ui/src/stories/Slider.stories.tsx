@@ -44,10 +44,10 @@ export const Horizontal: Story = {
   render: () => (
     <div className="flex flex-col gap-[var(--spacing-component-xs)] w-72">
       <div className="flex justify-between">
-        <Label className="text-sm font-medium text-[var(--color-background-default-foreground)]">
+        <Label className="text-[var(--color-background-default-foreground)]">
           Volume
         </Label>
-        <span className="text-sm text-[var(--color-text-secondary)]">60%</span>
+        <span className="text-body-sm text-[var(--color-text-secondary)]">60%</span>
       </div>
       <Slider defaultValue={[60]} max={100} step={1} />
     </div>
@@ -60,7 +60,7 @@ export const Horizontal: Story = {
 export const Disabled: Story = {
   render: () => (
     <div className="flex flex-col gap-[var(--spacing-component-xs)] w-72">
-      <Label className="text-sm font-medium text-[var(--color-text-disabled)]">
+      <Label className="text-[var(--color-text-disabled)]">
         Volume (locked)
       </Label>
       <Slider defaultValue={[40]} max={100} step={1} disabled />
@@ -74,7 +74,7 @@ export const Disabled: Story = {
 export const Vertical: Story = {
   render: () => (
     <div className="flex items-start gap-[var(--spacing-component-md)] h-40">
-      <Label className="text-sm font-medium text-[var(--color-background-default-foreground)]">
+      <Label className="text-[var(--color-background-default-foreground)]">
         Gain
       </Label>
       <Slider orientation="vertical" defaultValue={[70]} max={100} step={1} className="h-full" />
@@ -89,10 +89,10 @@ export const Range: Story = {
   render: () => (
     <div className="flex flex-col gap-[var(--spacing-component-xs)] w-72">
       <div className="flex justify-between">
-        <Label className="text-sm font-medium text-[var(--color-background-default-foreground)]">
+        <Label className="text-[var(--color-background-default-foreground)]">
           Price range
         </Label>
-        <span className="text-sm text-[var(--color-text-secondary)]">$20 – $80</span>
+        <span className="text-body-sm text-[var(--color-text-secondary)]">$20 – $80</span>
       </div>
       <Slider defaultValue={[20, 80]} max={100} step={1} />
     </div>
@@ -105,10 +105,10 @@ export const WithSteps: Story = {
   render: () => (
     <div className="flex flex-col gap-[var(--spacing-component-xs)] w-72">
       <div className="flex justify-between">
-        <Label className="text-sm font-medium text-[var(--color-background-default-foreground)]">
+        <Label className="text-[var(--color-background-default-foreground)]">
           AI temperature
         </Label>
-        <span className="text-sm text-[var(--color-text-secondary)]">0.5</span>
+        <span className="text-body-sm text-[var(--color-text-secondary)]">0.5</span>
       </div>
       <Slider defaultValue={[5]} min={0} max={10} step={1} />
     </div>

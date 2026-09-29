@@ -131,14 +131,14 @@ export const AllVariants: Story = {
   render: () => (
     <div className="flex flex-wrap items-start gap-6">
       <div className="flex flex-col gap-3 items-start">
-        <span className="text-xs text-[var(--color-text-secondary)]">Horizontal 2</span>
+        <span className="text-body-xs text-[var(--color-text-secondary)]">Horizontal 2</span>
         <ButtonGroup aria-label="View mode">
           <Button variant="ghost">List</Button>
           <Button variant="ghost">Grid</Button>
         </ButtonGroup>
       </div>
       <div className="flex flex-col gap-3 items-start">
-        <span className="text-xs text-[var(--color-text-secondary)]">Horizontal 3</span>
+        <span className="text-body-xs text-[var(--color-text-secondary)]">Horizontal 3</span>
         <ButtonGroup aria-label="Period">
           <Button variant="ghost">Month</Button>
           <Button variant="ghost">Week</Button>
@@ -146,14 +146,14 @@ export const AllVariants: Story = {
         </ButtonGroup>
       </div>
       <div className="flex flex-col gap-3 items-start">
-        <span className="text-xs text-[var(--color-text-secondary)]">Vertical 2</span>
+        <span className="text-body-xs text-[var(--color-text-secondary)]">Vertical 2</span>
         <ButtonGroup orientation="vertical" aria-label="Zoom">
           <Button variant="ghost" size="icon" aria-label="Zoom in"><MagnifyingGlassPlusIcon className="h-4 w-4" /></Button>
           <Button variant="ghost" size="icon" aria-label="Zoom out"><MagnifyingGlassMinusIcon className="h-4 w-4" /></Button>
         </ButtonGroup>
       </div>
       <div className="flex flex-col gap-3 items-start">
-        <span className="text-xs text-[var(--color-text-secondary)]">Vertical 3</span>
+        <span className="text-body-xs text-[var(--color-text-secondary)]">Vertical 3</span>
         <ButtonGroup orientation="vertical" aria-label="Alignment">
           <Button variant="ghost" size="icon" aria-label="Align left"><TextAlignLeftIcon className="h-4 w-4" /></Button>
           <Button variant="ghost" size="icon" aria-label="Align center"><TextAlignCenterIcon className="h-4 w-4" /></Button>

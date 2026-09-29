@@ -9,7 +9,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: () => (
     <div className="flex items-center gap-[var(--spacing-component-md)] text-[var(--color-text-secondary)]">
-      <Spinner /> <span className="text-sm">Loading positions…</span>
+      <Spinner /> <span className="text-body-sm">Loading positions…</span>
     </div>
   ),
 };

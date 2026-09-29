@@ -152,7 +152,7 @@ export const Scrollable: Story = {
         </DialogHeader>
         <div className="flex-1 overflow-y-auto px-[var(--spacing-component-lg)] py-[var(--spacing-component-lg)] flex flex-col gap-[var(--spacing-component-lg)]">
           {Array.from({ length: 8 }).map((_, i) => (
-            <p key={i} className="text-sm text-[var(--color-text-secondary)]">
+            <p key={i} className="text-body-sm text-[var(--color-text-secondary)]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
               ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut

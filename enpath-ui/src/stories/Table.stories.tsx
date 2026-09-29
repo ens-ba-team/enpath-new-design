@@ -62,7 +62,7 @@ export const Basic: Story = {
         <TableBody>
           {invoices.map((inv) => (
             <TableRow key={inv.id}>
-              <TableCell className="font-medium">{inv.id}</TableCell>
+              <TableCell className="text-heading-xs">{inv.id}</TableCell>
               <TableCell>{inv.status}</TableCell>
               <TableCell>{inv.method}</TableCell>
               <TableCell className="text-right">{inv.amount}</TableCell>
@@ -72,7 +72,7 @@ export const Basic: Story = {
         <TableFooter>
           <TableRow>
             <TableCell colSpan={3}>Total</TableCell>
-            <TableCell className="text-right font-medium">$750.00</TableCell>
+            <TableCell className="text-right text-heading-xs">$750.00</TableCell>
           </TableRow>
         </TableFooter>
       </Table>
@@ -106,7 +106,7 @@ export const WithSort: Story = {
         <TableBody>
           {invoices.map((inv) => (
             <TableRow key={inv.id}>
-              <TableCell className="font-medium">{inv.id}</TableCell>
+              <TableCell className="text-heading-xs">{inv.id}</TableCell>
               <TableCell>
                 <Badge variant={inv.status === "Paid" ? "success" : inv.status === "Pending" ? "warning" : "destructive"} shape="pill" size="md">
                   {inv.status}
@@ -146,7 +146,7 @@ export const WithSelection: Story = {
           {invoices.map((inv, i) => (
             <TableRow key={inv.id} data-state={i === 1 ? "selected" : undefined} aria-selected={i === 1}>
               <TableCell><Checkbox checked={i === 1} aria-label={`Select ${inv.id}`} /></TableCell>
-              <TableCell className="font-medium">{inv.id}</TableCell>
+              <TableCell className="text-heading-xs">{inv.id}</TableCell>
               <TableCell>{inv.amount}</TableCell>
               <TableCell>{inv.status}</TableCell>
               <TableCell><Button size="sm" variant="outline">Edit</Button></TableCell>
@@ -184,7 +184,7 @@ export const WithAvatars: Story = {
               <TableCell>
                 <div className="flex items-center gap-3">
                   <Avatar size="sm" className="shrink-0" name={m.name} fallback={m.initials} />
-                  <span className="font-medium">{m.name}</span>
+                  <span className="text-heading-xs">{m.name}</span>
                 </div>
               </TableCell>
               <TableCell className="text-[var(--color-text-secondary)]">{m.role}</TableCell>
@@ -227,10 +227,10 @@ export const WithTrends: Story = {
         <TableBody>
           {metrics.map((m) => (
             <TableRow key={m.metric}>
-              <TableCell className="font-medium">{m.metric}</TableCell>
+              <TableCell className="text-heading-xs">{m.metric}</TableCell>
               <TableCell>{m.value}</TableCell>
               <TableCell>
-                <span className={`inline-flex items-center gap-1 text-sm font-medium ${m.up ? "text-[var(--color-text-success)]" : "text-[var(--color-text-invalid)]"}`}>
+                <span className={`inline-flex items-center gap-1 text-heading-xs ${m.up ? "text-[var(--color-text-success)]" : "text-[var(--color-text-invalid)]"}`}>
                   {m.up
                     ? <TrendUpIcon className="h-4 w-4 text-[var(--color-icon-success)]" />
                     : <TrendDownIcon className="h-4 w-4 text-[var(--color-icon-danger)]" />}

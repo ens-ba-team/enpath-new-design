@@ -38,7 +38,7 @@ export const Default: Story = {
         <CardDescription>Card description — secondary text token.</CardDescription>
       </CardHeader>
       <CardContent>
-        <p className="text-sm text-[var(--color-text-secondary)]">Card body content.</p>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">Card body content.</p>
       </CardContent>
     </Card>
   ),
@@ -98,10 +98,10 @@ export const Info: Story = {
       </CardHeader>
       <CardContent>
         <div className="flex items-baseline gap-2">
-          <span className="text-3xl font-bold text-[var(--color-surface-overlay-foreground)]">$12,450</span>
+          <span className="text-display-sm text-[var(--color-surface-overlay-foreground)]">$12,450</span>
           <Badge variant="success" shape="pill">+8.2%</Badge>
         </div>
-        <p className="text-sm text-[var(--color-text-secondary)]">
+        <p className="text-body-sm text-[var(--color-text-secondary)]">
           Revenue increased by $944 vs. the previous period.
         </p>
       </CardContent>
@@ -119,8 +119,8 @@ export const Border: Story = {
         <CardDescription>Everything you need for a growing team.</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="text-3xl font-bold text-[var(--color-surface-overlay-foreground)]">
-          $49<span className="text-base font-normal text-[var(--color-text-secondary)]">/mo</span>
+        <div className="text-display-sm text-[var(--color-surface-overlay-foreground)]">
+          $49<span className="text-body-md text-[var(--color-text-secondary)]">/mo</span>
         </div>
       </CardContent>
       <CardFooter>
@@ -145,7 +145,7 @@ export const Item: Story = {
       <CardContent className="flex flex-col gap-0">
         {['Email digest', 'Push notifications', 'Weekly report'].map((item) => (
           <div key={item} className="flex items-center justify-between py-2">
-            <span className="text-sm font-medium text-[var(--color-surface-overlay-foreground)]">{item}</span>
+            <span className="text-heading-xs text-[var(--color-surface-overlay-foreground)]">{item}</span>
             <Button size="sm" variant="outline">Configure</Button>
           </div>
         ))}
@@ -166,20 +166,20 @@ export const SocialMedia: Story = {
           <div className="flex items-center gap-[var(--spacing-component-sm)]">
             <Avatar size="default" name="Jane Doe" fallback="JD" />
             <div className="flex flex-col gap-0.5">
-              <span className="text-sm font-semibold text-[var(--color-surface-overlay-foreground)]">
+              <span className="text-heading-xs text-[var(--color-surface-overlay-foreground)]">
                 Jane Doe
               </span>
-              <span className="text-xs text-[var(--color-text-secondary)]">@janedoe</span>
+              <span className="text-body-xs text-[var(--color-text-secondary)]">@janedoe</span>
             </div>
           </div>
           <Button size="sm" variant="outline">Follow</Button>
         </div>
       </CardHeader>
       <div className="w-full aspect-video bg-[var(--color-surface-muted)] rounded-[var(--radius-sm)] flex items-center justify-center">
-        <span className="text-xs text-[var(--color-text-secondary)]">Image placeholder</span>
+        <span className="text-body-xs text-[var(--color-text-secondary)]">Image placeholder</span>
       </div>
       <CardContent>
-        <p className="text-sm text-[var(--color-text-secondary)]">
+        <p className="text-body-sm text-[var(--color-text-secondary)]">
           Sharing something I've been working on. Excited to show everyone soon!
         </p>
       </CardContent>
@@ -195,7 +195,7 @@ export const ImageVertical: Story = {
   render: () => (
     <Card className="w-80 p-0 gap-0 overflow-hidden">
       <div className="w-full aspect-video bg-[var(--color-surface-muted)] flex items-center justify-center">
-        <span className="text-xs text-[var(--color-text-secondary)]">Image placeholder</span>
+        <span className="text-body-xs text-[var(--color-text-secondary)]">Image placeholder</span>
       </div>
       <div className="flex flex-col gap-[var(--spacing-component-lg)] p-[var(--spacing-component-xl)]">
         <CardHeader>
@@ -230,7 +230,7 @@ export const ImageDown: Story = {
         </CardFooter>
       </div>
       <div className="w-full aspect-video bg-[var(--color-surface-muted)] flex items-center justify-center">
-        <span className="text-xs text-[var(--color-text-secondary)]">Image placeholder</span>
+        <span className="text-body-xs text-[var(--color-text-secondary)]">Image placeholder</span>
       </div>
     </Card>
   ),
@@ -244,7 +244,7 @@ export const ImageHorizontal: Story = {
   render: () => (
     <Card className="w-80 flex-row p-0 overflow-hidden">
       <div className="w-32 shrink-0 bg-[var(--color-surface-muted)] flex items-center justify-center">
-        <span className="text-xs text-[var(--color-text-secondary)]">Image</span>
+        <span className="text-body-xs text-[var(--color-text-secondary)]">Image</span>
       </div>
       <div className="flex flex-col gap-[var(--spacing-component-sm)] p-[var(--spacing-component-xl)] flex-1">
         <CardHeader>

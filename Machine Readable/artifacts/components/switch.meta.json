@@ -227,6 +227,10 @@
       {
         "date": "2026-09-21",
         "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      },
+      {
+        "date": "2026-09-29",
+        "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
       }
     ]
   },

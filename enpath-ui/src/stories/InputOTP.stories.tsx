@@ -49,7 +49,7 @@ export const SixSlot: Story = {
           <InputOTPSlot index={5} />
         </InputOTPGroup>
       </InputOTP>
-      <p className="text-sm text-[var(--color-text-secondary)]">
+      <p className="text-body-sm text-[var(--color-text-secondary)]">
         We sent a 6-digit code to your email.
       </p>
     </div>
@@ -75,7 +75,7 @@ export const ThreePlusThree: Story = {
           <InputOTPSlot index={5} />
         </InputOTPGroup>
       </InputOTP>
-      <p className="text-sm text-[var(--color-text-secondary)]">
+      <p className="text-body-sm text-[var(--color-text-secondary)]">
         Enter the code in XXX–XXX format.
       </p>
     </div>
@@ -96,7 +96,7 @@ export const FourSlot: Story = {
           <InputOTPSlot index={3} />
         </InputOTPGroup>
       </InputOTP>
-      <p className="text-sm text-[var(--color-text-secondary)]">
+      <p className="text-body-sm text-[var(--color-text-secondary)]">
         Enter your 4-digit PIN.
       </p>
     </div>
@@ -143,7 +143,7 @@ export const Invalid: Story = {
           <InputOTPSlot index={5} />
         </InputOTPGroup>
       </InputOTP>
-      <p className="text-sm text-[var(--color-text-invalid)]">
+      <p className="text-body-sm text-[var(--color-text-invalid)]">
         The code you entered is incorrect. Please try again.
       </p>
     </div>
@@ -156,7 +156,7 @@ export const AllTypes: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <p className="text-xs text-[var(--color-text-secondary)]">6-Slot</p>
+        <p className="text-body-xs text-[var(--color-text-secondary)]">6-Slot</p>
         <InputOTP maxLength={6}>
           <InputOTPGroup>
             {[0,1,2,3,4,5].map(i => <InputOTPSlot key={i} index={i} />)}
@@ -164,7 +164,7 @@ export const AllTypes: Story = {
         </InputOTP>
       </div>
       <div className="flex flex-col gap-2">
-        <p className="text-xs text-[var(--color-text-secondary)]">3+3</p>
+        <p className="text-body-xs text-[var(--color-text-secondary)]">3+3</p>
         <InputOTP maxLength={6}>
           <InputOTPGroup>{[0,1,2].map(i => <InputOTPSlot key={i} index={i} />)}</InputOTPGroup>
           <InputOTPSeparator />
@@ -172,7 +172,7 @@ export const AllTypes: Story = {
         </InputOTP>
       </div>
       <div className="flex flex-col gap-2">
-        <p className="text-xs text-[var(--color-text-secondary)]">4-Slot</p>
+        <p className="text-body-xs text-[var(--color-text-secondary)]">4-Slot</p>
         <InputOTP maxLength={4}>
           <InputOTPGroup>{[0,1,2,3].map(i => <InputOTPSlot key={i} index={i} />)}</InputOTPGroup>
         </InputOTP>

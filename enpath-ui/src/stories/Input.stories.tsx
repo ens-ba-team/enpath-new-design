@@ -82,7 +82,7 @@ export const WithField: Story = {
     <div className="flex flex-col gap-[var(--spacing-component-xs)] w-[280px]">
       <Label htmlFor="email-story">Email</Label>
       <Input id="email-story" type="email" placeholder="name@example.com" />
-      <p className="text-sm text-[var(--color-text-secondary)]">Use your work email.</p>
+      <p className="text-body-sm text-[var(--color-text-secondary)]">Use your work email.</p>
     </div>
   ),
 };
@@ -99,7 +99,7 @@ export const WithFieldInvalid: Story = {
         defaultValue="not-an-email"
         aria-invalid="true"
       />
-      <p className="text-sm text-[var(--color-text-invalid)]">Email must contain @.</p>
+      <p className="text-body-sm text-[var(--color-text-invalid)]">Email must contain @.</p>
     </div>
   ),
 };
@@ -111,7 +111,7 @@ export const WithFieldDisabled: Story = {
     <div className="flex flex-col gap-[var(--spacing-component-xs)] w-[280px]">
       <Label htmlFor="disabled-story">Domain</Label>
       <Input id="disabled-story" defaultValue="agentic.design" disabled />
-      <p className="text-sm text-[var(--color-text-disabled)]">
+      <p className="text-body-sm text-[var(--color-text-disabled)]">
         Managed by your organization.
       </p>
     </div>
@@ -174,7 +174,7 @@ export const WithTrailingText: Story = {
   render: () => (
     <div className="relative w-[280px]">
       <Input className="pr-12" placeholder="0.00" type="number" />
-      <span className="pointer-events-none absolute right-[var(--spacing-component-md)] top-1/2 -translate-y-1/2 text-sm text-[var(--color-background-muted-foreground)]">
+      <span className="pointer-events-none absolute right-[var(--spacing-component-md)] top-1/2 -translate-y-1/2 text-body-sm text-[var(--color-background-muted-foreground)]">
         USD
       </span>
     </div>

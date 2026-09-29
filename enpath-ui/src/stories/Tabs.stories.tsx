@@ -38,13 +38,13 @@ export const Default: Story = {
         <TabsTrigger value="settings">Settings</TabsTrigger>
       </TabsList>
       <TabsContent value="overview" className="p-2">
-        <p className="text-sm text-[var(--color-text-secondary)]">Overview content.</p>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">Overview content.</p>
       </TabsContent>
       <TabsContent value="activity" className="p-2">
-        <p className="text-sm text-[var(--color-text-secondary)]">Activity content.</p>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">Activity content.</p>
       </TabsContent>
       <TabsContent value="settings" className="p-2">
-        <p className="text-sm text-[var(--color-text-secondary)]">Settings content.</p>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">Settings content.</p>
       </TabsContent>
     </Tabs>
   ),
@@ -64,13 +64,13 @@ export const Line: Story = {
         <TabsTrigger value="comments" variant="line">Comments</TabsTrigger>
       </TabsList>
       <TabsContent value="details" className="p-2">
-        <p className="text-sm text-[var(--color-text-secondary)]">Details content.</p>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">Details content.</p>
       </TabsContent>
       <TabsContent value="history" className="p-2">
-        <p className="text-sm text-[var(--color-text-secondary)]">History content.</p>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">History content.</p>
       </TabsContent>
       <TabsContent value="comments" className="p-2">
-        <p className="text-sm text-[var(--color-text-secondary)]">Comments content.</p>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">Comments content.</p>
       </TabsContent>
     </Tabs>
   ),
@@ -92,13 +92,13 @@ export const WithIcon: Story = {
         <TabsTrigger value="settings"><GearIcon className="size-3.5" aria-hidden="true" />Settings</TabsTrigger>
       </TabsList>
       <TabsContent value="overview" className="p-2">
-        <p className="text-sm text-[var(--color-text-secondary)]">Overview content.</p>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">Overview content.</p>
       </TabsContent>
       <TabsContent value="activity" className="p-2">
-        <p className="text-sm text-[var(--color-text-secondary)]">Activity content.</p>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">Activity content.</p>
       </TabsContent>
       <TabsContent value="settings" className="p-2">
-        <p className="text-sm text-[var(--color-text-secondary)]">Settings content.</p>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">Settings content.</p>
       </TabsContent>
     </Tabs>
   ),
@@ -115,13 +115,13 @@ export const LineWithIcon: Story = {
         <TabsTrigger value="comments" variant="line"><GearIcon className="size-3.5" aria-hidden="true" />Comments</TabsTrigger>
       </TabsList>
       <TabsContent value="details" className="p-2">
-        <p className="text-sm text-[var(--color-text-secondary)]">Details content.</p>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">Details content.</p>
       </TabsContent>
       <TabsContent value="history" className="p-2">
-        <p className="text-sm text-[var(--color-text-secondary)]">History content.</p>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">History content.</p>
       </TabsContent>
       <TabsContent value="comments" className="p-2">
-        <p className="text-sm text-[var(--color-text-secondary)]">Comments content.</p>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">Comments content.</p>
       </TabsContent>
     </Tabs>
   ),
@@ -141,13 +141,13 @@ export const Vertical: Story = {
       </TabsList>
       <div className="flex-1">
         <TabsContent value="account" className="mt-0">
-          <p className="text-sm text-[var(--color-text-secondary)]">Manage your account details.</p>
+          <p className="text-body-sm text-[var(--color-text-secondary)]">Manage your account details.</p>
         </TabsContent>
         <TabsContent value="password" className="mt-0">
-          <p className="text-sm text-[var(--color-text-secondary)]">Change your password.</p>
+          <p className="text-body-sm text-[var(--color-text-secondary)]">Change your password.</p>
         </TabsContent>
         <TabsContent value="notifications" className="mt-0">
-          <p className="text-sm text-[var(--color-text-secondary)]">Configure notification preferences.</p>
+          <p className="text-body-sm text-[var(--color-text-secondary)]">Configure notification preferences.</p>
         </TabsContent>
       </div>
     </Tabs>
@@ -167,10 +167,10 @@ export const WithDisabled: Story = {
         <TabsTrigger value="team">Team</TabsTrigger>
       </TabsList>
       <TabsContent value="general" className="p-2">
-        <p className="text-sm text-[var(--color-text-secondary)]">General settings.</p>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">General settings.</p>
       </TabsContent>
       <TabsContent value="team" className="p-2">
-        <p className="text-sm text-[var(--color-text-secondary)]">Team settings.</p>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">Team settings.</p>
       </TabsContent>
     </Tabs>
   ),
@@ -187,10 +187,10 @@ export const LineWithDisabled: Story = {
         <TabsTrigger value="reports" variant="line">Reports</TabsTrigger>
       </TabsList>
       <TabsContent value="summary" className="p-2">
-        <p className="text-sm text-[var(--color-text-secondary)]">Summary content.</p>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">Summary content.</p>
       </TabsContent>
       <TabsContent value="reports" className="p-2">
-        <p className="text-sm text-[var(--color-text-secondary)]">Reports content.</p>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">Reports content.</p>
       </TabsContent>
     </Tabs>
   ),
@@ -202,7 +202,7 @@ export const BothTypes: Story = {
   render: () => (
     <div className="flex flex-col gap-8 w-96">
       <div>
-        <p className="mb-2 text-xs text-[var(--color-text-secondary)]">Default (pill)</p>
+        <p className="mb-2 text-body-xs text-[var(--color-text-secondary)]">Default (pill)</p>
         <Tabs defaultValue="a">
           <TabsList>
             <TabsTrigger value="a">Overview</TabsTrigger>
@@ -212,7 +212,7 @@ export const BothTypes: Story = {
         </Tabs>
       </div>
       <div>
-        <p className="mb-2 text-xs text-[var(--color-text-secondary)]">Line (underline)</p>
+        <p className="mb-2 text-body-xs text-[var(--color-text-secondary)]">Line (underline)</p>
         <Tabs defaultValue="a">
           <TabsList variant="line">
             <TabsTrigger value="a" variant="line">Overview</TabsTrigger>

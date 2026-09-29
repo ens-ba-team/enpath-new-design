@@ -61,7 +61,7 @@ export const Default: Story = {
           <SidebarHeader>
             <SidebarLogo>
               <div className="h-7 w-7 rounded-md bg-[var(--color-brand-primary)] flex items-center justify-center">
-                <span className="text-xs font-bold text-white">A</span>
+                <span className="text-label-sm text-white">A</span>
               </div>
             </SidebarLogo>
             <SidebarBrand title="Enpath" caption="Design System" />
@@ -89,7 +89,7 @@ export const Default: Story = {
           </SidebarFooter>
         </Sidebar>
         <main className="flex-1 p-6 bg-[var(--color-background-default)]">
-          <p className="text-sm text-[var(--color-text-secondary)]">Main content area</p>
+          <p className="text-body-sm text-[var(--color-text-secondary)]">Main content area</p>
         </main>
       </div>
     </SidebarProvider>
@@ -106,7 +106,7 @@ export const WithSubItems: Story = {
           <SidebarHeader>
             <SidebarLogo>
               <div className="h-7 w-7 rounded-md bg-[var(--color-brand-primary)] flex items-center justify-center">
-                <span className="text-xs font-bold text-white">A</span>
+                <span className="text-label-sm text-white">A</span>
               </div>
             </SidebarLogo>
             <SidebarBrand title="Enpath" caption="Design System" />
@@ -139,7 +139,7 @@ export const Collapsible: Story = {
           <SidebarHeader>
             <SidebarLogo>
               <div className="h-7 w-7 rounded-md bg-[var(--color-brand-primary)] flex items-center justify-center">
-                <span className="text-xs font-bold text-white">A</span>
+                <span className="text-label-sm text-white">A</span>
               </div>
             </SidebarLogo>
             <SidebarBrand title="Enpath" caption="Design System" />
@@ -158,7 +158,7 @@ export const Collapsible: Story = {
           </SidebarFooter>
         </Sidebar>
         <main className="flex-1 p-6 bg-[var(--color-background-default)]">
-          <p className="text-sm text-[var(--color-text-secondary)]">Press Cmd+B or click the toggle to collapse</p>
+          <p className="text-body-sm text-[var(--color-text-secondary)]">Press Cmd+B or click the toggle to collapse</p>
         </main>
       </div>
     </SidebarProvider>
@@ -175,7 +175,7 @@ export const Floating: Story = {
           <SidebarHeader>
             <SidebarLogo>
               <div className="h-7 w-7 rounded-md bg-[var(--color-brand-primary)] flex items-center justify-center">
-                <span className="text-xs font-bold text-white">A</span>
+                <span className="text-label-sm text-white">A</span>
               </div>
             </SidebarLogo>
             <SidebarBrand title="Enpath" caption="Design System" />
@@ -189,7 +189,7 @@ export const Floating: Story = {
           </SidebarContent>
         </Sidebar>
         <main className="flex-1 rounded-[var(--radius-lg)] bg-[var(--color-background-default)] p-6">
-          <p className="text-sm text-[var(--color-text-secondary)]">Main content</p>
+          <p className="text-body-sm text-[var(--color-text-secondary)]">Main content</p>
         </main>
       </div>
     </SidebarProvider>

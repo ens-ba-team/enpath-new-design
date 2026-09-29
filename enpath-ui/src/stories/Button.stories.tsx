@@ -103,7 +103,7 @@ export const PressMotion: Story = {
   render: () => (
     <div className="flex flex-col items-start gap-[var(--spacing-component-sm)]">
       <Button>Press and hold</Button>
-      <p className="text-sm text-[var(--color-text-secondary)]">
+      <p className="text-body-sm text-[var(--color-text-secondary)]">
         The button moves down by 1px while pressed, with no pressed-state shadow.
       </p>
     </div>

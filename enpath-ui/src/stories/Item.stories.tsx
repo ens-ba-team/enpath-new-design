@@ -231,7 +231,7 @@ export const AllSizes: Story = {
     <div className="w-80 flex flex-col gap-4">
       {(['default', 'sm', 'xs'] as const).map(size => (
         <div key={size}>
-          <p className="text-xs text-[var(--color-text-secondary)] mb-1 capitalize">{size}</p>
+          <p className="text-body-xs text-[var(--color-text-secondary)] mb-1 capitalize">{size}</p>
           <Item
             size={size}
             type="icon"
@@ -252,7 +252,7 @@ export const InsideCard: Story = {
   render: () => (
     <div className="w-80 rounded-[var(--radius-lg)] border border-[var(--color-border-default)] bg-[var(--color-surface-overlay)]">
       <div className="px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)] border-b border-[var(--color-border-default)]">
-        <p className="text-sm font-semibold text-[var(--color-surface-overlay-foreground)]">Notifications</p>
+        <p className="text-heading-xs text-[var(--color-surface-overlay-foreground)]">Notifications</p>
       </div>
       <div className="p-[var(--spacing-component-xs)]">
         {[

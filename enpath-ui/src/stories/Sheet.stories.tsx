@@ -95,7 +95,7 @@ export const Left: Story = {
             <a
               key={item}
               href="#"
-              className="flex items-center px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)] text-sm rounded-[var(--radius-md)] text-[var(--color-surface-overlay-foreground)] hover:bg-[var(--color-background-accent)] transition-colors"
+              className="flex items-center px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)] text-body-sm rounded-[var(--radius-md)] text-[var(--color-surface-overlay-foreground)] hover:bg-[var(--color-background-accent)] transition-colors"
             >
               {item}
             </a>
