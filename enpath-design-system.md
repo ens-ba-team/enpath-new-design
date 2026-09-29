@@ -51,7 +51,7 @@ Enpath's system started as a copy of Agentic, re-themed from En UI (2026-09-21).
 | Success / warning fills | Dark text (`zinc/900`); text and icons on `/700` | Their `/500` is under 3:1 with white |
 | Radius, spacing | Agentic values (already equal to En UI's) + En UI role aliases | — |
 | Control height | En UI touch + pointer ladders, 32px default from 640px up | Denser than Agentic's 40px |
-| Type | Nunito + Roboto Mono · Tailwind's type scale · labels SemiBold | Code and Storybook only ever used Tailwind classes; Agentic's 18 named text styles were never in code and were dropped (2026-09-29) |
+| Type | Nunito + Roboto Mono · 9 text styles with Agentic's names, each one Tailwind class (`text-body-sm` …) · labels SemiBold | Agentic's styles were never in code, so screens mixed size and weight by hand; one class per style keeps them consistent (2026-09-29) |
 | Cards | White + border + `shadow/surface` | En UI; `surface/raised` stays a grey tint |
 | App shell | Transparent sidebar and white page panel (`radius/panel` 12px) on a light brand-tinted app background with soft brand glows (`color/background/app`, `/app-glow`), 8px apart (`spacing/shell`) | Modern, calm, with depth — as in modern productivity apps |
 | Sidebar selected item | White + `sidebar/border` hairline, label SemiBold; hover `sidebar/accent` (60% white) | Border = non-colour signal; hover lighter than selected so it never looks selected |
@@ -285,20 +285,25 @@ opacity/disabled 60 · loading 50 · overlay 50 (backdrop only) · ghost 80 · a
 
 ### Typography
 
-Text is styled with Tailwind classes. There are no named text styles and no Typography component. The classes read Enpath tokens (see Type above), so a value changes in `Tokens/`, never in CSS.
+Text uses **text styles**: one class carries size, line height and weight. Values live in `Tokens/semantics.tokens.json` → `typography/*` (each with its intent); `sd.build.mjs` generates the classes into `enpath-ui/src/app/text-styles.css`. Storybook: `Foundations/Text Styles`.
 
-| Class | Size / line height | Use for |
+| Class | Size / line height · weight | Use for |
 |---|---|---|
-| `text-xs` | 12 / 16 | Secondary text: captions, meta lines, badges, table headers |
-| `text-sm` | 14 / 20 | Default UI text: body, controls, list rows, descriptions |
-| `text-base` | 16 / 24 | Card and panel titles |
-| `text-lg` | 18 / 28 | Dialog and drawer titles |
-| `text-xl` · `text-2xl` | 20 / 28 · 24 / 32 | Page titles |
+| `text-heading-xl` | 24 / 32 · 600 | Page title (h1), one per page |
+| `text-heading-lg` | 20 / 28 · 600 | Large section title on a page |
+| `text-heading-md` | 18 / 24.75 · 600 | Dialog, drawer and sheet titles |
+| `text-heading-sm` | 16 / 22 · 600 | Card and panel titles, empty-state titles |
+| `text-heading-xs` | 14 / 20 · 600 | Titles of list rows, items and small cards |
+| `text-body-sm` | 14 / 20 · 400 | Default UI text: body, list rows, descriptions, table cells |
+| `text-body-xs` | 12 / 16 · 400 | Secondary text: captions, meta lines, helper text |
+| `text-label-md` | 14 / 14 · 600 | One-line labels: buttons, form labels, alert titles |
+| `text-label-sm` | 12 / 12 · 600 | Small one-line labels: badges, tabs, tooltips, table headers |
 
-- **Weight:** `font-normal` (400) for text, `font-semibold` (600) for labels and titles. Labels are SemiBold (from En UI); 37 places still use `font-medium` (500), listed in `document/design-patterns.md`.
-- **Line height:** `leading-none` for one-line labels (buttons, badges, tabs, tooltips), `leading-snug` for titles that can wrap. Otherwise keep the class's own line height.
-- **Mono:** `font-mono` + `text-xs` or `text-sm`, machine text only (R-ENP-03).
-- Common pairs: label `text-sm font-semibold leading-none` (small: `text-xs`), card title `text-base font-semibold leading-snug`, dialog title `text-lg font-semibold leading-snug`.
+- **One class, no mixing** (R-ENP-13): don't combine `text-sm`, `text-xs` … with `font-*` to build a style. A `font-*` class alone is allowed only to show a state (a selected row turns `font-semibold`).
+- **Labels never wrap:** `label-*` has line height = size, so two lines collide. Text that can wrap uses `body-*` or `heading-*`.
+- **Mono:** `font-mono` + `text-body-xs` or `text-body-sm`, machine text only (R-ENP-03). Tailwind can't put a font family in a text class.
+- **New style:** add it to `typography/*` in the tokens and rebuild. `cn()` (`lib/utils.ts`) already recognises `display|heading|body|label-(xs…xl)` names; without that, tailwind-merge drops the style when a colour class follows.
+- **Migration:** screens and components still use the old mixed classes; they move to styles in phases (components, then screens, then stories). Until then `text-*` + `font-*` still renders from tokens.
 
 ---
 
@@ -437,6 +442,9 @@ Carried over from En UI (`contracts/rules.catalog.json`, 65 rules) on 2026-09-21
 **R-ENP-03 · Mono is for machine-oriented text only** — code, commands, paths, hashes, serialized values. A date, a count, a level or an ID is **not** machine text; it uses sans.
 *From: `component.typography.reserve-mono-for-technical-content`*
 
+**R-ENP-13 · Use one text-style class; don't build text from size and weight utilities.** `text-body-sm`, not `text-sm`; `text-label-md`, not `text-sm font-semibold leading-none`. A lone `font-*` is only for a state change.
+*Enpath rule (2026-09-29). Replaces R-ENP-04, now that Enpath has text styles.*
+
 ### 3. Button
 
 **R-ENP-05 · A button label stays on one line and never wraps.** An icon-only button needs an `aria-label`.
@@ -476,7 +484,7 @@ Carried over from En UI (`contracts/rules.catalog.json`, 65 rules) on 2026-09-21
 | Application shell, header, page container, page header, page section (except R-ENP-12), split layout — 12 rules | Components not in this system yet |
 | AI chat page, AI workspace, login page — 11 rules | Patterns not in this system |
 | `component.colocation` | This system has its own file structure |
-| `component.typography.use-compact-roles` (was R-ENP-04, retired 2026-09-29; the number is not reused) | En UI's rule meant "use the `<Typography>` component's roles". Enpath has no Typography component: text is Tailwind `text-*` / `font-*` classes that read Enpath tokens (see Type) |
+| `component.typography.use-compact-roles` (was R-ENP-04, retired 2026-09-29; the number is not reused; replaced by R-ENP-13) | En UI's rule meant "use the `<Typography>` component's roles". Enpath has no Typography component: text is Tailwind `text-*` / `font-*` classes that read Enpath tokens (see Type) |
 
 ---
 

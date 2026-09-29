@@ -1838,6 +1838,177 @@
    * Status:      active
    */
   --height-control-touch-lg: 40px;
+  /**
+   * Intent:      Secondary text, 12/16 Regular.
+   * Use when:    Captions, meta lines under a title, helper text, timestamps, counts.
+   * Do not use:  Text the user must read to act; one-line labels inside controls.
+   * Use instead: label-sm for one-line control labels; body-sm for main text.
+   * Code:        class text-body-xs (generated in enpath-ui/src/app/text-styles.css)
+   * Status:      active
+   */
+  --typography-body-xs-font-size: 12;
+  /**
+   * Part of typography/body-xs. Don't use on its own; use the class text-body-xs.
+   * Status:      active
+   */
+  --typography-body-xs-line-height: 16;
+  /**
+   * Part of typography/body-xs. Don't use on its own; use the class text-body-xs.
+   * Status:      active
+   */
+  --typography-body-xs-font-weight: 400;
+  /**
+   * Intent:      Default UI text, 14/20 Regular.
+   * Use when:    Body copy, list rows, descriptions, table cells, input values, dialog descriptions.
+   * Do not use:  Titles or labels that need weight.
+   * Use instead: heading-xs for a title at this size; label-md for a one-line control label.
+   * Code:        class text-body-sm (generated in enpath-ui/src/app/text-styles.css)
+   * Status:      active
+   */
+  --typography-body-sm-font-size: 14;
+  /**
+   * Part of typography/body-sm. Don't use on its own; use the class text-body-sm.
+   * Status:      active
+   */
+  --typography-body-sm-line-height: 20;
+  /**
+   * Part of typography/body-sm. Don't use on its own; use the class text-body-sm.
+   * Status:      active
+   */
+  --typography-body-sm-font-weight: 400;
+  /**
+   * Intent:      Small one-line label, 12/12 SemiBold (line height = size).
+   * Use when:    Badges, tabs, tooltips, xs/sm buttons, select group labels, table headers, small section labels.
+   * Do not use:  Text that can wrap: lines collide.
+   * Use instead: body-xs for wrapping small text.
+   * Code:        class text-label-sm (generated in enpath-ui/src/app/text-styles.css)
+   * Status:      active
+   */
+  --typography-label-sm-font-size: 12;
+  /**
+   * Part of typography/label-sm. Don't use on its own; use the class text-label-sm.
+   * Status:      active
+   */
+  --typography-label-sm-line-height: 100;
+  /**
+   * Part of typography/label-sm. Don't use on its own; use the class text-label-sm.
+   * Status:      active
+   */
+  --typography-label-sm-font-weight: 600;
+  /**
+   * Intent:      One-line label, 14/14 SemiBold (line height = size).
+   * Use when:    Buttons, form labels, alert titles, menu and nav labels.
+   * Do not use:  Text that can wrap: lines collide.
+   * Use instead: heading-xs for a 14px title that can wrap.
+   * Code:        class text-label-md (generated in enpath-ui/src/app/text-styles.css)
+   * Status:      active
+   */
+  --typography-label-md-font-size: 14;
+  /**
+   * Part of typography/label-md. Don't use on its own; use the class text-label-md.
+   * Status:      active
+   */
+  --typography-label-md-line-height: 100;
+  /**
+   * Part of typography/label-md. Don't use on its own; use the class text-label-md.
+   * Status:      active
+   */
+  --typography-label-md-font-weight: 600;
+  /**
+   * Intent:      Small title, 14/20 SemiBold.
+   * Use when:    Titles of list rows, items and small cards; section titles inside a panel.
+   * Do not use:  Page or dialog titles.
+   * Use instead: heading-sm and up for card, dialog and page titles.
+   * Code:        class text-heading-xs (generated in enpath-ui/src/app/text-styles.css)
+   * Status:      active
+   */
+  --typography-heading-xs-font-size: 14;
+  /**
+   * Part of typography/heading-xs. Don't use on its own; use the class text-heading-xs.
+   * Status:      active
+   */
+  --typography-heading-xs-line-height: 20;
+  /**
+   * Part of typography/heading-xs. Don't use on its own; use the class text-heading-xs.
+   * Status:      active
+   */
+  --typography-heading-xs-font-weight: 600;
+  /**
+   * Intent:      Card title, 16/22 SemiBold.
+   * Use when:    Card and panel titles, empty-state titles.
+   * Do not use:  Dialog or page titles.
+   * Use instead: heading-md for dialogs; heading-xl for the page title.
+   * Code:        class text-heading-sm (generated in enpath-ui/src/app/text-styles.css)
+   * Status:      active
+   */
+  --typography-heading-sm-font-size: 16;
+  /**
+   * Part of typography/heading-sm. Don't use on its own; use the class text-heading-sm.
+   * Status:      active
+   */
+  --typography-heading-sm-line-height: 137.5;
+  /**
+   * Part of typography/heading-sm. Don't use on its own; use the class text-heading-sm.
+   * Status:      active
+   */
+  --typography-heading-sm-font-weight: 600;
+  /**
+   * Intent:      Overlay title, 18/24.75 SemiBold.
+   * Use when:    Dialog, alert dialog, drawer and sheet titles.
+   * Do not use:  Titles inside cards.
+   * Use instead: heading-sm for cards.
+   * Code:        class text-heading-md (generated in enpath-ui/src/app/text-styles.css)
+   * Status:      active
+   */
+  --typography-heading-md-font-size: 18;
+  /**
+   * Part of typography/heading-md. Don't use on its own; use the class text-heading-md.
+   * Status:      active
+   */
+  --typography-heading-md-line-height: 137.5;
+  /**
+   * Part of typography/heading-md. Don't use on its own; use the class text-heading-md.
+   * Status:      active
+   */
+  --typography-heading-md-font-weight: 600;
+  /**
+   * Intent:      Section title, 20/28 SemiBold.
+   * Use when:    Large section titles on a page.
+   * Do not use:  More than one level per page region.
+   * Use instead: heading-sm for cards.
+   * Code:        class text-heading-lg (generated in enpath-ui/src/app/text-styles.css)
+   * Status:      active
+   */
+  --typography-heading-lg-font-size: 20;
+  /**
+   * Part of typography/heading-lg. Don't use on its own; use the class text-heading-lg.
+   * Status:      active
+   */
+  --typography-heading-lg-line-height: 28;
+  /**
+   * Part of typography/heading-lg. Don't use on its own; use the class text-heading-lg.
+   * Status:      active
+   */
+  --typography-heading-lg-font-weight: 600;
+  /**
+   * Intent:      Page title, 24/32 SemiBold.
+   * Use when:    The one page title (h1).
+   * Do not use:  Anything but the page title.
+   * Use instead: heading-lg for sections.
+   * Code:        class text-heading-xl (generated in enpath-ui/src/app/text-styles.css)
+   * Status:      active
+   */
+  --typography-heading-xl-font-size: 24;
+  /**
+   * Part of typography/heading-xl. Don't use on its own; use the class text-heading-xl.
+   * Status:      active
+   */
+  --typography-heading-xl-line-height: 32;
+  /**
+   * Part of typography/heading-xl. Don't use on its own; use the class text-heading-xl.
+   * Status:      active
+   */
+  --typography-heading-xl-font-weight: 600;
   --button-primary-bg-bg: oklch(50.4% 0.2782 264.53);
   --button-primary-bg-hover: oklch(44% 0.25 264.53);
   --button-primary-bg-active: oklch(38% 0.22 264.53);

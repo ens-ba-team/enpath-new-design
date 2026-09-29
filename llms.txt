@@ -9,7 +9,7 @@
 
 ## Rules and Process
 
-- `enpath-design-system.md`: Source of truth, theme decisions (why each value was chosen), token layers, every primitive and semantic token with rules, component tokens (button, badge, table, tooltip), component and card layout rules, icons (Phosphor), accessibility, and the 11 R-ENP behaviour rules from En UI (R-ENP-04 retired). No Figma — light mode only.
+- `enpath-design-system.md`: Source of truth, theme decisions (why each value was chosen), token layers, every primitive and semantic token with rules, component tokens (button, badge, table, tooltip), component and card layout rules, icons (Phosphor), accessibility, and the R-ENP behaviour rules (11 from En UI, R-ENP-04 retired; R-ENP-13 text styles). No Figma — light mode only.
 - `Skills/token-binding-skill.md`: **Read before binding any token in code.** How to pick a token by meaning (descriptions in `Tokens/semantics.tokens.json`), pairing rules, height pairs, adding a new token with the full description template, verification, common mistakes.
 - `content-guidelines.md`: Voice-neutral UX writing mechanics — capitalization, button labels, error messages, empty states, punctuation. Brand voice/tone is left to the consuming product.
 - `enpath-tone-and-voice.md`: Enpath's own layer on top of the above — HR-platform-specific tone (a score is development information, not a verdict), admin vs. employee voice, HR/engineering jargon to avoid, reversible-action copy pattern. Enpath-specific, not part of the reusable design system.

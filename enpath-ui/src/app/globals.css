@@ -2,6 +2,7 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "./tokens.css";
+@import "./text-styles.css";
 /* AI Elements MessageResponse renders markdown with streamdown — let Tailwind see its classes */
 @source "../../node_modules/streamdown/dist/*.js";
 

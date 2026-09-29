@@ -6,6 +6,19 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-29 — Text styles
+
+### Added
+- **9 text styles**, Agentic's names, one Tailwind class each: `text-heading-xl/lg/md/sm/xs`, `text-body-sm/xs`, `text-label-md/sm`. A class sets size, line height and weight. Tokens: `typography/<style>/{font-size, line-height, font-weight}` in `semantics.tokens.json`, each with intent; `sd.build.mjs` generates `enpath-ui/src/app/text-styles.css` (imported in `globals.css`).
+- Storybook `Foundations/Text Styles` (measured values per style).
+- **R-ENP-13**: use one text-style class, don't mix size and weight utilities.
+
+### Changed
+- `cn()` (`lib/utils.ts`) extends tailwind-merge so it treats text-style classes as font sizes. Before, `cn("text-label-sm text-[var(--color-text-secondary)]")` dropped `text-label-sm`.
+- No screen or component uses the styles yet; nothing changes on screen. Migration follows in phases.
+
+---
+
 ## 2026-09-29 — Text styles: Tailwind classes only
 
 ### Removed
