@@ -24,7 +24,7 @@ import { Avatar } from "@/components/ui/avatar"
 //
 // Text:
 //   title:       color/surface/default/foreground · text-heading-xs
-//   description: color/surface/muted/foreground · text-body-sm
+//   description: color/surface/muted/foreground · text-body-sm (size sm / xs: text-body-xs, a meta line)
 //   content gap: spacing/component/xxs (2px)
 //
 // Selectable (onSelect set) — renders a <button>, for single-select lists (master–detail):
@@ -44,12 +44,18 @@ const itemVariants = cva(
         muted: "bg-[var(--color-surface-muted)]",
       },
       size: {
-        default: "p-3 gap-3",   // spacing/component/md = 12px
-        sm: "p-2 gap-2",        // spacing/component/sm = 8px
-        xs: "p-1.5 gap-1.5",   // spacing/component/xs-plus = 6px
+        default: "p-[var(--spacing-component-md)] gap-[var(--spacing-component-md)]",
+        sm: "p-[var(--spacing-component-sm)] gap-[var(--spacing-component-sm)]",
+        xs: "p-[var(--spacing-component-xs-plus)] gap-[var(--spacing-component-xs-plus)]",
+      },
+      // Side padding. default = the size's own padding; md = spacing/component/md on the left and
+      // right, so a list's rows line up with the search field and headings above them.
+      inset: {
+        default: "",
+        md: "px-[var(--spacing-component-md)]",
       },
     },
-    defaultVariants: { variant: "default", size: "default" },
+    defaultVariants: { variant: "default", size: "default", inset: "default" },
   }
 )
 
@@ -94,6 +100,7 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>(
       className,
       variant,
       size,
+      inset,
       type = "default",
       title,
       description,
@@ -119,7 +126,7 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>(
 
     // ── Content block (title + description) ──
     const contentBlock = (
-      <div className="flex flex-col gap-0.5 flex-1 min-w-0"> {/* spacing/component/xxs = 2px */}
+      <div className="flex flex-col gap-[var(--spacing-component-xxs)] flex-1 min-w-0">
         <span className={cn(
           "text-heading-xs",
           selected ? "font-semibold text-[var(--item-selected-fg)]" : "text-[var(--color-surface-default-foreground)]"
@@ -127,7 +134,7 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>(
           {title}
         </span>
         {description && (
-          <span className="text-body-sm text-[var(--color-surface-muted-foreground)]">
+          <span className={cn(size === "sm" || size === "xs" ? "text-body-xs" : "text-body-sm", "text-[var(--color-surface-muted-foreground)]")}>
             {description}
           </span>
         )}
@@ -182,7 +189,7 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>(
         <div
           ref={ref}
           className={cn(
-            itemVariants({ variant, size }),
+            itemVariants({ variant, size, inset }),
             "flex-col p-0",
             className
           )}
@@ -199,7 +206,7 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>(
           {/* Content row — padding applied here, not on container */}
           <div className={cn(
             "flex flex-1",
-            size === "sm" ? "p-2" : size === "xs" ? "p-1.5" : "p-3"
+            size === "sm" ? "p-[var(--spacing-component-sm)]" : size === "xs" ? "p-[var(--spacing-component-xs-plus)]" : "p-[var(--spacing-component-md)]"
           )}>
             {contentBlock}
           </div>
@@ -221,7 +228,7 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>(
         <a
           href={href}
           className={cn(
-            itemVariants({ variant, size }),
+            itemVariants({ variant, size, inset }),
             isTopAligned ? "items-start" : "items-center",
             "hover:bg-[var(--color-surface-accent)] transition-colors no-underline",
             className
@@ -240,7 +247,7 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>(
           onClick={onSelect}
           aria-current={selected ? "true" : undefined}
           className={cn(
-            itemVariants({ variant, size }),
+            itemVariants({ variant, size, inset }),
             isTopAligned ? "items-start" : "items-center",
             "text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)]",
             selected
@@ -258,7 +265,7 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>(
       <div
         ref={ref}
         className={cn(
-          itemVariants({ variant, size }),
+          itemVariants({ variant, size, inset }),
           isTopAligned ? "items-start" : "items-center",
           className
         )}

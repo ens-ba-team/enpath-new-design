@@ -4,7 +4,25 @@
   "category": "ai",
   "shadcnBase": "ai-elements/prompt-input",
   "codeOnly": true,
-  "variants": {},
+  "variants": {
+    "Select trigger size": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Sm"
+      ],
+      "default": "Default",
+      "reactProp": "size (on PromptInputSelectTrigger)",
+      "reactValues": {
+        "Default": "default",
+        "Sm": "sm"
+      },
+      "intent": {
+        "Default": "Standard trigger height.",
+        "Sm": "Compact composer-toolbar trigger: height/control-touch/sm + height/control/sm, text-body-xs, hugs its value."
+      }
+    }
+  },
   "tokens": {
     "Fill": "`chat/composer/bg`",
     "Border": "`chat/composer/border`; focus `color/border/focus`",
@@ -54,6 +72,10 @@
       {
         "date": "2026-09-29",
         "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
+      },
+      {
+        "date": "2026-09-29",
+        "change": "PromptInputSelectTrigger size=\"sm\" for the composer toolbar (mode / model selects); the chat panel used a hand-set h-7 before."
       }
     ]
   },

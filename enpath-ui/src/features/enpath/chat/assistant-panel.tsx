@@ -200,14 +200,14 @@ export function AssistantPanel({ script, onClose }: { script: AssistantScript; o
             <PromptInputTools>
               {script.modes && mode && (
                 <PromptInputSelect value={mode} onValueChange={setMode}>
-                  <PromptInputSelectTrigger aria-label="Mode" className="h-7 w-auto gap-[var(--spacing-component-xs)] border-none px-[var(--spacing-component-sm)] text-body-xs shadow-none"><PromptInputSelectValue /></PromptInputSelectTrigger>
+                  <PromptInputSelectTrigger aria-label="Mode" size="sm"><PromptInputSelectValue /></PromptInputSelectTrigger>
                   <PromptInputSelectContent>
                     {script.modes.map((m) => <PromptInputSelectItem key={m} value={m}>{m}</PromptInputSelectItem>)}
                   </PromptInputSelectContent>
                 </PromptInputSelect>
               )}
               <PromptInputSelect value={model} onValueChange={setModel}>
-                <PromptInputSelectTrigger aria-label="Model" className="h-7 w-auto gap-[var(--spacing-component-xs)] border-none px-[var(--spacing-component-sm)] text-body-xs shadow-none"><PromptInputSelectValue /></PromptInputSelectTrigger>
+                <PromptInputSelectTrigger aria-label="Model" size="sm"><PromptInputSelectValue /></PromptInputSelectTrigger>
                 <PromptInputSelectContent>
                   {MODELS.map((m) => <PromptInputSelectItem key={m.id} value={m.id}>{m.name}</PromptInputSelectItem>)}
                 </PromptInputSelectContent>

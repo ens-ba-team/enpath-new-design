@@ -22,8 +22,10 @@ const buttonVariants = cva(
           "border border-[var(--button-outline-border-default)] bg-[var(--button-outline-bg-bg)] text-[var(--button-outline-fg-fg)] hover:bg-[var(--button-outline-bg-hover)] hover:border-[var(--button-outline-border-hover)] active:bg-[var(--button-outline-bg-active)] active:border-[var(--button-outline-border-active)] focus-visible:border-[var(--button-outline-border-focus)] disabled:border-[var(--button-outline-border-disabled)]",
         secondary:
           "bg-[var(--button-secondary-bg-bg)] text-[var(--button-secondary-fg-fg)] hover:bg-[var(--button-secondary-bg-hover)] active:bg-[var(--button-secondary-bg-active)]",
+        // Pressed (aria-pressed="true"): a toggle that is switched on, e.g. the current view in a
+        // Map / List ButtonGroup. Fill button/ghost/bg/pressed + font-semibold (selected-state exception).
         ghost:
-          "bg-transparent text-[var(--button-ghost-fg-fg)] hover:bg-[var(--button-ghost-bg-hover)] active:bg-[var(--button-ghost-bg-active)]",
+          "bg-transparent text-[var(--button-ghost-fg-fg)] hover:bg-[var(--button-ghost-bg-hover)] active:bg-[var(--button-ghost-bg-active)] aria-pressed:bg-[var(--button-ghost-bg-pressed)] aria-pressed:font-semibold",
         // Secondary removal that is reversible or confirmed by a preview (e.g. "Remove as target").
         // Red text, no fill; light danger tint on hover; same red focus glow as destructive.
         // Final "Remove" inside a confirmation, or anything irreversible, stays on destructive.
@@ -51,6 +53,10 @@ const buttonVariants = cva(
           "h-[var(--height-control-touch-lg)] sm:h-[var(--height-control-lg)] w-[var(--height-control-touch-lg)] sm:w-[var(--height-control-lg)] rounded-[var(--button-size-button-radius-1)]",
       },
     },
+    // A link button sits inline with text: no control height, no side padding, whatever the size.
+    compoundVariants: [
+      { variant: "link", className: "h-auto sm:h-auto px-0" },
+    ],
     defaultVariants: {
       variant: "default",
       size: "default",

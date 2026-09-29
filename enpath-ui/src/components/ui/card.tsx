@@ -15,24 +15,32 @@ import { cn } from "@/lib/utils"
 //   shadow     = shadow/surface          → var(--shadow-surface)            (Enpath D4: white + shadow, from En UI)
 // Padding lives HERE — not repeated on CardHeader / CardContent / CardFooter.
 
+// size: "default" | "compact". Compact is the dense-widget card: padding spacing/component/md,
+// gap spacing/component/sm, CardTitle text-heading-xs.
+type CardSize = "default" | "compact"
+const CardSizeContext = React.createContext<CardSize>("default")
+
 const Card = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "flex flex-col",
-      "rounded-[var(--radius-lg)]",
-      "border border-[var(--color-border-default)]",
-      "bg-[var(--color-surface-overlay)]",
-      "shadow-[var(--shadow-surface)]",
-      "p-[var(--spacing-component-lg)]",
-      "gap-[var(--spacing-component-lg)]",
-      className
-    )}
-    {...props}
-  />
+  React.HTMLAttributes<HTMLDivElement> & { size?: CardSize }
+>(({ className, size = "default", ...props }, ref) => (
+  <CardSizeContext.Provider value={size}>
+    <div
+      ref={ref}
+      data-size={size}
+      className={cn(
+        "flex flex-col",
+        "rounded-[var(--radius-lg)]",
+        "border border-[var(--color-border-default)]",
+        "bg-[var(--color-surface-overlay)]",
+        "shadow-[var(--shadow-surface)]",
+        size === "compact" ? "p-[var(--spacing-component-md)]" : "p-[var(--spacing-component-lg)]",
+        size === "compact" ? "gap-[var(--spacing-component-sm)]" : "gap-[var(--spacing-component-lg)]",
+        className
+      )}
+      {...props}
+    />
+  </CardSizeContext.Provider>
 ))
 Card.displayName = "Card"
 
@@ -57,23 +65,26 @@ const CardHeader = React.forwardRef<
 CardHeader.displayName = "CardHeader"
 
 // ─── CardTitle ────────────────────────────────────────────────────────────────
-// Text: text-heading-sm
+// Text: text-heading-sm (compact card: text-heading-xs)
 // Token: color/surface/overlay/foreground → var(--color-surface-overlay-foreground) #18181b
 
 const CardTitle = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+>(({ className, ...props }, ref) => {
+  const size = React.useContext(CardSizeContext)
+  return (
   <div
     ref={ref}
     className={cn(
-      "text-heading-sm",
+      size === "compact" ? "text-heading-xs" : "text-heading-sm",
       "text-[var(--color-surface-overlay-foreground)]",
       className
     )}
     {...props}
   />
-))
+)
+})
 CardTitle.displayName = "CardTitle"
 
 // ─── CardDescription ─────────────────────────────────────────────────────────

@@ -86,7 +86,7 @@ function EnpathSidebarFooter() {
       <SidebarMenuItem icon={<PlugsIcon className="h-4 w-4" />} label="MCP access" href="#" className={collapsed ? 'justify-center' : ''} />
       <SidebarMenuItem icon={<BellIcon className="h-4 w-4" />} label="Notifications" badge="1" href="#" className={collapsed ? 'justify-center' : ''} />
       {/* Account block: set apart from the nav rows above */}
-      <Separator className="my-[var(--spacing-component-sm)] bg-[var(--color-sidebar-border)]" />
+      <Separator tone="sidebar" className="my-[var(--spacing-component-sm)]" />
       <EnpathUserRow />
     </SidebarFooter>
   );
@@ -155,7 +155,7 @@ export function EnpathAppShell({ defaultCollapsed = false, active = 'Setup', onN
                 {workspaceItems.map(item)}
               </SidebarGroup>
             </nav>
-            <Separator className="mx-[var(--spacing-component-md)] w-auto bg-[var(--color-sidebar-border)]" />
+            <Separator tone="sidebar" className="mx-[var(--spacing-component-md)] w-auto" />
             <nav aria-label="Operations">
               <SidebarGroup>
                 <SidebarGroupLabel>Operations</SidebarGroupLabel>

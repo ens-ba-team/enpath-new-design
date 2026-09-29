@@ -113,3 +113,21 @@ export const Multiple: Story = {
     </Accordion>
   ),
 };
+
+/** size="compact": inside a card or panel — tighter rows, body text, no border under the last item. */
+export const Compact: Story = {
+  render: () => (
+    <div className="w-[360px]">
+      <Accordion type="single" collapsible size="compact">
+        <AccordionItem value="a">
+          <AccordionTrigger>System design</AccordionTrigger>
+          <AccordionContent>Designs services that stay simple as the team grows.</AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="b">
+          <AccordionTrigger>Code quality</AccordionTrigger>
+          <AccordionContent>Writes code others can read and change safely.</AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </div>
+  ),
+};

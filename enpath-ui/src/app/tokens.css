@@ -2290,6 +2290,13 @@
   --button-ghost-bg-hover: #f1f5f9;
   --button-ghost-bg-bg: #ffffff;
   --button-ghost-bg-active: #f1f5f9;
+  /**
+   * Intent:      Fill of a ghost button that is switched on (aria-pressed="true"), e.g. the current view in a Map / List ButtonGroup
+   * Use when:    Toggle buttons: the button stays in this state until another is chosen
+   * Do not use:  The moment of clicking (that is button/ghost/bg/active) or a selected list row (item/selected/*)
+   * Status:      active
+   */
+  --button-ghost-bg-pressed: #f1f5f9;
   --button-ghost-fg-fg: #0f172a;
   --button-link-fg-default: #0e41ff;
   --button-link-fg-hover: #0934db;

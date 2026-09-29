@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
 //   fill     = color/background/default (all variants)
 //   stroke   = color/border/default (Default) | color/border/error (Destructive) | color/yellow/200 (Warning) | color/green/200 (Success) | color/blue/200 (Info)
 //   radius   = radius/lg
-//   padding  = spacing/component/lg (16px)
+//   padding  = spacing/component/lg (16px); size sm: md horizontal / sm vertical, one row
 //   gap      = spacing/component/sm (8px) — flat layout: title ↔ description
 //
 // Layout: flex-col (flat, no icon). For icon layout use explicit composition in
@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils"
 // subtle-foreground title + icon, 800 description.
 
 const alertVariants = cva(
-  "flex flex-col w-full rounded-[var(--radius-lg)] border p-[var(--spacing-component-lg)] gap-[var(--spacing-component-sm)]",
+  "flex w-full rounded-[var(--radius-lg)] border",
   {
     variants: {
       variant: {
@@ -62,19 +62,26 @@ const alertVariants = cva(
           "[&_svg]:text-[var(--color-status-info-subtle-foreground)]",
         ].join(" "),
       },
+      // size: default = stacked title + description; sm = one compact line (icon · title · action)
+      // for page headers and toolbars.
+      size: {
+        default: "flex-col p-[var(--spacing-component-lg)] gap-[var(--spacing-component-sm)]",
+        sm: "flex-row items-center px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)] gap-[var(--spacing-component-md)]",
+      },
     },
-    defaultVariants: { variant: "default" },
+    defaultVariants: { variant: "default", size: "default" },
   }
 )
 
 const Alert = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
->(({ className, variant, ...props }, ref) => (
+>(({ className, variant, size, ...props }, ref) => (
   <div
     ref={ref}
     role="alert"
-    className={cn(alertVariants({ variant }), className)}
+    data-size={size ?? "default"}
+    className={cn(alertVariants({ variant, size }), className)}
     {...props}
   />
 ))

@@ -186,3 +186,14 @@ export const AllVariants: Story = {
     </div>
   ),
 };
+
+/** size="sm": one compact line (icon · title · action) for page headers and toolbars. */
+export const Small: Story = {
+  render: () => (
+    <Alert variant="info" size="sm" role="status" className="w-fit">
+      <InfoIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
+      <AlertTitle>Engineering growth changed 27 Sep</AlertTitle>
+      <Button variant="link" size="sm">See what’s different</Button>
+    </Alert>
+  ),
+};

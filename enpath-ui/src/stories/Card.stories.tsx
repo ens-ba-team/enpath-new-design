@@ -276,3 +276,17 @@ export const ShellComparison: Story = {
     </div>
   ),
 };
+
+/** size="compact": dense widget — smaller padding and gap, CardTitle in the small heading style. */
+export const Compact: Story = {
+  render: () => (
+    <Card size="compact" className="w-[320px]">
+      <CardHeader>
+        <CardTitle>Growth areas · 2</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">System design · Mentoring</p>
+      </CardContent>
+    </Card>
+  ),
+};

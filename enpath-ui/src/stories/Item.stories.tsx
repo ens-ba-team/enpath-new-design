@@ -282,3 +282,14 @@ export const Selectable: Story = {
   args: { title: 'Selectable' },
   render: () => <SelectableDemo />,
 };
+
+/** inset="md": wider side padding so a list's rows line up with the search field above.
+ *  size="sm" descriptions use the meta-line style. */
+export const InsetList: Story = {
+  render: () => (
+    <div className="flex w-[280px] flex-col gap-[var(--spacing-component-xs)]">
+      <Item size="sm" inset="md" title="Backend Engineer" description="BE · 4 levels" selected onSelect={() => {}} />
+      <Item size="sm" inset="md" title="Frontend Engineer" description="FE · 4 levels" onSelect={() => {}} />
+    </div>
+  ),
+};

@@ -5,9 +5,8 @@
 // point comes from). Growth areas link to the next step: Plan an action (My Actions).
 // Not assessed yet has no button: assessing is the manager's job, not the employee's.
 // Wording follows enpath-tone-and-voice.md: "Not assessed yet" means no approved Assessment score, never a gap.
-// Each group is a compact Card (spacing/component/md inside); the gap between cards is structure
-// (spacing/layout/xs — the panel is narrow). Rows are compact: trigger padding component/sm (8px)
-// instead of the Accordion's 16px — local override until the Accordion gets a compact size. Built only from design-system components: Card,
+// Each group is a Card size="compact"; the gap between cards is structure (spacing/layout/xs — the
+// panel is narrow). Rows are an Accordion size="compact". Built only from design-system components: Card,
 // Accordion (rows), Collapsible + Button (Show/Hide).
 
 import * as React from 'react';
@@ -93,10 +92,10 @@ function GapGroup({ group, rows, focused }: { group: (typeof groups)[number]; ro
   React.useEffect(() => { if (focused) ref.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }, [focused]);
   return (
     <Collapsible open={open} onOpenChange={setOpen} asChild>
-      <Card ref={ref} role="region" aria-label={group.title} className={cn('gap-[var(--spacing-component-sm)] p-[var(--spacing-component-md)]', !open && 'gap-0')}>
+      <Card ref={ref} size="compact" role="region" aria-label={group.title} className={cn(!open && 'gap-0')}>
         <CardHeader className="flex-row items-center gap-[var(--spacing-component-sm)]">
           <span aria-hidden="true" className={cn('h-2 w-2 shrink-0 rounded-[var(--radius-pill)]', statusFill[group.status])} />
-          <CardTitle className="flex-1 text-heading-xs" role="heading" aria-level={3}>{group.title} <span className="font-normal text-[var(--color-text-secondary)]">· {rows.length}</span></CardTitle>
+          <CardTitle className="flex-1" role="heading" aria-level={3}>{group.title} <span className="font-normal text-[var(--color-text-secondary)]">· {rows.length}</span></CardTitle>
           {group.collapsed && (
             <CollapsibleTrigger asChild>
               <Button variant="ghost" size="xs">{open ? 'Hide' : 'Show'}</Button>
@@ -109,14 +108,14 @@ function GapGroup({ group, rows, focused }: { group: (typeof groups)[number]; ro
               <span>Competency</span><span>{group.values}</span>
             </p>
           )}
-          <Accordion type="single" collapsible>
+          <Accordion type="single" collapsible size="compact">
             {rows.map((gap) => (
-              <AccordionItem key={gap.id} value={gap.id} className="last:border-b-0">
-                <AccordionTrigger className="py-[var(--spacing-component-sm)] text-body-sm [&[data-state=open]>span:first-child]:font-semibold">
+              <AccordionItem key={gap.id} value={gap.id}>
+                <AccordionTrigger className="[&[data-state=open]>span:first-child]:font-semibold">
                   <span className="min-w-0 flex-1 text-left">{gap.name}</span>
                   <span className="shrink-0 tabular-nums text-[var(--color-text-secondary)]">{value(gap)}</span>
                 </AccordionTrigger>
-                <AccordionContent className="flex flex-col gap-[var(--spacing-component-xs)] pb-[var(--spacing-component-md)]">
+                <AccordionContent className="flex flex-col gap-[var(--spacing-component-xs)]">
                   <Detail gap={gap} />
                 </AccordionContent>
               </AccordionItem>

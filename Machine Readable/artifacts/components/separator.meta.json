@@ -16,6 +16,26 @@
         "Horizontal": "horizontal",
         "Vertical": "vertical"
       }
+    },
+    "Tone": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Subtle",
+        "Sidebar"
+      ],
+      "default": "Default",
+      "reactProp": "tone",
+      "reactValues": {
+        "Default": "default",
+        "Subtle": "subtle",
+        "Sidebar": "sidebar"
+      },
+      "intent": {
+        "Default": "color/border/default.",
+        "Subtle": "color/border/subtle — between closely related rows inside one block.",
+        "Sidebar": "color/sidebar/border — in the sidebar, on the app background."
+      }
     }
   },
   "tokens": {
@@ -65,6 +85,10 @@
       {
         "date": "2026-09-29",
         "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
+      },
+      {
+        "date": "2026-09-29",
+        "change": "Added tone (default / subtle / sidebar). The sidebar and the Matrices rating list use it instead of overriding the colour."
       }
     ]
   },

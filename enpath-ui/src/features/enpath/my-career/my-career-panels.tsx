@@ -131,14 +131,15 @@ export function PathChangeNotice({ path, date, onOpen, className }: { path: stri
     // role=status instead of the Alert's default role=alert.
     <Alert
       variant="info"
+      size="sm"
       role="status"
-      className={cn("w-fit max-w-full flex-row flex-wrap items-center gap-x-[var(--spacing-component-md)] gap-y-[var(--spacing-component-xs)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)]", className)}
+      className={cn("w-fit max-w-full flex-wrap gap-y-[var(--spacing-component-xs)]", className)}
     >
       <span className="flex items-center gap-[var(--spacing-component-sm)]">
         <InfoIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
         <AlertTitle>{path} changed {date}</AlertTitle>
       </span>
-      <Button variant="link" size="sm" className="h-auto px-0" onClick={onOpen}>
+      <Button variant="link" size="sm" onClick={onOpen}>
         See what’s different
       </Button>
     </Alert>
@@ -236,7 +237,6 @@ export function ProgressBoard({
               key={g.key}
               variant="outline"
               size="sm"
-              className="text-body-sm"
               onClick={() => onOpenGroup(g.key)}
             >
               <span
@@ -246,7 +246,7 @@ export function ProgressBoard({
                 }`}
               />
               <span>
-                <span className="text-heading-xs">{g.count}</span> {g.label}
+                <span className="font-semibold">{g.count}</span> {g.label}
               </span>
             </Button>
           ))}
@@ -266,7 +266,6 @@ export function ProgressBoard({
               variant="ghost"
               size="icon-sm"
               aria-label="About these numbers"
-              className="text-[var(--color-icon-muted)]"
             >
               <InfoIcon aria-hidden="true" />
             </Button>

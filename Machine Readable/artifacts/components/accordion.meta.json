@@ -23,6 +23,23 @@
         "Open": "open={true}",
         "Disabled": "disabled={true}"
       }
+    },
+    "Size": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Compact"
+      ],
+      "default": "Default",
+      "reactProp": "size (on Accordion)",
+      "reactValues": {
+        "Default": "default",
+        "Compact": "compact"
+      },
+      "intent": {
+        "Default": "Standalone accordion: trigger padding spacing/component/lg, text-heading-xs.",
+        "Compact": "Inside a card or panel: trigger padding spacing/component/sm, text-body-sm, content bottom padding spacing/component/md, no border under the last item."
+      }
     }
   },
   "tokens": {
@@ -109,6 +126,10 @@
       {
         "date": "2026-09-29",
         "change": "Text uses Enpath text styles (text-body-sm, text-heading-md …, see Foundations/Text Styles) instead of mixed size and weight classes. Labels (label-*) and small headings (heading-sm/xs) are Medium 500."
+      },
+      {
+        "date": "2026-09-29",
+        "change": "Added size=\"compact\" (Accordion prop, read by Item, Trigger and Content through context). Used by the My Career competency groups, which overrode the trigger locally before."
       }
     ]
   },

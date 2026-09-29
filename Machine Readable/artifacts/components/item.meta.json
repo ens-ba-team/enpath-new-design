@@ -71,6 +71,23 @@
           "gap": "spacing/component/xs-plus"
         }
       }
+    },
+    "Inset": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Md"
+      ],
+      "default": "Default",
+      "reactProp": "inset",
+      "reactValues": {
+        "Default": "default",
+        "Md": "md"
+      },
+      "intent": {
+        "Default": "Side padding from the size.",
+        "Md": "Side padding spacing/component/md, so a list's rows line up with the search field and headings above (Setup master lists)."
+      }
     }
   },
   "componentProperties": {
@@ -220,6 +237,10 @@
       {
         "date": "2026-09-29",
         "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
+      },
+      {
+        "date": "2026-09-29",
+        "change": "Spacing uses tokens (was p-3 / p-2 / p-1.5 / gap-0.5). Added inset=\"md\". Size sm / xs descriptions use text-body-xs (a meta line); default stays text-body-sm."
       }
     ]
   },

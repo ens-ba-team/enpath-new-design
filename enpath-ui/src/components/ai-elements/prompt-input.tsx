@@ -1263,15 +1263,22 @@ export const PromptInputSelect = (props: PromptInputSelectProps) => (
 
 export type PromptInputSelectTriggerProps = ComponentProps<
   typeof SelectTrigger
->;
+> & {
+  /** sm: compact trigger for the composer toolbar (control height sm pair, body-xs text, hugs its value) */
+  size?: "default" | "sm";
+};
 
 export const PromptInputSelectTrigger = ({
   className,
+  size = "default",
   ...props
 }: PromptInputSelectTriggerProps) => (
   <SelectTrigger
+    data-size={size}
     className={cn(
       "border-none bg-transparent text-label-md text-[var(--color-text-secondary)] shadow-none transition-colors",
+      size === "sm" &&
+        "h-[var(--height-control-touch-sm)] sm:h-[var(--height-control-sm)] w-auto gap-[var(--spacing-component-xs)] px-[var(--spacing-component-sm)] text-body-xs",
       "hover:bg-[var(--color-surface-accent)] hover:text-[var(--color-background-default-foreground)] aria-expanded:bg-[var(--color-surface-accent)] aria-expanded:text-[var(--color-background-default-foreground)]",
       className
     )}

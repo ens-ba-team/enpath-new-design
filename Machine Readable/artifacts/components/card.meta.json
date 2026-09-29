@@ -33,6 +33,23 @@
         "Tab": "tab-list at top + card-header + slots. Use for switchable metric views.",
         "Item": "card-header + slots + item rows + avatar group. Use for list-style cards (settings, team members)."
       }
+    },
+    "Size": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Compact"
+      ],
+      "default": "Default",
+      "reactProp": "size",
+      "reactValues": {
+        "Default": "default",
+        "Compact": "compact"
+      },
+      "intent": {
+        "Default": "Padding and gap spacing/component/lg; CardTitle text-heading-sm.",
+        "Compact": "Dense widget: padding spacing/component/md, gap spacing/component/sm; CardTitle text-heading-xs."
+      }
     }
   },
   "componentProperties": {
@@ -119,6 +136,10 @@
       {
         "date": "2026-09-29",
         "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
+      },
+      {
+        "date": "2026-09-29",
+        "change": "Added size=\"compact\" (CardTitle follows it through context). Used by the My Career competency group cards."
       }
     ]
   },

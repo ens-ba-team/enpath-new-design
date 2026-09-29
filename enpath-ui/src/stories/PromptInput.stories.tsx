@@ -14,7 +14,7 @@ export const Default: Story = {
         <PromptInputFooter>
           <PromptInputTools>
             <PromptInputSelect defaultValue="claude-sonnet-5">
-              <PromptInputSelectTrigger aria-label="Model" className="h-7 w-auto border-none text-body-xs shadow-none"><PromptInputSelectValue /></PromptInputSelectTrigger>
+              <PromptInputSelectTrigger aria-label="Model" size="sm"><PromptInputSelectValue /></PromptInputSelectTrigger>
               <PromptInputSelectContent><PromptInputSelectItem value="claude-sonnet-5">Claude Sonnet 5</PromptInputSelectItem></PromptInputSelectContent>
             </PromptInputSelect>
           </PromptInputTools>

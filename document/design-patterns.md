@@ -24,9 +24,12 @@ footer pattern") instead of repeating a pattern.
 2. **Patterns, templates and layouts are composition only**: which components, in what order, where
    they sit, how wide, what spacing between them, and the behaviour rules. They don't restyle
    components.
-3. **A change of look found at a place of use is debt.** It goes into
-   [Needs a Storybook update](#needs-a-storybook-update) until it becomes a variant / size of the
-   component (or is removed).
+3. **A change of look found at a place of use is debt.** It becomes a variant / size of the component
+   (or is removed). While open, list it here under a "Needs a Storybook update" heading; remove the
+   heading when the list is empty (last cleared 2026-09-29).
+4. **Composition is not debt:** classes that only place a component (scroll containment such as
+   `min-h-0`, a `border-t` separating panes, side padding aligning a TabsList with the page, chat panel
+   paddings) belong to the pattern, not the component.
 
 ## Four kinds
 
@@ -112,6 +115,11 @@ entries get an ID and go into the catalog. Names are working names.
   - **List (left, 280px, right border):** search Input with an icon · list of Items (name, one line of
     meta, status Badge) with the selected one highlighted · add action pinned at the bottom
     ("Add position" / "Add matrix", plus Import on positions).
+  - **Department group header (Career structure):** a bare `CollapsibleTrigger` styled on the screen,
+    full width, `radius/sm`, padding `spacing/component/xs` horizontal and `spacing/component/sm`
+    vertical, the department name · count in `text-label-sm` uppercase `text/secondary`, and a caret
+    that turns when the group closes. Kept on the screen by decision (2026-09-29); if a second place
+    needs it, it becomes a component.
   - **Detail (right, fills):** header = title + status Badge, a row of meta (label · value), related
     chips ("Used by", "Matrix"), actions on the right (P2) → scrolling content (matrix table,
     competency editor, step list).
@@ -123,8 +131,9 @@ entries get an ID and go into the catalog. Names are working names.
 - **Components:** Input, Item, Badge, Button, Tabs, DropdownMenu, Sheet (history), AlertDialog.
 - **Rules / decisions:** the open tab and selection are kept in the URL (`?tab=`). Preview → Confirm
   for every save (P4).
-- **Open:** Items use a local side padding (debt #11); the search Input pads itself instead of using
-  InputGroup (debt #8); mobile for Matrices and Career path.
+- **Components (2026-09-29):** list rows are `Item size="sm" inset="md"`; search is an `InputGroup` with
+  a leading icon.
+- **Open:** mobile for Matrices and Career path.
 
 _Career workspace (My Career) was proposed and **dropped** (2026-09-28): it doesn't repeat, so it's
 neither a template nor a pattern. Its decisions stay in `my-career-build.md`._
@@ -144,8 +153,8 @@ neither a template nor a pattern. Its decisions stay in `my-career-build.md`._
 - **Rules / decisions:** the status Alert belongs on the header row, not in the page body
   (2026-09-28); never full width on desktop; `role="status"` (not urgent).
 - **Components:** Alert, Progress, ButtonGroup, Button, Tooltip.
-- **Open:** Alert padding is overridden in both places (debt #2); Map / List pressed look by hand
-  (debt #4).
+- **Components (2026-09-29):** the status Alert is `size="sm"`; Map / List are ghost buttons in a
+  ButtonGroup with the current view `aria-pressed` (Button's pressed state).
 
 ### P2 · Detail header actions — candidate
 
@@ -225,7 +234,7 @@ neither a template nor a pattern. Its decisions stay in `my-career-build.md`._
 - **Rules / decisions:** employee UI says "growth area", never "gap"; points never "levels"; "Not
   assessed yet" has no button (2026-09-28); no readiness %.
 - **Components:** Card, Accordion, Collapsible, Button.
-- **Open:** Accordion and CardTitle are shrunk locally (debt #1, #13).
+- **Components (2026-09-29):** each group is `Card size="compact"`, rows an `Accordion size="compact"`.
 
 ### P8 · Locked action with a reason — candidate
 
@@ -247,43 +256,5 @@ neither a template nor a pattern. Its decisions stay in `my-career-build.md`._
   comes as a proposal card the person accepts ("Add to my map"); the answer shows what it read first
   ("Read your assessment…").
 - **Components:** AI Elements (Conversation, Message, PromptInput, Suggestion, Tool), Button.
-- **Open:** fixed 380px, no mobile form (hidden below 1024px); select triggers restyled (debt #16).
-
----
-
-## Needs a Storybook update
-
-Places where a screen changes how a design-system component looks. Each should become a variant or
-size of the component (in the `.tsx`, its story and `meta.json`), then the screen uses that instead.
-Found by scanning `src/features` and `src/app` for visual classes on design-system components
-(2026-09-28); still present and line numbers checked 2026-09-29. **Not fixed yet.**
-
-| #   | Component                                  | Where                                                                                           | What the screen overrides                                                                                                                                                  | Proposed change in the component                                                                  |
-| --- | ------------------------------------------ | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| 1   | **Accordion**                              | `my-career/gap-row.tsx:114–119`                                                                 | trigger padding `spacing/component/lg` → `spacing/component/sm`, trigger `text-body-sm` instead of the component's style, content bottom padding, last item without border | `size="compact"` (the code already says "local override until the Accordion gets a compact size") |
-| 2   | **Alert**                                  | `setup/setup-screen.tsx:566`, `my-career/my-career-panels.tsx:135`                              | padding lg → `px md / py sm` (one-line Alert in a page header)                                                                                                             | `size="sm"` (compact, one line)                                                                   |
-| 3   | **Button** (link)                          | `my-career/my-career-panels.tsx:141`                                                            | `h-auto px-0` so a link button sits inline                                                                                                                                 | the `link` variant has no control height / side padding by default                                |
-| 4   | **Button** (pressed)                       | `my-career/my-career-screen.tsx:209` (Map / List switch)                                        | pressed fill by hand: `bg-[--button-ghost-bg-active]` when pressed (the `font-semibold` is an allowed state exception)                                                                                | Button styles `aria-pressed` itself (or a Toggle Group component)                                 |
-| 5   | **Button** (outline, count)                | `my-career/my-career-panels.tsx:239` (progress-strip counts)                                    | `text-body-sm` instead of the button's label style                                                                                                                         | decide: a quieter button option, or accept the default style                                      |
-| 6   | **Button** (icon, muted)                   | `my-career/my-career-panels.tsx:269` (ⓘ)                                                        | icon colour `--color-icon-muted`                                                                                                                                           | a muted icon-button option, or accept the default colour                                          |
-| 7   | **Button / SelectTrigger** on the map      | `my-career/my-career-screen.tsx:218, 222`                                                       | background `--color-surface-default` (controls over the canvas)                                                                                                            | check the outline defaults; if they're transparent, an opaque "on canvas" option                  |
-| 8   | **Input** with a search icon               | `setup/setup-screen.tsx:148`, `setup/matrices-screen.tsx:59`                                    | `pl-[xl]!` to make room for the icon                                                                                                                                       | use **InputGroup** (exists) with a leading icon                                                   |
-| 9   | **Input** as an inline title               | `setup/matrices-screen.tsx:276`                                                                 | `text-heading-sm` instead of the input's style                                                                                                                             | a title size, or a separate inline-edit component                                                 |
-| 10  | **Textarea** for pasted data               | `setup/import-positions-dialog.tsx:96`                                                          | `text-code-sm`                                                                                                                                                             | a monospace option (machine text, allowed by the mono rule)                                       |
-| 11  | **Item** in master lists                   | `setup/setup-screen.tsx:164`, `setup/matrices-screen.tsx:67`, `setup/career-path-screen.tsx:97` | side padding → md                                                                                                                                                          | a list-row padding option (same in all three Setup lists)                                         |
-| 12  | **Item** description                       | `setup/history-drawer.tsx:33`                                                                   | description `text-body-xs`                                                                                                                                                 | check Item `size="sm"` description size                                                           |
-| 13  | **CardTitle**                              | `my-career/gap-row.tsx:99`                                                                      | `text-heading-xs` instead of the card title's style                                                                                                                        | Card compact size (goes with #1)                                                                  |
-| 14  | **Separator**                              | `app-shell.tsx:89, 158` (sidebar), `setup/matrices-screen.tsx:150`                              | colour `--color-sidebar-border` / `--color-border-subtle`                                                                                                                  | `tone` option (default / subtle / sidebar)                                                        |
-| 15  | **Progress**                               | `setup/setup-screen.tsx:571`                                                                    | track `--color-background-default`, fill green (`[&>div]:bg-success`)                                                                                                      | `tone="success"`                                                                                  |
-| 16  | **PromptInputSelectTrigger** (AI Elements) | `chat/assistant-panel.tsx:203, 210`                                                             | `h-7`, no border, no shadow, `text-body-xs`                                                                                                                                | a compact / borderless trigger option                                                             |
-| 17  | **CollapsibleTrigger**                     | `setup/setup-screen.tsx:154` (department group header)                                          | radius, padding on a bare trigger                                                                                                                                          | check: a styled group-header component, or a pattern built from Button                            |
-
-**Label weight (resolved 2026-09-29):** no `font-medium` is left in the code; labels and small headings take their weight from the text-style tokens. A lone `font-semibold` for a selected state (Sidebar, Item, Map / List) is an allowed exception (rulebook → Token rules → Text styles), not debt.
-
-**Not debt (composition, belongs to a pattern):** `min-h-0` on Tabs / Conversation (scroll
-containment), `border-t` on TabsContent and CareerMapLegend (separating panes), TabsList side
-padding aligned with the page, chat panel paddings (`ConversationContent`, empty state). These go
-into the pattern entries when written.
-
-**Excluded:** `app-shell.tsx:86–87` (`SidebarMenuItem`) — false hit, the class belongs to the icon
-inside it.
+- **Open:** fixed 380px, no mobile form (hidden below 1024px). Mode / model selects use
+  `PromptInputSelectTrigger size="sm"` (2026-09-29).

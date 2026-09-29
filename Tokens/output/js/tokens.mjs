@@ -482,6 +482,7 @@ export const buttonOutlineBorderDisabled = "#f1f5f9";
 export const buttonGhostBgHover = "#f1f5f9";
 export const buttonGhostBgBg = "#ffffff";
 export const buttonGhostBgActive = "#f1f5f9";
+export const buttonGhostBgPressed = "#f1f5f9";
 export const buttonGhostFgFg = "#0f172a";
 export const buttonLinkFgDefault = "#0e41ff";
 export const buttonLinkFgHover = "#0934db";

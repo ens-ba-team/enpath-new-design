@@ -126,3 +126,8 @@ export const Animated: Story = {
     );
   },
 };
+
+/** tone="success": green fill at every value on a white track, for progress on a success surface. */
+export const SuccessTone: Story = {
+  render: () => <div className="w-[240px]"><Progress value={60} tone="success" aria-label="Setup progress" /></div>,
+};

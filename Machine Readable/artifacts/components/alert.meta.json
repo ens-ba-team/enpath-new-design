@@ -53,6 +53,23 @@
         "True": true,
         "False": false
       }
+    },
+    "Size": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Sm"
+      ],
+      "default": "Default",
+      "reactProp": "size",
+      "reactValues": {
+        "Default": "default",
+        "Sm": "sm"
+      },
+      "intent": {
+        "Default": "Stacked title + description, padding spacing/component/lg, gap spacing/component/sm.",
+        "Sm": "One compact row (icon · title · action), padding spacing/component/md horizontal / spacing/component/sm vertical, gap spacing/component/md. For page headers and toolbars."
+      }
     }
   },
   "tokens": {
@@ -167,6 +184,10 @@
       {
         "date": "2026-09-29",
         "change": "Text uses Enpath text styles (text-body-sm, text-heading-md …, see Foundations/Text Styles) instead of mixed size and weight classes. Labels (label-*) and small headings (heading-sm/xs) are Medium 500."
+      },
+      {
+        "date": "2026-09-29",
+        "change": "Added size=\"sm\" (one compact line). Setup progress and My Career path-change notices use it instead of overriding padding."
       }
     ]
   },

@@ -16,6 +16,9 @@ import { cn } from "@/lib/utils"
 // Sizes:
 //   SM → h-1 (4px)   MD → h-2 (8px, default)   LG → h-3 (12px)
 //
+// tone="success": fill color/status/success at every value, track color/background/default —
+// for progress shown on a success surface (e.g. the Setup progress Alert).
+//
 // State in code is driven by value prop only:
 //   value 0–99 → Loading    value=100 → Complete    value=null → Indeterminate
 // No separate state prop in code.
@@ -29,8 +32,12 @@ const progressVariants = cva(
         md: "h-2",   // 8px — default
         lg: "h-3",   // 12px
       },
+      tone: {
+        default: "",
+        success: "bg-[var(--color-background-default)]",
+      },
     },
-    defaultVariants: { size: "md" },
+    defaultVariants: { size: "md", tone: "default" },
   }
 )
 
@@ -41,21 +48,22 @@ interface ProgressProps
 const Progress = React.forwardRef<
   React.ElementRef<typeof ProgressPrimitive.Root>,
   ProgressProps
->(({ className, value, size, ...props }, ref) => {
+>(({ className, value, size, tone, ...props }, ref) => {
   const isComplete = value === 100;
 
   return (
     <ProgressPrimitive.Root
       ref={ref}
-      className={cn(progressVariants({ size }), className)}
+      data-tone={tone ?? "default"}
+      className={cn(progressVariants({ size, tone }), className)}
       {...props}
       value={value}
     >
       <ProgressPrimitive.Indicator
         className={cn(
           "h-full w-full flex-1 rounded-full transition-all",
-          // Complete → color/status/success · Loading/Indeterminate → color/brand/primary
-          isComplete
+          // tone success or Complete → color/status/success · otherwise color/brand/primary
+          isComplete || tone === "success"
             ? "bg-[var(--color-status-success)]"
             : "bg-[var(--color-brand-primary)]"
         )}

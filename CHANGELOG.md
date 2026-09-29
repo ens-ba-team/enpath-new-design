@@ -6,6 +6,23 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-29 — Screen overrides moved into components
+
+### Added
+- **Accordion** and **Card** `size="compact"` (CardTitle follows through context).
+- **Alert** `size="sm"`: one compact row for page headers and toolbars.
+- **Button**: Pressed state for ghost buttons — `aria-pressed="true"` → new token `button/ghost/bg/pressed` + `font-semibold`. The `link` variant has no control height or side padding at any size.
+- **Item** `inset="md"` (side padding `spacing/component/md`); size `sm` / `xs` descriptions use `text-body-xs`.
+- **Separator** `tone`: default / subtle / sidebar. **Progress** `tone="success"`. **PromptInputSelectTrigger** `size="sm"`.
+- Stories: Accordion Compact, Card Compact, Alert Small, Button Pressed and LinkInline, ButtonGroup ViewSwitch, Item InsetList, Separator Tones, Progress SuccessTone; PromptInput uses the new trigger size.
+
+### Changed
+- Item spacing uses tokens (was `p-3` / `p-2` / `p-1.5` / `gap-0.5`).
+- Screens drop their overrides and use the options above: My Career competency groups, header notices, Map / List, progress-strip counts, ⓘ button, map controls, Setup search (`InputGroup`), master lists, history drawer, sidebar and rating-list separators, Setup progress, chat selects. The competency editor gets "Competency name" and "Description" labels.
+- `design-patterns.md`: all 17 "Needs a Storybook update" items resolved and the section removed; the department group header (#17) is recorded in T1, and "composition is not debt" is now rule 4.
+
+---
+
 ## 2026-09-29 — Prototype-build removed
 
 ### Removed

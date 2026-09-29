@@ -94,7 +94,7 @@ function PathList({
           <Item
             key={p.id}
             size="sm"
-            className="px-[var(--spacing-component-md)]"
+            inset="md"
             title={p.name}
             description={`${p.nodes.length} steps · ${p.owner}`}
             action={<PathStatus status={p.status} />}

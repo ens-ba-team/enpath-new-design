@@ -164,3 +164,20 @@ export const DestructiveWithConfirmation: Story = {
     </AlertDialog>
   ),
 };
+
+/** Ghost toggle: aria-pressed="true" shows the pressed fill (button/ghost/bg/pressed) and semibold label. */
+export const Pressed: Story = {
+  render: () => (
+    <div className="flex gap-[var(--spacing-component-sm)]">
+      <Button variant="ghost" aria-pressed={true}>Map</Button>
+      <Button variant="ghost" aria-pressed={false}>List</Button>
+    </div>
+  ),
+};
+
+/** Link: sits inline with text — no control height or side padding. */
+export const LinkInline: Story = {
+  render: () => (
+    <p className="text-body-sm">Your path changed. <Button variant="link" size="sm">See what’s different</Button></p>
+  ),
+};

@@ -46,6 +46,23 @@
           "when": "Prominent status — onboarding steps, upload progress, large feature areas."
         }
       }
+    },
+    "Tone": {
+      "type": "enum",
+      "values": [
+        "Default",
+        "Success"
+      ],
+      "default": "Default",
+      "reactProp": "tone",
+      "reactValues": {
+        "Default": "default",
+        "Success": "success"
+      },
+      "intent": {
+        "Default": "Fill color/brand/primary (color/status/success at 100), track color/background/muted.",
+        "Success": "Fill color/status/success at every value, track color/background/default — for progress on a success surface."
+      }
     }
   },
   "componentProperties": {
@@ -132,6 +149,10 @@
       {
         "date": "2026-09-29",
         "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
+      },
+      {
+        "date": "2026-09-29",
+        "change": "Added tone=\"success\". The Setup progress Alert uses it instead of overriding track and fill."
       }
     ]
   },

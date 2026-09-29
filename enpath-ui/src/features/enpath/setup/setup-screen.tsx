@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
+import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group';
 import { Item } from '@/components/ui/item';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
@@ -143,10 +143,10 @@ function PositionList({ positions, selected, onSelect, onAdd, onImport, classNam
     <aside className={`w-full shrink-0 flex-col border-[var(--color-border-default)] lg:w-[280px] lg:border-r ${className}`}>
       <div className="flex flex-col gap-[var(--spacing-component-md)] p-[var(--spacing-component-lg)]">
         <h2 className="text-heading-sm text-[var(--color-background-default-foreground)]">Positions</h2>
-        <div className="relative">
-          <MagnifyingGlassIcon className="pointer-events-none absolute left-[var(--spacing-component-sm)] top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--color-text-secondary)]" aria-hidden="true" />
-          <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search positions" aria-label="Search positions" className="pl-[var(--spacing-component-xl)]!" />
-        </div>
+        <InputGroup>
+          <InputGroupAddon><MagnifyingGlassIcon aria-hidden="true" /></InputGroupAddon>
+          <InputGroupInput value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search positions" aria-label="Search positions" />
+        </InputGroup>
       </div>
       <div className="flex flex-1 flex-col overflow-auto px-[var(--spacing-component-md)]" aria-label="Positions">
         {groups.map((g) => (
@@ -161,9 +161,9 @@ function PositionList({ positions, selected, onSelect, onAdd, onImport, classNam
                   <li key={p.id}>
                     <Item
                       size="sm"
-                      className="px-[var(--spacing-component-md)]"
+                      inset="md"
                       title={p.name}
-                      description={<span className="text-body-xs">{p.code} · {p.levels.length} {p.levels.length === 1 ? 'level' : 'levels'}</span>}
+                      description={`${p.code} · ${p.levels.length} ${p.levels.length === 1 ? 'level' : 'levels'}`}
                       action={<StatusBadge status={p.status} />}
                       selected={p.id === selected}
                       onSelect={() => onSelect(p.id)}
@@ -561,14 +561,14 @@ export function SetupScreen({ sidebarClassName, initialTab = 'structure' }: { si
             <h1 className="text-heading-xl text-[var(--color-background-default-foreground)]">Setup</h1>
             <Alert
               variant="success"
+              size="sm"
               role="status"
               title={`${unsetTotal} ${unsetTotal === 1 ? 'cell' : 'cells'} not set · ${drafts} ${drafts === 1 ? 'position' : 'positions'} not published`}
-              className="order-last w-full flex-row items-center gap-[var(--spacing-component-md)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)] sm:order-none sm:ml-auto sm:w-auto"
+              className="order-last w-full sm:order-none sm:ml-auto sm:w-auto"
             >
               <FlagCheckeredIcon className="h-4 w-4" aria-hidden="true" />
               <AlertTitle>Your setup is {done}% done</AlertTitle>
-              {/* Green fill before 100% — overrides Progress's brand fill; see note in reply */}
-              <Progress value={done} aria-label="Setup progress" className="min-w-0 flex-1 bg-[var(--color-background-default)] sm:w-[160px] sm:flex-none [&>div]:bg-[var(--color-status-success)]" />
+              <Progress value={done} tone="success" aria-label="Setup progress" className="min-w-0 flex-1 sm:w-[160px] sm:flex-none" />
             </Alert>
             {!chatOpen && (
               <Tip label="Ask AI (⌘I)">

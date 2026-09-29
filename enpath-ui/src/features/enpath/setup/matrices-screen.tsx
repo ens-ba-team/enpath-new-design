@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
+import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group';
 import { Item } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
@@ -54,19 +55,19 @@ function MatrixList({ matrices, selected, onSelect, onAdd }: { matrices: Matrix[
     <aside className="flex w-[280px] shrink-0 flex-col border-r border-[var(--color-border-default)]">
       <div className="flex flex-col gap-[var(--spacing-component-md)] p-[var(--spacing-component-lg)]">
         <h2 className="text-heading-sm text-[var(--color-background-default-foreground)]">Matrices</h2>
-        <div className="relative">
-          <MagnifyingGlassIcon className="pointer-events-none absolute left-[var(--spacing-component-sm)] top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--color-text-secondary)]" aria-hidden="true" />
-          <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search matrices" aria-label="Search matrices" className="pl-[var(--spacing-component-xl)]!" />
-        </div>
+        <InputGroup>
+          <InputGroupAddon><MagnifyingGlassIcon aria-hidden="true" /></InputGroupAddon>
+          <InputGroupInput value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search matrices" aria-label="Search matrices" />
+        </InputGroup>
       </div>
       <ul className="flex flex-1 flex-col gap-[var(--spacing-component-xs)] overflow-auto px-[var(--spacing-component-md)]" aria-label="Matrices">
         {shown.map((m) => (
           <li key={m.id}>
             <Item
               size="sm"
-              className="px-[var(--spacing-component-md)]"
+              inset="md"
               title={m.name}
-              description={<span className="text-body-xs">{m.competencies.length} {m.competencies.length === 1 ? 'competency' : 'competencies'}</span>}
+              description={`${m.competencies.length} ${m.competencies.length === 1 ? 'competency' : 'competencies'}`}
               action={<MatrixStatusBadge status={m.status} />}
               selected={m.id === selected}
               onSelect={() => onSelect(m.id)}
@@ -147,7 +148,7 @@ function ReadonlyRatingScale({ competency, scaleSize }: { competency: Competency
           const behavior = competency.behaviors[i];
           return (
             <React.Fragment key={i}>
-              {i > 0 && <Separator className="bg-[var(--color-border-subtle)]" />}
+              {i > 0 && <Separator tone="subtle" />}
               <li className="flex flex-col gap-[var(--spacing-component-sm)] py-[var(--spacing-component-lg)] first:pt-0 last:pb-0">
                 <h5 className="text-heading-xs text-[var(--color-background-default-foreground)]">
                   <span className="text-[var(--color-text-secondary)]">Scale {i + 1}</span>
@@ -271,11 +272,17 @@ function CompetencyEditor({ competencies, scaleSize, editable, expandedReadOnly,
           expandedReadOnly ? 'gap-[var(--spacing-layout-md)]' : 'gap-[var(--spacing-layout-xs)]'
         }`}>
           {editable ? (
-            <div className="flex flex-col gap-[var(--spacing-component-sm)]">
-              <Input value={current.name} placeholder="Competency name, e.g. System design"
-                className="text-heading-sm" onChange={(e) => onChangeCompetency(current.id, { name: e.target.value })} />
-              <Textarea rows={2} value={current.description} placeholder="What this competency covers"
-                onChange={(e) => onChangeCompetency(current.id, { description: e.target.value })} />
+            <div className="flex flex-col gap-[var(--spacing-component-md)]">
+              <div className="flex flex-col gap-[var(--spacing-component-xs)]">
+                <Label htmlFor={`c-name-${current.id}`}>Competency name</Label>
+                <Input id={`c-name-${current.id}`} value={current.name} placeholder="e.g. System design"
+                  onChange={(e) => onChangeCompetency(current.id, { name: e.target.value })} />
+              </div>
+              <div className="flex flex-col gap-[var(--spacing-component-xs)]">
+                <Label htmlFor={`c-desc-${current.id}`}>Description</Label>
+                <Textarea id={`c-desc-${current.id}`} rows={2} value={current.description} placeholder="What this competency covers"
+                  onChange={(e) => onChangeCompetency(current.id, { description: e.target.value })} />
+              </div>
             </div>
           ) : (
             <div>

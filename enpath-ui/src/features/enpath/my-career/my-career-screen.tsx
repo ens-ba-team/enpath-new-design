@@ -199,14 +199,13 @@ export function MyCareerScreen() {
   };
 
   // Map toolbar (on the canvas) and List toolbar (a bar above the list) share the same controls.
-  // Map / List: a design-system ButtonGroup of ghost buttons; the current view is pressed (ghost
-  // active fill + SemiBold).
+  // Map / List: a design-system ButtonGroup of ghost buttons; the current view is aria-pressed
+  // (Button's pressed state).
   const viewButton = (v: 'map' | 'list', icon: React.ReactNode, text: string) => (
     <Button
       variant="ghost"
       aria-pressed={view === v}
       onClick={() => setViewChoice(v)}
-      className={view === v ? 'bg-[var(--button-ghost-bg-active)] font-semibold' : 'font-normal'}
     >
       {icon}{text}
     </Button>
@@ -215,11 +214,11 @@ export function MyCareerScreen() {
     <>
       {(matchingPaths.length > 1 || !plan.followedPathId) && (
         <Select value={plan.followedPathId ?? ''} onValueChange={follow}>
-          <SelectTrigger aria-label="Company path you follow" className="w-auto gap-[var(--spacing-component-xs)] bg-[var(--color-surface-default)]"><SelectValue placeholder="Choose a company path" /></SelectTrigger>
+          <SelectTrigger aria-label="Company path you follow" className="w-auto gap-[var(--spacing-component-xs)]"><SelectValue placeholder="Choose a company path" /></SelectTrigger>
           <SelectContent>{matchingPaths.map((p) => <SelectItem key={p.id} value={p.id}>Following: {p.name}</SelectItem>)}</SelectContent>
         </Select>
       )}
-      <Button variant="outline" className="bg-[var(--color-surface-default)]" onClick={() => setDialog('add')}>
+      <Button variant="outline" onClick={() => setDialog('add')}>
         <PlusIcon aria-hidden="true" />Explore a position
       </Button>
     </>

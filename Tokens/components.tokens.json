@@ -123,6 +123,11 @@
         "active": {
           "$value": "{color.background.accent}",
           "$type": "color"
+        },
+        "pressed": {
+          "$value": "{color.background.accent}",
+          "$type": "color",
+          "$description": "Intent:      Fill of a ghost button that is switched on (aria-pressed=\"true\"), e.g. the current view in a Map / List ButtonGroup\nUse when:    Toggle buttons: the button stays in this state until another is chosen\nDo not use:  The moment of clicking (that is button/ghost/bg/active) or a selected list row (item/selected/*)\nStatus:      active"
         }
       },
       "fg": {

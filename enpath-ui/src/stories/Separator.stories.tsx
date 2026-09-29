@@ -99,3 +99,14 @@ export const InCard: Story = {
     </div>
   ),
 };
+
+/** tone: default · subtle (between closely related rows) · sidebar (on the app background). */
+export const Tones: Story = {
+  render: () => (
+    <div className="flex w-[320px] flex-col gap-[var(--spacing-component-lg)]">
+      <Separator />
+      <Separator tone="subtle" />
+      <div className="bg-[var(--color-background-app)] p-[var(--spacing-component-md)]"><Separator tone="sidebar" /></div>
+    </div>
+  ),
+};

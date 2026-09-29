@@ -1,3 +1,4 @@
+import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { ButtonGroup } from '@/components/ui/button-group';
 import { Button } from '@/components/ui/button';
@@ -150,4 +151,17 @@ export const AllVariants: Story = {
       </div>
     </div>
   ),
+};
+
+/** A view switch: ghost buttons, the current view is aria-pressed. */
+export const ViewSwitch: Story = {
+  render: () => {
+    const [view, setView] = React.useState<'map' | 'list'>('map');
+    return (
+      <ButtonGroup>
+        <Button variant="ghost" aria-pressed={view === 'map'} onClick={() => setView('map')}><SquaresFourIcon aria-hidden="true" />Map</Button>
+        <Button variant="ghost" aria-pressed={view === 'list'} onClick={() => setView('list')}><ListIcon aria-hidden="true" />List</Button>
+      </ButtonGroup>
+    );
+  },
 };
