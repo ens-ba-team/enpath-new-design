@@ -48,7 +48,7 @@ Code: `Enpath-design-system/enpath-ui/src/features/enpath/`. Mock data only.
 
 **Shell** — transparent sidebar (collapsible) · white page panel · AI chat panel on the right
 (closed by default). Visual spec (`background/app` brand/50 background, `radius/panel` 12px, `spacing/shell` 8px):
-`Enpath-design-system/enpath-design-system.md` §App shell.
+`Enpath-design-system/enpath-design-system.md` → Token rules → App shell.
 
 **Setup page**
 - Header: "Setup" + a small green progress card "Your setup is N% done" (share of expectation cells

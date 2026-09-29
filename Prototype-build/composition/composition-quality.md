@@ -3,8 +3,8 @@
 > | This file says | In Enpath | Where |
 > |---|---|---|
 > | En UI tokens / DESIGN.md | Enpath tokens — `enpath-design-system.md` (rules + theme decisions), values in `Tokens/*.tokens.json` | root |
-> | `Typography.*` presets (H1, Label, Eyebrow…) | Enpath has no Typography component — use Tailwind `text-*` + `font-*` classes (Tailwind's type scale, values from Enpath tokens) | `enpath-design-system.md` §Typography |
-> | Geist Mono | Roboto Mono | `enpath-design-system.md` §Theme Decisions |
+> | `Typography.*` presets (H1, Label, Eyebrow…) | Enpath has no Typography component — use the text-style classes (`text-body-sm` …, Storybook Foundations/Text Styles) | `enpath-design-system.md` §Typography |
+> | Geist Mono | Roboto Mono | `Tokens/primitives.tokens.json` → `font-family/mono` |
 > | `space.md`, `gap-md` (En UI spacing names) | `spacing/component/*` · `spacing/layout/*` — same pixel values, different names | `enpath-design-system.md` §Spacing |
 > | `pnpm exec en-ui-audit`, `../scripts/rendered-page-audit.mjs` | Not available. Use Playwright/Storybook screenshots + axe | — |
 > | Separation ladder, WCAG 2.2 AA, 24px target | Adopted as-is | `enpath-design-system.md` |

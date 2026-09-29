@@ -474,9 +474,9 @@
    */
   --color-surface-default-foreground: #0f172a;
   /**
-   * Intent:      Slightly elevated surface for elements that sit above the page but below overlays
-   * Use when:    Navigation bars, sticky headers, section headers, sidebar backgrounds, inline panels that feel lifted without floating
-   * Do not use:  Cards on a white page — the tint provides no contrast against white canvas
+   * Intent:      Grey tint for recessed or grouping areas inside a component
+   * Use when:    Tab list track, table header and footer rows, empty rating segments, filled step markers, small chips
+   * Do not use:  As a card or panel fill (cards are white + border + shadow/surface); for navigation bars or the sidebar (the sidebar has no fill)
    *              Modals, dropdowns, or tooltips — use color/surface/overlay for floating UI
    * Use instead: color/surface/default for cards, color/surface/overlay for floating elements
    * Foreground:  color/surface/raised/foreground

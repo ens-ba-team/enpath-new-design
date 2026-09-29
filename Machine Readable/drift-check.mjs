@@ -435,7 +435,7 @@ section('12. Text styles by name — no raw type values in meta.json, component 
 // ── 13. Text styles in code ──────────────────────────────────────────────────
 // R-ENP-13: text uses one text-style class (text-body-sm, text-label-md …). Size, line height,
 // font family and off-system weights written by hand in a class string drift from the tokens.
-// Exceptions (rulebook §Typography, decided 2026-09-29): lone font-semibold / font-normal for a
+// Exceptions (rulebook Token rules → Text styles, decided 2026-09-29): lone font-semibold / font-normal for a
 // selected state or inline emphasis; tracking-wide (small uppercase labels) and tracking-widest
 // (shortcut hints). Any other tracking-* fails.
 section('13. Text styles in code — no hand-built type in class strings');

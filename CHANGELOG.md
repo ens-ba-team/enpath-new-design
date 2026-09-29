@@ -6,6 +6,22 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-29 — Rulebook trimmed to rules
+
+### Removed
+- `enpath-design-system.md`: Theme Decisions, Component Tokens, Card layout, Layout, Contrast table. Values and per-token intent live in `Tokens/*.tokens.json` (and `meta.json` for components); contrast is checked by `validate-contrast.mjs`.
+- Primitives and Semantics listings: each is now one line pointing to its JSON file.
+
+### Changed
+- New **Token rules** section keeps only rules that span several tokens and weren't written anywhere else: brand vs blue, ramps, paired surfaces, destructive ≠ danger, surface vs background, icon colour, no opacity on text, spacing / z-index / breakpoints / layout, height pairs and hit areas, app shell, text styles and their exceptions.
+- "Component Behaviour & Accessibility Rules (from En UI)" rewritten as **Rules**: one plain line per rule, R-ENP numbers kept (code refers to them), grouped by topic; En UI ids and the "Not carried over" table removed.
+- Token rules no longer say which surface token a component uses (surface vs background, `surface/raised`, `background/accent`): that belongs to the token descriptions and each component's code and `meta.json`.
+- `color/surface/raised` description matches the code: a grey tint for tab tracks, table header and footer rows, empty rating segments, step markers and chips; not a card, panel, navigation-bar or sidebar fill (it said "navigation bars, sidebar backgrounds").
+- Accessibility → Target size names `height/target/min` and `height/target/touch` instead of px.
+- References updated: `document/set-up-build.md`, 7 Prototype-build notes (Geist Mono row → `font-family/mono`; Typography row → text styles), drift-check comment, `llms.txt`.
+
+---
+
 ## 2026-09-29 — Text-style exceptions decided
 
 ### Changed

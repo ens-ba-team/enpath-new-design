@@ -226,7 +226,7 @@
       "raised": {
         "$value": "{color.zinc.50}",
         "$type": "color",
-        "$description": "Intent:      Slightly elevated surface for elements that sit above the page but below overlays\nUse when:    Navigation bars, sticky headers, section headers, sidebar backgrounds, inline panels that feel lifted without floating\nDo not use:  Cards on a white page — the tint provides no contrast against white canvas\n             Modals, dropdowns, or tooltips — use color/surface/overlay for floating UI\nUse instead: color/surface/default for cards, color/surface/overlay for floating elements\nForeground:  color/surface/raised/foreground\nStatus:      active",
+        "$description": "Intent:      Grey tint for recessed or grouping areas inside a component\nUse when:    Tab list track, table header and footer rows, empty rating segments, filled step markers, small chips\nDo not use:  As a card or panel fill (cards are white + border + shadow/surface); for navigation bars or the sidebar (the sidebar has no fill)\n             Modals, dropdowns, or tooltips — use color/surface/overlay for floating UI\nUse instead: color/surface/default for cards, color/surface/overlay for floating elements\nForeground:  color/surface/raised/foreground\nStatus:      active",
         "foreground": {
           "$value": "{color.zinc.900}",
           "$type": "color",
