@@ -1,17 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { DatePicker } from '@/components/ui/date-picker';
 
-// Source: date-picker.meta.json
-//
-// Tokens:
-//   trigger Closed:  bg/default · input/border
-//   trigger Hover:   background/subtle · input/border
-//   trigger Focus:   bg/default · border/focus + ring
-//   trigger Open:    bg/default · border/default
-//   placeholder: color/input/placeholder
-//   Calendar popup: surface/overlay · border/default · radius/lg
-//
-// Types: Default (single) · Range (dual-month) · Input (typed date)
+// Spec: date-picker.meta.json
 
 const meta = {
   title: 'Forms/DatePicker',

@@ -312,12 +312,15 @@ Values live in `Tokens/semantics.tokens.json` → `typography/*` (each with its 
 | `text-code-md` | Machine text: code, paths, hashes |
 | `text-code-sm` | Small machine text in tables and meta lines |
 
-- **Weight as a state:** a style's weight comes from its token. `font-semibold` on its own is only for a selected state (selected nav item, selected row title).
-- **One class, no mixing** (R-ENP-13): don't combine `text-sm`, `text-xs` … with `font-*` to build a style. A `font-*` class alone is allowed only to show a state (a selected row turns `font-semibold`).
+- **Exceptions (allowed on top of a text style, decided 2026-09-29):**
+  - `font-semibold` / `font-normal` alone: a selected state (selected nav item, row title, day, step, pressed toggle) or emphasis inside a styled line (a bold name in a sentence, a quiet "(optional)" in a label).
+  - `tracking-wide`: small uppercase labels (group and section labels). `tracking-widest`: keyboard shortcut hints in menus.
+  - Nothing else: any other weight, size, line height, font or letter-spacing class fails drift-check 13.
+- **One class, no mixing** (R-ENP-13): don't combine `text-sm`, `text-xs` … with `font-*` to build a style. The only extras allowed are the exceptions below.
 - **Labels never wrap:** `label-*` has line height = size, so two lines collide. Text that can wrap uses `body-*` or `heading-*`.
 - **Mono:** `text-code-md` / `text-code-sm`, machine text only (R-ENP-03). They are generated as `@utility` classes because Tailwind's text theme can't carry a font family.
 - **New style:** add it to `typography/*` in the tokens and rebuild. `cn()` (`lib/utils.ts`) already recognises `display|heading|body|label|code-(xs…xl)` names; without that, tailwind-merge drops the style when a colour class follows.
-- **Migration:** done. Components, screens and stories use text styles. Inline emphasis inside a styled line (a bold name in a sentence, a quiet "(optional)" in a label) still uses a lone `font-semibold` / `font-normal`: open decision.
+- **Migration:** done. Components, screens and stories use text styles. Inline emphasis and selected states use the exceptions below.
 
 ---
 
@@ -456,8 +459,8 @@ Carried over from En UI (`contracts/rules.catalog.json`, 65 rules) on 2026-09-21
 **R-ENP-03 · Mono is for machine-oriented text only** — code, commands, paths, hashes, serialized values. A date, a count, a level or an ID is **not** machine text; it uses sans.
 *From: `component.typography.reserve-mono-for-technical-content`*
 
-**R-ENP-13 · Use one text-style class; don't build text from size and weight utilities.** `text-body-sm`, not `text-sm`; `text-label-md`, not `text-sm font-semibold leading-none`. A lone `font-*` is only for a state change.
-*Enpath rule (2026-09-29). Replaces R-ENP-04, now that Enpath has text styles.*
+**R-ENP-13 · Use one text-style class; don't build text from size and weight utilities.** `text-body-sm`, not `text-sm`; `text-label-md`, not `text-sm font-semibold leading-none`. Exceptions: lone `font-semibold` / `font-normal` for a selected state or inline emphasis; `tracking-wide` for small uppercase labels, `tracking-widest` for shortcut hints (see §Typography).
+*Enpath rule (2026-09-29). Replaces R-ENP-04, now that Enpath has text styles. Enforced by drift-check 13 on every `.tsx` class string (components, screens, stories).*
 
 ### 3. Button
 

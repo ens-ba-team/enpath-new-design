@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput, InputGroupTextarea } from '@/components/ui/input-group';
 import { MagnifyingGlassIcon, PaperPlaneRightIcon } from '@phosphor-icons/react/ssr';
 
-// Source: input-group.meta.json — shadcn InputGroup. One bordered field with addons; the chat composer is built on it.
+// Spec: input-group.meta.json
 const meta = { title: 'Forms/Input Group', parameters: { layout: 'padded' } } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;

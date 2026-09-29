@@ -13,13 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-// Source: dialog.meta.json
-// Tokens: popup fill color/surface/overlay · border color/border/default · radius/lg
-//   padding spacing/component/lg (16px) · gap spacing/component/lg (16px)
-//   No shadow. Overlay: color/background/inverted @ 50%.
-//
-// Cross-check (meta.json Type variants):
-//   Form ✓  No close button ✓  Sticky footer ✓  Scrollable ✓
+// Spec: dialog.meta.json
 
 const meta = {
   title: 'Overlay/Dialog',

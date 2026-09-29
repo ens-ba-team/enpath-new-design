@@ -3,9 +3,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { InfoIcon, WarningCircleIcon, WarningIcon } from "@phosphor-icons/react/ssr";
 import { Button } from '@/components/ui/button';
 
-// Source: alert.meta.json (category, variants, tokens)
-// Patterns: alert.examples.tsx
-// Note: AlertDialog is a separate component — alert-dialog.stories.tsx (not yet built).
+// Spec: alert.meta.json
 
 const meta = {
   title: 'Feedback/Alert',

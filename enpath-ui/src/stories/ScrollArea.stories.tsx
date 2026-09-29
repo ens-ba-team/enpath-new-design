@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-// Source: scroll-area.meta.json — shadcn ScrollArea (Radix). Styled scrollbars inside a fixed-height region.
+// Spec: scroll-area.meta.json
 const meta = { title: 'Layout/Scroll Area', parameters: { layout: 'padded' } } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;

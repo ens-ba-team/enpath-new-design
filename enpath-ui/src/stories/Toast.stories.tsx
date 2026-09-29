@@ -4,10 +4,7 @@ import { toast } from 'sonner';
 import { Toaster } from '@/components/ui/toast';
 import { Button } from '@/components/ui/button';
 
-// Source: toast.meta.json (category, variants, tokens)
-// Patterns: toast.examples.tsx
-// Note: Toast is imperative — no JSX at the call site.
-// <Toaster /> lives in the decorator; toast() is called from onClick handlers.
+// Spec: toast.meta.json
 
 const meta = {
   title: 'Feedback/Toast',

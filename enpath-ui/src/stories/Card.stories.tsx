@@ -13,10 +13,7 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Avatar } from '@/components/ui/avatar';
 
-// Source: card.meta.json (category, variants, tokens)
-// Patterns: card.examples.tsx
-// Note: Card variants are example compositions — not a closed set of modes.
-// The shell (fill, border, radius, padding, gap) is what the component owns.
+// Spec: card.meta.json
 
 const meta = {
   title: 'Layout/Card',

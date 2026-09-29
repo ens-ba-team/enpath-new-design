@@ -1,12 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Separator } from '@/components/ui/separator';
 
-// Source: separator.meta.json
-// Token: color/border/default (single token, both orientations, no states)
-// Horizontal: h-[1px] w-full · Vertical: h-full w-[1px]
-//
-// Cross-check (meta.json variants):
-//   Orientation: Horizontal ✓  Vertical ✓
+// Spec: separator.meta.json
 
 const meta = {
   title: 'Layout/Separator',

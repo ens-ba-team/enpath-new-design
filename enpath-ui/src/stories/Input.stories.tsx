@@ -4,10 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { CheckCircleIcon, MagnifyingGlassIcon } from "@phosphor-icons/react/ssr";
 
-// Source: input.meta.json (category, variants, tokens)
-// Patterns: input.examples.tsx
-// Note: shadcn has no InputField wrapper — the input-field pattern is composed:
-//   Label + Input + <p> description in a flex-col gap-[spacing/component/xs] div.
+// Spec: input.meta.json
 
 const meta = {
   title: 'Forms/Input',

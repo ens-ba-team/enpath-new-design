@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Tool, ToolContent, ToolHeader, ToolInput, ToolOutput } from '@/components/ai-elements/tool';
 
-// Source: tool.meta.json — AI Elements Tool. Collapsible record of a tool call the assistant made.
+// Spec: tool.meta.json
 const meta = { title: 'AI/Tool', parameters: { layout: 'padded' } } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;

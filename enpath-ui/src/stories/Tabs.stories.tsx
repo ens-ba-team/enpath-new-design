@@ -2,17 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { GearIcon, PulseIcon, SquaresFourIcon } from "@phosphor-icons/react/ssr";
 
-// Source: tabs.meta.json (category, variants, tokens)
 // Spec: tabs.meta.json
-//
-// Two visual types — pass variant to both TabsList and TabsTrigger:
-//   variant="default" — pill/background style (primary nav)
-//   variant="line"    — flat underline style (secondary/embedded nav)
-//
-// Cross-check (meta.json):
-//   Type: Default ✓  Line ✓
-//   Orientation: Horizontal ✓  Vertical ✓
-//   State: Active ✓  Disabled ✓  (Hover is interaction, not a separate story)
 
 const meta = {
   title: 'Navigation/Tabs',

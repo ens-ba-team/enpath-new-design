@@ -37,20 +37,7 @@ function useIsDesktop() {
   return isDesktop;
 }
 
-// Source: drawer.meta.json
-//
-// Tokens:
-//   Panel fill: color/surface/overlay · border: color/border/default
-//   Handle: 100×8px · color/background/muted · radius/full
-//   handle-bar padding T/B: spacing/component/lg (16px)
-//   Header padding: spacing/component/lg · gap: spacing/component/xxs (2px)
-//   Footer layout: VERTICAL (stacked) · padding: spacing/component/lg · gap: spacing/component/sm
-//   Title: color/background/default/foreground
-//   Description: color/background/muted/foreground
-//   Overlay: color/background/inverted @ 50%
-//
-// Cross-check (meta.json Direction variants):
-//   Bottom ✓  Right ✓  Responsive ✓
+// Spec: drawer.meta.json
 
 const meta = {
   title: 'Overlay/Drawer',

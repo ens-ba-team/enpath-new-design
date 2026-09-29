@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { ModelSelector, ModelSelectorContent, ModelSelectorEmpty, ModelSelectorGroup, ModelSelectorInput, ModelSelectorItem, ModelSelectorList, ModelSelectorName, ModelSelectorTrigger } from '@/components/ai-elements/model-selector';
 import { Button } from '@/components/ui/button';
 
-// Source: model-selector.meta.json — AI Elements ModelSelector. Searchable model picker in a dialog; for long model lists (the chat uses a compact Select while there is one model).
+// Spec: model-selector.meta.json
 const meta = { title: 'AI/Model Selector', parameters: { layout: 'padded' } } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;

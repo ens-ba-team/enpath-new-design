@@ -3,19 +3,7 @@ import { ButtonGroup } from '@/components/ui/button-group';
 import { Button } from '@/components/ui/button';
 import { ListIcon, MagnifyingGlassMinusIcon, MagnifyingGlassPlusIcon, SquaresFourIcon, TextAlignCenterIcon, TextAlignLeftIcon, TextAlignRightIcon, TextBIcon, TextItalicIcon, TextUnderlineIcon } from "@phosphor-icons/react/ssr";
 
-// Source: button-group.meta.json
-// Custom component — no shadcn base.
-// Composable API: put <Button variant="ghost"> children directly inside <ButtonGroup>.
-// Separators are CSS divide-x / divide-y — no explicit separator elements needed.
-//
-// Tokens:
-//   Container: color/surface/default fill · color/border/default border · radius/md · overflow-hidden
-//   Separators: color/border/default (via divide-*)
-//   Buttons: Ghost variant only (group border provides the visual container)
-//
-// Cross-check (meta.json variants):
-//   Orientation: Horizontal ✓  Vertical ✓
-//   Number: 2 ✓  3 ✓
+// Spec: button-group.meta.json
 
 const meta = {
   title: 'Actions/ButtonGroup',

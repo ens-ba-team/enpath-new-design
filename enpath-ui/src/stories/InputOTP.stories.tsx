@@ -9,20 +9,7 @@ import {
 } from '@/components/ui/input-otp';
 import { Label } from '@/components/ui/label';
 
-// Source: input-otp.meta.json
-// Built on input-otp library + shadcn wrapper. Single hidden <input> underneath.
-//
-// Tokens (slot states):
-//   Empty:    background/default · border/default
-//   Active:   background/default · border/focus + ring glow
-//   Filled:   background/default · border/default · digit foreground
-//   Disabled: background/muted   · border/disabled (opacity/disabled on container)
-//   Invalid:  background/default · border/error · digit foreground
-//   Group:    radius/md · overflow-hidden (clips slot corners)
-//   Separator: background/muted/foreground
-//
-// Cross-check (meta.json Type variants): 6-Slot ✓  3+3 ✓  4-Slot ✓
-// States: Empty ✓  Active(interaction) ✓  Disabled ✓  Invalid ✓
+// Spec: input-otp.meta.json
 
 const meta = {
   title: 'Forms/InputOTP',

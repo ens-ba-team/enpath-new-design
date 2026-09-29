@@ -2,20 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
 
-// Source: slider.meta.json
-//
-// Tokens:
-//   Track:  color/surface/muted · h-2 (8px) · radius/full
-//   Range:  color/brand/primary · h-2 (8px) · radius/full
-//   Thumb:  color/background/default fill
-//           color/brand/primary border 2px (Default/Disabled)
-//           color/ring border 2px OUTSIDE (Focus)
-//   Disabled: opacity/disabled on entire component
-//
-// Cross-check (meta.json):
-//   Orientation: Horizontal ✓  Vertical ✓
-//   State: Default ✓  Disabled ✓  (Focus = interaction)
-//   Range (two thumbs): code feature — story added
+// Spec: slider.meta.json
 
 const meta = {
   title: 'Forms/Slider',

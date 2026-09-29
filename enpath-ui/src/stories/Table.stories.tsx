@@ -9,18 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Avatar } from '@/components/ui/avatar';
 import { ArrowDownIcon, ArrowUpIcon, DotsThreeIcon, TrendDownIcon, TrendUpIcon } from "@phosphor-icons/react/ssr";
 
-// Source: table.meta.json
-//
-// Tokens:
-//   Container: border/default · radius/base · overflow-hidden (caller wraps Table)
-//   Header/Footer row: bg color/surface/raised
-//   TableHead: text color/surface/raised/foreground · text-xs font-medium · h-12 py-3 px-4
-//   TableCell: text color/surface/default/foreground · py-3 px-4
-//   TableRow hover: bg color/background/accent
-//   TableRow selected: bg color/background/accent + border-l-2 color/brand/primary
-//   Spacing: Tailwind utilities (py-3=12px, px-4=16px, h-12=48px, h-10=40px)
-//
-// NOTE: Table container border/radius applied by wrapping div, not by Table itself.
+// Spec: table.meta.json
 
 const meta = {
   title: 'Data/Table',

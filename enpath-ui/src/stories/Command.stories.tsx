@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from '@/components/ui/command';
 
-// Source: command.meta.json — shadcn Command (cmdk). Searchable list; used by the Model selector and prompt @-mentions.
+// Spec: command.meta.json
 const meta = { title: 'Navigation/Command', parameters: { layout: 'padded' } } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;

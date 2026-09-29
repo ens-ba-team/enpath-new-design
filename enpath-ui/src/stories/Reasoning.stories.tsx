@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Reasoning, ReasoningContent, ReasoningTrigger } from '@/components/ai-elements/reasoning';
 
-// Source: reasoning.meta.json — AI Elements Reasoning. Collapsible 'thinking' text; opens while streaming, closes when done.
+// Spec: reasoning.meta.json
 const meta = { title: 'AI/Reasoning', parameters: { layout: 'padded' } } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;

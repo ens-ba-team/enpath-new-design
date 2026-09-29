@@ -6,6 +6,31 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-29 — Text-style exceptions decided
+
+### Changed
+- Two exceptions to R-ENP-13 are now rules, not open questions: a lone `font-semibold` / `font-normal` for a selected state or inline emphasis, and `tracking-wide` (small uppercase labels) / `tracking-widest` (shortcut hints). Written in rulebook §Typography and R-ENP-13.
+- drift-check 13 now also fails on any other `tracking-*` class.
+
+---
+
+## 2026-09-29 — drift-check 13: text styles in code
+
+### Added
+- **drift-check 13** fails on hand-built type in any `.tsx` class string under `enpath-ui/src` (components, AI Elements, screens, stories): `text-xs`…`text-9xl` (with or without a variant prefix), `text-[Npx]`, `leading-*`, `font-mono` / `font-sans` / other family classes, `font-medium` / `font-bold` / `font-light` … Comments are skipped. Lone `font-semibold` / `font-normal` stay allowed (selected states, inline emphasis: open decision). `tracking-*` is not checked yet (open decision).
+
+### Changed
+- CodeBlock line numbers: `before:font-mono` removed (the block's `text-code-md` already sets the font). Foundations/Text Styles: class names use `text-code-sm`.
+
+---
+
+## 2026-09-29 — Story headers point to the spec
+
+### Changed
+- 52 story files: the hand-copied spec block at the top (tokens, hex, px, text classes, copied from `meta.json`) is replaced by one line, `// Spec: <name>.meta.json`. 276 comment lines removed; they restated values that already live in the tokens and `meta.json` and had drifted (e.g. Tooltip and Table still named old text classes). `Textarea.stories.tsx` pointed to `input.meta.json`; it now points to `textarea.meta.json`.
+
+---
+
 ## 2026-09-29 — Stories use text styles
 
 ### Changed

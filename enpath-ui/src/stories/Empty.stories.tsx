@@ -3,22 +3,7 @@ import { Empty } from '@/components/ui/empty';
 import { Button } from '@/components/ui/button';
 import { BellIcon, CalendarBlankIcon, FolderIcon, MagnifyingGlassIcon, TrayIcon, UsersIcon } from "@phosphor-icons/react/ssr";
 
-// Source: empty.meta.json
-// Custom component — no shadcn/Radix base. Purely presentational.
-//
-// Tokens:
-//   Default:    transparent · no border · no radius
-//   Outline:    transparent · color/border/default 1px · radius/lg
-//   Background: color/background/subtle fill · no border · radius/lg
-//   media (icon container): 36×36px · radius/lg
-//     Default/Outline: color/background/subtle fill
-//     Background:      color/surface/default fill (steps up to stay distinct)
-//   title: color/background/default/foreground
-//   description: color/text/secondary
-//   padding: spacing/component/2xl (32px) · gap: spacing/component/lg (16px)
-//
-// Cross-check (meta.json Variant values): Default ✓  Outline ✓  Background ✓
-// Button visibility patterns: both ✓  primary only ✓  read-only ✓  filter only ✓
+// Spec: empty.meta.json
 
 const meta = {
   title: 'Feedback/Empty',

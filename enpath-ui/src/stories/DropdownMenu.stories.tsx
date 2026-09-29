@@ -3,7 +3,7 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { Button } from '@/components/ui/button';
 import { DotsThreeIcon } from '@phosphor-icons/react/ssr';
 
-// Source: dropdown-menu.meta.json — shadcn DropdownMenu (Radix). Action menus (⋯).
+// Spec: dropdown-menu.meta.json
 const meta = { title: 'Overlay/Dropdown Menu', parameters: { layout: 'padded' } } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -13,21 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-// Source: sheet.meta.json
-// Built on Radix UI Dialog (NOT Vaul). No swipe-to-dismiss, no drag handle.
-// Key difference from Drawer: Sheet = Radix Dialog, Drawer = Vaul (gesture library).
-//
-// Tokens:
-//   Shell fill: color/surface/overlay · border: color/border/default · no shadow
-//   Radius: radius/lg on exposed edge only · screen-edge corners = 0
-//   Header: H layout · padding spacing/lg · gap spacing/md
-//   Body slot: padding spacing/lg
-//   Footer: VERTICAL stacked · border-top border/default · padding spacing/lg · gap spacing/sm
-//   Title: color/surface/overlay/foreground · Description: color/text/secondary
-//
-// Cross-check (meta.json Side variants):
-//   Horizontal → side="right" ✓  side="left" ✓
-//   Vertical   → side="bottom" ✓  side="top" ✓
+// Spec: sheet.meta.json
 
 const meta = {
   title: 'Overlay/Sheet',

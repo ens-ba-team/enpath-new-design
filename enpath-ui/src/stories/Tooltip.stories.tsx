@@ -8,21 +8,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { ArchiveIcon, ShareNetworkIcon, TrashIcon } from "@phosphor-icons/react/ssr";
 
-// Source: tooltip.meta.json
-//
-// Tokens:
-//   tooltip/bg → --tooltip-bg: #18181b — always dark, fixed regardless of theme
-//   tooltip/fg → --tooltip-fg: #ffffff — always white, fixed regardless of theme
-//   No border, no shadow. Padding: spacing/component/md (12px) × xs-plus (6px).
-//   Radius: radius/md. Text: text-xs font-semibold leading-none.
-//
-// TooltipProvider: delayDuration=200ms, skipDelayDuration=300ms.
-// Place once at app root — shown in decorator here.
-//
-// Cross-check (meta.json Side variants):
-//   Top ✓  Bottom ✓  Left ✓  Right ✓
-// Composition slots:
-//   Icon-only button ✓  Disabled-in-span ✓  Keyboard shortcut ✓
+// Spec: tooltip.meta.json
 
 const meta = {
   title: 'Overlay/Tooltip',

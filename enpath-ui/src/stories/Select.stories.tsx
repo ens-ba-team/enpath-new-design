@@ -11,13 +11,7 @@ import {
 } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 
-// Source: select.meta.json
-// shadcn has no SelectField wrapper — select-field is composed: Label + Select + description <p>.
-//
-// Cross-check (meta.json State variants):
-//   Default ✓  Hover ✓ (interaction)  Open ✓ (interaction)
-//   Filled ✓  Disabled ✓  Invalid ✓
-//   Slots: WithField ✓  WithGroups ✓
+// Spec: select.meta.json
 
 const meta = {
   title: 'Forms/Select',

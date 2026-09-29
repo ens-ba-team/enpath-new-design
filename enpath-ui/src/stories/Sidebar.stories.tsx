@@ -18,16 +18,7 @@ import { Avatar } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { EnpathAppShell } from '@/features/enpath/app-shell';
 
-// Source: sidebar.meta.json
-//
-// Tokens:
-//   Panel: sidebar/background · sidebar/border (right edge)
-//   Nav item default: transparent · sidebar/foreground
-//   Nav item hover/active: sidebar/accent · sidebar/accent/foreground
-//   Group label: sidebar/foreground (60% opacity)
-//   Badge: brand/primary · brand/primary/foreground
-//   Focus ring: sidebar/ring
-//   Logo: 28×28px, NOT token-bound (branding slot)
+// Spec: sidebar.meta.json
 
 const meta = {
   title: 'Navigation/Sidebar',

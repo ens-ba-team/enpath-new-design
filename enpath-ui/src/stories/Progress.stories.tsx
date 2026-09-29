@@ -2,19 +2,7 @@ import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Progress } from '@/components/ui/progress';
 
-// Source: progress.meta.json
-//
-// Tokens:
-//   Track: color/background/muted · radius/full
-//   Fill (Loading/Indeterminate): color/brand/primary
-//   Fill (Complete, value=100):   color/status/success  (spec corrected)
-//
-// Sizes: sm=4px · md=8px (default) · lg=12px
-// State is driven by value: 0–99=Loading · 100=Complete · null=Indeterminate
-//
-// Cross-check (meta.json):
-//   State: Loading ✓  Complete ✓  Indeterminate ✓
-//   Size: SM ✓  MD ✓  LG ✓
+// Spec: progress.meta.json
 
 const meta = {
   title: 'Feedback/Progress',

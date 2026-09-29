@@ -10,11 +10,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import { HouseIcon } from "@phosphor-icons/react/ssr";
 
-// Source: breadcrumb.meta.json (category, variants, tokens)
 // Spec: breadcrumb.meta.json
-// Note: Breadcrumb is a composition — no fixed composite component.
-//   Assembly: item → separator → item → separator → item(current)
-//   Last item always BreadcrumbPage (Current=True). Separator never at start or end.
 
 const meta = {
   title: 'Navigation/Breadcrumb',

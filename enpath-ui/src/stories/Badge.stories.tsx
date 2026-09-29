@@ -2,8 +2,7 @@ import { CheckIcon, ClockIcon, InfoIcon, XIcon } from "@phosphor-icons/react/ssr
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Badge } from '@/components/ui/badge';
 
-// Source: badge.meta.json (category, variants, argTypes, defaults)
-// Patterns: badge.examples.tsx
+// Spec: badge.meta.json
 
 const meta = {
   title: 'Display/Badge',

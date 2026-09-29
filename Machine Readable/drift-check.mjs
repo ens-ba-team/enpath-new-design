@@ -20,6 +20,9 @@
  *  12. Text styles by name — meta.json (changelog skipped) and component comments name the style
  *      (text-body-sm …), never raw type values: weight words, font-weight numbers, text-xs/sm…, font-medium;
  *      in docs (.md/.txt, CHANGELOG skipped) a line naming a text style can't also state a font, weight or size
+ *  13. Text styles in code — .tsx class strings (components, AI Elements, screens, stories) use text styles:
+ *      no text-xs…9xl, text-[Npx], leading-*, font-mono/sans/…, font-medium/bold/light…, tracking-* other
+ *      than wide/widest. Exceptions: lone font-semibold / font-normal, tracking-wide / -widest. Comments skipped.
  *
  * Exit code 1 if any drift is found (so CI can gate on it).
  */
@@ -427,6 +430,34 @@ section('12. Text styles by name — no raw type values in meta.json, component 
     });
   }
   if (hits === 0) ok('meta.json, component comments and docs name text styles, not values');
+}
+
+// ── 13. Text styles in code ──────────────────────────────────────────────────
+// R-ENP-13: text uses one text-style class (text-body-sm, text-label-md …). Size, line height,
+// font family and off-system weights written by hand in a class string drift from the tokens.
+// Exceptions (rulebook §Typography, decided 2026-09-29): lone font-semibold / font-normal for a
+// selected state or inline emphasis; tracking-wide (small uppercase labels) and tracking-widest
+// (shortcut hints). Any other tracking-* fails.
+section('13. Text styles in code — no hand-built type in class strings');
+{
+  const banned = /(?<![\w\[-])((?:[\w-]+:|\[[^\]]+\]:)*)(text-(?:xs|sm|base|lg|[2-9]?xl)|text-\[\d[^\]]*\]|leading-[\w\[\].-]+|font-(?:mono|sans|serif|display|heading|thin|extralight|light|medium|bold|extrabold|black)|tracking-(?!(?:wide|widest)(?![\w-]))[\w\[\].-]+)(?![\w-])/g;
+  let hits = 0;
+  (function walk(d) {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) { walk(p); continue; }
+      if (!e.name.endsWith('.tsx')) continue;
+      fs.readFileSync(p, 'utf8').split('\n').forEach((line, i) => {
+        const t = line.trim();
+        if (/^(\/\/|\*|\/\*|\{\/\*)/.test(t)) return;
+        const code = line.replace(/\/\/.*$/, '');
+        for (const lit of code.match(/"[^"\n]*"|'[^'\n]*'|`[^`]*`/g) || []) {
+          for (const m of lit.matchAll(banned)) { bad(`${path.relative(root, p)}:${i + 1} "${m[0]}" — use a text style`); hits++; }
+        }
+      });
+    }
+  })(path.join(root, 'enpath-ui/src'));
+  if (hits === 0) ok('class strings use text styles only');
 }
 
 // ── Summary ──────────────────────────────────────────────────────────────────

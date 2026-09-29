@@ -3,8 +3,7 @@ import * as React from 'react';
 
 import { StepRail, StepRailItem } from '@/components/ui/step-rail';
 
-// Source: step-rail.meta.json — one Career Map route as a vertical rail. Sample data is Lan Nguyen's
-// plan from the My Career prototype.
+// Spec: step-rail.meta.json
 const meta = {
   title: 'Navigation/Step Rail',
   component: StepRail,

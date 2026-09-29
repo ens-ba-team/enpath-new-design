@@ -39,7 +39,7 @@ function Row({ name, cls, use }: { name: string; cls: string; use: string }) {
   return (
     <div className="grid grid-cols-1 gap-[var(--spacing-component-xs)] border-b border-[var(--color-border-default)] py-[var(--spacing-component-md)] sm:grid-cols-[180px_1fr]">
       <div className="flex flex-col gap-[var(--spacing-component-xs)]">
-        <code className="font-mono text-body-xs text-[var(--color-background-default-foreground)]">text-{name}</code>
+        <code className="text-code-sm text-[var(--color-background-default-foreground)]">text-{name}</code>
         <span className="text-body-xs text-[var(--color-text-secondary)]">{spec}</span>
       </div>
       <div className="flex flex-col gap-[var(--spacing-component-xs)]">

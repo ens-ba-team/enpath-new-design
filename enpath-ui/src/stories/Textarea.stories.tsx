@@ -5,10 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { CheckCircleIcon, MagnifyingGlassIcon } from "@phosphor-icons/react/ssr";
 
-// Source: input.meta.json
-// Spec: textarea.meta.json → Token Bindings
-//   shadcn ships them as two separate components: input.tsx + textarea.tsx.
-//   This is the Textarea story — see Input.stories.tsx for the Input story.
+// Spec: textarea.meta.json
 
 const meta = {
   title: 'Forms/Textarea',

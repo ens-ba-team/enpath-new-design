@@ -19,8 +19,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
-// Source: button.meta.json (category, variants, argTypes, defaults)
-// Patterns: button.examples.tsx (leadingIcon, iconOnly, destructiveConfirmation)
+// Spec: button.meta.json
 
 const meta = {
   title: 'Actions/Button',

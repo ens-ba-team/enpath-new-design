@@ -4,23 +4,7 @@ import { Item } from '@/components/ui/item';
 import { Button } from '@/components/ui/button';
 import { BellRingingIcon, CaretRightIcon, ChartBarIcon, FileTextIcon, FolderIcon, GearIcon, HouseIcon, UserIcon } from "@phosphor-icons/react/ssr";
 
-// Source: item.meta.json
-// Custom component — no shadcn base.
-//
-// Tokens:
-//   Default:  transparent · radius/lg
-//   Outline:  color/surface/default · color/border/default 1px · radius/lg
-//   Muted:    color/surface/muted · radius/lg
-//   Padding + gap: md(12px) · sm(8px) · xs(6px)
-//   title: color/surface/default/foreground · text-sm font-medium
-//   description: color/surface/muted/foreground · text-sm
-//   content gap: spacing/component/xxs (2px)
-//   Alignment: Icon+Link → items-start · Default/Avatar/Image → items-center
-//
-// Cross-check (meta.json):
-//   Type: Default ✓  Icon ✓  Avatar ✓  Image ✓  Header ✓  Link ✓
-//   Variant: Default ✓  Outline ✓  Muted ✓
-//   Size: Default ✓  Sm ✓  Xs ✓
+// Spec: item.meta.json
 
 const meta = {
   title: 'Layout/Item',

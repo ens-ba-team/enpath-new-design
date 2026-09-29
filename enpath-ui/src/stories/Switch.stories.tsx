@@ -3,15 +3,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 
-// Source: switch.meta.json
-// shadcn provides only the raw Switch toggle. switch-item patterns are composed inline.
-//
-// Cross-check (meta.json variants):
-//   Size: Default ✓  Sm ✓
-//   Checked: True ✓  False ✓
-//   State: Default ✓  Disabled ✓  (Focus is interaction — shown via keyboard)
-//   ItemType: Basic ✓  Description ✓  Choice Card ✓
-//   ItemState: Default ✓  Disabled ✓  Invalid ✓
+// Spec: switch.meta.json
 
 const meta = {
   title: 'Forms/Switch',

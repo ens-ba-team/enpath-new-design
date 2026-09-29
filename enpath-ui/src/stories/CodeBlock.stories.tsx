@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { CodeBlock, CodeBlockCopyButton } from '@/components/ai-elements/code-block';
 
-// Source: code-block.meta.json — AI Elements CodeBlock. Highlighted code with copy.
+// Spec: code-block.meta.json
 const meta = { title: 'AI/Code Block', parameters: { layout: 'padded' } } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;

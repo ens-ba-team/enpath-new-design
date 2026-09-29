@@ -1,13 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { ComboboxField } from '@/components/ui/combobox';
 
-// Source: combobox.meta.json
-// Built on @base-ui/react Combobox
-//
-// Variants covered:
-//   Type=Basic (Default, Filled, Invalid, Disabled) ✓
-//   Type=Search (Default, Filled, Disabled) ✓
-//   Type=Basic State=Filled-chips (multi-select) ✓
+// Spec: combobox.meta.json
 
 const people = [
   { value: "ada", label: "Ada Lovelace" },

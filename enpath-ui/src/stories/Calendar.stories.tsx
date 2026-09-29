@@ -4,16 +4,7 @@ import { DateRange } from 'react-day-picker';
 import { addDays } from 'date-fns';
 import { Calendar, CalendarWithPresets, CalendarWithTime } from '@/components/ui/calendar';
 
-// Source: calendar.meta.json
-//
-// Tokens:
-//   Container: surface/default fill · border/default · radius/lg
-//   Day Default: transparent · background/default/foreground
-//   Day Today:   background/accent fill · accent/foreground
-//   Day Selected: brand/primary fill · primary/foreground
-//   Day Range-Middle: background/accent fill
-//   Day Outside/Disabled: text/secondary · text/disabled
-//   Size: 32×32px · radius/md per day cell
+// Spec: calendar.meta.json
 
 const meta = {
   title: 'Display/Calendar',

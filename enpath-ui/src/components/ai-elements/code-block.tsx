@@ -86,7 +86,6 @@ const LINE_NUMBER_CLASSES = cn(
   "before:mr-4",
   "before:text-right",
   "before:text-[var(--color-text-secondary)]/50",
-  "before:font-mono",
   "before:select-none"
 );
 

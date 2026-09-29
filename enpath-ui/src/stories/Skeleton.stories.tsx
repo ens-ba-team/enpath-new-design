@@ -1,14 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Skeleton } from '@/components/ui/skeleton';
 
-// Source: skeleton.meta.json — code-only
-// Single token: color/background/muted (bg-[var(--color-background-muted)])
-// No variants, no props. Compose multiple instances to mirror real content layout.
-// Wrap loading region in aria-busy="true" — individual Skeleton elements are decorative.
-//
-// Composition patterns (from meta.json compositionPatterns):
-//   Circle + text lines ✓  Full-width rectangle ✓
-//   Multiple text lines ✓  Row with circle + line ✓  Grid of rectangles ✓
+// Spec: skeleton.meta.json
 
 const meta = {
   title: 'Feedback/Skeleton',

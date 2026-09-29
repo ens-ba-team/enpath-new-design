@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Avatar } from '@/components/ui/avatar';
 
-// Source: avatar.meta.json (category, variants, argTypes, defaults)
-// Patterns: avatar.examples.tsx
+// Spec: avatar.meta.json
 
 const meta = {
   title: 'Display/Avatar',

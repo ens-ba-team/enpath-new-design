@@ -6,8 +6,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 
-// Source: accordion.meta.json (category, variants, tokens)
-// Patterns: accordion.examples.tsx
+// Spec: accordion.meta.json
 
 const meta = {
   title: 'Display/Accordion',

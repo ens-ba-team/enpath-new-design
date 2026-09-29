@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 
-// Source: hover-card.meta.json — shadcn HoverCard (Radix). Preview on hover/focus; never the only way to reach content.
+// Spec: hover-card.meta.json
 const meta = { title: 'Overlay/Hover Card', parameters: { layout: 'padded' } } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;

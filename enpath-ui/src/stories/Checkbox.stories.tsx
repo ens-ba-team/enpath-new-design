@@ -3,22 +3,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 
-// Source: checkbox.meta.json
-// shadcn ships only Checkbox — no CheckboxItem wrapper. Compose: Checkbox + Label + description p.
-//
-// Tokens (all 8 states):
-//   Unchecked:        border color/input/border
-//   Hover:            bg color/background/accent · border color/brand/primary
-//   Focus:            ring color/ring 2px OUTSIDE
-//   Checked:          bg color/brand/primary · check color/brand/primary/foreground
-//   Indeterminate:    bg color/brand/primary · dash color/brand/primary/foreground
-//   Disabled:         bg color/background/muted · border color/border/disabled
-//   Checked Disabled: same bg/border + check color/background/muted/foreground
-//   Invalid:          border color/border/error (via aria-invalid)
-//
-// Cross-check (meta.json variants):
-//   State: Unchecked ✓ Checked ✓ Indeterminate ✓ Disabled ✓ CheckedDisabled ✓ Invalid ✓
-//   Description: True ✓ False ✓
+// Spec: checkbox.meta.json
 
 const meta = {
   title: 'Forms/Checkbox',

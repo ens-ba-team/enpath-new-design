@@ -10,14 +10,7 @@ import {
 } from '@/components/ui/navigation-menu';
 import { BookOpenIcon, CurrencyDollarIcon, SquaresFourIcon, StarIcon, UsersIcon } from "@phosphor-icons/react/ssr";
 
-// Source: navigation-menu.meta.json
-//
-// Tokens:
-//   nav-button: bg/default · hover: bg/accent · focus: ring · label/icon: bg/default/fg
-//   nav-panel:  surface/overlay · border/default · radius/base · shadow/shadow
-//   nav-panel-link: hover bg/accent · title: surface/default/fg · description: text/secondary
-//
-// Stories cover: List panel, Grid panel, Featured panel, Type=Link, disabled states
+// Spec: navigation-menu.meta.json
 
 const meta = {
   title: 'Navigation/NavigationMenu',

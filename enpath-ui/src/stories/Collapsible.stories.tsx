@@ -3,7 +3,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { Button } from '@/components/ui/button';
 import { CaretDownIcon } from '@phosphor-icons/react/ssr';
 
-// Source: collapsible.meta.json — shadcn Collapsible (Radix). Unstyled show/hide; used by Reasoning and Tool.
+// Spec: collapsible.meta.json
 const meta = { title: 'Layout/Collapsible', parameters: { layout: 'padded' } } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;
