@@ -47,6 +47,10 @@
       {
         "date": "2026-09-22",
         "change": "Added (AI Elements install) and documented."
+      },
+      {
+        "date": "2026-09-29",
+        "change": "Text uses Enpath text styles (text-body-sm, text-heading-md …, see Foundations/Text Styles) instead of mixed size and weight classes. Labels (label-*) and small headings (heading-sm/xs) are Medium 500."
       }
     ]
   },

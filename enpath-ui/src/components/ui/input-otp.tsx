@@ -80,7 +80,7 @@ const InputOTPSlot = React.forwardRef<
       className={cn(
         // Base — 40×40px fixed square
         "relative flex h-10 w-10 items-center justify-center",
-        "text-sm font-medium",
+        "text-label-md",
         "transition-all",
         // Per-slot border — top + bottom + right; first slot adds left
         "border-y border-r border-[var(--color-border-default)]",

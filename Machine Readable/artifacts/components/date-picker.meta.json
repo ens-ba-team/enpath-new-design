@@ -127,6 +127,10 @@
       {
         "date": "2026-09-29",
         "change": "Text styles written as the Tailwind classes the component renders (Agentic style names such as label/sm removed; Enpath uses Tailwind's type scale). The placeholder was documented as label/sm; the trigger renders text-sm (corrected)."
+      },
+      {
+        "date": "2026-09-29",
+        "change": "Text uses Enpath text styles (text-label-sm, text-body-sm …, see Foundations/Text Styles) instead of mixed size and weight classes. Labels (label-*) and small headings (heading-sm/xs) are Medium 500."
       }
     ]
   },
@@ -186,7 +190,7 @@
       },
       {
         "title": "Structure",
-        "body": "\n### State=Closed / Hover / Focus\n\n```\ndate-picker                     — VERTICAL, no outer padding\n  └─ trigger                    — HORIZONTAL, gap: spacing/component/sm, radius/md\n       ├─ [icon]                — INSTANCE (chevron-down or calendar icon), 16×16px\n       └─ placeholder           — TEXT, text-sm, color/input/placeholder\n```\n\n### State=Open\n\n```\ndate-picker                     — VERTICAL, no outer padding\n  ├─ trigger                    — same as above\n  └─ calendar                   — INSTANCE of calendar component\n```\n\n> `Type=Default` and `Type=Input` show a single-month calendar popup.\n> `Type=Range` shows a two-month calendar popup (520px wide).\n> See [Calendar](Calendar.md) for calendar popup structure and token details.\n\n### Icons per Type\n\n| Type | Icon | Source |\n|---|---|---|\n| `Default` | `CaretDownIcon` | Phosphor |\n| `Range` | `CalendarBlankIcon` | Phosphor |\n| `Input` | `CalendarBlankIcon` | Phosphor |\n\n---\n\n"
+        "body": "\n### State=Closed / Hover / Focus\n\n```\ndate-picker                     — VERTICAL, no outer padding\n  └─ trigger                    — HORIZONTAL, gap: spacing/component/sm, radius/md\n       ├─ [icon]                — INSTANCE (chevron-down or calendar icon), 16×16px\n       └─ placeholder           — TEXT, text-body-sm, color/input/placeholder\n```\n\n### State=Open\n\n```\ndate-picker                     — VERTICAL, no outer padding\n  ├─ trigger                    — same as above\n  └─ calendar                   — INSTANCE of calendar component\n```\n\n> `Type=Default` and `Type=Input` show a single-month calendar popup.\n> `Type=Range` shows a two-month calendar popup (520px wide).\n> See [Calendar](Calendar.md) for calendar popup structure and token details.\n\n### Icons per Type\n\n| Type | Icon | Source |\n|---|---|---|\n| `Default` | `CaretDownIcon` | Phosphor |\n| `Range` | `CalendarBlankIcon` | Phosphor |\n| `Input` | `CalendarBlankIcon` | Phosphor |\n\n---\n\n"
       },
       {
         "title": "Token Bindings",

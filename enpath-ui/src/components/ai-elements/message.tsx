@@ -53,7 +53,7 @@ export const MessageContent = ({
 }: MessageContentProps) => (
   <div
     className={cn(
-      "flex w-fit min-w-0 max-w-full flex-col gap-2 overflow-hidden text-sm",
+      "flex w-fit min-w-0 max-w-full flex-col gap-2 overflow-hidden text-body-sm",
       // Enpath tokens: user = chat/user/bg + border, radius/lg · assistant = plain text chat/assistant/fg
       "group-[.is-user]:ml-auto group-[.is-user]:rounded-[var(--radius-lg)] group-[.is-user]:border group-[.is-user]:border-[var(--chat-user-border)] group-[.is-user]:bg-[var(--chat-user-bg)] group-[.is-user]:px-[var(--spacing-component-md)] group-[.is-user]:py-[var(--spacing-component-sm)] group-[.is-user]:text-[var(--chat-user-fg)]",
       "group-[.is-assistant]:text-[var(--chat-assistant-fg)]",
@@ -309,7 +309,7 @@ export const MessageBranchPage = ({
   return (
     <span
       className={cn(
-        "flex items-center px-[var(--spacing-component-sm)] text-xs text-[var(--color-text-secondary)]",
+        "flex items-center px-[var(--spacing-component-sm)] text-body-xs text-[var(--color-text-secondary)]",
         className
       )}
       {...props}

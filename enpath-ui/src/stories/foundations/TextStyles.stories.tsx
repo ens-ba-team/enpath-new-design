@@ -33,7 +33,8 @@ function Row({ name, cls, use }: { name: string; cls: string; use: string }) {
     if (!ref.current) return;
     const cs = getComputedStyle(ref.current);
     const ls = cs.letterSpacing === 'normal' ? '' : ` · ${cs.letterSpacing}`;
-    setSpec(`${parseFloat(cs.fontSize)} / ${Math.round(parseFloat(cs.lineHeight) * 100) / 100} · ${cs.fontWeight}${ls}`);
+    const font = cs.fontFamily.split(',')[0].replace(/["']/g, '');
+    setSpec(`${font} · ${parseFloat(cs.fontSize)} / ${Math.round(parseFloat(cs.lineHeight) * 100) / 100} · ${cs.fontWeight}${ls}`);
   }, []);
   return (
     <div className="grid grid-cols-1 gap-[var(--spacing-component-xs)] border-b border-[var(--color-border-default)] py-[var(--spacing-component-md)] sm:grid-cols-[180px_1fr]">

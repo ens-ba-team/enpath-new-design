@@ -60,8 +60,8 @@ The purpose is to catch unexamined defaults such as interchangeable cards, decor
 | Hero eyebrow / pill chip | AI slop | Review | Keep it when it carries meaningful context or brand rhythm; remove empty decoration. |
 | Oversized hero headline | AI slop | Review | Judge scale against the intended experience; expressive or editorial surfaces may legitimately lead with display type. |
 | Crushed letter spacing | AI slop | Source | Tighten display type optically without damaging character shapes. |
-| Overused font | AI slop | Source | Nunito is the interface family; do not substitute a trend font. |
-| Decorative alternate font | AI slop | Source | Keep product values in Nunito. Reserve Typography.Mono and Typography.Code for code or machine-oriented text; do not use mono as decorative branding or an eyebrow style. |
+| Overused font | AI slop | Source | Fonts come only from Enpath text styles (Inter, Nunito, Roboto Mono; which style uses which: Foundations/Text Styles); do not substitute a trend font. |
+| Decorative alternate font | AI slop | Source | Keep product values in their text style's font. Reserve Typography.Mono and Typography.Code for code or machine-oriented text; do not use mono as decorative branding or an eyebrow style. |
 | All-caps body text | Quality | Source | Reserve uppercase for short labels; use sentence case for prose and controls. |
 
 ## Color and contrast

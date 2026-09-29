@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
-import { Nunito, Roboto_Mono } from "next/font/google";
+import { Inter, Nunito, Roboto_Mono } from "next/font/google";
 import "./globals.css";
+
+// Inter = interface text (font-family/sans); Nunito = display and large headings
+// (font-family/display); Roboto Mono = machine text (font-family/mono).
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -25,7 +32,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${nunito.variable} ${robotoMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${nunito.variable} ${robotoMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

@@ -23,13 +23,13 @@ import { Avatar } from "@/components/ui/avatar"
 //   items-center: Default · Avatar · Image · Header
 //
 // Text:
-//   title:       color/surface/default/foreground · text-sm font-medium
-//   description: color/surface/muted/foreground · text-sm
+//   title:       color/surface/default/foreground · text-heading-xs
+//   description: color/surface/muted/foreground · text-body-sm
 //   content gap: spacing/component/xxs (2px)
 //
 // Selectable (onSelect set) — renders a <button>, for single-select lists (master–detail):
 //   hover:    item/hover/bg
-//   selected: item/selected/bg + 1px inset item/selected/border · title item/selected/fg, SemiBold
+//   selected: item/selected/bg + 1px inset item/selected/border · title item/selected/fg + font-semibold
 //   a11y:     aria-current="true" on the selected row · focus ring color/border/focus
 
 // ─── Variants ─────────────────────────────────────────────────────────────────
@@ -121,13 +121,13 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>(
     const contentBlock = (
       <div className="flex flex-col gap-0.5 flex-1 min-w-0"> {/* spacing/component/xxs = 2px */}
         <span className={cn(
-          "text-sm leading-snug",
-          selected ? "font-semibold text-[var(--item-selected-fg)]" : "font-medium text-[var(--color-surface-default-foreground)]"
+          "text-heading-xs",
+          selected ? "font-semibold text-[var(--item-selected-fg)]" : "text-[var(--color-surface-default-foreground)]"
         )}>
           {title}
         </span>
         {description && (
-          <span className="text-sm leading-snug text-[var(--color-surface-muted-foreground)]">
+          <span className="text-body-sm text-[var(--color-surface-muted-foreground)]">
             {description}
           </span>
         )}

@@ -75,7 +75,7 @@ const NavigationMenuTrigger = React.forwardRef<
       "group inline-flex items-center justify-center gap-[var(--spacing-component-xs)]",
       "rounded-[var(--radius-md)]",
       "px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)]",
-      "text-sm font-medium",
+      "text-heading-xs",
       "bg-[var(--color-background-default)] text-[var(--color-background-default-foreground)]",
       "hover:bg-[var(--color-background-accent)] hover:text-[var(--color-background-accent-foreground)]",
       "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ring)] focus-visible:ring-offset-0",
@@ -181,14 +181,14 @@ const NavigationMenuPanelLink = React.forwardRef<
       {...props}
     >
       <span className={cn(
-        "text-sm font-medium leading-snug",
+        "text-heading-xs",
         disabled ? "text-[var(--color-text-disabled)]" : "text-[var(--color-surface-overlay-foreground)]"
       )}>
         {title}
       </span>
       {description && (
         <span className={cn(
-          "text-xs leading-snug",
+          "text-body-xs",
           disabled ? "text-[var(--color-text-disabled)]" : "text-[var(--color-text-secondary)]"
         )}>
           {description}

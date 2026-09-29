@@ -35,11 +35,11 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
           // Spacing
           "px-[var(--spacing-component-md)] py-[var(--spacing-component-xs)]",
           // Typography
-          "text-sm text-[var(--color-surface-default-foreground)]",
+          "text-body-sm text-[var(--color-surface-default-foreground)]",
           // Placeholder
           "placeholder:text-[var(--color-input-placeholder)]",
           // File input
-          "file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-[var(--color-surface-default-foreground)]",
+          "file:border-0 file:bg-transparent file:text-label-md file:text-[var(--color-surface-default-foreground)]",
           // Hover state
           "hover:border-[var(--color-border-hover)]",
           // Focus state — border + ring glow

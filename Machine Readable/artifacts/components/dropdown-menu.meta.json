@@ -53,6 +53,10 @@
         "date": "2026-09-27",
         "change": "Documented: menus whose items open a Dialog / Sheet must be modal={false} — otherwise the page stays unclickable after the overlay closes (found in Setup → Duplicate position).",
         "breaking": false
+      },
+      {
+        "date": "2026-09-29",
+        "change": "Text uses Enpath text styles (text-body-sm, text-heading-md …, see Foundations/Text Styles) instead of mixed size and weight classes. Labels (label-*) and small headings (heading-sm/xs) are Medium 500."
       }
     ]
   },

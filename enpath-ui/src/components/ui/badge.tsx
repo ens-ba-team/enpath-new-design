@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const badgeVariants = cva(
-  "inline-flex items-center gap-[var(--spacing-component-xs)] border font-semibold leading-none transition-colors [&_svg]:pointer-events-none [&_svg]:size-3 [&_svg]:shrink-0",
+  "inline-flex items-center gap-[var(--spacing-component-xs)] border transition-colors [&_svg]:pointer-events-none [&_svg]:size-3 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -42,12 +42,12 @@ const badgeVariants = cva(
         pill: "rounded-full",
       },
       size: {
-        // Small: 16px h, 4px px, text-xs
-        sm: "h-[var(--badge-badge-height-small)] px-[var(--spacing-component-xs)] text-xs",
-        // Medium: 20px h, 8px px, text-xs
-        md: "h-[var(--badge-badge-height-medium)] px-[var(--spacing-component-sm)] text-xs",
-        // Large: 24px h, 8px px, text-sm
-        lg: "h-[var(--badge-badge-height-large)] px-[var(--spacing-component-sm)] text-sm",
+        // Small: badge/Badge-height-small · spacing/component/xs · text-label-sm
+        sm: "h-[var(--badge-badge-height-small)] px-[var(--spacing-component-xs)] text-label-sm",
+        // Medium: badge/Badge-height-medium · spacing/component/sm · text-label-sm
+        md: "h-[var(--badge-badge-height-medium)] px-[var(--spacing-component-sm)] text-label-sm",
+        // Large: badge/Badge-height-large · spacing/component/sm · text-label-md
+        lg: "h-[var(--badge-badge-height-large)] px-[var(--spacing-component-sm)] text-label-md",
       },
     },
     defaultVariants: {

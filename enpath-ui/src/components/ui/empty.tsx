@@ -77,12 +77,12 @@ const Empty = React.forwardRef<HTMLDivElement, EmptyProps>(
               {icon}
             </div>
           )}
-          {/* text-base font-semibold leading-snug */}
-          <p className="text-base font-semibold leading-snug text-[var(--color-background-default-foreground)]">
+          {/* text-heading-sm */}
+          <p className="text-heading-sm text-[var(--color-background-default-foreground)]">
             {title}
           </p>
           {description && (
-            <p className="text-sm text-[var(--color-text-secondary)] max-w-xs">
+            <p className="text-body-sm text-[var(--color-text-secondary)] max-w-xs">
               {description}
             </p>
           )}

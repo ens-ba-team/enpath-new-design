@@ -33,8 +33,8 @@ const AccordionTrigger = React.forwardRef<
         "flex flex-1 items-center justify-between",
         // Spacing — padding T/B: spacing/component/lg (16px); gap: spacing/component/sm (8px)
         "py-[var(--spacing-component-lg)] gap-[var(--spacing-component-sm)]",
-        // Typography — text-sm font-semibold, default foreground
-        "font-semibold text-sm text-[var(--color-surface-default-foreground)]",
+        // Typography — text-heading-xs, default foreground
+        "text-heading-xs text-[var(--color-surface-default-foreground)]",
         // Transition
         "transition-all",
         // Focus ring — color/ring 2px outside
@@ -63,7 +63,7 @@ const AccordionContent = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <AccordionPrimitive.Content
     ref={ref}
-    className="overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+    className="overflow-hidden text-body-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
     {...props}
   >
     {/* padding bottom: spacing/component/lg (16px) · no top padding per spec */}

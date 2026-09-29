@@ -178,6 +178,10 @@
       {
         "date": "2026-09-21",
         "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      },
+      {
+        "date": "2026-09-29",
+        "change": "Text uses Enpath text styles (text-body-sm, text-heading-md …, see Foundations/Text Styles) instead of mixed size and weight classes. Labels (label-*) and small headings (heading-sm/xs) are Medium 500."
       }
     ]
   },

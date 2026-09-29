@@ -70,7 +70,7 @@ function CaptionWithToggle({
           onClick={() => onToggleView(view === "months" ? "days" : "months")}
           className={cn(
             "inline-flex items-center gap-0.5 px-2 py-1 rounded-[var(--radius-md)]",
-            "text-sm font-medium transition-colors outline-none",
+            "text-heading-xs transition-colors outline-none",
             "focus-visible:ring-2 focus-visible:ring-[var(--color-ring)]",
             view === "months"
               ? "bg-[var(--color-background-accent)] text-[var(--color-background-accent-foreground)]"
@@ -86,7 +86,7 @@ function CaptionWithToggle({
           onClick={() => onToggleView(view === "years" ? "days" : "years")}
           className={cn(
             "inline-flex items-center gap-0.5 px-2 py-1 rounded-[var(--radius-md)]",
-            "text-sm font-medium transition-colors outline-none",
+            "text-heading-xs transition-colors outline-none",
             "focus-visible:ring-2 focus-visible:ring-[var(--color-ring)]",
             view === "years"
               ? "bg-[var(--color-background-accent)] text-[var(--color-background-accent-foreground)]"
@@ -124,7 +124,7 @@ function PillGrid({
           onClick={() => onSelect(i)}
           className={cn(
             "flex items-center justify-center h-9 w-full rounded-[var(--radius-md)]",
-            "text-sm font-medium transition-colors outline-none",
+            "text-heading-xs transition-colors outline-none",
             "focus-visible:ring-2 focus-visible:ring-[var(--color-ring)]",
             i === selectedIndex
               ? "bg-[var(--color-brand-primary)] text-[var(--color-brand-primary-foreground)]"
@@ -149,13 +149,13 @@ const dayClassNames = (classNames?: Record<string, string>) => ({
   head_row: "flex",
   head_cell: cn(
     "h-8 flex-1 flex items-center justify-center",
-    "text-xs font-medium",
+    "text-label-sm",
     "text-[var(--color-text-secondary)]",
     "rounded-[var(--radius-md)]"
   ),
   row: "flex w-full",
   cell: cn(
-    "relative flex-1 p-0 text-center text-sm",
+    "relative flex-1 p-0 text-center text-body-sm",
     "focus-within:relative focus-within:z-20",
     "[&:has([aria-selected].day-range-middle)]:bg-[var(--color-background-accent)]",
     "[&:has([aria-selected].day-outside)]:bg-[var(--color-background-accent)]/50",
@@ -166,7 +166,7 @@ const dayClassNames = (classNames?: Record<string, string>) => ({
   day: cn(
     "inline-flex items-center justify-center h-8 w-8",
     "rounded-[var(--radius-md)]",
-    "text-sm font-normal",
+    "text-body-sm",
     "text-[var(--color-background-default-foreground)]",
     "hover:bg-[var(--color-background-accent)]",
     "hover:text-[var(--color-background-accent-foreground)]",
@@ -176,8 +176,7 @@ const dayClassNames = (classNames?: Record<string, string>) => ({
   ),
   day_today: cn(
     "bg-[var(--color-background-accent)]",
-    "text-[var(--color-background-accent-foreground)]",
-    "font-medium"
+    "text-[var(--color-background-accent-foreground)]"
   ),
   day_selected: cn(
     "bg-[var(--color-brand-primary)]",
@@ -240,7 +239,7 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
           months: "flex flex-row gap-8",
           month: "flex flex-col gap-2",
           caption: "flex justify-center items-center relative pb-2",
-          caption_label: "text-sm font-medium text-[var(--color-background-default-foreground)]",
+          caption_label: "text-heading-xs text-[var(--color-background-default-foreground)]",
           nav: "flex items-center gap-1",
           nav_button: navBtnClass,
           nav_button_previous: "absolute left-1",
@@ -379,10 +378,10 @@ function CalendarWithPresets({ presets, className }: CalendarWithPresetsProps) {
             onClick={() => handlePreset(p)}
             className={cn(
               "text-left px-[var(--spacing-component-sm)] py-[var(--spacing-component-xs)] rounded-[var(--radius-md)]",
-              "text-sm transition-colors outline-none",
+              "text-body-sm transition-colors outline-none",
               "focus-visible:ring-2 focus-visible:ring-[var(--color-ring)]",
               activePreset === p.label
-                ? "bg-[var(--color-background-accent)] text-[var(--color-background-accent-foreground)] font-medium"
+                ? "bg-[var(--color-background-accent)] text-[var(--color-background-accent-foreground)] font-semibold"
                 : "text-[var(--color-background-default-foreground)] hover:bg-[var(--color-background-accent)]"
             )}
           >
@@ -454,7 +453,7 @@ function TimeColumn({
             onClick={() => onSelect(val)}
             className={cn(
               "flex items-center justify-center h-8 w-12 shrink-0 rounded-[var(--radius-md)]",
-              "text-sm font-medium transition-colors outline-none",
+              "text-heading-xs transition-colors outline-none",
               "focus-visible:ring-2 focus-visible:ring-[var(--color-ring)]",
               isSelected
                 ? "bg-[var(--color-brand-primary)] text-[var(--color-brand-primary-foreground)]"
@@ -525,7 +524,7 @@ function CalendarWithTime({ className }: CalendarWithTimeProps) {
 
       {/* Time section */}
       <div className="border-t border-[var(--color-border-default)] p-3">
-        <p className="text-sm font-medium text-[var(--color-background-default-foreground)] mb-2">
+        <p className="text-heading-xs text-[var(--color-background-default-foreground)] mb-2">
           Time
         </p>
 
@@ -549,7 +548,7 @@ function CalendarWithTime({ className }: CalendarWithTimeProps) {
               onChange={handleInputChange}
               placeholder="HH:MM"
               className={cn(
-                "flex-1 bg-transparent text-sm outline-none",
+                "flex-1 bg-transparent text-body-sm outline-none",
                 "text-[var(--color-background-default-foreground)]",
                 "placeholder:text-[var(--color-input-placeholder)]"
               )}
@@ -585,14 +584,14 @@ function CalendarWithTime({ className }: CalendarWithTimeProps) {
             >
               <div className="flex gap-0.5 items-start">
                 <div className="flex flex-col items-center">
-                  <span className="text-xs font-medium text-[var(--color-text-secondary)] pb-1">HH</span>
+                  <span className="text-label-sm text-[var(--color-text-secondary)] pb-1">HH</span>
                   <TimeColumn items={HOURS} selected={hours} onSelect={handleHourSelect} />
                 </div>
                 <div className="flex items-center h-48 pt-7">
-                  <span className="text-sm font-medium text-[var(--color-text-secondary)]">:</span>
+                  <span className="text-label-md text-[var(--color-text-secondary)]">:</span>
                 </div>
                 <div className="flex flex-col items-center">
-                  <span className="text-xs font-medium text-[var(--color-text-secondary)] pb-1">MM</span>
+                  <span className="text-label-sm text-[var(--color-text-secondary)] pb-1">MM</span>
                   <TimeColumn items={MINUTES} selected={minutes} onSelect={handleMinuteSelect} />
                 </div>
               </div>

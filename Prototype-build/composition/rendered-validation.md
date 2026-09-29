@@ -105,7 +105,7 @@ Capture or inspect screenshots at the selected routes, states, and widths. Revie
 - Page title, primary action, supporting controls, main content, and secondary actions having distinct weight.
 - Semantic spacing and block padding expressing relationships rather than repeating one gap everywhere.
 - Deliberate alignment, container proportions, readable text measure, and density appropriate to the brief.
-- Computed interface and product values use Nunito; alternate font rendering is limited to code and machine-oriented text.
+- Computed fonts come from the text styles (see Foundations/Text Styles); alternate font rendering is limited to code and machine-oriented text.
 - Tables retain the installed En UI row boundaries, hover treatment, and selected emphasis without consumer-authored row cards.
 - Sections do not repeat spacing, separators, and card edges to express one boundary.
 - En UI-specific anti-slop patterns from [composition-quality.md](composition-quality.md).

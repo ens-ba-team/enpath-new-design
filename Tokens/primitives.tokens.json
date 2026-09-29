@@ -659,12 +659,12 @@
     "medium": {
       "$value": 500,
       "$type": "number",
-      "$description": "Intent: Slightly emphasised weight for interactive controls and UI labels.\nUse when: Navigation links, form labels, tab labels, table column headers, secondary buttons, badge text. Ant Design uses 500 for emphasized interactive text; shadcn uses it for Label, nav items, TableHead.\nDo not use: For headings — too close to body weight to signal a clear hierarchy jump.\nUse instead: font-weight/semibold for titles and headings.\nStatus: Stable"
+      "$description": "Intent: The weight of labels and small titles.\nUse when: The label styles (text-label-lg/md/sm: buttons, form labels, badges, tabs, tooltips) and the small heading styles (text-heading-sm/xs: card, panel, list-row and item titles).\nDo not use: For large headings (heading-md and up: SemiBold) or body text (Regular).\nUse instead: font-weight/semibold for large headings and for a selected state (selected nav item, selected row title).\nStatus: Stable"
     },
     "semibold": {
       "$value": 600,
       "$type": "number",
-      "$description": "Intent: Primary heading weight and strong emphasis for UI titles.\nUse when: All component headings — card titles, dialog titles, section titles, sidebar headers, alert titles. Ant Design's fontWeightStrong token is 600; shadcn uses 600 for CardTitle, DialogTitle, AlertTitle, h1–h4.\nDo not use: For body copy — creates visual noise when overused at paragraph level.\nStatus: Stable"
+      "$description": "Intent: Weight of large headings and of a selected state.\nUse when: text-display-md, text-heading-xl/lg/md; a selected nav item or selected row title (font-semibold as a state modifier).\nDo not use: For labels or small titles (heading-sm/xs): those are Medium 500. For body text.\nUse instead: font-weight/medium for labels and small titles.\nStatus: Stable"
     },
     "bold": {
       "$value": 700,
@@ -811,14 +811,19 @@
   },
   "font-family": {
     "sans": {
+      "$value": "Inter",
+      "$type": "string",
+      "$description": "Intent: Interface typeface, and the page default for text without a text style.\nUse when: Only through text styles (typography/*) or as the inherited default. Which style uses it: Storybook Foundations/Text Styles.\nDo not use: As a hand-set font-family on a component or screen.\nCode: --font-sans (next/font in app/layout.tsx; Google Fonts in .storybook/preview-head.html).\nStatus: Stable"
+    },
+    "display": {
       "$value": "Nunito",
       "$type": "string",
-      "$description": "Intent: Primary UI typeface for all interface text.\nUse when: Body copy, labels, buttons, inputs, headings — everything that is not code or editorial serif.\nDo not use: For code blocks or monospace content.\nUse instead: font-family/mono for code; font-family/serif for editorial contexts.\nStatus: Stable"
+      "$description": "Intent: Softer, more characterful typeface for the text styles that should stand out.\nUse when: Only through text styles (typography/*). Which style uses it: Storybook Foundations/Text Styles.\nDo not use: As a hand-set font-family on a component or screen.\nCode: --font-display (next/font in app/layout.tsx; Google Fonts in .storybook/preview-head.html).\nStatus: Stable"
     },
     "mono": {
       "$value": "Roboto Mono",
       "$type": "string",
-      "$description": "Intent: Monospace typeface for code and technical content.\nUse when: Code blocks, inline code snippets, terminal output, token or variable names displayed in UI.\nDo not use: For general UI text — monospace has wider character width and will feel visually heavy.\nUse instead: font-family/sans for all non-code text.\nStatus: Stable"
+      "$description": "Intent: Monospace typeface for machine text (R-ENP-03).\nUse when: Only through the code text styles: code, commands, paths, hashes, serialized values.\nDo not use: For dates, counts, levels or IDs (those are not machine text), or as decoration.\nCode: --font-mono.\nStatus: Stable"
     },
     "serif": {
       "$value": "Georgia",

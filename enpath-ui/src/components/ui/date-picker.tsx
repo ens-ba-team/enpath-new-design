@@ -67,7 +67,7 @@ function DatePicker({
       {label && (
         <label
           htmlFor={id}
-          className="text-sm font-medium text-[var(--color-background-default-foreground)]"
+          className="text-label-md text-[var(--color-background-default-foreground)]"
         >
           {label}
         </label>
@@ -83,7 +83,7 @@ function DatePicker({
               "inline-flex items-center gap-[var(--spacing-component-sm)]",
               "h-[var(--height-control-touch-md)] sm:h-[var(--height-control-md)] w-full rounded-[var(--radius-md)]",
               "border px-[var(--spacing-component-md)]",
-              "text-sm outline-none transition-colors text-left",
+              "text-body-sm outline-none transition-colors text-left",
               // State: Closed
               "bg-[var(--color-input-bg)] border-[var(--color-input-border)]",
               // State: Hover

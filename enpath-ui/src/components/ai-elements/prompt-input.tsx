@@ -1271,7 +1271,7 @@ export const PromptInputSelectTrigger = ({
 }: PromptInputSelectTriggerProps) => (
   <SelectTrigger
     className={cn(
-      "border-none bg-transparent font-medium text-[var(--color-text-secondary)] shadow-none transition-colors",
+      "border-none bg-transparent text-label-md text-[var(--color-text-secondary)] shadow-none transition-colors",
       "hover:bg-[var(--color-surface-accent)] hover:text-[var(--color-background-default-foreground)] aria-expanded:bg-[var(--color-surface-accent)] aria-expanded:text-[var(--color-background-default-foreground)]",
       className
     )}
@@ -1361,7 +1361,7 @@ export const PromptInputTabLabel = ({
   // oxlint-disable-next-line eslint-plugin-jsx-a11y(heading-has-content)
   <h3
     className={cn(
-      "mb-2 px-3 font-medium text-[var(--color-text-secondary)] text-xs",
+      "mb-2 px-3 text-label-sm text-[var(--color-text-secondary)]",
       className
     )}
     {...props}
@@ -1385,7 +1385,7 @@ export const PromptInputTabItem = ({
 }: PromptInputTabItemProps) => (
   <div
     className={cn(
-      "flex items-center gap-2 px-3 py-2 text-xs hover:bg-[var(--color-surface-accent)]",
+      "flex items-center gap-2 px-3 py-2 text-body-xs hover:bg-[var(--color-surface-accent)]",
       className
     )}
     {...props}

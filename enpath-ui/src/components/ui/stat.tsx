@@ -39,12 +39,12 @@ export function Stat({ label, value, description, icon, tone = "neutral", classN
       )}
       {...props}
     >
-      <p className="flex items-center gap-[var(--spacing-component-xs)] text-sm font-semibold text-[var(--color-text-secondary)]">
+      <p className="flex items-center gap-[var(--spacing-component-xs)] text-heading-xs text-[var(--color-text-secondary)]">
         {icon && <span aria-hidden="true" className={cn("inline-flex shrink-0 [&_svg]:h-4 [&_svg]:w-4", toneIcon[tone])}>{icon}</span>}
         {label}
       </p>
-      <p className="text-2xl font-semibold text-[var(--color-surface-default-foreground)]">{value}</p>
-      {description && <p className="text-sm text-[var(--color-text-secondary)]">{description}</p>}
+      <p className="text-heading-xl text-[var(--color-surface-default-foreground)]">{value}</p>
+      {description && <p className="text-body-sm text-[var(--color-text-secondary)]">{description}</p>}
     </div>
   );
 }

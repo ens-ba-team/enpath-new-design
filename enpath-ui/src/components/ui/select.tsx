@@ -49,7 +49,7 @@ const SelectTrigger = React.forwardRef<
       // Spacing
       "px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)]",
       // Typography
-      "text-sm text-[var(--color-background-default-foreground)]",
+      "text-body-sm text-[var(--color-background-default-foreground)]",
       // Placeholder text
       "data-[placeholder]:text-[var(--color-input-placeholder)]",
       // Hover state
@@ -165,7 +165,7 @@ const SelectContent = React.forwardRef<
 SelectContent.displayName = SelectPrimitive.Content.displayName
 
 // ─── SelectLabel ──────────────────────────────────────────────────────────────
-// Group label — text-xs font-semibold, muted foreground.
+// Group label — text-label-sm, muted foreground.
 
 const SelectLabel = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Label>,
@@ -174,7 +174,7 @@ const SelectLabel = React.forwardRef<
   <SelectPrimitive.Label
     ref={ref}
     className={cn(
-      "py-1.5 pl-8 pr-2 text-xs font-semibold text-[var(--color-text-secondary)]",
+      "py-1.5 pl-8 pr-2 text-label-sm text-[var(--color-text-secondary)]",
       className
     )}
     {...props}
@@ -200,7 +200,7 @@ const SelectItem = React.forwardRef<
       // Spacing — sm L/R (8px), xxs T/B implicit via h-8 + items-center
       "px-2",
       // Typography
-      "text-sm text-[var(--color-background-default-foreground)]",
+      "text-body-sm text-[var(--color-background-default-foreground)]",
       "outline-none",
       // State: Hover / Focused — background/accent + foreground
       "focus:bg-[var(--color-background-accent)]",

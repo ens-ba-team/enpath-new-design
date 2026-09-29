@@ -6,6 +6,56 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-29 — label-lg/md in Nunito; fonts named only by the tokens
+
+### Changed (visual)
+- `typography/label-lg` and `label-md` font → `font-family/display` (Nunito). Buttons, form labels, alert titles, sidebar items and other `label-md` text are Nunito again.
+
+### Changed
+- Docs no longer say which style uses which font. Rulebook (Theme Decisions, Primitives → Type, Typography, R-ENP-02, AI handoff), Prototype-build notes and `font-family/*` token descriptions say: "Enpath uses three fonts: Inter, Nunito and Roboto Mono (machine text only, R-ENP-03). Which text style uses which font: see Storybook `Foundations/Text Styles`." The Font column and the "Font:" line in each style's intent are removed.
+- R-ENP-02 is now "Font comes from text styles; never set `font-family` by hand."
+- drift-check 12 also scans docs (.md/.txt, CHANGELOG skipped): a line naming a text style can't also state a font, weight or size.
+
+---
+
+## 2026-09-29 — Text styles named, never restated
+
+### Changed
+- Rulebook §Typography table: size, line height and weight columns removed; it lists class, font and use. Values are read in Storybook `Foundations/Text Styles` (measured live) or the tokens.
+- `meta.json` (career-map, item, sidebar) and component comments (item, badge, career-map, sidebar) name styles and classes (`text-heading-xs`, `font-semibold`) instead of weights and px.
+
+### Added
+- **drift-check 12**: fails when a `meta.json` (changelog skipped) or a component comment restates type values: weight words ("SemiBold"), weight numbers, raw `text-xs/sm…` or `font-medium/normal/bold`. `font-semibold` stays allowed (selected state).
+
+---
+
+## 2026-09-29 — Labels Medium 500
+
+### Changed (visual)
+- `typography/label-lg`, `label-md`, `label-sm` weight SemiBold 600 → **Medium 500** (`font-weight/medium`): buttons, form labels, badges, tabs, tooltips, alert titles, avatar initials, table headers. With heading-sm/xs already 500, SemiBold is now only for large headings and selected states.
+- Sidebar: the selected item gets `font-semibold` back (weight is its non-colour cue; it was dropped when label-md was 600). Item: the selected title gets `font-semibold` back, as before the text styles.
+- `font-weight/medium` and `/semibold` descriptions, rulebook (Theme Decisions, Typography, AI handoff line) and design-patterns.md updated.
+
+---
+
+## 2026-09-29 — Small headings Medium 500
+
+### Changed (visual)
+- `typography/heading-sm` and `heading-xs` weight SemiBold 600 → **Medium 500** (`font-weight/medium`). Affects card, panel, empty-state, accordion, item and list-row titles, stat labels, calendar month/year and time pickers, dropdown group labels, table footer, navigation-menu triggers. Labels (`label-*`) and large headings (`heading-md` and up) stay 600.
+- `font-weight/medium` description rewritten for Enpath: small titles only, not labels.
+
+---
+
+## 2026-09-29 — Inter for interface text
+
+### Changed — breaking (visual)
+- `font-family/sans` Nunito → **Inter**; new **`font-family/display`** = Nunito. Inter is the page default and the font of every text style except `display-lg/md/sm` and `heading-xl/lg/md` (Nunito). `code-md/sm` stay Roboto Mono.
+- Each `typography/<style>` token has a `font-family`; `sd.build.mjs` writes an `@utility` rule per style that sets it, next to the size/line-height/weight from the text theme.
+- Inter loaded with `next/font` (`app/layout.tsx`, `--font-inter`) and in Storybook (`preview-head.html`). `globals.css`: `--font-sans` → Inter, `--font-display` → Nunito.
+- R-ENP-02 rewritten; drift-check no longer bans "Inter". Rulebook Theme Decisions, Type and Typography updated.
+
+---
+
 ## 2026-09-29 — Text styles
 
 ### Added

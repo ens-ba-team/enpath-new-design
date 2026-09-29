@@ -271,14 +271,14 @@ const CodeBlockBody = memo(
     return (
       <pre
         className={cn(
-          " m-0 p-4 text-sm",
+          " m-0 p-4 text-code-md",
           className
         )}
         style={preStyle}
       >
         <code
           className={cn(
-            "font-mono text-sm",
+            "text-code-md",
             showLineNumbers && "[counter-increment:line_0] [counter-reset:line]"
           )}
         >
@@ -329,7 +329,7 @@ export const CodeBlockHeader = ({
 }: HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex items-center justify-between border-b bg-[var(--color-surface-muted)]/80 px-3 py-2 text-[var(--color-text-secondary)] text-xs",
+      "flex items-center justify-between border-b bg-[var(--color-surface-muted)]/80 px-3 py-2 text-[var(--color-text-secondary)] text-body-xs",
       className
     )}
     {...props}
@@ -353,7 +353,7 @@ export const CodeBlockFilename = ({
   className,
   ...props
 }: HTMLAttributes<HTMLSpanElement>) => (
-  <span className={cn("font-mono", className)} {...props}>
+  <span className={cn("text-code-sm", className)} {...props}>
     {children}
   </span>
 );
@@ -526,7 +526,7 @@ export const CodeBlockLanguageSelectorTrigger = ({
 }: CodeBlockLanguageSelectorTriggerProps) => (
   <SelectTrigger
     className={cn(
-      "h-7 border-none bg-transparent px-2 text-xs shadow-none",
+      "h-7 border-none bg-transparent px-2 text-body-xs shadow-none",
       className
     )}
     {...props}

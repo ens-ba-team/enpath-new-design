@@ -71,7 +71,7 @@ const PaginationLink = ({
   <a
     aria-current={isActive ? "page" : undefined}
     className={cn(
-      "flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] text-sm transition-colors",
+      "flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] text-body-sm transition-colors",
       // Default / non-active
       !isActive && [
         "border border-[var(--color-border-default)]",
@@ -165,7 +165,7 @@ const PaginationEllipsis = ({
   <span
     aria-hidden="true"
     className={cn(
-      "flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] text-sm",
+      "flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] text-body-sm",
       "border border-[var(--color-border-default)]",
       "bg-[var(--color-background-default)]",
       "text-[var(--color-background-muted-foreground)]",

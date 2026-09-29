@@ -1249,17 +1249,18 @@
    */
   --font-weight-normal: 400;
   /**
-   * Intent: Slightly emphasised weight for interactive controls and UI labels.
-   * Use when: Navigation links, form labels, tab labels, table column headers, secondary buttons, badge text. Ant Design uses 500 for emphasized interactive text; shadcn uses it for Label, nav items, TableHead.
-   * Do not use: For headings — too close to body weight to signal a clear hierarchy jump.
-   * Use instead: font-weight/semibold for titles and headings.
+   * Intent: The weight of labels and small titles.
+   * Use when: The label styles (text-label-lg/md/sm: buttons, form labels, badges, tabs, tooltips) and the small heading styles (text-heading-sm/xs: card, panel, list-row and item titles).
+   * Do not use: For large headings (heading-md and up: SemiBold) or body text (Regular).
+   * Use instead: font-weight/semibold for large headings and for a selected state (selected nav item, selected row title).
    * Status: Stable
    */
   --font-weight-medium: 500;
   /**
-   * Intent: Primary heading weight and strong emphasis for UI titles.
-   * Use when: All component headings — card titles, dialog titles, section titles, sidebar headers, alert titles. Ant Design's fontWeightStrong token is 600; shadcn uses 600 for CardTitle, DialogTitle, AlertTitle, h1–h4.
-   * Do not use: For body copy — creates visual noise when overused at paragraph level.
+   * Intent: Weight of large headings and of a selected state.
+   * Use when: text-display-md, text-heading-xl/lg/md; a selected nav item or selected row title (font-semibold as a state modifier).
+   * Do not use: For labels or small titles (heading-sm/xs): those are Medium 500. For body text.
+   * Use instead: font-weight/medium for labels and small titles.
    * Status: Stable
    */
   --font-weight-semibold: 600;
@@ -1453,18 +1454,26 @@
   --letter-spacing-wider: 5;
   --letter-spacing-widest: 10;
   /**
-   * Intent: Primary UI typeface for all interface text.
-   * Use when: Body copy, labels, buttons, inputs, headings — everything that is not code or editorial serif.
-   * Do not use: For code blocks or monospace content.
-   * Use instead: font-family/mono for code; font-family/serif for editorial contexts.
+   * Intent: Interface typeface, and the page default for text without a text style.
+   * Use when: Only through text styles (typography/*) or as the inherited default. Which style uses it: Storybook Foundations/Text Styles.
+   * Do not use: As a hand-set font-family on a component or screen.
+   * Code: --font-sans (next/font in app/layout.tsx; Google Fonts in .storybook/preview-head.html).
    * Status: Stable
    */
-  --font-family-sans: Nunito;
+  --font-family-sans: Inter;
   /**
-   * Intent: Monospace typeface for code and technical content.
-   * Use when: Code blocks, inline code snippets, terminal output, token or variable names displayed in UI.
-   * Do not use: For general UI text — monospace has wider character width and will feel visually heavy.
-   * Use instead: font-family/sans for all non-code text.
+   * Intent: Softer, more characterful typeface for the text styles that should stand out.
+   * Use when: Only through text styles (typography/*). Which style uses it: Storybook Foundations/Text Styles.
+   * Do not use: As a hand-set font-family on a component or screen.
+   * Code: --font-display (next/font in app/layout.tsx; Google Fonts in .storybook/preview-head.html).
+   * Status: Stable
+   */
+  --font-family-display: Nunito;
+  /**
+   * Intent: Monospace typeface for machine text (R-ENP-03).
+   * Use when: Only through the code text styles: code, commands, paths, hashes, serialized values.
+   * Do not use: For dates, counts, levels or IDs (those are not machine text), or as decoration.
+   * Code: --font-mono.
    * Status: Stable
    */
   --font-family-mono: Roboto Mono;
@@ -1863,6 +1872,11 @@
    */
   --typography-display-lg-letter-spacing: -1.5;
   /**
+   * Part of typography/display-lg. Don't use on its own; use the class text-display-lg.
+   * Status:      active
+   */
+  --typography-display-lg-font-family: Nunito;
+  /**
    * Intent:      Display text, 36/40 SemiBold, tracking −1.5px.
    * Use when:    Large figures on an overview or empty state.
    * Do not use:  Page titles and section titles.
@@ -1887,6 +1901,11 @@
    */
   --typography-display-md-letter-spacing: -1.5;
   /**
+   * Part of typography/display-md. Don't use on its own; use the class text-display-md.
+   * Status:      active
+   */
+  --typography-display-md-font-family: Nunito;
+  /**
    * Intent:      Small display text, 30/36 Medium.
    * Use when:    Big numbers in a stat or summary block.
    * Do not use:  Titles; below 600px width prefer heading-xl.
@@ -1905,6 +1924,11 @@
    * Status:      active
    */
   --typography-display-sm-font-weight: 500;
+  /**
+   * Part of typography/display-sm. Don't use on its own; use the class text-display-sm.
+   * Status:      active
+   */
+  --typography-display-sm-font-family: Nunito;
   /**
    * Intent:      Page title, 24/32 SemiBold.
    * Use when:    The one page title (h1).
@@ -1925,6 +1949,11 @@
    */
   --typography-heading-xl-font-weight: 600;
   /**
+   * Part of typography/heading-xl. Don't use on its own; use the class text-heading-xl.
+   * Status:      active
+   */
+  --typography-heading-xl-font-family: Nunito;
+  /**
    * Intent:      Section title, 20/28 SemiBold.
    * Use when:    Large section titles on a page.
    * Do not use:  More than one level per page region.
@@ -1943,6 +1972,11 @@
    * Status:      active
    */
   --typography-heading-lg-font-weight: 600;
+  /**
+   * Part of typography/heading-lg. Don't use on its own; use the class text-heading-lg.
+   * Status:      active
+   */
+  --typography-heading-lg-font-family: Nunito;
   /**
    * Intent:      Overlay title, 18/24.75 SemiBold.
    * Use when:    Dialog, alert dialog, drawer and sheet titles.
@@ -1963,7 +1997,12 @@
    */
   --typography-heading-md-font-weight: 600;
   /**
-   * Intent:      Card title, 16/22 SemiBold.
+   * Part of typography/heading-md. Don't use on its own; use the class text-heading-md.
+   * Status:      active
+   */
+  --typography-heading-md-font-family: Nunito;
+  /**
+   * Intent:      Card title, 16/22 Medium.
    * Use when:    Card and panel titles, empty-state titles.
    * Do not use:  Dialog or page titles.
    * Use instead: heading-md for dialogs; heading-xl for the page title.
@@ -1980,9 +2019,14 @@
    * Part of typography/heading-sm. Don't use on its own; use the class text-heading-sm.
    * Status:      active
    */
-  --typography-heading-sm-font-weight: 600;
+  --typography-heading-sm-font-weight: 500;
   /**
-   * Intent:      Small title, 14/20 SemiBold.
+   * Part of typography/heading-sm. Don't use on its own; use the class text-heading-sm.
+   * Status:      active
+   */
+  --typography-heading-sm-font-family: Inter;
+  /**
+   * Intent:      Small title, 14/20 Medium.
    * Use when:    Titles of list rows, items and small cards; section titles inside a panel.
    * Do not use:  Page or dialog titles.
    * Use instead: heading-sm and up for card, dialog and page titles.
@@ -1999,7 +2043,12 @@
    * Part of typography/heading-xs. Don't use on its own; use the class text-heading-xs.
    * Status:      active
    */
-  --typography-heading-xs-font-weight: 600;
+  --typography-heading-xs-font-weight: 500;
+  /**
+   * Part of typography/heading-xs. Don't use on its own; use the class text-heading-xs.
+   * Status:      active
+   */
+  --typography-heading-xs-font-family: Inter;
   /**
    * Intent:      Large body text, 18/28 Regular.
    * Use when:    Lead paragraph or intro text at the top of a page or panel.
@@ -2020,6 +2069,11 @@
    */
   --typography-body-lg-font-weight: 400;
   /**
+   * Part of typography/body-lg. Don't use on its own; use the class text-body-lg.
+   * Status:      active
+   */
+  --typography-body-lg-font-family: Inter;
+  /**
    * Intent:      Reading text, 16/24 Regular.
    * Use when:    Longer paragraphs meant to be read: explanations, empty-state body, onboarding copy.
    * Do not use:  Dense UI such as list rows, tables and controls.
@@ -2038,6 +2092,11 @@
    * Status:      active
    */
   --typography-body-md-font-weight: 400;
+  /**
+   * Part of typography/body-md. Don't use on its own; use the class text-body-md.
+   * Status:      active
+   */
+  --typography-body-md-font-family: Inter;
   /**
    * Intent:      Default UI text, 14/20 Regular.
    * Use when:    Body copy, list rows, descriptions, table cells, input values, dialog descriptions.
@@ -2058,6 +2117,11 @@
    */
   --typography-body-sm-font-weight: 400;
   /**
+   * Part of typography/body-sm. Don't use on its own; use the class text-body-sm.
+   * Status:      active
+   */
+  --typography-body-sm-font-family: Inter;
+  /**
    * Intent:      Secondary text, 12/16 Regular.
    * Use when:    Captions, meta lines under a title, helper text, timestamps, counts.
    * Do not use:  Text the user must read to act; one-line labels inside controls.
@@ -2077,7 +2141,12 @@
    */
   --typography-body-xs-font-weight: 400;
   /**
-   * Intent:      Large one-line label, 16/16 SemiBold (line height = size).
+   * Part of typography/body-xs. Don't use on its own; use the class text-body-xs.
+   * Status:      active
+   */
+  --typography-body-xs-font-family: Inter;
+  /**
+   * Intent:      Large one-line label, 16/16 Medium (line height = size).
    * Use when:    Labels on large (lg) controls and prominent one-line calls to action.
    * Do not use:  Text that can wrap: lines collide.
    * Use instead: heading-sm for a 16px title that can wrap.
@@ -2094,9 +2163,14 @@
    * Part of typography/label-lg. Don't use on its own; use the class text-label-lg.
    * Status:      active
    */
-  --typography-label-lg-font-weight: 600;
+  --typography-label-lg-font-weight: 500;
   /**
-   * Intent:      One-line label, 14/14 SemiBold (line height = size).
+   * Part of typography/label-lg. Don't use on its own; use the class text-label-lg.
+   * Status:      active
+   */
+  --typography-label-lg-font-family: Nunito;
+  /**
+   * Intent:      One-line label, 14/14 Medium (line height = size).
    * Use when:    Buttons, form labels, alert titles, menu and nav labels.
    * Do not use:  Text that can wrap: lines collide.
    * Use instead: heading-xs for a 14px title that can wrap.
@@ -2113,9 +2187,14 @@
    * Part of typography/label-md. Don't use on its own; use the class text-label-md.
    * Status:      active
    */
-  --typography-label-md-font-weight: 600;
+  --typography-label-md-font-weight: 500;
   /**
-   * Intent:      Small one-line label, 12/12 SemiBold (line height = size).
+   * Part of typography/label-md. Don't use on its own; use the class text-label-md.
+   * Status:      active
+   */
+  --typography-label-md-font-family: Nunito;
+  /**
+   * Intent:      Small one-line label, 12/12 Medium (line height = size).
    * Use when:    Badges, tabs, tooltips, xs/sm buttons, select group labels, table headers, small section labels.
    * Do not use:  Text that can wrap: lines collide.
    * Use instead: body-xs for wrapping small text.
@@ -2132,7 +2211,12 @@
    * Part of typography/label-sm. Don't use on its own; use the class text-label-sm.
    * Status:      active
    */
-  --typography-label-sm-font-weight: 600;
+  --typography-label-sm-font-weight: 500;
+  /**
+   * Part of typography/label-sm. Don't use on its own; use the class text-label-sm.
+   * Status:      active
+   */
+  --typography-label-sm-font-family: Inter;
   /**
    * Intent:      Machine text, 14/20 Roboto Mono.
    * Use when:    Code, commands, paths, hashes, serialized values in body-sized text (R-ENP-03).

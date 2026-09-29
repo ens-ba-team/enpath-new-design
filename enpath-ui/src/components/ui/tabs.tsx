@@ -25,7 +25,7 @@ import { cn } from "@/lib/utils"
 //   Disabled: transparent fill · text: color/text/disabled · indicator: brand/primary opacity 0
 //   (No Hover state on Type=Line)
 //
-// Typography: text-xs font-semibold leading-none
+// Typography: text-label-sm
 
 const Tabs = TabsPrimitive.Root
 
@@ -78,7 +78,7 @@ const TabsTrigger = React.forwardRef<
     className={cn(
       // Base — shared across both variants
       "inline-flex items-center justify-center whitespace-nowrap",
-      "text-xs font-semibold leading-none",
+      "text-label-sm",
       "transition-all",
       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ring)]",
       "disabled:pointer-events-none disabled:text-[var(--color-text-disabled)]",

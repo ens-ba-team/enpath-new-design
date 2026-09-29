@@ -36,7 +36,7 @@ const Textarea = React.forwardRef<
         // Spacing
         "px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)]",
         // Typography
-        "text-sm text-[var(--color-background-default-foreground)]",
+        "text-body-sm text-[var(--color-background-default-foreground)]",
         // Placeholder
         "placeholder:text-[var(--color-input-placeholder)]",
         // Hover state

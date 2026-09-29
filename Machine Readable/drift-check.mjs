@@ -11,12 +11,15 @@
  *   5. Storybook stories — every story file has a matching meta.json (catches undocumented components)
  *
  *   6. Docs — every restated px value matches the token it names
- *   7. No retired tooling — Figma, dark mode, non-Phosphor icons, Inter, R1–R8 audits, deleted files
+ *   7. No retired tooling — Figma, dark mode, non-Phosphor icons, R1–R8 audits, deleted files
  *   8. Component specs — every meta.json `docs` section is well-formed (meta.json is the only component spec)
  *   9. Component specs — every token named in a meta.json exists (component-token families included;
  *      meta.changelog is history and skipped)
  *  10. Component directory + quick reference — each entry starts with its meta.json description
  *  11. No em dashes in UI copy (src/features/enpath, comments skipped)
+ *  12. Text styles by name — meta.json (changelog skipped) and component comments name the style
+ *      (text-body-sm …), never raw type values: weight words, font-weight numbers, text-xs/sm…, font-medium;
+ *      in docs (.md/.txt, CHANGELOG skipped) a line naming a text style can't also state a font, weight or size
  *
  * Exit code 1 if any drift is found (so CI can gate on it).
  */
@@ -208,13 +211,12 @@ section('6. Docs — restated px values match the token they name');
 // Enpath has no Figma, no dark mode and one icon library (Phosphor). Any doc,
 // meta.json or token description that brings these back is drift. Deliberate
 // statements of the decision ("No Figma", "Light mode only") are allowed.
-section('7. No retired tooling — Figma, dark mode, other icon libraries, Inter, old audits');
+section('7. No retired tooling — Figma, dark mode, other icon libraries, old audits');
 {
   const banned = [
     [/figma/i, 'Figma (not used)'],
     [/dark[ -]mode|\.dark\b|darkMode|dark:/i, 'dark mode (light only)'],
     [/lucide|untitled ?ui|@untitledui|heroicons|react-icons|@tabler|tabler icons/i, 'icon library other than Phosphor'],
-    [/\bInter\b(?! alia)/, 'Inter font (Nunito)'],
     [/R1[–-]R8/, 'Figma audit rules R1–R8 (retired)'],
     [/enpath-theme\.md|figma-ids|Audit Status\.md|AI[- ]Readiness/i, 'deleted file'],
   ];
@@ -368,6 +370,63 @@ section('11. No em dashes in UI copy (src/features/enpath)');
     }
   })(base);
   if (hits === 0) ok('no em dashes in Enpath UI copy');
+}
+
+// ── 12. Text styles by name ──────────────────────────────────────────────────
+// Values of a text style live in Tokens/semantics.tokens.json typography/* and are
+// shown in Storybook Foundations/Text Styles. A spec or comment that restates them
+// ("SemiBold", "Medium 500", "text-sm font-medium") goes stale on the next token change.
+section('12. Text styles by name — no raw type values in meta.json, component comments or docs');
+{
+  const rules = [
+    [/(?<!font-)\b(?:SemiBold|Semi Bold|Semibold)\b/, 'weight word "SemiBold"'],
+    [/\b(?:Regular|Medium|Bold) [4-9]00\b|\b[4-9]00 (?:weight|Regular|Medium|SemiBold|Bold)\b|font-weight:? ?[4-9]00/i, 'font-weight value'],
+    [/(?<![\w-])text-(?:xs|sm|base|lg|[2-9]?xl)(?![\w-])/, 'raw text size class (use a text style)'],
+    [/(?<![\w-])font-(?:medium|normal|bold)(?![\w-])/, 'raw weight class (use a text style)'],
+  ];
+  let hits = 0;
+  const check = (where, text) => {
+    for (const [re, what] of rules) if (re.test(text)) { bad(`${where}: ${what} — "${text.match(re)[0]}"`); hits++; }
+  };
+  const metaDir = path.join(root, 'Machine Readable/artifacts/components');
+  for (const f of fs.readdirSync(metaDir).filter((f) => f.endsWith('.meta.json'))) {
+    (function walk(n, at, log) {
+      if (Array.isArray(n)) n.forEach((v, i) => walk(v, `${at}[${i}]`, log));
+      else if (n && typeof n === 'object') for (const [k, v] of Object.entries(n)) walk(v, `${at}.${k}`, log || k === 'changelog');
+      else if (typeof n === 'string' && !log) check(`${f} ${at}`, n);
+    })(JSON.parse(fs.readFileSync(path.join(metaDir, f), 'utf8')), '', false);
+  }
+  for (const dir of ['enpath-ui/src/components/ui', 'enpath-ui/src/components/ai-elements']) {
+    for (const f of fs.readdirSync(path.join(root, dir)).filter((f) => f.endsWith('.tsx'))) {
+      fs.readFileSync(path.join(root, dir, f), 'utf8').split('\n').forEach((line, i) => {
+        const m = line.match(/(?:\/\/|\/\*|^\s*\*)(.*)$/);
+        if (m) check(`${dir.split('/').pop()}/${f}:${i + 1}`, m[1]);
+      });
+    }
+  }
+  // Docs: a line that names a text style must not also state its font, weight or size.
+  // Those values live in Tokens/semantics.tokens.json typography/* and show in
+  // Storybook Foundations/Text Styles. CHANGELOG.md is history and skipped.
+  const style = /(?<![\w-])(?:text-)?(?:display|heading|body|label|code)[-/](?:xs|sm|md|lg|xl)(?![\w-])/;
+  const value = /\b(?:Inter|Nunito|Roboto Mono|SemiBold|Semi Bold|Regular|Medium [4-9]00|[4-9]00 (?:weight|Medium|Regular))\b|\b\d+(?:\.\d+)? ?\/ ?\d+(?:\.\d+)?\b|\b\d+px\b/;
+  const docFiles = [];
+  (function collect(d) {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      if (['node_modules', 'output', 'enpath-ui', '.git', 'artifacts'].includes(e.name)) continue;
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) collect(p);
+      else if (/\.(md|txt)$/.test(e.name) && e.name !== 'CHANGELOG.md') docFiles.push(p);
+    }
+  })(root);
+  for (const f of docFiles) {
+    fs.readFileSync(f, 'utf8').split('\n').forEach((line, i) => {
+      if (style.test(line) && value.test(line)) {
+        bad(`${path.relative(root, f)}:${i + 1}: names ${line.match(style)[0]} next to a value ("${line.match(value)[0]}") — values live in the tokens`);
+        hits++;
+      }
+    });
+  }
+  if (hits === 0) ok('meta.json, component comments and docs name text styles, not values');
 }
 
 // ── Summary ──────────────────────────────────────────────────────────────────

@@ -153,7 +153,7 @@ const DialogFooter = ({
 DialogFooter.displayName = "DialogFooter"
 
 // ─── DialogTitle ──────────────────────────────────────────────────────────────
-// Text: text-lg font-semibold leading-snug
+// Text: text-heading-md
 // fill: color/surface/overlay/foreground
 
 const DialogTitle = React.forwardRef<
@@ -163,7 +163,7 @@ const DialogTitle = React.forwardRef<
   <DialogPrimitive.Title
     ref={ref}
     className={cn(
-      "text-lg font-semibold leading-snug",
+      "text-heading-md",
       "text-[var(--color-surface-default-foreground)]",
       className
     )}
@@ -173,7 +173,7 @@ const DialogTitle = React.forwardRef<
 DialogTitle.displayName = DialogPrimitive.Title.displayName
 
 // ─── DialogDescription ────────────────────────────────────────────────────────
-// Text: text-sm
+// Text: text-body-sm
 // fill: color/text/secondary
 
 const DialogDescription = React.forwardRef<
@@ -183,7 +183,7 @@ const DialogDescription = React.forwardRef<
   <DialogPrimitive.Description
     ref={ref}
     className={cn(
-      "text-sm text-[var(--color-text-secondary)]",
+      "text-body-sm text-[var(--color-text-secondary)]",
       className
     )}
     {...props}

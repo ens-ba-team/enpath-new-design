@@ -10,7 +10,8 @@
 @theme inline {
   --color-background: var(--color-background-default);
   --color-foreground: var(--color-background-default-foreground);
-  --font-sans: var(--font-nunito);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-nunito);
   --font-mono: var(--font-roboto-mono);
   --font-heading: var(--font-nunito);
   --color-sidebar-ring: var(--color-sidebar-ring);

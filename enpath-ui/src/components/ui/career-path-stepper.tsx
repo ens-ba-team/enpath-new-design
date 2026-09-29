@@ -35,7 +35,7 @@ export function CareerPathStep({
       {...props}
     >
       <div className="flex shrink-0 flex-col items-center">
-        <div className="relative z-10 inline-flex size-[var(--height-target-touch)] items-center justify-center text-base font-semibold text-[var(--career-stepper-foreground)]">
+        <div className="relative z-10 inline-flex size-[var(--height-target-touch)] items-center justify-center text-label-lg text-[var(--career-stepper-foreground)]">
           <span
             className="absolute inset-0 bg-[var(--career-stepper-border)] [clip-path:polygon(50%_3%,95%_16%,95%_49%,88%_67%,73%_82%,50%_96%,27%_82%,12%_67%,5%_49%,5%_16%)]"
             aria-hidden="true"
@@ -74,13 +74,13 @@ export function CareerPathStep({
           {leading && <div className="shrink-0">{leading}</div>}
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-[var(--spacing-component-sm)]">
-              <p className="font-semibold text-[var(--career-stepper-row-foreground)]">
+              <p className="text-heading-sm text-[var(--career-stepper-row-foreground)]">
                 {title}
               </p>
               {warning}
             </div>
             {description && (
-              <p className="text-sm text-[var(--career-stepper-description)]">
+              <p className="text-body-sm text-[var(--career-stepper-description)]">
                 {description}
               </p>
             )}

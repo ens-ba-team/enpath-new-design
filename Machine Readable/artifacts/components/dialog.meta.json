@@ -156,6 +156,10 @@
         "date": "2026-09-22",
         "change": "Container radius → radius/overlay (12px, was radius/lg 8px) and shadow → shadow/overlay (was none) — dialogs float above the page and scrim; matches radius/panel 12px.",
         "breaking": false
+      },
+      {
+        "date": "2026-09-29",
+        "change": "Text uses Enpath text styles (text-body-sm, text-heading-md …, see Foundations/Text Styles) instead of mixed size and weight classes. Labels (label-*) and small headings (heading-sm/xs) are Medium 500."
       }
     ]
   },

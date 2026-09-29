@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils"
 // nav item (sidebar-menu-1):
 //   Default: transparent · foreground text/icon
 //   Hover:   sidebar/accent fill · accent/foreground
-//   Active:  sidebar/active fill (white) · active/border (1px inset) · active/foreground SemiBold (weight is the
+//   Active:  sidebar/active fill (white) · active/border (1px inset) · active/foreground + font-semibold (weight is the
 //            non-colour cue — the white chip is only 1.05:1 against the app background)
 //   radius/md · pad L/R: sm · gap: sm
 //
@@ -183,11 +183,11 @@ export function SidebarBrand({
 
   return (
     <div className={cn("flex flex-col gap-[var(--spacing-component-xxs)] min-w-0", className)}>
-      <span className="text-base font-semibold truncate text-[var(--color-sidebar-foreground)]">
+      <span className="text-heading-sm truncate text-[var(--color-sidebar-foreground)]">
         {title}
       </span>
       {caption && (
-        <span className="text-xs truncate text-[var(--color-text-secondary)]">
+        <span className="text-body-xs truncate text-[var(--color-text-secondary)]">
           {caption}
         </span>
       )}
@@ -251,7 +251,7 @@ export function SidebarGroupLabel({
   return (
     <div
       className={cn(
-        "text-xs font-semibold uppercase tracking-wide",
+        "text-label-sm uppercase tracking-wide",
         "text-[var(--color-text-secondary)]",
         "px-[var(--spacing-component-sm)]",
         className
@@ -309,7 +309,7 @@ export function SidebarMenuItem({
         "flex items-center gap-[var(--spacing-component-sm)]",
         "rounded-[var(--radius-md)]",
         "px-[var(--spacing-component-sm)] h-9",
-        "text-sm font-medium outline-none transition-colors",
+        "text-label-md outline-none transition-colors",
         "text-[var(--color-sidebar-foreground)]",
         !active && !disabled && "hover:bg-[var(--color-sidebar-accent)] hover:text-[var(--color-sidebar-accent-foreground)]",
         active && "bg-[var(--color-sidebar-active)] text-[var(--color-sidebar-active-foreground)] font-semibold shadow-[inset_0_0_0_1px_var(--color-sidebar-active-border)]",
@@ -380,7 +380,7 @@ export function SidebarSubItem({
         "rounded-[var(--radius-md)]",
         // Left indent: spacing/component/2xl (32px)
         "pl-[var(--spacing-component-2xl)] pr-[var(--spacing-component-sm)]",
-        "text-sm outline-none transition-colors",
+        "text-body-sm outline-none transition-colors",
         "text-[var(--color-sidebar-foreground)]",
         !active && !disabled && "hover:bg-[var(--color-sidebar-accent)] hover:text-[var(--color-sidebar-accent-foreground)]",
         active && "bg-[var(--color-sidebar-active)] text-[var(--color-sidebar-active-foreground)] font-semibold shadow-[inset_0_0_0_1px_var(--color-sidebar-active-border)]",
@@ -412,7 +412,7 @@ export function SidebarBadge({
         "min-w-[18px] h-[18px]",
         "rounded-[var(--radius-full)]",
         "px-[var(--spacing-component-xxs)]",
-        "text-xs font-medium leading-none",
+        "text-label-sm",
         "bg-[var(--color-brand-primary)] text-[var(--color-brand-primary-foreground)]",
         className
       )}

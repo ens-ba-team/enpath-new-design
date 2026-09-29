@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 //
 // Container (caller wraps): border/default · radius/base · overflow-hidden
 // TableHeader / TableFooter: bg color/surface/raised
-// TableHead (<th>):  h-12 px-4 · text-xs font-medium · color/surface/raised/foreground
+// TableHead (<th>):  h-12 px-4 · text-label-sm · color/surface/raised/foreground
 // TableRow (<tr>):   border-b color/border/default · hover: background/accent
 // TableCell (<td>):  p-4 · color/surface/default/foreground
 // TableCaption:      color/text/secondary
@@ -19,7 +19,7 @@ const Table = React.forwardRef<
   <div className="relative w-full overflow-auto">
     <table
       ref={ref}
-      className={cn("w-full caption-bottom text-sm", className)}
+      className={cn("w-full caption-bottom text-body-sm", className)}
       {...props}
     />
   </div>
@@ -57,7 +57,7 @@ const TableFooter = React.forwardRef<
   <tfoot
     ref={ref}
     className={cn(
-      "bg-[var(--color-surface-raised)] font-medium [&>tr]:last:border-b-0",
+      "bg-[var(--color-surface-raised)] [&_td]:text-heading-xs [&>tr]:last:border-b-0",
       className
     )}
     {...props}
@@ -92,7 +92,7 @@ const TableHead = React.forwardRef<
     ref={ref}
     className={cn(
       "h-12 px-4 text-left align-middle",
-      "text-xs font-medium text-[var(--color-surface-raised-foreground)]",
+      "text-label-sm text-[var(--color-surface-raised-foreground)]",
       "[&:has([role=checkbox])]:pr-0",
       className
     )}
@@ -110,7 +110,7 @@ const TableCell = React.forwardRef<
     ref={ref}
     className={cn(
       "p-4 align-middle",
-      "text-sm text-[var(--color-surface-default-foreground)]",
+      "text-body-sm text-[var(--color-surface-default-foreground)]",
       "[&:has([role=checkbox])]:pr-0",
       className
     )}
@@ -125,7 +125,7 @@ const TableCaption = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <caption
     ref={ref}
-    className={cn("mt-4 text-sm text-[var(--color-text-secondary)]", className)}
+    className={cn("mt-4 text-body-sm text-[var(--color-text-secondary)]", className)}
     {...props}
   />
 ))

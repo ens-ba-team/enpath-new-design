@@ -81,7 +81,7 @@ const Alert = React.forwardRef<
 Alert.displayName = "Alert"
 
 // ─── AlertTitle ───────────────────────────────────────────────────────────────
-// Text: text-sm font-semibold leading-none
+// Text: text-label-md
 // Color: driven by parent Alert variant via [data-alert-title] selector
 
 const AlertTitle = React.forwardRef<
@@ -91,14 +91,14 @@ const AlertTitle = React.forwardRef<
   <div
     ref={ref}
     data-alert-title=""
-    className={cn("text-sm font-semibold leading-none", className)}
+    className={cn("text-label-md", className)}
     {...props}
   />
 ))
 AlertTitle.displayName = "AlertTitle"
 
 // ─── AlertDescription ─────────────────────────────────────────────────────────
-// Text: text-sm
+// Text: text-body-sm
 // Color: driven by parent Alert variant via [data-alert-desc] selector
 
 const AlertDescription = React.forwardRef<
@@ -108,7 +108,7 @@ const AlertDescription = React.forwardRef<
   <div
     ref={ref}
     data-alert-desc=""
-    className={cn("text-sm", className)}
+    className={cn("text-body-sm", className)}
     {...props}
   />
 ))

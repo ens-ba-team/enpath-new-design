@@ -58,7 +58,7 @@ const statusIcons: Record<ToolPart["state"], ReactNode> = {
 };
 
 export const getStatusBadge = (status: ToolPart["state"]) => (
-  <Badge className="gap-1.5 rounded-full text-xs" variant="secondary">
+  <Badge className="gap-1.5 rounded-full text-label-sm" variant="secondary">
     {statusIcons[status]}
     {statusLabels[status]}
   </Badge>
@@ -85,7 +85,7 @@ export const ToolHeader = ({
     >
       <div className="flex items-center gap-2">
         <WrenchIcon className="size-4 text-[var(--color-text-secondary)]" />
-        <span className="font-medium text-sm">{title ?? derivedName}</span>
+        <span className="text-label-md">{title ?? derivedName}</span>
         {getStatusBadge(state)}
       </div>
       <CaretDownIcon className="size-4 text-[var(--color-text-secondary)] transition-transform group-data-[state=open]:rotate-180" />
@@ -111,7 +111,7 @@ export type ToolInputProps = ComponentProps<"div"> & {
 
 export const ToolInput = ({ className, input, ...props }: ToolInputProps) => (
   <div className={cn("space-y-2 overflow-hidden", className)} {...props}>
-    <h4 className="font-medium text-[var(--color-text-secondary)] text-xs uppercase tracking-wide">
+    <h4 className="text-label-sm text-[var(--color-text-secondary)] uppercase tracking-wide">
       Parameters
     </h4>
     <div className="rounded-md bg-[var(--color-surface-muted)]/50">
@@ -147,12 +147,12 @@ export const ToolOutput = ({
 
   return (
     <div className={cn("space-y-2", className)} {...props}>
-      <h4 className="font-medium text-[var(--color-text-secondary)] text-xs uppercase tracking-wide">
+      <h4 className="text-label-sm text-[var(--color-text-secondary)] uppercase tracking-wide">
         {errorText ? "Error" : "Result"}
       </h4>
       <div
         className={cn(
-          "overflow-x-auto rounded-md text-xs [&_table]:w-full",
+          "overflow-x-auto rounded-md text-body-xs [&_table]:w-full",
           errorText
             ? "bg-[var(--color-brand-destructive)]/10 text-[var(--color-text-invalid)]"
             : "bg-[var(--color-surface-muted)]/50 text-[var(--color-background-default-foreground)]"

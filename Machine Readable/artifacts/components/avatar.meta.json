@@ -45,17 +45,17 @@
         "SM": {
           "width": 32,
           "height": 32,
-          "textStyle": "text-xs font-semibold"
+          "textStyle": "text-label-sm"
         },
         "Default": {
           "width": 40,
           "height": 40,
-          "textStyle": "text-sm font-semibold"
+          "textStyle": "text-label-md"
         },
         "LG": {
           "width": 56,
           "height": 56,
-          "textStyle": "text-sm font-semibold"
+          "textStyle": "text-label-md"
         }
       }
     },
@@ -164,6 +164,10 @@
       {
         "date": "2026-09-29",
         "change": "Text styles written as the Tailwind classes the component renders (Agentic style names such as label/sm removed; Enpath uses Tailwind's type scale)."
+      },
+      {
+        "date": "2026-09-29",
+        "change": "Text uses Enpath text styles (text-label-sm, text-body-sm …, see Foundations/Text Styles) instead of mixed size and weight classes. Labels (label-*) and small headings (heading-sm/xs) are Medium 500."
       }
     ]
   },
@@ -212,7 +216,7 @@
       },
       {
         "title": "Sizes",
-        "body": "\n| Size | Dimensions | Text style |\n|---|---|---|\n| `SM` | 32 × 32px | `text-xs font-semibold` |\n| `Default` | 40 × 40px | `text-sm font-semibold` |\n| `LG` | 56 × 56px | `text-sm font-semibold` |\n\nAll sizes are fixed square. Avatar never hugs or fills — always switch via the `Size` variant prop.\n\n---\n\n"
+        "body": "\n| Size | Dimensions | Text style |\n|---|---|---|\n| `SM` | 32 × 32px | `text-label-sm` |\n| `Default` | 40 × 40px | `text-label-md` |\n| `LG` | 56 × 56px | `text-label-md` |\n\nAll sizes are fixed square. Avatar never hugs or fills — always switch via the `Size` variant prop.\n\n---\n\n"
       },
       {
         "title": "Component Properties",
@@ -224,7 +228,7 @@
       },
       {
         "title": "Token Bindings",
-        "body": "\n### Per Type — fills & radius\n\n| Type | Fill token | Radius token |\n|---|---|---|\n| `Image` | — (image fill, no color token) | `radius/full` |\n| `Fallback` | `color/surface/tint` | `radius/full` |\n\n### Fallback — text\n\n| Element | Token |\n|---|---|\n| `label` fill | `color/surface/tint/foreground` |\n| `label` text style | `text-xs font-semibold` (SM) · `text-sm font-semibold` (Default / LG) |\n\n### Sub-component — `avatar-indicator`\n\n| Variant | Element | Token |\n|---|---|---|\n| `type=online` | fill | `color/status/success` |\n| `type=offline` | fill | `color/status/offline` |\n\nBoth variants use `radius/full`. No stroke — the indicator is a pure filled dot.\n\n| Size | Dimensions |\n|---|---|\n| `size=Default` | 8 × 8px |\n| `size=large` | 12 × 12px |\n\n> Size pairing: use `size=Default` with `Size=SM` avatars, `size=large` with `Size=Default` and `Size=LG` avatars.\n\n---\n\n"
+        "body": "\n### Per Type — fills & radius\n\n| Type | Fill token | Radius token |\n|---|---|---|\n| `Image` | — (image fill, no color token) | `radius/full` |\n| `Fallback` | `color/surface/tint` | `radius/full` |\n\n### Fallback — text\n\n| Element | Token |\n|---|---|\n| `label` fill | `color/surface/tint/foreground` |\n| `label` text style | `text-label-sm` (SM) · `text-label-md` (Default / LG) |\n\n### Sub-component — `avatar-indicator`\n\n| Variant | Element | Token |\n|---|---|---|\n| `type=online` | fill | `color/status/success` |\n| `type=offline` | fill | `color/status/offline` |\n\nBoth variants use `radius/full`. No stroke — the indicator is a pure filled dot.\n\n| Size | Dimensions |\n|---|---|\n| `size=Default` | 8 × 8px |\n| `size=large` | 12 × 12px |\n\n> Size pairing: use `size=Default` with `Size=SM` avatars, `size=large` with `Size=Default` and `Size=LG` avatars.\n\n---\n\n"
       },
       {
         "title": "Sub-components",

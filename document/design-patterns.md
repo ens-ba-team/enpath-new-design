@@ -279,7 +279,7 @@ Found by scanning `src/features` and `src/app` for visual classes on design-syst
 | 16 | **PromptInputSelectTrigger** (AI Elements) | `chat/assistant-panel.tsx:203, 210` | `h-7`, no border, no shadow, `text-xs` | a compact / borderless trigger option |
 | 17 | **CollapsibleTrigger** | `setup/setup-screen.tsx:154` (department group header) | radius, padding on a bare trigger | check: a styled group-header component, or a pattern built from Button |
 
-**Label weight (found 2026-09-29, not fixed):** the rulebook says labels are SemiBold 600, but 37 places in 17 files use `font-medium` (500): `components/ui` (calendar ×12, table ×3, sidebar, navigation-menu, item, command ×2 each; input, input-otp, input-group, date-picker, combobox ×1), `components/ai-elements` (tool ×3, prompt-input ×2, conversation), screens (`matrices-screen.tsx:153, 158`, `import-positions-dialog.tsx:114`), plus 36 in stories. Item and Sidebar use 500 → 600 to show the selected row, so they need a decision before any change. Left as is on purpose (2026-09-29).
+**Label weight (resolved 2026-09-29):** labels (`label-*`) and small headings take their weight from the text-style tokens, so the old `font-medium` places match once they move to text styles. A selected state adds `font-semibold` (Sidebar, Item).
 
 **Not debt (composition, belongs to a pattern):** `min-h-0` on Tabs / Conversation (scroll
 containment), `border-t` on TabsContent and CareerMapLegend (separating panes), TabsList side

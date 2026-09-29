@@ -151,7 +151,7 @@ const DrawerFooter = ({
 DrawerFooter.displayName = "DrawerFooter"
 
 // ─── DrawerTitle ──────────────────────────────────────────────────────────────
-// Text: text-lg font-semibold leading-snug
+// Text: text-heading-md
 // fill: color/background/default/foreground (not surface/overlay/foreground — see spec)
 
 const DrawerTitle = React.forwardRef<
@@ -161,7 +161,7 @@ const DrawerTitle = React.forwardRef<
   <DrawerPrimitive.Title
     ref={ref}
     className={cn(
-      "text-lg font-semibold leading-snug",
+      "text-heading-md",
       "text-[var(--color-background-default-foreground)]",
       className
     )}
@@ -180,7 +180,7 @@ const DrawerDescription = React.forwardRef<
   <DrawerPrimitive.Description
     ref={ref}
     className={cn(
-      "text-sm text-[var(--color-background-muted-foreground)]",
+      "text-body-sm text-[var(--color-background-muted-foreground)]",
       className
     )}
     {...props}

@@ -155,20 +155,20 @@ function CareerMapNode({ data, selected }: NodeProps<CareerMapFlowNode>) {
     >
       <Handle type="target" position={Position.Left} isConnectable={false} className="!pointer-events-none !opacity-0" />
       {/* Status band on top; the level leads (it's what changes along a path), the Position follows. */}
-      <span className={cn("flex items-center gap-[var(--spacing-component-xs)] px-[var(--career-map-node-padding)] py-[var(--spacing-component-xs)] text-xs font-semibold", label.className)}>
+      <span className={cn("flex items-center gap-[var(--spacing-component-xs)] px-[var(--career-map-node-padding)] py-[var(--spacing-component-xs)] text-label-sm", label.className)}>
         <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
         {data.label ?? label.text}
       </span>
       <span className="flex flex-1 flex-col justify-center gap-[var(--career-map-node-gap)] px-[var(--career-map-node-padding)]">
         <span
           className={cn(
-            "truncate text-base font-semibold leading-snug",
+            "truncate text-heading-sm",
             data.state === "completed" ? "text-[var(--career-map-node-description)]" : "text-[var(--career-map-node-foreground)]"
           )}
         >
           {data.level}
         </span>
-        <span className="line-clamp-2 text-xs leading-snug text-[var(--career-map-node-description)]">{data.title}</span>
+        <span className="line-clamp-2 text-body-xs text-[var(--career-map-node-description)]">{data.title}</span>
       </span>
       <Handle type="source" position={Position.Right} isConnectable={false} className="!pointer-events-none !opacity-0" />
     </div>
@@ -423,12 +423,12 @@ export interface CareerMapLegendProps extends React.HTMLAttributes<HTMLUListElem
 
 export function CareerMapLegend({ paths, selectedRoute, onSelectRoute, className, ...props }: CareerMapLegendProps) {
   // Outline buttons, one per route drawn on the map (never every company path). The active route's
-  // button takes the outline pressed fill and SemiBold text; its swatch the role's strong colour.
+  // button takes the outline pressed fill and font-semibold text; its swatch the role's strong colour.
   const quiet = "font-normal text-[var(--color-text-secondary)]";
   return (
     <ul
       aria-label="Map legend"
-      className={cn("flex flex-wrap items-center gap-[var(--spacing-component-sm)] text-sm text-[var(--color-text-secondary)]", className)}
+      className={cn("flex flex-wrap items-center gap-[var(--spacing-component-sm)] text-body-sm text-[var(--color-text-secondary)]", className)}
       {...props}
     >
       {paths.map((p) => {
@@ -600,18 +600,18 @@ export function CareerMapList({ items, links, paths, selectedId, onSelect, selec
                   size="sm"
                   aria-pressed={active}
                   onClick={() => onSelectRoute(path.id)}
-                  className={cn("-ml-[var(--spacing-component-sm)] text-base font-semibold", active && "bg-[var(--button-outline-bg-active)]")}
+                  className={cn("-ml-[var(--spacing-component-sm)] text-heading-sm", active && "bg-[var(--button-outline-bg-active)]")}
                 >
                   {swatch}
                   {path.name}
                 </Button>
               ) : (
-                <span className="inline-flex items-center gap-[var(--spacing-component-sm)] text-base font-semibold">{swatch}{path.name}</span>
+                <span className="inline-flex items-center gap-[var(--spacing-component-sm)] text-heading-sm">{swatch}{path.name}</span>
               )}
               {path.badge && <Badge variant={badgeVariant} shape="pill" size="md">{path.badge}</Badge>}
             </div>
             {/* Context line under the header, like the detail panels. */}
-            {note && <p className="text-sm text-[var(--color-text-secondary)]">{note}</p>}
+            {note && <p className="text-body-sm text-[var(--color-text-secondary)]">{note}</p>}
             <StepRail tone={railTone(path)} aria-label={`Roles on ${path.name}`}>
               {rows.map((id) => row(byId.get(id)!, id === start))}
             </StepRail>

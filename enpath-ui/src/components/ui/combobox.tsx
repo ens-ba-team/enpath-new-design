@@ -33,7 +33,7 @@ export interface ComboboxFieldProps {
 const itemClass = cn(
   "flex h-[var(--height-control-touch-md)] sm:h-[var(--height-control-md)] w-full cursor-default select-none items-center px-2",
   "rounded-[var(--radius-md)]",
-  "text-sm text-[var(--color-background-default-foreground)]",
+  "text-body-sm text-[var(--color-background-default-foreground)]",
   "data-[highlighted]:bg-[var(--color-background-accent)]",
   "data-[highlighted]:text-[var(--color-background-accent-foreground)]",
   "data-[selected]:text-[var(--color-brand-primary)]",
@@ -77,7 +77,7 @@ function FilteredList({
         ))}
       </Combobox.List>
       {visible.length === 0 && (
-        <p className="h-[var(--height-control-touch-md)] sm:h-[var(--height-control-md)] flex items-center px-2 text-sm text-[var(--color-text-secondary)]">
+        <p className="h-[var(--height-control-touch-md)] sm:h-[var(--height-control-md)] flex items-center px-2 text-body-sm text-[var(--color-text-secondary)]">
           No results
         </p>
       )}
@@ -90,7 +90,7 @@ function FilteredList({
 function triggerClass(invalid: boolean, disabled: boolean) {
   return cn(
     "flex w-full items-center gap-2 rounded-[var(--radius-lg)]",
-    "border text-sm outline-none transition-colors",
+    "border text-body-sm outline-none transition-colors",
     "bg-[var(--color-input-bg)] border-[var(--color-input-border)]",
     "hover:border-[var(--color-border-hover)]",
     "data-[popup-open]:border-[var(--color-border-focus)]",
@@ -135,7 +135,7 @@ function FieldLabel({
     <label
       htmlFor={htmlFor}
       className={cn(
-        "text-sm font-medium",
+        "text-label-md",
         invalid
           ? "text-[var(--color-text-invalid)]"
           : "text-[var(--color-background-default-foreground)]",
@@ -161,7 +161,7 @@ function FieldDescription({
   return (
     <p
       className={cn(
-        "text-xs",
+        "text-body-xs",
         invalid
           ? "text-[var(--color-text-invalid)]"
           : "text-[var(--color-text-secondary)]",
@@ -294,7 +294,7 @@ function TagInputField({
           {tags.map((tag) => (
             <span
               key={tag}
-              className="inline-flex items-center gap-1 rounded-[var(--radius-md)] bg-[var(--color-background-muted)] px-2 py-0.5 text-xs text-[var(--color-background-muted-foreground)]"
+              className="inline-flex items-center gap-1 rounded-[var(--radius-md)] bg-[var(--color-background-muted)] px-2 py-0.5 text-body-xs text-[var(--color-background-muted-foreground)]"
             >
               {tag}
               <span
@@ -336,7 +336,7 @@ function TagInputField({
               if (hasSuggestions && inputVal.trim()) setShowSuggestions(true);
             }}
             className={cn(
-              "flex-1 min-w-[80px] bg-transparent outline-none text-sm",
+              "flex-1 min-w-[80px] bg-transparent outline-none text-body-sm",
               "placeholder:text-[var(--color-input-placeholder)]",
               "text-[var(--color-background-default-foreground)]",
               "disabled:cursor-not-allowed disabled:text-[var(--color-text-disabled)]"
@@ -359,7 +359,7 @@ function TagInputField({
                 className={cn(
                   "flex h-[var(--height-control-touch-md)] sm:h-[var(--height-control-md)] cursor-default select-none items-center px-2",
                   "rounded-[var(--radius-md)]",
-                  "text-sm text-[var(--color-background-default-foreground)]",
+                  "text-body-sm text-[var(--color-background-default-foreground)]",
                   "hover:bg-[var(--color-background-accent)]",
                   "hover:text-[var(--color-background-accent-foreground)]",
                   "outline-none"
@@ -473,7 +473,7 @@ export function ComboboxField({
                 return (
                   <span
                     key={val}
-                    className="inline-flex items-center gap-1 rounded-[var(--radius-md)] bg-[var(--color-background-muted)] px-2 py-0.5 text-xs text-[var(--color-background-muted-foreground)]"
+                    className="inline-flex items-center gap-1 rounded-[var(--radius-md)] bg-[var(--color-background-muted)] px-2 py-0.5 text-body-xs text-[var(--color-background-muted-foreground)]"
                   >
                     {opt?.label ?? val}
                     <span
@@ -494,7 +494,7 @@ export function ComboboxField({
               <Combobox.Input
                 id={id}
                 placeholder={activeValues.length === 0 ? placeholder : undefined}
-                className={cn(inputClass, "h-5 text-xs min-w-[60px]")}
+                className={cn(inputClass, "h-5 text-body-xs min-w-[60px]")}
                 aria-invalid={invalid || undefined}
               />
             </div>

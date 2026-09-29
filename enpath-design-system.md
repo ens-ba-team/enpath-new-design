@@ -51,10 +51,10 @@ Enpath's system started as a copy of Agentic, re-themed from En UI (2026-09-21).
 | Success / warning fills | Dark text (`zinc/900`); text and icons on `/700` | Their `/500` is under 3:1 with white |
 | Radius, spacing | Agentic values (already equal to En UI's) + En UI role aliases | — |
 | Control height | En UI touch + pointer ladders, 32px default from 640px up | Denser than Agentic's 40px |
-| Type | Nunito + Roboto Mono · Agentic's 17 text styles, each one Tailwind class (`text-body-sm` …) · labels SemiBold | Agentic's styles were never in code, so screens mixed size and weight by hand; one class per style keeps them consistent (2026-09-29) |
+| Type | Inter, Nunito, Roboto Mono (which style uses which: Foundations/Text Styles) · Agentic's 17 text styles, each one Tailwind class · labels use the label-* styles | Agentic's styles were never in code, so screens mixed size and weight by hand; one class per style keeps them consistent (2026-09-29) |
 | Cards | White + border + `shadow/surface` | En UI; `surface/raised` stays a grey tint |
 | App shell | Transparent sidebar and white page panel (`radius/panel` 12px) on a light brand-tinted app background with soft brand glows (`color/background/app`, `/app-glow`), 8px apart (`spacing/shell`) | Modern, calm, with depth — as in modern productivity apps |
-| Sidebar selected item | White + `sidebar/border` hairline, label SemiBold; hover `sidebar/accent` (60% white) | Border = non-colour signal; hover lighter than selected so it never looks selected |
+| Sidebar selected item | White + `sidebar/border` hairline, label `font-semibold`; hover `sidebar/accent` (60% white) | Border = non-colour signal; hover lighter than selected so it never looks selected |
 | Icons | Phosphor, Regular | — |
 | Figma | Not used | Documents and code are the source |
 | Dark mode | Not supported | Light only; `.dark` block is inherited and unmaintained |
@@ -117,8 +117,9 @@ radius/none 0 · sm 4 · md 6 · base = lg 8 · xl 12 · 2xl 14 · 3xl 18 · 4xl
 ### Type
 
 ```
-font-family/sans   Nunito
-font-family/mono   Roboto Mono
+font-family/sans     Inter  (page default)
+font-family/display  Nunito
+font-family/mono     Roboto Mono (code-*, machine text)
 font-size          xs 12 · sm 14 · base 16 · lg 18 · xl 20 · 2xl 24 · 3xl 30 · 4xl 36 · 5xl 48 · 6xl 60 · 7xl 72 · 8xl 96 · 9xl 128
 font-weight        thin 100 → black 900 (normal 400 · medium 500 · semibold 600 · bold 700 in use)
 line-height        none 1 · tight 1.25 · snug 1.375 · normal 1.5 · relaxed 1.625 · loose 2  (ratios → leading-*)
@@ -252,7 +253,7 @@ color/background/app (brand/50) + two soft color/background/app-glow (brand/400)
      sidebar: no fill · page: white, border, shadow/surface · radius/panel 12px
 ```
 
-- Sidebar (Floating): no fill, no border, no shadow — nav sits directly on `color/background/app`. Hover `color/sidebar/accent` (60% white); selected item white + hairline, label SemiBold (no shadow). Group labels and captions use `color/text/secondary` — never opacity on text.
+- Sidebar (Floating): no fill, no border, no shadow — nav sits directly on `color/background/app`. Hover `color/sidebar/accent` (60% white); selected item white + hairline, label `font-semibold` (no shadow). Group labels and captions use `color/text/secondary` — never opacity on text.
 - Page and chat panels: `color/background/default`, `radius/panel`, 1px border, `shadow/surface`.
 - Chat panel (right, 380px): closed by default; opening it (button or ⌘I) collapses the sidebar, closing restores it. User turns `chat/user/*` (blue/50 block); assistant turns plain text; composer `chat/composer/*`. The AI never saves — Edit mode drafts a proposal card that opens in the normal editor.
 - The app background is never used inside a panel.
@@ -285,33 +286,38 @@ opacity/disabled 60 · loading 50 · overlay 50 (backdrop only) · ghost 80 · a
 
 ### Typography
 
-Text uses **text styles**: one class carries size, line height and weight. Values live in `Tokens/semantics.tokens.json` → `typography/*` (each with its intent); `sd.build.mjs` generates the classes into `enpath-ui/src/app/text-styles.css`. Storybook: `Foundations/Text Styles`.
+Text uses **text styles**: one class carries font, size, line height and weight.
 
-| Class | Size / line height · weight | Use for |
-|---|---|---|
-| `text-display-lg` | 48 / 48 · 700 · −1.5px | Hero number or splash headline, at most one per screen |
-| `text-display-md` | 36 / 40 · 600 · −1.5px | Large figures on an overview or empty state |
-| `text-display-sm` | 30 / 36 · 500 | Big numbers in a stat or summary block |
-| `text-heading-xl` | 24 / 32 · 600 | Page title (h1), one per page |
-| `text-heading-lg` | 20 / 28 · 600 | Large section title on a page |
-| `text-heading-md` | 18 / 24.75 · 600 | Dialog, drawer and sheet titles |
-| `text-heading-sm` | 16 / 22 · 600 | Card and panel titles, empty-state titles |
-| `text-heading-xs` | 14 / 20 · 600 | Titles of list rows, items and small cards |
-| `text-body-lg` | 18 / 28 · 400 | Lead paragraph at the top of a page or panel |
-| `text-body-md` | 16 / 24 · 400 | Longer paragraphs meant to be read |
-| `text-body-sm` | 14 / 20 · 400 | Default UI text: body, list rows, descriptions, table cells |
-| `text-body-xs` | 12 / 16 · 400 | Secondary text: captions, meta lines, helper text |
-| `text-label-lg` | 16 / 16 · 600 | One-line labels on large controls |
-| `text-label-md` | 14 / 14 · 600 | One-line labels: buttons, form labels, alert titles |
-| `text-label-sm` | 12 / 12 · 600 | Small one-line labels: badges, tabs, tooltips, table headers |
-| `text-code-md` | 14 / 20 · 400 · Roboto Mono | Machine text: code, paths, hashes |
-| `text-code-sm` | 12 / 16 · 400 · Roboto Mono | Small machine text in tables and meta lines |
+Enpath uses three fonts: Inter, Nunito and Roboto Mono (machine text only, R-ENP-03). Which text style uses which font: see Storybook `Foundations/Text Styles`.
 
+Values live in `Tokens/semantics.tokens.json` → `typography/*` (each with its intent); `sd.build.mjs` generates the classes into `enpath-ui/src/app/text-styles.css`. **Values (font, size, line height, weight, letter spacing) are not written here**: read them in Storybook `Foundations/Text Styles`, which measures each class live, or in the tokens. Docs, `meta.json` and code comments name the style (`text-heading-xs`), never its values.
+
+| Class | Use for |
+|---|---|
+| `text-display-lg` | Hero number or splash headline, at most one per screen |
+| `text-display-md` | Large figures on an overview or empty state |
+| `text-display-sm` | Big numbers in a stat or summary block |
+| `text-heading-xl` | Page title (h1), one per page |
+| `text-heading-lg` | Large section title on a page |
+| `text-heading-md` | Dialog, drawer and sheet titles |
+| `text-heading-sm` | Card and panel titles, empty-state titles |
+| `text-heading-xs` | Titles of list rows, items and small cards |
+| `text-body-lg` | Lead paragraph at the top of a page or panel |
+| `text-body-md` | Longer paragraphs meant to be read |
+| `text-body-sm` | Default UI text: body, list rows, descriptions, table cells |
+| `text-body-xs` | Secondary text: captions, meta lines, helper text |
+| `text-label-lg` | One-line labels on large controls |
+| `text-label-md` | One-line labels: buttons, form labels, alert titles |
+| `text-label-sm` | Small one-line labels: badges, tabs, tooltips, table headers |
+| `text-code-md` | Machine text: code, paths, hashes |
+| `text-code-sm` | Small machine text in tables and meta lines |
+
+- **Weight as a state:** a style's weight comes from its token. `font-semibold` on its own is only for a selected state (selected nav item, selected row title).
 - **One class, no mixing** (R-ENP-13): don't combine `text-sm`, `text-xs` … with `font-*` to build a style. A `font-*` class alone is allowed only to show a state (a selected row turns `font-semibold`).
 - **Labels never wrap:** `label-*` has line height = size, so two lines collide. Text that can wrap uses `body-*` or `heading-*`.
 - **Mono:** `text-code-md` / `text-code-sm`, machine text only (R-ENP-03). They are generated as `@utility` classes because Tailwind's text theme can't carry a font family.
 - **New style:** add it to `typography/*` in the tokens and rebuild. `cn()` (`lib/utils.ts`) already recognises `display|heading|body|label|code-(xs…xl)` names; without that, tailwind-merge drops the style when a colour class follows.
-- **Migration:** screens and components still use the old mixed classes; they move to styles in phases (components, then screens, then stories). Until then `text-*` + `font-*` still renders from tokens.
+- **Migration:** components (`components/ui`, `components/ai-elements`) use styles. Screens (`src/features`, `src/app`) and stories still use the old mixed classes and move next; until then `text-*` + `font-*` still renders from tokens.
 
 ---
 
@@ -444,8 +450,8 @@ Carried over from En UI (`contracts/rules.catalog.json`, 65 rules) on 2026-09-21
 
 ### 2. Typography
 
-**R-ENP-02 · One sans family for all interface text** — prose, labels, identifiers, timestamps, counts, versions.
-*From: `component.typography.use-nunito-by-default`*
+**R-ENP-02 · Font comes from text styles; never set `font-family` by hand.** Enpath uses three fonts: Inter, Nunito and Roboto Mono (machine text only, R-ENP-03). Which text style uses which font: see Storybook `Foundations/Text Styles`.
+*From: `component.typography.use-nunito-by-default` (changed 2026-09-29: En UI used Nunito for everything).*
 
 **R-ENP-03 · Mono is for machine-oriented text only** — code, commands, paths, hashes, serialized values. A date, a count, a level or an ID is **not** machine text; it uses sans.
 *From: `component.typography.reserve-mono-for-technical-content`*
@@ -509,4 +515,4 @@ None currently.
 ## For AI Handoff
 
 Give: this file · `Tokens/*.tokens.json` · `llms.txt`. Summary line:
-_"Tailwind v4 + shadcn. Semantic tokens reference primitives — never hex. Token names are Tailwind's, values are Enpath's (brand = its own OKLCH ramp; blue = info/links/scale, not brand). Light mode only. Controls 32px. Labels SemiBold. Nunito + Roboto Mono. Phosphor Regular icons. destructive ≠ danger. Every surface has a /foreground pair. Flex inside components, grid for pages. Named z-index only."_
+_"Tailwind v4 + shadcn. Semantic tokens reference primitives — never hex. Token names are Tailwind's, values are Enpath's (brand = its own OKLCH ramp; blue = info/links/scale, not brand). Light mode only. Controls 32px. Text styles only; fonts Inter, Nunito, Roboto Mono (machine text only), which style uses which: Foundations/Text Styles. Phosphor Regular icons. destructive ≠ danger. Every surface has a /foreground pair. Flex inside components, grid for pages. Named z-index only."_
