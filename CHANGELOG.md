@@ -6,6 +6,13 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-29 — Prototype-build removed
+
+### Removed
+- `Prototype-build/composition/` (7 screen-building guides vendored from En UI). Nothing in the code or the build process used them. `llms.txt` entry removed; `design-patterns.md` no longer points to `application-pattern-contracts.md` (its entry headings are listed in its own Lifecycle section); drift-check no longer skips a `composition` folder.
+
+---
+
 ## 2026-09-29 — Rulebook trimmed to rules
 
 ### Removed

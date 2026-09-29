@@ -52,11 +52,7 @@
 
 ---
 
-## Screen Design (Storybook prototypes)
-
-Guides for designing full product screens using real components + Tailwind in Storybook.
-
-- `Prototype-build/composition/`: **Read before building any screen.** Screen-building guidance vendored from En UI — composition decision record (`composition-quality.md`), exploration, pattern contracts, common generated-UI mistakes (`anti-slop-catalog.md`), screenshot review gate (`rendered-validation.md`, `visual-quality-loop.md`), WCAG 2.2 AA policy. Each file opens with an En UI → Enpath override table.
+## Screen stories (Storybook)
 
 **Screen stories** live in `enpath-ui/src/stories/screens/` (title `Screens/Feature/Name`) and render the prototype's code — no duplicate. Current: `Screens/Setup/Career structure`.
 

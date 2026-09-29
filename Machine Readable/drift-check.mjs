@@ -70,7 +70,7 @@ section('3. No hex values in docs or meta.json (values live in Tokens/ only)');
 {
   // Deliberate anti-examples ("never do this") are allowed.
   const allow = [/❌[^\n]*#3B82F6/, /"fill": "#F4F4F5"/];
-  const skipDirs = new Set(['node_modules', 'Tokens', 'enpath-ui', 'composition']);
+  const skipDirs = new Set(['node_modules', 'Tokens', 'enpath-ui']);
   const files = [];
   const walk = (d) => {
     for (const e of fs.readdirSync(d, { withFileTypes: true })) {
@@ -224,7 +224,7 @@ section('7. No retired tooling — Figma, dark mode, other icon libraries, old a
     [/enpath-theme\.md|figma-ids|Audit Status\.md|AI[- ]Readiness/i, 'deleted file'],
   ];
   const allow = /No Figma|no Figma|\| Figma \| Not used|Figma workflow, dark mode|lucide-react (?:was )?removed|lucide-react removed|\| Dark mode \| Not supported|no dark-mode|Light mode only|light mode only|no `dark:`/;
-  const skipDirs = new Set(['node_modules', 'output', 'enpath-ui', 'composition']);
+  const skipDirs = new Set(['node_modules', 'output', 'enpath-ui']);
   const files = [];
   const walk = (d) => {
     for (const e of fs.readdirSync(d, { withFileTypes: true })) {
