@@ -9,7 +9,7 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 ## 2026-09-29 — Text styles
 
 ### Added
-- **9 text styles**, Agentic's names, one Tailwind class each: `text-heading-xl/lg/md/sm/xs`, `text-body-sm/xs`, `text-label-md/sm`. A class sets size, line height and weight. Tokens: `typography/<style>/{font-size, line-height, font-weight}` in `semantics.tokens.json`, each with intent; `sd.build.mjs` generates `enpath-ui/src/app/text-styles.css` (imported in `globals.css`).
+- **Agentic's 17 text styles**, one Tailwind class each: `text-display-lg/md/sm`, `text-heading-xl/lg/md/sm/xs`, `text-body-lg/md/sm/xs`, `text-label-lg/md/sm`, `text-code-md/sm`. A class sets size, line height and weight (display-lg/md also −1.5px tracking; code-* also Roboto Mono, generated as `@utility`). Values follow Tailwind's scale, weights follow Agentic. 9 match combinations already in the code; display-*, body-lg/md, label-lg and code-* are ready but unused. Tokens: `typography/<style>/{font-size, line-height, font-weight}` in `semantics.tokens.json`, each with intent; `sd.build.mjs` generates `enpath-ui/src/app/text-styles.css` (imported in `globals.css`).
 - Storybook `Foundations/Text Styles` (measured values per style).
 - **R-ENP-13**: use one text-style class, don't mix size and weight utilities.
 

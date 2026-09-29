@@ -776,123 +776,82 @@
     }
   },
   "typography": {
-    "body-xs": {
+    "display-lg": {
       "font-size": {
-        "$value": "{font-size.xs}",
+        "$value": "{font-size.5xl}",
         "$type": "number",
-        "$description": "Intent:      Secondary text, 12/16 Regular.\nUse when:    Captions, meta lines under a title, helper text, timestamps, counts.\nDo not use:  Text the user must read to act; one-line labels inside controls.\nUse instead: label-sm for one-line control labels; body-sm for main text.\nCode:        class text-body-xs (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
+        "$description": "Intent:      Largest display text, 48/48 Bold, tracking −1.5px.\nUse when:    Hero numbers or a splash headline; at most one per screen.\nDo not use:  Product UI screens and page titles.\nUse instead: heading-xl for the page title.\nCode:        class text-display-lg (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
       },
       "line-height": {
-        "$value": "{line-height.text-xs}",
+        "$value": "{line-height.text-5xl}",
         "$type": "number",
-        "$description": "Part of typography/body-xs. Don't use on its own; use the class text-body-xs.\nStatus:      active"
+        "$description": "Part of typography/display-lg. Don't use on its own; use the class text-display-lg.\nStatus:      active"
       },
       "font-weight": {
-        "$value": "{font-weight.normal}",
+        "$value": "{font-weight.bold}",
         "$type": "number",
-        "$description": "Part of typography/body-xs. Don't use on its own; use the class text-body-xs.\nStatus:      active"
+        "$description": "Part of typography/display-lg. Don't use on its own; use the class text-display-lg.\nStatus:      active"
+      },
+      "letter-spacing": {
+        "$value": "{letter-spacing.tight}",
+        "$type": "number",
+        "$description": "Part of typography/display-lg. Don't use on its own; use the class text-display-lg.\nStatus:      active"
       }
     },
-    "body-sm": {
+    "display-md": {
       "font-size": {
-        "$value": "{font-size.sm}",
+        "$value": "{font-size.4xl}",
         "$type": "number",
-        "$description": "Intent:      Default UI text, 14/20 Regular.\nUse when:    Body copy, list rows, descriptions, table cells, input values, dialog descriptions.\nDo not use:  Titles or labels that need weight.\nUse instead: heading-xs for a title at this size; label-md for a one-line control label.\nCode:        class text-body-sm (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
+        "$description": "Intent:      Display text, 36/40 SemiBold, tracking −1.5px.\nUse when:    Large figures on an overview or empty state.\nDo not use:  Page titles and section titles.\nUse instead: heading-xl for the page title.\nCode:        class text-display-md (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
       },
       "line-height": {
-        "$value": "{line-height.text-sm}",
+        "$value": "{line-height.text-4xl}",
         "$type": "number",
-        "$description": "Part of typography/body-sm. Don't use on its own; use the class text-body-sm.\nStatus:      active"
-      },
-      "font-weight": {
-        "$value": "{font-weight.normal}",
-        "$type": "number",
-        "$description": "Part of typography/body-sm. Don't use on its own; use the class text-body-sm.\nStatus:      active"
-      }
-    },
-    "label-sm": {
-      "font-size": {
-        "$value": "{font-size.xs}",
-        "$type": "number",
-        "$description": "Intent:      Small one-line label, 12/12 SemiBold (line height = size).\nUse when:    Badges, tabs, tooltips, xs/sm buttons, select group labels, table headers, small section labels.\nDo not use:  Text that can wrap: lines collide.\nUse instead: body-xs for wrapping small text.\nCode:        class text-label-sm (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
-      },
-      "line-height": {
-        "$value": "{line-height.none}",
-        "$type": "number",
-        "$description": "Part of typography/label-sm. Don't use on its own; use the class text-label-sm.\nStatus:      active"
+        "$description": "Part of typography/display-md. Don't use on its own; use the class text-display-md.\nStatus:      active"
       },
       "font-weight": {
         "$value": "{font-weight.semibold}",
         "$type": "number",
-        "$description": "Part of typography/label-sm. Don't use on its own; use the class text-label-sm.\nStatus:      active"
+        "$description": "Part of typography/display-md. Don't use on its own; use the class text-display-md.\nStatus:      active"
+      },
+      "letter-spacing": {
+        "$value": "{letter-spacing.tight}",
+        "$type": "number",
+        "$description": "Part of typography/display-md. Don't use on its own; use the class text-display-md.\nStatus:      active"
       }
     },
-    "label-md": {
+    "display-sm": {
       "font-size": {
-        "$value": "{font-size.sm}",
+        "$value": "{font-size.3xl}",
         "$type": "number",
-        "$description": "Intent:      One-line label, 14/14 SemiBold (line height = size).\nUse when:    Buttons, form labels, alert titles, menu and nav labels.\nDo not use:  Text that can wrap: lines collide.\nUse instead: heading-xs for a 14px title that can wrap.\nCode:        class text-label-md (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
+        "$description": "Intent:      Small display text, 30/36 Medium.\nUse when:    Big numbers in a stat or summary block.\nDo not use:  Titles; below 600px width prefer heading-xl.\nUse instead: heading-xl for titles.\nCode:        class text-display-sm (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
       },
       "line-height": {
-        "$value": "{line-height.none}",
+        "$value": "{line-height.text-3xl}",
         "$type": "number",
-        "$description": "Part of typography/label-md. Don't use on its own; use the class text-label-md.\nStatus:      active"
+        "$description": "Part of typography/display-sm. Don't use on its own; use the class text-display-sm.\nStatus:      active"
+      },
+      "font-weight": {
+        "$value": "{font-weight.medium}",
+        "$type": "number",
+        "$description": "Part of typography/display-sm. Don't use on its own; use the class text-display-sm.\nStatus:      active"
+      }
+    },
+    "heading-xl": {
+      "font-size": {
+        "$value": "{font-size.2xl}",
+        "$type": "number",
+        "$description": "Intent:      Page title, 24/32 SemiBold.\nUse when:    The one page title (h1).\nDo not use:  Anything but the page title.\nUse instead: heading-lg for sections.\nCode:        class text-heading-xl (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
+      },
+      "line-height": {
+        "$value": "{line-height.text-2xl}",
+        "$type": "number",
+        "$description": "Part of typography/heading-xl. Don't use on its own; use the class text-heading-xl.\nStatus:      active"
       },
       "font-weight": {
         "$value": "{font-weight.semibold}",
         "$type": "number",
-        "$description": "Part of typography/label-md. Don't use on its own; use the class text-label-md.\nStatus:      active"
-      }
-    },
-    "heading-xs": {
-      "font-size": {
-        "$value": "{font-size.sm}",
-        "$type": "number",
-        "$description": "Intent:      Small title, 14/20 SemiBold.\nUse when:    Titles of list rows, items and small cards; section titles inside a panel.\nDo not use:  Page or dialog titles.\nUse instead: heading-sm and up for card, dialog and page titles.\nCode:        class text-heading-xs (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
-      },
-      "line-height": {
-        "$value": "{line-height.text-sm}",
-        "$type": "number",
-        "$description": "Part of typography/heading-xs. Don't use on its own; use the class text-heading-xs.\nStatus:      active"
-      },
-      "font-weight": {
-        "$value": "{font-weight.semibold}",
-        "$type": "number",
-        "$description": "Part of typography/heading-xs. Don't use on its own; use the class text-heading-xs.\nStatus:      active"
-      }
-    },
-    "heading-sm": {
-      "font-size": {
-        "$value": "{font-size.base}",
-        "$type": "number",
-        "$description": "Intent:      Card title, 16/22 SemiBold.\nUse when:    Card and panel titles, empty-state titles.\nDo not use:  Dialog or page titles.\nUse instead: heading-md for dialogs; heading-xl for the page title.\nCode:        class text-heading-sm (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
-      },
-      "line-height": {
-        "$value": "{line-height.snug}",
-        "$type": "number",
-        "$description": "Part of typography/heading-sm. Don't use on its own; use the class text-heading-sm.\nStatus:      active"
-      },
-      "font-weight": {
-        "$value": "{font-weight.semibold}",
-        "$type": "number",
-        "$description": "Part of typography/heading-sm. Don't use on its own; use the class text-heading-sm.\nStatus:      active"
-      }
-    },
-    "heading-md": {
-      "font-size": {
-        "$value": "{font-size.lg}",
-        "$type": "number",
-        "$description": "Intent:      Overlay title, 18/24.75 SemiBold.\nUse when:    Dialog, alert dialog, drawer and sheet titles.\nDo not use:  Titles inside cards.\nUse instead: heading-sm for cards.\nCode:        class text-heading-md (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
-      },
-      "line-height": {
-        "$value": "{line-height.snug}",
-        "$type": "number",
-        "$description": "Part of typography/heading-md. Don't use on its own; use the class text-heading-md.\nStatus:      active"
-      },
-      "font-weight": {
-        "$value": "{font-weight.semibold}",
-        "$type": "number",
-        "$description": "Part of typography/heading-md. Don't use on its own; use the class text-heading-md.\nStatus:      active"
+        "$description": "Part of typography/heading-xl. Don't use on its own; use the class text-heading-xl.\nStatus:      active"
       }
     },
     "heading-lg": {
@@ -912,21 +871,218 @@
         "$description": "Part of typography/heading-lg. Don't use on its own; use the class text-heading-lg.\nStatus:      active"
       }
     },
-    "heading-xl": {
+    "heading-md": {
       "font-size": {
-        "$value": "{font-size.2xl}",
+        "$value": "{font-size.lg}",
         "$type": "number",
-        "$description": "Intent:      Page title, 24/32 SemiBold.\nUse when:    The one page title (h1).\nDo not use:  Anything but the page title.\nUse instead: heading-lg for sections.\nCode:        class text-heading-xl (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
+        "$description": "Intent:      Overlay title, 18/24.75 SemiBold.\nUse when:    Dialog, alert dialog, drawer and sheet titles.\nDo not use:  Titles inside cards.\nUse instead: heading-sm for cards.\nCode:        class text-heading-md (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
       },
       "line-height": {
-        "$value": "{line-height.text-2xl}",
+        "$value": "{line-height.snug}",
         "$type": "number",
-        "$description": "Part of typography/heading-xl. Don't use on its own; use the class text-heading-xl.\nStatus:      active"
+        "$description": "Part of typography/heading-md. Don't use on its own; use the class text-heading-md.\nStatus:      active"
       },
       "font-weight": {
         "$value": "{font-weight.semibold}",
         "$type": "number",
-        "$description": "Part of typography/heading-xl. Don't use on its own; use the class text-heading-xl.\nStatus:      active"
+        "$description": "Part of typography/heading-md. Don't use on its own; use the class text-heading-md.\nStatus:      active"
+      }
+    },
+    "heading-sm": {
+      "font-size": {
+        "$value": "{font-size.base}",
+        "$type": "number",
+        "$description": "Intent:      Card title, 16/22 SemiBold.\nUse when:    Card and panel titles, empty-state titles.\nDo not use:  Dialog or page titles.\nUse instead: heading-md for dialogs; heading-xl for the page title.\nCode:        class text-heading-sm (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
+      },
+      "line-height": {
+        "$value": "{line-height.snug}",
+        "$type": "number",
+        "$description": "Part of typography/heading-sm. Don't use on its own; use the class text-heading-sm.\nStatus:      active"
+      },
+      "font-weight": {
+        "$value": "{font-weight.semibold}",
+        "$type": "number",
+        "$description": "Part of typography/heading-sm. Don't use on its own; use the class text-heading-sm.\nStatus:      active"
+      }
+    },
+    "heading-xs": {
+      "font-size": {
+        "$value": "{font-size.sm}",
+        "$type": "number",
+        "$description": "Intent:      Small title, 14/20 SemiBold.\nUse when:    Titles of list rows, items and small cards; section titles inside a panel.\nDo not use:  Page or dialog titles.\nUse instead: heading-sm and up for card, dialog and page titles.\nCode:        class text-heading-xs (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
+      },
+      "line-height": {
+        "$value": "{line-height.text-sm}",
+        "$type": "number",
+        "$description": "Part of typography/heading-xs. Don't use on its own; use the class text-heading-xs.\nStatus:      active"
+      },
+      "font-weight": {
+        "$value": "{font-weight.semibold}",
+        "$type": "number",
+        "$description": "Part of typography/heading-xs. Don't use on its own; use the class text-heading-xs.\nStatus:      active"
+      }
+    },
+    "body-lg": {
+      "font-size": {
+        "$value": "{font-size.lg}",
+        "$type": "number",
+        "$description": "Intent:      Large body text, 18/28 Regular.\nUse when:    Lead paragraph or intro text at the top of a page or panel.\nDo not use:  Dense UI text, list rows.\nUse instead: body-sm for default UI text.\nCode:        class text-body-lg (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
+      },
+      "line-height": {
+        "$value": "{line-height.text-lg}",
+        "$type": "number",
+        "$description": "Part of typography/body-lg. Don't use on its own; use the class text-body-lg.\nStatus:      active"
+      },
+      "font-weight": {
+        "$value": "{font-weight.normal}",
+        "$type": "number",
+        "$description": "Part of typography/body-lg. Don't use on its own; use the class text-body-lg.\nStatus:      active"
+      }
+    },
+    "body-md": {
+      "font-size": {
+        "$value": "{font-size.base}",
+        "$type": "number",
+        "$description": "Intent:      Reading text, 16/24 Regular.\nUse when:    Longer paragraphs meant to be read: explanations, empty-state body, onboarding copy.\nDo not use:  Dense UI such as list rows, tables and controls.\nUse instead: body-sm for default UI text.\nCode:        class text-body-md (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
+      },
+      "line-height": {
+        "$value": "{line-height.text-base}",
+        "$type": "number",
+        "$description": "Part of typography/body-md. Don't use on its own; use the class text-body-md.\nStatus:      active"
+      },
+      "font-weight": {
+        "$value": "{font-weight.normal}",
+        "$type": "number",
+        "$description": "Part of typography/body-md. Don't use on its own; use the class text-body-md.\nStatus:      active"
+      }
+    },
+    "body-sm": {
+      "font-size": {
+        "$value": "{font-size.sm}",
+        "$type": "number",
+        "$description": "Intent:      Default UI text, 14/20 Regular.\nUse when:    Body copy, list rows, descriptions, table cells, input values, dialog descriptions.\nDo not use:  Titles or labels that need weight.\nUse instead: heading-xs for a title at this size; label-md for a one-line control label.\nCode:        class text-body-sm (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
+      },
+      "line-height": {
+        "$value": "{line-height.text-sm}",
+        "$type": "number",
+        "$description": "Part of typography/body-sm. Don't use on its own; use the class text-body-sm.\nStatus:      active"
+      },
+      "font-weight": {
+        "$value": "{font-weight.normal}",
+        "$type": "number",
+        "$description": "Part of typography/body-sm. Don't use on its own; use the class text-body-sm.\nStatus:      active"
+      }
+    },
+    "body-xs": {
+      "font-size": {
+        "$value": "{font-size.xs}",
+        "$type": "number",
+        "$description": "Intent:      Secondary text, 12/16 Regular.\nUse when:    Captions, meta lines under a title, helper text, timestamps, counts.\nDo not use:  Text the user must read to act; one-line labels inside controls.\nUse instead: label-sm for one-line control labels; body-sm for main text.\nCode:        class text-body-xs (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
+      },
+      "line-height": {
+        "$value": "{line-height.text-xs}",
+        "$type": "number",
+        "$description": "Part of typography/body-xs. Don't use on its own; use the class text-body-xs.\nStatus:      active"
+      },
+      "font-weight": {
+        "$value": "{font-weight.normal}",
+        "$type": "number",
+        "$description": "Part of typography/body-xs. Don't use on its own; use the class text-body-xs.\nStatus:      active"
+      }
+    },
+    "label-lg": {
+      "font-size": {
+        "$value": "{font-size.base}",
+        "$type": "number",
+        "$description": "Intent:      Large one-line label, 16/16 SemiBold (line height = size).\nUse when:    Labels on large (lg) controls and prominent one-line calls to action.\nDo not use:  Text that can wrap: lines collide.\nUse instead: heading-sm for a 16px title that can wrap.\nCode:        class text-label-lg (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
+      },
+      "line-height": {
+        "$value": "{line-height.none}",
+        "$type": "number",
+        "$description": "Part of typography/label-lg. Don't use on its own; use the class text-label-lg.\nStatus:      active"
+      },
+      "font-weight": {
+        "$value": "{font-weight.semibold}",
+        "$type": "number",
+        "$description": "Part of typography/label-lg. Don't use on its own; use the class text-label-lg.\nStatus:      active"
+      }
+    },
+    "label-md": {
+      "font-size": {
+        "$value": "{font-size.sm}",
+        "$type": "number",
+        "$description": "Intent:      One-line label, 14/14 SemiBold (line height = size).\nUse when:    Buttons, form labels, alert titles, menu and nav labels.\nDo not use:  Text that can wrap: lines collide.\nUse instead: heading-xs for a 14px title that can wrap.\nCode:        class text-label-md (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
+      },
+      "line-height": {
+        "$value": "{line-height.none}",
+        "$type": "number",
+        "$description": "Part of typography/label-md. Don't use on its own; use the class text-label-md.\nStatus:      active"
+      },
+      "font-weight": {
+        "$value": "{font-weight.semibold}",
+        "$type": "number",
+        "$description": "Part of typography/label-md. Don't use on its own; use the class text-label-md.\nStatus:      active"
+      }
+    },
+    "label-sm": {
+      "font-size": {
+        "$value": "{font-size.xs}",
+        "$type": "number",
+        "$description": "Intent:      Small one-line label, 12/12 SemiBold (line height = size).\nUse when:    Badges, tabs, tooltips, xs/sm buttons, select group labels, table headers, small section labels.\nDo not use:  Text that can wrap: lines collide.\nUse instead: body-xs for wrapping small text.\nCode:        class text-label-sm (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
+      },
+      "line-height": {
+        "$value": "{line-height.none}",
+        "$type": "number",
+        "$description": "Part of typography/label-sm. Don't use on its own; use the class text-label-sm.\nStatus:      active"
+      },
+      "font-weight": {
+        "$value": "{font-weight.semibold}",
+        "$type": "number",
+        "$description": "Part of typography/label-sm. Don't use on its own; use the class text-label-sm.\nStatus:      active"
+      }
+    },
+    "code-md": {
+      "font-size": {
+        "$value": "{font-size.sm}",
+        "$type": "number",
+        "$description": "Intent:      Machine text, 14/20 Roboto Mono.\nUse when:    Code, commands, paths, hashes, serialized values in body-sized text (R-ENP-03).\nDo not use:  Dates, counts, levels or IDs: those are sans.\nUse instead: body-sm for anything that isn't machine text.\nCode:        class text-code-md (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
+      },
+      "line-height": {
+        "$value": "{line-height.text-sm}",
+        "$type": "number",
+        "$description": "Part of typography/code-md. Don't use on its own; use the class text-code-md.\nStatus:      active"
+      },
+      "font-weight": {
+        "$value": "{font-weight.normal}",
+        "$type": "number",
+        "$description": "Part of typography/code-md. Don't use on its own; use the class text-code-md.\nStatus:      active"
+      },
+      "font-family": {
+        "$value": "{font-family.mono}",
+        "$type": "string",
+        "$description": "Part of typography/code-md. Don't use on its own; use the class text-code-md.\nStatus:      active"
+      }
+    },
+    "code-sm": {
+      "font-size": {
+        "$value": "{font-size.xs}",
+        "$type": "number",
+        "$description": "Intent:      Small machine text, 12/16 Roboto Mono.\nUse when:    Inline code, keys and values in dense places such as tables and meta lines (R-ENP-03).\nDo not use:  Dates, counts, levels or IDs: those are sans.\nUse instead: body-xs for anything that isn't machine text.\nCode:        class text-code-sm (generated in enpath-ui/src/app/text-styles.css)\nStatus:      active"
+      },
+      "line-height": {
+        "$value": "{line-height.text-xs}",
+        "$type": "number",
+        "$description": "Part of typography/code-sm. Don't use on its own; use the class text-code-sm.\nStatus:      active"
+      },
+      "font-weight": {
+        "$value": "{font-weight.normal}",
+        "$type": "number",
+        "$description": "Part of typography/code-sm. Don't use on its own; use the class text-code-sm.\nStatus:      active"
+      },
+      "font-family": {
+        "$value": "{font-family.mono}",
+        "$type": "string",
+        "$description": "Part of typography/code-sm. Don't use on its own; use the class text-code-sm.\nStatus:      active"
       }
     }
   }

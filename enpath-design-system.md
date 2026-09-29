@@ -51,7 +51,7 @@ Enpath's system started as a copy of Agentic, re-themed from En UI (2026-09-21).
 | Success / warning fills | Dark text (`zinc/900`); text and icons on `/700` | Their `/500` is under 3:1 with white |
 | Radius, spacing | Agentic values (already equal to En UI's) + En UI role aliases | — |
 | Control height | En UI touch + pointer ladders, 32px default from 640px up | Denser than Agentic's 40px |
-| Type | Nunito + Roboto Mono · 9 text styles with Agentic's names, each one Tailwind class (`text-body-sm` …) · labels SemiBold | Agentic's styles were never in code, so screens mixed size and weight by hand; one class per style keeps them consistent (2026-09-29) |
+| Type | Nunito + Roboto Mono · Agentic's 17 text styles, each one Tailwind class (`text-body-sm` …) · labels SemiBold | Agentic's styles were never in code, so screens mixed size and weight by hand; one class per style keeps them consistent (2026-09-29) |
 | Cards | White + border + `shadow/surface` | En UI; `surface/raised` stays a grey tint |
 | App shell | Transparent sidebar and white page panel (`radius/panel` 12px) on a light brand-tinted app background with soft brand glows (`color/background/app`, `/app-glow`), 8px apart (`spacing/shell`) | Modern, calm, with depth — as in modern productivity apps |
 | Sidebar selected item | White + `sidebar/border` hairline, label SemiBold; hover `sidebar/accent` (60% white) | Border = non-colour signal; hover lighter than selected so it never looks selected |
@@ -289,20 +289,28 @@ Text uses **text styles**: one class carries size, line height and weight. Value
 
 | Class | Size / line height · weight | Use for |
 |---|---|---|
+| `text-display-lg` | 48 / 48 · 700 · −1.5px | Hero number or splash headline, at most one per screen |
+| `text-display-md` | 36 / 40 · 600 · −1.5px | Large figures on an overview or empty state |
+| `text-display-sm` | 30 / 36 · 500 | Big numbers in a stat or summary block |
 | `text-heading-xl` | 24 / 32 · 600 | Page title (h1), one per page |
 | `text-heading-lg` | 20 / 28 · 600 | Large section title on a page |
 | `text-heading-md` | 18 / 24.75 · 600 | Dialog, drawer and sheet titles |
 | `text-heading-sm` | 16 / 22 · 600 | Card and panel titles, empty-state titles |
 | `text-heading-xs` | 14 / 20 · 600 | Titles of list rows, items and small cards |
+| `text-body-lg` | 18 / 28 · 400 | Lead paragraph at the top of a page or panel |
+| `text-body-md` | 16 / 24 · 400 | Longer paragraphs meant to be read |
 | `text-body-sm` | 14 / 20 · 400 | Default UI text: body, list rows, descriptions, table cells |
 | `text-body-xs` | 12 / 16 · 400 | Secondary text: captions, meta lines, helper text |
+| `text-label-lg` | 16 / 16 · 600 | One-line labels on large controls |
 | `text-label-md` | 14 / 14 · 600 | One-line labels: buttons, form labels, alert titles |
 | `text-label-sm` | 12 / 12 · 600 | Small one-line labels: badges, tabs, tooltips, table headers |
+| `text-code-md` | 14 / 20 · 400 · Roboto Mono | Machine text: code, paths, hashes |
+| `text-code-sm` | 12 / 16 · 400 · Roboto Mono | Small machine text in tables and meta lines |
 
 - **One class, no mixing** (R-ENP-13): don't combine `text-sm`, `text-xs` … with `font-*` to build a style. A `font-*` class alone is allowed only to show a state (a selected row turns `font-semibold`).
 - **Labels never wrap:** `label-*` has line height = size, so two lines collide. Text that can wrap uses `body-*` or `heading-*`.
-- **Mono:** `font-mono` + `text-body-xs` or `text-body-sm`, machine text only (R-ENP-03). Tailwind can't put a font family in a text class.
-- **New style:** add it to `typography/*` in the tokens and rebuild. `cn()` (`lib/utils.ts`) already recognises `display|heading|body|label-(xs…xl)` names; without that, tailwind-merge drops the style when a colour class follows.
+- **Mono:** `text-code-md` / `text-code-sm`, machine text only (R-ENP-03). They are generated as `@utility` classes because Tailwind's text theme can't carry a font family.
+- **New style:** add it to `typography/*` in the tokens and rebuild. `cn()` (`lib/utils.ts`) already recognises `display|heading|body|label|code-(xs…xl)` names; without that, tailwind-merge drops the style when a colour class follows.
 - **Migration:** screens and components still use the old mixed classes; they move to styles in phases (components, then screens, then stories). Until then `text-*` + `font-*` still renders from tokens.
 
 ---
