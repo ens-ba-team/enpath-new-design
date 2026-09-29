@@ -81,7 +81,7 @@ const Alert = React.forwardRef<
 Alert.displayName = "Alert"
 
 // ─── AlertTitle ───────────────────────────────────────────────────────────────
-// Text style: label/md — 14px / SemiBold / leading-none
+// Text: text-sm font-semibold leading-none
 // Color: driven by parent Alert variant via [data-alert-title] selector
 
 const AlertTitle = React.forwardRef<
@@ -98,7 +98,7 @@ const AlertTitle = React.forwardRef<
 AlertTitle.displayName = "AlertTitle"
 
 // ─── AlertDescription ─────────────────────────────────────────────────────────
-// Text style: body/sm — 14px / Regular
+// Text: text-sm
 // Color: driven by parent Alert variant via [data-alert-desc] selector
 
 const AlertDescription = React.forwardRef<

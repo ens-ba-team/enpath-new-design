@@ -51,7 +51,7 @@ Enpath's system started as a copy of Agentic, re-themed from En UI (2026-09-21).
 | Success / warning fills | Dark text (`zinc/900`); text and icons on `/700` | Their `/500` is under 3:1 with white |
 | Radius, spacing | Agentic values (already equal to En UI's) + En UI role aliases | — |
 | Control height | En UI touch + pointer ladders, 32px default from 640px up | Denser than Agentic's 40px |
-| Type | Nunito + Roboto Mono · Agentic's 18 styles · labels SemiBold | Option A — smallest change; unadopted En UI styles parked in `Enpath/retheme/parked-en-ui-text-styles.md` |
+| Type | Nunito + Roboto Mono · Tailwind's type scale · labels SemiBold | Code and Storybook only ever used Tailwind classes; Agentic's 18 named text styles were never in code and were dropped (2026-09-29) |
 | Cards | White + border + `shadow/surface` | En UI; `surface/raised` stays a grey tint |
 | App shell | Transparent sidebar and white page panel (`radius/panel` 12px) on a light brand-tinted app background with soft brand glows (`color/background/app`, `/app-glow`), 8px apart (`spacing/shell`) | Modern, calm, with depth — as in modern productivity apps |
 | Sidebar selected item | White + `sidebar/border` hairline, label SemiBold; hover `sidebar/accent` (60% white) | Border = non-colour signal; hover lighter than selected so it never looks selected |
@@ -285,21 +285,20 @@ opacity/disabled 60 · loading 50 · overlay 50 (backdrop only) · ghost 80 · a
 
 ### Typography
 
-18 text styles. Line-heights are fixed px. Labels are **SemiBold 600** (from En UI). Unadopted En UI styles are parked in `Enpath/retheme/parked-en-ui-text-styles.md`.
+Text is styled with Tailwind classes. There are no named text styles and no Typography component. The classes read Enpath tokens (see Type above), so a value changes in `Tokens/`, never in CSS.
 
-```
-display/lg  48 Bold  −1.5  48lh     body/lg  18 Regular 29lh
-display/md  36 SBold −1.5  45lh     body/md  16 Regular 24lh
-display/sm  30 Med          38lh     body/sm  14 Regular 21lh
-                                     body/xs  12 Regular 18lh
-heading/xl  24 SBold 33lh
-heading/lg  20 SBold 28lh           label/lg 16 SBold 16lh
-heading/md  18 SBold 25lh           label/md 14 SBold 14lh
-heading/sm  16 SBold 22lh           label/sm 12 SBold 12lh
-heading/xs  14 SBold 19lh
-                                     code/md  14 Roboto Mono 23lh
-                                     code/sm  12 Roboto Mono 20lh
-```
+| Class | Size / line height | Use for |
+|---|---|---|
+| `text-xs` | 12 / 16 | Secondary text: captions, meta lines, badges, table headers |
+| `text-sm` | 14 / 20 | Default UI text: body, controls, list rows, descriptions |
+| `text-base` | 16 / 24 | Card and panel titles |
+| `text-lg` | 18 / 28 | Dialog and drawer titles |
+| `text-xl` · `text-2xl` | 20 / 28 · 24 / 32 | Page titles |
+
+- **Weight:** `font-normal` (400) for text, `font-semibold` (600) for labels and titles. Labels are SemiBold (from En UI); 37 places still use `font-medium` (500), listed in `document/design-patterns.md`.
+- **Line height:** `leading-none` for one-line labels (buttons, badges, tabs, tooltips), `leading-snug` for titles that can wrap. Otherwise keep the class's own line height.
+- **Mono:** `font-mono` + `text-xs` or `text-sm`, machine text only (R-ENP-03).
+- Common pairs: label `text-sm font-semibold leading-none` (small: `text-xs`), card title `text-base font-semibold leading-snug`, dialog title `text-lg font-semibold leading-snug`.
 
 ---
 
@@ -438,9 +437,6 @@ Carried over from En UI (`contracts/rules.catalog.json`, 65 rules) on 2026-09-21
 **R-ENP-03 · Mono is for machine-oriented text only** — code, commands, paths, hashes, serialized values. A date, a count, a level or an ID is **not** machine text; it uses sans.
 *From: `component.typography.reserve-mono-for-technical-content`*
 
-**R-ENP-04 · Use the defined type styles; don't build new ones** from size and weight utilities.
-*From: `component.typography.use-compact-roles`*
-
 ### 3. Button
 
 **R-ENP-05 · A button label stays on one line and never wraps.** An icon-only button needs an `aria-label`.
@@ -480,6 +476,7 @@ Carried over from En UI (`contracts/rules.catalog.json`, 65 rules) on 2026-09-21
 | Application shell, header, page container, page header, page section (except R-ENP-12), split layout — 12 rules | Components not in this system yet |
 | AI chat page, AI workspace, login page — 11 rules | Patterns not in this system |
 | `component.colocation` | This system has its own file structure |
+| `component.typography.use-compact-roles` (was R-ENP-04, retired 2026-09-29; the number is not reused) | En UI's rule meant "use the `<Typography>` component's roles". Enpath has no Typography component: text is Tailwind `text-*` / `font-*` classes that read Enpath tokens (see Type) |
 
 ---
 

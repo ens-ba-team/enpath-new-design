@@ -77,7 +77,7 @@ const Empty = React.forwardRef<HTMLDivElement, EmptyProps>(
               {icon}
             </div>
           )}
-          {/* heading/sm — 16px / Semi Bold / leading-snug */}
+          {/* text-base font-semibold leading-snug */}
           <p className="text-base font-semibold leading-snug text-[var(--color-background-default-foreground)]">
             {title}
           </p>

@@ -20,7 +20,7 @@ import { cn } from "@/lib/utils"
 // Label fill:    tooltip/fg (--tooltip-fg)
 // Padding:       spacing/component/md (12px) L/R · spacing/component/xs-plus (6px) T/B
 // Radius:        radius/md
-// Text style:    label/sm — text-xs font-semibold leading-none
+// Text:          text-xs font-semibold leading-none
 // Border:        none — tooltip is a filled pill with no stroke
 // Shadow:        none
 //
@@ -51,7 +51,7 @@ const TooltipContent = React.forwardRef<
       "text-[var(--tooltip-fg)]",
       // Spacing — spacing/component/md (12px) × spacing/component/xs-plus (6px)
       "px-[var(--spacing-component-md)] py-[var(--spacing-component-xs-plus)]",
-      // Typography — label/sm: 12px / SemiBold / leading-none
+      // Typography — text-xs font-semibold leading-none
       "text-xs font-semibold leading-none",
       // Animations
       "animate-in fade-in-0 zoom-in-95",

@@ -68,7 +68,7 @@ entries get an ID and go into the catalog. Names are working names.
 | P3 | Pattern | History drawer | Position · Matrix · Career path · Path history (My Career) |
 | P4 | Pattern | Preview → Confirm dialog | 12 dialogs in Setup and My Career |
 | P5 | Pattern | Detail panel | My Career role panel · route panel |
-| P6 | Pattern | Step rail | Explore preview · List view (route panel to join: **merge into one**, decided) |
+| P6 | Pattern | Step rail | Explore preview · List view · route panel (built on `StepRail`, 2026-09-28) |
 | P7 | Pattern | Competency status groups | My Career role panel only (**doesn't repeat yet**: keep or drop?) |
 | P8 | Pattern | Locked action with a reason | Position · Matrix · the rating grid |
 | P9 | Pattern | Ask AI chat panel | Setup · My Career |
@@ -199,13 +199,14 @@ neither a template nor a pattern. Its decisions stay in `my-career-build.md`._
 - **Responsive:** right column 400px from 1024px; below that, under the work area.
 - **Components:** Badge, Button, plus the content (P7, P6).
 
-### P6 · Step rail — candidate (**merge into one: decided 2026-09-28, not built**)
+### P6 · Step rail — candidate (**built 2026-09-28**)
 
-- **Scope today:** two rail implementations and one list with icons:
-  - Explore a position preview: `RoutePreview` in `my-career/plan-dialogs.tsx` (private helper);
+- **Scope:** one design-system component, **`StepRail`** + `StepRailItem`
+  (`components/ui/step-rail.tsx`), used in three places:
+  - Explore a position preview: `RoutePreview` in `my-career/plan-dialogs.tsx` (thin wrapper);
   - List view rows: `CareerMapList` in `components/ui/career-map.tsx`;
-  - route panel steps: `RouteSteps` in `my-career/my-career-panels.tsx` (not a rail: one Item per
-    role with a status icon ✓ · pin · flag · clock · compass).
+  - route panel steps: `RouteSteps` in `my-career/my-career-panels.tsx` (thin wrapper; was a list of
+    status icons before 2026-09-28).
 - **Anatomy (rails):** a vertical rail in the route's colour (solid green = path you follow, solid grey
   = other company path, dashed violet = Career vision) with a ring per role; the start row is grey
   context ("Starts from …"); a role already on the map reads "· already on your map".
@@ -277,6 +278,8 @@ Found by scanning `src/features` and `src/app` for visual classes on design-syst
 | 15 | **Progress** | `setup/setup-screen.tsx:571` | track `--color-background-default`, fill green (`[&>div]:bg-success`) | `tone="success"` |
 | 16 | **PromptInputSelectTrigger** (AI Elements) | `chat/assistant-panel.tsx:203, 210` | `h-7`, no border, no shadow, `text-xs` | a compact / borderless trigger option |
 | 17 | **CollapsibleTrigger** | `setup/setup-screen.tsx:154` (department group header) | radius, padding on a bare trigger | check: a styled group-header component, or a pattern built from Button |
+
+**Label weight (found 2026-09-29, not fixed):** the rulebook says labels are SemiBold 600, but 37 places in 17 files use `font-medium` (500): `components/ui` (calendar ×12, table ×3, sidebar, navigation-menu, item, command ×2 each; input, input-otp, input-group, date-picker, combobox ×1), `components/ai-elements` (tool ×3, prompt-input ×2, conversation), screens (`matrices-screen.tsx:153, 158`, `import-positions-dialog.tsx:114`), plus 36 in stories. Item and Sidebar use 500 → 600 to show the selected row, so they need a decision before any change. Left as is on purpose (2026-09-29).
 
 **Not debt (composition, belongs to a pattern):** `min-h-0` on Tabs / Conversation (scroll
 containment), `border-t` on TabsContent and CareerMapLegend (separating panes), TabsList side

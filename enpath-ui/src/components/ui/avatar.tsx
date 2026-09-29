@@ -62,7 +62,7 @@ const AvatarFallback = React.forwardRef<
       // Tokens: fill = color/surface/tint (blue/100), text = color/surface/tint/foreground
       "flex h-full w-full items-center justify-center rounded-full font-semibold",
       "bg-[var(--color-surface-tint)] text-[var(--color-surface-tint-foreground)]",
-      // Text size: label/sm (12px = text-xs) for SM, label/md (14px = text-sm) for Default + LG
+      // Text size: text-xs for SM, text-sm for Default + LG
       size === "sm" ? "text-xs" : "text-sm",
       className
     )}

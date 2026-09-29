@@ -28,7 +28,7 @@ type Story = StoryObj<typeof meta>;
 
 // ─── Basic — Show description=False ────────────────────────────────────────────
 // Row: flex items-center, gap spacing/component/md (12px).
-// Label: label/md = text-sm font-medium, color/surface/default/foreground.
+// Label: text-sm font-medium, color/surface/default/foreground.
 // min-h-[44px] for touch target (radio is 16×16px — row provides hit area).
 
 export const Basic: Story = {
@@ -55,7 +55,7 @@ export const Basic: Story = {
 
 // ─── Basic — Show description=True ─────────────────────────────────────────────
 // text-block: V layout, gap spacing/component/xxs (2px).
-// Description: body/sm = text-sm, color/text/secondary.
+// Description: text-sm, color/text/secondary.
 
 export const BasicWithDescription: Story = {
   render: () => (

@@ -69,19 +69,19 @@
           "height": 16,
           "paddingH": 4,
           "gap": 4,
-          "textStyle": "label/sm"
+          "textStyle": "text-xs font-semibold leading-none"
         },
         "Medium": {
           "height": 20,
           "paddingH": 8,
           "gap": 4,
-          "textStyle": "label/sm"
+          "textStyle": "text-xs font-semibold leading-none"
         },
         "Large": {
           "height": 24,
           "paddingH": 8,
           "gap": 4,
-          "textStyle": "label/md"
+          "textStyle": "text-sm font-semibold leading-none"
         }
       }
     }
@@ -294,6 +294,10 @@
         "date": "2026-09-22",
         "change": "Success variant gains a 1px color/border/success border (was transparent) — matches Warning and Error, which already had status borders.",
         "breaking": false
+      },
+      {
+        "date": "2026-09-29",
+        "change": "Text styles written as the Tailwind classes the component renders (Agentic style names such as label/sm removed; Enpath uses Tailwind's type scale)."
       }
     ]
   },
@@ -357,7 +361,7 @@
       },
       {
         "title": "Sizes",
-        "body": "\n| Size | Height | Height token | Padding H token | Padding H | Gap token | Gap | Text style |\n|---|---|---|---|---|---|---|---|\n| `Small` | 16px | `badge/Badge-height-small` | `spacing/component/xs` | 4px | `spacing/component/xs` | 4px | `label/sm` |\n| `Medium` | 20px | `badge/Badge-height-medium` | `spacing/component/sm` | 8px | `spacing/component/xs` | 4px | `label/sm` |\n| `Large` | 24px | `badge/Badge-height-large` | `spacing/component/sm` | 8px | `spacing/component/xs` | 4px | `label/md` |\n\nWidth is auto (hug content) for all sizes. Icons: 12 × 12px across all sizes.\n\n---\n\n"
+        "body": "\n| Size | Height | Height token | Padding H token | Padding H | Gap token | Gap | Text style |\n|---|---|---|---|---|---|---|---|\n| `Small` | 16px | `badge/Badge-height-small` | `spacing/component/xs` | 4px | `spacing/component/xs` | 4px | `text-xs font-semibold leading-none` |\n| `Medium` | 20px | `badge/Badge-height-medium` | `spacing/component/sm` | 8px | `spacing/component/xs` | 4px | `text-xs font-semibold leading-none` |\n| `Large` | 24px | `badge/Badge-height-large` | `spacing/component/sm` | 8px | `spacing/component/xs` | 4px | `text-sm font-semibold leading-none` |\n\nWidth is auto (hug content) for all sizes. Icons: 12 × 12px across all sizes.\n\n---\n\n"
       },
       {
         "title": "Component Properties",

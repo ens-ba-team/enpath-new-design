@@ -153,7 +153,7 @@ const DialogFooter = ({
 DialogFooter.displayName = "DialogFooter"
 
 // ─── DialogTitle ──────────────────────────────────────────────────────────────
-// heading/md: 18px / Semi Bold / leading-snug
+// Text: text-lg font-semibold leading-snug
 // fill: color/surface/overlay/foreground
 
 const DialogTitle = React.forwardRef<
@@ -173,7 +173,7 @@ const DialogTitle = React.forwardRef<
 DialogTitle.displayName = DialogPrimitive.Title.displayName
 
 // ─── DialogDescription ────────────────────────────────────────────────────────
-// body/sm: 14px / Regular
+// Text: text-sm
 // fill: color/text/secondary
 
 const DialogDescription = React.forwardRef<

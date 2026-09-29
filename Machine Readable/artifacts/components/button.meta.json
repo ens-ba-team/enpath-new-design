@@ -75,21 +75,21 @@
           "height": 28,
           "paddingH": 12,
           "radius": 8,
-          "textStyle": "label/sm",
+          "textStyle": "text-xs font-semibold leading-none",
           "touchHeight": 32
         },
         "Default": {
           "height": 32,
           "paddingH": 12,
           "radius": 8,
-          "textStyle": "label/md",
+          "textStyle": "text-sm font-semibold leading-none",
           "touchHeight": 36
         },
         "Large": {
           "height": 36,
           "paddingH": 12,
           "radius": 12,
-          "textStyle": "label/md",
+          "textStyle": "text-sm font-semibold leading-none",
           "touchHeight": 40
         },
         "Icon Small": {
@@ -117,7 +117,7 @@
           "height": 24,
           "paddingH": 8,
           "radius": 8,
-          "textStyle": "label/sm",
+          "textStyle": "text-xs font-semibold leading-none",
           "touchHeight": 28
         }
       }
@@ -316,6 +316,10 @@
       {
         "date": "2026-09-21",
         "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      },
+      {
+        "date": "2026-09-29",
+        "change": "Text styles written as the Tailwind classes the component renders (Agentic style names such as label/sm removed; Enpath uses Tailwind's type scale)."
       }
     ]
   },
@@ -371,7 +375,7 @@
       },
       {
         "title": "Sizes",
-        "body": "\n| Size | Height | Radius token | Radius | Padding H token | Padding H | Text style |\n|---|---|---|---|---|---|---|\nHeights are a **touch + pointer pair**: touch rung below 640px, pointer rung from `sm` up (`height/control-touch/*` → `sm:height/control/*`).\n\n| Size | Height touch → pointer | Radius token | Radius | Padding H token | Padding H | Text style |\n|---|---|---|---|---|---|---|\n| `XSmall` | 28 → 24px | `button/size/Button radius 2` | 8px | `button/size/Button-padding-xsmall` | 8px | `label/sm` |\n| `Small` | 32 → 28px | `button/size/Button radius 2` | 8px | `button/size/Button-padding-small` | 12px | `label/sm` |\n| `Default` | 36 → 32px | `button/size/Button radius 2` | 8px | `button/size/Button-padding-default` | 12px | `label/md` |\n| `Large` | 40 → 36px | `button/size/Button radius 1` | 12px | `button/size/Button-padding-default` | 12px | `label/md` |\n| `Icon Small` | 32 → 28px square | `button/size/Button radius 2` | 8px | — | — | — |\n| `Icon Default` | 36 → 32px square | `button/size/Button radius 2` | 8px | — | — | — |\n| `Icon Large` | 40 → 36px square | `button/size/Button radius 1` | 12px | — | — | — |\n\nEvery size meets WCAG 2.2 AA (24px). 44px is advisory — reach it with an invisible hit area (`height/target/touch`), not a bigger button.\n\nWidth is auto (hug content) for all text sizes. Icon sizes are fixed square.\n\nGap between icon and label: `button/size/Button spacing` → `spacing/component/xs` (4px) — all sizes.\n\n---\n\n"
+        "body": "\n| Size | Height | Radius token | Radius | Padding H token | Padding H | Text style |\n|---|---|---|---|---|---|---|\nHeights are a **touch + pointer pair**: touch rung below 640px, pointer rung from `sm` up (`height/control-touch/*` → `sm:height/control/*`).\n\n| Size | Height touch → pointer | Radius token | Radius | Padding H token | Padding H | Text style |\n|---|---|---|---|---|---|---|\n| `XSmall` | 28 → 24px | `button/size/Button radius 2` | 8px | `button/size/Button-padding-xsmall` | 8px | `text-xs font-semibold leading-none` |\n| `Small` | 32 → 28px | `button/size/Button radius 2` | 8px | `button/size/Button-padding-small` | 12px | `text-xs font-semibold leading-none` |\n| `Default` | 36 → 32px | `button/size/Button radius 2` | 8px | `button/size/Button-padding-default` | 12px | `text-sm font-semibold leading-none` |\n| `Large` | 40 → 36px | `button/size/Button radius 1` | 12px | `button/size/Button-padding-default` | 12px | `text-sm font-semibold leading-none` |\n| `Icon Small` | 32 → 28px square | `button/size/Button radius 2` | 8px | — | — | — |\n| `Icon Default` | 36 → 32px square | `button/size/Button radius 2` | 8px | — | — | — |\n| `Icon Large` | 40 → 36px square | `button/size/Button radius 1` | 12px | — | — | — |\n\nEvery size meets WCAG 2.2 AA (24px). 44px is advisory — reach it with an invisible hit area (`height/target/touch`), not a bigger button.\n\nWidth is auto (hug content) for all text sizes. Icon sizes are fixed square.\n\nGap between icon and label: `button/size/Button spacing` → `spacing/component/xs` (4px) — all sizes.\n\n---\n\n"
       },
       {
         "title": "Component Properties",

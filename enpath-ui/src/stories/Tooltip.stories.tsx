@@ -14,7 +14,7 @@ import { ArchiveIcon, ShareNetworkIcon, TrashIcon } from "@phosphor-icons/react/
 //   tooltip/bg → --tooltip-bg: #18181b — always dark, fixed regardless of theme
 //   tooltip/fg → --tooltip-fg: #ffffff — always white, fixed regardless of theme
 //   No border, no shadow. Padding: spacing/component/md (12px) × xs-plus (6px).
-//   Radius: radius/md. Text: label/sm (text-xs font-medium leading-none).
+//   Radius: radius/md. Text: text-xs font-semibold leading-none.
 //
 // TooltipProvider: delayDuration=200ms, skipDelayDuration=300ms.
 // Place once at app root — shown in decorator here.

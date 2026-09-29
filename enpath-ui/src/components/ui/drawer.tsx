@@ -151,7 +151,7 @@ const DrawerFooter = ({
 DrawerFooter.displayName = "DrawerFooter"
 
 // ─── DrawerTitle ──────────────────────────────────────────────────────────────
-// heading/md: 18px / Semi Bold / leading-snug
+// Text: text-lg font-semibold leading-snug
 // fill: color/background/default/foreground (not surface/overlay/foreground — see spec)
 
 const DrawerTitle = React.forwardRef<

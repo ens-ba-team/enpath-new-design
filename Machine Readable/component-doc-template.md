@@ -31,11 +31,11 @@ List every variant property, its options, and its default.
 
 _Skip this section if the component has no Size variant._
 
-| Size | Height | Height token | Padding H token | Padding H | Gap token | Gap | Text style |
+| Size | Height | Height token | Padding H token | Padding H | Gap token | Gap | Text classes |
 |---|---|---|---|---|---|---|---|
-| `SM` | 24px | `component/height-sm` | `spacing/component/xs` | 4px | `spacing/component/xs` | 4px | `label/sm` |
-| `MD` | 32px | `component/height-md` | `spacing/component/sm` | 8px | `spacing/component/xs` | 4px | `label/md` |
-| `LG` | 40px | `component/height-lg` | `spacing/component/sm` | 8px | `spacing/component/sm` | 8px | `label/md` |
+| `SM` | 24px | `component/height-sm` | `spacing/component/xs` | 4px | `spacing/component/xs` | 4px | `text-xs font-semibold leading-none` |
+| `MD` | 32px | `component/height-md` | `spacing/component/sm` | 8px | `spacing/component/xs` | 4px | `text-sm font-semibold leading-none` |
+| `LG` | 40px | `component/height-lg` | `spacing/component/sm` | 8px | `spacing/component/sm` | 8px | `text-sm font-semibold leading-none` |
 
 [Note width behaviour: auto (hug content) / fixed square / fill container]
 

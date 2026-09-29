@@ -57,7 +57,7 @@ const CardHeader = React.forwardRef<
 CardHeader.displayName = "CardHeader"
 
 // ─── CardTitle ────────────────────────────────────────────────────────────────
-// Text style: heading/sm — 16px / Semi Bold / 0px tracking / 22px lh
+// Text: text-base font-semibold leading-snug (16px / 22px lh)
 // Token: color/surface/overlay/foreground → var(--color-surface-overlay-foreground) #18181b
 
 const CardTitle = React.forwardRef<
@@ -77,7 +77,7 @@ const CardTitle = React.forwardRef<
 CardTitle.displayName = "CardTitle"
 
 // ─── CardDescription ─────────────────────────────────────────────────────────
-// Text style: body/sm — 14px / Regular / 0px tracking
+// Text: text-sm (14px / Regular)
 // Token: color/text/secondary → var(--color-text-secondary) #52525b
 
 const CardDescription = React.forwardRef<

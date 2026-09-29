@@ -41,7 +41,7 @@
       "paddingX": "spacing/component/md",
       "paddingY": "spacing/component/xs-plus",
       "radius": "radius/md",
-      "textStyle": "label/sm"
+      "textStyle": "text-xs font-semibold leading-none"
     },
     "arrow": {
       "fill": "tooltip/bg"
@@ -96,6 +96,10 @@
       {
         "date": "2026-09-21",
         "change": "Enpath design system created from Agentic and re-themed from En UI. Earlier history not carried over."
+      },
+      {
+        "date": "2026-09-29",
+        "change": "Text styles written as the Tailwind classes the component renders (Agentic style names such as label/sm removed; Enpath uses Tailwind's type scale)."
       }
     ]
   },
@@ -152,7 +156,7 @@
       },
       {
         "title": "Token Bindings",
-        "body": "\n### Component tokens — tooltip-specific\n\n| Token | Alias | Resolves to |\n|---|---|---|\n| `tooltip/bg` | `color/background/inverted` | `zinc/900` — dark bubble on a light page |\n| `tooltip/fg` | `color/background/inverted/foreground` | `white` — text on the dark bubble |\n\nThese alias **semantic tokens** — `color/background/inverted` and its foreground pair. Dark bubble with light text.\n\n### `bubble` — fills\n\n| Layer | Token |\n|---|---|\n| `bubble` fill | `tooltip/bg` |\n| `label` fill | `tooltip/fg` |\n\n### `bubble` — spacing\n\n| Property | Token | Value |\n|---|---|---|\n| `paddingLeft` | `spacing/component/md` | 12px |\n| `paddingRight` | `spacing/component/md` | 12px |\n| `paddingTop` | `spacing/component/xs-plus` | 6px |\n| `paddingBottom` | `spacing/component/xs-plus` | 6px |\n\n### `bubble` — radius\n\n| Property | Token |\n|---|---|\n| All 4 corners | `radius/md` |\n\n### `tooltip` variants — fills\n\n| Layer | Fill |\n|---|---|\n| Outer `tooltip` frame | Transparent — no fill |\n| `arrow` frame | Transparent — no fill |\n| `arrow-shape` (VECTOR) | `tooltip/bg` |\n\nArrow inherits the same `tooltip/bg` token so it always matches the bubble.\n\n### `label` — text style\n\n| Property | Value |\n|---|---|\n| Text style | `label/sm` |\n\n---\n\n"
+        "body": "\n### Component tokens — tooltip-specific\n\n| Token | Alias | Resolves to |\n|---|---|---|\n| `tooltip/bg` | `color/background/inverted` | `zinc/900` — dark bubble on a light page |\n| `tooltip/fg` | `color/background/inverted/foreground` | `white` — text on the dark bubble |\n\nThese alias **semantic tokens** — `color/background/inverted` and its foreground pair. Dark bubble with light text.\n\n### `bubble` — fills\n\n| Layer | Token |\n|---|---|\n| `bubble` fill | `tooltip/bg` |\n| `label` fill | `tooltip/fg` |\n\n### `bubble` — spacing\n\n| Property | Token | Value |\n|---|---|---|\n| `paddingLeft` | `spacing/component/md` | 12px |\n| `paddingRight` | `spacing/component/md` | 12px |\n| `paddingTop` | `spacing/component/xs-plus` | 6px |\n| `paddingBottom` | `spacing/component/xs-plus` | 6px |\n\n### `bubble` — radius\n\n| Property | Token |\n|---|---|\n| All 4 corners | `radius/md` |\n\n### `tooltip` variants — fills\n\n| Layer | Fill |\n|---|---|\n| Outer `tooltip` frame | Transparent — no fill |\n| `arrow` frame | Transparent — no fill |\n| `arrow-shape` (VECTOR) | `tooltip/bg` |\n\nArrow inherits the same `tooltip/bg` token so it always matches the bubble.\n\n### `label` — text style\n\n| Property | Value |\n|---|---|\n| Text style | `text-xs font-semibold leading-none` |\n\n---\n\n"
       },
       {
         "title": "Behavior",

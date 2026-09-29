@@ -6,6 +6,19 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-29 — Text styles: Tailwind classes only
+
+### Removed
+- **Agentic's 18 text styles** (`display/*`, `heading/*`, `body/*`, `label/*`, `code/*`) from the rulebook. They were never in code; code and Storybook always used Tailwind classes, and the documented line heights never matched the screen (e.g. `body/sm` said 14/21, screens render 14/20). Migrate: write the class, e.g. `label/sm` → `text-xs font-semibold leading-none`.
+- **R-ENP-04** ("use the defined type styles"): moved to *Not carried over*. En UI's rule meant its `<Typography>` component, which Enpath doesn't have. Rule numbers are not reused.
+
+### Changed
+- Rulebook §Typography: a table of the Tailwind classes in use (size / line height / use) plus weight, line-height and mono rules. §Theme Decisions Type row updated; links to the vault-only `retheme/` notes removed.
+- `meta.json` of button, badge, tooltip, tabs, avatar, date-picker, checkbox, radio-group: style names replaced by the classes each component renders. date-picker's placeholder was documented as `label/sm`; it renders `text-sm`.
+- Comments in 11 components and 2 stories, `component-doc-template.md` and the 7 `Prototype-build/composition/` notes use class names. No code change.
+
+---
+
 ## 2026-09-29 — Type scale reads Enpath tokens
 
 ### Added

@@ -33,7 +33,7 @@ const AccordionTrigger = React.forwardRef<
         "flex flex-1 items-center justify-between",
         // Spacing — padding T/B: spacing/component/lg (16px); gap: spacing/component/sm (8px)
         "py-[var(--spacing-component-lg)] gap-[var(--spacing-component-sm)]",
-        // Typography — label/md weight, default foreground
+        // Typography — text-sm font-semibold, default foreground
         "font-semibold text-sm text-[var(--color-surface-default-foreground)]",
         // Transition
         "transition-all",

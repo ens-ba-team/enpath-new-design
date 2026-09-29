@@ -165,7 +165,7 @@ const SelectContent = React.forwardRef<
 SelectContent.displayName = SelectPrimitive.Content.displayName
 
 // ─── SelectLabel ──────────────────────────────────────────────────────────────
-// Group label — label/sm style, muted foreground.
+// Group label — text-xs font-semibold, muted foreground.
 
 const SelectLabel = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Label>,

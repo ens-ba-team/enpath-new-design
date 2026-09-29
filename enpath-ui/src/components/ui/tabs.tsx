@@ -25,7 +25,7 @@ import { cn } from "@/lib/utils"
 //   Disabled: transparent fill · text: color/text/disabled · indicator: brand/primary opacity 0
 //   (No Hover state on Type=Line)
 //
-// Typography: label/sm = text-xs font-semibold leading-none
+// Typography: text-xs font-semibold leading-none
 
 const Tabs = TabsPrimitive.Root
 

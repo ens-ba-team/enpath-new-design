@@ -42,11 +42,11 @@ const badgeVariants = cva(
         pill: "rounded-full",
       },
       size: {
-        // Small: 16px h, 4px px, label/sm (12px = text-xs)
+        // Small: 16px h, 4px px, text-xs
         sm: "h-[var(--badge-badge-height-small)] px-[var(--spacing-component-xs)] text-xs",
-        // Medium: 20px h, 8px px, label/sm (12px = text-xs)
+        // Medium: 20px h, 8px px, text-xs
         md: "h-[var(--badge-badge-height-medium)] px-[var(--spacing-component-sm)] text-xs",
-        // Large: 24px h, 8px px, label/md (14px = text-sm)
+        // Large: 24px h, 8px px, text-sm
         lg: "h-[var(--badge-badge-height-large)] px-[var(--spacing-component-sm)] text-sm",
       },
     },
