@@ -2,8 +2,8 @@
 // Action plan — Board view (my-actions-build.md → Board). Four columns: Proposed by AI · To do ·
 // In progress · Done (user, 2026-09-30: proposals as the first column, as in sketch B). Each column is
 // a grouping area with a count; status columns use the same fills as the Stat icon tiles (user,
-// 2026-09-30): To do surface/muted · In progress status/info-subtle · Done status/success-subtle;
-// Proposed by AI stays surface/raised. An Action card (Card compact) shows the
+// 2026-09-30), one step darker: To do zinc/200 · In progress blue/100 · Done green/100 (primitives);
+// Proposed by AI surface/muted (zinc/100) with a brand/400 stroke. An Action card (Card compact) shows the
 // same content as a List row: growth area, title, outcome, "Due · added by", next step and "…"; the
 // column says the status, so there's no badge. Proposals are the shared ProposalAlert, stacked.
 // Moving: the Start / Mark done buttons (touch and keyboard), or drag a card to another column on
@@ -20,14 +20,15 @@ import { ActionMenu, ActionMeta, NextStepButton, ProposalAlert, type ActionHandl
 import { statusLabel, type Action, type ActionStatus, type Proposal } from './mock-data';
 
 const columns: ActionStatus[] = ['todo', 'doing', 'done'];
-/** Same fills as the Stat icon tiles on this page. */
+/** The Stat icon tiles' hues, one step darker (user, 2026-09-30). Debt: primitives, no semantic token
+ *  at these steps (Open flag: Board column fills). */
 const columnFill: Record<ActionStatus, string> = {
-  todo: 'bg-[var(--color-surface-muted)]',
-  doing: 'bg-[var(--color-status-info-subtle)]',
-  done: 'bg-[var(--color-status-success-subtle)]',
+  todo: 'bg-[var(--color-zinc-200)]',
+  doing: 'bg-[var(--color-blue-100)]',
+  done: 'bg-[var(--color-green-100)]',
 };
 
-function Column({ title, count, icon, fill = 'bg-[var(--color-surface-raised)]', stroke, children, dropTarget, over, onDragOver, onDragLeave, onDrop }: {
+function Column({ title, count, icon, fill = 'bg-[var(--color-surface-muted)]', stroke, children, dropTarget, over, onDragOver, onDragLeave, onDrop }: {
   title: string; count: number; icon?: React.ReactNode; fill?: string; stroke?: string; children: React.ReactNode;
   dropTarget?: boolean; over?: boolean;
   onDragOver?: (e: React.DragEvent) => void; onDragLeave?: () => void; onDrop?: (e: React.DragEvent) => void;
