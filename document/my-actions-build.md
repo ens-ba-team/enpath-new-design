@@ -167,6 +167,17 @@ view / approval · "Plan an action" from My Career opening this page · Records 
 - [ ] Can the employee dismiss AI proposals, and do dismissed ones come back?
 - [ ] Templates: predefined Actions per competency? (PRD-022)
 - [ ] Do Actions follow the **Active target** only, or can they serve a Career vision's role too?
-- [ ] Layout: A, B or C (above)? Board as a second view?
+- [x] Layout: C (list grouped by growth area) built as the default; Board as a second view (planned).
+- [ ] **Who confirms an Action is done?** PRD-022 §9 "Completion Validation" offers: employee
+      self-confirmation · manager acknowledgement · AI evaluation from Records · a combination. The
+      prototype: one click on Mark done, no condition, date = today, can be moved back.
+- [ ] **Does Mark done ask anything** (completion date, a short progress note, as PRD-022 RQ-04
+      lists), or stay one click?
+- [ ] **Is there a Validated step** after Done (PRD-022 RQ-04: "Completion is acknowledged with
+      evidence"), or does confirmation happen only in the next Assessment?
+- [ ] **Differs from PRD-022 RQ-05 / §8, tell the PO:** the PRD links Completed → create / link a
+      Record → evidence reviewed → Assessment. We separated Actions and Records (2026-09-30): Done
+      doesn't create or ask for a record. PRD-022 also lists progress notes and an employee-set
+      completion date, which the prototype doesn't have.
 - [ ] Later: should a Done Action offer to add a record (and a record show "From action: …")? Not
       for now (2026-09-30).
