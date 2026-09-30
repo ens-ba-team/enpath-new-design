@@ -131,7 +131,7 @@ My Career's mock starts with no target; the pages keep separate state. Today = 3
 each growth area's title ("1/2"), the Stat tiles' coloured icon tiles (growth areas amber · in progress
 blue · to do grey · done green), the In progress badge's border.
 
-**Not built:** · Board view · manager
+**Not built:** Board view · manager
 view / approval · "Plan an action" from My Career opening this page · Records page.
 
 ## Screen — planned (not designed yet)
