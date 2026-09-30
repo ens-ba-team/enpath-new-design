@@ -411,8 +411,7 @@ function MatrixDetail({ matrix, positions, onChange, onPublish, onArchive, onRes
             </AlertDialogDescription>
           </AlertDialogHeader>
           {issues.length > 0 && (
-            <Alert variant="warning" role="status" className="flex-row items-start gap-[var(--spacing-component-sm)]">
-              <WarningIcon className="mt-[var(--spacing-component-xxs)] h-4 w-4 shrink-0" aria-hidden="true" />
+            <Alert variant="warning" role="status" icon={<WarningIcon />}>
               <div className="flex flex-col gap-[var(--spacing-component-xs)]">
                 <AlertTitle>Not ready</AlertTitle>
                 <ul className="flex list-disc flex-col gap-[var(--spacing-component-xxs)] pl-[var(--spacing-component-lg)] text-body-sm">
@@ -425,8 +424,7 @@ function MatrixDetail({ matrix, positions, onChange, onPublish, onArchive, onRes
             <div className="flex flex-col gap-[var(--spacing-component-sm)]">
               <p className="text-heading-xs text-[var(--color-background-default-foreground)]">Positions using it get these changes</p>
               {invalidRatingTotal > 0 && (
-                <Alert variant="warning" role="status" className="flex-row items-start gap-[var(--spacing-component-sm)]">
-                  <WarningIcon className="mt-[var(--spacing-component-xxs)] h-4 w-4 shrink-0" aria-hidden="true" />
+                <Alert variant="warning" role="status" icon={<WarningIcon />}>
                   <div>
                     <AlertTitle>{invalidRatingTotal} {invalidRatingTotal === 1 ? 'rating is' : 'ratings are'} above the new {matrix.scaleSize}-point scale</AlertTitle>
                     <AlertDescription>Those ratings will become “Not set”. Affected Published positions return to Draft for review.</AlertDescription>

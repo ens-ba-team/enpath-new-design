@@ -116,8 +116,7 @@ export function MatrixDialog({
           </fieldset>
 
           {droppedDetail.length > 0 && (
-            <Alert variant="warning" role="status" className="flex-row items-start gap-[var(--spacing-component-sm)]">
-              <WarningIcon className="mt-[var(--spacing-component-xxs)] h-4 w-4 shrink-0" aria-hidden="true" />
+            <Alert variant="warning" role="status" icon={<WarningIcon />}>
               <div className="flex flex-col gap-[var(--spacing-component-sm)]">
                 <AlertTitle>Lowering the scale to {draft.scaleSize} points removes this behavior text</AlertTitle>
                 <ul className="flex max-h-[160px] flex-col gap-[var(--spacing-component-sm)] overflow-auto text-body-sm">

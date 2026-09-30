@@ -19,6 +19,11 @@ import { cn } from "@/lib/utils"
 // tone="success": fill color/status/success at every value, track color/background/default —
 // for progress shown on a success surface (e.g. the Setup progress Alert).
 //
+// shape="ring" (2026-09-30, from the Action plan): a 36px circle with a short label inside (children,
+// e.g. "1/2", text-label-sm). Track color/border/default; fill color/icon/default (neutral); complete
+// (value 100) or tone="success" → color/icon/success. role="progressbar"; pass an aria-label that says
+// the numbers in words ("Delivery: 1 of 2 done").
+//
 // State in code is driven by value prop only:
 //   value 0–99 → Loading    value=100 → Complete    value=null → Indeterminate
 // No separate state prop in code.
@@ -43,12 +48,39 @@ const progressVariants = cva(
 
 interface ProgressProps
   extends React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root>,
-    VariantProps<typeof progressVariants> {}
+    VariantProps<typeof progressVariants> {
+  /** bar (default) or ring: a small circle with `children` as its label */
+  shape?: "bar" | "ring"
+}
+
+/** 36px ring: radius 15, stroke 3. */
+function ProgressRing({ value, tone, className, children, ...props }: Omit<ProgressProps, "shape" | "size">) {
+  const r = 15
+  const c = 2 * Math.PI * r
+  const share = Math.max(0, Math.min(100, value ?? 0)) / 100
+  const complete = value === 100 || tone === "success"
+  return (
+    <div role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={value ?? undefined}
+      data-shape="ring" className={cn("relative inline-flex shrink-0 items-center justify-center", className)}
+      {...(props as React.HTMLAttributes<HTMLDivElement>)}>
+      <svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true" className="-rotate-90">
+        <circle cx="18" cy="18" r={r} fill="none" strokeWidth="3" className="stroke-[var(--color-border-default)]" />
+        {share > 0 && (
+          <circle cx="18" cy="18" r={r} fill="none" strokeWidth="3" strokeLinecap="round"
+            strokeDasharray={`${c * share} ${c}`}
+            className={complete ? "stroke-[var(--color-icon-success)]" : "stroke-[var(--color-icon-default)]"} />
+        )}
+      </svg>
+      {children != null && <span className="absolute text-label-sm text-[var(--color-background-default-foreground)]">{children}</span>}
+    </div>
+  )
+}
 
 const Progress = React.forwardRef<
   React.ElementRef<typeof ProgressPrimitive.Root>,
   ProgressProps
->(({ className, value, size, tone, ...props }, ref) => {
+>(({ className, value, size, tone, shape = "bar", children, ...props }, ref) => {
+  if (shape === "ring") return <ProgressRing value={value} tone={tone} className={className} {...props}>{children}</ProgressRing>;
   const isComplete = value === 100;
 
   return (

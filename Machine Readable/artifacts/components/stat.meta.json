@@ -37,6 +37,25 @@
       "type": "SLOT",
       "default": null,
       "reactProp": "icon"
+    },
+    "aside": {
+      "type": "SLOT",
+      "notes": "Short note on the right of the description row (e.g. \"1 overdue\", coloured by the caller with color/text/danger)"
+    },
+    "iconTile": {
+      "type": "VARIANT",
+      "values": [
+        "warning",
+        "neutral",
+        "info",
+        "success"
+      ],
+      "notes": "Icon on a solid tile (color/tile/*) with a white icon (color/tile/*/foreground)"
+    },
+    "divided": {
+      "type": "BOOLEAN",
+      "default": false,
+      "notes": "A full-width line under the label row (color/border/default)"
     }
   },
   "tokens": {
@@ -63,28 +82,52 @@
       "neutral": "color/icon/muted",
       "success": "color/icon/success",
       "warning": "color/icon/warning"
+    },
+    "iconTile": {
+      "warning": "color/tile/warning",
+      "neutral": "color/tile/neutral",
+      "info": "color/tile/info",
+      "success": "color/tile/success",
+      "icon": "color/tile/*/foreground"
+    },
+    "divider": {
+      "stroke": "color/border/default",
+      "gap": "spacing/component/sm"
     }
   },
   "tokensUsed": [
+    "color/blue/400",
     "color/border/default",
+    "color/green/600",
     "color/green/700",
     "color/icon/muted",
     "color/icon/success",
     "color/icon/warning",
     "color/surface/default",
     "color/text/secondary",
+    "color/tile/info",
+    "color/tile/neutral",
+    "color/tile/success",
+    "color/tile/warning",
     "color/white",
+    "color/yellow/600",
     "color/yellow/700",
     "color/zinc/200",
+    "color/zinc/500",
     "color/zinc/600",
     "radius/lg",
+    "radius/md",
     "radius/surface",
     "shadow/default",
     "shadow/surface",
     "spacing/1",
+    "spacing/1-5",
+    "spacing/2",
     "spacing/3",
     "spacing/component/md",
-    "spacing/component/xs"
+    "spacing/component/sm",
+    "spacing/component/xs",
+    "spacing/component/xs-plus"
   ],
   "accessibility": {
     "properties": [
@@ -182,6 +225,10 @@
       {
         "date": "2026-09-30",
         "change": "Tile gets shadow/surface (was border only), so Stat lifts off the page like a Card."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Options iconTile (color/tile/*), divided and aside, from the Action plan summary (were built on the screen)."
       }
     ]
   },
@@ -209,7 +256,8 @@
       "Default",
       "Tones",
       "WithoutDescription",
-      "LongContent"
+      "LongContent",
+      "IconTileDivided"
     ],
     "decorators": [
       "none"

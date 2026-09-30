@@ -131,3 +131,14 @@ export const Animated: Story = {
 export const SuccessTone: Story = {
   render: () => <div className="w-[240px]"><Progress value={60} tone="success" aria-label="Setup progress" /></div>,
 };
+
+/** shape="ring": 36px, a short label inside. Neutral fill; green when complete. Say the numbers in the aria-label. */
+export const Ring: Story = {
+  render: () => (
+    <div className="flex items-center gap-[var(--spacing-component-lg)]">
+      <Progress shape="ring" value={0} aria-label="0 of 0 done">0/0</Progress>
+      <Progress shape="ring" value={50} aria-label="1 of 2 done">1/2</Progress>
+      <Progress shape="ring" value={100} aria-label="2 of 2 done">2/2</Progress>
+    </div>
+  ),
+};

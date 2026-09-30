@@ -10,11 +10,15 @@
     "Text": "`color/surface/overlay/foreground`",
     "Highlighted item": "`color/surface/accent` + `/foreground`",
     "Label · shortcut": "`color/text/secondary`",
-    "Destructive item": "`color/text/invalid`",
+    "Destructive item": "`color/brand/destructive` text, `color/status/danger-subtle` highlight (DropdownMenuItem variant=\"destructive\")",
     "Separator": "`color/border/default`"
   },
   "tokensUsed": [
     "color/border/default",
+    "color/brand/destructive",
+    "color/red/50",
+    "color/red/600",
+    "color/status/danger-subtle",
     "color/surface/accent",
     "color/surface/muted",
     "color/surface/overlay",
@@ -53,11 +57,10 @@
     "openQuestions": [],
     "knownIssues": [
       {
-        "issue": "Open flag (design-patterns.md): Label colour, shortcut dimmed with opacity, separator colour and destructive item differ from the spec.",
+        "issue": "Open flag (design-patterns.md): label colour, shortcut dimmed with opacity and separator colour differ from the spec.",
         "workaround": "The spec keeps the tokens below until the flag is decided; drift-check #14 allows only these.",
         "pendingTokens": [
-          "color/text/secondary",
-          "color/text/invalid"
+          "color/text/secondary"
         ],
         "date": "2026-09-30"
       }
@@ -78,6 +81,10 @@
       {
         "date": "2026-09-29",
         "change": "Text uses Enpath text styles (text-body-sm, text-heading-md …, see Foundations/Text Styles) instead of mixed size and weight classes. Labels (label-*) and small headings (heading-sm/xs) are Medium 500."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "DropdownMenuItem variant=\"destructive\" (red text, danger-subtle highlight), e.g. \"Remove from plan\"."
       }
     ]
   },
@@ -107,7 +114,8 @@
     "file": "src/stories/DropdownMenu.stories.tsx",
     "title": "Overlay/Dropdown Menu",
     "stories": [
-      "Default"
+      "Default",
+      "DestructiveItem"
     ],
     "decorators": [
       "none"

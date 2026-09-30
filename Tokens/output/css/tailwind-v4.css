@@ -379,7 +379,16 @@
    * Status:      active
    */
   --color-text-link-active: #072cba;
-  --color-text-invalid: #da2c24; /** Error/invalid text on default backgrounds. Use for form field labels, descriptions, and alert text in invalid or destructive states. NOT the same as status/danger-subtle/foreground (which requires a danger-subtle background). */
+  --color-text-invalid: #da2c24; /** Error/invalid text on default backgrounds. Use for form field labels, descriptions, and alert text in invalid or destructive states. NOT the same as status/danger-subtle/foreground (which requires a danger-subtle background). Do not use for status that needs attention outside a form (overdue, late): use color/text/danger. */
+  /**
+   * Intent:      Text for a status that needs attention: something late, missed or at risk
+   * Use when:    "overdue" on an action's due line, "N overdue" in a summary, other time or risk warnings in running text
+   * Do not use:  Form validation messages or invalid field labels (use color/text/invalid); destructive button labels (use the Button destructive variant); text on a danger-subtle fill (use color/status/danger-subtle/foreground)
+   * Use instead: color/text/invalid for form errors
+   * Note:        Same red as color/text/invalid today (red/600, 4.8:1 on white); kept separate because the meaning differs. Added 2026-09-30.
+   * Status:      active
+   */
+  --color-text-danger: #da2c24;
   --color-text-success: #15803d;
   /**
    * Intent:      Standard border for input fields, radio buttons, and component frames
@@ -454,6 +463,24 @@
    * Status:      active
    */
   --color-border-warning: #bb4d00;
+  /**
+   * Intent:      Stroke that marks something AI proposed
+   * Use when:    The AI Alert variant; the "Proposed by AI" column on the Action plan Board
+   * Do not use:  Anything a person made; focus rings (use color/ring); selected states
+   * Use instead: color/border/default for ordinary containers
+   * Note:        Brand/400. Added 2026-09-30 (was a primitive on the Action plan screen).
+   * Status:      active
+   */
+  --color-border-ai: oklch(70% 0.19 264.53);
+  /**
+   * Intent:      Stroke of an information status mark
+   * Use when:    Badge blue (In progress), next to success / warning / error badges that also have coloured borders
+   * Do not use:  Focus rings (color/ring), links, large containers
+   * Use instead: color/border/default for neutral containers
+   * Note:        Blue/500 (= status/info). Added 2026-09-30: Badge blue's border was border/subtle, near invisible.
+   * Status:      active
+   */
+  --color-border-info: #0e41ff;
   /**
    * Intent:      Background for cards and flat inline content containers
    * Use when:    Flat containers sitting on the page canvas: Card, Item rows, Calendar, Stat, Empty state, the active Tab and ButtonGroup segment, form sections
@@ -960,6 +987,101 @@
    * Status:      active
    */
   --color-scale-5: #072cba;
+  /**
+   * Intent:      Solid fill of a Stat icon tile (growth areas)
+   * Use when:    Stat with iconTile="warning"
+   * Do not use:  Text backgrounds, badges, buttons, large areas
+   * Use instead: color/status/*-subtle for tinted areas
+   * Note:        Set B (2026-09-30): similar lightness so no tile shouts. White icon on it.
+   * Status:      active
+   */
+  --color-tile-warning: #e17100;
+  /**
+   * Intent:      Icon on a Stat icon tile
+   * Use when:    The icon inside the tile
+   * Do not use:  Text
+   * Use instead: color/text/* for text
+   * Status:      active
+   */
+  --color-tile-warning-foreground: #ffffff;
+  /**
+   * Intent:      Solid fill of a Stat icon tile (to do)
+   * Use when:    Stat with iconTile="neutral"
+   * Do not use:  Text backgrounds, badges, buttons, large areas
+   * Use instead: color/status/*-subtle for tinted areas
+   * Note:        Set B (2026-09-30): similar lightness so no tile shouts. White icon on it.
+   * Status:      active
+   */
+  --color-tile-neutral: #64748b;
+  /**
+   * Intent:      Icon on a Stat icon tile
+   * Use when:    The icon inside the tile
+   * Do not use:  Text
+   * Use instead: color/text/* for text
+   * Status:      active
+   */
+  --color-tile-neutral-foreground: #ffffff;
+  /**
+   * Intent:      Solid fill of a Stat icon tile (in progress)
+   * Use when:    Stat with iconTile="info"
+   * Do not use:  Text backgrounds, badges, buttons, large areas
+   * Use instead: color/status/*-subtle for tinted areas
+   * Note:        Set B (2026-09-30): similar lightness so no tile shouts. White icon on it.
+   * Status:      active
+   */
+  --color-tile-info: #457afe;
+  /**
+   * Intent:      Icon on a Stat icon tile
+   * Use when:    The icon inside the tile
+   * Do not use:  Text
+   * Use instead: color/text/* for text
+   * Status:      active
+   */
+  --color-tile-info-foreground: #ffffff;
+  /**
+   * Intent:      Solid fill of a Stat icon tile (done)
+   * Use when:    Stat with iconTile="success"
+   * Do not use:  Text backgrounds, badges, buttons, large areas
+   * Use instead: color/status/*-subtle for tinted areas
+   * Note:        Set B (2026-09-30): similar lightness so no tile shouts. White icon on it.
+   * Status:      active
+   */
+  --color-tile-success: #16a34a;
+  /**
+   * Intent:      Icon on a Stat icon tile
+   * Use when:    The icon inside the tile
+   * Do not use:  Text
+   * Use instead: color/text/* for text
+   * Status:      active
+   */
+  --color-tile-success-foreground: #ffffff;
+  /**
+   * Intent:      Fill of the To do column on a Board
+   * Use when:    The Action plan Board's To do column (white cards sit on it)
+   * Do not use:  Cards, page sections, status text
+   * Use instead: color/surface/raised for neutral grouping areas
+   * Note:        Added 2026-09-30 (were primitives on the Action plan screen).
+   * Status:      active
+   */
+  --color-board-todo: #e2e8f0;
+  /**
+   * Intent:      Fill of the In progress column on a Board
+   * Use when:    The Action plan Board's In progress column (white cards sit on it)
+   * Do not use:  Cards, page sections, status text
+   * Use instead: color/surface/raised for neutral grouping areas
+   * Note:        Added 2026-09-30 (were primitives on the Action plan screen).
+   * Status:      active
+   */
+  --color-board-doing: #d8e5fe;
+  /**
+   * Intent:      Fill of the Done column on a Board
+   * Use when:    The Action plan Board's Done column (white cards sit on it)
+   * Do not use:  Cards, page sections, status text
+   * Use instead: color/surface/raised for neutral grouping areas
+   * Note:        Added 2026-09-30 (were primitives on the Action plan screen).
+   * Status:      active
+   */
+  --color-board-done: #dcfce7;
   --spacing-0: 0px;
   --spacing-1: 4px;
   --spacing-2: 8px;

@@ -7,44 +7,17 @@
 // default Alerts with a brand-blue Sparkle (icon laid out as in the Alert WithIcon stories; Alert has no
 // icon option yet, Open flag) with Add to plan / Dismiss. An empty growth area invites an action or Ask AI.
 // Row pieces (badge, meta, buttons, proposal) live in action-parts.tsx, shared with the Board.
-// SCREEN-LEVEL DEBT (design-patterns.md → Open flags, kind restyle, 2026-09-30): the progress ring
-// before the title is built here until Progress gets shape="ring", and so is the tinted header band (color/surface/header,
-// full-bleed to the card's edges with a border/default line under it; not a Card option yet).
-// Move them into the components, then delete them here.
+// The header is CardHeader tone="tinted"; progress is Progress shape="ring" (design-system options).
 
 import * as React from 'react';
 import { PlusIcon, SparkleIcon } from '@phosphor-icons/react/ssr';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
 import type { Gap } from '../my-career/mock-data';
 import { ActionMenu, ActionMeta, NextStepButton, ProposalAlert, StatusBadge, type ActionHandlers } from './action-parts';
 import { pointsLine, statusOrder, type Action, type Proposal } from './mock-data';
 
-/** Debt: progress ring (Open flag) — done out of total, before the growth area's title.
- *  Track border/default, fill icon/default (neutral: the page has enough blue), all done icon/success.
- *  36px, label inside. */
-function ProgressRing({ done, total, label }: { done: number; total: number; label: string }) {
-  const r = 15;
-  const c = 2 * Math.PI * r;
-  const share = total ? done / total : 0;
-  const complete = total > 0 && done === total;
-  return (
-    <div role="progressbar" aria-valuemin={0} aria-valuemax={total} aria-valuenow={done} aria-label={label}
-      className="relative inline-flex shrink-0 items-center justify-center">
-      <svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true" className="-rotate-90">
-        <circle cx="18" cy="18" r={r} fill="none" strokeWidth="3" className="stroke-[var(--color-border-default)]" />
-        {share > 0 && (
-          <circle cx="18" cy="18" r={r} fill="none" strokeWidth="3" strokeLinecap="round"
-            strokeDasharray={`${c * share} ${c}`}
-            className={complete ? 'stroke-[var(--color-icon-success)]' : 'stroke-[var(--color-icon-default)]'} />
-        )}
-      </svg>
-      <span className="absolute text-label-sm text-[var(--color-background-default-foreground)]">{done}/{total}</span>
-    </div>
-  );
-}
-
-/** Kept for the screen's imports: the handlers are shared with the Board. */
 export type GroupHandlers = ActionHandlers;
 
 function ActionRow({ action, h }: { action: Action; h: GroupHandlers }) {
@@ -72,12 +45,12 @@ export function GrowthAreaGroup({ area, actions, proposals, h }: {
   const progress = actions.length ? `${done} of ${actions.length} done` : 'No actions yet';
   return (
     <Card role="region" aria-label={area.name}>
-      {/* Debt: tinted header band. Negative margins cancel the Card's padding (spacing/component/lg) so the
-          band reaches the card's edges; the same side padding goes back inside it. */}
-      <CardHeader className="-mx-[var(--spacing-component-lg)] -mt-[var(--spacing-component-lg)] flex-row flex-wrap items-center gap-x-[var(--spacing-component-md)] gap-y-[var(--spacing-component-xs)] rounded-t-[var(--radius-lg)] border-b border-[var(--color-border-default)] bg-[var(--color-surface-header)] px-[var(--spacing-component-lg)] py-[var(--spacing-component-md)]">
-        <ProgressRing done={done} total={actions.length} label={`${area.name}: ${progress}`} />
+      <CardHeader tone="tinted" className="flex-row flex-wrap items-center gap-x-[var(--spacing-component-md)] gap-y-[var(--spacing-component-xs)]">
+        <Progress shape="ring" value={actions.length ? Math.round((done / actions.length) * 100) : 0} aria-label={`${area.name}: ${progress}`}>
+          {done}/{actions.length}
+        </Progress>
         <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xxs)]">
-          <CardTitle role="heading" aria-level={2} className="text-[var(--color-surface-header-foreground)]">{area.name}</CardTitle>
+          <CardTitle role="heading" aria-level={2} >{area.name}</CardTitle>
           <p className="text-body-xs text-[var(--color-text-secondary)]">Growth area · {pointsLine(area)}</p>
         </div>
         <Button variant="outline" size="sm" onClick={() => h.onAddAction(area.id)}><PlusIcon aria-hidden="true" />Add action</Button>

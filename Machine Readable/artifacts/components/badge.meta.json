@@ -189,7 +189,7 @@
       },
       "Blue": {
         "fill": "color/status/info-subtle",
-        "border": "color/border/subtle",
+        "border": "color/border/info",
         "fg": "color/status/info-subtle/foreground"
       },
       "Online": {
@@ -245,10 +245,11 @@
   },
   "tokensUsed": [
     "color/blue/50",
+    "color/blue/500",
     "color/border/default",
     "color/border/error",
+    "color/border/info",
     "color/border/strong",
-    "color/border/subtle",
     "color/border/success",
     "color/border/warning",
     "color/brand/500",
@@ -338,6 +339,10 @@
       {
         "date": "2026-09-29",
         "change": "Text uses Enpath text styles (text-label-sm, text-body-sm …, see Foundations/Text Styles) instead of mixed size and weight classes. Labels (label-*) and small headings (heading-sm/xs) are Medium 500."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Blue: border color/border/info (was color/border/subtle, near invisible next to success / warning / error)."
       }
     ]
   },

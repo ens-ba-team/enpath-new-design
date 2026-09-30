@@ -96,7 +96,12 @@
       "invalid": {
         "$value": "{color.red.600}",
         "$type": "color",
-        "$description": "Error/invalid text on default backgrounds. Use for form field labels, descriptions, and alert text in invalid or destructive states. NOT the same as status/danger-subtle/foreground (which requires a danger-subtle background)."
+        "$description": "Error/invalid text on default backgrounds. Use for form field labels, descriptions, and alert text in invalid or destructive states. NOT the same as status/danger-subtle/foreground (which requires a danger-subtle background). Do not use for status that needs attention outside a form (overdue, late): use color/text/danger."
+      },
+      "danger": {
+        "$value": "{color.red.600}",
+        "$type": "color",
+        "$description": "Intent:      Text for a status that needs attention: something late, missed or at risk\nUse when:    \"overdue\" on an action's due line, \"N overdue\" in a summary, other time or risk warnings in running text\nDo not use:  Form validation messages or invalid field labels (use color/text/invalid); destructive button labels (use the Button destructive variant); text on a danger-subtle fill (use color/status/danger-subtle/foreground)\nUse instead: color/text/invalid for form errors\nNote:        Same red as color/text/invalid today (red/600, 4.8:1 on white); kept separate because the meaning differs. Added 2026-09-30.\nStatus:      active"
       },
       "success": {
         "$value": "{color.green.700}",
@@ -148,6 +153,16 @@
         "$value": "{color.yellow.700}",
         "$type": "color",
         "$description": "Intent:      Border indicating a cautionary or attention-required state\nUse when:    Input border with a non-critical warning, fields approaching a limit\nDo not use:  Actual errors or failed validation — warning is not failure\nUse instead: color/border/error for validation failures\nStatus:      active"
+      },
+      "ai": {
+        "$value": "{color.brand.400}",
+        "$type": "color",
+        "$description": "Intent:      Stroke that marks something AI proposed\nUse when:    The AI Alert variant; the \"Proposed by AI\" column on the Action plan Board\nDo not use:  Anything a person made; focus rings (use color/ring); selected states\nUse instead: color/border/default for ordinary containers\nNote:        Brand/400. Added 2026-09-30 (was a primitive on the Action plan screen).\nStatus:      active"
+      },
+      "info": {
+        "$value": "{color.blue.500}",
+        "$type": "color",
+        "$description": "Intent:      Stroke of an information status mark\nUse when:    Badge blue (In progress), next to success / warning / error badges that also have coloured borders\nDo not use:  Focus rings (color/ring), links, large containers\nUse instead: color/border/default for neutral containers\nNote:        Blue/500 (= status/info). Added 2026-09-30: Badge blue's border was border/subtle, near invisible.\nStatus:      active"
       }
     },
     "brand": {
@@ -590,6 +605,65 @@
         "$value": "{color.blue.700}",
         "$type": "color",
         "$description": "Intent:      Fill of proficiency step 5 (Expert) on the 5-level rating scale; darker per step\nUse when:    Segments of the stepped level cell (expectations grid) and other rating-scale meters — segment n uses color/scale/n\nDo not use:  Progress, status, charts or selection — use color/brand/primary, color/status/*, color/chart/*\nUse instead: color/surface/raised for an empty (unfilled) step\nForeground:  none — graphic only; always pair with a text label (steps 1–2 are below 3:1 on white)\nNote:        Added 2026-09-22 for the Setup expectations grid.\nStatus:      active"
+      }
+    },
+    "tile": {
+      "warning": {
+        "$value": "{color.yellow.600}",
+        "$type": "color",
+        "$description": "Intent:      Solid fill of a Stat icon tile (growth areas)\nUse when:    Stat with iconTile=\"warning\"\nDo not use:  Text backgrounds, badges, buttons, large areas\nUse instead: color/status/*-subtle for tinted areas\nNote:        Set B (2026-09-30): similar lightness so no tile shouts. White icon on it.\nStatus:      active",
+        "foreground": {
+          "$value": "{color.white}",
+          "$type": "color",
+          "$description": "Intent:      Icon on a Stat icon tile\nUse when:    The icon inside the tile\nDo not use:  Text\nUse instead: color/text/* for text\nStatus:      active"
+        }
+      },
+      "neutral": {
+        "$value": "{color.zinc.500}",
+        "$type": "color",
+        "$description": "Intent:      Solid fill of a Stat icon tile (to do)\nUse when:    Stat with iconTile=\"neutral\"\nDo not use:  Text backgrounds, badges, buttons, large areas\nUse instead: color/status/*-subtle for tinted areas\nNote:        Set B (2026-09-30): similar lightness so no tile shouts. White icon on it.\nStatus:      active",
+        "foreground": {
+          "$value": "{color.white}",
+          "$type": "color",
+          "$description": "Intent:      Icon on a Stat icon tile\nUse when:    The icon inside the tile\nDo not use:  Text\nUse instead: color/text/* for text\nStatus:      active"
+        }
+      },
+      "info": {
+        "$value": "{color.blue.400}",
+        "$type": "color",
+        "$description": "Intent:      Solid fill of a Stat icon tile (in progress)\nUse when:    Stat with iconTile=\"info\"\nDo not use:  Text backgrounds, badges, buttons, large areas\nUse instead: color/status/*-subtle for tinted areas\nNote:        Set B (2026-09-30): similar lightness so no tile shouts. White icon on it.\nStatus:      active",
+        "foreground": {
+          "$value": "{color.white}",
+          "$type": "color",
+          "$description": "Intent:      Icon on a Stat icon tile\nUse when:    The icon inside the tile\nDo not use:  Text\nUse instead: color/text/* for text\nStatus:      active"
+        }
+      },
+      "success": {
+        "$value": "{color.green.600}",
+        "$type": "color",
+        "$description": "Intent:      Solid fill of a Stat icon tile (done)\nUse when:    Stat with iconTile=\"success\"\nDo not use:  Text backgrounds, badges, buttons, large areas\nUse instead: color/status/*-subtle for tinted areas\nNote:        Set B (2026-09-30): similar lightness so no tile shouts. White icon on it.\nStatus:      active",
+        "foreground": {
+          "$value": "{color.white}",
+          "$type": "color",
+          "$description": "Intent:      Icon on a Stat icon tile\nUse when:    The icon inside the tile\nDo not use:  Text\nUse instead: color/text/* for text\nStatus:      active"
+        }
+      }
+    },
+    "board": {
+      "todo": {
+        "$value": "{color.zinc.200}",
+        "$type": "color",
+        "$description": "Intent:      Fill of the To do column on a Board\nUse when:    The Action plan Board's To do column (white cards sit on it)\nDo not use:  Cards, page sections, status text\nUse instead: color/surface/raised for neutral grouping areas\nNote:        Added 2026-09-30 (were primitives on the Action plan screen).\nStatus:      active"
+      },
+      "doing": {
+        "$value": "{color.blue.100}",
+        "$type": "color",
+        "$description": "Intent:      Fill of the In progress column on a Board\nUse when:    The Action plan Board's In progress column (white cards sit on it)\nDo not use:  Cards, page sections, status text\nUse instead: color/surface/raised for neutral grouping areas\nNote:        Added 2026-09-30 (were primitives on the Action plan screen).\nStatus:      active"
+      },
+      "done": {
+        "$value": "{color.green.100}",
+        "$type": "color",
+        "$description": "Intent:      Fill of the Done column on a Board\nUse when:    The Action plan Board's Done column (white cards sit on it)\nDo not use:  Cards, page sections, status text\nUse instead: color/surface/raised for neutral grouping areas\nNote:        Added 2026-09-30 (were primitives on the Action plan screen).\nStatus:      active"
       }
     }
   },

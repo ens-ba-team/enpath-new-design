@@ -24,3 +24,21 @@ export const Default: Story = {
     </DropdownMenu>
   ),
 };
+
+/** variant="destructive": a removal item, red text and a danger-subtle highlight. Confirm it with the
+ *  AlertDialog Destructive type. */
+export const DestructiveItem: Story = {
+  name: 'Destructive item',
+  render: () => (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm" aria-label="More actions"><DotsThreeIcon className="h-4 w-4" /></Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start">
+        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem variant="destructive">Remove from plan</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  ),
+};

@@ -48,20 +48,31 @@ Card.displayName = "Card"
 // Tokens:
 //   gap = spacing/component/xs → var(--spacing-component-xs) 4px
 // No padding — Card shell owns all padding.
+// tone="tinted" (2026-09-30): the header becomes a full-width band on color/surface/header with a
+// color/border/default line under it; it cancels the Card's padding (lg, compact md) so it reaches the
+// card's edges, and puts the same side padding back inside. For a Card that groups a list.
 
 const CardHeader = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+  React.HTMLAttributes<HTMLDivElement> & { tone?: "default" | "tinted" }
+>(({ className, tone = "default", ...props }, ref) => {
+  const size = React.useContext(CardSizeContext)
+  return (
   <div
     ref={ref}
+    data-tone={tone}
     className={cn(
       "flex flex-col gap-[var(--spacing-component-xs)]",
+      tone === "tinted" && "rounded-t-[var(--radius-lg)] border-b border-[var(--color-border-default)] bg-[var(--color-surface-header)]",
+      tone === "tinted" && (size === "compact"
+        ? "-mx-[var(--spacing-component-md)] -mt-[var(--spacing-component-md)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)]"
+        : "-mx-[var(--spacing-component-lg)] -mt-[var(--spacing-component-lg)] px-[var(--spacing-component-lg)] py-[var(--spacing-component-md)]"),
       className
     )}
     {...props}
   />
-))
+  )
+})
 CardHeader.displayName = "CardHeader"
 
 // ─── CardTitle ────────────────────────────────────────────────────────────────

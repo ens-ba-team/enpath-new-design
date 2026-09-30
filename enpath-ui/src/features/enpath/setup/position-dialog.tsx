@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { DotsSixVerticalIcon, PlusIcon, UsersIcon, XIcon } from '@phosphor-icons/react/ssr';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -194,14 +195,14 @@ export function PositionDialog({
           </fieldset>
 
           {matrixChanged && (
-            <p role="status" className="rounded-[var(--radius-md)] bg-[var(--color-status-warning-subtle)] p-[var(--spacing-component-md)] text-body-sm text-[var(--color-status-warning-subtle-foreground)]">
-              Switching matrix clears all {setCount} expectations of this position.
-            </p>
+            <Alert variant="warning" role="status">
+              <AlertDescription>Switching matrix clears all {setCount} expectations of this position.</AlertDescription>
+            </Alert>
           )}
           {removed.length > 0 && !matrixChanged && (
-            <p role="status" className="rounded-[var(--radius-md)] bg-[var(--color-status-warning-subtle)] p-[var(--spacing-component-md)] text-body-sm text-[var(--color-status-warning-subtle-foreground)]">
-              Removing {removed.map((l) => l.name || 'an unnamed level').join(', ')} also deletes {removed.length === 1 ? 'its' : 'their'} expectations.
-            </p>
+            <Alert variant="warning" role="status">
+              <AlertDescription>Removing {removed.map((l) => l.name || 'an unnamed level').join(', ')} also deletes {removed.length === 1 ? 'its' : 'their'} expectations.</AlertDescription>
+            </Alert>
           )}
 
           <DialogFooter>

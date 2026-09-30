@@ -16,7 +16,8 @@
         "Destructive",
         "Warning",
         "Success",
-        "Info"
+        "Info",
+        "AI"
       ],
       "default": "Default",
       "reactProp": "variant",
@@ -25,7 +26,11 @@
         "Destructive": "destructive",
         "Warning": "warning",
         "Success": "success",
-        "Info": "info"
+        "Info": "info",
+        "AI": "ai"
+      },
+      "intent": {
+        "AI": "An AI proposal: white fill, color/border/ai stroke, the icon in color/icon/brand (use the Sparkle)."
       }
     },
     "Has Icon": {
@@ -35,11 +40,12 @@
         "False"
       ],
       "default": "True",
-      "reactProp": "hasIcon",
+      "reactProp": "icon",
       "reactValues": {
         "True": true,
         "False": false
-      }
+      },
+      "notes": "Optional `icon` prop (a Phosphor icon). The Alert places it beside the content and colours it by variant. Not every Alert has one; without it nothing changes. Never build the icon row by hand."
     },
     "Has Action": {
       "type": "enum",
@@ -125,6 +131,17 @@
       "Default": "color/background/default/foreground",
       "Destructive": "color/icon/danger",
       "Warning": "color/icon/warning"
+    },
+    "ai": {
+      "fill": "color/surface/default",
+      "stroke": "color/border/ai",
+      "title": "color/surface/default/foreground",
+      "description": "color/text/secondary",
+      "icon": "color/icon/brand"
+    },
+    "iconLayout": {
+      "gap": "spacing/component/md",
+      "contentGap": "spacing/component/xxs"
     }
   },
   "tokensUsed": [
@@ -132,12 +149,17 @@
     "color/blue/200",
     "color/blue/50",
     "color/blue/800",
+    "color/border/ai",
     "color/border/default",
     "color/border/error",
+    "color/brand/400",
+    "color/brand/500",
+    "color/brand/primary",
     "color/green/200",
     "color/green/50",
     "color/green/700",
     "color/green/800",
+    "color/icon/brand",
     "color/icon/danger",
     "color/icon/success",
     "color/icon/warning",
@@ -146,6 +168,7 @@
     "color/status/danger",
     "color/status/info-subtle",
     "color/status/success-subtle",
+    "color/surface/default",
     "color/text/invalid",
     "color/text/secondary",
     "color/white",
@@ -157,12 +180,14 @@
     "color/zinc/200",
     "color/zinc/600",
     "radius/lg",
+    "spacing/0-5",
     "spacing/2",
     "spacing/3",
     "spacing/4",
     "spacing/component/lg",
     "spacing/component/md",
-    "spacing/component/sm"
+    "spacing/component/sm",
+    "spacing/component/xxs"
   ],
   "accessibility": {
     "properties": [
@@ -229,6 +254,10 @@
       {
         "date": "2026-09-30",
         "change": "Spec token section matches the code: the nested (icon) layout gap belongs to the story composition, not the component."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Optional `icon` prop (the Alert lays out icon + content; Setup warnings and the Action plan proposals use it instead of hand-built rows) and variant ai (color/border/ai, color/icon/brand)."
       }
     ]
   },
@@ -253,7 +282,8 @@
       "DestructiveWithIcon",
       "WarningWithIcon",
       "WithAction",
-      "AllVariants"
+      "AllVariants",
+      "AIProposal"
     ],
     "decorators": [
       "none"

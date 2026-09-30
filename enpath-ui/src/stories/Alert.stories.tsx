@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { InfoIcon, WarningCircleIcon, WarningIcon } from "@phosphor-icons/react/ssr";
+import { InfoIcon, SparkleIcon, WarningCircleIcon, WarningIcon } from "@phosphor-icons/react/ssr";
 import { Button } from '@/components/ui/button';
 
 // Spec: alert.meta.json
@@ -85,67 +85,61 @@ export const InfoVariant: Story = {
 
 // ─── With icon (nested layout) ────────────────────────────────────────────────
 // Nested layout: flex-row wrapper (gap spacing/component/md) > icon + content div
-// Content div: flex-col, gap spacing/component/xxs (2px) between title and description
-// Icon color is set by the parent variant via [&_svg] selector
+// icon prop: the Alert places the icon beside the content (gap md; content gap xxs) and colours it by variant.
 
 export const DefaultWithIcon: Story = {
   render: () => (
-    <Alert className="w-[400px]">
-      <div className="flex flex-row items-start gap-[var(--spacing-component-md)]">
-        <InfoIcon className="h-4 w-4 shrink-0 mt-0.5" />
-        <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
-          <AlertTitle>New integration available</AlertTitle>
-          <AlertDescription>Connect your account to unlock additional features.</AlertDescription>
-        </div>
-      </div>
+    <Alert className="w-[400px]" icon={<InfoIcon />}>
+      <AlertTitle>New integration available</AlertTitle>
+      <AlertDescription>Connect your account to unlock additional features.</AlertDescription>
     </Alert>
   ),
 };
 
 export const DestructiveWithIcon: Story = {
   render: () => (
-    <Alert variant="destructive" className="w-[400px]">
-      <div className="flex flex-row items-start gap-[var(--spacing-component-md)]">
-        <WarningCircleIcon className="h-4 w-4 shrink-0 mt-0.5" />
-        <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
-          <AlertTitle>Payment failed</AlertTitle>
-          <AlertDescription>Check your card details and try again.</AlertDescription>
-        </div>
-      </div>
+    <Alert variant="destructive" className="w-[400px]" icon={<WarningCircleIcon />}>
+      <AlertTitle>Payment failed</AlertTitle>
+      <AlertDescription>Check your card details and try again.</AlertDescription>
     </Alert>
   ),
 };
 
 export const WarningWithIcon: Story = {
   render: () => (
-    <Alert variant="warning" className="w-[400px]">
-      <div className="flex flex-row items-start gap-[var(--spacing-component-md)]">
-        <WarningIcon className="h-4 w-4 shrink-0 mt-0.5" />
-        <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
-          <AlertTitle>API key expires in 7 days</AlertTitle>
-          <AlertDescription>Rotate your key before it expires to avoid service interruption.</AlertDescription>
-        </div>
-      </div>
+    <Alert variant="warning" className="w-[400px]" icon={<WarningIcon />}>
+      <AlertTitle>API key expires in 7 days</AlertTitle>
+      <AlertDescription>Rotate your key before it expires to avoid service interruption.</AlertDescription>
     </Alert>
   ),
 };
 
 // ─── With action ──────────────────────────────────────────────────────────────
-// Action button sits below content in the flex-col content stack.
+// Action button sits below the text in the content column.
 // Button is self-contained — alert must not override any button fills.
 
 export const WithAction: Story = {
   render: () => (
-    <Alert variant="warning" className="w-[400px]">
-      <div className="flex flex-row items-start gap-[var(--spacing-component-md)]">
-        <WarningIcon className="h-4 w-4 shrink-0 mt-0.5" />
-        <div className="flex flex-col gap-[var(--spacing-component-sm)]">
-          <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
-            <AlertTitle>Storage almost full</AlertTitle>
-            <AlertDescription>You have used 90% of your storage quota.</AlertDescription>
-          </div>
-          <Button size="sm" className="self-start">Manage storage</Button>
-        </div>
+    <Alert variant="warning" className="w-[400px]" icon={<WarningIcon />}>
+      <AlertTitle>Storage almost full</AlertTitle>
+      <AlertDescription>You have used 90% of your storage quota.</AlertDescription>
+      <Button size="sm" className="mt-[var(--spacing-component-xs)] self-start">Manage storage</Button>
+    </Alert>
+  ),
+};
+
+// ─── AI proposal ──────────────────────────────────────────────────────────────
+// variant="ai": white fill, color/border/ai stroke, the icon in color/icon/brand. Use the Sparkle.
+
+export const AIProposal: Story = {
+  name: 'AI proposal',
+  render: () => (
+    <Alert variant="ai" className="w-[480px]" icon={<SparkleIcon />} role="group" aria-label="AI proposal">
+      <AlertTitle>Write a short guide to readable pull requests</AlertTitle>
+      <AlertDescription>AI proposal · outcome: a one-page guide the team links in reviews</AlertDescription>
+      <div className="mt-[var(--spacing-component-xs)] flex gap-[var(--spacing-component-xs)]">
+        <Button variant="outline" size="sm">Add to plan</Button>
+        <Button variant="ghost" size="sm">Dismiss</Button>
       </div>
     </Alert>
   ),
@@ -156,32 +150,21 @@ export const WithAction: Story = {
 export const AllVariants: Story = {
   render: () => (
     <div className="flex flex-col gap-4 w-[400px]">
-      <Alert>
-        <div className="flex flex-row items-start gap-[var(--spacing-component-md)]">
-          <InfoIcon className="h-4 w-4 shrink-0 mt-0.5" />
-          <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
-            <AlertTitle>Information</AlertTitle>
-            <AlertDescription>Your changes were saved successfully.</AlertDescription>
-          </div>
-        </div>
+      <Alert icon={<InfoIcon />}>
+        <AlertTitle>Information</AlertTitle>
+        <AlertDescription>Your changes were saved successfully.</AlertDescription>
       </Alert>
-      <Alert variant="destructive">
-        <div className="flex flex-row items-start gap-[var(--spacing-component-md)]">
-          <WarningCircleIcon className="h-4 w-4 shrink-0 mt-0.5" />
-          <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>Payment failed — check your card details.</AlertDescription>
-          </div>
-        </div>
+      <Alert variant="destructive" icon={<WarningCircleIcon />}>
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription>Payment failed. Check your card details.</AlertDescription>
       </Alert>
-      <Alert variant="warning">
-        <div className="flex flex-row items-start gap-[var(--spacing-component-md)]">
-          <WarningIcon className="h-4 w-4 shrink-0 mt-0.5" />
-          <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
-            <AlertTitle>Warning</AlertTitle>
-            <AlertDescription>Your API key expires in 7 days.</AlertDescription>
-          </div>
-        </div>
+      <Alert variant="warning" icon={<WarningIcon />}>
+        <AlertTitle>Warning</AlertTitle>
+        <AlertDescription>Your API key expires in 7 days.</AlertDescription>
+      </Alert>
+      <Alert variant="ai" icon={<SparkleIcon />}>
+        <AlertTitle>AI proposal</AlertTitle>
+        <AlertDescription>Lead a cross-functional planning session.</AlertDescription>
       </Alert>
     </div>
   ),

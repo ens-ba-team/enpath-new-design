@@ -290,3 +290,27 @@ export const Compact: Story = {
     </Card>
   ),
 };
+
+/** CardHeader tone="tinted": the title row is a full-width band on color/surface/header with a line
+ *  under it (default and compact sizes). For a Card that groups a list. */
+export const TintedHeader: Story = {
+  name: 'Tinted header',
+  render: () => (
+    <div className="flex w-[min(480px,calc(100vw-2rem))] flex-col gap-[var(--spacing-layout-xs)]">
+      <Card>
+        <CardHeader tone="tinted">
+          <CardTitle>Code quality</CardTitle>
+          <CardDescription>Growth area · You 3 → Needed 4</CardDescription>
+        </CardHeader>
+        <CardContent>Lead code reviews for the checkout service</CardContent>
+      </Card>
+      <Card size="compact">
+        <CardHeader tone="tinted">
+          <CardTitle>Delivery</CardTitle>
+          <CardDescription>Compact size</CardDescription>
+        </CardHeader>
+        <CardContent>Split the search migration into weekly releases</CardContent>
+      </Card>
+    </div>
+  ),
+};

@@ -114,7 +114,7 @@ Route `/me/actions` (sidebar "My Actions"). Code: `enpath-ui/src/features/enpath
 - **Action rows** (layout A, 2026-09-30; nothing expands), sorted In progress → To do → Done, then by
   due date, in fixed columns so they line up: status Badge (To do secondary · In progress blue · Done
   success) | title, the **outcome in full**, and a small line "Due 26 Sep · overdue · added by you"
-  (only "overdue" in `color/text/invalid`; Done rows say "Done 12 Sep" and their title is secondary) |
+  (only "overdue" in `color/text/danger`; Done rows say "Done 12 Sep" and their title is secondary) |
   **Start** (To do) / **Mark done** (In progress) | "…" menu: Edit · **Move to** (a submenu with the other two statuses, 2026-09-30:
   the List can make every move the Board's drag can) · Remove from plan (destructive confirm: red Remove button, AlertDialog Destructive type).
   "What {point} looks like" isn't shown per action (it describes the growth area, not the action).
@@ -137,9 +137,10 @@ My Career's mock starts with no target; the pages keep separate state. Today = 3
 
 **Rows** sit in fixed columns (status slot · title · caret | next-step button | "…") so they line up.
 
-**Built on the screen, to move into components** (Open flags, kind restyle): the progress ring before
-each growth area's title ("1/2"), the Stat tiles' coloured icon tiles (solid fill + white icon: growth areas
-yellow/600 · in progress blue/600 · to do zinc/500 · done green/600), the In progress badge's border, the tinted header band (`color/surface/header`).
+**Design-system options it uses** (moved from the screen into components 2026-09-30): `Progress
+shape="ring"`, `CardHeader tone="tinted"`, `Stat iconTile / divided / aside`, `Alert variant="ai"` with
+`icon`, `color/board/*` and `color/border/ai` on the Board, `DropdownMenuItem variant="destructive"`.
+The screen has no hand-built copies or overrides left.
 
 **Not built:** manager
 view / approval · "Plan an action" from My Career opening this page · Records page.

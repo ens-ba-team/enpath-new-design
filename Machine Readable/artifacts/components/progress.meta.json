@@ -63,6 +63,23 @@
         "Default": "Fill color/brand/primary (color/status/success at 100), track color/background/muted.",
         "Success": "Fill color/status/success at every value, track color/background/default — for progress on a success surface."
       }
+    },
+    "Shape": {
+      "type": "enum",
+      "values": [
+        "Bar",
+        "Ring"
+      ],
+      "default": "Bar",
+      "reactProp": "shape",
+      "reactValues": {
+        "Bar": "bar",
+        "Ring": "ring"
+      },
+      "intent": {
+        "Bar": "A horizontal bar",
+        "Ring": "A 36px circle with a short label inside (children, e.g. \"1/2\"); pass an aria-label that says the numbers in words"
+      }
     }
   },
   "componentProperties": {
@@ -85,17 +102,29 @@
       "fill": "color/brand/primary",
       "radius": "radius/full",
       "note": "Fill radius must match container radius to avoid clipping artefacts."
+    },
+    "ring": {
+      "track": "color/border/default",
+      "fill": "color/icon/default",
+      "fillComplete": "color/icon/success",
+      "label": "color/background/default/foreground"
     }
   },
   "tokensUsed": [
     "color/background/default",
+    "color/background/default/foreground",
     "color/background/muted",
+    "color/border/default",
     "color/brand/500",
     "color/brand/primary",
     "color/green/500",
+    "color/green/700",
+    "color/icon/default",
+    "color/icon/success",
     "color/status/success",
     "color/white",
     "color/zinc/100",
+    "color/zinc/200",
     "radius/full"
   ],
   "accessibility": {
@@ -164,6 +193,10 @@
       {
         "date": "2026-09-29",
         "change": "Added tone=\"success\". The Setup progress Alert uses it instead of overriding track and fill."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "shape=\"ring\" (36px, label inside): the Action plan growth area ring, built on the screen before."
       }
     ]
   },
@@ -185,7 +218,9 @@
       "Indeterminate",
       "Sizes",
       "StepTracker",
-      "Animated"
+      "Animated",
+      "SuccessTone",
+      "Ring"
     ],
     "decorators": [
       "none"

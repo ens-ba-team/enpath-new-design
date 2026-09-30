@@ -78,12 +78,17 @@ const DropdownMenuItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
     inset?: boolean
+    /** destructive (2026-09-30): a removal or deletion — red text (color/brand/destructive), danger-subtle
+     *  highlight. Pair it with a destructive confirm dialog. */
+    variant?: "default" | "destructive"
   }
->(({ className, inset, ...props }, ref) => (
+>(({ className, inset, variant = "default", ...props }, ref) => (
   <DropdownMenuPrimitive.Item
     ref={ref}
+    data-variant={variant}
     className={cn(
       "relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-body-sm outline-none transition-colors focus:bg-[var(--color-surface-accent)] focus:text-[var(--color-surface-accent-foreground)] data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+      variant === "destructive" && "text-[var(--color-brand-destructive)] focus:bg-[var(--color-status-danger-subtle)] focus:text-[var(--color-brand-destructive)]",
       inset && "pl-8",
       className
     )}

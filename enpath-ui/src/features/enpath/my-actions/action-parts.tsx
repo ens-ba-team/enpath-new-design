@@ -1,14 +1,13 @@
 'use client';
 // Pieces an Action shows the same way in the List (growth-area-group.tsx) and the Board
 // (board-view.tsx): the status Badge, the "Due · added by" line, the next-step button, the "…" menu
-// and an AI proposal. One place, so the two views can't drift.
-// SCREEN-LEVEL DEBT (design-patterns.md → Open flags, kind restyle, 2026-09-30): the In progress
-// Badge's border, the proposal's brand-blue Sparkle (Alert colours every svg) and the proposal's
-// border (primitive color/brand/400: no semantic "AI" border token yet) are overridden here.
+// and an AI proposal. One place, so the two views can't drift. Built from design-system options only
+// (Alert variant ai + icon, Badge, DropdownMenu destructive item): no screen overrides.
 
 import * as React from 'react';
 import { DotsThreeIcon, SparkleIcon } from '@phosphor-icons/react/ssr';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -27,11 +26,9 @@ export interface ActionHandlers {
 }
 
 const statusBadge: Record<ActionStatus, 'secondary' | 'blue' | 'success'> = { todo: 'secondary', doing: 'blue', done: 'success' };
-/** Debt: Badge blue's border (border/subtle) is near-invisible next to success's; match it here. */
-const statusBadgeClass: Partial<Record<ActionStatus, string>> = { doing: 'border-[var(--color-status-info)]' };
 
 export function StatusBadge({ status }: { status: ActionStatus }) {
-  return <Badge variant={statusBadge[status]} shape="pill" size="sm" className={statusBadgeClass[status]}>{statusLabel[status]}</Badge>;
+  return <Badge variant={statusBadge[status]} shape="pill" size="sm">{statusLabel[status]}</Badge>;
 }
 
 /** "Due 26 Sep · overdue · added by you" — only "overdue" is red. */
@@ -40,7 +37,7 @@ export function ActionMeta({ action }: { action: Action }) {
   return (
     <span className="text-body-xs text-[var(--color-text-secondary)]">
       {when}
-      {isOverdue(action) && <> · <span className="text-[var(--color-text-invalid)]">overdue</span></>}
+      {isOverdue(action) && <> · <span className="text-[var(--color-text-danger)]">overdue</span></>}
       {' · '}{sourceLabel[action.source]}
     </span>
   );
@@ -73,30 +70,48 @@ export function ActionMenu({ action, h }: { action: Action; h: ActionHandlers })
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => h.onRemove(action)}>Remove from plan</DropdownMenuItem>
+        <DropdownMenuItem variant="destructive" onClick={() => h.onRemove(action)}>Remove from plan</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
 }
 
-/** An AI proposal: default Alert with a brand-blue Sparkle (the chat panel's AI mark). Icon + text +
- *  buttons sit in an inner row, as in the Alert WithIcon story (Alert has no icon option, Open flag).
- *  `stacked` puts the buttons under the text (narrow Board column). Not urgent → role=group. */
-export function ProposalAlert({ proposal, h, context, stacked = false }: { proposal: Proposal; h: ActionHandlers; context?: string; stacked?: boolean }) {
-  // Brand stroke in the List; on the Board the whole "Proposed by AI" column carries it instead (stacked).
+const proposalButtons = (proposal: Proposal, h: ActionHandlers) => (
+  <div className="flex items-center gap-[var(--spacing-component-xs)]">
+    <Button variant="outline" size="sm" onClick={() => h.onAcceptProposal(proposal)}>Add to plan</Button>
+    <Button variant="ghost" size="sm" onClick={() => h.onDismissProposal(proposal)}>Dismiss</Button>
+  </div>
+);
+
+/** An AI proposal in the List: Alert variant="ai" (color/border/ai, brand Sparkle) with the icon option.
+ *  Text on the left, Add to plan / Dismiss on the right. Not urgent → role=group. */
+export function ProposalAlert({ proposal, h, context }: { proposal: Proposal; h: ActionHandlers; context?: string }) {
   return (
-    <Alert variant="default" role="group" aria-label="AI proposal" className={stacked ? undefined : 'border-[var(--color-brand-400)]'}>
+    <Alert variant="ai" icon={<SparkleIcon />} role="group" aria-label="AI proposal">
       <div className="flex flex-wrap items-start gap-[var(--spacing-component-md)]">
-        <SparkleIcon className="mt-[var(--spacing-component-xxs)] h-4 w-4 shrink-0 text-[var(--color-icon-brand)]!" aria-hidden="true" />
         <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xxs)]">
           <AlertTitle>{proposal.title}</AlertTitle>
           <AlertDescription>{context ?? 'AI proposal'} · outcome: {proposal.outcome}</AlertDescription>
         </div>
-        <div className={stacked ? 'flex w-full items-center gap-[var(--spacing-component-xs)]' : 'flex items-center gap-[var(--spacing-component-xs)]'}>
-          <Button variant="outline" size="sm" onClick={() => h.onAcceptProposal(proposal)}>Add to plan</Button>
-          <Button variant="ghost" size="sm" onClick={() => h.onDismissProposal(proposal)}>Dismiss</Button>
-        </div>
+        {proposalButtons(proposal, h)}
       </div>
     </Alert>
+  );
+}
+
+/** An AI proposal on the Board: a compact Card like the other Board cards (the "Proposed by AI" column
+ *  carries the AI border), with the brand Sparkle, and the buttons under the text. */
+export function ProposalCard({ proposal, h, context }: { proposal: Proposal; h: ActionHandlers; context?: string }) {
+  return (
+    <Card size="compact" role="group" aria-label="AI proposal">
+      <div className="flex items-start gap-[var(--spacing-component-sm)]">
+        <SparkleIcon className="mt-[var(--spacing-component-xxs)] h-4 w-4 shrink-0 text-[var(--color-icon-brand)]" aria-hidden="true" />
+        <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xxs)]">
+          <p className="text-heading-xs text-[var(--color-surface-default-foreground)]">{proposal.title}</p>
+          <p className="text-body-sm text-[var(--color-text-secondary)]">{context ?? 'AI proposal'} · outcome: {proposal.outcome}</p>
+        </div>
+      </div>
+      {proposalButtons(proposal, h)}
+    </Card>
   );
 }

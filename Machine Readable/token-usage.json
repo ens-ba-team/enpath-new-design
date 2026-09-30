@@ -261,6 +261,7 @@
     "date-picker",
     "item",
     "message",
+    "progress",
     "select"
   ],
   "color/background/inverted": [
@@ -298,6 +299,9 @@
   "color/blue/25": [
     "item"
   ],
+  "color/blue/400": [
+    "stat"
+  ],
   "color/blue/50": [
     "alert",
     "badge",
@@ -305,6 +309,7 @@
     "message"
   ],
   "color/blue/500": [
+    "badge",
     "button",
     "sidebar"
   ],
@@ -316,6 +321,9 @@
     "button"
   ],
   "color/blue/800": [
+    "alert"
+  ],
+  "color/border/ai": [
     "alert"
   ],
   "color/border/default": [
@@ -347,6 +355,7 @@
     "model-selector",
     "navigation-menu",
     "pagination",
+    "progress",
     "radio-group",
     "scroll-area",
     "select",
@@ -405,12 +414,14 @@
     "select",
     "textarea"
   ],
+  "color/border/info": [
+    "badge"
+  ],
   "color/border/strong": [
     "badge",
     "button"
   ],
   "color/border/subtle": [
-    "badge",
     "separator"
   ],
   "color/border/success": [
@@ -435,10 +446,15 @@
     "career-map"
   ],
   "color/brand/400": [
+    "alert",
     "career-path-stepper"
+  ],
+  "color/brand/50": [
+    "card"
   ],
   "color/brand/500": [
     "accordion",
+    "alert",
     "badge",
     "breadcrumb",
     "button",
@@ -476,6 +492,7 @@
   "color/brand/destructive": [
     "badge",
     "button",
+    "dropdown-menu",
     "tool"
   ],
   "color/brand/destructive-active": [
@@ -488,6 +505,7 @@
     "button"
   ],
   "color/brand/primary": [
+    "alert",
     "badge",
     "button",
     "calendar",
@@ -552,17 +570,22 @@
   "color/green/600": [
     "badge",
     "career-map",
+    "stat",
     "step-rail",
     "tool"
   ],
   "color/green/700": [
     "alert",
     "career-map",
+    "progress",
     "stat",
     "step-rail",
     "toast"
   ],
   "color/green/800": [
+    "alert"
+  ],
+  "color/icon/brand": [
     "alert"
   ],
   "color/icon/danger": [
@@ -573,6 +596,7 @@
     "calendar",
     "combobox",
     "date-picker",
+    "progress",
     "select"
   ],
   "color/icon/disabled": [
@@ -585,6 +609,7 @@
   ],
   "color/icon/success": [
     "alert",
+    "progress",
     "stat",
     "toast"
   ],
@@ -630,7 +655,8 @@
   ],
   "color/red/50": [
     "badge",
-    "button"
+    "button",
+    "dropdown-menu"
   ],
   "color/red/500": [
     "alert",
@@ -649,6 +675,7 @@
     "badge",
     "button",
     "combobox",
+    "dropdown-menu",
     "toast",
     "tool"
   ],
@@ -706,7 +733,8 @@
   ],
   "color/status/danger-subtle": [
     "badge",
-    "button"
+    "button",
+    "dropdown-menu"
   ],
   "color/status/info-subtle": [
     "alert",
@@ -737,6 +765,7 @@
     "tabs"
   ],
   "color/surface/default": [
+    "alert",
     "button-group",
     "calendar",
     "card",
@@ -751,6 +780,9 @@
   "color/surface/default/foreground": [
     "career-map",
     "career-path-stepper"
+  ],
+  "color/surface/header": [
+    "card"
   ],
   "color/surface/muted": [
     "code-block",
@@ -848,6 +880,18 @@
     "career-map",
     "step-rail"
   ],
+  "color/tile/info": [
+    "stat"
+  ],
+  "color/tile/neutral": [
+    "stat"
+  ],
+  "color/tile/success": [
+    "stat"
+  ],
+  "color/tile/warning": [
+    "stat"
+  ],
   "color/violet/100": [
     "career-map"
   ],
@@ -907,6 +951,7 @@
     "badge"
   ],
   "color/yellow/600": [
+    "stat",
     "tool"
   ],
   "color/yellow/700": [
@@ -981,6 +1026,7 @@
     "model-selector",
     "navigation-menu",
     "pagination",
+    "progress",
     "radio-group",
     "scroll-area",
     "select",
@@ -1037,6 +1083,7 @@
     "date-picker",
     "input",
     "select",
+    "stat",
     "textarea"
   ],
   "color/zinc/600": [
@@ -1241,6 +1288,7 @@
     "pagination",
     "select",
     "sidebar",
+    "stat",
     "tabs",
     "textarea",
     "tooltip"
@@ -1332,6 +1380,7 @@
     "stat"
   ],
   "spacing/0-5": [
+    "alert",
     "calendar",
     "career-map",
     "career-path-stepper",
@@ -1362,6 +1411,7 @@
   "spacing/1-5": [
     "combobox",
     "item",
+    "stat",
     "tabs",
     "tooltip"
   ],
@@ -1401,6 +1451,7 @@
     "select",
     "sheet",
     "sidebar",
+    "stat",
     "step-rail",
     "tabs",
     "textarea"
@@ -1524,6 +1575,7 @@
     "select",
     "sheet",
     "sidebar",
+    "stat",
     "step-rail",
     "tabs",
     "textarea"
@@ -1551,10 +1603,12 @@
   "spacing/component/xs-plus": [
     "combobox",
     "item",
+    "stat",
     "tabs",
     "tooltip"
   ],
   "spacing/component/xxs": [
+    "alert",
     "calendar",
     "career-map",
     "career-path-stepper",

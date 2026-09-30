@@ -1,11 +1,10 @@
 'use client';
 // Action plan — Board view (my-actions-build.md → Board). Four columns: Proposed by AI · To do ·
 // In progress · Done (user, 2026-09-30: proposals as the first column, as in sketch B). Each column is
-// a grouping area with a count; status columns use the same fills as the Stat icon tiles (user,
-// 2026-09-30), one step darker: To do zinc/200 · In progress blue/100 · Done green/100 (primitives);
-// Proposed by AI surface/raised (zinc/50) with a brand/400 stroke. An Action card (Card compact) shows the
+// a grouping area with a count; status columns use color/board/* (To do · In progress · Done);
+// Proposed by AI is color/surface/raised with a color/border/ai stroke. An Action card (Card compact) shows the
 // same content as a List row: growth area, title, outcome, "Due · added by", next step and "…"; the
-// column says the status, so there's no badge. Proposals are the shared ProposalAlert, stacked.
+// column says the status, so there's no badge. Proposals are the shared ProposalCard.
 // Moving: the Start / Mark done buttons (touch and keyboard), or drag a card to another column on
 // desktop (native drag, like Setup's career path editor); the target column shows
 // color/drop-indicator while a card is over it. Proposals don't drag: Add to plan opens the dialog.
@@ -16,16 +15,15 @@ import { SparkleIcon } from '@phosphor-icons/react/ssr';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import type { Gap } from '../my-career/mock-data';
-import { ActionMenu, ActionMeta, NextStepButton, ProposalAlert, type ActionHandlers } from './action-parts';
+import { ActionMenu, ActionMeta, NextStepButton, ProposalCard, type ActionHandlers } from './action-parts';
 import { statusLabel, type Action, type ActionStatus, type Proposal } from './mock-data';
 
 const columns: ActionStatus[] = ['todo', 'doing', 'done'];
-/** The Stat icon tiles' hues, one step darker (user, 2026-09-30). Debt: primitives, no semantic token
- *  at these steps (Open flag: Board column fills). */
+/** Column fills: color/board/* tokens (2026-09-30). */
 const columnFill: Record<ActionStatus, string> = {
-  todo: 'bg-[var(--color-zinc-200)]',
-  doing: 'bg-[var(--color-blue-100)]',
-  done: 'bg-[var(--color-green-100)]',
+  todo: 'bg-[var(--color-board-todo)]',
+  doing: 'bg-[var(--color-board-doing)]',
+  done: 'bg-[var(--color-board-done)]',
 };
 
 function Column({ title, count, icon, fill = 'bg-[var(--color-surface-raised)]', stroke, children, dropTarget, over, onDragOver, onDragLeave, onDrop }: {
@@ -92,12 +90,11 @@ export function BoardView({ actions, proposals, areas, h, onMove }: {
   return (
     // Four columns from 1024px; narrower screens scroll the columns sideways, one readable width each.
     <div className="grid auto-cols-[minmax(16rem,1fr)] grid-flow-col gap-[var(--spacing-component-md)] overflow-x-auto pb-[var(--spacing-component-xs)] lg:grid-flow-row lg:grid-cols-4">
-      {/* Debt: brand stroke on the whole AI column, primitive color/brand/400 (Open flag: AI proposal border). */}
-      <Column title="Proposed by AI" count={proposals.length} stroke="border border-[var(--color-brand-400)]"
+      <Column title="Proposed by AI" count={proposals.length} stroke="border border-[var(--color-border-ai)]"
         icon={<SparkleIcon className="h-4 w-4 text-[var(--color-icon-brand)]" aria-hidden="true" />}>
         {proposals.length === 0
           ? <li className="px-[var(--spacing-component-xs)] text-body-sm text-[var(--color-text-secondary)]">No proposals right now. Ask AI for ideas.</li>
-          : proposals.map((p) => <li key={p.id}><ProposalAlert proposal={p} h={h} context={areaOf(p.competencyId)?.name} stacked /></li>)}
+          : proposals.map((p) => <li key={p.id}><ProposalCard proposal={p} h={h} context={areaOf(p.competencyId)?.name} /></li>)}
       </Column>
 
       {columns.map((status) => {

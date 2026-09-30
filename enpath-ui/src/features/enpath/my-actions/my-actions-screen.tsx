@@ -27,36 +27,8 @@ import {
   type Action, type Proposal,
 } from './mock-data';
 
-// SCREEN-LEVEL DEBT (design-patterns.md → Open flags, kind restyle, 2026-09-30): Stat has no icon-tile
-// option, so the tile is built in its icon slot. Colours follow meaning: growth areas amber (as in My
-// Career), in progress info blue, to do neutral, done success. Move into Stat, then delete this.
-function IconTile({ icon, tone }: { icon: React.ReactNode; tone: 'warning' | 'info' | 'neutral' | 'success' }) {
-  const fill = {
-    // Solid fill + white icon, set B (user, 2026-09-30): similar lightness so no tile shouts —
-    // amber/600 · zinc/500 · blue/400 (blue/600 was too electric) · green/600. Primitives: no semantic
-    // token at these steps.
-    warning: 'bg-[var(--color-yellow-600)] text-[var(--color-white)]',
-    info: 'bg-[var(--color-blue-400)] text-[var(--color-white)]',
-    neutral: 'bg-[var(--color-zinc-500)] text-[var(--color-white)]',
-    success: 'bg-[var(--color-green-600)] text-[var(--color-white)]',
-  }[tone];
-  return <span className={`inline-flex rounded-[var(--radius-md)] p-[var(--spacing-component-xs-plus)] ${fill}`}>{icon}</span>;
-}
-
-// Debt (same flag): Stat has no header divider or right-hand note. The label row gets a full-bleed line
-// under it (negative margins cancel Stat's spacing/component/md padding), and the description slot holds
-// a row: the detail on the left, "N overdue" in red on the right when there is any.
-const statWithHeader =
-  '[&>p:first-child]:-mx-[var(--spacing-component-md)] [&>p:first-child]:border-b [&>p:first-child]:border-[var(--color-border-default)] [&>p:first-child]:px-[var(--spacing-component-md)] [&>p:first-child]:pb-[var(--spacing-component-sm)]';
-
-function StatNote({ text, overdue = 0 }: { text: string; overdue?: number }) {
-  return (
-    <span className="flex items-baseline justify-between gap-[var(--spacing-component-sm)]">
-      <span className="min-w-0 truncate">{text}</span>
-      {overdue > 0 && <span className="shrink-0 text-[var(--color-text-invalid)]">{overdue} overdue</span>}
-    </span>
-  );
-}
+/** "1 overdue" beside a summary note (color/text/danger), only when there is any. */
+const overdueNote = (n: number) => (n > 0 ? <span className="text-[var(--color-text-danger)]">{n} overdue</span> : undefined);
 
 type Editor = { mode: 'add'; prefill?: Partial<ActionDraft>; fromProposal?: string } | { mode: 'edit'; action: Action } | null;
 
@@ -163,14 +135,14 @@ export function MyActionsScreen() {
 
             <div className="flex flex-col gap-[var(--spacing-layout-sm)] px-[var(--spacing-layout-sm)] pb-[var(--spacing-layout-sm)]">
               <section aria-label="Plan summary" className="grid grid-cols-2 gap-[var(--spacing-component-md)] md:grid-cols-4">
-                <Stat className={statWithHeader} label="Growth areas" value={growthAreas.length} icon={<IconTile tone="warning" icon={<TargetIcon />} />}
-                  description={<StatNote text={`toward ${targetName}`} />} />
-                <Stat className={statWithHeader} label="To do" value={count('todo')} icon={<IconTile tone="neutral" icon={<ListChecksIcon />} />}
-                  description={<StatNote text={summary.todo ? `next due ${shortDate(summary.todo)}` : 'Nothing to start'} overdue={summary.todoOverdue} />} />
-                <Stat className={statWithHeader} label="In progress" value={count('doing')} icon={<IconTile tone="info" icon={<PlayCircleIcon />} />}
-                  description={<StatNote text={summary.doing ? `due ${shortDate(summary.doing)}` : 'Nothing started'} overdue={summary.doingOverdue} />} />
-                <Stat className={statWithHeader} label="Done" value={count('done')} icon={<IconTile tone="success" icon={<CheckCircleIcon />} />}
-                  description={<StatNote text={summary.lastDone ? `last on ${shortDate(summary.lastDone)}` : 'None yet'} />} />
+                <Stat divided iconTile="warning" icon={<TargetIcon />} label="Growth areas" value={growthAreas.length}
+                  description={`toward ${targetName}`} />
+                <Stat divided iconTile="neutral" icon={<ListChecksIcon />} label="To do" value={count('todo')}
+                  description={summary.todo ? `next due ${shortDate(summary.todo)}` : 'Nothing to start'} aside={overdueNote(summary.todoOverdue)} />
+                <Stat divided iconTile="info" icon={<PlayCircleIcon />} label="In progress" value={count('doing')}
+                  description={summary.doing ? `due ${shortDate(summary.doing)}` : 'Nothing started'} aside={overdueNote(summary.doingOverdue)} />
+                <Stat divided iconTile="success" icon={<CheckCircleIcon />} label="Done" value={count('done')}
+                  description={summary.lastDone ? `last on ${shortDate(summary.lastDone)}` : 'None yet'} />
               </section>
 
               {view === 'board' ? (

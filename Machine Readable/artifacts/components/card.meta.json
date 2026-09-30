@@ -56,6 +56,15 @@
     "Property 1": {
       "type": "VARIANT",
       "default": "Form"
+    },
+    "CardHeader tone": {
+      "type": "VARIANT",
+      "values": [
+        "default",
+        "tinted"
+      ],
+      "default": "default",
+      "notes": "tinted: the header becomes a full-width band on color/surface/header with a color/border/default line under it (for a Card that groups a list)"
     }
   },
   "tokens": {
@@ -82,11 +91,19 @@
     "slots": {
       "Slot 1": "Free-composition FRAME — charts, stat blocks, image frames, badge rows",
       "Slot 2": "Free-composition FRAME — charts, stat blocks, image frames, badge rows"
+    },
+    "headerTinted": {
+      "fill": "color/surface/header",
+      "stroke": "color/border/default",
+      "paddingX": "spacing/component/lg (compact: md)",
+      "paddingY": "spacing/component/md (compact: sm)"
     }
   },
   "tokensUsed": [
     "color/border/default",
+    "color/brand/50",
     "color/surface/default",
+    "color/surface/header",
     "color/text/secondary",
     "color/white",
     "color/zinc/200",
@@ -173,6 +190,10 @@
       {
         "date": "2026-09-30",
         "change": "Fill color/surface/overlay → color/surface/default and title color/surface/overlay/foreground → color/surface/default/foreground: a card is a flat container, overlay is for floating UI (token descriptions aligned). No visual change."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "CardHeader tone=\"tinted\" (color/surface/header band, full width): the Action plan growth area header, built on the screen before."
       }
     ]
   },
@@ -198,7 +219,8 @@
       "ImageVertical",
       "ImageDown",
       "ImageHorizontal",
-      "ShellComparison"
+      "ShellComparison",
+      "TintedHeader"
     ],
     "decorators": [
       "none"

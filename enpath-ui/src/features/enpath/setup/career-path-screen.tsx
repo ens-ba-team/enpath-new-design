@@ -417,9 +417,9 @@ export function CareerPathScreen({
             {current.nodes.length < 2 && (
               <Alert
                 variant="warning"
+                icon={<WarningIcon />}
                 className="mb-[var(--spacing-layout-xs)]"
               >
-                <WarningIcon />
                 <AlertTitle>Add at least 2 steps</AlertTitle>
                 <AlertDescription>
                   A path needs two or more Position–Level steps before it can be

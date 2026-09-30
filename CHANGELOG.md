@@ -6,6 +6,30 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-30 — Action plan debts moved into components
+
+### Added
+- Tokens: `color/border/ai` (brand/400), `color/border/info` (blue/500), `color/tile/{warning,neutral,info,success}` + `/foreground` (white), `color/board/{todo,doing,done}`. Each with a full description.
+- **Alert:** optional `icon` prop (icon beside the content, coloured by variant; Alerts without it are unchanged) and variant `ai` (white, `color/border/ai`, brand icon). Stories: With icon (prop), AI proposal.
+- **Stat:** `iconTile`, `divided`, `aside`. Story: Icon tile, divided, aside.
+- **Progress:** `shape="ring"` (36px, label inside). Story: Ring.
+- **CardHeader:** `tone="tinted"` (full-width `color/surface/header` band). Story: Tinted header.
+- **DropdownMenuItem:** `variant="destructive"`. Story: Destructive item.
+
+### Changed
+- **Badge blue:** border `color/border/info` (was `color/border/subtle`). Every blue badge changes.
+- Screens use the options instead of hand-built copies: the Action plan (ring, band, Stat tiles, AI proposals, Board columns and AI column, Remove from plan), Setup's four warning Alerts and the career path warning (icon prop), the Position dialog's two warnings (hand-built `<p>` → Alert warning).
+- `design-patterns.md`: seven Open flags closed; new candidate P10 Action item; new flag: the To do badge reads as disabled.
+
+---
+
+## 2026-09-30 — New token `color/text/danger`
+
+### Added
+- `color/text/danger` (red/600): text for a status that needs attention (overdue, late, at risk). `color/text/invalid` stays for form errors; its description now points here. My Actions' "overdue" and "N overdue" use it.
+
+---
+
 ## 2026-09-30 — Tooltip wraps long labels
 
 ### Changed

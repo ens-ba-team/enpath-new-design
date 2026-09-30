@@ -11,8 +11,12 @@ import { cn } from "@/lib/utils"
 //   padding  = spacing/component/lg (16px); size sm: md horizontal / sm vertical, one row
 //   gap      = spacing/component/sm (8px) — flat layout: title ↔ description
 //
-// Layout: flex-col (flat, no icon). For icon layout use explicit composition in
-// the story: flex-row wrapper > icon + flex-col content (gap spacing/component/xxs).
+// Layout: flex-col (flat). Optional `icon` (2026-09-30): the icon sits beside the content — a row of
+// icon + a flex-col of the children (gap spacing/component/md, content gap spacing/component/xxs).
+// Not every Alert has an icon; without `icon` nothing changes. Size sm is already one row: the icon
+// goes first. Don't build the icon row by hand on a screen.
+// Variant ai (2026-09-30): an AI proposal — white fill, color/border/ai stroke, the icon in
+// color/icon/brand (use the Sparkle icon).
 //
 // Text colors cascade via CSS descendant selectors on data-alert-title / data-alert-desc.
 // Icon color cascades via [&_svg] selector.
@@ -61,6 +65,14 @@ const alertVariants = cva(
           "[&_[data-alert-desc]]:text-[var(--color-blue-800)]",
           "[&_svg]:text-[var(--color-status-info-subtle-foreground)]",
         ].join(" "),
+        ai: [
+          "bg-[var(--color-surface-default)]",
+          "border-[var(--color-border-ai)]",
+          "[&_[data-alert-title]]:text-[var(--color-surface-default-foreground)]",
+          "[&_[data-alert-desc]]:text-[var(--color-text-secondary)]",
+          "[&_svg]:text-[var(--color-surface-default-foreground)]",
+          "[&_[data-slot=alert-icon]_svg]:text-[var(--color-icon-brand)]",
+        ].join(" "),
       },
       // size: default = stacked title + description; sm = one compact line (icon · title · action)
       // for page headers and toolbars.
@@ -75,16 +87,36 @@ const alertVariants = cva(
 
 const Alert = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
->(({ className, variant, size, ...props }, ref) => (
-  <div
-    ref={ref}
-    role="alert"
-    data-size={size ?? "default"}
-    className={cn(alertVariants({ variant, size }), className)}
-    {...props}
-  />
-))
+  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants> & {
+    /** Optional icon (Phosphor, sized h-4 w-4 here), placed beside the content and coloured by variant */
+    icon?: React.ReactNode
+  }
+>(({ className, variant, size, icon, children, ...props }, ref) => {
+  const iconSlot = icon ? (
+    <span data-slot="alert-icon" aria-hidden="true"
+      className={cn("inline-flex shrink-0 [&_svg]:h-4 [&_svg]:w-4", size !== "sm" && "mt-[var(--spacing-component-xxs)]")}>
+      {icon}
+    </span>
+  ) : null
+  return (
+    <div
+      ref={ref}
+      role="alert"
+      data-size={size ?? "default"}
+      className={cn(alertVariants({ variant, size }), className)}
+      {...props}
+    >
+      {icon && size !== "sm" ? (
+        <div className="flex w-full items-start gap-[var(--spacing-component-md)]">
+          {iconSlot}
+          <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xxs)]">{children}</div>
+        </div>
+      ) : (
+        <>{iconSlot}{children}</>
+      )}
+    </div>
+  )
+})
 Alert.displayName = "Alert"
 
 // ─── AlertTitle ───────────────────────────────────────────────────────────────

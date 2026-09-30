@@ -39,6 +39,8 @@ footer pattern") instead of repeating a pattern.
 
 Decisions waiting. One row per flag; remove it when decided and done.
 
+Closed 2026-09-30 (moved into components, see CHANGELOG): progress ring (`Progress shape="ring"`), Stat icon tile + divider + note (`Stat iconTile / divided / aside`), Badge blue border (`color/border/info`), tinted header band (`CardHeader tone="tinted"`), Alert icon (`Alert icon`, plus the Setup warnings and the Position dialog), AI proposal border (`Alert variant="ai"`, `color/border/ai`), Board column fills (`color/board/*`).
+
 | Flag | Kind | Where | Since | Decision needed |
 |---|---|---|---|---|
 | Step rail reuses the Career map's role tokens (`career-map/*`, 10 tokens: node, band, label, edge colours) | breaks token | `components/ui/step-rail.tsx` | 2026-09-30 | Allow it (add `step-rail` to the owners of `career-map/*`, the rail is the map's line language turned on its side), or give the rail its own tokens |
@@ -49,18 +51,12 @@ Decisions waiting. One row per flag; remove it when decided and done.
 | CodeBlock: spec fill is `chat/code/bg` (grey, surface/raised); the code fills `color/background/default` (white) | breaks spec | `components/ai-elements/code-block.tsx` | 2026-09-30 | Which fill is right: grey (spec) or white (code) |
 | DatePicker: spec open-state fill is `color/background/default`, code uses `color/input/bg`; spec's invalid state (`color/border/error` border + ring) isn't in the code | breaks spec | `components/ui/date-picker.tsx` | 2026-09-30 | Match the spec in code, or update the spec to the code |
 | Dialog: Sticky footer / Scrollable types are built in the story by overriding `DialogContent` / `DialogHeader` padding; footer fill `color/background/subtle` + `color/border/subtle` are story classes | restyle | `stories/Dialog.stories.tsx` | 2026-09-30 | Add `DialogBody` / a sticky `DialogFooter` option to the component, or drop the types from the spec |
-| DropdownMenu: label colour (spec `color/text/secondary`, code inherits the overlay text); shortcut dimmed with `opacity-60` (rulebook: never dim text with opacity); separator `color/surface/muted` vs spec `color/border/default`; spec's destructive item (`color/text/invalid`) isn't in the code | breaks spec | `components/ui/dropdown-menu.tsx` | 2026-09-30 | Match the spec in code (shortcut → `color/text/secondary`), or update the spec |
+| DropdownMenu: label colour (spec `color/text/secondary`, code inherits the overlay text); shortcut dimmed with `opacity-60` (rulebook: never dim text with opacity); separator `color/surface/muted` vs spec `color/border/default` | breaks spec | `components/ui/dropdown-menu.tsx` | 2026-09-30 | Match the spec in code (shortcut → `color/text/secondary`), or update the spec |
 | InputOTP: slot fill is `color/background/default` in code, `color/input/bg` in the spec; Disabled dims the whole group with opacity instead of the spec's disabled fill / stroke / text (`color/surface/muted`, `color/border/disabled`, `color/text/disabled`) | breaks spec | `components/ui/input-otp.tsx` | 2026-09-30 | Match the spec in code, or update the spec to the code |
 | Chat composer look (`chat/composer/bg`, `/border`, `/radius`) is applied by the Ask AI screen with className overrides on `PromptInput`; `PromptInput` itself renders the plain InputGroup | restyle | `features/enpath/chat/assistant-panel.tsx` (PromptInput); prompt-input + input-group specs | 2026-09-30 | Move the composer look into `PromptInput` (default or a variant), or drop it from the specs |
 | Pagination: the Simple story overrides `PaginationContent` gap with a className | restyle | `stories/Pagination.stories.tsx` | 2026-09-30 | Add a gap option to `PaginationContent`, or keep the default |
 | Toast: paddings and gaps come from sonner's default CSS; the spec binds `spacing/component/md`, `lg`, `sm`, `xxs` | breaks spec | `components/ui/toast.tsx` | 2026-09-30 | Bind the spec's spacing tokens through `toastOptions.classNames`, or update the spec to sonner's defaults |
-| Progress ring ("1/2" in a circle, after Culture Amp) **before the title** of each growth area (user, 2026-09-30). **Built on the screen** (`ProgressRing` in the file): SVG, track `color/border/default`, fill `color/icon/default` (neutral, 2026-09-30: too much blue on the page), all done `color/icon/success`, `role="progressbar"`. `Progress` is a straight bar only | restyle | `features/enpath/my-actions/growth-area-group.tsx` | 2026-09-30 | Move it into the design system (`Progress` option `shape="ring"` + story + meta.json), then delete the screen copy |
-| Stat icon in a coloured tile (like common dashboard tiles). **Built on the screen** (`IconTile` passed into Stat's `icon` slot): **solid fill + white icon** (user, 2026-09-30): set B (similar lightness): growth areas `yellow/600`, to do `zinc/500`, in progress `blue/400`, done `green/600`, icon `color/white` (primitives). Also built on the screen: a full-bleed line under the label row and a note row in the description slot (detail left, "N overdue" in red right). `Stat` only colours a bare icon | restyle | `features/enpath/my-actions/my-actions-screen.tsx` | 2026-09-30 | Move it into Stat (an icon-tile option, a header divider and a note/trend slot, + story + meta.json), then delete the screen copy |
-| Badge `blue` has an almost invisible border (`color/border/subtle`) while `success`, `warning` and `error` have coloured borders. **Overridden on the screen**: the In progress badge gets `color/status/info` as its border (there's no `border/info` token) | restyle | `features/enpath/my-actions/growth-area-group.tsx` (`statusBadgeClass`); `components/ui/badge.tsx` | 2026-09-30 | Fix it in Badge (every `blue` badge changes; maybe add a `color/border/info` token), then delete the override |
-| Tinted header band on a Card: the title row full-bleed on `color/surface/header` (brand/50, new token 2026-09-30) with a `color/border/default` line under it. **Built on the screen** (negative margins cancel the compact Card's padding) | restyle | `features/enpath/my-actions/growth-area-group.tsx` | 2026-09-30 | Make it a Card option (`<CardHeader tone="tinted">` for both sizes + story + meta.json) when a second screen needs it, then delete the screen copy |
-| Alert with an icon: the Action plan's AI proposals are `Alert variant="default"` (user 2026-09-30) with a brand-blue Sparkle icon (`color/icon/brand`, forced with `!` because Alert colours every svg) beside the title (user, 2026-09-30: proposals get an icon). Alert has no icon option, so the icon + text + buttons sit in an inner row, copied from the Alert WithIcon story. Setup's warnings do the same by overriding the Alert's layout, and the Position dialog uses a hand-built warning `<p>` | missing component | `features/enpath/my-actions/growth-area-group.tsx`; also `setup/setup-screen.tsx`, `setup/matrix-dialog.tsx`, `setup/matrices-screen.tsx` (×2), `setup/position-dialog.tsx` | 2026-09-30 | Add an icon option to Alert (+ story + meta.json) and move every Alert-with-icon to it; replace the Position dialog's `<p>` with Alert warning |
-| AI proposal border: the proposal Alerts in the List, and the whole "Proposed by AI" column on the Board (its cards keep the normal border), have a brand stroke, **primitive `color/brand/400`** set on the screen (user, 2026-09-30), because no semantic token means "AI" | restyle | `features/enpath/my-actions/action-parts.tsx` (`ProposalAlert`), `board-view.tsx` (AI column) | 2026-09-30 | Add a semantic token (e.g. `color/border/ai` → brand/400, or an Alert `ai` variant with the Sparkle built in) and bind it, then remove the primitive from the screen |
-| Board column fills: status columns use the Stat icon tiles' hues one step darker (user, 2026-09-30): To do `color/zinc/200` · In progress `color/blue/100` · Done `color/green/100`, **primitives** (no semantic token at these steps); the Stat icon tiles no longer match them (solid fills since 2026-09-30); Proposed by AI `color/surface/raised` | restyle | `features/enpath/my-actions/board-view.tsx` (`columnFill`), `my-actions-screen.tsx` (`IconTile`) | 2026-09-30 | Add semantic tokens for board column fills (or make the Board a pattern with its own tokens) and bind them, then remove the primitives |
+| The "To do" status uses Badge `secondary` (grey), which reads as disabled next to In progress (blue) and Done (green) | breaks token | `features/enpath/my-actions/action-parts.tsx` (`StatusBadge`) | 2026-09-30 | Pick a Badge variant for a neutral, active status (e.g. a new `neutral` status variant with a visible border), or keep `secondary` |
 
 Kinds: **restyle** (component changed at a place of use) · **missing component** · **missing token** ·
 **breaks token** (component vs token description) · **breaks spec** (code vs `meta.json`).
@@ -110,6 +106,7 @@ entries get an ID and go into the catalog. Names are working names.
 | P7 | Pattern | Competency status groups | My Career role panel. **Approved 2026-09-30** → `enp-pat-competency-status-groups` |
 | P8 | Pattern | Locked action with a reason | Position · Matrix · the rating grid |
 | P9 | Pattern | Ask AI chat panel | Setup · My Career |
+| P10 | Pattern | Action item | My Actions: List row · Board card (2026-09-30) |
 
 ---
 
@@ -302,3 +299,19 @@ neither a template nor a pattern. Its decisions stay in `my-career-build.md`._
 - **Components:** AI Elements (Conversation, Message, PromptInput, Suggestion, Tool), Button.
 - **Open:** fixed 380px, no mobile form (hidden below 1024px). Mode / model selects use
   `PromptInputSelectTrigger size="sm"` (2026-09-29).
+
+### P10 · Action item — candidate (2026-09-30)
+
+- **Scope:** one Action shown two ways with the same content and actions. Code:
+  `my-actions/action-parts.tsx` (shared pieces), `growth-area-group.tsx` (List row), `board-view.tsx`
+  (Board card).
+- **Anatomy:** status (Badge in the List; the column on the Board) · growth area (Board only; the List
+  groups by it) · title · outcome in full · meta line "Due {date} · overdue · added by …" (only
+  "overdue" in `color/text/danger`) · next-step button (Start / Mark done) · "…" menu: Edit · Move to ▸
+  (the other two statuses) · Remove from plan (`DropdownMenuItem variant="destructive"`, destructive
+  confirm).
+- **Rules / decisions:** nothing expands (everything is on the item); rows sort In progress → To do →
+  Done, then by due date; the Board adds drag between columns, the menu's Move to gives the same moves
+  everywhere; AI proposals are separate (`Alert variant="ai"` in the List, a compact Card in the AI column).
+- **Components:** Badge, Button, DropdownMenu, Card (Board), Alert.
+

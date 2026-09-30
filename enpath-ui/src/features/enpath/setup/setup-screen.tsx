@@ -357,8 +357,7 @@ function PositionDetail({ position, matrix, onChange, onPublish, onUnpublish, on
             </AlertDialogDescription>
           </AlertDialogHeader>
           {unsetCells.length > 0 && (
-            <Alert variant="warning" role="status" className="flex-row items-start gap-[var(--spacing-component-sm)]">
-              <WarningIcon className="mt-[var(--spacing-component-xxs)] h-4 w-4 shrink-0" aria-hidden="true" />
+            <Alert variant="warning" role="status" icon={<WarningIcon />}>
               <div className="flex flex-col gap-[var(--spacing-component-sm)]">
                 <AlertTitle>{unsetCells.length} {unsetCells.length === 1 ? 'cell' : 'cells'} not set</AlertTitle>
                 <AlertDescription>You can still publish. Unset cells show as “Not set” to employees.</AlertDescription>
