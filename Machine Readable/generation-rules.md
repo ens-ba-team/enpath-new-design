@@ -22,7 +22,9 @@ Every meta artifact must be produced through these three stages in order. Do not
 
 ### Stage 1 — Code inspection (source of truth)
 
-Read the component's `.tsx` in `enpath-ui/src/components/ui/` before writing anything — it is what renders. Capture every token the classes reference (`var(--…)`), per element and per state:
+**First run the script:** `node "Machine Readable/extract-token-usage.mjs" --write`. It reads the component's code and writes the generated `tokensUsed` list into its meta.json (and `Machine Readable/token-usage.json`). Never type `tokensUsed` by hand. The script reports any token the hand-written `tokens` block names but the code doesn't use: fix the spec to match the code, or, if the code is wrong, add it to `document/design-patterns.md` → Open flags. drift-check #14 fails when `tokensUsed` is stale.
+
+Then read the component's `.tsx` in `enpath-ui/src/components/ui/` before writing anything — it is what renders. Capture every token the classes reference (`var(--…)`), per element and per state:
 
 - Fill, stroke (colour + width), radius, padding on every side, gap, opacity, height
 - Resolve each CSS variable to its token name (`--color-input-border` → `color/input/border`)

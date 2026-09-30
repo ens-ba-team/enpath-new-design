@@ -30,6 +30,21 @@
     "Tool selects": "compact Select, no border",
     "Submit": "Button default — `color/brand/primary`"
   },
+  "tokensUsed": [
+    "color/surface/accent",
+    "color/text/secondary",
+    "color/zinc/100",
+    "color/zinc/600",
+    "height/control-touch/sm",
+    "height/control/sm",
+    "shadow/none",
+    "spacing/1",
+    "spacing/2",
+    "spacing/7",
+    "spacing/8",
+    "spacing/component/sm",
+    "spacing/component/xs"
+  ],
   "accessibility": {
     "properties": [
       {

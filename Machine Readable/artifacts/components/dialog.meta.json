@@ -75,6 +75,38 @@
       "exitEasing": "motion/easing/exit"
     }
   },
+  "tokensUsed": [
+    "color/background/accent",
+    "color/background/inverted",
+    "color/border/default",
+    "color/brand/500",
+    "color/ring",
+    "color/surface/overlay",
+    "color/text/secondary",
+    "color/white",
+    "color/zinc/100",
+    "color/zinc/200",
+    "color/zinc/600",
+    "color/zinc/900",
+    "height/target/touch",
+    "motion/duration/normal",
+    "motion/easing/enter",
+    "motion/easing/exit",
+    "radius/overlay",
+    "radius/sm",
+    "radius/xl",
+    "shadow/2xl",
+    "shadow/modal",
+    "spacing/1",
+    "spacing/11",
+    "spacing/2",
+    "spacing/3",
+    "spacing/4",
+    "spacing/component/lg",
+    "spacing/component/md",
+    "spacing/component/sm",
+    "spacing/component/xs"
+  ],
   "accessibility": {
     "properties": [
       {

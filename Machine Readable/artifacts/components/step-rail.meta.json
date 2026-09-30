@@ -117,6 +117,38 @@
       "ringToTitle": "spacing/component/sm (Item gap)"
     }
   },
+  "tokensUsed": [
+    "career-map/band-current",
+    "career-map/band-target",
+    "career-map/current-label",
+    "career-map/followed-edge",
+    "career-map/node-border",
+    "career-map/node-description",
+    "career-map/node-surface",
+    "career-map/other-path-edge",
+    "career-map/target-border",
+    "career-map/target-label",
+    "career-map/vision-edge",
+    "color/border/default",
+    "color/border/success",
+    "color/brand/200",
+    "color/brand/500",
+    "color/brand/primary",
+    "color/green/100",
+    "color/green/600",
+    "color/green/700",
+    "color/surface/default",
+    "color/text/secondary",
+    "color/text/success",
+    "color/violet/600",
+    "color/white",
+    "color/zinc/200",
+    "color/zinc/600",
+    "radius/full",
+    "radius/pill",
+    "spacing/2",
+    "spacing/component/sm"
+  ],
   "accessibility": {
     "properties": [
       {

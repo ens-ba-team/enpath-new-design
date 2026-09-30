@@ -1,0 +1,1533 @@
+{
+  "button/destructive/bg/active": [
+    "button"
+  ],
+  "button/destructive/bg/bg": [
+    "button"
+  ],
+  "button/destructive/bg/hover": [
+    "button"
+  ],
+  "button/destructive/fg/fg": [
+    "button"
+  ],
+  "button/ghost/bg/active": [
+    "button"
+  ],
+  "button/ghost/bg/hover": [
+    "button"
+  ],
+  "button/ghost/bg/pressed": [
+    "button"
+  ],
+  "button/ghost/fg/fg": [
+    "button"
+  ],
+  "button/link/fg/active": [
+    "button"
+  ],
+  "button/link/fg/default": [
+    "button"
+  ],
+  "button/link/fg/disabled": [
+    "button"
+  ],
+  "button/link/fg/hover": [
+    "button"
+  ],
+  "button/outline/bg/active": [
+    "button",
+    "career-map"
+  ],
+  "button/outline/bg/bg": [
+    "button"
+  ],
+  "button/outline/bg/hover": [
+    "button"
+  ],
+  "button/outline/border/active": [
+    "button"
+  ],
+  "button/outline/border/default": [
+    "button",
+    "career-map"
+  ],
+  "button/outline/border/disabled": [
+    "button"
+  ],
+  "button/outline/border/focus": [
+    "button"
+  ],
+  "button/outline/border/hover": [
+    "button"
+  ],
+  "button/outline/fg/fg": [
+    "button"
+  ],
+  "button/primary/bg/active": [
+    "button"
+  ],
+  "button/primary/bg/bg": [
+    "button"
+  ],
+  "button/primary/bg/hover": [
+    "button"
+  ],
+  "button/primary/fg/fg": [
+    "button"
+  ],
+  "button/secondary/bg/active": [
+    "button"
+  ],
+  "button/secondary/bg/bg": [
+    "button"
+  ],
+  "button/secondary/bg/hover": [
+    "button"
+  ],
+  "button/secondary/fg/fg": [
+    "button"
+  ],
+  "career-map/band-completed": [
+    "career-map"
+  ],
+  "career-map/band-current": [
+    "career-map",
+    "step-rail"
+  ],
+  "career-map/band-planned": [
+    "career-map"
+  ],
+  "career-map/band-target": [
+    "career-map",
+    "step-rail"
+  ],
+  "career-map/band-vision": [
+    "career-map"
+  ],
+  "career-map/canvas": [
+    "career-map"
+  ],
+  "career-map/current-label": [
+    "career-map",
+    "step-rail"
+  ],
+  "career-map/followed-edge": [
+    "career-map",
+    "step-rail"
+  ],
+  "career-map/followed-edge-inactive": [
+    "career-map"
+  ],
+  "career-map/grid": [
+    "career-map"
+  ],
+  "career-map/node-border": [
+    "career-map",
+    "step-rail"
+  ],
+  "career-map/node-description": [
+    "career-map",
+    "step-rail"
+  ],
+  "career-map/node-foreground": [
+    "career-map"
+  ],
+  "career-map/node-gap": [
+    "career-map"
+  ],
+  "career-map/node-padding": [
+    "career-map"
+  ],
+  "career-map/node-radius": [
+    "career-map"
+  ],
+  "career-map/node-selected": [
+    "career-map"
+  ],
+  "career-map/node-surface": [
+    "career-map",
+    "step-rail"
+  ],
+  "career-map/other-path-edge": [
+    "career-map",
+    "step-rail"
+  ],
+  "career-map/other-path-edge-inactive": [
+    "career-map"
+  ],
+  "career-map/target-border": [
+    "career-map",
+    "step-rail"
+  ],
+  "career-map/target-label": [
+    "career-map",
+    "step-rail"
+  ],
+  "career-map/vision-border": [
+    "career-map"
+  ],
+  "career-map/vision-edge": [
+    "career-map",
+    "step-rail"
+  ],
+  "career-map/vision-edge-inactive": [
+    "career-map"
+  ],
+  "career-stepper/border": [
+    "career-path-stepper"
+  ],
+  "career-stepper/connector": [
+    "career-path-stepper"
+  ],
+  "career-stepper/description": [
+    "career-path-stepper"
+  ],
+  "career-stepper/foreground": [
+    "career-path-stepper"
+  ],
+  "career-stepper/item-gap": [
+    "career-path-stepper"
+  ],
+  "career-stepper/radius": [
+    "career-path-stepper"
+  ],
+  "career-stepper/row-border": [
+    "career-path-stepper"
+  ],
+  "career-stepper/row-foreground": [
+    "career-path-stepper"
+  ],
+  "career-stepper/row-gap": [
+    "career-path-stepper"
+  ],
+  "career-stepper/row-padding": [
+    "career-path-stepper"
+  ],
+  "career-stepper/row-surface": [
+    "career-path-stepper"
+  ],
+  "career-stepper/step-gap": [
+    "career-path-stepper"
+  ],
+  "career-stepper/surface": [
+    "career-path-stepper"
+  ],
+  "chat/assistant/fg": [
+    "message"
+  ],
+  "chat/user/bg": [
+    "message"
+  ],
+  "chat/user/border": [
+    "message"
+  ],
+  "chat/user/fg": [
+    "message"
+  ],
+  "color/background/accent": [
+    "button",
+    "calendar",
+    "career-map",
+    "checkbox",
+    "combobox",
+    "dialog",
+    "navigation-menu",
+    "pagination",
+    "select",
+    "sheet",
+    "table"
+  ],
+  "color/background/default": [
+    "alert",
+    "button",
+    "calendar",
+    "code-block",
+    "input-otp",
+    "model-selector",
+    "navigation-menu",
+    "pagination",
+    "progress",
+    "shimmer",
+    "slider",
+    "switch",
+    "toast"
+  ],
+  "color/background/default/foreground": [
+    "button",
+    "calendar",
+    "career-path-stepper",
+    "combobox",
+    "date-picker",
+    "item",
+    "message",
+    "select"
+  ],
+  "color/background/inverted": [
+    "alert-dialog",
+    "dialog",
+    "drawer",
+    "sheet",
+    "tooltip"
+  ],
+  "color/background/inverted/foreground": [
+    "tooltip"
+  ],
+  "color/background/muted": [
+    "career-map",
+    "checkbox",
+    "combobox",
+    "drawer",
+    "pagination",
+    "progress",
+    "skeleton"
+  ],
+  "color/background/subtle": [
+    "career-map",
+    "empty"
+  ],
+  "color/blue/100": [
+    "avatar",
+    "message"
+  ],
+  "color/blue/200": [
+    "alert",
+    "career-path-stepper",
+    "item"
+  ],
+  "color/blue/25": [
+    "item"
+  ],
+  "color/blue/50": [
+    "alert",
+    "badge",
+    "item",
+    "message"
+  ],
+  "color/blue/500": [
+    "button",
+    "sidebar"
+  ],
+  "color/blue/600": [
+    "button",
+    "tool"
+  ],
+  "color/blue/700": [
+    "button"
+  ],
+  "color/blue/800": [
+    "alert"
+  ],
+  "color/border/default": [
+    "accordion",
+    "alert",
+    "alert-dialog",
+    "badge",
+    "button",
+    "button-group",
+    "calendar",
+    "card",
+    "career-map",
+    "career-path-stepper",
+    "combobox",
+    "command",
+    "date-picker",
+    "dialog",
+    "drawer",
+    "empty",
+    "input-otp",
+    "item",
+    "model-selector",
+    "navigation-menu",
+    "pagination",
+    "scroll-area",
+    "select",
+    "separator",
+    "sheet",
+    "stat",
+    "step-rail",
+    "switch",
+    "table",
+    "tabs",
+    "toast"
+  ],
+  "color/border/disabled": [
+    "button",
+    "checkbox",
+    "combobox",
+    "input",
+    "pagination",
+    "radio-group",
+    "select",
+    "textarea"
+  ],
+  "color/border/error": [
+    "alert",
+    "badge",
+    "checkbox",
+    "combobox",
+    "input",
+    "input-group",
+    "input-otp",
+    "radio-group",
+    "select",
+    "textarea"
+  ],
+  "color/border/focus": [
+    "calendar",
+    "career-map",
+    "combobox",
+    "date-picker",
+    "input",
+    "input-group",
+    "input-otp",
+    "item",
+    "select",
+    "textarea"
+  ],
+  "color/border/hover": [
+    "button",
+    "combobox",
+    "date-picker",
+    "input",
+    "select",
+    "textarea"
+  ],
+  "color/border/strong": [
+    "badge",
+    "button"
+  ],
+  "color/border/subtle": [
+    "badge",
+    "separator"
+  ],
+  "color/border/success": [
+    "badge",
+    "career-map",
+    "step-rail"
+  ],
+  "color/border/warning": [
+    "badge"
+  ],
+  "color/brand/100": [
+    "button",
+    "career-map"
+  ],
+  "color/brand/200": [
+    "button",
+    "career-map",
+    "step-rail"
+  ],
+  "color/brand/300": [
+    "button",
+    "career-map"
+  ],
+  "color/brand/400": [
+    "career-path-stepper"
+  ],
+  "color/brand/500": [
+    "accordion",
+    "badge",
+    "breadcrumb",
+    "button",
+    "calendar",
+    "career-map",
+    "checkbox",
+    "combobox",
+    "date-picker",
+    "dialog",
+    "input",
+    "input-group",
+    "input-otp",
+    "item",
+    "navigation-menu",
+    "pagination",
+    "progress",
+    "radio-group",
+    "select",
+    "sheet",
+    "sidebar",
+    "slider",
+    "step-rail",
+    "switch",
+    "table",
+    "tabs",
+    "textarea"
+  ],
+  "color/brand/600": [
+    "button",
+    "calendar"
+  ],
+  "color/brand/700": [
+    "button"
+  ],
+  "color/brand/destructive": [
+    "badge",
+    "button",
+    "tool"
+  ],
+  "color/brand/destructive-active": [
+    "button"
+  ],
+  "color/brand/destructive-hover": [
+    "button"
+  ],
+  "color/brand/destructive/foreground": [
+    "button"
+  ],
+  "color/brand/primary": [
+    "badge",
+    "button",
+    "calendar",
+    "career-map",
+    "checkbox",
+    "combobox",
+    "pagination",
+    "progress",
+    "radio-group",
+    "select",
+    "sidebar",
+    "slider",
+    "step-rail",
+    "switch",
+    "table",
+    "tabs"
+  ],
+  "color/brand/primary-active": [
+    "button"
+  ],
+  "color/brand/primary-hover": [
+    "button",
+    "calendar"
+  ],
+  "color/brand/primary/foreground": [
+    "button"
+  ],
+  "color/brand/secondary": [
+    "button"
+  ],
+  "color/brand/secondary-active": [
+    "button"
+  ],
+  "color/brand/secondary-hover": [
+    "button"
+  ],
+  "color/brand/secondary/foreground": [
+    "button"
+  ],
+  "color/drop-indicator": [
+    "career-path-stepper"
+  ],
+  "color/green/100": [
+    "career-map",
+    "step-rail"
+  ],
+  "color/green/200": [
+    "alert"
+  ],
+  "color/green/400": [
+    "career-map"
+  ],
+  "color/green/50": [
+    "alert",
+    "badge"
+  ],
+  "color/green/500": [
+    "avatar",
+    "badge",
+    "progress"
+  ],
+  "color/green/600": [
+    "badge",
+    "career-map",
+    "step-rail",
+    "tool"
+  ],
+  "color/green/700": [
+    "alert",
+    "career-map",
+    "stat",
+    "step-rail",
+    "toast"
+  ],
+  "color/green/800": [
+    "alert"
+  ],
+  "color/icon/danger": [
+    "alert",
+    "toast"
+  ],
+  "color/icon/default": [
+    "calendar",
+    "combobox",
+    "date-picker",
+    "select"
+  ],
+  "color/icon/disabled": [
+    "combobox",
+    "pagination",
+    "select"
+  ],
+  "color/icon/muted": [
+    "stat"
+  ],
+  "color/icon/success": [
+    "alert",
+    "stat",
+    "toast"
+  ],
+  "color/icon/warning": [
+    "alert",
+    "stat",
+    "toast"
+  ],
+  "color/input/bg": [
+    "combobox",
+    "date-picker",
+    "input",
+    "input-group",
+    "select",
+    "textarea"
+  ],
+  "color/input/bg-readonly": [
+    "input",
+    "textarea"
+  ],
+  "color/input/border": [
+    "calendar",
+    "checkbox",
+    "combobox",
+    "date-picker",
+    "input",
+    "input-group",
+    "radio-group",
+    "select",
+    "textarea"
+  ],
+  "color/input/border-readonly": [
+    "input",
+    "textarea"
+  ],
+  "color/input/placeholder": [
+    "calendar",
+    "combobox",
+    "date-picker",
+    "input",
+    "select",
+    "textarea"
+  ],
+  "color/red/50": [
+    "badge",
+    "button"
+  ],
+  "color/red/500": [
+    "alert",
+    "badge",
+    "checkbox",
+    "combobox",
+    "input",
+    "input-group",
+    "input-otp",
+    "radio-group",
+    "select",
+    "textarea"
+  ],
+  "color/red/600": [
+    "alert",
+    "badge",
+    "button",
+    "combobox",
+    "toast",
+    "tool"
+  ],
+  "color/red/700": [
+    "button"
+  ],
+  "color/red/800": [
+    "button"
+  ],
+  "color/ring": [
+    "accordion",
+    "breadcrumb",
+    "button",
+    "calendar",
+    "career-map",
+    "checkbox",
+    "combobox",
+    "date-picker",
+    "dialog",
+    "input",
+    "input-group",
+    "input-otp",
+    "item",
+    "navigation-menu",
+    "radio-group",
+    "select",
+    "sheet",
+    "slider",
+    "switch",
+    "tabs",
+    "textarea"
+  ],
+  "color/sidebar/accent": [
+    "sidebar"
+  ],
+  "color/sidebar/active": [
+    "sidebar"
+  ],
+  "color/sidebar/background": [
+    "sidebar"
+  ],
+  "color/sidebar/border": [
+    "separator",
+    "sidebar"
+  ],
+  "color/sidebar/foreground": [
+    "sidebar"
+  ],
+  "color/sidebar/ring": [
+    "sidebar"
+  ],
+  "color/status/danger": [
+    "alert",
+    "toast"
+  ],
+  "color/status/danger-subtle": [
+    "badge",
+    "button"
+  ],
+  "color/status/info-subtle": [
+    "alert",
+    "badge"
+  ],
+  "color/status/offline": [
+    "avatar",
+    "badge"
+  ],
+  "color/status/success": [
+    "avatar",
+    "badge",
+    "progress"
+  ],
+  "color/status/success-subtle": [
+    "alert",
+    "badge"
+  ],
+  "color/status/warning-subtle": [
+    "badge"
+  ],
+  "color/surface/accent": [
+    "badge",
+    "command",
+    "dropdown-menu",
+    "item",
+    "prompt-input",
+    "tabs"
+  ],
+  "color/surface/default": [
+    "button-group",
+    "calendar",
+    "card",
+    "career-map",
+    "career-path-stepper",
+    "empty",
+    "item",
+    "stat",
+    "step-rail",
+    "tabs"
+  ],
+  "color/surface/default/foreground": [
+    "career-map",
+    "career-path-stepper"
+  ],
+  "color/surface/muted": [
+    "code-block",
+    "combobox",
+    "dropdown-menu",
+    "input",
+    "item",
+    "select",
+    "slider",
+    "textarea",
+    "toast",
+    "tool"
+  ],
+  "color/surface/overlay": [
+    "alert-dialog",
+    "calendar",
+    "combobox",
+    "command",
+    "date-picker",
+    "dialog",
+    "drawer",
+    "dropdown-menu",
+    "hover-card",
+    "navigation-menu",
+    "select",
+    "sheet",
+    "toast"
+  ],
+  "color/surface/raised": [
+    "table",
+    "tabs"
+  ],
+  "color/surface/tint": [
+    "avatar"
+  ],
+  "color/text/disabled": [
+    "accordion",
+    "button",
+    "calendar",
+    "combobox",
+    "input",
+    "navigation-menu",
+    "pagination",
+    "select",
+    "tabs",
+    "textarea"
+  ],
+  "color/text/invalid": [
+    "alert",
+    "button",
+    "combobox",
+    "tool"
+  ],
+  "color/text/link": [
+    "button"
+  ],
+  "color/text/link-active": [
+    "button"
+  ],
+  "color/text/link-hover": [
+    "button"
+  ],
+  "color/text/secondary": [
+    "accordion",
+    "alert",
+    "alert-dialog",
+    "breadcrumb",
+    "calendar",
+    "card",
+    "career-map",
+    "career-path-stepper",
+    "code-block",
+    "combobox",
+    "command",
+    "conversation",
+    "dialog",
+    "empty",
+    "input-group",
+    "message",
+    "navigation-menu",
+    "prompt-input",
+    "reasoning",
+    "select",
+    "sheet",
+    "sidebar",
+    "stat",
+    "step-rail",
+    "table",
+    "tabs",
+    "toast",
+    "tool"
+  ],
+  "color/text/success": [
+    "career-map",
+    "step-rail"
+  ],
+  "color/violet/100": [
+    "career-map"
+  ],
+  "color/violet/400": [
+    "career-map"
+  ],
+  "color/violet/600": [
+    "career-map",
+    "step-rail"
+  ],
+  "color/white": [
+    "alert",
+    "alert-dialog",
+    "button",
+    "button-group",
+    "calendar",
+    "card",
+    "career-map",
+    "career-path-stepper",
+    "code-block",
+    "combobox",
+    "command",
+    "date-picker",
+    "dialog",
+    "drawer",
+    "dropdown-menu",
+    "empty",
+    "hover-card",
+    "input",
+    "input-group",
+    "input-otp",
+    "item",
+    "model-selector",
+    "navigation-menu",
+    "pagination",
+    "progress",
+    "select",
+    "sheet",
+    "shimmer",
+    "sidebar",
+    "slider",
+    "stat",
+    "step-rail",
+    "switch",
+    "tabs",
+    "textarea",
+    "toast"
+  ],
+  "color/white-alpha/60": [
+    "sidebar"
+  ],
+  "color/yellow/200": [
+    "alert"
+  ],
+  "color/yellow/50": [
+    "alert",
+    "badge"
+  ],
+  "color/yellow/600": [
+    "tool"
+  ],
+  "color/yellow/700": [
+    "alert",
+    "badge",
+    "stat",
+    "toast"
+  ],
+  "color/yellow/800": [
+    "alert"
+  ],
+  "color/yellow/900": [
+    "alert"
+  ],
+  "color/zinc/100": [
+    "badge",
+    "button",
+    "calendar",
+    "career-map",
+    "checkbox",
+    "code-block",
+    "combobox",
+    "command",
+    "dialog",
+    "drawer",
+    "dropdown-menu",
+    "input",
+    "item",
+    "navigation-menu",
+    "pagination",
+    "progress",
+    "prompt-input",
+    "radio-group",
+    "select",
+    "separator",
+    "sheet",
+    "skeleton",
+    "slider",
+    "table",
+    "tabs",
+    "textarea",
+    "toast",
+    "tool"
+  ],
+  "color/zinc/200": [
+    "accordion",
+    "alert",
+    "alert-dialog",
+    "avatar",
+    "badge",
+    "button",
+    "button-group",
+    "calendar",
+    "card",
+    "career-map",
+    "career-path-stepper",
+    "combobox",
+    "command",
+    "date-picker",
+    "dialog",
+    "drawer",
+    "empty",
+    "input-otp",
+    "item",
+    "model-selector",
+    "navigation-menu",
+    "pagination",
+    "scroll-area",
+    "select",
+    "separator",
+    "sheet",
+    "stat",
+    "step-rail",
+    "switch",
+    "table",
+    "tabs",
+    "toast"
+  ],
+  "color/zinc/300": [
+    "button",
+    "calendar",
+    "checkbox",
+    "combobox",
+    "date-picker",
+    "input",
+    "input-group",
+    "radio-group",
+    "select",
+    "separator",
+    "sidebar",
+    "textarea"
+  ],
+  "color/zinc/400": [
+    "accordion",
+    "badge",
+    "button",
+    "calendar",
+    "career-map",
+    "combobox",
+    "input",
+    "navigation-menu",
+    "pagination",
+    "select",
+    "tabs",
+    "textarea"
+  ],
+  "color/zinc/50": [
+    "career-map",
+    "empty",
+    "table",
+    "tabs"
+  ],
+  "color/zinc/500": [
+    "calendar",
+    "combobox",
+    "date-picker",
+    "input",
+    "select",
+    "textarea"
+  ],
+  "color/zinc/600": [
+    "accordion",
+    "alert",
+    "alert-dialog",
+    "breadcrumb",
+    "calendar",
+    "card",
+    "career-map",
+    "career-path-stepper",
+    "code-block",
+    "combobox",
+    "command",
+    "conversation",
+    "dialog",
+    "empty",
+    "input-group",
+    "message",
+    "navigation-menu",
+    "prompt-input",
+    "reasoning",
+    "select",
+    "sheet",
+    "sidebar",
+    "stat",
+    "step-rail",
+    "table",
+    "tabs",
+    "toast",
+    "tool"
+  ],
+  "color/zinc/800": [
+    "sidebar"
+  ],
+  "color/zinc/900": [
+    "alert-dialog",
+    "dialog",
+    "drawer",
+    "sheet",
+    "tooltip"
+  ],
+  "gradient/career-stepper": [
+    "career-path-stepper"
+  ],
+  "height/control-touch/lg": [
+    "button"
+  ],
+  "height/control-touch/md": [
+    "button",
+    "combobox",
+    "date-picker",
+    "input",
+    "select"
+  ],
+  "height/control-touch/sm": [
+    "button",
+    "prompt-input"
+  ],
+  "height/control-touch/xs": [
+    "button"
+  ],
+  "height/control/lg": [
+    "button"
+  ],
+  "height/control/md": [
+    "button",
+    "combobox",
+    "date-picker",
+    "input",
+    "select"
+  ],
+  "height/control/sm": [
+    "button",
+    "prompt-input"
+  ],
+  "height/control/xs": [
+    "button"
+  ],
+  "height/target/touch": [
+    "breadcrumb",
+    "career-path-stepper",
+    "checkbox",
+    "dialog",
+    "radio-group",
+    "sheet",
+    "slider",
+    "switch"
+  ],
+  "item/hover/bg": [
+    "item"
+  ],
+  "item/selected/bg": [
+    "item"
+  ],
+  "item/selected/border": [
+    "item"
+  ],
+  "item/selected/fg": [
+    "item"
+  ],
+  "motion/duration/fast": [
+    "button"
+  ],
+  "motion/duration/normal": [
+    "alert-dialog",
+    "dialog"
+  ],
+  "motion/easing/enter": [
+    "alert-dialog",
+    "dialog"
+  ],
+  "motion/easing/exit": [
+    "alert-dialog",
+    "dialog"
+  ],
+  "motion/easing/standard": [
+    "button"
+  ],
+  "opacity/60": [
+    "button",
+    "calendar",
+    "combobox",
+    "date-picker",
+    "input-otp",
+    "navigation-menu",
+    "radio-group",
+    "sidebar",
+    "slider",
+    "switch"
+  ],
+  "opacity/disabled": [
+    "button",
+    "calendar",
+    "combobox",
+    "date-picker",
+    "input-otp",
+    "navigation-menu",
+    "radio-group",
+    "sidebar",
+    "slider",
+    "switch"
+  ],
+  "radius/base": [
+    "input-group",
+    "navigation-menu"
+  ],
+  "radius/control": [
+    "career-map",
+    "input-group"
+  ],
+  "radius/full": [
+    "avatar",
+    "badge",
+    "career-map",
+    "career-path-stepper",
+    "conversation",
+    "drawer",
+    "model-selector",
+    "progress",
+    "radio-group",
+    "scroll-area",
+    "sidebar",
+    "slider",
+    "step-rail",
+    "suggestion",
+    "switch",
+    "tool"
+  ],
+  "radius/lg": [
+    "alert",
+    "calendar",
+    "card",
+    "career-map",
+    "career-path-stepper",
+    "combobox",
+    "date-picker",
+    "drawer",
+    "empty",
+    "item",
+    "message",
+    "select",
+    "sheet",
+    "stat",
+    "tabs",
+    "toast"
+  ],
+  "radius/md": [
+    "badge",
+    "button-group",
+    "calendar",
+    "career-map",
+    "checkbox",
+    "combobox",
+    "date-picker",
+    "input",
+    "input-group",
+    "input-otp",
+    "item",
+    "navigation-menu",
+    "pagination",
+    "select",
+    "sidebar",
+    "tabs",
+    "textarea",
+    "tooltip"
+  ],
+  "radius/none": [
+    "button-group",
+    "calendar",
+    "input-group",
+    "tabs"
+  ],
+  "radius/overlay": [
+    "alert-dialog",
+    "dialog"
+  ],
+  "radius/panel": [
+    "sidebar"
+  ],
+  "radius/pill": [
+    "career-map",
+    "step-rail"
+  ],
+  "radius/sm": [
+    "breadcrumb",
+    "dialog",
+    "sheet"
+  ],
+  "radius/surface": [
+    "career-map",
+    "career-path-stepper",
+    "stat"
+  ],
+  "radius/xl": [
+    "alert-dialog",
+    "dialog",
+    "sidebar"
+  ],
+  "shadow/2xl": [
+    "alert-dialog",
+    "dialog",
+    "drawer",
+    "sheet"
+  ],
+  "shadow/lg": [
+    "calendar",
+    "combobox",
+    "command",
+    "date-picker",
+    "dropdown-menu",
+    "hover-card",
+    "navigation-menu",
+    "select"
+  ],
+  "shadow/md": [
+    "navigation-menu"
+  ],
+  "shadow/modal": [
+    "alert-dialog",
+    "dialog",
+    "drawer",
+    "sheet"
+  ],
+  "shadow/none": [
+    "code-block",
+    "date-picker",
+    "input-group",
+    "prompt-input"
+  ],
+  "shadow/overlay": [
+    "calendar",
+    "combobox",
+    "command",
+    "date-picker",
+    "dropdown-menu",
+    "hover-card",
+    "navigation-menu",
+    "select"
+  ],
+  "shadow/sm": [
+    "card",
+    "career-map",
+    "tabs"
+  ],
+  "shadow/surface": [
+    "card",
+    "career-map"
+  ],
+  "spacing/0-5": [
+    "career-map",
+    "career-path-stepper",
+    "drawer",
+    "item",
+    "pagination",
+    "sidebar",
+    "tabs"
+  ],
+  "spacing/1": [
+    "alert-dialog",
+    "badge",
+    "breadcrumb",
+    "calendar",
+    "card",
+    "career-map",
+    "career-path-stepper",
+    "combobox",
+    "date-picker",
+    "dialog",
+    "input",
+    "navigation-menu",
+    "prompt-input",
+    "stat",
+    "tabs"
+  ],
+  "spacing/1-5": [
+    "combobox",
+    "item",
+    "tabs",
+    "tooltip"
+  ],
+  "spacing/10": [
+    "button"
+  ],
+  "spacing/11": [
+    "breadcrumb",
+    "career-path-stepper",
+    "checkbox",
+    "dialog",
+    "radio-group",
+    "sheet",
+    "slider",
+    "switch"
+  ],
+  "spacing/2": [
+    "accordion",
+    "alert",
+    "alert-dialog",
+    "badge",
+    "calendar",
+    "card",
+    "career-map",
+    "career-path-stepper",
+    "combobox",
+    "date-picker",
+    "dialog",
+    "drawer",
+    "item",
+    "message",
+    "navigation-menu",
+    "prompt-input",
+    "select",
+    "sheet",
+    "sidebar",
+    "step-rail",
+    "tabs",
+    "textarea"
+  ],
+  "spacing/3": [
+    "accordion",
+    "alert",
+    "calendar",
+    "card",
+    "career-map",
+    "career-path-stepper",
+    "combobox",
+    "date-picker",
+    "dialog",
+    "input",
+    "item",
+    "message",
+    "navigation-menu",
+    "select",
+    "sheet",
+    "sidebar",
+    "stat",
+    "tabs",
+    "textarea",
+    "tooltip"
+  ],
+  "spacing/4": [
+    "accordion",
+    "alert",
+    "alert-dialog",
+    "card",
+    "career-map",
+    "dialog",
+    "drawer",
+    "sheet",
+    "sidebar"
+  ],
+  "spacing/6": [
+    "alert-dialog",
+    "button"
+  ],
+  "spacing/7": [
+    "button",
+    "prompt-input"
+  ],
+  "spacing/8": [
+    "button",
+    "combobox",
+    "date-picker",
+    "input",
+    "prompt-input",
+    "select",
+    "sidebar"
+  ],
+  "spacing/9": [
+    "button",
+    "combobox",
+    "date-picker",
+    "input",
+    "select"
+  ],
+  "spacing/component/2xl": [
+    "sidebar"
+  ],
+  "spacing/component/lg": [
+    "accordion",
+    "alert",
+    "alert-dialog",
+    "card",
+    "dialog",
+    "drawer",
+    "sheet",
+    "sidebar"
+  ],
+  "spacing/component/md": [
+    "accordion",
+    "alert",
+    "calendar",
+    "card",
+    "career-map",
+    "career-path-stepper",
+    "combobox",
+    "date-picker",
+    "dialog",
+    "input",
+    "item",
+    "message",
+    "navigation-menu",
+    "select",
+    "sheet",
+    "sidebar",
+    "stat",
+    "tabs",
+    "textarea",
+    "tooltip"
+  ],
+  "spacing/component/sm": [
+    "accordion",
+    "alert",
+    "alert-dialog",
+    "badge",
+    "calendar",
+    "card",
+    "career-map",
+    "career-path-stepper",
+    "combobox",
+    "date-picker",
+    "dialog",
+    "drawer",
+    "item",
+    "message",
+    "navigation-menu",
+    "prompt-input",
+    "select",
+    "sheet",
+    "sidebar",
+    "step-rail",
+    "tabs",
+    "textarea"
+  ],
+  "spacing/component/xl": [
+    "alert-dialog"
+  ],
+  "spacing/component/xs": [
+    "alert-dialog",
+    "badge",
+    "breadcrumb",
+    "calendar",
+    "card",
+    "career-map",
+    "career-path-stepper",
+    "combobox",
+    "date-picker",
+    "dialog",
+    "input",
+    "navigation-menu",
+    "prompt-input",
+    "stat",
+    "tabs"
+  ],
+  "spacing/component/xs-plus": [
+    "combobox",
+    "item",
+    "tabs",
+    "tooltip"
+  ],
+  "spacing/component/xxs": [
+    "career-map",
+    "career-path-stepper",
+    "drawer",
+    "item",
+    "pagination",
+    "sidebar",
+    "tabs"
+  ],
+  "spacing/layout/xs": [
+    "career-map"
+  ],
+  "tooltip/bg": [
+    "tooltip"
+  ],
+  "tooltip/fg": [
+    "tooltip"
+  ]
+}

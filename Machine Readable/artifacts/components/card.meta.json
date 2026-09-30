@@ -84,6 +84,25 @@
       "Slot 2": "Free-composition FRAME — charts, stat blocks, image frames, badge rows"
     }
   },
+  "tokensUsed": [
+    "color/border/default",
+    "color/surface/default",
+    "color/text/secondary",
+    "color/white",
+    "color/zinc/200",
+    "color/zinc/600",
+    "radius/lg",
+    "shadow/sm",
+    "shadow/surface",
+    "spacing/1",
+    "spacing/2",
+    "spacing/3",
+    "spacing/4",
+    "spacing/component/lg",
+    "spacing/component/md",
+    "spacing/component/sm",
+    "spacing/component/xs"
+  ],
   "accessibility": {
     "properties": [
       {

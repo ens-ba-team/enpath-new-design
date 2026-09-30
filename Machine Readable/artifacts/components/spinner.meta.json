@@ -8,6 +8,7 @@
   "tokens": {
     "Colour": "`currentColor` — the surrounding text colour"
   },
+  "tokensUsed": [],
   "accessibility": {
     "properties": [
       {

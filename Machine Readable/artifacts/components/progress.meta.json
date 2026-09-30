@@ -87,6 +87,17 @@
       "note": "Fill radius must match container radius to avoid clipping artefacts."
     }
   },
+  "tokensUsed": [
+    "color/background/default",
+    "color/background/muted",
+    "color/brand/500",
+    "color/brand/primary",
+    "color/green/500",
+    "color/status/success",
+    "color/white",
+    "color/zinc/100",
+    "radius/full"
+  ],
   "accessibility": {
     "properties": [
       {

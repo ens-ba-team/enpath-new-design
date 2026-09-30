@@ -50,6 +50,26 @@
       "gap": "spacing/component/sm"
     }
   },
+  "tokensUsed": [
+    "color/background/inverted",
+    "color/background/muted",
+    "color/border/default",
+    "color/surface/overlay",
+    "color/white",
+    "color/zinc/100",
+    "color/zinc/200",
+    "color/zinc/900",
+    "radius/full",
+    "radius/lg",
+    "shadow/2xl",
+    "shadow/modal",
+    "spacing/0-5",
+    "spacing/2",
+    "spacing/4",
+    "spacing/component/lg",
+    "spacing/component/sm",
+    "spacing/component/xxs"
+  ],
   "accessibility": {
     "properties": [
       {

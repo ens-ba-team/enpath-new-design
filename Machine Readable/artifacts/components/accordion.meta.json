@@ -79,6 +79,22 @@
     },
     "contentText": "color/text/secondary"
   },
+  "tokensUsed": [
+    "color/border/default",
+    "color/brand/500",
+    "color/ring",
+    "color/text/disabled",
+    "color/text/secondary",
+    "color/zinc/200",
+    "color/zinc/400",
+    "color/zinc/600",
+    "spacing/2",
+    "spacing/3",
+    "spacing/4",
+    "spacing/component/lg",
+    "spacing/component/md",
+    "spacing/component/sm"
+  ],
   "accessibility": {
     "properties": [
       {

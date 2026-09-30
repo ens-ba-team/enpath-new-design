@@ -9,6 +9,7 @@
     "Content": "none — inherits its container",
     "Trigger": "use a Button (ghost / outline)"
   },
+  "tokensUsed": [],
   "accessibility": {
     "properties": [
       {

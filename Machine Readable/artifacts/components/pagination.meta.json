@@ -138,6 +138,24 @@
       "Show All": "spacing/component/md"
     }
   },
+  "tokensUsed": [
+    "color/background/accent",
+    "color/background/default",
+    "color/background/muted",
+    "color/border/default",
+    "color/border/disabled",
+    "color/brand/500",
+    "color/brand/primary",
+    "color/icon/disabled",
+    "color/text/disabled",
+    "color/white",
+    "color/zinc/100",
+    "color/zinc/200",
+    "color/zinc/400",
+    "radius/md",
+    "spacing/0-5",
+    "spacing/component/xxs"
+  ],
   "accessibility": {
     "properties": [
       {

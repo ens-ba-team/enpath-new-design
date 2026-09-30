@@ -41,7 +41,8 @@ Decisions waiting. One row per flag; remove it when decided and done.
 
 | Flag | Kind | Where | Since | Decision needed |
 |---|---|---|---|---|
-| — | — | — | — | None open (2026-09-30). The last "Needs a Storybook update" list was cleared 2026-09-29 |
+| Step rail reuses the Career map's role tokens (`career-map/*`, 10 tokens: node, band, label, edge colours) | breaks token | `components/ui/step-rail.tsx` | 2026-09-30 | Allow it (add `step-rail` to the owners of `career-map/*`, the rail is the map's line language turned on its side), or give the rail its own tokens |
+| The map legend rebuilds outline buttons from Button's tokens (`button/outline/*`) instead of using `Button` | restyle | `components/ui/career-map.tsx` (legend, route title) | 2026-09-30 | Use `Button variant="outline"` (pressed via `aria-pressed`), or keep it and add `career-map` to the owners of `button/*` |
 
 Kinds: **restyle** (component changed at a place of use) · **missing component** · **missing token** ·
 **breaks token** (component vs token description) · **breaks spec** (code vs `meta.json`).

@@ -8,6 +8,10 @@
   "tokens": {
     "Text": "`color/text/secondary` with a moving highlight"
   },
+  "tokensUsed": [
+    "color/background/default",
+    "color/white"
+  ],
   "accessibility": {
     "properties": [
       {

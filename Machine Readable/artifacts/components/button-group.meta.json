@@ -45,6 +45,14 @@
       "Vertical": "Button Type=Ghost Size=Icon Large"
     }
   },
+  "tokensUsed": [
+    "color/border/default",
+    "color/surface/default",
+    "color/white",
+    "color/zinc/200",
+    "radius/md",
+    "radius/none"
+  ],
   "accessibility": {
     "properties": [
       {

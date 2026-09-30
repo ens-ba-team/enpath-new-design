@@ -96,6 +96,17 @@
     "separator": "color/background/default/foreground",
     "gap": "spacing/component/xs"
   },
+  "tokensUsed": [
+    "color/brand/500",
+    "color/ring",
+    "color/text/secondary",
+    "color/zinc/600",
+    "height/target/touch",
+    "radius/sm",
+    "spacing/1",
+    "spacing/11",
+    "spacing/component/xs"
+  ],
   "accessibility": {
     "properties": [
       {

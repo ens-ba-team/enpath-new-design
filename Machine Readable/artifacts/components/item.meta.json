@@ -171,6 +171,36 @@
       "focus": "color/border/focus"
     }
   },
+  "tokensUsed": [
+    "color/background/default/foreground",
+    "color/blue/200",
+    "color/blue/25",
+    "color/blue/50",
+    "color/border/default",
+    "color/border/focus",
+    "color/brand/500",
+    "color/ring",
+    "color/surface/accent",
+    "color/surface/default",
+    "color/surface/muted",
+    "color/white",
+    "color/zinc/100",
+    "color/zinc/200",
+    "item/hover/bg",
+    "item/selected/bg",
+    "item/selected/border",
+    "item/selected/fg",
+    "radius/lg",
+    "radius/md",
+    "spacing/0-5",
+    "spacing/1-5",
+    "spacing/2",
+    "spacing/3",
+    "spacing/component/md",
+    "spacing/component/sm",
+    "spacing/component/xs-plus",
+    "spacing/component/xxs"
+  ],
   "accessibility": {
     "properties": [
       {

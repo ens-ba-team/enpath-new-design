@@ -281,6 +281,32 @@
       }
     }
   },
+  "tokensUsed": [
+    "color/border/disabled",
+    "color/border/error",
+    "color/border/focus",
+    "color/border/hover",
+    "color/brand/500",
+    "color/input/bg",
+    "color/input/bg-readonly",
+    "color/input/border",
+    "color/input/border-readonly",
+    "color/input/placeholder",
+    "color/red/500",
+    "color/ring",
+    "color/surface/muted",
+    "color/text/disabled",
+    "color/white",
+    "color/zinc/100",
+    "color/zinc/300",
+    "color/zinc/400",
+    "color/zinc/500",
+    "radius/md",
+    "spacing/2",
+    "spacing/3",
+    "spacing/component/md",
+    "spacing/component/sm"
+  ],
   "accessibility": {
     "properties": [
       {

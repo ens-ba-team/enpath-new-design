@@ -6,6 +6,23 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-30 — Token usage generated from the code; token rules checked
+
+### Added
+- `Machine Readable/extract-token-usage.mjs`: reads each component's `.tsx` and writes the generated `tokensUsed` into its meta.json, plus `Machine Readable/token-usage.json` (token → components). Handles direct `var(--…)`, Tailwind utilities through `globals.css`, runtime-built names (`var(--career-map-${role})`) and the tokens a component token points to.
+- drift-check **#14** (`tokensUsed` and `token-usage.json` match the code) and **#15** (component tokens only in their owners; no component uses a token whose `doNotUseIn` names it).
+- Token rules as data: `$extensions.enpath.owners` on each group in `components.tokens.json`; `$extensions.enpath.doNotUseIn` on `color/surface/default`, `color/surface/overlay`, `shadow/overlay`, `shadow/modal`. Uses waiting on a decision are `pending` and warn.
+- Storybook Foundations pages show **Used by** under each token, linking to the component's story.
+- Two Open flags in `design-patterns.md`: Step rail reuses `career-map/*`; the map legend rebuilds outline buttons from `button/outline/*`.
+
+### Changed
+- `generation-rules.md` Stage 1 starts with the script; `meta-artifact-template.md` documents `tokensUsed`; the rulebook gate list runs the script before drift-check; `token-binding-skill.md` explains `owners` / `doNotUseIn`.
+
+### Pending
+- 32 specs name tokens their code doesn't use (#14 reports them; it fails once the spec batches are done).
+
+---
+
 ## 2026-09-30 — Foundations token pages
 
 ### Added

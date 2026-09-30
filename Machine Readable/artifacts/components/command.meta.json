@@ -12,6 +12,18 @@
     "Selected item": "`color/surface/accent` + `/foreground`",
     "Border": "`color/border/default`"
   },
+  "tokensUsed": [
+    "color/border/default",
+    "color/surface/accent",
+    "color/surface/overlay",
+    "color/text/secondary",
+    "color/white",
+    "color/zinc/100",
+    "color/zinc/200",
+    "color/zinc/600",
+    "shadow/lg",
+    "shadow/overlay"
+  ],
   "accessibility": {
     "properties": [
       {

@@ -74,6 +74,17 @@
       }
     }
   },
+  "tokensUsed": [
+    "color/background/subtle",
+    "color/border/default",
+    "color/surface/default",
+    "color/text/secondary",
+    "color/white",
+    "color/zinc/200",
+    "color/zinc/50",
+    "color/zinc/600",
+    "radius/lg"
+  ],
   "accessibility": {
     "properties": [
       {

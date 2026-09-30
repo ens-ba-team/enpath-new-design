@@ -10,6 +10,13 @@
     "List": "Command tokens",
     "Selected": "`color/surface/accent`"
   },
+  "tokensUsed": [
+    "color/background/default",
+    "color/border/default",
+    "color/white",
+    "color/zinc/200",
+    "radius/full"
+  ],
   "accessibility": {
     "properties": [
       {

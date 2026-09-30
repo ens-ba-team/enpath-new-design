@@ -23,6 +23,12 @@
  *  13. Text styles in code — .tsx class strings (components, AI Elements, screens, stories) use text styles:
  *      no text-xs…9xl, text-[Npx], leading-*, font-mono/sans/…, font-medium/bold/light…, tracking-* other
  *      than wide/widest. Exceptions: lone font-semibold / font-normal, tracking-wide / -widest. Comments skipped.
+ *  14. Token usage is generated — each meta.json `tokensUsed` and token-usage.json match the code
+ *      (extract-token-usage.mjs --write was run); the hand-written `tokens` block names only tokens the
+ *      code uses (reported as pending until the spec batches are done, then it fails).
+ *  15. Components follow token rules — a component token is used only by its owners
+ *      ($extensions.enpath.owners in components.tokens.json), and no component uses a token whose
+ *      $extensions.enpath.doNotUseIn names it. Uses recorded as `pending` (an Open flag) warn, don't fail.
  *
  * Exit code 1 if any drift is found (so CI can gate on it).
  */
@@ -458,6 +464,60 @@ section('13. Text styles in code — no hand-built type in class strings');
     }
   })(path.join(root, 'enpath-ui/src'));
   if (hits === 0) ok('class strings use text styles only');
+}
+
+// ── 14. Token usage is generated from the code ──────────────────────────────
+// The token section of a spec follows the code (rulebook → Source of Truth). extract-token-usage.mjs
+// writes `tokensUsed` and token-usage.json; this proves it was run after the last component change.
+section('14. Token usage — tokensUsed and token-usage.json match the code');
+{
+  const { scanUsage, tokensNamedInSpec, usagePath } = await import('./extract-token-usage.mjs');
+  const { components, usage, tokenNames } = scanUsage();
+  let stale = 0, specOnly = 0;
+  for (const [name, c] of Object.entries(components)) {
+    if (c.missing) { bad(`${name}: tsx not found (${c.missing})`); continue; }
+    const meta = JSON.parse(fs.readFileSync(path.join(metaDir, c.file), 'utf8'));
+    if (JSON.stringify(meta.tokensUsed ?? null) !== JSON.stringify(c.tokensUsed)) { bad(`${name}: tokensUsed is stale`); stale++; }
+    if ([...tokensNamedInSpec(meta, tokenNames)].some((t) => !c.tokensUsed.includes(t))) specOnly++;
+  }
+  const usageText = JSON.stringify(usage, null, 2) + '\n';
+  if (!fs.existsSync(usagePath) || fs.readFileSync(usagePath, 'utf8') !== usageText) { bad('token-usage.json is stale'); stale++; }
+  if (stale) console.log('    → run: node "Machine Readable/extract-token-usage.mjs" --write');
+  else ok(`${Object.keys(components).length} components: tokensUsed and token-usage.json current`);
+  // Pending until the spec batches (plan 2026-09-30) are done; then this becomes bad().
+  if (specOnly) console.log(`  ⚠ ${specOnly} spec(s) name tokens the code doesn't use (pending spec batches; see extract-token-usage.mjs)`);
+}
+
+// ── 15. Components follow token rules ────────────────────────────────────────
+// Intent is written once, in the token files: who owns a component token, and which components a
+// semantic token must not be used in. Checked against what the code really uses.
+section('15. Token rules — component-token owners and doNotUseIn');
+{
+  const { scanUsage } = await import('./extract-token-usage.mjs');
+  const { components } = scanUsage();
+  const rules = [];   // { prefix?, token?, owners?, doNotUseIn?, pending }
+  const walkRules = (node, p) => {
+    if (!node || typeof node !== 'object') return;
+    const ext = node.$extensions?.enpath;
+    if (ext?.owners) rules.push({ prefix: p.join('/') + '/', owners: ext.owners, pending: ext.pending ?? {} });
+    if (ext?.doNotUseIn) rules.push({ token: p.join('/'), doNotUseIn: ext.doNotUseIn, pending: ext.pending ?? {} });
+    for (const [k, v] of Object.entries(node)) if (!k.startsWith('$')) walkRules(v, [...p, k]);
+  };
+  for (const f of ['semantics', 'components']) walkRules(JSON.parse(fs.readFileSync(path.join(root, `Tokens/${f}.tokens.json`), 'utf8')), []);
+  let broken = 0, pendingCount = 0;
+  for (const [name, c] of Object.entries(components)) {
+    for (const t of c.direct ?? []) {
+      for (const r of rules) {
+        const hit = (r.prefix && t.startsWith(r.prefix) && !r.owners.includes(name)) || (r.token === t && r.doNotUseIn.includes(name));
+        if (!hit) continue;
+        if (r.pending[name]) { pendingCount++; continue; }
+        bad(`${name} uses ${t} — ${r.prefix ? `owned by ${r.owners.join(', ')}` : 'its doNotUseIn names this component'}`);
+        broken++;
+      }
+    }
+  }
+  if (!broken) ok(`${rules.length} rules, no component breaks them`);
+  if (pendingCount) console.log(`  ⚠ ${pendingCount} use(s) waiting on an Open flag (design-patterns.md)`);
 }
 
 // ── Summary ──────────────────────────────────────────────────────────────────

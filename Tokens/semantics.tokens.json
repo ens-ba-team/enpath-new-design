@@ -221,6 +221,24 @@
           "$value": "{color.zinc.900}",
           "$type": "color",
           "$description": "Intent:      Text and icon color inside a color/surface/default container\nUse when:    Text and icons inside cards, list items, and flat content containers\nDo not use:  Text directly on the page canvas — use color/background/default/foreground\nUse instead: color/text/secondary for subdued text inside surface containers\nStatus:      active"
+        },
+        "$extensions": {
+          "enpath": {
+            "doNotUseIn": [
+              "dialog",
+              "alert-dialog",
+              "sheet",
+              "drawer",
+              "dropdown-menu",
+              "hover-card",
+              "command",
+              "toast",
+              "select",
+              "combobox",
+              "date-picker",
+              "navigation-menu"
+            ]
+          }
         }
       },
       "raised": {
@@ -241,6 +259,18 @@
           "$value": "{color.zinc.900}",
           "$type": "color",
           "$description": "Intent:      Text and icon color inside floating overlay surfaces\nUse when:    Dropdown options, tooltip text, modal body text, popover content\nDo not use:  Text on flat cards or the page canvas\nUse instead: color/surface/default/foreground for text inside flat cards\nStatus:      active"
+        },
+        "$extensions": {
+          "enpath": {
+            "doNotUseIn": [
+              "card",
+              "item",
+              "stat",
+              "empty",
+              "button-group",
+              "tabs"
+            ]
+          }
         }
       },
       "accent": {
@@ -518,8 +548,8 @@
           "$type": "color",
           "$description": "Intent:      Text and icon on the selected nav item\nUse when:    Label and icon of the item with aria-current=\"page\"\nDo not use:  On hovered or inactive rows\nUse instead: color/sidebar/foreground for inactive rows\nStatus:      active"
         },
-      "border": {
-        "$value": "{color.brand.300}",
+        "border": {
+          "$value": "{color.brand.300}",
           "$type": "color",
           "$description": "Intent:      1px inset hairline around the selected sidebar item\nUse when:    Always with color/sidebar/active\nDo not use:  The panel edge (the floating sidebar has no border)\nUse instead: color/sidebar/border for separators inside the sidebar\nStatus:      active"
         }
@@ -709,12 +739,38 @@
     "overlay": {
       "$value": "{shadow.lg}",
       "$type": "string",
-      "$description": "Role shadow (from En UI shadow-overlay). Use for: Floating UI that leaves the page usable — DropdownMenu, Select and Combobox lists, DatePicker and Calendar popovers, HoverCard, Command, the NavigationMenu panel. Not for anything behind a scrim (use shadow/modal)."
+      "$description": "Role shadow (from En UI shadow-overlay). Use for: Floating UI that leaves the page usable — DropdownMenu, Select and Combobox lists, DatePicker and Calendar popovers, HoverCard, Command, the NavigationMenu panel. Not for anything behind a scrim (use shadow/modal).",
+      "$extensions": {
+        "enpath": {
+          "doNotUseIn": [
+            "dialog",
+            "alert-dialog",
+            "sheet",
+            "drawer",
+            "card"
+          ]
+        }
+      }
     },
     "modal": {
       "$value": "{shadow.2xl}",
       "$type": "string",
-      "$description": "Role shadow (from En UI shadow-modal). Use for: UI that blocks the page behind a scrim — Dialog, AlertDialog, Sheet, Drawer."
+      "$description": "Role shadow (from En UI shadow-modal). Use for: UI that blocks the page behind a scrim — Dialog, AlertDialog, Sheet, Drawer.",
+      "$extensions": {
+        "enpath": {
+          "doNotUseIn": [
+            "card",
+            "dropdown-menu",
+            "select",
+            "combobox",
+            "hover-card",
+            "date-picker",
+            "calendar",
+            "navigation-menu",
+            "command"
+          ]
+        }
+      }
     }
   },
   "height": {

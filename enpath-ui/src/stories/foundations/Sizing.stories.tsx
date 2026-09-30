@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import * as React from 'react';
-import { Description, Page, Section, TokenRow, semanticTokens, tokensUnder, useCssVar, type Token } from './token-kit';
+import { Description, Page, Section, TokenRow, UsedBy, semanticTokens, tokensUnder, useCssVar, type Token } from './token-kit';
 
 // Sizing — control heights (touch + pointer pair) and target sizes. Names and
 // descriptions from Tokens/semantics.tokens.json, values from the rendered CSS variables.
@@ -41,7 +41,10 @@ function Pair({ size }: { size: string }) {
           <span className="text-body-xs text-[var(--color-text-secondary)]">sm and up · {pointerValue}</span>
         </div>
       </div>
-      <Description text={pointer.description} />
+      <div className="flex flex-col gap-[var(--spacing-component-xs)]">
+        <Description text={pointer.description} />
+        <UsedBy token={pointer} />
+      </div>
     </div>
   );
 }

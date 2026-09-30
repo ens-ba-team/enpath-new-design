@@ -13,6 +13,15 @@
     "Destructive item": "`color/text/invalid`",
     "Separator": "`color/border/default`"
   },
+  "tokensUsed": [
+    "color/surface/accent",
+    "color/surface/muted",
+    "color/surface/overlay",
+    "color/white",
+    "color/zinc/100",
+    "shadow/lg",
+    "shadow/overlay"
+  ],
   "accessibility": {
     "properties": [
       {

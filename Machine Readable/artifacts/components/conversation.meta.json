@@ -10,6 +10,11 @@
     "Empty-state text": "`color/text/secondary`",
     "Scroll button": "Button outline, `color/surface/overlay`"
   },
+  "tokensUsed": [
+    "color/text/secondary",
+    "color/zinc/600",
+    "radius/full"
+  ],
   "accessibility": {
     "properties": [
       {

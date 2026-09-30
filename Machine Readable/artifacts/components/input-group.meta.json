@@ -13,6 +13,24 @@
     "Radius": "`radius/control` (composer overrides with `chat/composer/radius`)",
     "Addon text / icon": "`color/text/secondary`"
   },
+  "tokensUsed": [
+    "color/border/error",
+    "color/border/focus",
+    "color/brand/500",
+    "color/input/bg",
+    "color/input/border",
+    "color/red/500",
+    "color/ring",
+    "color/text/secondary",
+    "color/white",
+    "color/zinc/300",
+    "color/zinc/600",
+    "radius/base",
+    "radius/control",
+    "radius/md",
+    "radius/none",
+    "shadow/none"
+  ],
   "accessibility": {
     "properties": [
       {

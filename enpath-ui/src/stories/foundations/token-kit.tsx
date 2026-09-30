@@ -1,11 +1,25 @@
+/// <reference types="vite/client" />
 import * as React from 'react';
+import { storyNameFromExport, toId } from 'storybook/internal/csf';
 
 // Shared by the Foundations pages. Names, aliases and descriptions come straight from
 // Tokens/*.tokens.json; values are read from the rendered CSS variables at runtime.
-// No value is written in this folder, so the pages can't drift from the tokens.
+// No value is written in this folder, so the pages can't drift from the tokens. "Used by" comes
+// from Machine Readable/token-usage.json, generated from the component code (extract-token-usage.mjs).
 
 import primitives from '../../../../Tokens/primitives.tokens.json';
 import semantics from '../../../../Tokens/semantics.tokens.json';
+import usage from '../../../../Machine Readable/token-usage.json';
+
+type StorybookRef = { title?: string; stories?: string[] };
+const storybookByFile = import.meta.glob('../../../../Machine Readable/artifacts/components/*.meta.json', {
+  eager: true,
+  import: 'storybook',
+}) as Record<string, StorybookRef>;
+const storybookByName = new Map(
+  Object.entries(storybookByFile).map(([file, ref]) => [file.split('/').pop()!.replace('.meta.json', ''), ref]),
+);
+const usedBy = usage as Record<string, string[]>;
 
 type Json = { [k: string]: unknown };
 
@@ -155,13 +169,40 @@ export function Description({ text }: { text?: string }) {
   );
 }
 
-/** One row: a visual sample, the token name, and its description. */
+/** Components whose code uses this token, each linking to its Storybook page. */
+export function UsedBy({ token }: { token: Token }) {
+  const names = usedBy[token.name];
+  if (!names?.length) return null;
+  return (
+    <p className="text-body-xs text-[var(--color-text-secondary)]">
+      <span className="text-label-sm">Used by </span>
+      {names.map((n, i) => {
+        const ref = storybookByName.get(n);
+        const first = ref?.stories?.[0];
+        const href = ref?.title && first ? `/?path=/story/${toId(ref.title, storyNameFromExport(first))}` : undefined;
+        return (
+          <React.Fragment key={n}>
+            {i > 0 && ', '}
+            {href ? (
+              <a href={href} target="_top" className="text-[var(--color-text-link)] underline-offset-2 hover:underline">{n}</a>
+            ) : n}
+          </React.Fragment>
+        );
+      })}
+    </p>
+  );
+}
+
+/** One row: a visual sample, the token name, its description and the components that use it. */
 export function TokenRow({ token, value, sample }: { token: Token; value?: string; sample: React.ReactNode }) {
   return (
     <div className="grid grid-cols-1 gap-[var(--spacing-component-sm)] border-b border-[var(--color-border-default)] py-[var(--spacing-component-md)] sm:grid-cols-[120px_220px_1fr]">
       <div className="flex items-start">{sample}</div>
       <TokenName token={token} value={value} />
-      <Description text={token.description} />
+      <div className="flex flex-col gap-[var(--spacing-component-xs)]">
+        <Description text={token.description} />
+        <UsedBy token={token} />
+      </div>
     </div>
   );
 }

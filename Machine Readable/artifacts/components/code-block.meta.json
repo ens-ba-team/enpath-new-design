@@ -11,6 +11,15 @@
     "Font": "Roboto Mono (`font/mono`)",
     "Highlighting": "shiki github-light"
   },
+  "tokensUsed": [
+    "color/background/default",
+    "color/surface/muted",
+    "color/text/secondary",
+    "color/white",
+    "color/zinc/100",
+    "color/zinc/600",
+    "shadow/none"
+  ],
   "accessibility": {
     "properties": [
       {

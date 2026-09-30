@@ -62,6 +62,20 @@
       "Disabled": "opacity/disabled"
     }
   },
+  "tokensUsed": [
+    "color/background/default",
+    "color/brand/500",
+    "color/brand/primary",
+    "color/ring",
+    "color/surface/muted",
+    "color/white",
+    "color/zinc/100",
+    "height/target/touch",
+    "opacity/60",
+    "opacity/disabled",
+    "radius/full",
+    "spacing/11"
+  ],
   "accessibility": {
     "properties": [
       {

@@ -22,6 +22,7 @@ Enpath has **no Figma file**. Every change is made in documents and code.
 **Gates — run before calling any change done:**
 ```bash
 node "Machine Readable/sync-doc-values.mjs" --write
+node "Machine Readable/extract-token-usage.mjs" --write   # token usage generated from the code
 node "Machine Readable/drift-check.mjs"
 node "Machine Readable/validate-artifacts.mjs"
 cd Tokens && node validate-contrast.mjs

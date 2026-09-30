@@ -16,7 +16,9 @@ to the same colour today and diverge tomorrow — the name you bind is the promi
 |---|---|
 | `Tokens/semantics.tokens.json` → `$description` | **Intent · Use when · Do not use · Use instead · Foreground** for every semantic token. The authority |
 | `enpath-design-system.md` | System rules that cut across tokens (paired surfaces, destructive ≠ danger, heights, separation ladder) |
-| `Tokens/components.tokens.json` | Component-scoped aliases (button, badge, table, tooltip) — use these inside that component |
+| `Tokens/components.tokens.json` | Component-scoped aliases (button, badge, table, tooltip) — use these inside that component. `$extensions.enpath.owners` lists the only components allowed to use a group (drift-check #15) |
+| `$extensions.enpath.doNotUseIn` on a semantic token | Components that must not use it: the machine-checked part of "Do not use" (drift-check #15). Add a component there when a description forbids it by name |
+| `Machine Readable/token-usage.json` · Storybook `Foundations/*` → Used by | Which components use a token today, generated from the code |
 | Existing `enpath-ui/src/components/ui/*.tsx` | How a token is already used. Precedent only: if it contradicts the description, **the description wins**. Don't copy it; add it to `document/design-patterns.md` → Open flags |
 
 Never bind from `tokens.css` or a hex value alone. `tokens.css` is generated; its comments mirror the JSON.

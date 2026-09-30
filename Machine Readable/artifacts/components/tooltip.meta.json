@@ -47,6 +47,18 @@
       "fill": "tooltip/bg"
     }
   },
+  "tokensUsed": [
+    "color/background/inverted",
+    "color/background/inverted/foreground",
+    "color/zinc/900",
+    "radius/md",
+    "spacing/1-5",
+    "spacing/3",
+    "spacing/component/md",
+    "spacing/component/xs-plus",
+    "tooltip/bg",
+    "tooltip/fg"
+  ],
   "accessibility": {
     "properties": [
       {

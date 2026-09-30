@@ -172,6 +172,22 @@
       }
     }
   },
+  "tokensUsed": [
+    "color/border/disabled",
+    "color/border/error",
+    "color/brand/500",
+    "color/brand/primary",
+    "color/input/border",
+    "color/red/500",
+    "color/ring",
+    "color/zinc/100",
+    "color/zinc/300",
+    "height/target/touch",
+    "opacity/60",
+    "opacity/disabled",
+    "radius/full",
+    "spacing/11"
+  ],
   "accessibility": {
     "properties": [
       {

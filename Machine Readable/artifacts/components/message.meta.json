@@ -13,6 +13,22 @@
     "Assistant text": "`chat/assistant/fg` — no bubble",
     "Actions": "Button ghost; tooltips"
   },
+  "tokensUsed": [
+    "chat/assistant/fg",
+    "chat/user/bg",
+    "chat/user/border",
+    "chat/user/fg",
+    "color/background/default/foreground",
+    "color/blue/100",
+    "color/blue/50",
+    "color/text/secondary",
+    "color/zinc/600",
+    "radius/lg",
+    "spacing/2",
+    "spacing/3",
+    "spacing/component/md",
+    "spacing/component/sm"
+  ],
   "accessibility": {
     "properties": [
       {

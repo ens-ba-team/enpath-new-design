@@ -149,6 +149,37 @@
       }
     }
   },
+  "tokensUsed": [
+    "color/border/default",
+    "color/brand/500",
+    "color/brand/primary",
+    "color/ring",
+    "color/surface/accent",
+    "color/surface/default",
+    "color/surface/raised",
+    "color/text/disabled",
+    "color/text/secondary",
+    "color/white",
+    "color/zinc/100",
+    "color/zinc/200",
+    "color/zinc/400",
+    "color/zinc/50",
+    "color/zinc/600",
+    "radius/lg",
+    "radius/md",
+    "radius/none",
+    "shadow/sm",
+    "spacing/0-5",
+    "spacing/1",
+    "spacing/1-5",
+    "spacing/2",
+    "spacing/3",
+    "spacing/component/md",
+    "spacing/component/sm",
+    "spacing/component/xs",
+    "spacing/component/xs-plus",
+    "spacing/component/xxs"
+  ],
   "accessibility": {
     "properties": [
       {

@@ -9,6 +9,10 @@
     "Trigger text": "`color/text/secondary`",
     "Content": "`color/text/secondary`"
   },
+  "tokensUsed": [
+    "color/text/secondary",
+    "color/zinc/600"
+  ],
   "accessibility": {
     "properties": [
       {

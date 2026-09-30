@@ -172,6 +172,18 @@
       }
     }
   },
+  "tokensUsed": [
+    "color/background/accent",
+    "color/border/default",
+    "color/brand/500",
+    "color/brand/primary",
+    "color/surface/raised",
+    "color/text/secondary",
+    "color/zinc/100",
+    "color/zinc/200",
+    "color/zinc/50",
+    "color/zinc/600"
+  ],
   "accessibility": {
     "properties": [
       {

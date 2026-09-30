@@ -211,6 +211,31 @@
       "exitEasing": "motion/easing/exit"
     }
   },
+  "tokensUsed": [
+    "color/background/inverted",
+    "color/border/default",
+    "color/surface/overlay",
+    "color/text/secondary",
+    "color/white",
+    "color/zinc/200",
+    "color/zinc/600",
+    "color/zinc/900",
+    "motion/duration/normal",
+    "motion/easing/enter",
+    "motion/easing/exit",
+    "radius/overlay",
+    "radius/xl",
+    "shadow/2xl",
+    "shadow/modal",
+    "spacing/1",
+    "spacing/2",
+    "spacing/4",
+    "spacing/6",
+    "spacing/component/lg",
+    "spacing/component/sm",
+    "spacing/component/xl",
+    "spacing/component/xs"
+  ],
   "accessibility": {
     "properties": [
       {

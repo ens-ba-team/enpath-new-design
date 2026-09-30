@@ -243,6 +243,42 @@
       "gap": "spacing/component/xs"
     }
   },
+  "tokensUsed": [
+    "color/blue/50",
+    "color/border/default",
+    "color/border/error",
+    "color/border/strong",
+    "color/border/subtle",
+    "color/border/success",
+    "color/border/warning",
+    "color/brand/500",
+    "color/brand/destructive",
+    "color/brand/primary",
+    "color/green/50",
+    "color/green/500",
+    "color/green/600",
+    "color/red/50",
+    "color/red/500",
+    "color/red/600",
+    "color/status/danger-subtle",
+    "color/status/info-subtle",
+    "color/status/offline",
+    "color/status/success",
+    "color/status/success-subtle",
+    "color/status/warning-subtle",
+    "color/surface/accent",
+    "color/yellow/50",
+    "color/yellow/700",
+    "color/zinc/100",
+    "color/zinc/200",
+    "color/zinc/400",
+    "radius/full",
+    "radius/md",
+    "spacing/1",
+    "spacing/2",
+    "spacing/component/sm",
+    "spacing/component/xs"
+  ],
   "accessibility": {
     "properties": [
       {

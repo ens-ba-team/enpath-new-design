@@ -9,6 +9,9 @@
     "Chip": "Button outline — `color/border/default`, `color/surface/default`",
     "Radius": "`radius/full`"
   },
+  "tokensUsed": [
+    "radius/full"
+  ],
   "accessibility": {
     "properties": [
       {

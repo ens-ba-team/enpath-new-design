@@ -9,6 +9,10 @@
     "background": "color/background/muted",
     "note": "Token is applied via Tailwind class bg-muted. Uses background (not surface) because skeleton sits on the page canvas."
   },
+  "tokensUsed": [
+    "color/background/muted",
+    "color/zinc/100"
+  ],
   "accessibility": {
     "properties": [
       {

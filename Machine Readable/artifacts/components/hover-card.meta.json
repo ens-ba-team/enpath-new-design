@@ -11,6 +11,12 @@
     "Border": "`color/border/default`",
     "Shadow": "`shadow/overlay`"
   },
+  "tokensUsed": [
+    "color/surface/overlay",
+    "color/white",
+    "shadow/lg",
+    "shadow/overlay"
+  ],
   "accessibility": {
     "properties": [
       {

@@ -106,6 +106,15 @@
       }
     }
   },
+  "tokensUsed": [
+    "color/blue/100",
+    "color/green/500",
+    "color/status/offline",
+    "color/status/success",
+    "color/surface/tint",
+    "color/zinc/200",
+    "radius/full"
+  ],
   "accessibility": {
     "properties": [
       {

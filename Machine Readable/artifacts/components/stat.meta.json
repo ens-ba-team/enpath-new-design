@@ -64,6 +64,25 @@
       "warning": "color/icon/warning"
     }
   },
+  "tokensUsed": [
+    "color/border/default",
+    "color/green/700",
+    "color/icon/muted",
+    "color/icon/success",
+    "color/icon/warning",
+    "color/surface/default",
+    "color/text/secondary",
+    "color/white",
+    "color/yellow/700",
+    "color/zinc/200",
+    "color/zinc/600",
+    "radius/lg",
+    "radius/surface",
+    "spacing/1",
+    "spacing/3",
+    "spacing/component/md",
+    "spacing/component/xs"
+  ],
   "accessibility": {
     "properties": [
       {

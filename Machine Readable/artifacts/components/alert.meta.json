@@ -127,6 +127,43 @@
       "Warning": "color/icon/warning"
     }
   },
+  "tokensUsed": [
+    "color/background/default",
+    "color/blue/200",
+    "color/blue/50",
+    "color/blue/800",
+    "color/border/default",
+    "color/border/error",
+    "color/green/200",
+    "color/green/50",
+    "color/green/700",
+    "color/green/800",
+    "color/icon/danger",
+    "color/icon/success",
+    "color/icon/warning",
+    "color/red/500",
+    "color/red/600",
+    "color/status/danger",
+    "color/status/info-subtle",
+    "color/status/success-subtle",
+    "color/text/invalid",
+    "color/text/secondary",
+    "color/white",
+    "color/yellow/200",
+    "color/yellow/50",
+    "color/yellow/700",
+    "color/yellow/800",
+    "color/yellow/900",
+    "color/zinc/200",
+    "color/zinc/600",
+    "radius/lg",
+    "spacing/2",
+    "spacing/3",
+    "spacing/4",
+    "spacing/component/lg",
+    "spacing/component/md",
+    "spacing/component/sm"
+  ],
   "accessibility": {
     "properties": [
       {

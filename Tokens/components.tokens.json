@@ -1,5 +1,15 @@
 {
   "button": {
+    "$extensions": {
+      "enpath": {
+        "owners": [
+          "button"
+        ],
+        "pending": {
+          "career-map": "Open flag: the map legend rebuilds outline buttons from button tokens"
+        }
+      }
+    },
     "primary": {
       "bg": {
         "bg": {
@@ -191,6 +201,13 @@
     }
   },
   "badge": {
+    "$extensions": {
+      "enpath": {
+        "owners": [
+          "badge"
+        ]
+      }
+    },
     "Badge-height-small": {
       "$value": "{spacing.4}",
       "$type": "dimension",
@@ -208,6 +225,13 @@
     }
   },
   "table": {
+    "$extensions": {
+      "enpath": {
+        "owners": [
+          "table"
+        ]
+      }
+    },
     "table-cell-compact": {
       "$value": "{spacing.10}",
       "$type": "dimension",
@@ -220,6 +244,13 @@
     }
   },
   "tooltip": {
+    "$extensions": {
+      "enpath": {
+        "owners": [
+          "tooltip"
+        ]
+      }
+    },
     "bg": {
       "$value": "{color.background.inverted}",
       "$type": "color",
@@ -232,6 +263,13 @@
     }
   },
   "item": {
+    "$extensions": {
+      "enpath": {
+        "owners": [
+          "item"
+        ]
+      }
+    },
     "hover": {
       "bg": {
         "$value": "{color.blue.25}",
@@ -258,6 +296,13 @@
     }
   },
   "career-stepper": {
+    "$extensions": {
+      "enpath": {
+        "owners": [
+          "career-path-stepper"
+        ]
+      }
+    },
     "surface": {
       "$value": "{gradient.career-stepper}",
       "$type": "string",
@@ -325,6 +370,17 @@
     }
   },
   "chat": {
+    "$extensions": {
+      "enpath": {
+        "owners": [
+          "message",
+          "prompt-input",
+          "code-block",
+          "conversation",
+          "tool"
+        ]
+      }
+    },
     "user": {
       "bg": {
         "$value": "{color.blue.50}",
@@ -375,6 +431,16 @@
     }
   },
   "career-map": {
+    "$extensions": {
+      "enpath": {
+        "owners": [
+          "career-map"
+        ],
+        "pending": {
+          "step-rail": "Open flag: step-rail reuses the map's role colours"
+        }
+      }
+    },
     "canvas": {
       "$value": "{color.brand.100}",
       "$type": "color",

@@ -70,6 +70,25 @@
       }
     }
   },
+  "tokensUsed": [
+    "color/background/default",
+    "color/border/default",
+    "color/green/700",
+    "color/icon/danger",
+    "color/icon/success",
+    "color/icon/warning",
+    "color/red/600",
+    "color/status/danger",
+    "color/surface/muted",
+    "color/surface/overlay",
+    "color/text/secondary",
+    "color/white",
+    "color/yellow/700",
+    "color/zinc/100",
+    "color/zinc/200",
+    "color/zinc/600",
+    "radius/lg"
+  ],
   "accessibility": {
     "properties": [
       {

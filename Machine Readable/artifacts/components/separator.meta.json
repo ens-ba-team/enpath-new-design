@@ -41,6 +41,14 @@
   "tokens": {
     "fill": "color/border/default"
   },
+  "tokensUsed": [
+    "color/border/default",
+    "color/border/subtle",
+    "color/sidebar/border",
+    "color/zinc/100",
+    "color/zinc/200",
+    "color/zinc/300"
+  ],
   "accessibility": {
     "properties": [
       {

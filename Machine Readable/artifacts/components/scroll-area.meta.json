@@ -9,6 +9,11 @@
     "Thumb": "`color/border/default`",
     "Region": "inherits its container"
   },
+  "tokensUsed": [
+    "color/border/default",
+    "color/zinc/200",
+    "radius/full"
+  ],
   "accessibility": {
     "properties": [
       {

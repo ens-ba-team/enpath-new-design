@@ -78,6 +78,40 @@
       }
     }
   },
+  "tokensUsed": [
+    "color/background/default/foreground",
+    "color/border/default",
+    "color/border/focus",
+    "color/border/hover",
+    "color/brand/500",
+    "color/icon/default",
+    "color/input/bg",
+    "color/input/border",
+    "color/input/placeholder",
+    "color/ring",
+    "color/surface/overlay",
+    "color/white",
+    "color/zinc/200",
+    "color/zinc/300",
+    "color/zinc/500",
+    "height/control-touch/md",
+    "height/control/md",
+    "opacity/60",
+    "opacity/disabled",
+    "radius/lg",
+    "radius/md",
+    "shadow/lg",
+    "shadow/none",
+    "shadow/overlay",
+    "spacing/1",
+    "spacing/2",
+    "spacing/3",
+    "spacing/8",
+    "spacing/9",
+    "spacing/component/md",
+    "spacing/component/sm",
+    "spacing/component/xs"
+  ],
   "accessibility": {
     "properties": [
       {
