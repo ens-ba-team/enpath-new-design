@@ -36,17 +36,14 @@ Records (what happened, from anyone) ──────────────�
   draft (suggested person, competency, title); it never picks the person on its own when unsure and
   never sends.
 
-## From the old prototype (`enpath-prototype.html` → Records)
+## From the old prototype (`enpath-prototype.html` → Records): information only
 
-- **Views:** "Related to me" (about me, or written by me) · "Sent by me" · "Create record".
-  Counters: related to me · sent by me · awaiting my review.
-- **List + detail:** list cards show "About me / About {name}", status, title, "From {name} · date".
-  Detail: title, summary, about, submitted by, occurred on, competency, contribution, outcome,
-  impact, visibility, attachment, review status; **Acknowledge record** when it's about me and
-  awaiting.
+Its layout is **not** a reference (user, 2026-09-30); only the content below is.
+
 - **Fields:** about (employee)*, title*, summary*, contribution, outcome, impact, occurred on,
   competency, visibility (default Team), attachment; AI mode adds source text / file.
 - **Statuses:** Draft · Awaiting acknowledgement · Acknowledged · Approved.
+- **Who's involved:** records about me · records I sent · records waiting for me to acknowledge.
 - A completed Action could create a record ("origin: My Actions"): **dropped** (see Decisions).
 
 ## Assumed defaults for the first build (to confirm; each maps to an open question)
@@ -62,12 +59,9 @@ Records (what happened, from anyone) ──────────────�
 | 7 | No retro UI yet | Q7 |
 | 8 | Page name **Records** (as the sidebar); "My Records" in docs means the same page | Q8 |
 
-## Layout — A chosen (user, 2026-09-30)
+## Layout — not chosen
 
-- **A (chosen)** List + detail panel (old prototype, like My Career's side panel): filters About me · Sent by
-  me · Waiting for you, competency dropdown; the selected record's detail and Acknowledge on the right.
-- **B** Timeline by month (a work log): competency chips (with counts) as filters, About me dropdown;
-  each record shows title, status, summary, "From · date · competency", Acknowledge on the row.
+The old prototype's layout is not a reference. A recommendation is being discussed (2026-09-30).
 
 ## Open questions
 
@@ -82,4 +76,4 @@ Records (what happened, from anyone) ──────────────�
 - [ ] **Q7 Retro generation:** placeholder in the UI now ("Suggested from retro" drafts to review), or
       later?
 - [ ] **Q8 Name:** "Records" or "My Records"?
-- [x] **Layout:** A, list + detail panel (2026-09-30). Rows as a table or as cards: to decide.
+- [ ] **Layout:** not chosen yet.
