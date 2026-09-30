@@ -17,7 +17,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
-import { pointLabel, type Gap, type GapStatus } from './mock-data';
+import type { Gap, GapStatus } from './mock-data';
 
 /** `values` names the numbers on the right once per card, e.g. "You → Needed". */
 const groups: { status: GapStatus; title: string; collapsed: boolean; values?: string }[] = [
@@ -44,14 +44,14 @@ function value(gap: Gap) {
 
 function Detail({ gap }: { gap: Gap }) {
   const comingNext = (where: string) => toast(`${where} is coming next. This button will open it.`);
-  const label = (text: string) => <p className="text-heading-xs text-[var(--color-background-default-foreground)]">{text}</p>;
-  const body = (text: string) => <p className="text-body-sm text-[var(--color-text-secondary)]">{text}</p>;
+  // One short line in a smaller, regular, secondary style, so it never reads like the row's title
+  // (user, 2026-09-30). The points are already on the row ("3 → 4"), so the detail doesn't repeat them.
+  const body = (text: string) => <p className="text-body-xs text-[var(--color-text-secondary)]">{text}</p>;
   const link = (text: string, where: string) => (
     <Button variant="outline" size="sm" className="mt-[var(--spacing-component-xs)] self-start" onClick={() => comingNext(where)}>{text}<ArrowRightIcon aria-hidden="true" /></Button>
   );
   if (gap.status === 'growth') return (
     <>
-      {label(`What ${pointLabel(gap.required!)} looks like`)}
       {body(gap.meaning ?? 'Your assessment shows this is a growth area for this level.')}
       {link('Plan an action', 'My Actions')}
     </>
@@ -59,13 +59,12 @@ function Detail({ gap }: { gap: Gap }) {
   if (gap.status === 'evidence') return (
     <>
       {/* "Why it doesn't count as a growth area" lives in the progress strip's ⓘ tooltip — the row only says what's needed. */}
-      {label(`No approved score yet · needs ${pointLabel(gap.required!)}`)}
+      {body('No approved score yet')}
     </>
   );
   if (gap.status === 'ready') return (
     <>
-      {label(`You’re at ${pointLabel(gap.current!)}`)}
-      {body(gap.source ? `Based on: ${gap.source}.` : 'Your assessment meets this level.')}
+      {body(gap.source ? `Based on: ${gap.source}` : 'Your assessment meets this level')}
     </>
   );
   return body('Setup hasn’t set an expectation for this level yet, so there’s nothing to compare.');
@@ -108,7 +107,8 @@ function GapGroup({ group, rows, focused }: { group: (typeof groups)[number]; ro
               <span>Competency</span><span>{group.values}</span>
             </p>
           )}
-          <Accordion type="single" collapsible size="compact">
+          {/* multiple: opening one row keeps the others open (user, 2026-09-30). */}
+          <Accordion type="multiple" size="compact">
             {rows.map((gap) => (
               <AccordionItem key={gap.id} value={gap.id}>
                 <AccordionTrigger className="[&[data-state=open]>span:first-child]:font-semibold">

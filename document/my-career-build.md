@@ -113,10 +113,13 @@ Progress strip ─ Toward {target} · bar · 2 ready · 2 growth areas · 2 not 
 
 | Status | Meaning | Dot / bar colour | Row value | Row expands to | Action |
 |---|---|---|---|---|---|
-| **Growth area** | Approved score below what the role needs | warning (orange) | "3 → 4" (You → Needed) | "What 4 · Advanced looks like" + the Matrix's behavior text | **Plan an action** (toast "My Actions is coming next") |
-| **Not assessed yet** | Role sets an expectation, employee has no approved score | border-strong (grey) | "3" (Needed) | "No approved score yet · needs 3 · Intermediate" | none (manager's job) |
-| **Ready** | Approved score meets the expectation | success (green) | "3" (You) | "You're at 3 · Intermediate" + "Based on: {source}" | none |
+| **Growth area** | Approved score below what the role needs | warning (orange) | "3 → 4" (You → Needed) | the Matrix's behavior text for the needed point | **Plan an action** (toast "My Actions is coming next") |
+| **Not assessed yet** | Role sets an expectation, employee has no approved score | border-strong (grey) | "3" (Needed) | "No approved score yet" | none (manager's job) |
+| **Ready** | Approved score meets the expectation | success (green) | "3" (You) | "Based on: {source}" | none |
 | **Not set** | Setup has no expectation for this level | border-default | "Not set" | "Setup hasn't set an expectation for this level yet…" | none |
+
+Expanded rows (2026-09-30): one short line in `text-body-xs` secondary (never the row title's style
+or weight), no points repeated (they're on the row); several rows can be open at once.
 
 Groups in this order: Growth areas → Not assessed yet → Ready (collapsed) → Not set in Setup
 (collapsed). Each group is a Card; rows are Accordion items (one open at a time). If **every**

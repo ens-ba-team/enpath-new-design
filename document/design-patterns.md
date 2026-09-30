@@ -272,7 +272,8 @@ neither a template nor a pattern. Its decisions stay in `my-career-build.md`._
   page (Action plan), so the group title (`text-heading-sm`) stands above row titles (`text-heading-xs`).
 - **Anatomy:** one Card per group, in this order: **Growth areas** (You → Needed) · **Not assessed
   yet** (Needed) · **Ready** (collapsed, Show) · **Not set in Setup** (collapsed). Rows are Accordion
-  items: name + short value; expanded: what the needed point looks like (+ Plan an action) / "No
+  items (several open at once, 2026-09-30): name + short value; expanded: one short `body-xs`
+  secondary line: the needed point's behaviour (+ Plan an action) / "No
   approved score yet" / the source of a Ready score.
 - **Rules / decisions:** employee UI says "growth area", never "gap"; points never "levels"; "Not
   assessed yet" has no button (2026-09-28); no readiness %.
