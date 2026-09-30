@@ -8,11 +8,14 @@ Semantic tokens always reference primitives. Always read the "Do not use" line b
 
 Enpath has **no Figma file**. Every change is made in documents and code.
 
+**Order of authority: Token → Component → Screen.** Token descriptions are the rule components follow. A component's code and its `meta.json` match each other and follow their tokens. A screen uses components exactly as their Storybook stories show. On a conflict the higher layer wins. When following it needs a decision (a visible change, something missing), don't improvise: add it to `document/design-patterns.md` → **Open flags**.
+
 | Layer | Authoritative source | On change |
 |---|---|---|
 | Token values | `Tokens/primitives.tokens.json`; text styles in `Tokens/semantics.tokens.json` → `typography/*` | Edit JSON → `node sd.build.mjs`. The build writes `enpath-ui/src/app/tokens.css` — never edit that file |
 | Token names + semantic rules | This file + `Tokens/semantics.tokens.json` | Update both together |
-| Component behaviour + variants | `enpath-ui/src/components/ui/*.tsx` | Code wins; update meta.json to match |
+| Component meaning, behaviour, variants, `doNot` | `meta.json` | **meta.json is the rule; the code follows.** Code that does something else is flagged (Open flags) |
+| Component tokens (what the code binds) | `enpath-ui/src/components/ui/*.tsx` | The token section of `meta.json` follows the code. Change the code, then the spec |
 | Component spec (machine-readable) | `Machine Readable/artifacts/components/*.meta.json` | Regenerate when the component changes |
 | Component usage guidance | `meta.json` → `docs` | Edit the JSON — there is no separate Markdown page |
 
@@ -118,6 +121,15 @@ after:absolute after:content-[''] … pointer-coarse:after:min-h-[var(--height-t
 **Leaf vs container.** Leaf components (Button, Input, Badge, Avatar, Checkbox) have fixed structure and meaningful variants. Container components (Card, Dialog, Sheet, Popover, Field, ButtonGroup) are shells — variants describe layout only; children vary by composition.
 
 **Branding slots** (logos, wordmarks) are exempt from token rules. Only size is constrained: sidebar logo 28 × 28px.
+
+### Building a screen
+
+Plan before writing any screen code:
+
+1. **Components:** which ones, with which variant and size. Scan `Machine Readable/component-quick-reference.md`, then read each `meta.json`. Use them as their Storybook stories show; never restyle one on the screen (`document/design-patterns.md` rule 1).
+2. **Patterns:** reuse an approved pattern, template or layout from `document/design-patterns.md` when one fits.
+3. **Tokens:** only for the composition between components (placement, `spacing/layout/*`), picked by description (`Skills/token-binding-skill.md`).
+4. **Anything missing** (a component, variant, token or pattern): don't invent it. Add it to `document/design-patterns.md` → Open flags and ask.
 
 ### Separation ladder
 

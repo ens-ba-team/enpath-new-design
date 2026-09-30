@@ -24,12 +24,29 @@ footer pattern") instead of repeating a pattern.
 2. **Patterns, templates and layouts are composition only**: which components, in what order, where
    they sit, how wide, what spacing between them, and the behaviour rules. They don't restyle
    components.
-3. **A change of look found at a place of use is debt.** It becomes a variant / size of the component
-   (or is removed). While open, list it here under a "Needs a Storybook update" heading; remove the
-   heading when the list is empty (last cleared 2026-09-29).
+3. **What doesn't fit is flagged, not improvised.** Anything below goes into **Open flags** and
+   waits for a decision; a flag is removed once it's decided and done.
+   - a component restyled at a place of use (becomes a variant or size of the component, or is removed);
+   - a component or variant a screen needs that doesn't exist;
+   - a token that doesn't exist;
+   - a component that breaks its token's description, or does something its `meta.json` doesn't say
+     (the token description and `meta.json` are the rule; see the rulebook → Order of authority).
 4. **Composition is not debt:** classes that only place a component (scroll containment such as
    `min-h-0`, a `border-t` separating panes, side padding aligning a TabsList with the page, chat panel
    paddings) belong to the pattern, not the component.
+
+## Open flags
+
+Decisions waiting. One row per flag; remove it when decided and done.
+
+| Flag | Kind | Where | Since | Decision needed |
+|---|---|---|---|---|
+| — | — | — | — | None open (2026-09-30). The last "Needs a Storybook update" list was cleared 2026-09-29 |
+
+Kinds: **restyle** (component changed at a place of use) · **missing component** · **missing token** ·
+**breaks token** (component vs token description) · **breaks spec** (code vs `meta.json`).
+
+---
 
 ## Four kinds
 

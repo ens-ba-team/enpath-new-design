@@ -1,5 +1,7 @@
 # Meta Artifact Requirements
 
+**Authority (decided 2026-09-30):** `meta.json` is the rule for a component's meaning, behaviour, variants and `doNot`; the code follows it, and code that does something else is flagged in `document/design-patterns.md` → Open flags. The **token** section follows the code (Stage 1 below).
+
 A component's `meta.json` is its **only** documentation source: structured fields for tools (variants, tokens, constraints, storybook, implementation) plus `docs` — the readable spec, section by section. There is no separate Markdown page (removed 2026-09-25).
 
 ## Trigger Rule — When to Regenerate

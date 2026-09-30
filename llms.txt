@@ -9,7 +9,7 @@
 
 ## Rules and Process
 
-- `enpath-design-system.md`: The rulebook. Source of truth (where each thing lives, the gates), token layers, pointers to the token JSON (values are not restated), Token rules (cross-token rules: colour, spacing, height pairs and hit areas, app shell, text styles and their exceptions), component rules (use existing components, separation ladder), icons (Phosphor), accessibility (focus, target size), and the numbered R-ENP rules. No Figma — light mode only.
+- `enpath-design-system.md`: The rulebook. Source of truth (where each thing lives, the gates), token layers, pointers to the token JSON (values are not restated), Token rules (cross-token rules: colour, spacing, height pairs and hit areas, app shell, text styles and their exceptions), order of authority (Token → Component → Screen), component rules (use existing components, building a screen, separation ladder), icons (Phosphor), accessibility (focus, target size), and the numbered R-ENP rules. No Figma — light mode only.
 - `Skills/token-binding-skill.md`: **Read before binding any token in code.** How to pick a token by meaning (descriptions in `Tokens/semantics.tokens.json`), pairing rules, height pairs, adding a new token with the full description template, verification, common mistakes.
 - `content-guidelines.md`: Voice-neutral UX writing mechanics — capitalization, button labels, error messages, empty states, punctuation. Brand voice/tone is left to the consuming product.
 - `enpath-tone-and-voice.md`: Enpath's own layer on top of the above — HR-platform-specific tone (a score is development information, not a verdict), admin vs. employee voice, HR/engineering jargon to avoid, reversible-action copy pattern. Enpath-specific, not part of the reusable design system.
