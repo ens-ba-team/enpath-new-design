@@ -111,7 +111,8 @@ Route `/me/actions` (sidebar "My Actions"). Code: `enpath-ui/src/features/enpath
   Edit · Move back to In progress (Done only) · Remove from plan (confirm). Expanding shows Outcome,
   "{point} means" (the Matrix behaviour text) and when / by whom it was added.
 - **Done** has no record step (Actions and Records are separate).
-- **AI proposals** sit in their growth area as **info Alerts** with a Sparkle icon (title = Alert title,
+- **AI proposals** sit in their growth area as **green (success) Alerts** with a Sparkle icon (green chosen
+  2026-09-30 so they stand apart from the blue header band and links) (title = Alert title,
   "AI proposal · outcome: …" = description):
   **Add to plan** opens Add action prefilled (the person picks a due date and confirms) · **Dismiss**
   (confirm; it doesn't come back).
@@ -138,7 +139,7 @@ view / approval · "Plan an action" from My Career opening this page · Records 
 ### Visual audit (2026-09-30)
 
 - **Blue budget.** Blue means brand (primary action, header band) or information (link, In progress,
-  info Alert). Decorative things don't get blue: the progress ring fills neutral (`color/icon/default`),
+  In progress). The AI proposal is green. Decorative things don't get blue: the progress ring fills neutral (`color/icon/default`),
   green when complete. The AI proposal is the only tinted block inside a card.
 - **Text hierarchy:** page title `heading-xl` → group title `heading-sm` → action title `heading-xs`
   → Alert title `label-md` → meta `body-xs`. A compact Card made the group title `heading-xs`, the same
