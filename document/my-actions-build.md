@@ -33,8 +33,9 @@ My Actions turns growth areas into work. It is **not** a performance or task-man
 - **AI proposes, a person adds.** AI suggestions appear as a "Proposal" card (the growth area it
   serves + the outcome to show); nothing joins the plan until someone presses **Add to plan**.
 - **Actions and Records are separate** (2026-09-30, see "Actions and Records" below). A Done
-  Action does **not** become a record, and Done has no "Add a record" step for now. Records feed the
-  next Assessment (`my-assessment-build.md`); Actions don't.
+  Action does **not** become a record, and Done has no "Add a record" step for now. At the next
+  Assessment AI reads **both** Records and Actions and suggests scores; the manager confirms
+  (`my-assessment-build.md`, 2026-09-30).
 - **Nothing is lost when a role changes.** Actions stay in My Actions with their history even if
   their growth area no longer exists at the new role (e.g. You are here moves from C to C′); their
   records can count toward a later role with a similar competency.
@@ -64,7 +65,7 @@ Two pages, two directions in time, one shared key (the competency):
 | Written by | The employee (manager and AI can propose) | Anyone: the employee, the manager, colleagues; later generated from retros |
 | About | Only the employee | Any employee (Records has "about me" and "sent by me") |
 | Organised by | Growth area | Date, filterable by competency and by who wrote it |
-| Feeds Assessment | No | Yes: the input the self-assessment and the manager review read |
+| Feeds Assessment | Yes: AI reads it (a Done Action alone never raises a score) | Yes: AI reads it |
 
 - **Names stay:** "Action plan" and "Records". The confusion came from the layout (the two met at
   Done), not the names.
@@ -73,8 +74,9 @@ Two pages, two directions in time, one shared key (the competency):
 - **Done Action ≠ record** (2026-09-30). Finishing an Action doesn't create or ask for a record. A
   Done Action says the plan step is finished; it proves nothing by itself and doesn't change a
   score.
-- **The only link is the competency:** a growth area group in the Action plan points to that
-  competency's Records. Records are never shown inside Action cards.
+- **No link between the pages** (2026-09-30): records carry no competency, so the Action plan can't
+  count "records per growth area". Records are never shown inside Action cards. The prototype's
+  "{N} records" link on each growth area is **to remove** (waiting for the user's go-ahead).
 - **Records is its own tab** so it can grow on its own (records about colleagues, records generated
   from retros) without touching the Action plan.
 - Page purpose lines (proposed copy): Action plan "What you plan to do to grow toward {target}."
@@ -177,8 +179,7 @@ view / approval · "Plan an action" from My Career opening this page · Records 
 - Board: To do · In progress · Done. Card: title, growth area, due date, source, status control.
 - Done: the Action is finished; no record step. Done Actions shrink to one line at the bottom of
   their growth area.
-- Each growth area group links to Records: "{N} records for this competency →" opens Records
-  filtered to that competency (planned; depends on the Records screen).
+- ~~Each growth area group links to Records~~: dropped (2026-09-30), records have no competency.
 - Manager view: the same plan, read-only, with approve (scope of "approve" is open).
 - Built on the Enpath design system (the dev team's screen isn't: black primary button, own shell).
 

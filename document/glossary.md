@@ -106,14 +106,15 @@ The employee side. How they look on the map: `my-career-build.md` → "How the m
 Target ──▶ Assessment ──▶ Growth areas ──▶ Action plan
 (where I     (where I am:    (target minus     (what I plan
  want to go)  scores)         scores)           to do next)
-                 ▲
-                 └──── read by the next Assessment ◀──── Records
+                 ▲                                      │
+                 └──── AI reads both at the next ◀──────┤
+                       Assessment (manager confirms)   Records
                                                        (what happened, from
                                                         me, my manager, colleagues)
 ```
 
-**Assessment = the score. Record = what happened. Action = the plan.** Actions and Records meet only
-through the competency (2026-09-30). Growth areas are computed, never
+**Assessment = the score. Record = what happened. Action = the plan.** Actions and Records are separate
+pages; they meet at Assessment, where AI reads both and suggests scores (2026-09-30). Growth areas are computed, never
 entered by hand.
 
 ## Words to keep out of the UI

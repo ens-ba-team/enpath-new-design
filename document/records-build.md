@@ -29,9 +29,14 @@ Records (what happened, from anyone) ──────────────�
 - **Anyone writes, about anyone:** the employee, their manager, a colleague (old prototype: "any
   employee in the company"). Later, records are **generated from retros** (PO: the reason Records is
   its own tab, so it can grow on its own).
-- **Separate from Actions** (2026-09-30): a Done Action doesn't create or ask for a record. The only
-  link is the competency: each growth area in the Action plan shows "{N} records →", which opens
-  Records filtered to that competency.
+- **Separate from Actions** (2026-09-30): a Done Action doesn't create or ask for a record, and the
+  pages don't link. They meet at Assessment: **AI reads records and actions** and suggests scores per
+  competency; the manager confirms (`my-assessment-build.md`).
+- **No competency on a record** (user, 2026-09-30): people write what happened; AI works out which
+  competencies it shows at Assessment time.
+- **Idea, not confirmed (2026-09-30): an AI reasoning log.** When AI suggests a score, keep a record of
+  how it got there (which records and actions it read, what it concluded), shown in the detail panel
+  like a history log, for the manager to check. Not decided; don't build yet.
 - **AI drafts, a person sends** (old prototype, PRD-004): AI can turn pasted notes or a file into a
   draft (suggested person, competency, title); it never picks the person on its own when unsure and
   never sends.
@@ -41,7 +46,8 @@ Records (what happened, from anyone) ──────────────�
 Its layout is **not** a reference (user, 2026-09-30); only the content below is.
 
 - **Fields:** about (employee)*, title*, summary*, contribution, outcome, impact, occurred on,
-  competency, visibility (default Team), attachment; AI mode adds source text / file.
+  competency (**dropped** for Enpath, see Decisions), visibility (default Team), attachment; AI mode
+  adds source text / file.
 - **Statuses:** Draft · Awaiting acknowledgement · Acknowledged · Approved.
 - **Who's involved:** records about me · records I sent · records waiting for me to acknowledge.
 - A completed Action could create a record ("origin: My Actions"): **dropped** (see Decisions).
@@ -54,8 +60,7 @@ Its layout is **not** a reference (user, 2026-09-30); only the content below is.
 | 2 | No reject or "ask for changes" | Q2 |
 | 3 | Visibility is **Team** only (the person, their manager, the author) | Q3 |
 | 4 | A sent record can't be edited or deleted; drafts can | Q4 |
-| 5 | **One competency** per record, from the person's Matrix; optional | Q5 |
-| 6 | Only acknowledged records count for an Assessment | Q6 |
+| 6 | AI reads only acknowledged records at Assessment | Q6 |
 | 7 | No retro UI yet | Q7 |
 | 8 | Page name **Records** (as the sidebar); "My Records" in docs means the same page | Q8 |
 
@@ -71,8 +76,11 @@ The old prototype's layout is not a reference. A recommendation is being discuss
 - [ ] **Q3 Visibility:** what does "Team" cover; other options (Private, Manager only)? Can a
       colleague write about someone outside their team, and who sees it?
 - [ ] **Q4** Can a record be edited or deleted after it's sent / acknowledged? History?
-- [ ] **Q5 Competency:** one, several or none? From the person's Matrix or the whole library?
-- [ ] **Q6** Which records does an Assessment read: acknowledged only? Only within its period?
+- [x] ~~Q5 Competency~~: none on a record; AI maps records to competencies at Assessment (2026-09-30).
+- [ ] **Q6** Which records and actions does AI read at Assessment: acknowledged records only? Only
+      within the period? Done actions only?
+- [ ] **AI reasoning log** (idea, not confirmed): show how AI reached a suggested score in the
+      detail panel?
 - [ ] **Q7 Retro generation:** placeholder in the UI now ("Suggested from retro" drafts to review), or
       later?
 - [ ] **Q8 Name:** "Records" or "My Records"?

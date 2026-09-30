@@ -29,10 +29,15 @@ Target → ASSESSMENT (scores) → Growth areas → Action plan → Records → 
   matrix.
 - **Flow:** the employee **self-assesses** → the **line manager reviews** → **Completed** (approved,
   "ready for comparison").
-- **Records are the input** (My Records is **kept**, 2026-09-28). Records (written by the employee,
-  the manager or colleagues; later from retros) are gathered per competency for the self-assessment
-  and shown to the manager at review. A record is never a score by itself. Actions are not an input:
-  a Done Action doesn't become a record (2026-09-30, `my-actions-build.md` → Actions and Records).
+- **AI reads records and actions** (user, 2026-09-30; replaces "Actions are not an input"). At
+  Assessment time AI reads the person's **Records** (written by the employee, the manager or
+  colleagues; later from retros) **and Actions**, and suggests a score per competency of the target
+  role. Records carry **no competency tag**: AI works out which competencies they show. A record or a
+  Done Action is never a score by itself (PRD-022: completing an action doesn't raise a score); the
+  manager confirms (B1 below).
+- **Idea, not confirmed (2026-09-30): an AI reasoning log.** When AI suggests a score, keep a record of
+  how it got there (which records and actions it read, what it concluded), shown in the detail panel
+  like a history log, for the manager to check. Not decided; don't build yet.
 - **AI proposes, the manager decides (B1, 2026-09-28).** AI may summarise records, and may
   **suggest** a score where there's no approved one (see "When You are here changes" below). A
   suggested score is labelled "Suggested", shows what it's based on, and **counts only after the
