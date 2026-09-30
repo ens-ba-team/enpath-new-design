@@ -101,9 +101,8 @@ Route `/me/actions` (sidebar "My Actions"). Code: `enpath-ui/src/features/enpath
 
 - **Header (P1):** "Action plan" + "What you plan to do to grow toward {target}. Your manager can see
   this plan." · Ask AI (outline, from 1024px, ⌘I) · **Add action** (primary).
-- **Summary:** four Stat tiles: Growth areas · In progress · To do · Done.
-- **One Card per growth area** of the Active target (pattern P7): name, "Growth area · You 3 → Needed 4
-  · 1 of 2 done", "{N} records" (link; Records isn't built, so it says it's coming next), Add action
+- **Summary:** four Stat tiles with coloured icon tiles: Growth areas · In progress · To do · Done.
+- **One Card per growth area** of the Active target (pattern P7): name, "Growth area · You 3 → Needed 4" with the progress ring before the title, "{N} records" (link; Records isn't built, so it says it's coming next), Add action
   (outline; opens the dialog with that growth area chosen). "0 records" is plain text, not a link.
 - **Action rows** (Accordion compact), sorted In progress → To do → Done, then by due date: status Badge
   (To do secondary · In progress blue · Done success), title, "Due 26 Sep · overdue" (only "overdue" in
@@ -128,7 +127,11 @@ My Career's mock starts with no target; the pages keep separate state. Today = 3
 
 **Rows** sit in fixed columns (status slot · title · caret | next-step button | "…") so they line up.
 
-**Not built:** progress ring before the title, Stat icon tiles, Badge `blue` border (three Open flags, not now) · Board view · manager
+**Built on the screen, to move into components** (Open flags, kind restyle): the progress ring before
+each growth area's title ("1/2"), the Stat tiles' coloured icon tiles (growth areas amber · in progress
+blue · to do grey · done green), the In progress badge's border.
+
+**Not built:** · Board view · manager
 view / approval · "Plan an action" from My Career opening this page · Records page.
 
 ## Screen — planned (not designed yet)

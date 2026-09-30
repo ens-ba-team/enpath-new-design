@@ -6,7 +6,9 @@
 // outcome and what the needed point looks like. Start / Mark done and the "…" menu sit beside the
 // trigger (never inside it). AI proposals for this growth area are muted Items with Add to plan /
 // Dismiss. An empty growth area invites an action or Ask AI.
-// Progress is text ("1 of 2 done"): a progress ring (before the title) doesn't exist yet (Open flag).
+// SCREEN-LEVEL DEBT (design-patterns.md → Open flags, kind restyle, 2026-09-30): the progress ring
+// before the title and the In progress Badge's border are built here until the components get them
+// (Progress shape="ring"; Badge blue border). Move them into the components, then delete them here.
 
 import * as React from 'react';
 import { DotsThreeIcon, PlusIcon, SparkleIcon } from '@phosphor-icons/react/ssr';
@@ -23,6 +25,31 @@ import {
 } from './mock-data';
 
 const statusBadge: Record<ActionStatus, 'secondary' | 'blue' | 'success'> = { todo: 'secondary', doing: 'blue', done: 'success' };
+/** Debt: Badge blue's border (border/subtle) is near-invisible next to success's; match it here. */
+const statusBadgeClass: Partial<Record<ActionStatus, string>> = { doing: 'border-[var(--color-status-info)]' };
+
+/** Debt: progress ring (Open flag) — done out of total, before the growth area's title.
+ *  Track border/default, fill brand/primary, all done icon/success. 36px, label inside. */
+function ProgressRing({ done, total, label }: { done: number; total: number; label: string }) {
+  const r = 15;
+  const c = 2 * Math.PI * r;
+  const share = total ? done / total : 0;
+  const complete = total > 0 && done === total;
+  return (
+    <div role="progressbar" aria-valuemin={0} aria-valuemax={total} aria-valuenow={done} aria-label={label}
+      className="relative inline-flex shrink-0 items-center justify-center">
+      <svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true" className="-rotate-90">
+        <circle cx="18" cy="18" r={r} fill="none" strokeWidth="3" className="stroke-[var(--color-border-default)]" />
+        {share > 0 && (
+          <circle cx="18" cy="18" r={r} fill="none" strokeWidth="3" strokeLinecap="round"
+            strokeDasharray={`${c * share} ${c}`}
+            className={complete ? 'stroke-[var(--color-icon-success)]' : 'stroke-[var(--color-brand-primary)]'} />
+        )}
+      </svg>
+      <span className="absolute text-label-sm text-[var(--color-background-default-foreground)]">{done}/{total}</span>
+    </div>
+  );
+}
 
 export interface GroupHandlers {
   onAdvance: (a: Action) => void;
@@ -58,7 +85,7 @@ function ActionRow({ action, area, h }: { action: Action; area: Gap; h: GroupHan
         <div className="flex min-w-0 [&>h3]:min-w-0 [&>h3]:flex-1">
           <AccordionTrigger className="min-w-0 justify-start text-left">
           <span className="flex w-[5.5rem] shrink-0">
-            <Badge variant={statusBadge[action.status]} shape="pill" size="sm">{statusLabel[action.status]}</Badge>
+            <Badge variant={statusBadge[action.status]} shape="pill" size="sm" className={statusBadgeClass[action.status]}>{statusLabel[action.status]}</Badge>
           </span>
           <span className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xxs)]">
             <span className={done ? 'text-[var(--color-text-secondary)]' : 'text-heading-xs'}>{action.title}</span>
@@ -106,9 +133,10 @@ export function GrowthAreaGroup({ area, actions, proposals, records, h }: {
   return (
     <Card size="compact" role="region" aria-label={area.name}>
       <CardHeader className="flex-row flex-wrap items-center gap-x-[var(--spacing-component-md)] gap-y-[var(--spacing-component-xs)]">
+        <ProgressRing done={done} total={actions.length} label={`${area.name}: ${progress}`} />
         <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xxs)]">
           <CardTitle role="heading" aria-level={2}>{area.name}</CardTitle>
-          <p className="text-body-xs text-[var(--color-text-secondary)]">Growth area · {pointsLine(area)} · {progress}</p>
+          <p className="text-body-xs text-[var(--color-text-secondary)]">Growth area · {pointsLine(area)}</p>
         </div>
         {records > 0 ? (
           <Button variant="link" size="sm" onClick={() => h.onOpenRecords(area)}>{records === 1 ? '1 record' : `${records} records`}</Button>

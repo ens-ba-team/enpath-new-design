@@ -9,7 +9,7 @@
 
 import * as React from 'react';
 import { toast } from 'sonner';
-import { PlusIcon, SparkleIcon } from '@phosphor-icons/react/ssr';
+import { CheckCircleIcon, ListChecksIcon, PlayCircleIcon, PlusIcon, SparkleIcon, TargetIcon } from '@phosphor-icons/react/ssr';
 import { Button } from '@/components/ui/button';
 import { Stat } from '@/components/ui/stat';
 import { Toaster } from '@/components/ui/toast';
@@ -24,6 +24,19 @@ import {
   growthAreas, initialActions, initialProposals, recordCounts, targetName, TODAY,
   type Action, type Proposal,
 } from './mock-data';
+
+// SCREEN-LEVEL DEBT (design-patterns.md → Open flags, kind restyle, 2026-09-30): Stat has no icon-tile
+// option, so the tile is built in its icon slot. Colours follow meaning: growth areas amber (as in My
+// Career), in progress info blue, to do neutral, done success. Move into Stat, then delete this.
+function IconTile({ icon, tone }: { icon: React.ReactNode; tone: 'warning' | 'info' | 'neutral' | 'success' }) {
+  const fill = {
+    warning: 'bg-[var(--color-status-warning-subtle)] text-[var(--color-icon-warning)]',
+    info: 'bg-[var(--color-status-info-subtle)] text-[var(--color-status-info)]',
+    neutral: 'bg-[var(--color-surface-muted)] text-[var(--color-icon-muted)]',
+    success: 'bg-[var(--color-status-success-subtle)] text-[var(--color-icon-success)]',
+  }[tone];
+  return <span className={`inline-flex rounded-[var(--radius-md)] p-[var(--spacing-component-xs-plus)] ${fill}`}>{icon}</span>;
+}
 
 type Editor = { mode: 'add'; prefill?: Partial<ActionDraft>; fromProposal?: string } | { mode: 'edit'; action: Action } | null;
 
@@ -105,10 +118,10 @@ export function MyActionsScreen() {
 
             <div className="flex flex-col gap-[var(--spacing-layout-xs)] px-[var(--spacing-layout-sm)] pb-[var(--spacing-layout-sm)]">
               <section aria-label="Plan summary" className="grid grid-cols-2 gap-[var(--spacing-component-md)] md:grid-cols-4">
-                <Stat label="Growth areas" value={growthAreas.length} />
-                <Stat label="In progress" value={count('doing')} />
-                <Stat label="To do" value={count('todo')} />
-                <Stat label="Done" value={count('done')} />
+                <Stat label="Growth areas" value={growthAreas.length} icon={<IconTile tone="warning" icon={<TargetIcon />} />} />
+                <Stat label="In progress" value={count('doing')} icon={<IconTile tone="info" icon={<PlayCircleIcon />} />} />
+                <Stat label="To do" value={count('todo')} icon={<IconTile tone="neutral" icon={<ListChecksIcon />} />} />
+                <Stat label="Done" value={count('done')} icon={<IconTile tone="success" icon={<CheckCircleIcon />} />} />
               </section>
 
               {growthAreas.map((area) => (
