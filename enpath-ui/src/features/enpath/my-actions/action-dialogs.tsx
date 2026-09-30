@@ -8,7 +8,7 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription,
   AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { DatePicker } from '@/components/ui/date-picker';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -96,7 +96,8 @@ export function ActionDialog({ open, onOpenChange, editing, prefill, onSave }: {
   );
 }
 
-/** Preview → Confirm for removing an Action from the plan. */
+/** Preview → Confirm for removing an Action from the plan. Destructive: the AlertDialog's Destructive
+ *  type (the action button uses the destructive Button, as in the AlertDialog Destructive story). */
 export function RemoveActionDialog({ action, onOpenChange, onConfirm }: { action?: Action; onOpenChange: (open: boolean) => void; onConfirm: () => void }) {
   return (
     <AlertDialog open={!!action} onOpenChange={onOpenChange}>
@@ -107,7 +108,7 @@ export function RemoveActionDialog({ action, onOpenChange, onConfirm }: { action
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm}>Remove</AlertDialogAction>
+          <AlertDialogAction className={buttonVariants({ variant: 'destructive' })} onClick={onConfirm}>Remove</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

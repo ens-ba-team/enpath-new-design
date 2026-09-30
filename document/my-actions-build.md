@@ -108,7 +108,7 @@ Route `/me/actions` (sidebar "My Actions"). Code: `enpath-ui/src/features/enpath
   (To do secondary · In progress blue · Done success), title, "Due 26 Sep · overdue" (only "overdue" in
   `color/text/invalid`) or "Done 12 Sep", source ("added by you" · "proposed by your manager" · "from
   an AI proposal"). Beside the row: **Start** (To do) / **Mark done** (In progress), and a "…" menu:
-  Edit · Move back to In progress (Done only) · Remove from plan (confirm). Expanding shows Outcome,
+  Edit · Move back to In progress (Done only) · Remove from plan (destructive confirm: red Remove button, AlertDialog Destructive type). Expanding shows Outcome,
   "{point} means" (the Matrix behaviour text) and when / by whom it was added.
 - **Done** has no record step (Actions and Records are separate).
 - **AI proposals** sit in their growth area as **green (success) Alerts** with a Sparkle icon (green chosen
