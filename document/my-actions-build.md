@@ -134,7 +134,7 @@ My Career's mock starts with no target; the pages keep separate state. Today = 3
 
 **Built on the screen, to move into components** (Open flags, kind restyle): the progress ring before
 each growth area's title ("1/2"), the Stat tiles' coloured icon tiles (growth areas amber · in progress
-blue · to do grey · done green), the In progress badge's border, the tinted header band (`color/surface/header`).
+blue/100 · to do zinc/200 · done green/100, same fills as the Board columns), the In progress badge's border, the tinted header band (`color/surface/header`).
 
 **Not built:** manager
 view / approval · "Plan an action" from My Career opening this page · Records page.
@@ -145,7 +145,7 @@ view / approval · "Plan an action" from My Career opening this page · Records 
   like My Career's Map / List. List is the default at every width.
 - **Columns:** Proposed by AI · To do · In progress · Done, each with a count. Status columns use
   the Stat icon tiles' hues one step darker (To do `zinc/200` · In progress `blue/100` · Done
-  `green/100`, primitives, Open flag); Proposed by AI `surface/muted` with a brand stroke (primitive `brand/400`, Open flag; its
+  `green/100`, primitives, Open flag); Proposed by AI `surface/raised` (zinc/50) with a brand stroke (primitive `brand/400`, Open flag; its
   proposal cards keep the normal border)
   (user, 2026-09-30: proposals as the first column, as sketch B). Four columns from 1024px; narrower
   screens scroll the columns sideways (16rem each).

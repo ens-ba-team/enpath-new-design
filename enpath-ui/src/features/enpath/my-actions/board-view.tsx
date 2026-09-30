@@ -3,7 +3,7 @@
 // In progress · Done (user, 2026-09-30: proposals as the first column, as in sketch B). Each column is
 // a grouping area with a count; status columns use the same fills as the Stat icon tiles (user,
 // 2026-09-30), one step darker: To do zinc/200 · In progress blue/100 · Done green/100 (primitives);
-// Proposed by AI surface/muted (zinc/100) with a brand/400 stroke. An Action card (Card compact) shows the
+// Proposed by AI surface/raised (zinc/50) with a brand/400 stroke. An Action card (Card compact) shows the
 // same content as a List row: growth area, title, outcome, "Due · added by", next step and "…"; the
 // column says the status, so there's no badge. Proposals are the shared ProposalAlert, stacked.
 // Moving: the Start / Mark done buttons (touch and keyboard), or drag a card to another column on
@@ -28,7 +28,7 @@ const columnFill: Record<ActionStatus, string> = {
   done: 'bg-[var(--color-green-100)]',
 };
 
-function Column({ title, count, icon, fill = 'bg-[var(--color-surface-muted)]', stroke, children, dropTarget, over, onDragOver, onDragLeave, onDrop }: {
+function Column({ title, count, icon, fill = 'bg-[var(--color-surface-raised)]', stroke, children, dropTarget, over, onDragOver, onDragLeave, onDrop }: {
   title: string; count: number; icon?: React.ReactNode; fill?: string; stroke?: string; children: React.ReactNode;
   dropTarget?: boolean; over?: boolean;
   onDragOver?: (e: React.DragEvent) => void; onDragLeave?: () => void; onDrop?: (e: React.DragEvent) => void;

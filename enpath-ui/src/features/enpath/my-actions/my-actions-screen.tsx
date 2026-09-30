@@ -33,9 +33,10 @@ import {
 function IconTile({ icon, tone }: { icon: React.ReactNode; tone: 'warning' | 'info' | 'neutral' | 'success' }) {
   const fill = {
     warning: 'bg-[var(--color-status-warning-subtle)] text-[var(--color-icon-warning)]',
-    info: 'bg-[var(--color-status-info-subtle)] text-[var(--color-status-info)]',
-    neutral: 'bg-[var(--color-surface-muted)] text-[var(--color-icon-muted)]',
-    success: 'bg-[var(--color-status-success-subtle)] text-[var(--color-icon-success)]',
+    // Same fills as the Board's columns (user, 2026-09-30): primitives, no semantic token at these steps.
+    info: 'bg-[var(--color-blue-100)] text-[var(--color-status-info)]',
+    neutral: 'bg-[var(--color-zinc-200)] text-[var(--color-icon-muted)]',
+    success: 'bg-[var(--color-green-100)] text-[var(--color-icon-success)]',
   }[tone];
   return <span className={`inline-flex rounded-[var(--radius-md)] p-[var(--spacing-component-xs-plus)] ${fill}`}>{icon}</span>;
 }
