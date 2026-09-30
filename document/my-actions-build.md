@@ -102,7 +102,7 @@ Route `/me/actions` (sidebar "My Actions"). Code: `enpath-ui/src/features/enpath
 - **Header (P1):** "Action plan" + "What you plan to do to grow toward {target}. Your manager can see
   this plan." · Ask AI (outline, from 1024px, ⌘I) · **Add action** (primary).
 - **Summary:** four Stat tiles with coloured icon tiles: Growth areas · In progress · To do · Done.
-- **One Card per growth area** of the Active target (pattern P7): name, "Growth area · You 3 → Needed 4" with the progress ring before the title, "{N} records" (link; Records isn't built, so it says it's coming next), Add action
+- **One Card per growth area** of the Active target (pattern P7; default size, groups `spacing/layout/sm` apart): name, "Growth area · You 3 → Needed 4" with the progress ring before the title, "{N} records" (link; Records isn't built, so it says it's coming next), Add action
   (outline; opens the dialog with that growth area chosen). "0 records" is plain text, not a link.
 - **Action rows** (Accordion compact), sorted In progress → To do → Done, then by due date: status Badge
   (To do secondary · In progress blue · Done success), title, "Due 26 Sep · overdue" (only "overdue" in
@@ -111,7 +111,8 @@ Route `/me/actions` (sidebar "My Actions"). Code: `enpath-ui/src/features/enpath
   Edit · Move back to In progress (Done only) · Remove from plan (confirm). Expanding shows Outcome,
   "{point} means" (the Matrix behaviour text) and when / by whom it was added.
 - **Done** has no record step (Actions and Records are separate).
-- **AI proposals** sit in their growth area as muted Items (Sparkle, "AI proposal · outcome: …"):
+- **AI proposals** sit in their growth area as **info Alerts** with a Sparkle icon (title = Alert title,
+  "AI proposal · outcome: …" = description):
   **Add to plan** opens Add action prefilled (the person picks a due date and confirms) · **Dismiss**
   (confirm; it doesn't come back).
 - **Empty growth area:** "Plan something to grow here, or ask AI for ideas." + Ask AI.
@@ -133,6 +134,16 @@ blue · to do grey · done green), the In progress badge's border, the tinted he
 
 **Not built:** Board view · manager
 view / approval · "Plan an action" from My Career opening this page · Records page.
+
+### Visual audit (2026-09-30)
+
+- **Blue budget.** Blue means brand (primary action, header band) or information (link, In progress,
+  info Alert). Decorative things don't get blue: the progress ring fills neutral (`color/icon/default`),
+  green when complete. The AI proposal is the only tinted block inside a card.
+- **Text hierarchy:** page title `heading-xl` → group title `heading-sm` → action title `heading-xs`
+  → Alert title `label-md` → meta `body-xs`. A compact Card made the group title `heading-xs`, the same
+  as the rows, so full-width pages use the default Card.
+- **Spacing:** default Card padding (`spacing/component/lg`); groups `spacing/layout/sm` apart.
 
 ## Screen — planned (not designed yet)
 

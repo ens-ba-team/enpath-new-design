@@ -1,11 +1,11 @@
 'use client';
 // One growth area of the Action plan (List view, sketch C v2 — my-actions-build.md → Layout).
-// Card size="compact": heading = the competency, "You 3 → Needed 4", "1 of 2 done", a link to that
+// Card (default size: a full-width page, not a side panel): heading = the competency, "You 3 → Needed 4", "1 of 2 done", a link to that
 // competency's Records and "Add action". Rows are an Accordion size="compact" (same as the competency
 // groups in My Career, pattern P7): status Badge + title + due date / source; expanding shows the
 // outcome and what the needed point looks like. Start / Mark done and the "…" menu sit beside the
-// trigger (never inside it). AI proposals for this growth area are muted Items with Add to plan /
-// Dismiss. An empty growth area invites an action or Ask AI.
+// trigger (never inside it). AI proposals for this growth area are info Alerts (icon laid out as in
+// the Alert WithIcon stories; Alert has no icon option yet, Open flag) with Add to plan / Dismiss. An empty growth area invites an action or Ask AI.
 // SCREEN-LEVEL DEBT (design-patterns.md → Open flags, kind restyle, 2026-09-30): the progress ring
 // before the title and the In progress Badge's border are built here until the components get them
 // (Progress shape="ring"; Badge blue border), and so is the tinted header band (color/surface/header,
@@ -19,7 +19,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Item } from '@/components/ui/item';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import type { Gap } from '../my-career/mock-data';
 import {
   isOverdue, neededLabel, pointsLine, shortDate, sourceLabel, statusLabel, statusOrder,
@@ -31,7 +31,8 @@ const statusBadge: Record<ActionStatus, 'secondary' | 'blue' | 'success'> = { to
 const statusBadgeClass: Partial<Record<ActionStatus, string>> = { doing: 'border-[var(--color-status-info)]' };
 
 /** Debt: progress ring (Open flag) — done out of total, before the growth area's title.
- *  Track border/default, fill brand/primary, all done icon/success. 36px, label inside. */
+ *  Track border/default, fill icon/default (neutral: the page has enough blue), all done icon/success.
+ *  36px, label inside. */
 function ProgressRing({ done, total, label }: { done: number; total: number; label: string }) {
   const r = 15;
   const c = 2 * Math.PI * r;
@@ -45,7 +46,7 @@ function ProgressRing({ done, total, label }: { done: number; total: number; lab
         {share > 0 && (
           <circle cx="18" cy="18" r={r} fill="none" strokeWidth="3" strokeLinecap="round"
             strokeDasharray={`${c * share} ${c}`}
-            className={complete ? 'stroke-[var(--color-icon-success)]' : 'stroke-[var(--color-brand-primary)]'} />
+            className={complete ? 'stroke-[var(--color-icon-success)]' : 'stroke-[var(--color-icon-default)]'} />
         )}
       </svg>
       <span className="absolute text-label-sm text-[var(--color-background-default-foreground)]">{done}/{total}</span>
@@ -133,10 +134,10 @@ export function GrowthAreaGroup({ area, actions, proposals, records, h }: {
   const done = actions.filter((a) => a.status === 'done').length;
   const progress = actions.length ? `${done} of ${actions.length} done` : 'No actions yet';
   return (
-    <Card size="compact" role="region" aria-label={area.name}>
-      {/* Debt: tinted header band. Negative margins cancel the compact Card's padding (spacing/component/md)
-          so the band reaches the card's edges; the same padding goes back inside it. */}
-      <CardHeader className="-mx-[var(--spacing-component-md)] -mt-[var(--spacing-component-md)] flex-row flex-wrap items-center gap-x-[var(--spacing-component-md)] gap-y-[var(--spacing-component-xs)] rounded-t-[var(--radius-lg)] border-b border-[var(--color-border-default)] bg-[var(--color-surface-header)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)]">
+    <Card role="region" aria-label={area.name}>
+      {/* Debt: tinted header band. Negative margins cancel the Card's padding (spacing/component/lg) so the
+          band reaches the card's edges; the same side padding goes back inside it. */}
+      <CardHeader className="-mx-[var(--spacing-component-lg)] -mt-[var(--spacing-component-lg)] flex-row flex-wrap items-center gap-x-[var(--spacing-component-md)] gap-y-[var(--spacing-component-xs)] rounded-t-[var(--radius-lg)] border-b border-[var(--color-border-default)] bg-[var(--color-surface-header)] px-[var(--spacing-component-lg)] py-[var(--spacing-component-md)]">
         <ProgressRing done={done} total={actions.length} label={`${area.name}: ${progress}`} />
         <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xxs)]">
           <CardTitle role="heading" aria-level={2} className="text-[var(--color-surface-header-foreground)]">{area.name}</CardTitle>
@@ -157,17 +158,21 @@ export function GrowthAreaGroup({ area, actions, proposals, records, h }: {
       )}
 
       {proposals.map((p) => (
-        <Item key={p.id} variant="muted" size="sm" type="icon"
-          icon={<SparkleIcon className="h-4 w-4 text-[var(--color-icon-brand)]" aria-hidden="true" />}
-          title={p.title}
-          description={`AI proposal · outcome: ${p.outcome}`}
-          action={
-            <div className="flex flex-wrap items-center gap-[var(--spacing-component-xs)]">
+        // Info Alert: a suggestion, not a warning. Not urgent → role=group (the Alert defaults to role=alert).
+        // Icon + text + buttons sit in an inner row, as in the Alert WithIcon story (Alert has no icon option).
+        <Alert key={p.id} variant="info" role="group" aria-label="AI proposal">
+          <div className="flex flex-wrap items-start gap-[var(--spacing-component-md)]">
+            <SparkleIcon className="mt-[var(--spacing-component-xxs)] h-4 w-4 shrink-0" aria-hidden="true" />
+            <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xxs)]">
+              <AlertTitle>{p.title}</AlertTitle>
+              <AlertDescription>AI proposal · outcome: {p.outcome}</AlertDescription>
+            </div>
+            <div className="flex items-center gap-[var(--spacing-component-xs)]">
               <Button variant="outline" size="sm" onClick={() => h.onAcceptProposal(p)}>Add to plan</Button>
               <Button variant="ghost" size="sm" onClick={() => h.onDismissProposal(p)}>Dismiss</Button>
             </div>
-          }
-        />
+          </div>
+        </Alert>
       ))}
 
       {rows.length === 0 && proposals.length === 0 && (

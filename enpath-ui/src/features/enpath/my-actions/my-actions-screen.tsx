@@ -116,7 +116,7 @@ export function MyActionsScreen() {
               <Button onClick={() => openEditor({ mode: 'add' })}><PlusIcon aria-hidden="true" />Add action</Button>
             </header>
 
-            <div className="flex flex-col gap-[var(--spacing-layout-xs)] px-[var(--spacing-layout-sm)] pb-[var(--spacing-layout-sm)]">
+            <div className="flex flex-col gap-[var(--spacing-layout-sm)] px-[var(--spacing-layout-sm)] pb-[var(--spacing-layout-sm)]">
               <section aria-label="Plan summary" className="grid grid-cols-2 gap-[var(--spacing-component-md)] md:grid-cols-4">
                 <Stat label="Growth areas" value={growthAreas.length} icon={<IconTile tone="warning" icon={<TargetIcon />} />} />
                 <Stat label="In progress" value={count('doing')} icon={<IconTile tone="info" icon={<PlayCircleIcon />} />} />
