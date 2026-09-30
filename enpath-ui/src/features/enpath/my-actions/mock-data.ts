@@ -1,8 +1,8 @@
 // My Actions — mock data (Lan Nguyen). Spec: document/my-actions-build.md (repo root).
 // Growth areas come from the same comparison My Career uses (gapsForLevel): Lan's assessed points
 // vs the Active target's expectations. Each Action serves one growth area and has a due date.
-// Actions and Records are separate (2026-09-30): a Done Action is just done; the only link to
-// Records is a per-competency count on the growth area's heading.
+// Actions and Records are separate pages (2026-09-30): a Done Action is just done, and records carry
+// no competency, so this page doesn't count or link them. AI reads both at Assessment.
 //
 // PROTOTYPE ASSUMPTION: the Active target is Frontend Engineer L3 (it replaced Backend Engineer L3
 // on Lan's company path on 27 Sep). My Career's own mock starts with no target; the two pages keep
@@ -65,8 +65,6 @@ export const initialProposals: Proposal[] = [
     outcome: 'The new joiner ships their first change without help on the third ticket' },
 ];
 
-/** Records per competency (the Records page isn't built yet; this only feeds the heading link). */
-export const recordCounts: Record<string, number> = { code: 2, deliv: 1, ment: 0 };
 
 export const statusLabel: Record<ActionStatus, string> = { todo: 'To do', doing: 'In progress', done: 'Done' };
 /** Rows sort by status: the work in hand first. */

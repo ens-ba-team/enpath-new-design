@@ -1,7 +1,7 @@
 'use client';
 // One growth area of the Action plan (List view — my-actions-build.md → What's built).
 // Card (default size: a full-width page, not a side panel): heading = the competency, "You 3 → Needed 4",
-// the progress ring, a link to that competency's Records and "Add action". Rows (layout A, 2026-09-30):
+// the progress ring and "Add action" (no records link: records carry no competency, 2026-09-30). Rows (layout A, 2026-09-30):
 // status Badge · title, the outcome in full, a small "Due · added by" line · Start / Mark done · "…".
 // Nothing expands: everything an action has is on its row. AI proposals for this growth area are
 // default Alerts with a brand-blue Sparkle (icon laid out as in the Alert WithIcon stories; Alert has no
@@ -64,8 +64,8 @@ function ActionRow({ action, h }: { action: Action; h: GroupHandlers }) {
   );
 }
 
-export function GrowthAreaGroup({ area, actions, proposals, records, h }: {
-  area: Gap; actions: Action[]; proposals: Proposal[]; records: number; h: GroupHandlers;
+export function GrowthAreaGroup({ area, actions, proposals, h }: {
+  area: Gap; actions: Action[]; proposals: Proposal[]; h: GroupHandlers;
 }) {
   const rows = [...actions].sort((a, b) => statusOrder[a.status] - statusOrder[b.status] || a.due.localeCompare(b.due));
   const done = actions.filter((a) => a.status === 'done').length;
@@ -80,11 +80,6 @@ export function GrowthAreaGroup({ area, actions, proposals, records, h }: {
           <CardTitle role="heading" aria-level={2} className="text-[var(--color-surface-header-foreground)]">{area.name}</CardTitle>
           <p className="text-body-xs text-[var(--color-text-secondary)]">Growth area · {pointsLine(area)}</p>
         </div>
-        {records > 0 ? (
-          <Button variant="link" size="sm" onClick={() => h.onOpenRecords(area)}>{records === 1 ? '1 record' : `${records} records`}</Button>
-        ) : (
-          <span className="text-body-sm text-[var(--color-text-secondary)]">0 records</span>
-        )}
         <Button variant="outline" size="sm" onClick={() => h.onAddAction(area.id)}><PlusIcon aria-hidden="true" />Add action</Button>
       </CardHeader>
 

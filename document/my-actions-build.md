@@ -76,7 +76,7 @@ Two pages, two directions in time, one shared key (the competency):
   score.
 - **No link between the pages** (2026-09-30): records carry no competency, so the Action plan can't
   count "records per growth area". Records are never shown inside Action cards. The prototype's
-  "{N} records" link on each growth area is **to remove** (waiting for the user's go-ahead).
+  "{N} records" link on each growth area was removed (2026-09-30).
 - **Records is its own tab** so it can grow on its own (records about colleagues, records generated
   from retros) without touching the Action plan.
 - Page purpose lines (proposed copy): Action plan "What you plan to do to grow toward {target}."
@@ -106,8 +106,8 @@ Route `/me/actions` (sidebar "My Actions"). Code: `enpath-ui/src/features/enpath
 - **Header (P1):** "Action plan" + "What you plan to do to grow toward {target}. Your manager can see
   this plan." · Ask AI (outline, from 1024px, ⌘I) · **Add action** (primary).
 - **Summary:** four Stat tiles with coloured icon tiles: Growth areas · In progress · To do · Done.
-- **One Card per growth area** of the Active target (pattern P7; default size, groups `spacing/layout/sm` apart): name, "Growth area · You 3 → Needed 4" with the progress ring before the title, "{N} records" (link; Records isn't built, so it says it's coming next), Add action
-  (outline; opens the dialog with that growth area chosen). "0 records" is plain text, not a link.
+- **One Card per growth area** of the Active target (pattern P7; default size, groups `spacing/layout/sm` apart): name, "Growth area · You 3 → Needed 4" with the progress ring before the title, Add action (no records link: removed 2026-09-30, records carry no competency)
+  (outline; opens the dialog with that growth area chosen). 
 - **Action rows** (layout A, 2026-09-30; nothing expands), sorted In progress → To do → Done, then by
   due date, in fixed columns so they line up: status Badge (To do secondary · In progress blue · Done
   success) | title, the **outcome in full**, and a small line "Due 26 Sep · overdue · added by you"

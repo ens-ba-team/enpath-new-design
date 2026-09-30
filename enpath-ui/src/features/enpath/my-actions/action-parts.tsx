@@ -12,7 +12,6 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import type { Gap } from '../my-career/mock-data';
 import { isOverdue, shortDate, sourceLabel, statusLabel, type Action, type ActionStatus, type Proposal } from './mock-data';
 
 export interface ActionHandlers {
@@ -23,7 +22,6 @@ export interface ActionHandlers {
   onAddAction: (competencyId: string) => void;
   onAcceptProposal: (p: Proposal) => void;
   onDismissProposal: (p: Proposal) => void;
-  onOpenRecords: (area: Gap) => void;
   onAskAI: () => void;
 }
 

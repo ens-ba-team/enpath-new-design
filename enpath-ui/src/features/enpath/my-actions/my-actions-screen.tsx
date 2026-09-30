@@ -3,8 +3,8 @@
 // Header (P1): "Action plan" + purpose line, Ask AI, Add action. Four Stat tiles (growth areas, in
 // progress, to do, done). One GrowthAreaGroup per growth area of the Active target. The employee
 // owns the plan: adds, edits, starts, finishes and removes Actions; AI proposals join only through
-// Add to plan (the Add action dialog opens prefilled). Actions and Records are separate: the only
-// link is each growth area's record count (the Records page isn't built yet, so it says so).
+// Add to plan (the Add action dialog opens prefilled). Actions and Records are separate pages
+// with no link between them (records carry no competency; AI reads both at Assessment).
 // List or Board (header switch, like My Career's Map / List): List by default. Not yet: manager view, links from My Career.
 
 import * as React from 'react';
@@ -23,7 +23,7 @@ import { ActionsChat } from './actions-chat';
 import { BoardView } from './board-view';
 import { GrowthAreaGroup, type GroupHandlers } from './growth-area-group';
 import {
-  growthAreas, initialActions, initialProposals, recordCounts, targetName, TODAY,
+  growthAreas, initialActions, initialProposals, targetName, TODAY,
   type Action, type Proposal,
 } from './mock-data';
 
@@ -72,7 +72,6 @@ export function MyActionsScreen() {
     onAddAction: (competencyId) => openEditor({ mode: 'add', prefill: { competencyId } }),
     onAcceptProposal: (p) => openEditor({ mode: 'add', prefill: { title: p.title, competencyId: p.competencyId, outcome: p.outcome }, fromProposal: p.id }),
     onDismissProposal: (p) => setDismissing(p),
-    onOpenRecords: (area) => toast(`Records is coming next. This link will open ${area.name} records.`),
     onAskAI: () => setChatOpen(true),
   };
 
@@ -151,7 +150,6 @@ export function MyActionsScreen() {
                   area={area}
                   actions={actions.filter((a) => a.competencyId === area.id)}
                   proposals={proposals.filter((p) => p.competencyId === area.id)}
-                  records={recordCounts[area.id] ?? 0}
                   h={h}
                 />
               ))}
