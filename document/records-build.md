@@ -62,9 +62,9 @@ Records (what happened, from anyone) ──────────────�
 | 7 | No retro UI yet | Q7 |
 | 8 | Page name **Records** (as the sidebar); "My Records" in docs means the same page | Q8 |
 
-## Layout — to choose (sketches 2026-09-30)
+## Layout — A chosen (user, 2026-09-30)
 
-- **A** List + detail panel (old prototype, like My Career's side panel): filters About me · Sent by
+- **A (chosen)** List + detail panel (old prototype, like My Career's side panel): filters About me · Sent by
   me · Waiting for you, competency dropdown; the selected record's detail and Acknowledge on the right.
 - **B** Timeline by month (a work log): competency chips (with counts) as filters, About me dropdown;
   each record shows title, status, summary, "From · date · competency", Acknowledge on the row.
@@ -82,4 +82,4 @@ Records (what happened, from anyone) ──────────────�
 - [ ] **Q7 Retro generation:** placeholder in the UI now ("Suggested from retro" drafts to review), or
       later?
 - [ ] **Q8 Name:** "Records" or "My Records"?
-- [ ] **Layout:** A or B (above)?
+- [x] **Layout:** A, list + detail panel (2026-09-30). Rows as a table or as cards: to decide.
