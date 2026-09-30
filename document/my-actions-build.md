@@ -146,8 +146,8 @@ view / approval · "Plan an action" from My Career opening this page · Records 
 
 ### Board view (built 2026-09-30)
 
-- **Switch:** List / Board in the header (ButtonGroup of ghost buttons, the current one `aria-pressed`),
-  like My Career's Map / List. List is the default at every width.
+- **Switch:** Board / List in the header (ButtonGroup of ghost buttons, the current one `aria-pressed`),
+  like My Career's Map / List. **Board is the default** (user, 2026-09-30).
 - **Columns:** Proposed by AI · To do · In progress · Done, each with a count. Status columns use
   the Stat icon tiles' hues one step darker (To do `zinc/200` · In progress `blue/100` · Done
   `green/100`, primitives, Open flag); Proposed by AI `surface/raised` (zinc/50) with a brand stroke (primitive `brand/400`, Open flag; its
@@ -194,7 +194,7 @@ view / approval · "Plan an action" from My Career opening this page · Records 
 - [ ] Can the employee dismiss AI proposals, and do dismissed ones come back?
 - [ ] Templates: predefined Actions per competency? (PRD-022)
 - [ ] Do Actions follow the **Active target** only, or can they serve a Career vision's role too?
-- [x] Layout: C (list grouped by growth area) is the default; Board is the second view (both built).
+- [x] Layout: Board is the default (2026-09-30); List (grouped by growth area) is the second view.
 - [ ] **Who confirms an Action is done?** PRD-022 §9 "Completion Validation" offers: employee
       self-confirmation · manager acknowledgement · AI evaluation from Records · a combination. The
       prototype: one click on Mark done, no condition, date = today, can be moved back.

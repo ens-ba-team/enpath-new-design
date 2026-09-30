@@ -6,6 +6,13 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-30 — Tooltip wraps long labels
+
+### Changed
+- **Tooltip** has a max width (20rem, never wider than the screen) and balanced line breaks. Long labels, like My Career's progress ⓘ, wrap instead of running across the page.
+
+---
+
 ## 2026-09-30 — Stronger card shadow
 
 ### Changed

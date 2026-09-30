@@ -5,7 +5,7 @@
 // owns the plan: adds, edits, starts, finishes and removes Actions; AI proposals join only through
 // Add to plan (the Add action dialog opens prefilled). Actions and Records are separate pages
 // with no link between them (records carry no competency; AI reads both at Assessment).
-// List or Board (header switch, like My Career's Map / List): List by default. Not yet: manager view, links from My Career.
+// Board or List (header switch, like My Career's Map / List): Board by default. Not yet: manager view, links from My Career.
 
 import * as React from 'react';
 import { toast } from 'sonner';
@@ -71,8 +71,8 @@ export function MyActionsScreen() {
   const [removing, setRemoving] = React.useState<Action | undefined>();
   const [dismissing, setDismissing] = React.useState<Proposal | undefined>();
   const [chatOpen, setChatOpen] = React.useState(false);
-  // List is the default at every width; the Board scrolls its columns sideways on narrow screens.
-  const [view, setView] = React.useState<'list' | 'board'>('list');
+  // Board is the default (user, 2026-09-30); its columns scroll sideways on narrow screens.
+  const [view, setView] = React.useState<'list' | 'board'>('board');
   useChatShortcut(React.useCallback(() => setChatOpen((o) => !o), []));
 
   const count = (s: Action['status']) => actions.filter((a) => a.status === s).length;
@@ -148,8 +148,8 @@ export function MyActionsScreen() {
                 <p className="text-body-sm text-[var(--color-text-secondary)]">What you plan to do to grow toward {targetName}. Your manager can see this plan.</p>
               </div>
               <ButtonGroup role="group" aria-label="View">
-                {viewButton('list', <ListBulletsIcon aria-hidden="true" />, 'List')}
                 {viewButton('board', <KanbanIcon aria-hidden="true" />, 'Board')}
+                {viewButton('list', <ListBulletsIcon aria-hidden="true" />, 'List')}
               </ButtonGroup>
               {!chatOpen && (
                 <Tip label="Ask AI (⌘I)">

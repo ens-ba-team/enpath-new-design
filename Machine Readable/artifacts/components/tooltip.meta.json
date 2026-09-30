@@ -93,7 +93,8 @@
     "Do not use tooltips on mobile — hover is unavailable; use visible labels or a popover instead",
     "The trigger element must be focusable (button, link, input) — do not attach tooltips to non-interactive elements",
     "`bubble` is the source of truth for text and colour — never override its internal fills from the `tooltip` instance",
-    "Do not use tooltips on mobile as the only way to reveal information."
+    "Do not use tooltips on mobile as the only way to reveal information.",
+    "Long labels wrap: the bubble is at most 20rem wide (and never wider than the screen minus 2rem), with balanced lines."
   ],
   "meta": {
     "storyFile": "src/stories/Tooltip.stories.tsx",
@@ -116,6 +117,10 @@
       {
         "date": "2026-09-29",
         "change": "Text uses Enpath text styles (text-label-sm, text-body-sm …, see Foundations/Text Styles) instead of mixed size and weight classes. Labels (label-*) and small headings (heading-sm/xs) are Medium 500."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Max width 20rem (min with the screen width), text-balance: long labels wrap instead of running across the page (seen on My Career’s progress ⓘ)."
       }
     ]
   },

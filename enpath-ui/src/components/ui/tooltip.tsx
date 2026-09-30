@@ -42,8 +42,8 @@ const TooltipContent = React.forwardRef<
     ref={ref}
     sideOffset={sideOffset}
     className={cn(
-      // Layout
-      "z-50 overflow-visible",
+      // Layout — long labels wrap at 20rem (never wider than the screen) instead of running across it
+      "z-50 overflow-visible max-w-[min(20rem,calc(100vw-2rem))] text-balance",
       // Shape — no border, no shadow (just a filled dark pill)
       "rounded-[var(--radius-md)]",
       // Surface — component tokens: always-dark regardless of theme
