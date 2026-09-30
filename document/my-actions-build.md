@@ -108,8 +108,10 @@ Route `/me/actions` (sidebar "My Actions"). Code: `enpath-ui/src/features/enpath
   (To do secondary · In progress blue · Done success), title, "Due 26 Sep · overdue" (only "overdue" in
   `color/text/invalid`) or "Done 12 Sep", source ("added by you" · "proposed by your manager" · "from
   an AI proposal"). Beside the row: **Start** (To do) / **Mark done** (In progress), and a "…" menu:
-  Edit · Move back to In progress (Done only) · Remove from plan (destructive confirm: red Remove button, AlertDialog Destructive type). Expanding shows Outcome,
-  "{point} means" (the Matrix behaviour text) and when / by whom it was added.
+  Edit · Move back to In progress (Done only) · Remove from plan (destructive confirm: red Remove button, AlertDialog Destructive type). Expanding (several can be open at
+  once) shows, under the title on a light block: **Outcome** and **What {point} looks like** (the
+  Matrix behaviour text). Source and date aren't repeated there. Details open in place, not in a
+  panel (decided 2026-09-30: little content); a Board card will expand the same way.
 - **Done** has no record step (Actions and Records are separate).
 - **AI proposals** sit in their growth area as **default Alerts** (white, bordered) with a brand-blue Sparkle icon, the same AI mark as the
   chat panel (2026-09-30) (title = Alert title,

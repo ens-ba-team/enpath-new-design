@@ -113,15 +113,20 @@ function ActionRow({ action, area, h }: { action: Action; area: Gap; h: GroupHan
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <AccordionContent>
-        <dl className="grid grid-cols-[minmax(0,120px)_minmax(0,1fr)] gap-x-[var(--spacing-component-md)] gap-y-[var(--spacing-component-xs)]">
-          <dt>Outcome</dt>
-          <dd className="text-[var(--color-background-default-foreground)]">{action.outcome || 'Not written yet'}</dd>
-          <dt>{neededLabel(area)} means</dt>
-          <dd className="text-[var(--color-background-default-foreground)]">{area.meaning ?? 'See the matrix for this level.'}</dd>
-          <dt>Added</dt>
-          <dd className="text-[var(--color-background-default-foreground)]">{shortDate(action.added)}, {sourceLabel[action.source]}</dd>
-        </dl>
+      {/* Details start under the title (status slot 5.5rem + the trigger's gap), on a light block so they
+          read as part of this row. Label + text pairs as in My Career's competency rows (P7). The source
+          and date are already under the title, so they aren't repeated here. */}
+      <AccordionContent className="pl-[calc(5.5rem+var(--spacing-component-sm))]">
+        <div className="flex flex-col gap-[var(--spacing-component-md)] rounded-[var(--radius-md)] bg-[var(--color-surface-raised)] p-[var(--spacing-component-md)]">
+          <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
+            <p className="text-heading-xs text-[var(--color-background-default-foreground)]">Outcome</p>
+            <p className="text-body-sm text-[var(--color-text-secondary)]">{action.outcome || 'Not written yet. Edit the action to add one.'}</p>
+          </div>
+          <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
+            <p className="text-heading-xs text-[var(--color-background-default-foreground)]">What {neededLabel(area)} looks like</p>
+            <p className="text-body-sm text-[var(--color-text-secondary)]">{area.meaning ?? 'See the matrix for this level.'}</p>
+          </div>
+        </div>
       </AccordionContent>
     </AccordionItem>
   );
@@ -152,7 +157,7 @@ export function GrowthAreaGroup({ area, actions, proposals, records, h }: {
       </CardHeader>
 
       {rows.length > 0 && (
-        <Accordion type="single" collapsible size="compact">
+        <Accordion type="multiple" size="compact" /* opening one action leaves the others open (user, 2026-09-30) */>
           {rows.map((a) => <ActionRow key={a.id} action={a} area={area} h={h} />)}
         </Accordion>
       )}
