@@ -115,7 +115,7 @@ Route `/me/actions` (sidebar "My Actions"). Code: `enpath-ui/src/features/enpath
   "What {point} looks like" isn't shown per action (it describes the growth area, not the action).
 - **Done** has no record step (Actions and Records are separate).
 - **AI proposals** sit in their growth area as **default Alerts** (white, bordered) with a brand-blue Sparkle icon, the same AI mark as the
-  chat panel (2026-09-30) (title = Alert title,
+  chat panel (2026-09-30); border primitive `color/brand/400` (Open flag: no semantic AI token) (title = Alert title,
   "AI proposal · outcome: …" = description):
   **Add to plan** opens Add action prefilled (the person picks a due date and confirms) · **Dismiss**
   (confirm; it doesn't come back).
