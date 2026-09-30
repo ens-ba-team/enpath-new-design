@@ -92,7 +92,7 @@
     "color/zinc/200",
     "color/zinc/600",
     "radius/lg",
-    "shadow/sm",
+    "shadow/default",
     "shadow/surface",
     "spacing/1",
     "spacing/2",

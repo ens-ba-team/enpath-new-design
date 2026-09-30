@@ -1514,7 +1514,7 @@
    * Use when: Inner edges of layered surfaces (from En UI shadow-hairline).
    * Status: active
    */
-  --shadow-xs: 0 1px rgb(0 0 0 / 0.04);
+  --shadow-xs: 0 1px rgb(15 23 42 / 0.04);
   /**
    * Intent: Hairline shadow for subtle lift on small elements.
    * Use when: Buttons, input fields, small cards, tags — elements that need the slightest separation from the background without looking elevated.
@@ -1522,35 +1522,35 @@
    * Use instead: shadow/default or shadow/md for floating elements.
    * Status: Stable
    */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.05);
   /**
    * Intent: Standard shadow for cards and low-elevation surfaces.
    * Use when: Content cards, list containers, standard panels — elements that sit above the page background but are not floating.
    * Do not use: For interactive popups or modals — use shadow/md or above for floating UI.
    * Status: Stable
    */
-  --shadow-default: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-default: 0 1px 3px 0 rgb(15 23 42 / 0.1), 0 1px 2px -1px rgb(15 23 42 / 0.1);
   /**
    * Intent: Medium elevation for floating UI elements.
    * Use when: Dropdown menus, select popups, date pickers, context menus — elements that float above page content.
    * Do not use: For inline cards or non-floating surfaces — shadow/default is sufficient there.
    * Status: Stable
    */
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(15 23 42 / 0.1), 0 2px 4px -2px rgb(15 23 42 / 0.1);
   /**
    * Intent: High elevation for prominent floating containers.
    * Use when: Popovers, tooltips, command palettes, floating action panels.
    * Do not use: For modals — use shadow/xl or shadow/2xl for full-screen overlays.
    * Status: Stable
    */
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(15 23 42 / 0.1), 0 4px 6px -4px rgb(15 23 42 / 0.1);
   /**
    * Intent: Strong elevation for modal-level overlays.
    * Use when: Dialog modals, sheet panels, drawer overlays — elements that take focus away from the page.
    * Do not use: For inline elements or cards — disproportionate shadow for non-floating surfaces.
    * Status: Stable
    */
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(15 23 42 / 0.1), 0 8px 10px -6px rgb(15 23 42 / 0.1);
   /**
    * Intent: Maximum elevation; deepest shadow in the scale.
    * Use when: Full-screen modals, onboarding overlays, lightboxes — the topmost layer in a stacking context.
@@ -1558,19 +1558,19 @@
    * Use instead: shadow/xl for standard dialogs.
    * Status: Stable
    */
-  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --shadow-2xl: 0 25px 50px -12px rgb(15 23 42 / 0.25);
   /**
    * Intent: Inset shadow to signal a recessed or pressed surface.
    * Use when: Input field backgrounds, pressed button states, search bars — surfaces that should feel sunken rather than raised.
    * Do not use: On elevated or floating elements — inset shadow conflicts with the elevation metaphor.
    * Status: Stable
    */
-  --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
-  --shadow-hairline: 0 1px rgb(0 0 0 / 0.04); /** Role shadow (from En UI shadow-hairline). Use for: Inner edge of layered surfaces. */
-  --shadow-surface: 0 1px 2px 0 rgb(0 0 0 / 0.05); /** Role shadow (from En UI shadow-surface). Use for: Flat containers on the page — Card, panels, tables, Career map role cards. Pairs with border/default and color/surface/default. */
-  --shadow-raised: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /** Role shadow (from En UI shadow-raised). Use for: Sticky regions; a card only while dragged or pinned above scrolling content. */
-  --shadow-overlay: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); /** Role shadow (from En UI shadow-overlay). Use for: Floating UI that leaves the page usable — DropdownMenu, Select and Combobox lists, DatePicker and Calendar popovers, HoverCard, Command, the NavigationMenu panel. Not for anything behind a scrim (use shadow/modal). */
-  --shadow-modal: 0 25px 50px -12px rgb(0 0 0 / 0.25); /** Role shadow (from En UI shadow-modal). Use for: UI that blocks the page behind a scrim — Dialog, AlertDialog, Sheet, Drawer. */
+  --shadow-inner: inset 0 2px 4px 0 rgb(15 23 42 / 0.05);
+  --shadow-hairline: 0 1px rgb(15 23 42 / 0.04); /** Role shadow (from En UI shadow-hairline). Use for: Inner edge of layered surfaces. */
+  --shadow-surface: 0 1px 3px 0 rgb(15 23 42 / 0.1), 0 1px 2px -1px rgb(15 23 42 / 0.1); /** Role shadow (from En UI shadow-surface). Use for: Flat containers on the page — Card, panels, tables, Career map role cards. Pairs with border/default and color/surface/default. Value shadow/default (was shadow/sm, too faint on white; 2026-09-30). */
+  --shadow-raised: 0 4px 6px -1px rgb(15 23 42 / 0.1), 0 2px 4px -2px rgb(15 23 42 / 0.1); /** Role shadow (from En UI shadow-raised). Use for: Sticky regions; a card only while dragged or pinned above scrolling content. */
+  --shadow-overlay: 0 10px 15px -3px rgb(15 23 42 / 0.1), 0 4px 6px -4px rgb(15 23 42 / 0.1); /** Role shadow (from En UI shadow-overlay). Use for: Floating UI that leaves the page usable — DropdownMenu, Select and Combobox lists, DatePicker and Calendar popovers, HoverCard, Command, the NavigationMenu panel. Not for anything behind a scrim (use shadow/modal). */
+  --shadow-modal: 0 25px 50px -12px rgb(15 23 42 / 0.25); /** Role shadow (from En UI shadow-modal). Use for: UI that blocks the page behind a scrim — Dialog, AlertDialog, Sheet, Drawer. */
   /**
    * Intent: Zero-duration transition for changes that must feel immediate.
    * Use when: Checkbox checks, toggle switches, radio selection — binary state changes where animation would feel laggy.

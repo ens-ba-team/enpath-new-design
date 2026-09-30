@@ -46,7 +46,8 @@
       "strokeWeight": 1,
       "radius": "radius/surface",
       "padding": "spacing/component/md",
-      "gap": "spacing/component/xs"
+      "gap": "spacing/component/xs",
+      "shadow": "shadow/surface"
     },
     "label": {
       "foreground": "color/text/secondary",
@@ -78,6 +79,8 @@
     "color/zinc/600",
     "radius/lg",
     "radius/surface",
+    "shadow/default",
+    "shadow/surface",
     "spacing/1",
     "spacing/3",
     "spacing/component/md",
@@ -175,6 +178,10 @@
       {
         "date": "2026-09-29",
         "change": "Text uses Enpath text styles (text-body-sm, text-heading-md …, see Foundations/Text Styles) instead of mixed size and weight classes. Labels (label-*) and small headings (heading-sm/xs) are Medium 500."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Tile gets shadow/surface (was border only), so Stat lifts off the page like a Card."
       }
     ]
   },

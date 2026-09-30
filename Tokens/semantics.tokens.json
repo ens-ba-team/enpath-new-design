@@ -737,9 +737,9 @@
       "$description": "Role shadow (from En UI shadow-hairline). Use for: Inner edge of layered surfaces."
     },
     "surface": {
-      "$value": "{shadow.sm}",
+      "$value": "{shadow.default}",
       "$type": "string",
-      "$description": "Role shadow (from En UI shadow-surface). Use for: Flat containers on the page — Card, panels, tables, Career map role cards. Pairs with border/default and color/surface/default."
+      "$description": "Role shadow (from En UI shadow-surface). Use for: Flat containers on the page — Card, panels, tables, Career map role cards. Pairs with border/default and color/surface/default. Value shadow/default (was shadow/sm, too faint on white; 2026-09-30)."
     },
     "raised": {
       "$value": "{shadow.md}",

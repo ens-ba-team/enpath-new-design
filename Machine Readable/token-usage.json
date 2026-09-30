@@ -1283,6 +1283,11 @@
     "drawer",
     "sheet"
   ],
+  "shadow/default": [
+    "card",
+    "career-map",
+    "stat"
+  ],
   "shadow/lg": [
     "calendar",
     "combobox",
@@ -1319,13 +1324,12 @@
     "select"
   ],
   "shadow/sm": [
-    "card",
-    "career-map",
     "tabs"
   ],
   "shadow/surface": [
     "card",
-    "career-map"
+    "career-map",
+    "stat"
   ],
   "spacing/0-5": [
     "calendar",

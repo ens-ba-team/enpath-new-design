@@ -6,6 +6,15 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-30 — Stronger card shadow
+
+### Changed
+- `shadow/surface` → `{shadow.default}` (was `{shadow.sm}`, barely visible on white). Every Card, the Career Map frame, the chat panel and the page panel get it.
+- **Stat** gets `shadow/surface` (it had a border only), so it lifts off the page like a Card.
+- Every shadow primitive (`shadow/xs` … `2xl`, `inner`) uses **slate/900** (`rgb(15 23 42 / …)`) instead of pure black, same sizes and opacities: softer on the slate / brand interface.
+
+---
+
 ## 2026-09-30 — New token `color/surface/header`
 
 ### Added

@@ -838,45 +838,46 @@
       "$description": "Intent: Explicitly removes any shadow from an element.\nUse when: Resetting shadow on a component that inherits one, flat UI surfaces that must have zero elevation.\nDo not use: As the default — omitting a shadow and explicitly setting none are different in CSS cascade terms.\nStatus: Stable"
     },
     "xs": {
-      "$value": "0 1px rgb(0 0 0 / 0.04)",
+      "$value": "0 1px rgb(15 23 42 / 0.04)",
       "$type": "string",
       "$description": "Intent: One-pixel bottom edge, barely visible.\nUse when: Inner edges of layered surfaces (from En UI shadow-hairline).\nStatus: active"
     },
     "sm": {
-      "$value": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+      "$value": "0 1px 2px 0 rgb(15 23 42 / 0.05)",
       "$type": "string",
       "$description": "Intent: Hairline shadow for subtle lift on small elements.\nUse when: Buttons, input fields, small cards, tags — elements that need the slightest separation from the background without looking elevated.\nDo not use: For floating UI like dropdowns or modals — too subtle to communicate elevation.\nUse instead: shadow/default or shadow/md for floating elements.\nStatus: Stable"
     },
     "default": {
-      "$value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+      "$value": "0 1px 3px 0 rgb(15 23 42 / 0.1), 0 1px 2px -1px rgb(15 23 42 / 0.1)",
       "$type": "string",
       "$description": "Intent: Standard shadow for cards and low-elevation surfaces.\nUse when: Content cards, list containers, standard panels — elements that sit above the page background but are not floating.\nDo not use: For interactive popups or modals — use shadow/md or above for floating UI.\nStatus: Stable"
     },
     "md": {
-      "$value": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+      "$value": "0 4px 6px -1px rgb(15 23 42 / 0.1), 0 2px 4px -2px rgb(15 23 42 / 0.1)",
       "$type": "string",
       "$description": "Intent: Medium elevation for floating UI elements.\nUse when: Dropdown menus, select popups, date pickers, context menus — elements that float above page content.\nDo not use: For inline cards or non-floating surfaces — shadow/default is sufficient there.\nStatus: Stable"
     },
     "lg": {
-      "$value": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+      "$value": "0 10px 15px -3px rgb(15 23 42 / 0.1), 0 4px 6px -4px rgb(15 23 42 / 0.1)",
       "$type": "string",
       "$description": "Intent: High elevation for prominent floating containers.\nUse when: Popovers, tooltips, command palettes, floating action panels.\nDo not use: For modals — use shadow/xl or shadow/2xl for full-screen overlays.\nStatus: Stable"
     },
     "xl": {
-      "$value": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+      "$value": "0 20px 25px -5px rgb(15 23 42 / 0.1), 0 8px 10px -6px rgb(15 23 42 / 0.1)",
       "$type": "string",
       "$description": "Intent: Strong elevation for modal-level overlays.\nUse when: Dialog modals, sheet panels, drawer overlays — elements that take focus away from the page.\nDo not use: For inline elements or cards — disproportionate shadow for non-floating surfaces.\nStatus: Stable"
     },
     "2xl": {
-      "$value": "0 25px 50px -12px rgb(0 0 0 / 0.25)",
+      "$value": "0 25px 50px -12px rgb(15 23 42 / 0.25)",
       "$type": "string",
       "$description": "Intent: Maximum elevation; deepest shadow in the scale.\nUse when: Full-screen modals, onboarding overlays, lightboxes — the topmost layer in a stacking context.\nDo not use: For anything below modal level — the opacity and spread are too heavy.\nUse instead: shadow/xl for standard dialogs.\nStatus: Stable"
     },
     "inner": {
-      "$value": "inset 0 2px 4px 0 rgb(0 0 0 / 0.05)",
+      "$value": "inset 0 2px 4px 0 rgb(15 23 42 / 0.05)",
       "$type": "string",
       "$description": "Intent: Inset shadow to signal a recessed or pressed surface.\nUse when: Input field backgrounds, pressed button states, search bars — surfaces that should feel sunken rather than raised.\nDo not use: On elevated or floating elements — inset shadow conflicts with the elevation metaphor.\nStatus: Stable"
-    }
+    },
+    "$description": "Shadow colour is slate/900 (rgb 15 23 42), not pure black (2026-09-30): it sits softer on the slate/brand interface."
   },
   "motion": {
     "duration": {

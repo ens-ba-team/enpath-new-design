@@ -2,7 +2,7 @@
 // expectation". Flat bordered tile; tone is carried by the icon colour only, so text stays neutral
 // and readable (no warning-coloured text token exists for white surfaces).
 //
-// Tokens: color/surface/default · color/border/default · radius/surface · spacing/component/md ·
+// Tokens: color/surface/default · color/border/default · shadow/surface · radius/surface · spacing/component/md ·
 // spacing/component/xs · color/text/secondary · color/surface/default/foreground ·
 // color/icon/muted · color/icon/success · color/icon/warning
 
@@ -34,7 +34,7 @@ export function Stat({ label, value, description, icon, tone = "neutral", classN
     <div
       data-slot="stat"
       className={cn(
-        "flex min-w-0 flex-col gap-[var(--spacing-component-xs)] rounded-[var(--radius-surface)] border border-[var(--color-border-default)] bg-[var(--color-surface-default)] p-[var(--spacing-component-md)]",
+        "flex min-w-0 flex-col gap-[var(--spacing-component-xs)] rounded-[var(--radius-surface)] border border-[var(--color-border-default)] bg-[var(--color-surface-default)] shadow-[var(--shadow-surface)] p-[var(--spacing-component-md)]",
         className
       )}
       {...props}
