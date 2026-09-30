@@ -112,8 +112,8 @@ Route `/me/actions` (sidebar "My Actions"). Code: `enpath-ui/src/features/enpath
   due date, in fixed columns so they line up: status Badge (To do secondary · In progress blue · Done
   success) | title, the **outcome in full**, and a small line "Due 26 Sep · overdue · added by you"
   (only "overdue" in `color/text/invalid`; Done rows say "Done 12 Sep" and their title is secondary) |
-  **Start** (To do) / **Mark done** (In progress) | "…" menu: Edit · Move back to In progress (Done
-  only) · Remove from plan (destructive confirm: red Remove button, AlertDialog Destructive type).
+  **Start** (To do) / **Mark done** (In progress) | "…" menu: Edit · **Move to** (a submenu with the other two statuses, 2026-09-30:
+  the List can make every move the Board's drag can) · Remove from plan (destructive confirm: red Remove button, AlertDialog Destructive type).
   "What {point} looks like" isn't shown per action (it describes the growth area, not the action).
 - **Done** has no record step (Actions and Records are separate).
 - **AI proposals** sit in their growth area as **default Alerts** (white, bordered) with a brand-blue Sparkle icon, the same AI mark as the

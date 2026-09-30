@@ -11,13 +11,14 @@ import { DotsThreeIcon, SparkleIcon } from '@phosphor-icons/react/ssr';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { isOverdue, shortDate, sourceLabel, statusLabel, type Action, type ActionStatus, type Proposal } from './mock-data';
 
 export interface ActionHandlers {
   onAdvance: (a: Action) => void;
   onEdit: (a: Action) => void;
-  onReopen: (a: Action) => void;
+  /** Move to any status: the "…" menu's Move to (List and Board), and a drop on the Board */
+  onMove: (a: Action, to: ActionStatus) => void;
   onRemove: (a: Action) => void;
   onAddAction: (competencyId: string) => void;
   onAcceptProposal: (p: Proposal) => void;
@@ -52,7 +53,9 @@ export function NextStepButton({ action, h }: { action: Action; h: ActionHandler
   return null;
 }
 
-/** The "…" menu. Non-modal: its items open dialogs (a modal menu left the page unclickable, P2). */
+/** The "…" menu. Non-modal: its items open dialogs (a modal menu left the page unclickable, P2).
+ *  Move to lists the other two statuses, so the List can do every move the Board's drag can
+ *  (and keyboard / touch users get one on the Board too). */
 export function ActionMenu({ action, h }: { action: Action; h: ActionHandlers }) {
   return (
     <DropdownMenu modal={false}>
@@ -61,7 +64,14 @@ export function ActionMenu({ action, h }: { action: Action; h: ActionHandlers })
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => h.onEdit(action)}>Edit</DropdownMenuItem>
-        {action.status === 'done' && <DropdownMenuItem onClick={() => h.onReopen(action)}>Move back to In progress</DropdownMenuItem>}
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>Move to</DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            {(['todo', 'doing', 'done'] as const).filter((s) => s !== action.status).map((s) => (
+              <DropdownMenuItem key={s} onClick={() => h.onMove(action, s)}>{statusLabel[s]}</DropdownMenuItem>
+            ))}
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => h.onRemove(action)}>Remove from plan</DropdownMenuItem>
       </DropdownMenuContent>

@@ -67,7 +67,7 @@ export function MyActionsScreen() {
       else if (a.status === 'doing') { update(a.id, { status: 'done', doneOn: TODAY }); toast.success(`Done: ${a.title}`); }
     },
     onEdit: (a) => openEditor({ mode: 'edit', action: a }),
-    onReopen: (a) => { update(a.id, { status: 'doing', doneOn: undefined }); toast(`Back in progress: ${a.title}`); },
+    onMove: (a, to) => move(a, to),
     onRemove: (a) => setRemoving(a),
     onAddAction: (competencyId) => openEditor({ mode: 'add', prefill: { competencyId } }),
     onAcceptProposal: (p) => openEditor({ mode: 'add', prefill: { title: p.title, competencyId: p.competencyId, outcome: p.outcome }, fromProposal: p.id }),
@@ -75,7 +75,8 @@ export function MyActionsScreen() {
     onAskAI: () => setChatOpen(true),
   };
 
-  // Board: a card dropped on another column. Same toasts as the buttons; Done gets today's date.
+  // Move to any status: the "…" menu's Move to, or a card dropped on another Board column. Done gets
+  // today's date; leaving Done clears it.
   const move = (a: Action, to: Action['status']) => {
     update(a.id, { status: to, doneOn: to === 'done' ? TODAY : undefined });
     toast(to === 'done' ? `Done: ${a.title}` : to === 'doing' ? `In progress: ${a.title}` : `Back to To do: ${a.title}`);
