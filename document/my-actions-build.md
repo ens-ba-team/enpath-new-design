@@ -2,7 +2,7 @@
 title: My Actions build
 created: 2026-09-28
 updated: 2026-09-30
-status: List view built (2026-09-30, `/me/actions`). Board view, manager view and links from My Career not built
+status: List and Board views built (2026-09-30, `/me/actions`). Manager view and links from My Career not built
 related: ../../document/original brief/prd-022-my-action.md, glossary.md, my-career-build.md, my-assessment-build.md
 ---
 
@@ -97,7 +97,9 @@ Two pages, two directions in time, one shared key (the competency):
 ## What's built (List view, 2026-09-30)
 
 Route `/me/actions` (sidebar "My Actions"). Code: `enpath-ui/src/features/enpath/my-actions/`
-(`my-actions-screen.tsx`, `growth-area-group.tsx`, `action-dialogs.tsx`, `actions-chat.tsx`, `mock-data.ts`).
+(`my-actions-screen.tsx`, `growth-area-group.tsx` (List), `board-view.tsx` (Board), `action-parts.tsx`
+(badge, meta line, next step, "…" menu, proposal: shared by both views), `action-dialogs.tsx`,
+`actions-chat.tsx`, `mock-data.ts`).
 
 - **Header (P1):** "Action plan" + "What you plan to do to grow toward {target}. Your manager can see
   this plan." · Ask AI (outline, from 1024px, ⌘I) · **Add action** (primary).
@@ -134,8 +136,26 @@ My Career's mock starts with no target; the pages keep separate state. Today = 3
 each growth area's title ("1/2"), the Stat tiles' coloured icon tiles (growth areas amber · in progress
 blue · to do grey · done green), the In progress badge's border, the tinted header band (`color/surface/header`).
 
-**Not built:** Board view · manager
+**Not built:** manager
 view / approval · "Plan an action" from My Career opening this page · Records page.
+
+### Board view (built 2026-09-30)
+
+- **Switch:** List / Board in the header (ButtonGroup of ghost buttons, the current one `aria-pressed`),
+  like My Career's Map / List. List is the default at every width.
+- **Columns:** Proposed by AI · To do · In progress · Done, each on `color/surface/raised` with a count
+  (user, 2026-09-30: proposals as the first column, as sketch B). Four columns from 1024px; narrower
+  screens scroll the columns sideways (16rem each).
+- **Action card** (Card compact): growth area, title, outcome, "Due · added by", next step, "…". No
+  status badge (the column says it); nothing expands; Done cards greyed. Cards sort by due date.
+- **Proposals** in the first column: the same default Alert with the blue Sparkle, buttons under the
+  text, the growth area in the description. Empty: "No proposals right now. Ask AI for ideas."
+- **Moving:** Start / Mark done (touch, keyboard), or **drag a card** to another column on desktop
+  (native drag, like Setup's career path editor; user 2026-09-30). The column under the card shows a
+  `color/drop-indicator` ring. Dropping on Done sets today's date; moving out of Done clears it.
+  Proposals don't drag.
+- **Not on the Board:** growth areas with no action (no line for them, user 2026-09-30), You →
+  Needed, records links, the progress ring. The List shows those.
 
 ### Visual audit (2026-09-30)
 
@@ -167,7 +187,7 @@ view / approval · "Plan an action" from My Career opening this page · Records 
 - [ ] Can the employee dismiss AI proposals, and do dismissed ones come back?
 - [ ] Templates: predefined Actions per competency? (PRD-022)
 - [ ] Do Actions follow the **Active target** only, or can they serve a Career vision's role too?
-- [x] Layout: C (list grouped by growth area) built as the default; Board as a second view (planned).
+- [x] Layout: C (list grouped by growth area) is the default; Board is the second view (both built).
 - [ ] **Who confirms an Action is done?** PRD-022 §9 "Completion Validation" offers: employee
       self-confirmation · manager acknowledgement · AI evaluation from Records · a combination. The
       prototype: one click on Mark done, no condition, date = today, can be moved back.

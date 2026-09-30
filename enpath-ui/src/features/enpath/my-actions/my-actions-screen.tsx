@@ -5,12 +5,13 @@
 // owns the plan: adds, edits, starts, finishes and removes Actions; AI proposals join only through
 // Add to plan (the Add action dialog opens prefilled). Actions and Records are separate: the only
 // link is each growth area's record count (the Records page isn't built yet, so it says so).
-// Not yet: Board view, manager view, a progress ring (Open flag), links from My Career.
+// List or Board (header switch, like My Career's Map / List): List by default. Not yet: manager view, links from My Career.
 
 import * as React from 'react';
 import { toast } from 'sonner';
-import { CheckCircleIcon, ListChecksIcon, PlayCircleIcon, PlusIcon, SparkleIcon, TargetIcon } from '@phosphor-icons/react/ssr';
+import { CheckCircleIcon, KanbanIcon, ListBulletsIcon, ListChecksIcon, PlayCircleIcon, PlusIcon, SparkleIcon, TargetIcon } from '@phosphor-icons/react/ssr';
 import { Button } from '@/components/ui/button';
+import { ButtonGroup } from '@/components/ui/button-group';
 import { Stat } from '@/components/ui/stat';
 import { Toaster } from '@/components/ui/toast';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -19,6 +20,7 @@ import { SidebarFollowsChat, useChatShortcut } from '../chat/sidebar-follows-cha
 import { Tip } from '../tip';
 import { ActionDialog, DismissProposalDialog, RemoveActionDialog, type ActionDraft } from './action-dialogs';
 import { ActionsChat } from './actions-chat';
+import { BoardView } from './board-view';
 import { GrowthAreaGroup, type GroupHandlers } from './growth-area-group';
 import {
   growthAreas, initialActions, initialProposals, recordCounts, targetName, TODAY,
@@ -51,6 +53,8 @@ export function MyActionsScreen() {
   const [removing, setRemoving] = React.useState<Action | undefined>();
   const [dismissing, setDismissing] = React.useState<Proposal | undefined>();
   const [chatOpen, setChatOpen] = React.useState(false);
+  // List is the default at every width; the Board scrolls its columns sideways on narrow screens.
+  const [view, setView] = React.useState<'list' | 'board'>('list');
   useChatShortcut(React.useCallback(() => setChatOpen((o) => !o), []));
 
   const count = (s: Action['status']) => actions.filter((a) => a.status === s).length;
@@ -70,6 +74,16 @@ export function MyActionsScreen() {
     onOpenRecords: (area) => toast(`Records is coming next. This link will open ${area.name} records.`),
     onAskAI: () => setChatOpen(true),
   };
+
+  // Board: a card dropped on another column. Same toasts as the buttons; Done gets today's date.
+  const move = (a: Action, to: Action['status']) => {
+    update(a.id, { status: to, doneOn: to === 'done' ? TODAY : undefined });
+    toast(to === 'done' ? `Done: ${a.title}` : to === 'doing' ? `In progress: ${a.title}` : `Back to To do: ${a.title}`);
+  };
+
+  const viewButton = (v: 'list' | 'board', icon: React.ReactNode, text: string) => (
+    <Button variant="ghost" aria-pressed={view === v} onClick={() => setView(v)}>{icon}{text}</Button>
+  );
 
   const proposeFromChat = React.useCallback((p: Omit<Proposal, 'id'>) => {
     setEditorKey((k) => k + 1);
@@ -106,6 +120,10 @@ export function MyActionsScreen() {
                 <h1 className="text-heading-xl text-[var(--color-background-default-foreground)]">Action plan</h1>
                 <p className="text-body-sm text-[var(--color-text-secondary)]">What you plan to do to grow toward {targetName}. Your manager can see this plan.</p>
               </div>
+              <ButtonGroup role="group" aria-label="View">
+                {viewButton('list', <ListBulletsIcon aria-hidden="true" />, 'List')}
+                {viewButton('board', <KanbanIcon aria-hidden="true" />, 'Board')}
+              </ButtonGroup>
               {!chatOpen && (
                 <Tip label="Ask AI (⌘I)">
                   <Button variant="outline" className="hidden lg:inline-flex" onClick={() => setChatOpen(true)}>
@@ -124,7 +142,9 @@ export function MyActionsScreen() {
                 <Stat label="Done" value={count('done')} icon={<IconTile tone="success" icon={<CheckCircleIcon />} />} />
               </section>
 
-              {growthAreas.map((area) => (
+              {view === 'board' ? (
+                <BoardView actions={actions} proposals={proposals} areas={growthAreas} h={h} onMove={move} />
+              ) : growthAreas.map((area) => (
                 <GrowthAreaGroup
                   key={area.id}
                   area={area}
