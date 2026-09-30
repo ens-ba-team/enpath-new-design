@@ -105,8 +105,10 @@ Route `/me/actions` (sidebar "My Actions"). Code: `enpath-ui/src/features/enpath
 
 - **Header (P1):** "Action plan" + "What you plan to do to grow toward {target}. Your manager can see
   this plan." · Ask AI (outline, from 1024px, ⌘I) · **Add action** (primary).
-- **Summary:** four Stat tiles with coloured icon tiles: Growth areas · To do · In progress · Done
-  (the order work moves, 2026-09-30).
+- **Summary:** four Stat cards (Growth areas · To do · In progress · Done), each with a solid icon
+  tile + white icon (set B: amber/600 · zinc/500 · blue/400 · green/600), a line under the label, the
+  number, and a note from the data: "toward {target}" · "next due {date}" · "due {date}" (nearest) ·
+  "last on {date}", with "N overdue" in red on the right of To do / In progress when there is any.
 - **One Card per growth area** of the Active target (pattern P7; default size, groups `spacing/layout/sm` apart): name, "Growth area · You 3 → Needed 4" with the progress ring before the title, Add action (no records link: removed 2026-09-30, records carry no competency)
   (outline; opens the dialog with that growth area chosen). 
 - **Action rows** (layout A, 2026-09-30; nothing expands), sorted In progress → To do → Done, then by
