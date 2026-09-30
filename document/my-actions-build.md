@@ -143,7 +143,9 @@ view / approval · "Plan an action" from My Career opening this page · Records 
 
 - **Switch:** List / Board in the header (ButtonGroup of ghost buttons, the current one `aria-pressed`),
   like My Career's Map / List. List is the default at every width.
-- **Columns:** Proposed by AI · To do · In progress · Done, each on `color/surface/raised` with a count
+- **Columns:** Proposed by AI · To do · In progress · Done, each with a count. Status columns use
+  the Stat icon tiles' fills (To do `surface/muted` · In progress `status/info-subtle` · Done
+  `status/success-subtle`); Proposed by AI stays `surface/raised`
   (user, 2026-09-30: proposals as the first column, as sketch B). Four columns from 1024px; narrower
   screens scroll the columns sideways (16rem each).
 - **Action card** (Card compact): growth area, title, outcome, "Due · added by", next step, "…". No

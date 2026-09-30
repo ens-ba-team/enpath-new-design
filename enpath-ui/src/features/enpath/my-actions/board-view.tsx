@@ -1,7 +1,9 @@
 'use client';
 // Action plan — Board view (my-actions-build.md → Board). Four columns: Proposed by AI · To do ·
-// In progress · Done (user, 2026-09-30: proposals as the first column, as in sketch B). Columns are
-// grouping areas on color/surface/raised, each with a count. An Action card (Card compact) shows the
+// In progress · Done (user, 2026-09-30: proposals as the first column, as in sketch B). Each column is
+// a grouping area with a count; status columns use the same fills as the Stat icon tiles (user,
+// 2026-09-30): To do surface/muted · In progress status/info-subtle · Done status/success-subtle;
+// Proposed by AI stays surface/raised. An Action card (Card compact) shows the
 // same content as a List row: growth area, title, outcome, "Due · added by", next step and "…"; the
 // column says the status, so there's no badge. Proposals are the shared ProposalAlert, stacked.
 // Moving: the Start / Mark done buttons (touch and keyboard), or drag a card to another column on
@@ -18,9 +20,15 @@ import { ActionMenu, ActionMeta, NextStepButton, ProposalAlert, type ActionHandl
 import { statusLabel, type Action, type ActionStatus, type Proposal } from './mock-data';
 
 const columns: ActionStatus[] = ['todo', 'doing', 'done'];
+/** Same fills as the Stat icon tiles on this page. */
+const columnFill: Record<ActionStatus, string> = {
+  todo: 'bg-[var(--color-surface-muted)]',
+  doing: 'bg-[var(--color-status-info-subtle)]',
+  done: 'bg-[var(--color-status-success-subtle)]',
+};
 
-function Column({ title, count, icon, children, dropTarget, over, onDragOver, onDragLeave, onDrop }: {
-  title: string; count: number; icon?: React.ReactNode; children: React.ReactNode;
+function Column({ title, count, icon, fill = 'bg-[var(--color-surface-raised)]', children, dropTarget, over, onDragOver, onDragLeave, onDrop }: {
+  title: string; count: number; icon?: React.ReactNode; fill?: string; children: React.ReactNode;
   dropTarget?: boolean; over?: boolean;
   onDragOver?: (e: React.DragEvent) => void; onDragLeave?: () => void; onDrop?: (e: React.DragEvent) => void;
 }) {
@@ -31,7 +39,8 @@ function Column({ title, count, icon, children, dropTarget, over, onDragOver, on
       onDragLeave={onDragLeave}
       onDrop={onDrop}
       className={cn(
-        'flex min-w-0 flex-col gap-[var(--spacing-component-sm)] rounded-[var(--radius-lg)] bg-[var(--color-surface-raised)] p-[var(--spacing-component-sm)]',
+        'flex min-w-0 flex-col gap-[var(--spacing-component-sm)] rounded-[var(--radius-lg)] p-[var(--spacing-component-sm)]',
+        fill,
         dropTarget && over && 'ring-2 ring-[var(--color-drop-indicator)]',
       )}
     >
@@ -91,7 +100,7 @@ export function BoardView({ actions, proposals, areas, h, onMove }: {
       {columns.map((status) => {
         const cards = actions.filter((a) => a.status === status).sort(byDue);
         return (
-          <Column key={status} title={statusLabel[status]} count={cards.length}
+          <Column key={status} title={statusLabel[status]} count={cards.length} fill={columnFill[status]}
             dropTarget={dragId !== null} over={overCol === status}
             onDragOver={(e) => { if (!dragId) return; e.preventDefault(); e.dataTransfer.dropEffect = 'move'; setOverCol(status); }}
             onDragLeave={() => setOverCol((c) => (c === status ? null : c))}
