@@ -13,6 +13,7 @@
   },
   "tokensUsed": [
     "color/blue/600",
+    "color/border/default",
     "color/brand/destructive",
     "color/green/600",
     "color/red/600",
@@ -21,6 +22,7 @@
     "color/text/secondary",
     "color/yellow/600",
     "color/zinc/100",
+    "color/zinc/200",
     "color/zinc/600",
     "radius/full"
   ],

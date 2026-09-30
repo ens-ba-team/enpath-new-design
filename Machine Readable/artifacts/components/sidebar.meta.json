@@ -201,6 +201,7 @@
   },
   "tokensUsed": [
     "color/blue/500",
+    "color/border/default",
     "color/brand/500",
     "color/brand/primary",
     "color/sidebar/accent",
@@ -212,6 +213,7 @@
     "color/text/secondary",
     "color/white",
     "color/white-alpha/60",
+    "color/zinc/200",
     "color/zinc/300",
     "color/zinc/600",
     "color/zinc/800",

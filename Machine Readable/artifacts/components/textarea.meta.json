@@ -282,6 +282,7 @@
     }
   },
   "tokensUsed": [
+    "color/border/default",
     "color/border/disabled",
     "color/border/error",
     "color/border/focus",
@@ -298,6 +299,7 @@
     "color/text/disabled",
     "color/white",
     "color/zinc/100",
+    "color/zinc/200",
     "color/zinc/300",
     "color/zinc/400",
     "color/zinc/500",

@@ -14,11 +14,13 @@
     "Separator": "`color/border/default`"
   },
   "tokensUsed": [
+    "color/border/default",
     "color/surface/accent",
     "color/surface/muted",
     "color/surface/overlay",
     "color/white",
     "color/zinc/100",
+    "color/zinc/200",
     "shadow/lg",
     "shadow/overlay"
   ],

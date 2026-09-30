@@ -104,7 +104,7 @@
         "when": "Has Icon=True OR Has Action=True",
         "structure": "icon + content frame + action-slot are siblings inside the alert frame",
         "containerGap": "spacing/component/md",
-        "contentFrameGap": "spacing/component/xxs"
+        "composition": "Icon + content frame are composed in the story (see alert.tsx header); the component renders the flat layout only."
       }
     },
     "text": {
@@ -225,6 +225,10 @@
       {
         "date": "2026-09-29",
         "change": "Added size=\"sm\" (one compact line). Setup progress and My Career path-change notices use it instead of overriding padding."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Spec token section matches the code: the nested (icon) layout gap belongs to the story composition, not the component."
       }
     ]
   },

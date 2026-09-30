@@ -12,8 +12,10 @@
     "Shadow": "`shadow/overlay`"
   },
   "tokensUsed": [
+    "color/border/default",
     "color/surface/overlay",
     "color/white",
+    "color/zinc/200",
     "shadow/lg",
     "shadow/overlay"
   ],

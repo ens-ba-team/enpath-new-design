@@ -13,10 +13,12 @@
   },
   "tokensUsed": [
     "color/background/default",
+    "color/border/default",
     "color/surface/muted",
     "color/text/secondary",
     "color/white",
     "color/zinc/100",
+    "color/zinc/200",
     "color/zinc/600",
     "shadow/none"
   ],

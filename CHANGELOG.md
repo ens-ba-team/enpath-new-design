@@ -6,6 +6,18 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-30 — Spec batch 1 (token sections follow the code)
+
+### Changed
+- **Calendar** time picker binds `spacing/component/xxs` (was `gap-0.5` / `p-0.5`, same value).
+- Specs match the code: **AlertDialog** (no container focus ring), **Alert** (icon layout gap belongs to the story), **Checkbox** (label colours and gaps belong to the composed Label), **Conversation** (no fill; scroll button is a Button).
+- `extract-token-usage.mjs` counts a bare `border` class as `color/border/default` (globals.css base layer).
+
+### Flagged (Open flags in design-patterns.md)
+- AlertDialog Type + icon container, Breadcrumb Disabled, Card Border / density overrides, CodeBlock fill, DatePicker open fill + invalid state, Dialog Sticky footer / Scrollable overrides, DropdownMenu label / shortcut / separator / destructive.
+
+---
+
 ## 2026-09-30 — Token usage generated from the code; token rules checked
 
 ### Added

@@ -173,6 +173,7 @@
     }
   },
   "tokensUsed": [
+    "color/border/default",
     "color/border/disabled",
     "color/border/error",
     "color/brand/500",
@@ -181,6 +182,7 @@
     "color/red/500",
     "color/ring",
     "color/zinc/100",
+    "color/zinc/200",
     "color/zinc/300",
     "height/target/touch",
     "opacity/60",

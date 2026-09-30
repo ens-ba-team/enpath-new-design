@@ -129,19 +129,7 @@
       "DefaultStates": {
         "label": "color/background/default/foreground",
         "description": "color/background/muted/foreground"
-      },
-      "Invalid": {
-        "label": "color/text/invalid",
-        "description": "color/text/invalid"
-      },
-      "Disabled": {
-        "label": "color/text/disabled",
-        "description": "color/text/disabled"
       }
-    },
-    "spacing": {
-      "itemGap": "spacing/component/sm",
-      "textGap": "spacing/component/xxs"
     },
     "states": {
       "invalid": {
@@ -150,11 +138,13 @@
         "ringGlow": "color-mix(in_srgb,var(--color-border-error)_20%,transparent)",
         "notes": "Uses [&[aria-invalid]] compound selector to beat data-[state=open]/focus-visible specificity. Blue ring must NOT appear when invalid."
       }
-    }
+    },
+    "composition": "Label and description are composed with Label in the stories; their colours and gaps belong there, not to the checkbox."
   },
   "tokensUsed": [
     "color/background/accent",
     "color/background/muted",
+    "color/border/default",
     "color/border/disabled",
     "color/border/error",
     "color/brand/500",
@@ -163,6 +153,7 @@
     "color/red/500",
     "color/ring",
     "color/zinc/100",
+    "color/zinc/200",
     "color/zinc/300",
     "height/target/touch",
     "radius/md",
@@ -226,6 +217,10 @@
       {
         "date": "2026-09-29",
         "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Spec token section matches the code: label and description colours and gaps belong to the composed Label, not the checkbox."
       }
     ]
   },

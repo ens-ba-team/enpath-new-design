@@ -224,12 +224,14 @@
     "radius/none",
     "shadow/lg",
     "shadow/overlay",
+    "spacing/0-5",
     "spacing/1",
     "spacing/2",
     "spacing/3",
     "spacing/component/md",
     "spacing/component/sm",
-    "spacing/component/xs"
+    "spacing/component/xs",
+    "spacing/component/xxs"
   ],
   "accessibility": {
     "properties": [
@@ -297,6 +299,10 @@
       {
         "date": "2026-09-30",
         "change": "Time popover shadow shadow/sm → shadow/overlay (the role token for floating UI)."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Time picker binds spacing/component/xxs (was gap-0.5 / p-0.5, same value) as its spec says."
       }
     ]
   },

@@ -65,6 +65,7 @@ function aliases(byVar) {
 const stripComments = (s) => s.replace(/(^|[^:"'`])\/\/.*$/gm, '$1').replace(/\/\*[\s\S]*?\*\//g, '');
 
 const COLOR_UTIL = /(?<![\w-])(?:[a-z0-9-]+:|\[[^\]]+\]:)*!?(?:bg|text|border(?:-[trblxyse])?|ring(?:-offset)?|outline|fill|stroke|divide|from|via|to|decoration|caret|placeholder|accent|shadow)-([a-z][a-z0-9-]*?)(?:\/\d+)?(?![\w-])/g;
+const BARE_BORDER = /(?<![\w-])(?:[a-z0-9-]+:)*(?:border|border-[trblxyse]|border-[trblxyse]?-?\d+|divide-[xy])(?![\w\[-])/;
 const RADIUS_UTIL = /(?<![\w-])(?:[a-z0-9-]+:)*!?rounded(?:-[trblse]{1,2})?-([a-z0-9]+)(?![\w-])/g;
 const SHADOW_UTIL = /(?<![\w-])(?:[a-z0-9-]+:)*!?shadow-([a-z0-9]+)(?![\w-])/g;
 
@@ -108,6 +109,8 @@ export function scanUsage() {
       }
     }
     for (const m of code.matchAll(COLOR_UTIL)) { const t = utility(`--color-${m[1]}`); if (t) used.add(t); }
+    // globals.css: `* { @apply border-border }` — a border width with no colour class is color/border/default.
+    if (BARE_BORDER.test(code)) { const t = utility('--color-border'); if (t) used.add(t); }
     for (const m of code.matchAll(RADIUS_UTIL)) { const t = utility(`--radius-${m[1]}`); if (t) used.add(t); }
     for (const m of code.matchAll(SHADOW_UTIL)) { const t = utility(`--shadow-${m[1]}`); if (t) used.add(t); }
     const direct = [...used].filter((t) => !t.startsWith('typography/')).sort();

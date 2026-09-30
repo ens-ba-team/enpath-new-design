@@ -6,9 +6,9 @@
   "codeOnly": true,
   "variants": {},
   "tokens": {
-    "Region": "inherits the chat panel (`color/background/default`)",
+    "Region": "No fill of its own: sits in the chat panel.",
     "Empty-state text": "`color/text/secondary`",
-    "Scroll button": "Button outline, `color/surface/overlay`"
+    "Scroll button": "A Button (outline). Its tokens are Button's."
   },
   "tokensUsed": [
     "color/text/secondary",
@@ -53,6 +53,10 @@
       {
         "date": "2026-09-29",
         "change": "Text uses Enpath text styles (text-body-sm, text-heading-md …, see Foundations/Text Styles) instead of mixed size and weight classes. Labels (label-*) and small headings (heading-sm/xs) are Medium 500."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Spec token section matches the code: the region has no fill; the scroll button is a Button."
       }
     ]
   },

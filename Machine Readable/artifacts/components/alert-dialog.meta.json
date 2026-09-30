@@ -30,6 +30,10 @@
       {
         "date": "2026-09-30",
         "change": "Shadow shadow/overlay → shadow/modal: an alert dialog blocks the page behind a scrim. Deeper shadow."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Spec token section matches the code: removed a container focus ring the code never had (focus goes to the buttons inside). Type and icon container are an Open flag."
       }
     ]
   },
@@ -196,14 +200,6 @@
       "paddingRight": "spacing/component/xl",
       "gap": "spacing/component/lg",
       "footerGap": "spacing/component/sm"
-    },
-    "states": {
-      "focus": {
-        "indicator": "ring",
-        "token": "color/ring",
-        "weight": 2,
-        "align": "outside"
-      }
     },
     "motion": {
       "duration": "motion/duration/normal",

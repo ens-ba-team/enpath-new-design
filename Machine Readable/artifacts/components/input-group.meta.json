@@ -14,6 +14,7 @@
     "Addon text / icon": "`color/text/secondary`"
   },
   "tokensUsed": [
+    "color/border/default",
     "color/border/error",
     "color/border/focus",
     "color/brand/500",
@@ -23,6 +24,7 @@
     "color/ring",
     "color/text/secondary",
     "color/white",
+    "color/zinc/200",
     "color/zinc/300",
     "color/zinc/600",
     "radius/base",

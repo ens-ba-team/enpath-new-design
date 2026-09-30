@@ -441,7 +441,7 @@ function TimeColumn({
   return (
     <div
       ref={ref}
-      className="flex flex-col gap-0.5 overflow-y-auto h-48 scrollbar-none"
+      className="flex flex-col gap-[var(--spacing-component-xxs)] overflow-y-auto h-48 scrollbar-none"
       style={{ scrollbarWidth: "none" }}
     >
       {items.map((val) => {
@@ -576,13 +576,13 @@ function CalendarWithTime({ className }: CalendarWithTimeProps) {
                 "z-50 rounded-[var(--radius-lg)]",
                 "border border-[var(--color-border-default)]",
                 "bg-[var(--color-surface-overlay)]",
-                "p-0.5 shadow-[var(--shadow-overlay)]",
+                "p-[var(--spacing-component-xxs)] shadow-[var(--shadow-overlay)]",
                 "outline-none",
                 "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
                 "data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95"
               )}
             >
-              <div className="flex gap-0.5 items-start">
+              <div className="flex gap-[var(--spacing-component-xxs)] items-start">
                 <div className="flex flex-col items-center">
                   <span className="text-label-sm text-[var(--color-text-secondary)] pb-1">HH</span>
                   <TimeColumn items={HOURS} selected={hours} onSelect={handleHourSelect} />
