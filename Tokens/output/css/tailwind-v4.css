@@ -491,6 +491,23 @@
    */
   --color-surface-raised-foreground: #0f172a;
   /**
+   * Intent:      Tinted band behind a card's title row
+   * Use when:    The title row of a Card that groups a list (the Action plan's growth area cards), full-bleed with a color/border/default line under it
+   * Do not use:  Whole cards or page sections (use color/surface/default); selected or hover states (use the component tokens); inside the sidebar or the app background (use color/background/app)
+   * Use instead: color/surface/default for the card body, color/surface/raised for recessed areas inside a component
+   * Foreground:  color/surface/header/foreground
+   * Note:        Brand/50, the same step as color/background/app, used inside the page panel. Added 2026-09-30; used on the Action plan screen only (Open flag: the band isn't a Card option yet).
+   * Status:      active
+   */
+  --color-surface-header: oklch(97% 0.012 264.53);
+  /**
+   * Intent:      Text and icons on color/surface/header
+   * Use when:    The card title and its meta line inside the tinted header band
+   * Do not use:  Text on the card body (use color/surface/default/foreground)
+   * Status:      active
+   */
+  --color-surface-header-foreground: #0f172a;
+  /**
    * Intent:      Background for floating UI elements that layer above page content
    * Use when:    Everything that floats above or blocks the page: DropdownMenu, Select and Combobox lists, DatePicker and Calendar popovers, HoverCard, Command, the NavigationMenu panel, Toast, Dialog, AlertDialog, Sheet, Drawer
    * Do not use:  Cards or flat inline content — use color/surface/default for non-floating containers

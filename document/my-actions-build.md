@@ -129,7 +129,7 @@ My Career's mock starts with no target; the pages keep separate state. Today = 3
 
 **Built on the screen, to move into components** (Open flags, kind restyle): the progress ring before
 each growth area's title ("1/2"), the Stat tiles' coloured icon tiles (growth areas amber · in progress
-blue · to do grey · done green), the In progress badge's border.
+blue · to do grey · done green), the In progress badge's border, the tinted header band (`color/surface/header`).
 
 **Not built:** Board view · manager
 view / approval · "Plan an action" from My Career opening this page · Records page.

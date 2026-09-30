@@ -8,7 +8,9 @@
 // Dismiss. An empty growth area invites an action or Ask AI.
 // SCREEN-LEVEL DEBT (design-patterns.md → Open flags, kind restyle, 2026-09-30): the progress ring
 // before the title and the In progress Badge's border are built here until the components get them
-// (Progress shape="ring"; Badge blue border). Move them into the components, then delete them here.
+// (Progress shape="ring"; Badge blue border), and so is the tinted header band (color/surface/header,
+// full-bleed to the card's edges with a border/default line under it; not a Card option yet).
+// Move them into the components, then delete them here.
 
 import * as React from 'react';
 import { DotsThreeIcon, PlusIcon, SparkleIcon } from '@phosphor-icons/react/ssr';
@@ -132,10 +134,12 @@ export function GrowthAreaGroup({ area, actions, proposals, records, h }: {
   const progress = actions.length ? `${done} of ${actions.length} done` : 'No actions yet';
   return (
     <Card size="compact" role="region" aria-label={area.name}>
-      <CardHeader className="flex-row flex-wrap items-center gap-x-[var(--spacing-component-md)] gap-y-[var(--spacing-component-xs)]">
+      {/* Debt: tinted header band. Negative margins cancel the compact Card's padding (spacing/component/md)
+          so the band reaches the card's edges; the same padding goes back inside it. */}
+      <CardHeader className="-mx-[var(--spacing-component-md)] -mt-[var(--spacing-component-md)] flex-row flex-wrap items-center gap-x-[var(--spacing-component-md)] gap-y-[var(--spacing-component-xs)] rounded-t-[var(--radius-lg)] border-b border-[var(--color-border-default)] bg-[var(--color-surface-header)] px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)]">
         <ProgressRing done={done} total={actions.length} label={`${area.name}: ${progress}`} />
         <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xxs)]">
-          <CardTitle role="heading" aria-level={2}>{area.name}</CardTitle>
+          <CardTitle role="heading" aria-level={2} className="text-[var(--color-surface-header-foreground)]">{area.name}</CardTitle>
           <p className="text-body-xs text-[var(--color-text-secondary)]">Growth area · {pointsLine(area)}</p>
         </div>
         {records > 0 ? (

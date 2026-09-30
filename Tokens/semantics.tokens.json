@@ -251,6 +251,16 @@
           "$description": "Intent:      Text and icon color on a color/surface/raised background\nUse when:    Nav labels, sidebar text, sticky header text on the raised surface\nDo not use:  Text on the page canvas or inside floating overlays\nUse instead: color/surface/overlay/foreground for text inside dropdowns and modals\nStatus:      active"
         }
       },
+      "header": {
+        "$value": "{color.brand.50}",
+        "$type": "color",
+        "$description": "Intent:      Tinted band behind a card's title row\nUse when:    The title row of a Card that groups a list (the Action plan's growth area cards), full-bleed with a color/border/default line under it\nDo not use:  Whole cards or page sections (use color/surface/default); selected or hover states (use the component tokens); inside the sidebar or the app background (use color/background/app)\nUse instead: color/surface/default for the card body, color/surface/raised for recessed areas inside a component\nForeground:  color/surface/header/foreground\nNote:        Brand/50, the same step as color/background/app, used inside the page panel. Added 2026-09-30; used on the Action plan screen only (Open flag: the band isn't a Card option yet).\nStatus:      active",
+        "foreground": {
+          "$value": "{color.zinc.900}",
+          "$type": "color",
+          "$description": "Intent:      Text and icons on color/surface/header\nUse when:    The card title and its meta line inside the tinted header band\nDo not use:  Text on the card body (use color/surface/default/foreground)\nStatus:      active"
+        }
+      },
       "overlay": {
         "$value": "{color.white}",
         "$type": "color",

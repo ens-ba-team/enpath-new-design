@@ -6,6 +6,13 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-30 — New token `color/surface/header`
+
+### Added
+- `color/surface/header` (brand/50) + `/foreground` (zinc/900): the tinted band behind a card's title row. Used by the Action plan's growth area cards, built on the screen for now (Open flag: not a Card option yet). Contrast checked.
+
+---
+
 ## 2026-09-30 — Spec batch 3; drift-check #14 enforced
 
 ### Changed
