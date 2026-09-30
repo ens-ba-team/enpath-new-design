@@ -54,7 +54,7 @@ Values live in `Tokens/primitives.tokens.json`, each with its intent. They are n
 
 ## Semantics
 
-Values and intent live in `Tokens/semantics.tokens.json`. Before binding a token, read its **Intent · Use when · Do not use** (`Skills/token-binding-skill.md`). Text styles are `typography/*`, shown in Storybook `Foundations/Text Styles`. Nothing is restated here.
+Values and intent live in `Tokens/semantics.tokens.json`. Before binding a token, read its **Intent · Use when · Do not use** (`Skills/token-binding-skill.md`). Text styles are `typography/*`, shown in Storybook `Foundations/Text Styles`. Every other token group (colour, spacing, radius, elevation, sizing, opacity, z-index, motion, breakpoints) is shown in Storybook `Foundations/*`, read live from the token files. Nothing is restated here.
 
 ---
 

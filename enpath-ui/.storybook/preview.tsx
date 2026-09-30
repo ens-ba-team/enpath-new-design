@@ -23,7 +23,7 @@ const preview: Preview = {
     },
     options: {
       storySort: {
-        order: ['Foundations', '*'],
+        order: ['Foundations', ['Colour', 'Text Styles', 'Spacing', 'Radius', 'Elevation', 'Sizing', 'Other'], '*'],
       },
     },
   },

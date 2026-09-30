@@ -6,6 +6,15 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-30 — Foundations token pages
+
+### Added
+- Storybook `Foundations/Colour` (primitive ramps + one page per semantic group, each colour with the text that sits on it), `Spacing`, `Radius`, `Elevation`, `Sizing` (touch + pointer height pairs, targets) and `Other` (opacity, z-index, motion, breakpoints, layout grid, gradient).
+- The pages hold no values: names, aliases and descriptions are read from `Tokens/*.tokens.json`, values from the rendered CSS variables (`src/stories/foundations/token-kit.tsx`). A token or description change shows up without editing a story.
+- `.storybook/main.ts` lets the dev server read `Tokens/` (outside `enpath-ui`); Foundations pages sort Colour → Text Styles → Spacing → Radius → Elevation → Sizing → Other.
+
+---
+
 ## 2026-09-30 — Surfaces and shadows follow the token descriptions
 
 ### Changed
