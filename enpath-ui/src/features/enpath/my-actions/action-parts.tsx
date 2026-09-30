@@ -103,7 +103,7 @@ export function ProposalAlert({ proposal, h, context }: { proposal: Proposal; h:
  *  carries the AI border), with the brand Sparkle, and the buttons under the text. */
 export function ProposalCard({ proposal, h, context }: { proposal: Proposal; h: ActionHandlers; context?: string }) {
   return (
-    <Card size="compact" role="group" aria-label="AI proposal">
+    <Card size="compact" role="group" aria-label="AI proposal" className="shadow-none" style={{ boxShadow: 'none' }}>
       <div className="flex items-start gap-[var(--spacing-component-sm)]">
         <SparkleIcon className="mt-[var(--spacing-component-xxs)] h-4 w-4 shrink-0 text-[var(--color-icon-brand)]" aria-hidden="true" />
         <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xxs)]">

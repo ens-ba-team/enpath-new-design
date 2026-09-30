@@ -61,7 +61,7 @@ function ActionCard({ action, area, h, onDragStart, onDragEnd }: {
   return (
     <li draggable onDragStart={(e) => { e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', action.id); onDragStart(); }} onDragEnd={onDragEnd}
       className="cursor-grab active:cursor-grabbing">
-      <Card size="compact">
+      <Card size="compact" className="shadow-none" style={{ boxShadow: 'none' }}>
         <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
           {area && <span className="text-body-xs text-[var(--color-text-secondary)]">{area.name}</span>}
           <p className={done ? 'text-heading-xs text-[var(--color-text-secondary)]' : 'text-heading-xs text-[var(--color-background-default-foreground)]'}>{action.title}</p>

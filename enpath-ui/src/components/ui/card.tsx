@@ -28,6 +28,7 @@ const Card = React.forwardRef<
     <div
       ref={ref}
       data-size={size}
+      {...props}
       className={cn(
         "flex flex-col",
         "rounded-[var(--radius-lg)]",
@@ -38,7 +39,6 @@ const Card = React.forwardRef<
         size === "compact" ? "gap-[var(--spacing-component-sm)]" : "gap-[var(--spacing-component-lg)]",
         className
       )}
-      {...props}
     />
   </CardSizeContext.Provider>
 ))

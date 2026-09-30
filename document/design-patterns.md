@@ -312,6 +312,8 @@ neither a template nor a pattern. Its decisions stay in `my-career-build.md`._
   confirm).
 - **Rules / decisions:** nothing expands (everything is on the item); rows sort In progress → To do →
   Done, then by due date; the Board adds drag between columns, the menu's Move to gives the same moves
-  everywhere; AI proposals are separate (`Alert variant="ai"` in the List, a compact Card in the AI column).
+  everywhere; **all cards inside the Kanban columns, including AI proposal cards in "Proposed by AI",
+  have no shadow** so the columns read as one working surface. This applies only to Board cards; List
+  cards and List-view AI proposals keep their existing Card / Alert treatment. AI proposals are separate
+  (`Alert variant="ai"` in the List, a compact Card in the AI column).
 - **Components:** Badge, Button, DropdownMenu, Card (Board), Alert.
-
