@@ -316,15 +316,15 @@ open at a time. Withdraw → "Request withdrawn. Career vision N is a draft agai
 
 ## 7. Development loop (decided 2026-09-28)
 
-Target → **Assessment** → Growth areas → **Action plan** (My Actions) → **Evidence** → next
-Assessment. Build docs: `my-assessment-build.md`, `my-actions-build.md`. For My Career:
+Target → **Assessment** → Growth areas → **Action plan** (My Actions); **Records** (what happened)
+→ next Assessment. Build docs: `my-assessment-build.md`, `my-actions-build.md`. For My Career:
 
 - Scores = the latest Completed Assessment per competency.
 - A growth row's Plan an action will open My Actions for that growth area.
 - Still planned: Ready rows say "Based on H2 2026 assessment, approved {date}" (with mock
   Assessments).
-- **My Records is kept** (decided 2026-09-28, reversing the earlier drop): the employee's proof of
-  work, the input to the next Assessment, and what AI reads to propose actions and suggest scores.
+- **My Records is kept** (decided 2026-09-28, reversing the earlier drop): what happened in the
+  employee's work (separate from Actions, 2026-09-30), the input to the next Assessment, and what AI reads to propose actions and suggest scores.
   Sidebar order (2026-09-28): My Career · My Actions · Records, siblings (Actions never inside
   Records). Screen not designed yet.
 
@@ -462,14 +462,14 @@ Mobile polish comes last.
 - [x] Keep My Records: **yes** (2026-09-28).
 - [x] Cross-Matrix scores: AI suggests, manager confirms (B1, 2026-09-28).
 - [x] Setting a target on a company path needs no approval.
-- [x] Scores come from Assessment (2026-09-28); evidence is input, AI only summarises it.
+- [x] Scores come from Assessment (2026-09-28); records are input, AI only summarises them.
 - [x] Company path changes: follow the latest version, with §8's rules.
 
 ## 13. Old prototype: what the rebuild fixed
 
 - Readiness **0%** while nothing was assessed (read as failing) → no %, "Not assessed yet".
 - "Current L— → Required L4": "L" for competency points → points ("3 · Intermediate").
-- AI tip with no evidence behind it → AI shows what it read.
+- AI tip with nothing behind it → AI shows what it read.
 - Four entry points for adding; "Apply career path" led nowhere → one Explore a position dialog.
 - Actions and Records before any target (BR-15) → progress only toward the Active target.
 - Personal branches not distinguished from company paths (RQ-09) → dashed violet Career visions.

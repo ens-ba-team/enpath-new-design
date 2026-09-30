@@ -96,21 +96,24 @@ The employee side. How they look on the map: `my-career-build.md` → "How the m
 | **Assessment**                          | A periodic check of where the employee is: a score per competency                                                          | H2 2026 · Senior Software Engineer · 3 competencies                                   | The **only source of scores**. Per employee, per target role, per period (H1/H2, growth check-in), covering a chosen set of competencies. Employee self-assesses → line manager reviews → **Completed** (approved). The latest Completed score per competency is "you" in every comparison. Scores belong to the employee × competency, not to a path step, so they survive path changes. No PRD yet → `my-assessment-build.md` |
 | **Growth area**                         | A competency where the score is below what the role needs                                                                  | Stakeholder management 2 → 3                                                          | Employee-facing name for a **gap** (tone guide: development information, not a verdict)                                                                                                                                                                                                                                           |
 | **Action plan / Action**                | The employee's plan of work to close growth areas; an Action is one piece of work tied to one growth area, with a due date | "Facilitate a stakeholder session" · Growth area: Stakeholder management · due 11 Oct | My Actions (PRD-022). Kanban To do → In progress → Done. **The employee creates, edits and works in it; the manager sees it and approves.** AI proposes actions; a person adds them ("Add to plan") → `my-actions-build.md`                                                                                                       |
-| **Record** (evidence) | Proof of work the employee keeps: feedback, project notes, links, files | Notes and feedback from "Lead a design review" | **My Records** page, **kept** (2026-09-28, reverses dropping it). Added when an Action moves to Done, or on its own. Never a score by itself: it's the evidence for the next Assessment. AI reads records to propose Actions and, when a role uses another Matrix, to suggest scores (manager confirms). Records are never lost: they keep their history and can count toward any later role with a similar competency |
+| **Record** | What happened in someone's work: feedback, project notes, outcomes, links, files. Written by the employee, the manager or a colleague (later also generated from retros) | Notes and feedback from a design review | **Records** page, its own tab (2026-09-28 kept; 2026-09-30 separate from Actions: a Done Action does **not** become a record). Never a score by itself: it's what the next Assessment reads. Say "record" / "what happened", never "evidence" in the UI (PO, 2026-09-30). AI reads records to propose Actions and, when a role uses another Matrix, to suggest scores (manager confirms). Records are never lost: they keep their history and can count toward any later role with a similar competency |
 | **Suggested score** | A score AI proposes for a competency that has no approved score, from a **similar competency** in another Matrix plus the employee's records and actions | "Design systems: suggested 1 · Awareness, based on 'Learn design system basics' (done 12 Sep)" | Used when a role uses a different Matrix (e.g. You are here moves to C′). Shown as "Suggested" and **not counted** until the manager confirms (can confirm in bulk). Decided 2026-09-28 (B1): AI proposes, a person decides |
 | **Competency library** | Competencies shared across Matrices, so the same skill keeps one identity | "Testing" used by Engineering and QA matrices | **Future, not built.** Today each Matrix has its own competencies (Duplicate makes new ones), so cross-Matrix matching goes through Suggested scores |
 
 ### How the pieces fit — the development loop
 
 ```
-Target ──▶ Assessment ──▶ Growth areas ──▶ Action plan ──▶ Records
-(where I     (where I am:    (target minus     (work to close   (proof of the
- want to go)  scores)         scores)           them)            work done)
-                 ▲                                                  │
-                 └──────────── used in the next Assessment ◀────────┘
+Target ──▶ Assessment ──▶ Growth areas ──▶ Action plan
+(where I     (where I am:    (target minus     (what I plan
+ want to go)  scores)         scores)           to do next)
+                 ▲
+                 └──── read by the next Assessment ◀──── Records
+                                                       (what happened, from
+                                                        me, my manager, colleagues)
 ```
 
-**Assessment = the score. Record = the proof (evidence). Action = the plan.** Growth areas are computed, never
+**Assessment = the score. Record = what happened. Action = the plan.** Actions and Records meet only
+through the competency (2026-09-30). Growth areas are computed, never
 entered by hand.
 
 ## Words to keep out of the UI

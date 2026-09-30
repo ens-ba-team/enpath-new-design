@@ -29,9 +29,10 @@ Target → ASSESSMENT (scores) → Growth areas → Action plan → Records → 
   matrix.
 - **Flow:** the employee **self-assesses** → the **line manager reviews** → **Completed** (approved,
   "ready for comparison").
-- **Records are the input** (My Records is **kept**, 2026-09-28). Records added in the Action plan
-  (when an Action moves to Done) or on their own are gathered per competency for the
-  self-assessment and shown to the manager at review. A record is never a score by itself.
+- **Records are the input** (My Records is **kept**, 2026-09-28). Records (written by the employee,
+  the manager or colleagues; later from retros) are gathered per competency for the self-assessment
+  and shown to the manager at review. A record is never a score by itself. Actions are not an input:
+  a Done Action doesn't become a record (2026-09-30, `my-actions-build.md` → Actions and Records).
 - **AI proposes, the manager decides (B1, 2026-09-28).** AI may summarise records, and may
   **suggest** a score where there's no approved one (see "When You are here changes" below). A
   suggested score is labelled "Suggested", shows what it's based on, and **counts only after the
@@ -84,9 +85,9 @@ future direction, **not built**.
 ## Screens — planned (not designed yet)
 
 - **Employee:** "My assessment(s)" — the open self-assessment for the Active target (per competency:
-  pick a point, see the level's behaviour text and the gathered evidence, add a note), past Completed
+  pick a point, see the level's behaviour text and the records for that competency, add a note), past Completed
   assessments. Where it lives is open (own page vs inside My Career).
-- **Manager:** the list above on the Enpath design system + a review screen (self-score, evidence, AI
+- **Manager:** the list above on the Enpath design system + a review screen (self-score, records, AI
   summary, manager score, approve / send back).
 
 ## Open questions

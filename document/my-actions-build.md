@@ -1,7 +1,7 @@
 ---
 title: My Actions build
 created: 2026-09-28
-updated: 2026-09-28
+updated: 2026-09-30
 status: Not built. Decisions and design direction only; My Career's "Plan an action" button shows a "coming next" toast
 related: ../../document/original brief/prd-022-my-action.md, glossary.md, my-career-build.md, my-assessment-build.md
 ---
@@ -17,7 +17,8 @@ brief, not a My Actions brief — ignore it for this module.
 Where it sits in the development loop (`glossary.md` → "How the pieces fit"):
 
 ```
-Target → Assessment (scores) → Growth areas → ACTION PLAN → Records → next Assessment
+Target → Assessment (scores) → Growth areas → ACTION PLAN
+Records (what happened, from anyone) ──────────────────────▶ next Assessment
 ```
 
 My Actions turns growth areas into work. It is **not** a performance or task-management tool
@@ -31,9 +32,9 @@ My Actions turns growth areas into work. It is **not** a performance or task-man
   date. PRD-022 RQ-01: "each generated action should relate to at least one competency".
 - **AI proposes, a person adds.** AI suggestions appear as a "Proposal" card (the growth area it
   serves + the outcome to show); nothing joins the plan until someone presses **Add to plan**.
-- **Records are kept** (2026-09-28, reverses dropping them). When an Action moves to Done, the
-  employee can **add a record** (notes, links, files, feedback); it lands in **My Records**, linked to
-  the Action and its competency. Records feed the next Assessment (`my-assessment-build.md`).
+- **Actions and Records are separate** (2026-09-30, see "Actions and Records" below). A Done
+  Action does **not** become a record, and Done has no "Add a record" step for now. Records feed the
+  next Assessment (`my-assessment-build.md`); Actions don't.
 - **Nothing is lost when a role changes.** Actions stay in My Actions with their history even if
   their growth area no longer exists at the new role (e.g. You are here moves from C to C′); their
   records can count toward a later role with a similar competency.
@@ -49,15 +50,59 @@ My Actions turns growth areas into work. It is **not** a performance or task-man
 | Statuses | Suggested → Planned → In progress → Completed → **Validated** | Proposal card, then To do → In progress → Done (kanban) | Kanban columns To do / In progress / Done; Proposal is the Suggested state. **Validated** = to decide (see open questions) |
 | Where an action comes from | System generated · Employee added · Manager suggested | Proposal (AI) · "Add action" (employee) | All three, labelled on the card |
 | Manager's role | Suggestions + acknowledgement | "Managed by {manager}, visible to Direct Manager" | Employee owns; manager sees + approves |
-| Records | Completed action → create / link a **Record** → acknowledged | — | Same as PRD-022: record added on Done, kept in My Records; acknowledged when the manager reviews the Assessment |
+| Records | Completed action → create / link a **Record** → acknowledged | — | **Not linked for now** (2026-09-30): Done ends the Action; Records live on their own page and are written separately |
 | Card content | Action · related goal · competency · notes · completion date | Title · "Gap: {competency}" · due date · "Move to next status" | Title · "Growth area: {competency}" · due date · status control |
+
+## Actions and Records (decided 2026-09-30)
+
+Two pages, two directions in time, one shared key (the competency):
+
+| | Action plan (My Actions) | Records |
+|---|---|---|
+| Answers | What will I do next? | What happened in my work? |
+| Time | Forward: planned work with a due date | Backward: things that happened, with a date |
+| Written by | The employee (manager and AI can propose) | Anyone: the employee, the manager, colleagues; later generated from retros |
+| About | Only the employee | Any employee (Records has "about me" and "sent by me") |
+| Organised by | Growth area | Date, filterable by competency and by who wrote it |
+| Feeds Assessment | No | Yes: the input the self-assessment and the manager review read |
+
+- **Names stay:** "Action plan" and "Records". The confusion came from the layout (the two met at
+  Done), not the names.
+- **No "evidence" in the UI** (PO, 2026-09-30). Say "record" or "what happened". Code keeps its
+  internal `evidence` status key (never shown).
+- **Done Action ≠ record** (2026-09-30). Finishing an Action doesn't create or ask for a record. A
+  Done Action says the plan step is finished; it proves nothing by itself and doesn't change a
+  score.
+- **The only link is the competency:** a growth area group in the Action plan points to that
+  competency's Records. Records are never shown inside Action cards.
+- **Records is its own tab** so it can grow on its own (records about colleagues, records generated
+  from retros) without touching the Action plan.
+- Page purpose lines (proposed copy): Action plan "What you plan to do to grow toward {target}."
+  · Records "What happened in your work, from you, your manager and colleagues."
+
+## Layout — under review (sketches 2026-09-30)
+
+- **A** kanban (To do · In progress · Done) with proposals above and a detail panel (the dev team's
+  screen, on Enpath components).
+- **B** kanban with proposals as the first column and a side Sheet.
+- **C** list grouped by growth area (after Culture Amp Develop): one Card per growth area with
+  You → Needed, a progress ring, action rows (status label + Start / Mark done), AI proposals inside
+  their growth area, empty growth areas shown with "Add action / Ask AI".
+- Discussed: a kanban inside each growth area is too much (1–3 actions per area leaves columns
+  empty; cramped at 1280px; collapses to a list below 1024px). Alternative: rows sorted by status +
+  a status count on each group heading.
+- Not chosen yet. Market check: career / development tools (Lattice, Leapsome, Culture Amp) use
+  lists, not kanban (`market-research.md` to be updated).
 
 ## Screen — planned (not designed yet)
 
 - Header: "Action plan" + one line on ownership; **Add action**.
 - AI **Proposal** cards above the board (growth area + outcome) with **Add to plan** / dismiss.
 - Board: To do · In progress · Done. Card: title, growth area, due date, source, status control.
-- Done: optional **Add a record** (note / link / file) → My Records.
+- Done: the Action is finished; no record step. Done Actions shrink to one line at the bottom of
+  their growth area.
+- Each growth area group links to Records: "{N} records for this competency →" opens Records
+  filtered to that competency (planned; depends on the Records screen).
 - Manager view: the same plan, read-only, with approve (scope of "approve" is open).
 - Built on the Enpath design system (the dev team's screen isn't: black primary button, own shell).
 
@@ -69,3 +114,6 @@ My Actions turns growth areas into work. It is **not** a performance or task-man
 - [ ] Can the employee dismiss AI proposals, and do dismissed ones come back?
 - [ ] Templates: predefined Actions per competency? (PRD-022)
 - [ ] Do Actions follow the **Active target** only, or can they serve a Career vision's role too?
+- [ ] Layout: A, B or C (above)? Board as a second view?
+- [ ] Later: should a Done Action offer to add a record (and a record show "From action: …")? Not
+      for now (2026-09-30).
