@@ -2,7 +2,7 @@
 title: My Actions build
 created: 2026-09-28
 updated: 2026-09-30
-status: Not built. Decisions and design direction only; My Career's "Plan an action" button shows a "coming next" toast
+status: List view built (2026-09-30, `/me/actions`). Board view, manager view and links from My Career not built
 related: ../../document/original brief/prd-022-my-action.md, glossary.md, my-career-build.md, my-assessment-build.md
 ---
 
@@ -93,6 +93,41 @@ Two pages, two directions in time, one shared key (the competency):
   a status count on each group heading.
 - Not chosen yet. Market check: career / development tools (Lattice, Leapsome, Culture Amp) use
   lists, not kanban (`market-research.md` to be updated).
+
+## What's built (List view, 2026-09-30)
+
+Route `/me/actions` (sidebar "My Actions"). Code: `enpath-ui/src/features/enpath/my-actions/`
+(`my-actions-screen.tsx`, `growth-area-group.tsx`, `action-dialogs.tsx`, `actions-chat.tsx`, `mock-data.ts`).
+
+- **Header (P1):** "Action plan" + "What you plan to do to grow toward {target}. Your manager can see
+  this plan." · Ask AI (outline, from 1024px, ⌘I) · **Add action** (primary).
+- **Summary:** four Stat tiles: Growth areas · In progress · To do · Done.
+- **One Card per growth area** of the Active target (pattern P7): name, "Growth area · You 3 → Needed 4
+  · 1 of 2 done", "{N} records" (link; Records isn't built, so it says it's coming next), Add action
+  (opens the dialog with that growth area chosen).
+- **Action rows** (Accordion compact), sorted In progress → To do → Done, then by due date: status Badge
+  (To do secondary · In progress blue · Done success), title, "Due 26 Sep · overdue" (overdue in
+  `color/text/invalid`) or "Done 12 Sep", source ("added by you" · "proposed by your manager" · "from
+  an AI proposal"). Beside the row: **Start** (To do) / **Mark done** (In progress), and a "…" menu:
+  Edit · Move back to In progress (Done only) · Remove from plan (confirm). Expanding shows Outcome,
+  "{point} means" (the Matrix behaviour text) and when / by whom it was added.
+- **Done** has no record step (Actions and Records are separate).
+- **AI proposals** sit in their growth area as muted Items (Sparkle, "AI proposal · outcome: …"):
+  **Add to plan** opens Add action prefilled (the person picks a due date and confirms) · **Dismiss**
+  (confirm; it doesn't come back).
+- **Empty growth area:** "Plan something to grow here, or ask AI for ideas." + Ask AI.
+- **Add / Edit action dialog:** Action*, Growth area* (Select), Outcome, Due date* (DatePicker); inline
+  errors on submit.
+- **Ask AI:** the shared chat panel with an Action plan script: suggests one action per growth area
+  (proposal card → "Add to plan" opens the prefilled dialog) and where to start.
+- Every change shows a toast.
+
+**Prototype assumptions:** the Active target is **Frontend Engineer L3** (it replaced Backend
+Engineer L3 on Lan's path on 27 Sep), giving three growth areas: Code quality, Delivery, Mentoring.
+My Career's mock starts with no target; the pages keep separate state. Today = 30 Sep 2026.
+
+**Not built:** progress ring (Open flag: missing component; text meanwhile) · Board view · manager
+view / approval · "Plan an action" from My Career opening this page · Records page.
 
 ## Screen — planned (not designed yet)
 

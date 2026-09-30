@@ -293,10 +293,15 @@ export const pointLabel = (n: number) => `${n} · ${scale[n - 1]}`;
 
 /** Every competency of the step's Matrix, compared with Lan's evidence. */
 export function gapsFor(step: PlanStep): Gap[] {
-  const position = initialPositions.find((p) => p.id === step.positionId)!;
+  return gapsForLevel(step.levelId);
+}
+
+/** The same comparison for any Level (My Actions uses it for the Active target). */
+export function gapsForLevel(levelId: string): Gap[] {
+  const position = positionOfLevel(levelId);
   const matrix = initialMatrices.find((m) => m.id === position.matrixId)!;
   return matrix.competencies.map((c) => {
-    const required = position.expectations[c.id]?.[step.levelId] ?? null;
+    const required = position.expectations[c.id]?.[levelId] ?? null;
     const current = evidence[c.id]?.point ?? null;
     const status: GapStatus = required == null ? 'unset' : current == null ? 'evidence' : current >= required ? 'ready' : 'growth';
     const meaning = required != null ? c.behaviors[required - 1]?.description : undefined;

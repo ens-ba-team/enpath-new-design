@@ -54,6 +54,7 @@ Decisions waiting. One row per flag; remove it when decided and done.
 | Chat composer look (`chat/composer/bg`, `/border`, `/radius`) is applied by the Ask AI screen with className overrides on `PromptInput`; `PromptInput` itself renders the plain InputGroup | restyle | `features/enpath/chat/assistant-panel.tsx` (PromptInput); prompt-input + input-group specs | 2026-09-30 | Move the composer look into `PromptInput` (default or a variant), or drop it from the specs |
 | Pagination: the Simple story overrides `PaginationContent` gap with a className | restyle | `stories/Pagination.stories.tsx` | 2026-09-30 | Add a gap option to `PaginationContent`, or keep the default |
 | Toast: paddings and gaps come from sonner's default CSS; the spec binds `spacing/component/md`, `lg`, `sm`, `xxs` | breaks spec | `components/ui/toast.tsx` | 2026-09-30 | Bind the spec's spacing tokens through `toastOptions.classNames`, or update the spec to sonner's defaults |
+| Progress ring ("1/2" in a circle, after Culture Amp) for each growth area in the Action plan; the user likes it (2026-09-30). `Progress` is a straight bar only | missing component | `features/enpath/my-actions/growth-area-group.tsx` (shows the text "1 of 2 done" meanwhile) | 2026-09-30 | Build a ring (a `Progress` variant `shape="ring"` or a new component + story + meta.json), or keep the text |
 
 Kinds: **restyle** (component changed at a place of use) · **missing component** · **missing token** ·
 **breaks token** (component vs token description) · **breaks spec** (code vs `meta.json`).
@@ -258,7 +259,9 @@ neither a template nor a pattern. Its decisions stay in `my-career-build.md`._
 - **Approved** by the user 2026-09-30, although it appears in one place only (an exception to the
   "2+ places" rule for candidates). Goes into `catalog-entries.json` when the catalog is built.
 
-- **Scope:** every My Career role panel. Code: `my-career/gap-row.tsx`.
+- **Scope:** every My Career role panel (`my-career/gap-row.tsx`); since 2026-09-30 also the growth area
+  groups of the Action plan (`my-actions/growth-area-group.tsx`): one Card per growth area, action
+  rows as an Accordion compact, row buttons beside the trigger (never inside it).
 - **Anatomy:** one Card per group, in this order: **Growth areas** (You → Needed) · **Not assessed
   yet** (Needed) · **Ready** (collapsed, Show) · **Not set in Setup** (collapsed). Rows are Accordion
   items: name + short value; expanded: what the needed point looks like (+ Plan an action) / "No
