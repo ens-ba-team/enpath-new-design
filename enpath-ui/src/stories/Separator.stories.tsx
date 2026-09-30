@@ -88,9 +88,9 @@ export const InMetadataRow: Story = {
 
 export const InCard: Story = {
   render: () => (
-    <div className="w-72 rounded-[var(--radius-lg)] border border-[var(--color-border-default)] bg-[var(--color-surface-overlay)]">
+    <div className="w-72 rounded-[var(--radius-lg)] border border-[var(--color-border-default)] bg-[var(--color-surface-default)]">
       <div className="p-[var(--spacing-component-lg)]">
-        <p className="text-heading-xs text-[var(--color-surface-overlay-foreground)]">Card header</p>
+        <p className="text-heading-xs text-[var(--color-surface-default-foreground)]">Card header</p>
       </div>
       <Separator />
       <div className="p-[var(--spacing-component-lg)]">

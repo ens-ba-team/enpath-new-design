@@ -131,6 +131,10 @@
       {
         "date": "2026-09-29",
         "change": "Text uses Enpath text styles (text-label-sm, text-body-sm …, see Foundations/Text Styles) instead of mixed size and weight classes. Labels (label-*) and small headings (heading-sm/xs) are Medium 500."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Popover shadow shadow/md → shadow/overlay (the role token for floating UI)."
       }
     ]
   },

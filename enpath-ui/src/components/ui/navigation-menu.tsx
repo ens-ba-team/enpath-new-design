@@ -137,7 +137,7 @@ const NavigationMenuViewport = React.forwardRef<
         "rounded-[var(--radius-base)]",
         "border border-[var(--color-border-default)]",
         "bg-[var(--color-surface-overlay)]",
-        "shadow-[var(--shadow-sm)]",
+        "shadow-[var(--shadow-overlay)]",
         "h-[var(--radix-navigation-menu-viewport-height)]",
         "w-full md:w-[var(--radix-navigation-menu-viewport-width)]",
         "data-[state=open]:animate-in data-[state=open]:zoom-in-90",

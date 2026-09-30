@@ -60,7 +60,7 @@
   },
   "tokens": {
     "container": {
-      "fill": "color/surface/overlay",
+      "fill": "color/surface/default",
       "stroke": "color/border/default",
       "strokeBorder": "color/border/strong",
       "strokeBorderNote": "Property 1=Border only uses color/border/strong",
@@ -72,7 +72,7 @@
     },
     "cardHeader": {
       "gap": "spacing/component/xs",
-      "titleFill": "color/surface/overlay/foreground",
+      "titleFill": "color/surface/default/foreground",
       "descriptionFill": "color/text/secondary"
     },
     "cardFooter": {
@@ -140,6 +140,10 @@
       {
         "date": "2026-09-29",
         "change": "Added size=\"compact\" (CardTitle follows it through context). Used by the My Career competency group cards."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Fill color/surface/overlay → color/surface/default and title color/surface/overlay/foreground → color/surface/default/foreground: a card is a flat container, overlay is for floating UI (token descriptions aligned). No visual change."
       }
     ]
   },
@@ -199,11 +203,11 @@
       },
       {
         "title": "Structure",
-        "body": "\n### Shell — all variants\n\n```\ncard                            — V AUTO-LAYOUT, fill: color/surface/overlay\n                                  stroke: color/border/default 1px INSIDE\n                                  radius: radius/lg (8px)\n                                  padding (all sides): spacing/component/xl (24px)\n                                  gap between sections: spacing/component/lg (16px)\n```\n\n> `Property 1=Border` uses `color/border/strong` instead of `color/border/default`.\n> `Property 1=Image-vertical`, `Image-down`, `Image-horizontal` have no root padding — the image bleeds to the card edge; padding is applied inside `card-content` only.\n\n### `card-header`\n\n```\ncard-header                     — V AUTO-LAYOUT, no fill\n                                  gap: spacing/component/xs (4px)\n  ├─ title                      — TEXT, fill: color/surface/overlay/foreground\n  └─ description                — TEXT, fill: color/text/secondary\n```\n\nMaps to shadcn `<CardHeader>` + `<CardTitle>` + `<CardDescription>`.\n\n### `card-content`\n\n```\ncard-content                    — V AUTO-LAYOUT, no fill\n                                  gap: spacing/component/lg (16px) — default\n                                  (spacing/component/xs in some variants — matches content density)\n  └─ [content instances or text]\n```\n\nMaps to shadcn `<CardContent>`. Interior structure varies by variant — may contain input fields, descriptive text, item rows, or any other content.\n\n### `card-footer`\n\n```\ncard-footer                     — H AUTO-LAYOUT, no fill\n                                  gap: spacing/component/sm (8px)\n  └─ [action and cancel buttons, avatar groups, or helper text rows]\n```\n\nMaps to shadcn `<CardFooter>`. Typically holds the card's primary action(s).\n\n### Slots (`Slot 1`, `Slot 2`)\n\nFree-composition frames for content that doesn't fit the standard header/content/footer sections. Used across Info, Social media, Border, Tab, Item, and image variants. Replace with charts, stat blocks, image frames, badge rows, or any other content block.\n\n---\n\n"
+        "body": "\n### Shell — all variants\n\n```\ncard                            — V AUTO-LAYOUT, fill: color/surface/default\n                                  stroke: color/border/default 1px INSIDE\n                                  radius: radius/lg (8px)\n                                  padding (all sides): spacing/component/xl (24px)\n                                  gap between sections: spacing/component/lg (16px)\n```\n\n> `Property 1=Border` uses `color/border/strong` instead of `color/border/default`.\n> `Property 1=Image-vertical`, `Image-down`, `Image-horizontal` have no root padding — the image bleeds to the card edge; padding is applied inside `card-content` only.\n\n### `card-header`\n\n```\ncard-header                     — V AUTO-LAYOUT, no fill\n                                  gap: spacing/component/xs (4px)\n  ├─ title                      — TEXT, fill: color/surface/default/foreground\n  └─ description                — TEXT, fill: color/text/secondary\n```\n\nMaps to shadcn `<CardHeader>` + `<CardTitle>` + `<CardDescription>`.\n\n### `card-content`\n\n```\ncard-content                    — V AUTO-LAYOUT, no fill\n                                  gap: spacing/component/lg (16px) — default\n                                  (spacing/component/xs in some variants — matches content density)\n  └─ [content instances or text]\n```\n\nMaps to shadcn `<CardContent>`. Interior structure varies by variant — may contain input fields, descriptive text, item rows, or any other content.\n\n### `card-footer`\n\n```\ncard-footer                     — H AUTO-LAYOUT, no fill\n                                  gap: spacing/component/sm (8px)\n  └─ [action and cancel buttons, avatar groups, or helper text rows]\n```\n\nMaps to shadcn `<CardFooter>`. Typically holds the card's primary action(s).\n\n### Slots (`Slot 1`, `Slot 2`)\n\nFree-composition frames for content that doesn't fit the standard header/content/footer sections. Used across Info, Social media, Border, Tab, Item, and image variants. Replace with charts, stat blocks, image frames, badge rows, or any other content block.\n\n---\n\n"
       },
       {
         "title": "Token Bindings",
-        "body": "\n### Shell — all variants\n\n| Property | Token | Value |\n|---|---|---|\n| Fill | `color/surface/overlay` | White / elevated surface |\n| Stroke | `color/border/default` | Standard border (all except Border variant) |\n| Stroke | `color/border/strong` | Emphasis border (`Property 1=Border` only) |\n| Radius (all 4 corners) | `radius/lg` | 8px |\n| Padding (all sides) | `spacing/component/xl` | 24px |\n| Gap between sections | `spacing/component/lg` | 16px |\n\n### `card-header`\n\n| Layer | Property | Token |\n|---|---|---|\n| root | Gap | `spacing/component/xs` (4px) |\n| `title` | Fill | `color/surface/overlay/foreground` |\n| `description` | Fill | `color/text/secondary` |\n\n### `card-footer`\n\n| Property | Token |\n|---|---|\n| Gap | `spacing/component/sm` (8px) |\n\n### Image variants (no root padding)\n\nImage-vertical, Image-down, Image-horizontal have no `paddingTop` on the root shell — the image bleeds edge-to-edge. The `card-content` frame inside applies `spacing/component/xl` padding independently.\n\n---\n\n"
+        "body": "\n### Shell — all variants\n\n| Property | Token | Value |\n|---|---|---|\n| Fill | `color/surface/default` | White / flat container |\n| Stroke | `color/border/default` | Standard border (all except Border variant) |\n| Stroke | `color/border/strong` | Emphasis border (`Property 1=Border` only) |\n| Radius (all 4 corners) | `radius/lg` | 8px |\n| Padding (all sides) | `spacing/component/xl` | 24px |\n| Gap between sections | `spacing/component/lg` | 16px |\n\n### `card-header`\n\n| Layer | Property | Token |\n|---|---|---|\n| root | Gap | `spacing/component/xs` (4px) |\n| `title` | Fill | `color/surface/default/foreground` |\n| `description` | Fill | `color/text/secondary` |\n\n### `card-footer`\n\n| Property | Token |\n|---|---|\n| Gap | `spacing/component/sm` (8px) |\n\n### Image variants (no root padding)\n\nImage-vertical, Image-down, Image-horizontal have no `paddingTop` on the root shell — the image bleeds edge-to-edge. The `card-content` frame inside applies `spacing/component/xl` padding independently.\n\n---\n\n"
       },
       {
         "title": "Behavior",
@@ -271,8 +275,8 @@
       "correct": "Use a consistent grid with `gap` — adjacent cards need breathing room"
     },
     {
-      "wrong": "Override the card fill to `color/surface/default` or a background token",
-      "correct": "Keep `color/surface/overlay` — the card's elevated appearance relative to the page is intentional"
+      "wrong": "Override the card fill to `color/surface/overlay` or a background token",
+      "correct": "Keep `color/surface/default` — a card is a flat container on the page; its lift comes from border + shadow/surface, not the fill"
     },
     {
       "wrong": "Put a card inside a card",

@@ -6,6 +6,20 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-30 — Surfaces and shadows follow the token descriptions
+
+### Changed
+- **Card** fill `color/surface/overlay` → `color/surface/default` (title foreground follows). A card is a flat container; overlay is for floating UI. No visual change today (both white).
+- **Dialog** fill `color/surface/default` → `color/surface/overlay`; **Drawer** fill `color/surface/default` → `color/surface/overlay` (title `color/background/default/foreground` → `color/surface/overlay/foreground`).
+- **Dialog, AlertDialog** shadow `shadow/overlay` → `shadow/modal`; **Sheet, Drawer** gain `shadow/modal` (had none). Visible: deeper shadow on everything behind a scrim.
+- **Select, Combobox, DatePicker, Calendar popover, NavigationMenu panel** shadow primitive `shadow/sm` / `shadow/md` → role token `shadow/overlay`. Visible: slightly deeper shadow.
+- Token descriptions rewritten so they name the components that use them: `color/surface/default` (flat containers), `color/surface/overlay` (everything that floats or blocks the page), `shadow/surface`, `shadow/overlay` (floating, page still usable), `shadow/modal` (behind a scrim). `shadow/overlay` no longer lists dialogs.
+- Stories (Card, Empty, Separator, Item) and the Ask AI proposal card use `color/surface/default` for flat containers.
+
+**Migration:** none for code that uses the components. Hand-built floating UI uses `color/surface/overlay` + `shadow/overlay`, or `shadow/modal` when it has a scrim.
+
+---
+
 ## 2026-09-29 — Screen overrides moved into components
 
 ### Added

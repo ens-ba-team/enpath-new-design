@@ -216,7 +216,7 @@
       "default": {
         "$value": "{color.white}",
         "$type": "color",
-        "$description": "Intent:      Background for cards and flat inline content containers\nUse when:    Card backgrounds, list item backgrounds, form section backgrounds, any container sitting on top of the page canvas\nDo not use:  The page canvas itself — use color/background/default for the page\n             Floating or elevated UI — use color/surface/overlay for dropdowns and modals\nUse instead: color/background/default for the page, color/surface/overlay for floating UI\nForeground:  color/surface/default/foreground\nStatus:      active",
+        "$description": "Intent:      Background for cards and flat inline content containers\nUse when:    Flat containers sitting on the page canvas: Card, Item rows, Calendar, Stat, Empty state, the active Tab and ButtonGroup segment, form sections\nDo not use:  The page canvas itself — use color/background/default for the page\n             Anything that floats above or blocks the page (menus, popovers, dialogs, sheets, drawers) — use color/surface/overlay\nUse instead: color/background/default for the page, color/surface/overlay for floating UI\nForeground:  color/surface/default/foreground\nStatus:      active",
         "foreground": {
           "$value": "{color.zinc.900}",
           "$type": "color",
@@ -236,7 +236,7 @@
       "overlay": {
         "$value": "{color.white}",
         "$type": "color",
-        "$description": "Intent:      Background for floating UI elements that layer above page content\nUse when:    Dropdowns, tooltips, popovers, modals, command palettes, context menus\nDo not use:  Cards or flat inline content — use color/surface/default for non-floating containers\nUse instead: color/surface/default for flat containers, color/surface/raised for sticky bars\nForeground:  color/surface/overlay/foreground\nNote:        Resolves to the same primitive as color/surface/default today; keep the distinction so floating layers can change on their own.\nStatus:      active",
+        "$description": "Intent:      Background for floating UI elements that layer above page content\nUse when:    Everything that floats above or blocks the page: DropdownMenu, Select and Combobox lists, DatePicker and Calendar popovers, HoverCard, Command, the NavigationMenu panel, Toast, Dialog, AlertDialog, Sheet, Drawer\nDo not use:  Cards or flat inline content — use color/surface/default for non-floating containers\nUse instead: color/surface/default for flat containers, color/surface/raised for sticky bars\nForeground:  color/surface/overlay/foreground\nNote:        Pairs with shadow/overlay (floats, page stays usable) or shadow/modal (blocks the page behind a scrim). Tooltip uses its own tooltip/bg. Resolves to the same primitive as color/surface/default today; keep the distinction so floating layers can change on their own.\nStatus:      active",
         "foreground": {
           "$value": "{color.zinc.900}",
           "$type": "color",
@@ -699,7 +699,7 @@
     "surface": {
       "$value": "{shadow.sm}",
       "$type": "string",
-      "$description": "Role shadow (from En UI shadow-surface). Use for: Default containers — cards, panels, tables. Pairs with border/default."
+      "$description": "Role shadow (from En UI shadow-surface). Use for: Flat containers on the page — Card, panels, tables, Career map role cards. Pairs with border/default and color/surface/default."
     },
     "raised": {
       "$value": "{shadow.md}",
@@ -709,12 +709,12 @@
     "overlay": {
       "$value": "{shadow.lg}",
       "$type": "string",
-      "$description": "Role shadow (from En UI shadow-overlay). Use for: Popovers, menus, tooltips, dialogs and alert dialogs."
+      "$description": "Role shadow (from En UI shadow-overlay). Use for: Floating UI that leaves the page usable — DropdownMenu, Select and Combobox lists, DatePicker and Calendar popovers, HoverCard, Command, the NavigationMenu panel. Not for anything behind a scrim (use shadow/modal)."
     },
     "modal": {
       "$value": "{shadow.2xl}",
       "$type": "string",
-      "$description": "Role shadow (from En UI shadow-modal). Use for: Dialogs and sheets."
+      "$description": "Role shadow (from En UI shadow-modal). Use for: UI that blocks the page behind a scrim — Dialog, AlertDialog, Sheet, Drawer."
     }
   },
   "height": {

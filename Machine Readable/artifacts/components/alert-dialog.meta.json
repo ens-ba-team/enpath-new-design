@@ -26,6 +26,10 @@
       {
         "date": "2026-09-29",
         "change": "Text uses Enpath text styles (text-body-sm, text-heading-md …, see Foundations/Text Styles) instead of mixed size and weight classes. Labels (label-*) and small headings (heading-sm/xs) are Medium 500."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Shadow shadow/overlay → shadow/modal: an alert dialog blocks the page behind a scrim. Deeper shadow."
       }
     ]
   },
@@ -161,7 +165,7 @@
         "strokeWeight": 1,
         "strokeAlign": "inside",
         "radius": "radius/overlay",
-        "shadow": "shadow/overlay",
+        "shadow": "shadow/modal",
         "padding": "spacing/component/xl"
       }
     },
@@ -309,7 +313,7 @@
       },
       {
         "title": "Token Bindings",
-        "body": "\n### Container\n\n| Property | Token |\n|---|---|\n| Fill | `color/surface/overlay` |\n| Stroke | `color/border/default` · 1px · INSIDE |\n| Radius | `radius/overlay` |\n| Shadow | `shadow/overlay` |\n| Padding | `spacing/component/xl` (24px all sides) |\n| Gap | `spacing/component/lg` (16px) |\n\n### icon-container per Type\n\n| Type | Fill |\n|---|---|\n| `Default` | `color/background/muted` |\n| `Destructive` | `color/status/danger-subtle` |\n\nThe icon inside `Destructive` icon-container sits on `color/status/danger-subtle` — its icon may use `color/status/danger-subtle/foreground`. This is a valid paired-surface usage.\n\n### Text\n\n| Layer | Token |\n|---|---|\n| `title` | `color/surface/overlay/foreground` |\n| `description` | `color/text/secondary` |\n\n### Footer buttons\n\nFooter buttons are chosen by the **parent alert-dialog** through the Button `variant` prop — never by overriding the button's own styles.\n\n| Type | btn-confirm | btn-cancel |\n|---|---|---|\n| `Default` | Primary (`button/primary/bg/bg`) | Outline (`button/outline/bg/bg`) |\n| `Destructive` | Destructive (`button/destructive/bg/bg`) | Outline (`button/outline/bg/bg`) |\n\n\n### Footer spacing\n\n| Property | Token |\n|---|---|\n| Gap between buttons | `spacing/component/sm` (8px) |\n| Padding | inherited from container |\n\n---\n\n"
+        "body": "\n### Container\n\n| Property | Token |\n|---|---|\n| Fill | `color/surface/overlay` |\n| Stroke | `color/border/default` · 1px · INSIDE |\n| Radius | `radius/overlay` |\n| Shadow | `shadow/modal` |\n| Padding | `spacing/component/xl` (24px all sides) |\n| Gap | `spacing/component/lg` (16px) |\n\n### icon-container per Type\n\n| Type | Fill |\n|---|---|\n| `Default` | `color/background/muted` |\n| `Destructive` | `color/status/danger-subtle` |\n\nThe icon inside `Destructive` icon-container sits on `color/status/danger-subtle` — its icon may use `color/status/danger-subtle/foreground`. This is a valid paired-surface usage.\n\n### Text\n\n| Layer | Token |\n|---|---|\n| `title` | `color/surface/overlay/foreground` |\n| `description` | `color/text/secondary` |\n\n### Footer buttons\n\nFooter buttons are chosen by the **parent alert-dialog** through the Button `variant` prop — never by overriding the button's own styles.\n\n| Type | btn-confirm | btn-cancel |\n|---|---|---|\n| `Default` | Primary (`button/primary/bg/bg`) | Outline (`button/outline/bg/bg`) |\n| `Destructive` | Destructive (`button/destructive/bg/bg`) | Outline (`button/outline/bg/bg`) |\n\n\n### Footer spacing\n\n| Property | Token |\n|---|---|\n| Gap between buttons | `spacing/component/sm` (8px) |\n| Padding | inherited from container |\n\n---\n\n"
       },
       {
         "title": "Motion Token Bindings",

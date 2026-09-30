@@ -234,9 +234,9 @@ export const AllSizes: Story = {
 
 export const InsideCard: Story = {
   render: () => (
-    <div className="w-80 rounded-[var(--radius-lg)] border border-[var(--color-border-default)] bg-[var(--color-surface-overlay)]">
+    <div className="w-80 rounded-[var(--radius-lg)] border border-[var(--color-border-default)] bg-[var(--color-surface-default)]">
       <div className="px-[var(--spacing-component-md)] py-[var(--spacing-component-sm)] border-b border-[var(--color-border-default)]">
-        <p className="text-heading-xs text-[var(--color-surface-overlay-foreground)]">Notifications</p>
+        <p className="text-heading-xs text-[var(--color-surface-default-foreground)]">Notifications</p>
       </div>
       <div className="p-[var(--spacing-component-xs)]">
         {[

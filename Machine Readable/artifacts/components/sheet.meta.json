@@ -34,7 +34,8 @@
       "fill": "color/surface/overlay",
       "stroke": "color/border/default",
       "strokeWeight": 1,
-      "radius": "radius/lg"
+      "radius": "radius/lg",
+      "shadow": "shadow/modal"
     },
     "sheetHeader": {
       "padding": "spacing/component/lg",
@@ -146,6 +147,10 @@
       {
         "date": "2026-09-29",
         "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Added shadow/modal (was none): a sheet blocks the page behind a scrim."
       }
     ]
   },
@@ -199,7 +204,7 @@
       },
       {
         "title": "Token Bindings",
-        "body": "\n### Shell\n\n| Property | Token |\n|---|---|\n| Fill | `color/surface/overlay` |\n| Stroke | `color/border/default` 1px |\n| Radius | `radius/lg` |\n\n### `sheet-header`\n\n| Layer | Property | Token |\n|---|---|---|\n| root | Padding (all sides) | `spacing/component/lg` (16px) |\n| root | Gap | `spacing/component/md` (12px) |\n| `text-block` | Gap | `spacing/component/sm` (8px) |\n| `title` | Fill | `color/surface/overlay/foreground` |\n| `description` | Fill | `color/text/secondary` |\n\n### `sheet-body` (SLOT)\n\n| Property | Token |\n|---|---|\n| Padding (all sides) | `spacing/component/lg` (16px) |\n| Radius | `radius/md` |\n\n### `sheet-footer`\n\n| Layer | Property | Token |\n|---|---|---|\n| root | Stroke (top separator) | `color/border/default` |\n| root | Padding (all sides) | `spacing/component/lg` (16px) |\n| root | Gap | `spacing/component/sm` (8px) |\n| `btn-primary` | Fill | `button/primary/bg/bg` |\n| `btn-secondary` | Fill / Stroke | `button/outline/bg/bg` / `button/outline/border/default` |\n\nBoth footer buttons are full-width (`fill container`) — the sheet footer stacks them vertically.\n\n---\n\n"
+        "body": "\n### Shell\n\n| Property | Token |\n|---|---|\n| Fill | `color/surface/overlay` |\n| Stroke | `color/border/default` 1px |\n| Radius | `radius/lg` |\n| Shadow | `shadow/modal` |\n\n### `sheet-header`\n\n| Layer | Property | Token |\n|---|---|---|\n| root | Padding (all sides) | `spacing/component/lg` (16px) |\n| root | Gap | `spacing/component/md` (12px) |\n| `text-block` | Gap | `spacing/component/sm` (8px) |\n| `title` | Fill | `color/surface/overlay/foreground` |\n| `description` | Fill | `color/text/secondary` |\n\n### `sheet-body` (SLOT)\n\n| Property | Token |\n|---|---|\n| Padding (all sides) | `spacing/component/lg` (16px) |\n| Radius | `radius/md` |\n\n### `sheet-footer`\n\n| Layer | Property | Token |\n|---|---|---|\n| root | Stroke (top separator) | `color/border/default` |\n| root | Padding (all sides) | `spacing/component/lg` (16px) |\n| root | Gap | `spacing/component/sm` (8px) |\n| `btn-primary` | Fill | `button/primary/bg/bg` |\n| `btn-secondary` | Fill / Stroke | `button/outline/bg/bg` / `button/outline/border/default` |\n\nBoth footer buttons are full-width (`fill container`) — the sheet footer stacks them vertically.\n\n---\n\n"
       },
       {
         "title": "Behavior",

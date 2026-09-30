@@ -117,7 +117,7 @@ function DatePicker({
               "z-50 rounded-[var(--radius-lg)]",
               "border border-[var(--color-border-default)]",
               "bg-[var(--color-surface-overlay)]",
-              "shadow-[var(--shadow-md)]",
+              "shadow-[var(--shadow-overlay)]",
               "outline-none",
               "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
               "data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95"

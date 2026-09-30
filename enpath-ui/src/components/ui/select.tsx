@@ -130,7 +130,7 @@ const SelectContent = React.forwardRef<
         "border border-[var(--color-border-default)]",
         "bg-[var(--color-surface-overlay)]",
         "text-[var(--color-surface-overlay-foreground)]",
-        "shadow-[var(--shadow-sm)]",
+        "shadow-[var(--shadow-overlay)]",
         // Animations
         "data-[state=open]:animate-in data-[state=closed]:animate-out",
         "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",

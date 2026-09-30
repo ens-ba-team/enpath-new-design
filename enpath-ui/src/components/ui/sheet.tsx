@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils"
 //   stroke:  color/border/default · 1px
 //   radius:  radius/lg on exposed edge only (screen-edge corners = 0)
 //   padding: none on root — each section owns its spacing
-//   shadow:  none
+//   shadow:  shadow/modal
 //
 // sheet-header (H layout):
 //   padding: spacing/component/lg (16px) all sides
@@ -64,8 +64,9 @@ SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 const sheetVariants = cva(
   [
     "fixed z-50 flex flex-col",
-    // Surface — no shadow
+    // Surface — shadow/modal (blocks the page behind a scrim)
     "bg-[var(--color-surface-overlay)]",
+    "shadow-[var(--shadow-modal)]",
     "border border-[var(--color-border-default)]",
     // Animation
     "transition ease-in-out",

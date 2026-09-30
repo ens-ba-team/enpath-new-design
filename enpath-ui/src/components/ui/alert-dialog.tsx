@@ -18,7 +18,7 @@ import { buttonVariants } from "@/components/ui/button"
 //   radius:  radius/overlay (12px)
 //   padding: spacing/component/xl (24px) — alert-dialog uses xl, Dialog uses lg
 //   gap:     spacing/component/lg (16px)
-//   shadow:  shadow/overlay
+//   shadow:  shadow/modal
 //
 // AlertDialogTitle:       color/surface/overlay/foreground
 // AlertDialogDescription: color/text/secondary
@@ -70,7 +70,7 @@ const AlertDialogContent = React.forwardRef<
         "flex flex-col w-full max-w-lg",
         "rounded-[var(--radius-overlay)]",
         "border border-[var(--color-border-default)]",
-        "shadow-[var(--shadow-overlay)]",
+        "shadow-[var(--shadow-modal)]",
         "bg-[var(--color-surface-overlay)]",
         "p-[var(--spacing-component-xl)]",
         "gap-[var(--spacing-component-lg)]",

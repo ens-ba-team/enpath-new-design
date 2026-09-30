@@ -95,7 +95,7 @@ export const Info: Story = {
       </CardHeader>
       <CardContent>
         <div className="flex items-baseline gap-2">
-          <span className="text-display-sm text-[var(--color-surface-overlay-foreground)]">$12,450</span>
+          <span className="text-display-sm text-[var(--color-surface-default-foreground)]">$12,450</span>
           <Badge variant="success" shape="pill">+8.2%</Badge>
         </div>
         <p className="text-body-sm text-[var(--color-text-secondary)]">
@@ -116,7 +116,7 @@ export const Border: Story = {
         <CardDescription>Everything you need for a growing team.</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="text-display-sm text-[var(--color-surface-overlay-foreground)]">
+        <div className="text-display-sm text-[var(--color-surface-default-foreground)]">
           $49<span className="text-body-md text-[var(--color-text-secondary)]">/mo</span>
         </div>
       </CardContent>
@@ -142,7 +142,7 @@ export const Item: Story = {
       <CardContent className="flex flex-col gap-0">
         {['Email digest', 'Push notifications', 'Weekly report'].map((item) => (
           <div key={item} className="flex items-center justify-between py-2">
-            <span className="text-heading-xs text-[var(--color-surface-overlay-foreground)]">{item}</span>
+            <span className="text-heading-xs text-[var(--color-surface-default-foreground)]">{item}</span>
             <Button size="sm" variant="outline">Configure</Button>
           </div>
         ))}
@@ -163,7 +163,7 @@ export const SocialMedia: Story = {
           <div className="flex items-center gap-[var(--spacing-component-sm)]">
             <Avatar size="default" name="Jane Doe" fallback="JD" />
             <div className="flex flex-col gap-0.5">
-              <span className="text-heading-xs text-[var(--color-surface-overlay-foreground)]">
+              <span className="text-heading-xs text-[var(--color-surface-default-foreground)]">
                 Jane Doe
               </span>
               <span className="text-body-xs text-[var(--color-text-secondary)]">@janedoe</span>

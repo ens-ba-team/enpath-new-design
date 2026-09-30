@@ -22,11 +22,12 @@
   },
   "tokens": {
     "container": {
-      "fill": "color/surface/default",
+      "fill": "color/surface/overlay",
       "stroke": "color/border/default",
       "strokeWeight": 1,
       "strokeAlign": "inside",
-      "radius": "radius/lg"
+      "radius": "radius/lg",
+      "shadow": "shadow/modal"
     },
     "handle": {
       "barPaddingY": "spacing/component/lg",
@@ -37,7 +38,7 @@
     "header": {
       "padding": "spacing/component/lg",
       "gap": "spacing/component/xxs",
-      "title": "color/background/default/foreground",
+      "title": "color/surface/overlay/foreground",
       "description": "color/background/muted/foreground"
     },
     "content": {
@@ -108,6 +109,10 @@
       {
         "date": "2026-09-29",
         "change": "Text uses Enpath text styles (text-body-sm, text-heading-md …, see Foundations/Text Styles) instead of mixed size and weight classes. Labels (label-*) and small headings (heading-sm/xs) are Medium 500."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Fill color/surface/default → color/surface/overlay, title → color/surface/overlay/foreground, added shadow/modal: a drawer blocks the page behind a scrim."
       }
     ]
   },
@@ -156,11 +161,11 @@
       },
       {
         "title": "Structure",
-        "body": "\n### Direction=Bottom\n\n```\ndrawer                          — VERTICAL AUTO LAYOUT, radius/lg top · RAW:0 bottom\n                                  fill: color/surface/default, stroke: color/border/default\n  ├─ handle-bar                 — FRAME, paddingTop/Bottom: spacing/component/lg\n  │    └─ handle                — FRAME, 100×8px, fill: color/background/muted, radius/full\n  ├─ header                     — FRAME, padding: spacing/component/lg, gap: spacing/component/xxs\n  │    ├─ title                 — TEXT\n  │    └─ description           — TEXT\n  ├─ content                    — SLOT, padding: spacing/component/lg (all sides)\n  └─ footer                     — FRAME, padding: spacing/component/lg, gap: spacing/component/sm\n       ├─ btn-primary           — INSTANCE (Type=Default, State=Enabled, Size=Default)\n       └─ btn-outline           — INSTANCE (Type=Outline, State=Enabled, Size=Default)\n```\n\n### Direction=Right\n\n```\ndrawer                          — VERTICAL AUTO LAYOUT, radius/lg left corners · RAW:0 right corners\n                                  fill: color/surface/default, stroke: color/border/default\n  ├─ header                     — FRAME, padding: spacing/component/lg, gap: spacing/component/xxs\n  │    ├─ title                 — TEXT\n  │    └─ description           — TEXT\n  ├─ content                    — SLOT, padding: spacing/component/lg (all sides)\n  └─ footer                     — FRAME, padding: spacing/component/lg, gap: spacing/component/sm\n       ├─ btn-primary           — INSTANCE (Type=Default, State=Enabled)\n       └─ btn-outline           — INSTANCE (Type=Outline, State=Enabled)\n```\n\n### Direction=Responsive\n\n```\ndrawer                          — VERTICAL AUTO LAYOUT, radius/lg all 4 corners\n                                  fill: color/surface/default, stroke: color/border/default\n  ├─ header                     — FRAME, padding: spacing/component/lg, gap: spacing/component/xxs\n  │    ├─ title                 — TEXT\n  │    └─ description           — TEXT\n  ├─ content                    — SLOT, padding: spacing/component/lg (all sides)\n  └─ footer                     — FRAME, padding: spacing/component/lg, gap: spacing/component/sm\n       ├─ btn-primary           — INSTANCE (Type=Default, State=Enabled)\n       └─ btn-outline           — INSTANCE (Type=Outline, State=Enabled)\n```\n\n`Direction=Responsive` is `Bottom` on mobile viewports and switches to a centred floating panel (all-corner radius) on larger screens.\n\n---\n\n"
+        "body": "\n### Direction=Bottom\n\n```\ndrawer                          — VERTICAL AUTO LAYOUT, radius/lg top · RAW:0 bottom\n                                  fill: color/surface/overlay, stroke: color/border/default\n  ├─ handle-bar                 — FRAME, paddingTop/Bottom: spacing/component/lg\n  │    └─ handle                — FRAME, 100×8px, fill: color/background/muted, radius/full\n  ├─ header                     — FRAME, padding: spacing/component/lg, gap: spacing/component/xxs\n  │    ├─ title                 — TEXT\n  │    └─ description           — TEXT\n  ├─ content                    — SLOT, padding: spacing/component/lg (all sides)\n  └─ footer                     — FRAME, padding: spacing/component/lg, gap: spacing/component/sm\n       ├─ btn-primary           — INSTANCE (Type=Default, State=Enabled, Size=Default)\n       └─ btn-outline           — INSTANCE (Type=Outline, State=Enabled, Size=Default)\n```\n\n### Direction=Right\n\n```\ndrawer                          — VERTICAL AUTO LAYOUT, radius/lg left corners · RAW:0 right corners\n                                  fill: color/surface/overlay, stroke: color/border/default\n  ├─ header                     — FRAME, padding: spacing/component/lg, gap: spacing/component/xxs\n  │    ├─ title                 — TEXT\n  │    └─ description           — TEXT\n  ├─ content                    — SLOT, padding: spacing/component/lg (all sides)\n  └─ footer                     — FRAME, padding: spacing/component/lg, gap: spacing/component/sm\n       ├─ btn-primary           — INSTANCE (Type=Default, State=Enabled)\n       └─ btn-outline           — INSTANCE (Type=Outline, State=Enabled)\n```\n\n### Direction=Responsive\n\n```\ndrawer                          — VERTICAL AUTO LAYOUT, radius/lg all 4 corners\n                                  fill: color/surface/overlay, stroke: color/border/default\n  ├─ header                     — FRAME, padding: spacing/component/lg, gap: spacing/component/xxs\n  │    ├─ title                 — TEXT\n  │    └─ description           — TEXT\n  ├─ content                    — SLOT, padding: spacing/component/lg (all sides)\n  └─ footer                     — FRAME, padding: spacing/component/lg, gap: spacing/component/sm\n       ├─ btn-primary           — INSTANCE (Type=Default, State=Enabled)\n       └─ btn-outline           — INSTANCE (Type=Outline, State=Enabled)\n```\n\n`Direction=Responsive` is `Bottom` on mobile viewports and switches to a centred floating panel (all-corner radius) on larger screens.\n\n---\n\n"
       },
       {
         "title": "Token Bindings",
-        "body": "\n### Container\n\n| Property | Token | Notes |\n|---|---|---|\n| Fill | `color/surface/default` | Drawer is a floating panel — matches shadcn --card |\n| Stroke | `color/border/default` 1px INSIDE | Provides edge definition against backdrop |\n| Radius — Direction=Bottom | `radius/lg` top-left · top-right · `0` bottom | Rounded cap on the exposed edge |\n| Radius — Direction=Right | `radius/lg` top-left · bottom-left · `0` right | Rounded cap on the exposed edge |\n| Radius — Direction=Responsive | `radius/lg` all 4 corners | Floats as a centred panel |\n\n### handle (Direction=Bottom only)\n\n| Layer | Property | Token |\n|---|---|---|\n| `handle-bar` | paddingTop / paddingBottom | `spacing/component/lg` |\n| `handle` | Fill | `color/background/muted` |\n| `handle` | Radius (all 4 corners) | `radius/full` |\n| `handle` | Size | 100 × 8px (fixed) |\n\n### header\n\n| Layer | Property | Token |\n|---|---|---|\n| `header` frame | Padding (all 4 sides) | `spacing/component/lg` |\n| `header` frame | `itemSpacing` (gap) | `spacing/component/xxs` |\n| `title` | Fill | `color/background/default/foreground` |\n| `description` | Fill | `color/background/muted/foreground` |\n\n### content SLOT\n\n| Property | Token |\n|---|---|\n| Padding (all 4 sides) | `spacing/component/lg` |\n\nThe `content` layer is a SLOT — replace its contents with your own layout.\n\n### footer\n\n| Layer | Property | Token |\n|---|---|---|\n| `footer` frame | Padding (all 4 sides) | `spacing/component/lg` |\n| `footer` frame | `itemSpacing` (gap) | `spacing/component/sm` |\n| `btn-primary` | Type | `Default` (primary fill) — FILL width |\n| `btn-outline` | Type | `Outline` — FILL width |\n\n---\n\n"
+        "body": "\n### Container\n\n| Property | Token | Notes |\n|---|---|---|\n| Fill | `color/surface/overlay` | Drawer blocks the page behind a scrim — floating UI |\n| Stroke | `color/border/default` 1px INSIDE | Provides edge definition against backdrop |\n| Radius — Direction=Bottom | `radius/lg` top-left · top-right · `0` bottom | Rounded cap on the exposed edge |\n| Radius — Direction=Right | `radius/lg` top-left · bottom-left · `0` right | Rounded cap on the exposed edge |\n| Radius — Direction=Responsive | `radius/lg` all 4 corners | Floats as a centred panel |\n\n### handle (Direction=Bottom only)\n\n| Layer | Property | Token |\n|---|---|---|\n| `handle-bar` | paddingTop / paddingBottom | `spacing/component/lg` |\n| `handle` | Fill | `color/background/muted` |\n| `handle` | Radius (all 4 corners) | `radius/full` |\n| `handle` | Size | 100 × 8px (fixed) |\n\n### header\n\n| Layer | Property | Token |\n|---|---|---|\n| `header` frame | Padding (all 4 sides) | `spacing/component/lg` |\n| `header` frame | `itemSpacing` (gap) | `spacing/component/xxs` |\n| `title` | Fill | `color/surface/overlay/foreground` |\n| `description` | Fill | `color/background/muted/foreground` |\n\n### content SLOT\n\n| Property | Token |\n|---|---|\n| Padding (all 4 sides) | `spacing/component/lg` |\n\nThe `content` layer is a SLOT — replace its contents with your own layout.\n\n### footer\n\n| Layer | Property | Token |\n|---|---|---|\n| `footer` frame | Padding (all 4 sides) | `spacing/component/lg` |\n| `footer` frame | `itemSpacing` (gap) | `spacing/component/sm` |\n| `btn-primary` | Type | `Default` (primary fill) — FILL width |\n| `btn-outline` | Type | `Outline` — FILL width |\n\n---\n\n"
       },
       {
         "title": "Direction Guide",
@@ -225,7 +230,7 @@
   "doNot": [
     {
       "wrong": "`color/background/default` on drawer fill",
-      "correct": "`color/surface/default` — drawer is a floating panel (matches shadcn --card)"
+      "correct": "`color/surface/overlay` — drawer blocks the page behind a scrim (floating UI)"
     },
     {
       "wrong": "Primitive spacing tokens (`spacing/4`) in SLOT padding",

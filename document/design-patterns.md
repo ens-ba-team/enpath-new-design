@@ -1,8 +1,8 @@
 ---
 title: Design patterns
 created: 2026-09-28
-updated: 2026-09-29
-status: First pass reviewed in part (2026-09-28): 1 layout, 1 template, 9 patterns as candidates. No IDs yet. Checked against the code 2026-09-29.
+updated: 2026-09-30
+status: First pass reviewed in part (2026-09-28): 1 layout, 1 template, 9 patterns. P7 approved 2026-09-30; the rest are candidates. Checked against the code 2026-09-29.
 related: glossary.md, my-career-build.md, set-up-build.md, ../Skills/catalog-build/enpath-catalog-plan.md, ../Tracking/Storybook Status.md
 ---
 
@@ -71,7 +71,7 @@ entries get an ID and go into the catalog. Names are working names.
 | P4 | Pattern | Preview → Confirm dialog | 12 dialogs in Setup and My Career |
 | P5 | Pattern | Detail panel | My Career role panel · route panel |
 | P6 | Pattern | Step rail | Explore preview · List view · route panel (built on `StepRail`, 2026-09-28) |
-| P7 | Pattern | Competency status groups | My Career role panel only (**doesn't repeat yet**: keep or drop?) |
+| P7 | Pattern | Competency status groups | My Career role panel. **Approved 2026-09-30** → `enp-pat-competency-status-groups` |
 | P8 | Pattern | Locked action with a reason | Position · Matrix · the rating grid |
 | P9 | Pattern | Ask AI chat panel | Setup · My Career |
 
@@ -224,7 +224,10 @@ neither a template nor a pattern. Its decisions stay in `my-career-build.md`._
   spec `step-rail.meta.json`), **used by all three** (2026-09-28): List view rows (CareerMapList),
   the route panel (was a list of status icons) and the Explore preview.
 
-### P7 · Competency status groups — candidate
+### P7 · Competency status groups — approved (`enp-pat-competency-status-groups`)
+
+- **Approved** by the user 2026-09-30, although it appears in one place only (an exception to the
+  "2+ places" rule for candidates). Goes into `catalog-entries.json` when the catalog is built.
 
 - **Scope:** every My Career role panel. Code: `my-career/gap-row.tsx`.
 - **Anatomy:** one Card per group, in this order: **Growth areas** (You → Needed) · **Not assessed

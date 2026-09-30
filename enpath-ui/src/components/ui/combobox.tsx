@@ -46,7 +46,7 @@ const popupClass = cn(
   "z-20 w-full rounded-[var(--radius-lg)]",
   "border border-[var(--color-border-default)]",
   "bg-[var(--color-surface-overlay)]",
-  "p-0.5 shadow-[var(--shadow-md)]",
+  "p-0.5 shadow-[var(--shadow-overlay)]",
   "outline-none"
 );
 
@@ -350,7 +350,7 @@ function TagInputField({
             "absolute top-full left-0 right-0 z-20 mt-1",
             "rounded-[var(--radius-lg)] border border-[var(--color-border-default)]",
             "bg-[var(--color-surface-overlay)]",
-            "flex flex-col gap-0.5 p-0.5 shadow-[var(--shadow-md)]"
+            "flex flex-col gap-0.5 p-0.5 shadow-[var(--shadow-overlay)]"
           )}>
             {suggestions.map((opt) => (
               <div

@@ -101,7 +101,7 @@
         "fill": "color/surface/overlay",
         "stroke": "color/border/default",
         "radius": "radius/lg",
-        "shadow": "shadow/sm",
+        "shadow": "shadow/overlay",
         "padding": "spacing/component/xxs (2px all sides)",
         "gap": "spacing/component/xxs (2px between items)"
       },
@@ -204,6 +204,10 @@
       {
         "date": "2026-09-29",
         "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Dropdown shadow shadow/sm → shadow/overlay (the role token for floating UI). Slightly deeper shadow."
       }
     ]
   },

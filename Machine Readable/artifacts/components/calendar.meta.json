@@ -129,7 +129,7 @@
         "fill": "color/surface/overlay",
         "stroke": "color/border/default",
         "radius": "radius/lg",
-        "shadow": "shadow-[var(--shadow-sm)]",
+        "shadow": "shadow/overlay",
         "padding": "p-0.5 (2px — spacing/component/xxs)",
         "sideOffset": "4px below trigger",
         "align": "start",
@@ -254,6 +254,10 @@
       {
         "date": "2026-09-29",
         "change": "Text uses Enpath text styles (text-label-sm, text-body-sm …, see Foundations/Text Styles) instead of mixed size and weight classes. Labels (label-*) and small headings (heading-sm/xs) are Medium 500."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Time popover shadow shadow/sm → shadow/overlay (the role token for floating UI)."
       }
     ]
   },

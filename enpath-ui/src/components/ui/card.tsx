@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 
 // ─── Card shell ───────────────────────────────────────────────────────────────
 // Tokens:
-//   fill       = color/surface/overlay    → var(--color-surface-overlay)    #ffffff
+//   fill       = color/surface/default    → var(--color-surface-default)    #ffffff  (flat container, not floating)
 //   stroke     = color/border/default     → var(--color-border-default)     #e3e3e3  (default)
 //              = color/border/strong      → use className override for Border variant
 //   radius     = radius/lg               → var(--radius-lg)                 8px
@@ -32,7 +32,7 @@ const Card = React.forwardRef<
         "flex flex-col",
         "rounded-[var(--radius-lg)]",
         "border border-[var(--color-border-default)]",
-        "bg-[var(--color-surface-overlay)]",
+        "bg-[var(--color-surface-default)]",
         "shadow-[var(--shadow-surface)]",
         size === "compact" ? "p-[var(--spacing-component-md)]" : "p-[var(--spacing-component-lg)]",
         size === "compact" ? "gap-[var(--spacing-component-sm)]" : "gap-[var(--spacing-component-lg)]",
@@ -66,7 +66,7 @@ CardHeader.displayName = "CardHeader"
 
 // ─── CardTitle ────────────────────────────────────────────────────────────────
 // Text: text-heading-sm (compact card: text-heading-xs)
-// Token: color/surface/overlay/foreground → var(--color-surface-overlay-foreground) #18181b
+// Token: color/surface/default/foreground → var(--color-surface-default-foreground) #18181b
 
 const CardTitle = React.forwardRef<
   HTMLDivElement,
@@ -78,7 +78,7 @@ const CardTitle = React.forwardRef<
     ref={ref}
     className={cn(
       size === "compact" ? "text-heading-xs" : "text-heading-sm",
-      "text-[var(--color-surface-overlay-foreground)]",
+      "text-[var(--color-surface-default-foreground)]",
       className
     )}
     {...props}

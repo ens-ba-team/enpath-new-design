@@ -13,14 +13,14 @@ import { cn } from "@/lib/utils"
 //   fill: color/background/inverted @ opacity/overlay (50%)
 //
 // DialogContent (popup):
-//   fill:    color/surface/default
+//   fill:    color/surface/overlay
 //   stroke:  color/border/default · 1px · INSIDE
 //   radius:  radius/overlay (12px)
 //   padding: spacing/component/lg (16px) all sides — Form / No close button types
 //   gap:     spacing/component/lg (16px)
-//   shadow:  shadow/overlay
+//   shadow:  shadow/modal
 //
-// DialogTitle:  color/surface/default/foreground
+// DialogTitle:  color/surface/overlay/foreground
 // DialogDescription: color/text/secondary
 // DialogFooter gap (Form): spacing/component/sm (8px)
 // DialogHeader gap: spacing/component/xs (4px)
@@ -73,11 +73,11 @@ const DialogContent = React.forwardRef<
         "fixed left-[50%] top-[50%] z-50 translate-x-[-50%] translate-y-[-50%]",
         // Layout
         "flex flex-col w-full max-w-lg",
-        // Shape — radius/overlay + shadow/overlay (floats above the page and scrim)
+        // Shape — radius/overlay + shadow/modal (blocks the page behind a scrim)
         "rounded-[var(--radius-overlay)]",
-        "shadow-[var(--shadow-overlay)]",
+        "shadow-[var(--shadow-modal)]",
         "border border-[var(--color-border-default)]",
-        "bg-[var(--color-surface-default)]",
+        "bg-[var(--color-surface-overlay)]",
         // Spacing — spacing/component/lg (16px) padding + gap
         "p-[var(--spacing-component-lg)]",
         "gap-[var(--spacing-component-lg)]",
@@ -164,7 +164,7 @@ const DialogTitle = React.forwardRef<
     ref={ref}
     className={cn(
       "text-heading-md",
-      "text-[var(--color-surface-default-foreground)]",
+      "text-[var(--color-surface-overlay-foreground)]",
       className
     )}
     {...props}

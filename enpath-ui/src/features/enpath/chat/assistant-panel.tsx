@@ -153,7 +153,7 @@ export function AssistantPanel({ script, onClose }: { script: AssistantScript; o
                   {t.role === 'assistant' && !t.text ? <Shimmer>Thinking…</Shimmer> : t.role === 'assistant' ? <MessageResponse>{t.text}</MessageResponse> : t.text}
                 </MessageContent>
                 {t.proposal && t.proposal.state !== 'discarded' && (
-                  <div className="flex flex-col gap-[var(--spacing-component-sm)] rounded-[var(--radius-surface)] border border-[var(--color-border-default)] bg-[var(--color-surface-overlay)] p-[var(--spacing-component-md)] shadow-[var(--shadow-surface)]">
+                  <div className="flex flex-col gap-[var(--spacing-component-sm)] rounded-[var(--radius-surface)] border border-[var(--color-border-default)] bg-[var(--color-surface-default)] p-[var(--spacing-component-md)] shadow-[var(--shadow-surface)]">
                     <p className="text-label-sm uppercase tracking-wide text-[var(--color-text-secondary)]">{t.proposal.label}</p>
                     <div className="text-body-sm text-[var(--color-background-default-foreground)]">{t.proposal.body}</div>
                     <div className="flex justify-end gap-[var(--spacing-component-sm)]">

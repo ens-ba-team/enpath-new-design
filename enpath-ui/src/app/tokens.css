@@ -457,9 +457,9 @@
   --color-border-warning: #bb4d00;
   /**
    * Intent:      Background for cards and flat inline content containers
-   * Use when:    Card backgrounds, list item backgrounds, form section backgrounds, any container sitting on top of the page canvas
+   * Use when:    Flat containers sitting on the page canvas: Card, Item rows, Calendar, Stat, Empty state, the active Tab and ButtonGroup segment, form sections
    * Do not use:  The page canvas itself — use color/background/default for the page
-   *              Floating or elevated UI — use color/surface/overlay for dropdowns and modals
+   *              Anything that floats above or blocks the page (menus, popovers, dialogs, sheets, drawers) — use color/surface/overlay
    * Use instead: color/background/default for the page, color/surface/overlay for floating UI
    * Foreground:  color/surface/default/foreground
    * Status:      active
@@ -493,11 +493,11 @@
   --color-surface-raised-foreground: #0f172a;
   /**
    * Intent:      Background for floating UI elements that layer above page content
-   * Use when:    Dropdowns, tooltips, popovers, modals, command palettes, context menus
+   * Use when:    Everything that floats above or blocks the page: DropdownMenu, Select and Combobox lists, DatePicker and Calendar popovers, HoverCard, Command, the NavigationMenu panel, Toast, Dialog, AlertDialog, Sheet, Drawer
    * Do not use:  Cards or flat inline content — use color/surface/default for non-floating containers
    * Use instead: color/surface/default for flat containers, color/surface/raised for sticky bars
    * Foreground:  color/surface/overlay/foreground
-   * Note:        Resolves to the same primitive as color/surface/default today; keep the distinction so floating layers can change on their own.
+   * Note:        Pairs with shadow/overlay (floats, page stays usable) or shadow/modal (blocks the page behind a scrim). Tooltip uses its own tooltip/bg. Resolves to the same primitive as color/surface/default today; keep the distinction so floating layers can change on their own.
    * Status:      active
    */
   --color-surface-overlay: #ffffff;
@@ -1551,10 +1551,10 @@
    */
   --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
   --shadow-hairline: 0 1px rgb(0 0 0 / 0.04); /** Role shadow (from En UI shadow-hairline). Use for: Inner edge of layered surfaces. */
-  --shadow-surface: 0 1px 2px 0 rgb(0 0 0 / 0.05); /** Role shadow (from En UI shadow-surface). Use for: Default containers — cards, panels, tables. Pairs with border/default. */
+  --shadow-surface: 0 1px 2px 0 rgb(0 0 0 / 0.05); /** Role shadow (from En UI shadow-surface). Use for: Flat containers on the page — Card, panels, tables, Career map role cards. Pairs with border/default and color/surface/default. */
   --shadow-raised: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /** Role shadow (from En UI shadow-raised). Use for: Sticky regions; a card only while dragged or pinned above scrolling content. */
-  --shadow-overlay: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); /** Role shadow (from En UI shadow-overlay). Use for: Popovers, menus, tooltips, dialogs and alert dialogs. */
-  --shadow-modal: 0 25px 50px -12px rgb(0 0 0 / 0.25); /** Role shadow (from En UI shadow-modal). Use for: Dialogs and sheets. */
+  --shadow-overlay: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); /** Role shadow (from En UI shadow-overlay). Use for: Floating UI that leaves the page usable — DropdownMenu, Select and Combobox lists, DatePicker and Calendar popovers, HoverCard, Command, the NavigationMenu panel. Not for anything behind a scrim (use shadow/modal). */
+  --shadow-modal: 0 25px 50px -12px rgb(0 0 0 / 0.25); /** Role shadow (from En UI shadow-modal). Use for: UI that blocks the page behind a scrim — Dialog, AlertDialog, Sheet, Drawer. */
   /**
    * Intent: Zero-duration transition for changes that must feel immediate.
    * Use when: Checkbox checks, toggle switches, radio selection — binary state changes where animation would feel laggy.

@@ -12,8 +12,9 @@ import { cn } from "@/lib/utils"
 //   fill: color/background/inverted @ opacity/overlay (50%)
 //
 // DrawerContent (panel):
-//   fill:   color/surface/default
+//   fill:   color/surface/overlay
 //   stroke: color/border/default · 1px
+//   shadow: shadow/modal
 //   radius: radius/lg on exposed edge only
 //     Direction=Bottom: top-left + top-right rounded, bottom = 0
 //     Direction=Right:  top-left + bottom-left rounded, right = 0
@@ -25,7 +26,7 @@ import { cn } from "@/lib/utils"
 // DrawerHeader:
 //   padding: spacing/component/lg (16px) all sides
 //   gap: spacing/component/xxs (2px)
-//   title fill:       color/background/default/foreground
+//   title fill:       color/surface/overlay/foreground
 //   description fill: color/background/muted/foreground
 //
 // DrawerFooter:
@@ -92,7 +93,8 @@ const DrawerContent = React.forwardRef<
         "inset-x-0 bottom-0 rounded-t-[var(--radius-lg)]",
         // Surface
         "border border-[var(--color-border-default)]",
-        "bg-[var(--color-surface-default)]",
+        "bg-[var(--color-surface-overlay)]",
+        "shadow-[var(--shadow-modal)]",
         className
       )}
       {...props}
@@ -152,7 +154,7 @@ DrawerFooter.displayName = "DrawerFooter"
 
 // ─── DrawerTitle ──────────────────────────────────────────────────────────────
 // Text: text-heading-md
-// fill: color/background/default/foreground (not surface/overlay/foreground — see spec)
+// fill: color/surface/overlay/foreground (pairs with the panel fill)
 
 const DrawerTitle = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Title>,
@@ -162,7 +164,7 @@ const DrawerTitle = React.forwardRef<
     ref={ref}
     className={cn(
       "text-heading-md",
-      "text-[var(--color-background-default-foreground)]",
+      "text-[var(--color-surface-overlay-foreground)]",
       className
     )}
     {...props}
