@@ -46,9 +46,8 @@ function IconTile({ icon, tone }: { icon: React.ReactNode; tone: 'warning' | 'in
 // Debt (same flag): Stat has no header divider or right-hand note. The label row gets a full-bleed line
 // under it (negative margins cancel Stat's spacing/component/md padding), and the description slot holds
 // a row: the detail on the left, "N overdue" in red on the right when there is any.
-// TRIAL (2026-09-30, step B): border-transparent — on the grey content area the shadow is enough.
 const statWithHeader =
-  'border-transparent [&>p:first-child]:-mx-[var(--spacing-component-md)] [&>p:first-child]:border-b [&>p:first-child]:border-[var(--color-border-default)] [&>p:first-child]:px-[var(--spacing-component-md)] [&>p:first-child]:pb-[var(--spacing-component-sm)]';
+  '[&>p:first-child]:-mx-[var(--spacing-component-md)] [&>p:first-child]:border-b [&>p:first-child]:border-[var(--color-border-default)] [&>p:first-child]:px-[var(--spacing-component-md)] [&>p:first-child]:pb-[var(--spacing-component-sm)]';
 
 function StatNote({ text, overdue = 0 }: { text: string; overdue?: number }) {
   return (
@@ -162,11 +161,7 @@ export function MyActionsScreen() {
               <Button onClick={() => openEditor({ mode: 'add' })}><PlusIcon aria-hidden="true" />Add action</Button>
             </header>
 
-            {/* TRIAL (2026-09-30, "the page looks washed out"): the content under the header sits on
-                brand/100 (the same blue as My Career's map canvas; primitive, since career-map/canvas is
-                for the map only) so the white cards stand out, instead of white on white. The rulebook says
-                panels stay white: this is a My Actions trial before deciding for the whole app. */}
-            <div className="flex flex-1 flex-col gap-[var(--spacing-layout-sm)] border-t border-[var(--color-border-default)] bg-[var(--color-brand-100)] px-[var(--spacing-layout-sm)] py-[var(--spacing-layout-sm)]">
+            <div className="flex flex-col gap-[var(--spacing-layout-sm)] px-[var(--spacing-layout-sm)] pb-[var(--spacing-layout-sm)]">
               <section aria-label="Plan summary" className="grid grid-cols-2 gap-[var(--spacing-component-md)] md:grid-cols-4">
                 <Stat className={statWithHeader} label="Growth areas" value={growthAreas.length} icon={<IconTile tone="warning" icon={<TargetIcon />} />}
                   description={<StatNote text={`toward ${targetName}`} />} />

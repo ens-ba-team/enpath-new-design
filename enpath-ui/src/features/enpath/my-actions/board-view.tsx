@@ -20,16 +20,15 @@ import { ActionMenu, ActionMeta, NextStepButton, ProposalAlert, type ActionHandl
 import { statusLabel, type Action, type ActionStatus, type Proposal } from './mock-data';
 
 const columns: ActionStatus[] = ['todo', 'doing', 'done'];
-/** TRIAL (2026-09-30): on the brand/100 content area, columns are white and the status colour is a
- *  dot before the column title, in the Stat icon tiles' colours (zinc/500 · blue/400 · green/600).
- *  Primitives (Open flag: Board column fills). */
-const columnDot: Record<ActionStatus, string> = {
-  todo: 'bg-[var(--color-zinc-500)]',
-  doing: 'bg-[var(--color-blue-400)]',
-  done: 'bg-[var(--color-green-600)]',
+/** The Stat icon tiles' hues, one step darker (user, 2026-09-30). Debt: primitives, no semantic token
+ *  at these steps (Open flag: Board column fills). */
+const columnFill: Record<ActionStatus, string> = {
+  todo: 'bg-[var(--color-zinc-200)]',
+  doing: 'bg-[var(--color-blue-100)]',
+  done: 'bg-[var(--color-green-100)]',
 };
 
-function Column({ title, count, icon, fill = 'bg-[var(--color-surface-default)]', stroke, children, dropTarget, over, onDragOver, onDragLeave, onDrop }: {
+function Column({ title, count, icon, fill = 'bg-[var(--color-surface-raised)]', stroke, children, dropTarget, over, onDragOver, onDragLeave, onDrop }: {
   title: string; count: number; icon?: React.ReactNode; fill?: string; stroke?: string; children: React.ReactNode;
   dropTarget?: boolean; over?: boolean;
   onDragOver?: (e: React.DragEvent) => void; onDragLeave?: () => void; onDrop?: (e: React.DragEvent) => void;
@@ -104,8 +103,7 @@ export function BoardView({ actions, proposals, areas, h, onMove }: {
       {columns.map((status) => {
         const cards = actions.filter((a) => a.status === status).sort(byDue);
         return (
-          <Column key={status} title={statusLabel[status]} count={cards.length}
-            icon={<span aria-hidden="true" className={cn('h-2 w-2 shrink-0 rounded-[var(--radius-pill)]', columnDot[status])} />}
+          <Column key={status} title={statusLabel[status]} count={cards.length} fill={columnFill[status]}
             dropTarget={dragId !== null} over={overCol === status}
             onDragOver={(e) => { if (!dragId) return; e.preventDefault(); e.dataTransfer.dropEffect = 'move'; setOverCol(status); }}
             onDragLeave={() => setOverCol((c) => (c === status ? null : c))}
