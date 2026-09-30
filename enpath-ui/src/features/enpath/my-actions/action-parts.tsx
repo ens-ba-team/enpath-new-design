@@ -75,8 +75,9 @@ export function ActionMenu({ action, h }: { action: Action; h: ActionHandlers })
  *  buttons sit in an inner row, as in the Alert WithIcon story (Alert has no icon option, Open flag).
  *  `stacked` puts the buttons under the text (narrow Board column). Not urgent → role=group. */
 export function ProposalAlert({ proposal, h, context, stacked = false }: { proposal: Proposal; h: ActionHandlers; context?: string; stacked?: boolean }) {
+  // Brand stroke in the List; on the Board the whole "Proposed by AI" column carries it instead (stacked).
   return (
-    <Alert variant="default" role="group" aria-label="AI proposal" className="border-[var(--color-brand-400)]">
+    <Alert variant="default" role="group" aria-label="AI proposal" className={stacked ? undefined : 'border-[var(--color-brand-400)]'}>
       <div className="flex flex-wrap items-start gap-[var(--spacing-component-md)]">
         <SparkleIcon className="mt-[var(--spacing-component-xxs)] h-4 w-4 shrink-0 text-[var(--color-icon-brand)]!" aria-hidden="true" />
         <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xxs)]">

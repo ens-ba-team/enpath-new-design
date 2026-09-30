@@ -27,8 +27,8 @@ const columnFill: Record<ActionStatus, string> = {
   done: 'bg-[var(--color-status-success-subtle)]',
 };
 
-function Column({ title, count, icon, fill = 'bg-[var(--color-surface-raised)]', children, dropTarget, over, onDragOver, onDragLeave, onDrop }: {
-  title: string; count: number; icon?: React.ReactNode; fill?: string; children: React.ReactNode;
+function Column({ title, count, icon, fill = 'bg-[var(--color-surface-raised)]', stroke, children, dropTarget, over, onDragOver, onDragLeave, onDrop }: {
+  title: string; count: number; icon?: React.ReactNode; fill?: string; stroke?: string; children: React.ReactNode;
   dropTarget?: boolean; over?: boolean;
   onDragOver?: (e: React.DragEvent) => void; onDragLeave?: () => void; onDrop?: (e: React.DragEvent) => void;
 }) {
@@ -41,6 +41,7 @@ function Column({ title, count, icon, fill = 'bg-[var(--color-surface-raised)]',
       className={cn(
         'flex min-w-0 flex-col gap-[var(--spacing-component-sm)] rounded-[var(--radius-lg)] p-[var(--spacing-component-sm)]',
         fill,
+        stroke,
         dropTarget && over && 'ring-2 ring-[var(--color-drop-indicator)]',
       )}
     >
@@ -90,7 +91,8 @@ export function BoardView({ actions, proposals, areas, h, onMove }: {
   return (
     // Four columns from 1024px; narrower screens scroll the columns sideways, one readable width each.
     <div className="grid auto-cols-[minmax(16rem,1fr)] grid-flow-col gap-[var(--spacing-component-md)] overflow-x-auto pb-[var(--spacing-component-xs)] lg:grid-flow-row lg:grid-cols-4">
-      <Column title="Proposed by AI" count={proposals.length}
+      {/* Debt: brand stroke on the whole AI column, primitive color/brand/400 (Open flag: AI proposal border). */}
+      <Column title="Proposed by AI" count={proposals.length} stroke="border border-[var(--color-brand-400)]"
         icon={<SparkleIcon className="h-4 w-4 text-[var(--color-icon-brand)]" aria-hidden="true" />}>
         {proposals.length === 0
           ? <li className="px-[var(--spacing-component-xs)] text-body-sm text-[var(--color-text-secondary)]">No proposals right now. Ask AI for ideas.</li>
