@@ -6,9 +6,9 @@
   "codeOnly": true,
   "variants": {},
   "tokens": {
-    "Dialog": "`color/surface/overlay`, `radius/overlay`, `shadow/overlay`",
+    "Dialog": "A Dialog (CommandDialog); its tokens are Dialog's.",
     "List": "Command tokens",
-    "Selected": "`color/surface/accent`"
+    "Selected": "Command item tokens."
   },
   "tokensUsed": [
     "color/background/default",
@@ -46,6 +46,10 @@
       {
         "date": "2026-09-22",
         "change": "Added (AI Elements install) and documented."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Spec token section matches the code: the dialog and list are Dialog and Command, with their own tokens."
       }
     ]
   },

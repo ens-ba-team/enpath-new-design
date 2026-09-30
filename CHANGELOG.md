@@ -6,6 +6,17 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-30 — Spec batch 2
+
+### Changed
+- **Empty** binds `spacing/component/2xl`, `lg`, `sm`; **InputOTP** and **RadioGroup** bind `spacing/component/sm` (were raw Tailwind steps with the same values).
+- Specs match the code: **Empty** and **Item** (actions are Buttons), **ModelSelector** (Dialog + Command), **Input** (icons, description and textarea padding belong to InputGroup, Label, Textarea), **Pagination** and **RadioGroup** (extra layouts are story compositions), **NavigationMenu** (no panel padding; disabled icon inherits the label colour), **PromptInput** (submit is a Button).
+
+### Flagged
+- InputOTP fills / disabled state, the chat composer look set by the screen, Pagination story gap override.
+
+---
+
 ## 2026-09-30 — Spec batch 1 (token sections follow the code)
 
 ### Changed

@@ -131,11 +131,7 @@
       "Basic": "spacing/component/xxs",
       "More": "spacing/component/xxs",
       "Disabled": "spacing/component/xxs",
-      "Simple": "spacing/component/sm",
-      "With Changer": "spacing/component/sm",
-      "With Jumper": "spacing/component/sm",
-      "With Total": "spacing/component/lg",
-      "Show All": "spacing/component/md"
+      "note": "Simple, With Changer, With Jumper, With Total and Show All are compositions in the stories; their gaps belong there."
     }
   },
   "tokensUsed": [
@@ -213,6 +209,10 @@
       {
         "date": "2026-09-29",
         "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Spec token section matches the code: the component has one gap; the other layouts are story compositions."
       }
     ]
   },

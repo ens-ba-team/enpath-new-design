@@ -126,7 +126,9 @@
     "color/zinc/200",
     "opacity/60",
     "opacity/disabled",
-    "radius/md"
+    "radius/md",
+    "spacing/2",
+    "spacing/component/sm"
   ],
   "accessibility": {
     "properties": [
@@ -189,6 +191,10 @@
       {
         "date": "2026-09-29",
         "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Group gap binds spacing/component/sm (was gap-2, same value)."
       }
     ]
   },

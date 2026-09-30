@@ -153,12 +153,7 @@
         "chevronStroke": "color/surface/default/foreground"
       }
     },
-    "actionSlot": {
-      "fill": "button/outline/bg/bg",
-      "stroke": "button/outline/border/default",
-      "labelFill": "button/outline/fg/fg",
-      "doNotOverride": true
-    },
+    "actionSlot": "A Button (outline); its tokens are Button's.",
     "selectable": {
       "hover": {
         "fill": "item/hover/bg"
@@ -271,6 +266,10 @@
       {
         "date": "2026-09-29",
         "change": "Spacing uses tokens (was p-3 / p-2 / p-1.5 / gap-0.5). Added inset=\"md\". Size sm / xs descriptions use text-body-xs (a meta line); default stays text-body-sm."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Spec token section matches the code: the action slot is a Button."
       }
     ]
   },

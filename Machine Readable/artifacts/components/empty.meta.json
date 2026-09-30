@@ -62,17 +62,7 @@
     "content": {
       "gap": "spacing/component/sm"
     },
-    "buttons": {
-      "btnPrimary": {
-        "fill": "button/primary/bg/bg",
-        "doNotOverride": true
-      },
-      "btnOutline": {
-        "fill": "button/outline/bg/bg",
-        "stroke": "button/outline/border/default",
-        "doNotOverride": true
-      }
-    }
+    "buttons": "Actions are Buttons; their tokens are Button's."
   },
   "tokensUsed": [
     "color/background/subtle",
@@ -83,7 +73,13 @@
     "color/zinc/200",
     "color/zinc/50",
     "color/zinc/600",
-    "radius/lg"
+    "radius/lg",
+    "spacing/2",
+    "spacing/4",
+    "spacing/8",
+    "spacing/component/2xl",
+    "spacing/component/lg",
+    "spacing/component/sm"
   ],
   "accessibility": {
     "properties": [
@@ -140,6 +136,10 @@
       {
         "date": "2026-09-29",
         "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Padding and gaps bind spacing/component/2xl, lg and sm (were p-8, gap-4, gap-2, same values). Action buttons are Buttons: their tokens are Button's."
       }
     ]
   },

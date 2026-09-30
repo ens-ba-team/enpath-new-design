@@ -102,20 +102,13 @@
       "placeholderDisabled": "color/text/disabled",
       "value": "color/background/default/foreground",
       "trailingText": "color/background/muted/foreground",
-      "trailingTextDisabled": "color/text/disabled",
-      "icon": "color/icon/default",
-      "iconDisabled": "color/icon/disabled"
+      "trailingTextDisabled": "color/text/disabled"
     },
     "spacing": {
       "inputPaddingY": "spacing/component/xs",
-      "textareaPaddingY": "spacing/component/sm",
-      "paddingX": "spacing/component/md",
-      "gap": "spacing/component/sm"
+      "paddingX": "spacing/component/md"
     },
     "inputField": {
-      "descriptionDefault": "color/text/secondary",
-      "descriptionDisabled": "color/text/disabled",
-      "descriptionInvalid": "color/text/invalid",
       "gap": "spacing/component/xs"
     },
     "states": {
@@ -125,7 +118,8 @@
         "ringGlow": "color-mix(in_srgb,var(--color-border-error)_20%,transparent)",
         "notes": "Uses [&[aria-invalid]] compound selector to beat data-[state=open]/focus-visible specificity. Blue ring must NOT appear when invalid."
       }
-    }
+    },
+    "composition": "Icons and addons come from InputGroup; label, description and error text are composed with Label in the stories; Textarea has its own spec."
   },
   "tokensUsed": [
     "color/border/default",
@@ -218,6 +212,10 @@
       {
         "date": "2026-09-29",
         "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Spec token section matches the code: icons (InputGroup), description text (composed with Label) and textarea padding (Textarea) belong to other components."
       }
     ]
   },

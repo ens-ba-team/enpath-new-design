@@ -119,7 +119,7 @@
         "Default": "color/background/default/foreground",
         "Focus": "color/background/default/foreground",
         "Hover": "color/background/accent/foreground",
-        "Disabled": "color/icon/disabled"
+        "Disabled": "inherits the label colour (color/text/disabled)"
       },
       "note": "Use color/background/* tokens on nav-button — it sits on the page canvas, not a surface."
     },
@@ -130,7 +130,6 @@
       "strokeAlign": "inside",
       "radius": "radius/base",
       "effect": "shadow/overlay",
-      "padding": "spacing/component/lg",
       "gap": "spacing/component/sm"
     },
     "navPanelLink": {
@@ -256,6 +255,10 @@
       {
         "date": "2026-09-30",
         "change": "Panel shadow shadow/sm → shadow/overlay (the role token for floating UI)."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Spec token section matches the code: the panel has no padding of its own; a disabled icon inherits the label colour."
       }
     ]
   },

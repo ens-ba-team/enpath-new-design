@@ -28,7 +28,7 @@
     "Border": "`chat/composer/border`; focus `color/border/focus`",
     "Radius": "`chat/composer/radius` (→ `radius/overlay`)",
     "Tool selects": "compact Select, no border",
-    "Submit": "Button default — `color/brand/primary`"
+    "Submit": "A Button (default); its tokens are Button's."
   },
   "tokensUsed": [
     "color/surface/accent",
@@ -91,6 +91,10 @@
       {
         "date": "2026-09-29",
         "change": "PromptInputSelectTrigger size=\"sm\" for the composer toolbar (mode / model selects); the chat panel used a hand-set h-7 before."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Submit is a Button. The composer look is an Open flag."
       }
     ]
   },

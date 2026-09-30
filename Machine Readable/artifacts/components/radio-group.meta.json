@@ -112,56 +112,8 @@
       },
       "radius": "radius/full"
     },
-    "choiceCard": {
-      "Default": {
-        "fill": "transparent",
-        "stroke": "color/border/default",
-        "radius": "radius/lg"
-      },
-      "Checked": {
-        "fill": "transparent",
-        "stroke": "color/brand/primary",
-        "radius": "radius/lg"
-      },
-      "Disabled": {
-        "fill": "transparent",
-        "stroke": "color/border/default",
-        "opacity": "opacity/disabled",
-        "radius": "radius/lg"
-      },
-      "Invalid": {
-        "fill": "transparent",
-        "stroke": "color/border/error",
-        "radius": "radius/lg"
-      },
-      "Focus": {
-        "fill": "transparent",
-        "stroke": "color/border/focus",
-        "radius": "radius/lg"
-      }
-    },
-    "text": {
-      "DefaultCheckedFocus": {
-        "label": "color/surface/default/foreground",
-        "description": "color/text/secondary"
-      },
-      "Invalid": {
-        "label": "color/text/invalid",
-        "description": "color/text/secondary"
-      },
-      "DisabledBasic": {
-        "label": "color/text/disabled",
-        "description": "color/text/disabled"
-      },
-      "DisabledChoiceCard": {
-        "label": "color/surface/default/foreground",
-        "description": "color/text/secondary"
-      }
-    },
     "spacing": {
-      "itemGap": "spacing/component/md",
-      "choiceCardPadding": "spacing/component/lg",
-      "textGap": "spacing/component/xxs"
+      "itemGap": "spacing/component/sm"
     },
     "states": {
       "invalid": {
@@ -170,7 +122,8 @@
         "ringGlow": "color-mix(in_srgb,var(--color-border-error)_20%,transparent)",
         "notes": "Uses [&[aria-invalid]] compound selector to beat data-[state=open]/focus-visible specificity. Blue ring must NOT appear when invalid."
       }
-    }
+    },
+    "composition": "Choice cards, labels and descriptions are composed in the stories; their borders, colours and gaps belong there."
   },
   "tokensUsed": [
     "color/border/default",
@@ -188,7 +141,9 @@
     "opacity/60",
     "opacity/disabled",
     "radius/full",
-    "spacing/11"
+    "spacing/11",
+    "spacing/2",
+    "spacing/component/sm"
   ],
   "accessibility": {
     "properties": [
@@ -253,6 +208,10 @@
       {
         "date": "2026-09-29",
         "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Item gap binds spacing/component/sm (was gap-2, same value; spec said md). Choice cards and labels are story compositions."
       }
     ]
   },
