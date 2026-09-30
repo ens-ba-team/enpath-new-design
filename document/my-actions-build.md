@@ -104,14 +104,13 @@ Route `/me/actions` (sidebar "My Actions"). Code: `enpath-ui/src/features/enpath
 - **Summary:** four Stat tiles with coloured icon tiles: Growth areas · In progress · To do · Done.
 - **One Card per growth area** of the Active target (pattern P7; default size, groups `spacing/layout/sm` apart): name, "Growth area · You 3 → Needed 4" with the progress ring before the title, "{N} records" (link; Records isn't built, so it says it's coming next), Add action
   (outline; opens the dialog with that growth area chosen). "0 records" is plain text, not a link.
-- **Action rows** (Accordion compact), sorted In progress → To do → Done, then by due date: status Badge
-  (To do secondary · In progress blue · Done success), title, "Due 26 Sep · overdue" (only "overdue" in
-  `color/text/invalid`) or "Done 12 Sep", source ("added by you" · "proposed by your manager" · "from
-  an AI proposal"). Beside the row: **Start** (To do) / **Mark done** (In progress), and a "…" menu:
-  Edit · Move back to In progress (Done only) · Remove from plan (destructive confirm: red Remove button, AlertDialog Destructive type). Expanding (several can be open at
-  once) shows, indented under the title (no background): **Outcome** and **What {point} looks like** (the
-  Matrix behaviour text). Source and date aren't repeated there. Details open in place, not in a
-  panel (decided 2026-09-30: little content); a Board card will expand the same way.
+- **Action rows** (layout A, 2026-09-30; nothing expands), sorted In progress → To do → Done, then by
+  due date, in fixed columns so they line up: status Badge (To do secondary · In progress blue · Done
+  success) | title, the **outcome in full**, and a small line "Due 26 Sep · overdue · added by you"
+  (only "overdue" in `color/text/invalid`; Done rows say "Done 12 Sep" and their title is secondary) |
+  **Start** (To do) / **Mark done** (In progress) | "…" menu: Edit · Move back to In progress (Done
+  only) · Remove from plan (destructive confirm: red Remove button, AlertDialog Destructive type).
+  "What {point} looks like" isn't shown per action (it describes the growth area, not the action).
 - **Done** has no record step (Actions and Records are separate).
 - **AI proposals** sit in their growth area as **default Alerts** (white, bordered) with a brand-blue Sparkle icon, the same AI mark as the
   chat panel (2026-09-30) (title = Alert title,

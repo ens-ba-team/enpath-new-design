@@ -264,8 +264,8 @@ neither a template nor a pattern. Its decisions stay in `my-career-build.md`._
   "2+ places" rule for candidates). Goes into `catalog-entries.json` when the catalog is built.
 
 - **Scope:** every My Career role panel (`my-career/gap-row.tsx`); since 2026-09-30 also the growth area
-  groups of the Action plan (`my-actions/growth-area-group.tsx`): one Card per growth area, action
-  rows as an Accordion compact, row buttons beside the trigger (never inside it).
+  groups of the Action plan (`my-actions/growth-area-group.tsx`): one Card per growth area; its
+  action rows don't expand (everything is on the row: title, outcome, due · source, next step, "…").
   **Card size by width** (2026-09-30): compact in a narrow side panel (My Career), default on a full-width
   page (Action plan), so the group title (`text-heading-sm`) stands above row titles (`text-heading-xs`).
 - **Anatomy:** one Card per group, in this order: **Growth areas** (You → Needed) · **Not assessed

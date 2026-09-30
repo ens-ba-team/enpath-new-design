@@ -1,11 +1,11 @@
 'use client';
-// One growth area of the Action plan (List view, sketch C v2 — my-actions-build.md → Layout).
-// Card (default size: a full-width page, not a side panel): heading = the competency, "You 3 → Needed 4", "1 of 2 done", a link to that
-// competency's Records and "Add action". Rows are an Accordion size="compact" (same as the competency
-// groups in My Career, pattern P7): status Badge + title + due date / source; expanding shows the
-// outcome and what the needed point looks like. Start / Mark done and the "…" menu sit beside the
-// trigger (never inside it). AI proposals for this growth area are default Alerts with a brand-blue Sparkle (icon laid out as in
-// the Alert WithIcon stories; Alert has no icon option yet, Open flag) with Add to plan / Dismiss. An empty growth area invites an action or Ask AI.
+// One growth area of the Action plan (List view — my-actions-build.md → What's built).
+// Card (default size: a full-width page, not a side panel): heading = the competency, "You 3 → Needed 4",
+// the progress ring, a link to that competency's Records and "Add action". Rows (layout A, 2026-09-30):
+// status Badge · title, the outcome in full, a small "Due · added by" line · Start / Mark done · "…".
+// Nothing expands: everything an action has is on its row. AI proposals for this growth area are
+// default Alerts with a brand-blue Sparkle (icon laid out as in the Alert WithIcon stories; Alert has no
+// icon option yet, Open flag) with Add to plan / Dismiss. An empty growth area invites an action or Ask AI.
 // SCREEN-LEVEL DEBT (design-patterns.md → Open flags, kind restyle, 2026-09-30): the progress ring
 // before the title and the In progress Badge's border are built here until the components get them
 // (Progress shape="ring"; Badge blue border), and so is the tinted header band (color/surface/header,
@@ -14,7 +14,6 @@
 
 import * as React from 'react';
 import { DotsThreeIcon, PlusIcon, SparkleIcon } from '@phosphor-icons/react/ssr';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
@@ -22,7 +21,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import type { Gap } from '../my-career/mock-data';
 import {
-  isOverdue, neededLabel, pointsLine, shortDate, sourceLabel, statusLabel, statusOrder,
+  isOverdue, pointsLine, shortDate, sourceLabel, statusLabel, statusOrder,
   type Action, type ActionStatus, type Proposal,
 } from './mock-data';
 
@@ -78,57 +77,36 @@ function Meta({ action }: { action: Action }) {
   );
 }
 
-function ActionRow({ action, area, h }: { action: Action; area: Gap; h: GroupHandlers }) {
+function ActionRow({ action, h }: { action: Action; h: GroupHandlers }) {
   const done = action.status === 'done';
   return (
-    <AccordionItem value={action.id}>
-      {/* Fixed columns so every row lines up: trigger (status · title · caret) | next-step button | "…".
-          The trigger's header fills its column; the status sits in a fixed-width slot. */}
-      <div className="grid grid-cols-[minmax(0,1fr)_7rem_auto] items-center gap-[var(--spacing-component-sm)]">
-        <div className="flex min-w-0 [&>h3]:min-w-0 [&>h3]:flex-1">
-          <AccordionTrigger className="min-w-0 justify-start text-left">
-          <span className="flex w-[5.5rem] shrink-0">
-            <Badge variant={statusBadge[action.status]} shape="pill" size="sm" className={statusBadgeClass[action.status]}>{statusLabel[action.status]}</Badge>
-          </span>
-          <span className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xxs)]">
-            <span className={done ? 'text-[var(--color-text-secondary)]' : 'text-heading-xs'}>{action.title}</span>
-            <Meta action={action} />
-          </span>
-          </AccordionTrigger>
-        </div>
-        <div className="flex justify-end">
-          {action.status === 'todo' && <Button variant="outline" size="sm" onClick={() => h.onAdvance(action)}>Start</Button>}
-          {action.status === 'doing' && <Button variant="outline" size="sm" onClick={() => h.onAdvance(action)}>Mark done</Button>}
-        </div>
-        {/* Non-modal: its items open dialogs (a modal menu left the page unclickable, P2). */}
-        <DropdownMenu modal={false}>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon-sm" aria-label={`More for ${action.title}`}><DotsThreeIcon aria-hidden="true" /></Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => h.onEdit(action)}>Edit</DropdownMenuItem>
-            {done && <DropdownMenuItem onClick={() => h.onReopen(action)}>Move back to In progress</DropdownMenuItem>}
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => h.onRemove(action)}>Remove from plan</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+    // Fixed columns so every row lines up: status slot | title · outcome · meta | next-step button | "…".
+    <li className="grid grid-cols-[5.5rem_minmax(0,1fr)_7rem_auto] items-start gap-[var(--spacing-component-sm)] border-b border-[var(--color-border-default)] py-[var(--spacing-component-md)] last:border-b-0">
+      <span className="flex pt-[var(--spacing-component-xxs)]">
+        <Badge variant={statusBadge[action.status]} shape="pill" size="sm" className={statusBadgeClass[action.status]}>{statusLabel[action.status]}</Badge>
+      </span>
+      <div className="flex min-w-0 flex-col gap-[var(--spacing-component-xxs)]">
+        <p className={done ? 'text-heading-xs text-[var(--color-text-secondary)]' : 'text-heading-xs text-[var(--color-background-default-foreground)]'}>{action.title}</p>
+        {action.outcome && <p className="text-body-sm text-[var(--color-background-default-foreground)]">{action.outcome}</p>}
+        <Meta action={action} />
       </div>
-      {/* Details start under the title (status slot 5.5rem + the trigger's gap), no background
-          (user, 2026-09-30); the indent ties them to the row. Label + text pairs as in My Career's competency rows (P7). The source
-          and date are already under the title, so they aren't repeated here. */}
-      <AccordionContent className="pl-[calc(5.5rem+var(--spacing-component-sm))]">
-        <div className="flex flex-col gap-[var(--spacing-component-md)]">
-          <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
-            <p className="text-heading-xs text-[var(--color-background-default-foreground)]">Outcome</p>
-            <p className="text-body-sm text-[var(--color-text-secondary)]">{action.outcome || 'Not written yet. Edit the action to add one.'}</p>
-          </div>
-          <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
-            <p className="text-heading-xs text-[var(--color-background-default-foreground)]">What {neededLabel(area)} looks like</p>
-            <p className="text-body-sm text-[var(--color-text-secondary)]">{area.meaning ?? 'See the matrix for this level.'}</p>
-          </div>
-        </div>
-      </AccordionContent>
-    </AccordionItem>
+      <div className="flex justify-end">
+        {action.status === 'todo' && <Button variant="outline" size="sm" onClick={() => h.onAdvance(action)}>Start</Button>}
+        {action.status === 'doing' && <Button variant="outline" size="sm" onClick={() => h.onAdvance(action)}>Mark done</Button>}
+      </div>
+      {/* Non-modal: its items open dialogs (a modal menu left the page unclickable, P2). */}
+      <DropdownMenu modal={false}>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" size="icon-sm" aria-label={`More for ${action.title}`}><DotsThreeIcon aria-hidden="true" /></Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem onClick={() => h.onEdit(action)}>Edit</DropdownMenuItem>
+          {done && <DropdownMenuItem onClick={() => h.onReopen(action)}>Move back to In progress</DropdownMenuItem>}
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => h.onRemove(action)}>Remove from plan</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </li>
   );
 }
 
@@ -157,9 +135,9 @@ export function GrowthAreaGroup({ area, actions, proposals, records, h }: {
       </CardHeader>
 
       {rows.length > 0 && (
-        <Accordion type="multiple" size="compact" /* opening one action leaves the others open (user, 2026-09-30) */>
-          {rows.map((a) => <ActionRow key={a.id} action={a} area={area} h={h} />)}
-        </Accordion>
+        <ul aria-label={`${area.name} actions`} className="flex flex-col">
+          {rows.map((a) => <ActionRow key={a.id} action={a} h={h} />)}
+        </ul>
       )}
 
       {proposals.map((p) => (
