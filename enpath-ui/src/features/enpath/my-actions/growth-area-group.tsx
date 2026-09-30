@@ -113,11 +113,11 @@ function ActionRow({ action, area, h }: { action: Action; area: Gap; h: GroupHan
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      {/* Details start under the title (status slot 5.5rem + the trigger's gap), on a light block so they
-          read as part of this row. Label + text pairs as in My Career's competency rows (P7). The source
+      {/* Details start under the title (status slot 5.5rem + the trigger's gap), no background
+          (user, 2026-09-30); the indent ties them to the row. Label + text pairs as in My Career's competency rows (P7). The source
           and date are already under the title, so they aren't repeated here. */}
       <AccordionContent className="pl-[calc(5.5rem+var(--spacing-component-sm))]">
-        <div className="flex flex-col gap-[var(--spacing-component-md)] rounded-[var(--radius-md)] bg-[var(--color-surface-raised)] p-[var(--spacing-component-md)]">
+        <div className="flex flex-col gap-[var(--spacing-component-md)]">
           <div className="flex flex-col gap-[var(--spacing-component-xxs)]">
             <p className="text-heading-xs text-[var(--color-background-default-foreground)]">Outcome</p>
             <p className="text-body-sm text-[var(--color-text-secondary)]">{action.outcome || 'Not written yet. Edit the action to add one.'}</p>

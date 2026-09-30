@@ -109,7 +109,7 @@ Route `/me/actions` (sidebar "My Actions"). Code: `enpath-ui/src/features/enpath
   `color/text/invalid`) or "Done 12 Sep", source ("added by you" · "proposed by your manager" · "from
   an AI proposal"). Beside the row: **Start** (To do) / **Mark done** (In progress), and a "…" menu:
   Edit · Move back to In progress (Done only) · Remove from plan (destructive confirm: red Remove button, AlertDialog Destructive type). Expanding (several can be open at
-  once) shows, under the title on a light block: **Outcome** and **What {point} looks like** (the
+  once) shows, indented under the title (no background): **Outcome** and **What {point} looks like** (the
   Matrix behaviour text). Source and date aren't repeated there. Details open in place, not in a
   panel (decided 2026-09-30: little content); a Board card will expand the same way.
 - **Done** has no record step (Actions and Records are separate).
