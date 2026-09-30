@@ -104,9 +104,9 @@ Route `/me/actions` (sidebar "My Actions"). Code: `enpath-ui/src/features/enpath
 - **Summary:** four Stat tiles: Growth areas · In progress · To do · Done.
 - **One Card per growth area** of the Active target (pattern P7): name, "Growth area · You 3 → Needed 4
   · 1 of 2 done", "{N} records" (link; Records isn't built, so it says it's coming next), Add action
-  (opens the dialog with that growth area chosen).
+  (outline; opens the dialog with that growth area chosen). "0 records" is plain text, not a link.
 - **Action rows** (Accordion compact), sorted In progress → To do → Done, then by due date: status Badge
-  (To do secondary · In progress blue · Done success), title, "Due 26 Sep · overdue" (overdue in
+  (To do secondary · In progress blue · Done success), title, "Due 26 Sep · overdue" (only "overdue" in
   `color/text/invalid`) or "Done 12 Sep", source ("added by you" · "proposed by your manager" · "from
   an AI proposal"). Beside the row: **Start** (To do) / **Mark done** (In progress), and a "…" menu:
   Edit · Move back to In progress (Done only) · Remove from plan (confirm). Expanding shows Outcome,
@@ -126,7 +126,9 @@ Route `/me/actions` (sidebar "My Actions"). Code: `enpath-ui/src/features/enpath
 Engineer L3 on Lan's path on 27 Sep), giving three growth areas: Code quality, Delivery, Mentoring.
 My Career's mock starts with no target; the pages keep separate state. Today = 30 Sep 2026.
 
-**Not built:** progress ring (Open flag: missing component; text meanwhile) · Board view · manager
+**Rows** sit in fixed columns (status slot · title · caret | next-step button | "…") so they line up.
+
+**Not built:** progress ring before the title, Stat icon tiles, Badge `blue` border (three Open flags, not now) · Board view · manager
 view / approval · "Plan an action" from My Career opening this page · Records page.
 
 ## Screen — planned (not designed yet)

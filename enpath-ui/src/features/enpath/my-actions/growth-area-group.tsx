@@ -6,7 +6,7 @@
 // outcome and what the needed point looks like. Start / Mark done and the "…" menu sit beside the
 // trigger (never inside it). AI proposals for this growth area are muted Items with Add to plan /
 // Dismiss. An empty growth area invites an action or Ask AI.
-// Progress is text ("1 of 2 done"): a progress-ring component doesn't exist yet (Open flag).
+// Progress is text ("1 of 2 done"): a progress ring (before the title) doesn't exist yet (Open flag).
 
 import * as React from 'react';
 import { DotsThreeIcon, PlusIcon, SparkleIcon } from '@phosphor-icons/react/ssr';
@@ -37,12 +37,12 @@ export interface GroupHandlers {
 }
 
 function Meta({ action }: { action: Action }) {
-  const when = action.status === 'done'
-    ? `Done ${shortDate(action.doneOn ?? action.due)}`
-    : `Due ${shortDate(action.due)}${isOverdue(action) ? ' · overdue' : ''}`;
+  const when = action.status === 'done' ? `Done ${shortDate(action.doneOn ?? action.due)}` : `Due ${shortDate(action.due)}`;
+  // Only the word "overdue" is red; the date stays secondary.
   return (
     <span className="text-body-xs text-[var(--color-text-secondary)]">
-      <span className={isOverdue(action) ? 'text-[var(--color-text-invalid)]' : undefined}>{when}</span>
+      {when}
+      {isOverdue(action) && <> · <span className="text-[var(--color-text-invalid)]">overdue</span></>}
       {' · '}{sourceLabel[action.source]}
     </span>
   );
@@ -52,16 +52,24 @@ function ActionRow({ action, area, h }: { action: Action; area: Gap; h: GroupHan
   const done = action.status === 'done';
   return (
     <AccordionItem value={action.id}>
-      <div className="flex items-center gap-[var(--spacing-component-sm)]">
-        <AccordionTrigger className="min-w-0 justify-start text-left">
-          <Badge variant={statusBadge[action.status]} shape="pill" size="sm" className="shrink-0">{statusLabel[action.status]}</Badge>
+      {/* Fixed columns so every row lines up: trigger (status · title · caret) | next-step button | "…".
+          The trigger's header fills its column; the status sits in a fixed-width slot. */}
+      <div className="grid grid-cols-[minmax(0,1fr)_7rem_auto] items-center gap-[var(--spacing-component-sm)]">
+        <div className="flex min-w-0 [&>h3]:min-w-0 [&>h3]:flex-1">
+          <AccordionTrigger className="min-w-0 justify-start text-left">
+          <span className="flex w-[5.5rem] shrink-0">
+            <Badge variant={statusBadge[action.status]} shape="pill" size="sm">{statusLabel[action.status]}</Badge>
+          </span>
           <span className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xxs)]">
             <span className={done ? 'text-[var(--color-text-secondary)]' : 'text-heading-xs'}>{action.title}</span>
             <Meta action={action} />
           </span>
-        </AccordionTrigger>
-        {action.status === 'todo' && <Button variant="outline" size="sm" onClick={() => h.onAdvance(action)}>Start</Button>}
-        {action.status === 'doing' && <Button variant="outline" size="sm" onClick={() => h.onAdvance(action)}>Mark done</Button>}
+          </AccordionTrigger>
+        </div>
+        <div className="flex justify-end">
+          {action.status === 'todo' && <Button variant="outline" size="sm" onClick={() => h.onAdvance(action)}>Start</Button>}
+          {action.status === 'doing' && <Button variant="outline" size="sm" onClick={() => h.onAdvance(action)}>Mark done</Button>}
+        </div>
         {/* Non-modal: its items open dialogs (a modal menu left the page unclickable, P2). */}
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
@@ -102,10 +110,12 @@ export function GrowthAreaGroup({ area, actions, proposals, records, h }: {
           <CardTitle role="heading" aria-level={2}>{area.name}</CardTitle>
           <p className="text-body-xs text-[var(--color-text-secondary)]">Growth area · {pointsLine(area)} · {progress}</p>
         </div>
-        <Button variant="link" size="sm" onClick={() => h.onOpenRecords(area)}>
-          {records === 1 ? '1 record' : `${records} records`}
-        </Button>
-        <Button variant="ghost" size="sm" onClick={() => h.onAddAction(area.id)}><PlusIcon aria-hidden="true" />Add action</Button>
+        {records > 0 ? (
+          <Button variant="link" size="sm" onClick={() => h.onOpenRecords(area)}>{records === 1 ? '1 record' : `${records} records`}</Button>
+        ) : (
+          <span className="text-body-sm text-[var(--color-text-secondary)]">0 records</span>
+        )}
+        <Button variant="outline" size="sm" onClick={() => h.onAddAction(area.id)}><PlusIcon aria-hidden="true" />Add action</Button>
       </CardHeader>
 
       {rows.length > 0 && (
