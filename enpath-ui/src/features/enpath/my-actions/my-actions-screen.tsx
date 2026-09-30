@@ -139,8 +139,8 @@ export function MyActionsScreen() {
             <div className="flex flex-col gap-[var(--spacing-layout-sm)] px-[var(--spacing-layout-sm)] pb-[var(--spacing-layout-sm)]">
               <section aria-label="Plan summary" className="grid grid-cols-2 gap-[var(--spacing-component-md)] md:grid-cols-4">
                 <Stat label="Growth areas" value={growthAreas.length} icon={<IconTile tone="warning" icon={<TargetIcon />} />} />
-                <Stat label="In progress" value={count('doing')} icon={<IconTile tone="info" icon={<PlayCircleIcon />} />} />
                 <Stat label="To do" value={count('todo')} icon={<IconTile tone="neutral" icon={<ListChecksIcon />} />} />
+                <Stat label="In progress" value={count('doing')} icon={<IconTile tone="info" icon={<PlayCircleIcon />} />} />
                 <Stat label="Done" value={count('done')} icon={<IconTile tone="success" icon={<CheckCircleIcon />} />} />
               </section>
 
