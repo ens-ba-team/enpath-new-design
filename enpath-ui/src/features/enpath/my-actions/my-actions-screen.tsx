@@ -46,8 +46,9 @@ function IconTile({ icon, tone }: { icon: React.ReactNode; tone: 'warning' | 'in
 // Debt (same flag): Stat has no header divider or right-hand note. The label row gets a full-bleed line
 // under it (negative margins cancel Stat's spacing/component/md padding), and the description slot holds
 // a row: the detail on the left, "N overdue" in red on the right when there is any.
+// TRIAL (2026-09-30, step B): border-transparent — on the grey content area the shadow is enough.
 const statWithHeader =
-  '[&>p:first-child]:-mx-[var(--spacing-component-md)] [&>p:first-child]:border-b [&>p:first-child]:border-[var(--color-border-default)] [&>p:first-child]:px-[var(--spacing-component-md)] [&>p:first-child]:pb-[var(--spacing-component-sm)]';
+  'border-transparent [&>p:first-child]:-mx-[var(--spacing-component-md)] [&>p:first-child]:border-b [&>p:first-child]:border-[var(--color-border-default)] [&>p:first-child]:px-[var(--spacing-component-md)] [&>p:first-child]:pb-[var(--spacing-component-sm)]';
 
 function StatNote({ text, overdue = 0 }: { text: string; overdue?: number }) {
   return (

@@ -170,6 +170,9 @@ view / approval · "Plan an action" from My Career opening this page · Records 
 - **Trial: grey content area** (2026-09-30). Under the header, the page sits on `background/subtle`
   with the cards white, to fix the washed-out look (white on white, no layers). Goes against the
   rulebook's "panels stay white" for now: decide after the trial whether it becomes an app-wide rule.
+- **Trial steps B + C** (2026-09-30): on the grey area, group cards and Stat cards lose their border
+  (shadow only); the growth area header band is white (divider kept; `surface/header` unused for
+  now); group titles `heading-md`, action titles `heading-sm` (one step up each). Screen only.
 
 - **Blue budget.** Blue means brand (primary action, header band) or information (link, In progress,
   In progress). The AI proposal is a default (white) Alert; only its Sparkle is brand blue. Decorative things don't get blue: the progress ring fills neutral (`color/icon/default`),
