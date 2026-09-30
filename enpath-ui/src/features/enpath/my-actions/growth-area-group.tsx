@@ -72,11 +72,12 @@ export function GrowthAreaGroup({ area, actions, proposals, h }: {
   const progress = actions.length ? `${done} of ${actions.length} done` : 'No actions yet';
   return (
     // TRIAL (2026-09-30, washed-out look, steps B + C): on the grey content area the card needs no
-    // border (shadow only), titles are one step bigger. The header band keeps color/surface/header.
+    // border (shadow only), titles are one step bigger, and the title row is white (divider kept):
+    // on the brand/100 area the blue band blurred into the background.
     <Card role="region" aria-label={area.name} className="border-transparent">
       {/* Debt: tinted header band. Negative margins cancel the Card's padding (spacing/component/lg) so the
           band reaches the card's edges; the same side padding goes back inside it. */}
-      <CardHeader className="-mx-[var(--spacing-component-lg)] -mt-[var(--spacing-component-lg)] flex-row flex-wrap items-center gap-x-[var(--spacing-component-md)] gap-y-[var(--spacing-component-xs)] rounded-t-[var(--radius-lg)] border-b border-[var(--color-border-default)] bg-[var(--color-surface-header)] px-[var(--spacing-component-lg)] py-[var(--spacing-component-md)]">
+      <CardHeader className="-mx-[var(--spacing-component-lg)] -mt-[var(--spacing-component-lg)] flex-row flex-wrap items-center gap-x-[var(--spacing-component-md)] gap-y-[var(--spacing-component-xs)] rounded-t-[var(--radius-lg)] border-b border-[var(--color-border-default)] px-[var(--spacing-component-lg)] py-[var(--spacing-component-md)]">
         <ProgressRing done={done} total={actions.length} label={`${area.name}: ${progress}`} />
         <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xxs)]">
           <CardTitle role="heading" aria-level={2} className="text-heading-md text-[var(--color-background-default-foreground)]">{area.name}</CardTitle>
