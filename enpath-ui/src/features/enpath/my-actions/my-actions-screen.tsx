@@ -161,7 +161,10 @@ export function MyActionsScreen() {
               <Button onClick={() => openEditor({ mode: 'add' })}><PlusIcon aria-hidden="true" />Add action</Button>
             </header>
 
-            <div className="flex flex-col gap-[var(--spacing-layout-sm)] px-[var(--spacing-layout-sm)] pb-[var(--spacing-layout-sm)]">
+            {/* TRIAL (2026-09-30, "the page looks washed out"): the content under the header sits on
+                background/subtle so the white cards stand out, instead of white on white. The rulebook says
+                panels stay white: this is a My Actions trial before deciding for the whole app. */}
+            <div className="flex flex-1 flex-col gap-[var(--spacing-layout-sm)] border-t border-[var(--color-border-default)] bg-[var(--color-background-subtle)] px-[var(--spacing-layout-sm)] py-[var(--spacing-layout-sm)]">
               <section aria-label="Plan summary" className="grid grid-cols-2 gap-[var(--spacing-component-md)] md:grid-cols-4">
                 <Stat className={statWithHeader} label="Growth areas" value={growthAreas.length} icon={<IconTile tone="warning" icon={<TargetIcon />} />}
                   description={<StatNote text={`toward ${targetName}`} />} />
