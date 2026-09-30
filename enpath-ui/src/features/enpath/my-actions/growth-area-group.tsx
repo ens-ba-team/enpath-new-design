@@ -4,7 +4,7 @@
 // competency's Records and "Add action". Rows are an Accordion size="compact" (same as the competency
 // groups in My Career, pattern P7): status Badge + title + due date / source; expanding shows the
 // outcome and what the needed point looks like. Start / Mark done and the "…" menu sit beside the
-// trigger (never inside it). AI proposals for this growth area are success (green) Alerts (icon laid out as in
+// trigger (never inside it). AI proposals for this growth area are warning (yellow) Alerts (icon laid out as in
 // the Alert WithIcon stories; Alert has no icon option yet, Open flag) with Add to plan / Dismiss. An empty growth area invites an action or Ask AI.
 // SCREEN-LEVEL DEBT (design-patterns.md → Open flags, kind restyle, 2026-09-30): the progress ring
 // before the title and the In progress Badge's border are built here until the components get them
@@ -158,10 +158,10 @@ export function GrowthAreaGroup({ area, actions, proposals, records, h }: {
       )}
 
       {proposals.map((p) => (
-        // Green (success) Alert (user, 2026-09-30): stands apart from the blue header band and links.
+        // Yellow (warning) Alert (user, 2026-09-30): stands apart from the blue header band and links.
         // Not urgent → role=group (the Alert defaults to role=alert).
         // Icon + text + buttons sit in an inner row, as in the Alert WithIcon story (Alert has no icon option).
-        <Alert key={p.id} variant="success" role="group" aria-label="AI proposal">
+        <Alert key={p.id} variant="warning" role="group" aria-label="AI proposal">
           <div className="flex flex-wrap items-start gap-[var(--spacing-component-md)]">
             <SparkleIcon className="mt-[var(--spacing-component-xxs)] h-4 w-4 shrink-0" aria-hidden="true" />
             <div className="flex min-w-0 flex-1 flex-col gap-[var(--spacing-component-xxs)]">
