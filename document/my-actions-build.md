@@ -135,8 +135,8 @@ My Career's mock starts with no target; the pages keep separate state. Today = 3
 **Rows** sit in fixed columns (status slot · title · caret | next-step button | "…") so they line up.
 
 **Built on the screen, to move into components** (Open flags, kind restyle): the progress ring before
-each growth area's title ("1/2"), the Stat tiles' coloured icon tiles (growth areas amber · in progress
-blue/100 · to do zinc/200 · done green/100, same fills as the Board columns), the In progress badge's border, the tinted header band (`color/surface/header`).
+each growth area's title ("1/2"), the Stat tiles' coloured icon tiles (solid fill + white icon: growth areas
+yellow/600 · in progress blue/600 · to do zinc/500 · done green/600), the In progress badge's border, the tinted header band (`color/surface/header`).
 
 **Not built:** manager
 view / approval · "Plan an action" from My Career opening this page · Records page.

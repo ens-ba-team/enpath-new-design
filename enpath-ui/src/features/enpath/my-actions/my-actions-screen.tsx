@@ -32,11 +32,12 @@ import {
 // Career), in progress info blue, to do neutral, done success. Move into Stat, then delete this.
 function IconTile({ icon, tone }: { icon: React.ReactNode; tone: 'warning' | 'info' | 'neutral' | 'success' }) {
   const fill = {
-    warning: 'bg-[var(--color-status-warning-subtle)] text-[var(--color-icon-warning)]',
-    // Same fills as the Board's columns (user, 2026-09-30): primitives, no semantic token at these steps.
-    info: 'bg-[var(--color-blue-100)] text-[var(--color-status-info)]',
-    neutral: 'bg-[var(--color-zinc-200)] text-[var(--color-icon-muted)]',
-    success: 'bg-[var(--color-green-100)] text-[var(--color-icon-success)]',
+    // Solid fill + white icon (user, 2026-09-30): step 600 for all, To do step 500. Primitives: no
+    // semantic token at these steps.
+    warning: 'bg-[var(--color-yellow-600)] text-[var(--color-white)]',
+    info: 'bg-[var(--color-blue-600)] text-[var(--color-white)]',
+    neutral: 'bg-[var(--color-zinc-500)] text-[var(--color-white)]',
+    success: 'bg-[var(--color-green-600)] text-[var(--color-white)]',
   }[tone];
   return <span className={`inline-flex rounded-[var(--radius-md)] p-[var(--spacing-component-xs-plus)] ${fill}`}>{icon}</span>;
 }
