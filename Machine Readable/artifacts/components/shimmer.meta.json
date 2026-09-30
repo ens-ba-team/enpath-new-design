@@ -10,7 +10,9 @@
   },
   "tokensUsed": [
     "color/background/default",
-    "color/white"
+    "color/text/secondary",
+    "color/white",
+    "color/zinc/600"
   ],
   "accessibility": {
     "properties": [
@@ -41,6 +43,10 @@
       {
         "date": "2026-09-22",
         "change": "Added (AI Elements install) and documented."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Text colour binds color/text/secondary (was the shadcn muted-foreground alias, same value)."
       }
     ]
   },

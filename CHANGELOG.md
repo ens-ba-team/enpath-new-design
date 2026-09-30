@@ -6,6 +6,18 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-09-30 — Spec batch 3; drift-check #14 enforced
+
+### Changed
+- **Select** list binds `spacing/component/xxs`; **Shimmer** text binds `color/text/secondary` (same values as before).
+- Specs match the code: **Select** (label text is the composed Label), **Sheet** (no body radius; footer actions are Buttons), **Suggestion** (chips are Buttons), **Tool** (code is a CodeBlock), **Sidebar** (floating = `radius/panel`, no content padding), **Switch**, **Textarea** (labels, icons, choice cards are compositions), **Table** (wrapper rule moved to constraints; trend and rating cells are compositions).
+- **drift-check #14 now fails** when a spec names a token its code doesn't use. The 11 flagged specs list those tokens in `meta.knownIssues[].pendingTokens` (28 tokens), which the check allows until each flag is decided.
+
+### Flagged
+- Toast paddings and gaps come from sonner's default CSS.
+
+---
+
 ## 2026-09-30 — Spec batch 2
 
 ### Changed
@@ -40,9 +52,6 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ### Changed
 - `generation-rules.md` Stage 1 starts with the script; `meta-artifact-template.md` documents `tokensUsed`; the rulebook gate list runs the script before drift-check; `token-binding-skill.md` explains `owners` / `doNotUseIn`.
-
-### Pending
-- 32 specs name tokens their code doesn't use (#14 reports them; it fails once the spec batches are done).
 
 ---
 

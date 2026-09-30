@@ -25,7 +25,7 @@
  *      than wide/widest. Exceptions: lone font-semibold / font-normal, tracking-wide / -widest. Comments skipped.
  *  14. Token usage is generated — each meta.json `tokensUsed` and token-usage.json match the code
  *      (extract-token-usage.mjs --write was run); the hand-written `tokens` block names only tokens the
- *      code uses (reported as pending until the spec batches are done, then it fails).
+ *      code uses, except tokens listed in meta.knownIssues[].pendingTokens (waiting on an Open flag).
  *  15. Components follow token rules — a component token is used only by its owners
  *      ($extensions.enpath.owners in components.tokens.json), and no component uses a token whose
  *      $extensions.enpath.doNotUseIn names it. Uses recorded as `pending` (an Open flag) warn, don't fail.
@@ -473,19 +473,22 @@ section('14. Token usage — tokensUsed and token-usage.json match the code');
 {
   const { scanUsage, tokensNamedInSpec, usagePath } = await import('./extract-token-usage.mjs');
   const { components, usage, tokenNames } = scanUsage();
-  let stale = 0, specOnly = 0;
+  let stale = 0, specOnly = 0, pendingCount = 0;
   for (const [name, c] of Object.entries(components)) {
     if (c.missing) { bad(`${name}: tsx not found (${c.missing})`); continue; }
     const meta = JSON.parse(fs.readFileSync(path.join(metaDir, c.file), 'utf8'));
     if (JSON.stringify(meta.tokensUsed ?? null) !== JSON.stringify(c.tokensUsed)) { bad(`${name}: tokensUsed is stale`); stale++; }
-    if ([...tokensNamedInSpec(meta, tokenNames)].some((t) => !c.tokensUsed.includes(t))) specOnly++;
+    const pending = new Set((meta.meta?.knownIssues ?? []).flatMap((k) => k.pendingTokens ?? []));
+    const extra = [...tokensNamedInSpec(meta, tokenNames)].filter((t) => !c.tokensUsed.includes(t));
+    for (const t of extra) if (!pending.has(t)) { bad(`${name}: spec names ${t}, the code doesn't use it`); specOnly++; }
+    pendingCount += extra.filter((t) => pending.has(t)).length;
   }
   const usageText = JSON.stringify(usage, null, 2) + '\n';
   if (!fs.existsSync(usagePath) || fs.readFileSync(usagePath, 'utf8') !== usageText) { bad('token-usage.json is stale'); stale++; }
   if (stale) console.log('    → run: node "Machine Readable/extract-token-usage.mjs" --write');
   else ok(`${Object.keys(components).length} components: tokensUsed and token-usage.json current`);
-  // Pending until the spec batches (plan 2026-09-30) are done; then this becomes bad().
-  if (specOnly) console.log(`  ⚠ ${specOnly} spec(s) name tokens the code doesn't use (pending spec batches; see extract-token-usage.mjs)`);
+  if (!specOnly) ok('every token a spec names is used by its code');
+  if (pendingCount) console.log(`  ⚠ ${pendingCount} spec token(s) waiting on an Open flag (meta.knownIssues pendingTokens)`);
 }
 
 // ── 15. Components follow token rules ────────────────────────────────────────

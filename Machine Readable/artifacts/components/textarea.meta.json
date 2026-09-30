@@ -28,6 +28,10 @@
       {
         "date": "2026-09-29",
         "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Spec token section matches the code: description text and icons belong to the composed Label and InputGroup."
       }
     ]
   },
@@ -217,37 +221,23 @@
         }
       },
       "counter": {
-        "All": {
-          "fill": "color/text/secondary"
-        }
+        "All": {}
       }
     },
     "icons": {
       "leading-icon": {
-        "Active": {
-          "stroke": "color/icon/default"
-        },
-        "Disabled": {
-          "stroke": "color/icon/disabled"
-        }
+        "Active": {},
+        "Disabled": {}
       },
       "trailing-icon": {
-        "Active": {
-          "stroke": "color/icon/default"
-        },
-        "Disabled": {
-          "stroke": "color/icon/disabled"
-        }
+        "Active": {},
+        "Disabled": {}
       },
       "header-icon": {
-        "All": {
-          "stroke": "color/icon/default"
-        }
+        "All": {}
       },
       "header-trailing-icon": {
-        "All": {
-          "stroke": "color/icon/default"
-        }
+        "All": {}
       }
     },
     "spacing": {
@@ -279,7 +269,8 @@
         "borderOverride": "color/border/disabled",
         "textOverride": "color/text/disabled"
       }
-    }
+    },
+    "composition": "Description text and icons are composed (Label, InputGroup) in the stories."
   },
   "tokensUsed": [
     "color/border/default",

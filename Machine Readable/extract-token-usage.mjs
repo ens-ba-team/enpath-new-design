@@ -147,7 +147,8 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
     const p = path.join(metaDir, c.file);
     const meta = JSON.parse(fs.readFileSync(p, 'utf8'));
     const same = JSON.stringify(meta.tokensUsed ?? null) === JSON.stringify(c.tokensUsed);
-    const extra = [...tokensNamedInSpec(meta, tokenNames)].filter((t) => !c.tokensUsed.includes(t));
+    const pending = new Set((meta.meta?.knownIssues ?? []).flatMap((k) => k.pendingTokens ?? []));
+    const extra = [...tokensNamedInSpec(meta, tokenNames)].filter((t) => !c.tokensUsed.includes(t) && !pending.has(t));
     if (extra.length) { specOnly++; console.log(`  ✗ ${name}: spec names ${extra.length} token(s) the code doesn't use: ${extra.join(', ')}`); }
     if (!same) {
       stale++;

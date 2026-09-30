@@ -89,13 +89,6 @@
       "paddingY": "spacing/component/sm",
       "paddingX": "spacing/component/md"
     },
-    "field": {
-      "descriptionDefault": "color/text/secondary",
-      "descriptionOpen": "hidden",
-      "descriptionDisabled": "color/text/disabled",
-      "descriptionInvalid": "color/text/invalid",
-      "gap": "spacing/component/xs"
-    },
     "dropdown": {
       "container": {
         "fill": "color/surface/overlay",
@@ -135,7 +128,8 @@
         "ringGlow": "color-mix(in_srgb,var(--color-border-error)_20%,transparent)",
         "notes": "Uses [&[aria-invalid]] compound selector to beat data-[state=open]/focus-visible specificity. Blue ring must NOT appear when invalid."
       }
-    }
+    },
+    "composition": "Label, description and error text are composed with Label in the stories."
   },
   "tokensUsed": [
     "color/background/accent",
@@ -171,12 +165,14 @@
     "radius/md",
     "shadow/lg",
     "shadow/overlay",
+    "spacing/0-5",
     "spacing/2",
     "spacing/3",
     "spacing/8",
     "spacing/9",
     "spacing/component/md",
-    "spacing/component/sm"
+    "spacing/component/sm",
+    "spacing/component/xxs"
   ],
   "accessibility": {
     "properties": [
@@ -249,6 +245,10 @@
       {
         "date": "2026-09-30",
         "change": "Dropdown shadow shadow/sm → shadow/overlay (the role token for floating UI). Slightly deeper shadow."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Dropdown list binds spacing/component/xxs (was gap-0.5 / p-0.5, same value). Label and description text belong to the composed Label."
       }
     ]
   },

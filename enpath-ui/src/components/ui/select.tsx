@@ -151,7 +151,7 @@ const SelectContent = React.forwardRef<
       <SelectPrimitive.Viewport
         className={cn(
           // Container: spacing/component/xxs (2px) padding all sides, gap between items
-          "flex flex-col gap-0.5 p-0.5",
+          "flex flex-col gap-[var(--spacing-component-xxs)] p-[var(--spacing-component-xxs)]",
           position === "popper" &&
             "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]"
         )}

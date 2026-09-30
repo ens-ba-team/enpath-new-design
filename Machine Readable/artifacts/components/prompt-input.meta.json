@@ -71,7 +71,20 @@
     "artifactStatus": "needs review",
     "version": "3.0",
     "openQuestions": [],
-    "knownIssues": [],
+    "knownIssues": [
+      {
+        "issue": "Open flag (design-patterns.md): The chat composer look is applied by the Ask AI screen with className overrides.",
+        "workaround": "The spec keeps the tokens below until the flag is decided; drift-check #14 allows only these.",
+        "pendingTokens": [
+          "chat/composer/bg",
+          "chat/composer/border",
+          "color/border/focus",
+          "chat/composer/radius",
+          "radius/overlay"
+        ],
+        "date": "2026-09-30"
+      }
+    ],
     "notes": [
       "Installed 2026-09-22 with AI Elements for the chat panel. Stock source adapted to Enpath: Phosphor icons, light-only classes, shadcn colour names rewritten to Enpath tokens."
     ],

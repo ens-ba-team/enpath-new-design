@@ -110,12 +110,6 @@
     }
   },
   "tokens": {
-    "tableContainer": {
-      "fill": "transparent",
-      "stroke": "color/border/default",
-      "radius": "radius/base",
-      "note": "ALWAYS use radius/base — canonical table radius. Never use radius/lg, radius/md, or hardcoded values."
-    },
     "tableHead": {
       "containerFill": "color/surface/raised",
       "containerStroke": "color/border/default",
@@ -126,17 +120,7 @@
       "contentFill": "color/surface/default/foreground",
       "supportingTextFill": "color/text/secondary",
       "iconStroke": "color/surface/default/foreground",
-      "trendUpIconStroke": "color/icon/success",
-      "trendUpLabelFill": "color/text/success",
-      "trendDownIconStroke": "color/icon/danger",
-      "trendDownLabelFill": "color/text/invalid",
-      "starFill": "color/chart/4",
-      "starFrameFill": "color/surface/default",
-      "gap": {
-        "default": "spacing/component/sm",
-        "trendTypes": "spacing/component/xs",
-        "starRatings": "spacing/component/xxs"
-      }
+      "composition": "Trend and star-rating cells are compositions in the stories; their colours and gaps belong there."
     },
     "tableRow": {
       "Regular": {
@@ -249,7 +233,8 @@
     "`Type=Input` and `Type=Select` are Default size only — do not use in Compact tables",
     "Star-Ratings is display-only — not interactive",
     "Never add radius to individual `_table-row` instances — the container FRAME handles the corner radius",
-    "Always use Type=Header row for column headers — never style a Regular row to look like a header."
+    "Always use Type=Header row for column headers — never style a Regular row to look like a header.",
+    "The caller wraps the table: border color/border/default, radius/base (the canonical table radius), overflow hidden. Never radius/lg, radius/md or a hardcoded radius."
   ],
   "meta": {
     "storyFile": "src/stories/Table.stories.tsx",
@@ -272,6 +257,10 @@
       {
         "date": "2026-09-29",
         "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Spec token section matches the code: the wrapper is the caller's (rule moved to constraints); trend and rating cells are story compositions."
       }
     ]
   },

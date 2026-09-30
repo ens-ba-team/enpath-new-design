@@ -142,7 +142,16 @@
     "notes": [
       "Source markdown has no open questions."
     ],
-    "knownIssues": [],
+    "knownIssues": [
+      {
+        "issue": "Open flag (design-patterns.md): State=Disabled is only styled in the story with a className.",
+        "workaround": "The spec keeps the tokens below until the flag is decided; drift-check #14 allows only these.",
+        "pendingTokens": [
+          "color/text/disabled"
+        ],
+        "date": "2026-09-30"
+      }
+    ],
     "changelog": [
       {
         "date": "2026-09-21",

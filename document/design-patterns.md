@@ -53,6 +53,7 @@ Decisions waiting. One row per flag; remove it when decided and done.
 | InputOTP: slot fill is `color/background/default` in code, `color/input/bg` in the spec; Disabled dims the whole group with opacity instead of the spec's disabled fill / stroke / text (`color/surface/muted`, `color/border/disabled`, `color/text/disabled`) | breaks spec | `components/ui/input-otp.tsx` | 2026-09-30 | Match the spec in code, or update the spec to the code |
 | Chat composer look (`chat/composer/bg`, `/border`, `/radius`) is applied by the Ask AI screen with className overrides on `PromptInput`; `PromptInput` itself renders the plain InputGroup | restyle | `features/enpath/chat/assistant-panel.tsx` (PromptInput); prompt-input + input-group specs | 2026-09-30 | Move the composer look into `PromptInput` (default or a variant), or drop it from the specs |
 | Pagination: the Simple story overrides `PaginationContent` gap with a className | restyle | `stories/Pagination.stories.tsx` | 2026-09-30 | Add a gap option to `PaginationContent`, or keep the default |
+| Toast: paddings and gaps come from sonner's default CSS; the spec binds `spacing/component/md`, `lg`, `sm`, `xxs` | breaks spec | `components/ui/toast.tsx` | 2026-09-30 | Bind the spec's spacing tokens through `toastOptions.classNames`, or update the spec to sonner's defaults |
 
 Kinds: **restyle** (component changed at a place of use) · **missing component** · **missing token** ·
 **breaks token** (component vs token description) · **breaks spec** (code vs `meta.json`).

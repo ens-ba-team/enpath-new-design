@@ -132,50 +132,7 @@
       },
       "radius": "radius/full"
     },
-    "switchItemText": {
-      "Default": {
-        "label": "color/background/default/foreground",
-        "description": "color/background/muted/foreground"
-      },
-      "Focus": {
-        "label": "color/background/default/foreground",
-        "description": "color/background/muted/foreground"
-      },
-      "Disabled": {
-        "label": "color/text/disabled",
-        "description": "color/text/disabled"
-      },
-      "Invalid": {
-        "label": "color/text/invalid",
-        "description": "color/text/secondary"
-      }
-    },
-    "choiceCard": {
-      "Default": {
-        "stroke": "color/border/default",
-        "fill": "transparent",
-        "radius": "radius/lg",
-        "padding": "spacing/component/lg"
-      },
-      "Disabled": {
-        "stroke": "color/border/disabled",
-        "fill": "transparent",
-        "radius": "radius/lg",
-        "padding": "spacing/component/lg"
-      },
-      "Invalid": {
-        "stroke": "color/border/error",
-        "fill": "transparent",
-        "radius": "radius/lg",
-        "padding": "spacing/component/lg"
-      },
-      "Focus": {
-        "stroke": "color/border/focus",
-        "fill": "transparent",
-        "radius": "radius/lg",
-        "padding": "spacing/component/lg"
-      }
-    }
+    "composition": "Labels, descriptions and choice cards are composed in the stories; their colours, borders and padding belong there."
   },
   "tokensUsed": [
     "color/background/default",
@@ -245,6 +202,10 @@
       {
         "date": "2026-09-29",
         "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Spec token section matches the code: labels and choice cards are story compositions."
       }
     ]
   },

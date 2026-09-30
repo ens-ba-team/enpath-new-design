@@ -51,7 +51,17 @@
     "artifactStatus": "needs review",
     "version": "3.0",
     "openQuestions": [],
-    "knownIssues": [],
+    "knownIssues": [
+      {
+        "issue": "Open flag (design-patterns.md): Label colour, shortcut dimmed with opacity, separator colour and destructive item differ from the spec.",
+        "workaround": "The spec keeps the tokens below until the flag is decided; drift-check #14 allows only these.",
+        "pendingTokens": [
+          "color/text/secondary",
+          "color/text/invalid"
+        ],
+        "date": "2026-09-30"
+      }
+    ],
     "notes": [
       "Installed 2026-09-22 with AI Elements for the chat panel. Stock source adapted to Enpath: Phosphor icons, light-only classes, shadcn colour names rewritten to Enpath tokens."
     ],

@@ -12,7 +12,17 @@
     "notes": [
       "Destructive type icon-container uses color/status/danger-subtle fill — icon inside may use color/status/danger-subtle/foreground (valid paired-surface)."
     ],
-    "knownIssues": [],
+    "knownIssues": [
+      {
+        "issue": "Open flag (design-patterns.md): Type Default / Destructive and the icon container are in the spec, not in the code.",
+        "workaround": "The spec keeps the tokens below until the flag is decided; drift-check #14 allows only these.",
+        "pendingTokens": [
+          "color/background/muted",
+          "color/status/danger-subtle"
+        ],
+        "date": "2026-09-30"
+      }
+    ],
     "changelog": [
       {
         "date": "2026-09-21",

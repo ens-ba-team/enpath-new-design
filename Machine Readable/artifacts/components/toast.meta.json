@@ -146,7 +146,19 @@
     "notes": [
       "Sonner imperative API — no JSX props at call site; <Toaster /> in root layout provides the portal."
     ],
-    "knownIssues": [],
+    "knownIssues": [
+      {
+        "issue": "Open flag (design-patterns.md): Paddings and gaps come from sonner's default CSS, not the spec's tokens.",
+        "workaround": "The spec keeps the tokens below until the flag is decided; drift-check #14 allows only these.",
+        "pendingTokens": [
+          "spacing/component/md",
+          "spacing/component/lg",
+          "spacing/component/xxs",
+          "spacing/component/sm"
+        ],
+        "date": "2026-09-30"
+      }
+    ],
     "changelog": [
       {
         "date": "2026-09-21",

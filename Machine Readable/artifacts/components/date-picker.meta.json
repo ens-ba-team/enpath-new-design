@@ -152,7 +152,17 @@
     "notes": [
       "Source markdown contains complete token, behavior, accessibility, and usage sections."
     ],
-    "knownIssues": [],
+    "knownIssues": [
+      {
+        "issue": "Open flag (design-patterns.md): Open-state fill differs from the spec; the invalid state is not in the code.",
+        "workaround": "The spec keeps the tokens below until the flag is decided; drift-check #14 allows only these.",
+        "pendingTokens": [
+          "color/background/default",
+          "color/border/error"
+        ],
+        "date": "2026-09-30"
+      }
+    ],
     "changelog": [
       {
         "date": "2026-09-21",

@@ -354,6 +354,8 @@ Document bugs and limitations with workarounds so future sessions don't re-inves
 ]
 ```
 
+A known issue that is an Open flag in `document/design-patterns.md` may list `"pendingTokens": [...]`: tokens the spec keeps although the code doesn't use them yet. drift-check #14 allows only those; remove the entry when the flag is decided.
+
 ### `meta.changelog`
 
 Log breaking changes and notable updates. Mirrors CHANGELOG.md entries for this specific component.

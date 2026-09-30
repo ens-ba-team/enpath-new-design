@@ -96,7 +96,7 @@
       "Floating": {
         "fill": "color/sidebar/background",
         "stroke": "none",
-        "cornerRadius": "radius/lg"
+        "cornerRadius": "radius/panel"
       },
       "Inset": {
         "fill": "color/sidebar/background",
@@ -124,10 +124,10 @@
       "caption": "color/text/secondary"
     },
     "content": {
-      "paddingTop": "spacing/0",
-      "paddingBottom": "spacing/0",
-      "paddingLeft": "spacing/0",
-      "paddingRight": "spacing/0",
+      "paddingTop": "none",
+      "paddingBottom": "none",
+      "paddingLeft": "none",
+      "paddingRight": "none",
       "gap": "spacing/component/md"
     },
     "groups": {
@@ -350,6 +350,10 @@
       {
         "date": "2026-09-29",
         "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Spec token section matches the code: the floating sidebar uses radius/panel; content has no padding."
       }
     ]
   },

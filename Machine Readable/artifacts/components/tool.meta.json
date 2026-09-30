@@ -8,7 +8,7 @@
   "tokens": {
     "Border": "`color/border/default`",
     "Status badge": "Badge secondary",
-    "Input / output code": "`chat/code/bg`",
+    "Input / output code": "A CodeBlock; its tokens are CodeBlock's.",
     "Error text": "`color/text/invalid`"
   },
   "tokensUsed": [
@@ -60,6 +60,10 @@
       {
         "date": "2026-09-29",
         "change": "Text uses Enpath text styles (text-body-sm, text-heading-md …, see Foundations/Text Styles) instead of mixed size and weight classes. Labels (label-*) and small headings (heading-sm/xs) are Medium 500."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Spec token section matches the code: input and output are CodeBlocks."
       }
     ]
   },

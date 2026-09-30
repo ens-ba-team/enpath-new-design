@@ -179,7 +179,18 @@
     "notes": [
       "Type=Form has Slot 1 and Slot 2 between input fields for checkboxes, selects, helper text rows, or custom form elements."
     ],
-    "knownIssues": [],
+    "knownIssues": [
+      {
+        "issue": "Open flag (design-patterns.md): Sticky footer / Scrollable are built in the story by overriding padding; footer fill is a story class.",
+        "workaround": "The spec keeps the tokens below until the flag is decided; drift-check #14 allows only these.",
+        "pendingTokens": [
+          "spacing/component/xl",
+          "color/background/subtle",
+          "color/border/subtle"
+        ],
+        "date": "2026-09-30"
+      }
+    ],
     "changelog": [
       {
         "date": "2026-09-21",

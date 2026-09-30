@@ -835,6 +835,7 @@
     "reasoning",
     "select",
     "sheet",
+    "shimmer",
     "sidebar",
     "stat",
     "step-rail",
@@ -1060,6 +1061,7 @@
     "reasoning",
     "select",
     "sheet",
+    "shimmer",
     "sidebar",
     "stat",
     "step-rail",
@@ -1332,6 +1334,7 @@
     "drawer",
     "item",
     "pagination",
+    "select",
     "sidebar",
     "tabs"
   ],
@@ -1554,6 +1557,7 @@
     "drawer",
     "item",
     "pagination",
+    "select",
     "sidebar",
     "tabs"
   ],

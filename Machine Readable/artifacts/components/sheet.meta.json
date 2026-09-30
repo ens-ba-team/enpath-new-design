@@ -47,7 +47,6 @@
     },
     "sheetBody": {
       "padding": "spacing/component/lg",
-      "radius": "radius/md",
       "type": "SLOT — replace with any content appropriate to the sheet's purpose"
     },
     "sheetFooter": {
@@ -55,15 +54,7 @@
       "strokePosition": "top",
       "padding": "spacing/component/lg",
       "gap": "spacing/component/sm",
-      "btnPrimary": {
-        "fill": "button/primary/bg/bg",
-        "width": "fill container"
-      },
-      "btnSecondary": {
-        "fill": "button/outline/bg/bg",
-        "stroke": "button/outline/border/default",
-        "width": "fill container"
-      }
+      "buttons": "Buttons; their tokens are Button's."
     }
   },
   "tokensUsed": [
@@ -177,6 +168,10 @@
       {
         "date": "2026-09-30",
         "change": "Added shadow/modal (was none): a sheet blocks the page behind a scrim."
+      },
+      {
+        "date": "2026-09-30",
+        "change": "Spec token section matches the code: the body has no radius; footer actions are Buttons."
       }
     ]
   },

@@ -142,7 +142,17 @@
     "notes": [
       "Card variants are example compositions, not closed modes — any interior structure is valid as long as the shell tokens are preserved."
     ],
-    "knownIssues": [],
+    "knownIssues": [
+      {
+        "issue": "Open flag (design-patterns.md): Border example and prose density are className overrides in the stories.",
+        "workaround": "The spec keeps the tokens below until the flag is decided; drift-check #14 allows only these.",
+        "pendingTokens": [
+          "color/border/strong",
+          "spacing/component/xl"
+        ],
+        "date": "2026-09-30"
+      }
+    ],
     "changelog": [
       {
         "date": "2026-09-21",
