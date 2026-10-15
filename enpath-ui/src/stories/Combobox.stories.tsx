@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { ComboboxField } from '@/components/ui/combobox';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 // Spec: combobox.meta.json
 
@@ -209,5 +211,21 @@ export const AllStates: Story = {
       <ComboboxField id="s5" label="Search" type="search" placeholder="Search people" options={people} />
       <ComboboxField id="s6" label="Multi-select" placeholder="Add members" multiple defaultValue={["ada"]} options={people} description="Select all that apply." />
     </div>
+  ),
+};
+
+// ─── In a Dialog (2026-10-15: the list must be clickable and typeable inside a modal) ──
+
+export const InDialog: Story = {
+  render: () => (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline">Open dialog</Button>
+      </DialogTrigger>
+      <DialogContent aria-describedby={undefined}>
+        <DialogHeader><DialogTitle>Assign owner</DialogTitle></DialogHeader>
+        <ComboboxField id="owner-dialog" label="Owner" type="search" placeholder="Search people" options={people} />
+      </DialogContent>
+    </Dialog>
   ),
 };

@@ -1,0 +1,159 @@
+{
+  "name": "popover",
+  "description": "A floating panel anchored to a trigger for small interactive content: a list to pick from, a short form.",
+  "category": "overlay",
+  "shadcnBase": "popover",
+  "codeOnly": true,
+  "variants": {},
+  "tokens": {
+    "Fill": "`color/surface/overlay`",
+    "Text": "`color/surface/overlay/foreground`",
+    "Border": "`color/border/default`",
+    "Radius": "`radius/lg`",
+    "Shadow": "`shadow/overlay`",
+    "Padding": "`spacing/component/md` (a list inside sets p-0)",
+    "Z-index": "`z-index/modal` (above a Dialog or Sheet)"
+  },
+  "tokensUsed": [
+    "color/border/default",
+    "color/surface/overlay",
+    "color/white",
+    "color/zinc/200",
+    "radius/lg",
+    "shadow/lg",
+    "shadow/overlay",
+    "spacing/3",
+    "spacing/component/md",
+    "z-index/modal"
+  ],
+  "accessibility": {
+    "properties": [
+      {
+        "property": "Opens on",
+        "value": "Click or Enter / Space on the trigger"
+      },
+      {
+        "property": "Focus",
+        "value": "Moves into the panel on open and back to the trigger on close; Escape closes"
+      },
+      {
+        "property": "In a modal",
+        "value": "Works inside Dialog and Sheet (same Radix layer stack)"
+      }
+    ]
+  },
+  "constraints": [
+    "Use for small interactive content tied to a trigger: the Combobox list, a short filter form.",
+    "Keep it small; a task that needs focus belongs in a Dialog.",
+    "Read-only previews on hover belong in HoverCard."
+  ],
+  "meta": {
+    "storyFile": "src/stories/Popover.stories.tsx",
+    "artifactStatus": "needs review",
+    "version": "3.0",
+    "openQuestions": [],
+    "knownIssues": [],
+    "notes": [
+      "Added 2026-10-15 (shadcn Popover on Radix) to rebuild Combobox: Base UI's list didn't work inside a Radix Dialog."
+    ],
+    "changelog": [
+      {
+        "date": "2026-10-15",
+        "change": "Created."
+      }
+    ]
+  },
+  "implementation": {
+    "tsxFile": "src/components/ui/popover.tsx",
+    "packageDeps": [
+      "@radix-ui/react-popover"
+    ],
+    "exports": [
+      "Popover",
+      "PopoverTrigger",
+      "PopoverAnchor",
+      "PopoverContent"
+    ],
+    "notes": []
+  },
+  "storybook": {
+    "file": "src/stories/Popover.stories.tsx",
+    "title": "Overlay/Popover",
+    "stories": [
+      "Default"
+    ],
+    "decorators": [
+      "none"
+    ],
+    "notes": ""
+  },
+  "docs": {
+    "intro": "# Popover\n\nA floating panel anchored to a trigger for small interactive content: a list to pick from, a short form.\n\n---\n\n",
+    "sections": [
+      {
+        "title": "What it is",
+        "body": "\nRadix Popover. Same primitive family as Dialog, Sheet and Select, so it stays clickable inside a modal. First use: the Combobox list.\n\n**Exports:** `Popover` · `PopoverTrigger` · `PopoverAnchor` · `PopoverContent`\n\n---\n\n"
+      },
+      {
+        "title": "Token Bindings",
+        "body": "\n| Part | Token |\n|---|---|\n| Fill | `color/surface/overlay` |\n| Text | `color/surface/overlay/foreground` |\n| Border | `color/border/default` |\n| Radius | `radius/lg` |\n| Shadow | `shadow/overlay` |\n| Padding | `spacing/component/md` |\n| Z-index | `z-index/modal` |\n\n---\n\n"
+      },
+      {
+        "title": "Accessibility",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "accessibility.properties"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Usage Rules",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "constraints"
+          },
+          {
+            "md": "\n---\n\n"
+          }
+        ]
+      },
+      {
+        "title": "Do Not",
+        "parts": [
+          {
+            "md": ""
+          },
+          {
+            "from": "doNot"
+          },
+          {
+            "md": ""
+          }
+        ]
+      },
+      {
+        "title": "More details",
+        "body": "\n- **Source:** https://ui.shadcn.com/docs/components/popover\n- **Story:** `Overlay/Popover`\n\n---\n\n"
+      }
+    ]
+  },
+  "doNot": [
+    {
+      "wrong": "A long task or a form that needs full attention in a Popover",
+      "correct": "Dialog"
+    },
+    {
+      "wrong": "Hover-only previews in a Popover",
+      "correct": "HoverCard"
+    }
+  ]
+}

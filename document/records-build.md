@@ -202,10 +202,14 @@ every status; Lan's manager Hà Phạm and a direct report An Trần, so My team
   the correction, both acknowledge again (BR-10).
 - **Tokens fixed:** selection bar `surface/tint` (identity fills only) → `surface/raised` + border;
   waiting clock `icon/muted` → `icon/default`; Lan shows as "You" in From / About.
-- **Sent view grouped by Record (2026-10-15):** a group row (title · N feedback · date, collapsible,
-  all open by default, no status or actions) with its feedback rows under it; no From column (always
-  you). Records with one feedback are groups too. Other views stay flat.
+- **Every view groups rows by Record (2026-10-15; first Sent only):** a group row (title · from
+  {creator} · N feedback · date; "from" left out for your own records; collapsible, all open, no status
+  or actions) with its feedback rows under it; no From column. A group holds **only the rows that view
+  may show** (BR-18), so My team groups a record about several reports (Quân Đỗ's Sprint 14 retro →
+  An Trần + Bình Hồ) without revealing anything else in it.
 - **My team person filter = Combobox** (searchable; Select didn't scale to 100+ reports).
+- **Combobox rebuilt (2026-10-15)** on Popover + Command: the Base UI list couldn't be clicked or typed
+  in inside the Dialog; adds a Clear (×) button. New component: Popover (CHANGELOG).
 - **Create record (step 3, 2026-10-15)** (`create-record-dialog.tsx`): Dialog · Title · blocks
   "Feedback N" (Recipient Combobox with **You** first · "Manager: {name}" once chosen, PRD RQ-02 ·
   Feedback textarea) separated by Separator · Remove on extra blocks · Add feedback · Cancel · Save draft

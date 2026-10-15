@@ -1,6 +1,6 @@
 # Component Directory
 
-Generated from `artifacts/components/[name].meta.json` — 55 components with their Storybook title and source file. There's no generator: when a meta.json description changes, update its row here and its "What it's for" line in `component-quick-reference.md` — `drift-check.mjs` #10 fails until you do.
+Generated from `artifacts/components/[name].meta.json` — 56 components with their Storybook title and source file. There's no generator: when a meta.json description changes, update its row here and its "What it's for" line in `component-quick-reference.md` — `drift-check.mjs` #10 fails until you do.
 
 **Deep lookup:** read `artifacts/components/[name].meta.json` for tokens, behaviour, implementation notes, known issues and story names.
 
@@ -55,6 +55,7 @@ Generated from `artifacts/components/[name].meta.json` — 55 components with th
 | drawer | A sliding panel that emerges from an edge of the screen or centers responsively as an overlay. | `Overlay/Drawer` | `drawer.tsx` |
 | dropdown-menu | A menu of actions opened from a button (⋯). | `Overlay/Dropdown Menu` | `dropdown-menu.tsx` |
 | hover-card | A preview card shown when hovering or focusing a link. | `Overlay/Hover Card` | `hover-card.tsx` |
+| popover | A floating panel anchored to a trigger for small interactive content: a list to pick from, a short form. | `Overlay/Popover` | `popover.tsx` |
 | sheet | A slide-in panel from the viewport edge for secondary tasks — filters, navigation, detail panels, settings. | `Overlay/Sheet` | `sheet.tsx` |
 | tooltip | A floating label that appears on hover or focus to provide supplementary context. | `Overlay/Tooltip` | `tooltip.tsx` |
 

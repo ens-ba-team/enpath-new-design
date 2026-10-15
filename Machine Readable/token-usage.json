@@ -355,6 +355,7 @@
     "model-selector",
     "navigation-menu",
     "pagination",
+    "popover",
     "progress",
     "radio-group",
     "scroll-area",
@@ -586,7 +587,8 @@
     "alert"
   ],
   "color/icon/brand": [
-    "alert"
+    "alert",
+    "combobox"
   ],
   "color/icon/danger": [
     "alert",
@@ -807,6 +809,7 @@
     "dropdown-menu",
     "hover-card",
     "navigation-menu",
+    "popover",
     "select",
     "sheet",
     "toast"
@@ -927,6 +930,7 @@
     "model-selector",
     "navigation-menu",
     "pagination",
+    "popover",
     "progress",
     "select",
     "sheet",
@@ -1026,6 +1030,7 @@
     "model-selector",
     "navigation-menu",
     "pagination",
+    "popover",
     "progress",
     "radio-group",
     "scroll-area",
@@ -1142,6 +1147,7 @@
   ],
   "height/control-touch/sm": [
     "button",
+    "combobox",
     "prompt-input"
   ],
   "height/control-touch/xs": [
@@ -1159,6 +1165,7 @@
   ],
   "height/control/sm": [
     "button",
+    "combobox",
     "prompt-input"
   ],
   "height/control/xs": [
@@ -1266,6 +1273,7 @@
     "empty",
     "item",
     "message",
+    "popover",
     "select",
     "sheet",
     "stat",
@@ -1312,6 +1320,7 @@
   ],
   "radius/sm": [
     "breadcrumb",
+    "combobox",
     "dialog",
     "sheet"
   ],
@@ -1344,6 +1353,7 @@
     "dropdown-menu",
     "hover-card",
     "navigation-menu",
+    "popover",
     "select"
   ],
   "shadow/md": [
@@ -1369,6 +1379,7 @@
     "dropdown-menu",
     "hover-card",
     "navigation-menu",
+    "popover",
     "select"
   ],
   "shadow/sm": [
@@ -1470,6 +1481,7 @@
     "item",
     "message",
     "navigation-menu",
+    "popover",
     "select",
     "sheet",
     "sidebar",
@@ -1496,6 +1508,7 @@
   ],
   "spacing/7": [
     "button",
+    "combobox",
     "prompt-input"
   ],
   "spacing/8": [
@@ -1544,6 +1557,7 @@
     "item",
     "message",
     "navigation-menu",
+    "popover",
     "select",
     "sheet",
     "sidebar",
@@ -1629,6 +1643,6 @@
     "tooltip"
   ],
   "z-index/modal": [
-    "combobox"
+    "popover"
   ]
 }

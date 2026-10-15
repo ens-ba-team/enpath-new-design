@@ -161,6 +161,12 @@ export const initialRecords: RecordItem[] = [
     ],
   },
   {
+    id: 'r13', recordId: 'rec-retro-quan', title: 'Sprint 14 retro', content: 'Paired with An on the release checklist and caught two blockers early.',
+    creatorId: 'quan', recipientId: 'binh', managerId: 'lan', created: '2026-10-13T10:02', submitted: '2026-10-13T10:05',
+    corrections: [],
+    history: [{ who: 'Quân Đỗ', what: 'Submitted', when: '13 Oct, 10:05' }],
+  },
+  {
     id: 'r10', recordId: 'rec-oncall', title: 'October on-call', content: 'Took over the on-call rota without being asked when two people were out sick.',
     creatorId: 'minh', recipientId: 'binh', managerId: 'lan', created: '2026-10-11T08:40', submitted: '2026-10-11T08:42',
     ackRecipient: { at: '2026-10-11T12:05' }, corrections: [],

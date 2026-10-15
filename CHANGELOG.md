@@ -6,6 +6,21 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-10-15 — Combobox rebuilt on Popover + Command; new Popover
+
+### Changed
+- **Combobox** is rebuilt on shadcn's pattern: Radix **Popover** + cmdk **Command** (was Base UI). Base UI's list rendered outside a Radix Dialog / Sheet, which blocks pointer events and holds focus, so inside a modal you couldn't click an option or type. Same `ComboboxField` API (basic · search · multiple · tag-input · `avatar` · `hint` · `hideLabel`); no screen changes needed.
+
+### Added
+- **Clear (×)** button on a single Combobox once a value is chosen.
+- **Popover** component (`popover.tsx`, `popover.meta.json`, story `Overlay/Popover`): surface/overlay, border/default, radius/lg, shadow/overlay, z-index/modal.
+- Story `Combobox / InDialog`.
+
+### Note
+- `@base-ui/react` is no longer imported anywhere; it's still in `package.json` (not removed).
+
+---
+
 ## 2026-10-15 — Card flat, Avatar XS, Combobox person options
 
 ### Added

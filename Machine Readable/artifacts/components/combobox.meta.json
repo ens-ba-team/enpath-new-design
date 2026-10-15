@@ -201,9 +201,7 @@
         "notes": "Uses [&[aria-invalid]] compound selector to beat data-[state=open]/focus-visible specificity. Blue ring must NOT appear when invalid."
       }
     },
-    "popup": {
-      "zIndex": "z-index/modal on the Positioner, so the list opens above a Dialog or Sheet (like Select)"
-    }
+    "list": "The list sits in a Popover; its fill, shadow and layering are Popover's (popover.meta.json)"
   },
   "tokensUsed": [
     "color/background/accent",
@@ -216,6 +214,7 @@
     "color/border/hover",
     "color/brand/500",
     "color/brand/primary",
+    "color/icon/brand",
     "color/icon/default",
     "color/icon/disabled",
     "color/input/bg",
@@ -237,24 +236,27 @@
     "color/zinc/500",
     "color/zinc/600",
     "height/control-touch/md",
+    "height/control-touch/sm",
     "height/control/md",
+    "height/control/sm",
     "opacity/60",
     "opacity/disabled",
     "radius/lg",
     "radius/md",
+    "radius/sm",
     "shadow/lg",
     "shadow/overlay",
     "spacing/1",
     "spacing/1-5",
     "spacing/2",
     "spacing/3",
+    "spacing/7",
     "spacing/8",
     "spacing/9",
     "spacing/component/md",
     "spacing/component/sm",
     "spacing/component/xs",
-    "spacing/component/xs-plus",
-    "z-index/modal"
+    "spacing/component/xs-plus"
   ],
   "accessibility": {
     "properties": [
@@ -314,7 +316,8 @@
     "openQuestions": [],
     "notes": [
       "Examples assume a ComboboxField wrapper API over the chosen Base UI implementation; source markdown itself does not mark this component not ready.",
-      "Type=Time-picker opens menu-dropdown Type=os-time-menu."
+      "Type=Time-picker opens menu-dropdown Type=os-time-menu.",
+      "2026-10-15: built on Popover + Command (shadcn combobox pattern). Works inside Dialog and Sheet."
     ],
     "knownIssues": [
       {
@@ -343,13 +346,18 @@
       {
         "date": "2026-10-15",
         "change": "Options can carry avatar (Avatar XS) and hint (secondary text, searchable): person pickers search by name or email."
+      },
+      {
+        "date": "2026-10-15",
+        "change": "Rebuilt on shadcn's pattern, Radix Popover + cmdk Command (was Base UI, whose list couldn't be clicked or typed in inside a Radix Dialog / Sheet). Same API; adds a Clear (×) button once a value is chosen; search types in the list's search field."
       }
     ]
   },
   "implementation": {
     "tsxFile": "src/components/ui/combobox.tsx",
     "packageDeps": [
-      "@base-ui/react"
+      "@radix-ui/react-popover",
+      "cmdk"
     ],
     "exports": [
       "Combobox"
@@ -374,7 +382,8 @@
       "TagInput",
       "TagInputWithSuggestions",
       "TagInputInvalid",
-      "AllStates"
+      "AllStates",
+      "InDialog"
     ],
     "decorators": [
       "none"

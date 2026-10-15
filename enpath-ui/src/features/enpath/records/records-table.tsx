@@ -88,20 +88,22 @@ function PersonCell({ id }: { id: string }) {
   );
 }
 
-/** Rows of one Record, in order of first appearance (Sent view). */
+/** Rows of one Record, in order of first appearance. Only the rows this view shows, so a group never
+ *  reveals feedback the viewer can't see (PRD-023 BR-18); its count is what they can see. */
 function groupByRecord(rows: RecordItem[]) {
-  const groups: { recordId: string; title: string; created: string; items: RecordItem[] }[] = [];
+  const groups: { recordId: string; title: string; creatorId: string; created: string; items: RecordItem[] }[] = [];
   for (const r of rows) {
     const g = groups.find((x) => x.recordId === r.recordId);
     if (g) { g.items.push(r); if (r.created < g.created) g.created = r.created; }
-    else groups.push({ recordId: r.recordId, title: r.title, created: r.created, items: [r] });
+    else groups.push({ recordId: r.recordId, title: r.title, creatorId: r.creatorId, created: r.created, items: [r] });
   }
   return groups;
 }
 
 export function RecordsTable({ tab, grouped = false, rows, selected, onToggle, onToggleAll, onOpen, onAction }: {
   tab: Tab;
-  /** Sent: rows grouped under their Record (title · N feedback · date); no From column (always you) */
+  /** Rows grouped under their Record (title · from · N feedback · date). Every view since 2026-10-15;
+   *  the From column goes, the group says who wrote it ("from" left out for your own records). */
   grouped?: boolean;
   rows: RecordItem[];
   selected: Set<string>;
@@ -201,7 +203,7 @@ export function RecordsTable({ tab, grouped = false, rows, selected, onToggle, o
                           <CaretRightIcon className={`h-4 w-4 shrink-0 text-[var(--color-icon-default)] transition-transform ${open ? 'rotate-90' : ''}`} aria-hidden="true" />
                           <span className="text-heading-xs text-[var(--color-surface-raised-foreground)]">{g.title}</span>
                           <span className="text-body-xs text-[var(--color-text-secondary)]">
-                            · {g.items.length} feedback · {shortDate(g.created)}
+                            {g.creatorId !== ME && `· from ${nameOf(g.creatorId)} `}· {g.items.length} feedback · {shortDate(g.created)}
                           </span>
                         </button>
                       </TableCell>

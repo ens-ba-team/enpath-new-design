@@ -1,6 +1,6 @@
 # Component Quick Reference
 
-Scanned from all 55 component artifacts. Read before building any screen — covers what each component is for, the key usage rule, and the most common mistake.
+Scanned from all 56 component artifacts. Read before building any screen — covers what each component is for, the key usage rule, and the most common mistake.
 
 **Source of truth:** all information here is extracted from `Machine Readable/artifacts/components/[name].meta.json`.  
 Each entry links to its artifact file and Storybook story — open those for full token bindings, variant matrices, and accessibility specs.
@@ -601,6 +601,15 @@ Each entry links to its artifact file and Storybook story — open those for ful
 **Common mistake:** Actions or forms in a HoverCard → use Popover or Dialog
 
 → Artifact: `Machine Readable/artifacts/components/hover-card.meta.json` · Storybook: `Overlay/Hover Card`
+
+### `popover`
+**What it's for:** A floating panel anchored to a trigger for small interactive content: a list to pick from, a short form.
+
+**Key rule:** Use for small interactive content tied to a trigger: the Combobox list, a short filter form.
+
+**Common mistake:** A long task or a form that needs full attention in a Popover → use Dialog
+
+→ Artifact: `Machine Readable/artifacts/components/popover.meta.json` · Storybook: `Overlay/Popover`
 
 ### `input-group`
 **What it's for:** One bordered field that combines an input or textarea with addons — icons, text or buttons. Base of the chat composer.

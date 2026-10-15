@@ -9,8 +9,8 @@
 // always shows. Lan acknowledges (as the person or the manager), requests a correction (in the
 // drawer), submits drafts (Preview → Confirm) and, on a correction, edits and resubmits in one step.
 // The selection bar sits on color/surface/raised (a grouping area of the table, like its header row).
-// Create record = a Dialog (create-record-dialog.tsx), which also edits a record's drafts. Sent groups
-// its rows by record (records-table.tsx). Not built yet: AI from files (step 4).
+// Create record = a Dialog (create-record-dialog.tsx), which also edits a record's drafts. Every view
+// groups its rows by record (records-table.tsx), showing only the rows that view may show. Not built yet: AI from files (step 4).
 
 import * as React from 'react';
 import { toast } from 'sonner';
@@ -272,7 +272,7 @@ export function RecordsScreen() {
                   )}
 
                   {rows.length > 0 ? (
-                    <RecordsTable tab={tab} grouped={tab === 'mine' && view === 'sent'} rows={rows} selected={selected} onToggle={toggle} onToggleAll={toggleAll}
+                    <RecordsTable tab={tab} grouped rows={rows} selected={selected} onToggle={toggle} onToggleAll={toggleAll}
                       onOpen={(r) => openRecord(r.id)} onAction={onAction} />
                   ) : q ? (
                     <Empty variant="outline" icon={<MagnifyingGlassIcon className="h-5 w-5" aria-hidden="true" />}
