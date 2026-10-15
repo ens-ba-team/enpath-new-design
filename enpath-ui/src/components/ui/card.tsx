@@ -17,24 +17,27 @@ import { cn } from "@/lib/utils"
 
 // size: "default" | "compact". Compact is the dense-widget card: padding spacing/component/md,
 // gap spacing/component/sm, CardTitle text-heading-xs.
+// elevation: "raised" (default, shadow/surface) | "flat" (2026-10-15: no shadow, border only) — for a
+// card inside an overlay (Dialog, Sheet), which already floats; e.g. a form block in Create record.
 type CardSize = "default" | "compact"
 const CardSizeContext = React.createContext<CardSize>("default")
 
 const Card = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { size?: CardSize }
->(({ className, size = "default", ...props }, ref) => (
+  React.HTMLAttributes<HTMLDivElement> & { size?: CardSize; elevation?: "raised" | "flat" }
+>(({ className, size = "default", elevation = "raised", ...props }, ref) => (
   <CardSizeContext.Provider value={size}>
     <div
       ref={ref}
       data-size={size}
+      data-elevation={elevation}
       {...props}
       className={cn(
         "flex flex-col",
         "rounded-[var(--radius-lg)]",
         "border border-[var(--color-border-default)]",
         "bg-[var(--color-surface-default)]",
-        "shadow-[var(--shadow-surface)]",
+        elevation === "raised" && "shadow-[var(--shadow-surface)]",
         size === "compact" ? "p-[var(--spacing-component-md)]" : "p-[var(--spacing-component-lg)]",
         size === "compact" ? "gap-[var(--spacing-component-sm)]" : "gap-[var(--spacing-component-lg)]",
         className

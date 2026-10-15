@@ -30,6 +30,7 @@
     "Size": {
       "type": "enum",
       "values": [
+        "XS",
         "SM",
         "Default",
         "LG"
@@ -39,7 +40,8 @@
       "reactValues": {
         "SM": "sm",
         "Default": "default",
-        "LG": "lg"
+        "LG": "lg",
+        "XS": "xs"
       },
       "dimensions": {
         "SM": {
@@ -56,6 +58,11 @@
           "width": 56,
           "height": 56,
           "textStyle": "text-label-md"
+        },
+        "XS": {
+          "width": 24,
+          "height": 24,
+          "textStyle": "text-label-sm"
         }
       }
     },
@@ -181,6 +188,10 @@
       {
         "date": "2026-09-29",
         "change": "Story examples use text styles (text-body-sm, text-heading-xs …) instead of mixed size and weight classes; overrides that replaced the component's own text style (e.g. Label) removed."
+      },
+      {
+        "date": "2026-10-15",
+        "change": "Added Size=XS (24px, text-label-sm) for avatars inside a 32px control or list row (Combobox person options)."
       }
     ]
   },

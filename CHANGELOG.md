@@ -6,6 +6,38 @@ Breaking changes, additions and removals to the Enpath Design System. Newest fir
 
 ---
 
+## 2026-10-15 — Card flat, Avatar XS, Combobox person options
+
+### Added
+- `Card elevation="flat"`: border, no shadow, for a card inside a Dialog or Sheet (they already float). Default stays `raised`.
+- `Avatar size="xs"` (24px, text-label-sm) for avatars inside a 32px control or list row.
+- Combobox options take `avatar` (initials, shown as Avatar XS in the list and the trigger) and `hint` (secondary text such as an email, matched by the search).
+
+First use: Records → Create record (each feedback block is a flat Card; Recipient searches by name or email with avatars).
+
+---
+
+## 2026-10-15 — Combobox fixes + hideLabel
+
+### Fixed
+- Single-select Combobox showed the chosen option's **value** in the input ("grace"), not its label ("Grace Hopper"). It now maps value → label.
+- The Combobox list opened **under** a Dialog or Sheet (its Positioner had no z-index). It now uses `z-index/modal`, like Select.
+
+### Added
+- `hideLabel` on `ComboboxField`: the label stays for screen readers only. For a filter in a toolbar (first use: Records → My team → Filter by person).
+
+---
+
+## 2026-10-15 — SheetFooter horizontal option
+
+### Added
+- `SheetFooter orientation="horizontal"`: one right-aligned row, secondary before primary. For a detail sheet with one or two short actions (first use: Records drawer, Request correction · Acknowledge). `vertical` stays the default; existing sheets don't change.
+
+### Changed
+- Sheet spec constraint: "footer buttons are full-width by design, never a horizontal row" now reads "vertical by default; horizontal only for one or two short actions". User decision.
+
+---
+
 ## 2026-09-30 — Action plan debts moved into components
 
 ### Added

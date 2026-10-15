@@ -7,13 +7,15 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 // ─── Size CVA ─────────────────────────────────────────────────────────────────
-// SM=32px · Default=40px · LG=56px  (spec: all fixed square, never hug/fill)
+// XS=24px · SM=32px · Default=40px · LG=56px  (spec: all fixed square, never hug/fill)
+// XS (2026-10-15): inside a 32px control or list row (person options in Combobox).
 
 const avatarSizeVariants = cva(
   "flex shrink-0 overflow-hidden rounded-full",
   {
     variants: {
       size: {
+        xs:      "h-6 w-6",    // 24 × 24px — spec Size=XS
         sm:      "h-8 w-8",    // 32 × 32px — spec Size=SM
         default: "h-10 w-10",  // 40 × 40px — spec Size=Default
         lg:      "h-14 w-14",  // 56 × 56px — spec Size=LG
@@ -62,8 +64,8 @@ const AvatarFallback = React.forwardRef<
       // Tokens: fill = color/surface/tint (blue/100), text = color/surface/tint/foreground
       "flex h-full w-full items-center justify-center rounded-full",
       "bg-[var(--color-surface-tint)] text-[var(--color-surface-tint-foreground)]",
-      // Text style: text-label-sm for SM, text-label-md for Default + LG
-      size === "sm" ? "text-label-sm" : "text-label-md",
+      // Text style: text-label-sm for XS + SM, text-label-md for Default + LG
+      size === "sm" || size === "xs" ? "text-label-sm" : "text-label-md",
       className
     )}
     {...props}
@@ -87,7 +89,8 @@ const indicatorFill: Record<"online" | "offline", string> = {
   offline: "var(--color-status-offline)",
 }
 
-const indicatorPx: Record<"sm" | "default" | "lg", number> = {
+const indicatorPx: Record<"xs" | "sm" | "default" | "lg", number> = {
+  xs:      6,
   sm:      8,
   default: 12,
   lg:      12,
@@ -96,8 +99,8 @@ const indicatorPx: Record<"sm" | "default" | "lg", number> = {
 // ─── Unified Avatar wrapper ────────────────────────────────────────────────────
 
 export interface AvatarProps {
-  /** Avatar size — sm=32px / default=40px / lg=56px */
-  size?: "sm" | "default" | "lg"
+  /** Avatar size — xs=24px / sm=32px / default=40px / lg=56px */
+  size?: "xs" | "sm" | "default" | "lg"
   /** Photo URL — AvatarImage renders when provided; falls back to initials on error */
   src?: string
   /** Full name — used as accessible alt text */

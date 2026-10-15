@@ -171,16 +171,20 @@ const SheetHeader = ({
 SheetHeader.displayName = "SheetHeader"
 
 // ─── SheetFooter ──────────────────────────────────────────────────────────────
-// V layout (stacked buttons — VERTICAL confirmed), top separator border.
+// orientation="vertical" (default): stacked full-width buttons. orientation="horizontal"
+// (2026-10-15, Records drawer): one row, right-aligned, secondary before primary — for a detail
+// sheet with one or two short actions. Top separator border.
 // padding: spacing/component/lg · gap: spacing/component/sm
 
 const SheetFooter = ({
   className,
+  orientation = "vertical",
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
+}: React.HTMLAttributes<HTMLDivElement> & { orientation?: "vertical" | "horizontal" }) => (
   <div
     className={cn(
-      "mt-auto flex flex-col",
+      "mt-auto flex",
+      orientation === "horizontal" ? "flex-row flex-wrap items-center justify-end" : "flex-col",
       "border-t border-[var(--color-border-default)]",
       "p-[var(--spacing-component-lg)]",
       "gap-[var(--spacing-component-sm)]",

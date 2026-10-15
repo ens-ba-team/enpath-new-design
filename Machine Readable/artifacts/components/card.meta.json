@@ -50,6 +50,23 @@
         "Default": "Padding and gap spacing/component/lg; CardTitle text-heading-sm.",
         "Compact": "Dense widget: padding spacing/component/md, gap spacing/component/sm; CardTitle text-heading-xs."
       }
+    },
+    "Elevation": {
+      "type": "enum",
+      "values": [
+        "Raised",
+        "Flat"
+      ],
+      "default": "Raised",
+      "reactProp": "elevation",
+      "reactValues": {
+        "Raised": "raised",
+        "Flat": "flat"
+      },
+      "intent": {
+        "Raised": "White + border + shadow/surface: a card on the page.",
+        "Flat": "White + border, no shadow: a card inside an overlay (Dialog, Sheet) that already floats, e.g. a form block in Create record."
+      }
     }
   },
   "componentProperties": {
@@ -194,6 +211,10 @@
       {
         "date": "2026-09-30",
         "change": "CardHeader tone=\"tinted\" (color/surface/header band, full width): the Action plan growth area header, built on the screen before."
+      },
+      {
+        "date": "2026-10-15",
+        "change": "Added elevation=\"flat\" (no shadow) for cards inside a Dialog or Sheet."
       }
     ]
   },

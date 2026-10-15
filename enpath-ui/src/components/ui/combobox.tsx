@@ -3,6 +3,7 @@
 import * as React from "react";
 import { Combobox } from "@base-ui/react/combobox";
 import { cn } from "@/lib/utils";
+import { Avatar } from "@/components/ui/avatar";
 import { CaretDownIcon, MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react/ssr";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -10,6 +11,10 @@ import { CaretDownIcon, MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react
 export interface ComboboxOption {
   value: string;
   label: string;
+  /** Person options: 1–2 initials, shown as an Avatar before the label (list and chosen value) */
+  avatar?: string;
+  /** Secondary text after the label (e.g. an email); also matched by the search */
+  hint?: string;
 }
 
 export interface ComboboxFieldProps {
@@ -26,6 +31,8 @@ export interface ComboboxFieldProps {
   onValueChange?: (value: string | string[] | null) => void;
   className?: string;
   "aria-invalid"?: boolean | "true" | "false";
+  /** Keep the label for screen readers only (a filter in a toolbar, 2026-10-15). */
+  hideLabel?: boolean;
 }
 
 // ─── Shared styles ────────────────────────────────────────────────────────────
@@ -61,18 +68,19 @@ function FilteredList({
   inputValue: string;
   filterable: boolean;
 }) {
-  const visible = filterable && inputValue.trim()
-    ? options.filter((o) =>
-        o.label.toLowerCase().includes(inputValue.toLowerCase())
-      )
+  const q = inputValue.trim().toLowerCase();
+  const visible = filterable && q
+    ? options.filter((o) => o.label.toLowerCase().includes(q) || (o.hint?.toLowerCase().includes(q) ?? false))
     : options;
 
   return (
     <>
       <Combobox.List className="flex flex-col gap-0.5 max-h-60 overflow-y-auto">
         {visible.map((opt) => (
-          <Combobox.Item key={opt.value} value={opt.value} className={itemClass}>
-            {opt.label}
+          <Combobox.Item key={opt.value} value={opt.value} className={cn(itemClass, "gap-[var(--spacing-component-sm)]")}>
+            {opt.avatar && <Avatar size="xs" name={opt.label} fallback={opt.avatar} />}
+            <span className="truncate">{opt.label}</span>
+            {opt.hint && <span className="truncate text-body-xs text-[var(--color-text-secondary)]">{opt.hint}</span>}
           </Combobox.Item>
         ))}
       </Combobox.List>
@@ -124,17 +132,20 @@ function FieldLabel({
   htmlFor,
   invalid,
   disabled,
+  hidden = false,
   children,
 }: {
   htmlFor: string;
   invalid: boolean;
   disabled: boolean;
+  hidden?: boolean;
   children: React.ReactNode;
 }) {
   return (
     <label
       htmlFor={htmlFor}
       className={cn(
+        hidden && "sr-only",
         "text-label-md",
         invalid
           ? "text-[var(--color-text-invalid)]"
@@ -397,6 +408,7 @@ export function ComboboxField({
   onValueChange,
   className,
   "aria-invalid": ariaInvalid,
+  hideLabel = false,
 }: ComboboxFieldProps) {
   const disabled = state === "disabled";
   const invalid =
@@ -443,7 +455,7 @@ export function ComboboxField({
 
     return (
       <div className={cn("flex flex-col gap-[var(--spacing-component-xs)]", className)}>
-        <FieldLabel htmlFor={id} invalid={invalid} disabled={disabled}>
+        <FieldLabel htmlFor={id} invalid={invalid} disabled={disabled} hidden={hideLabel}>
           {label}
         </FieldLabel>
 
@@ -509,7 +521,7 @@ export function ComboboxField({
           </Combobox.Trigger>
 
           <Combobox.Portal>
-            <Combobox.Positioner anchor={triggerRef} sideOffset={4} className="w-[var(--anchor-width)] min-w-[200px]">
+            <Combobox.Positioner anchor={triggerRef} sideOffset={4} className="z-[var(--z-index-modal)] w-[var(--anchor-width)] min-w-[200px]">
               <Combobox.Popup className={popupClass}>
                 <FilteredList options={options ?? []} inputValue={inputValue} filterable />
               </Combobox.Popup>
@@ -527,17 +539,23 @@ export function ComboboxField({
   }
 
   // ── Single select ────────────────────────────────────────────────────────────
+  // The chosen option, so a person option can show its avatar in the trigger.
+  const [chosen, setChosen] = React.useState<string | undefined>((value as string | undefined) ?? (defaultValue as string | undefined));
+  const current = value !== undefined ? (value as string) : chosen;
+  const chosenOpt = options?.find((o) => o.value === current);
   return (
     <div className={cn("flex flex-col gap-[var(--spacing-component-xs)]", className)}>
-      <FieldLabel htmlFor={id} invalid={invalid} disabled={disabled}>
+      <FieldLabel htmlFor={id} invalid={invalid} disabled={disabled} hidden={hideLabel}>
         {label}
       </FieldLabel>
 
       <Combobox.Root
         defaultValue={defaultValue as string | undefined}
         value={value as string | undefined}
-        onValueChange={onValueChange as ((v: string | null) => void) | undefined}
+        onValueChange={(v: string | null) => { setChosen(v ?? undefined); (onValueChange as ((v: string | null) => void) | undefined)?.(v); }}
         onInputValueChange={(v) => setInputValue(v)}
+        // The input shows the chosen option's label, not its value (was showing "grace", 2026-10-15)
+        itemToStringLabel={(v: string) => options?.find((o) => o.value === v)?.label ?? String(v)}
         autoHighlight={isSearch}
         disabled={disabled}
       >
@@ -551,7 +569,9 @@ export function ComboboxField({
               : "px-[var(--spacing-component-md)]"
           )}
         >
-          {isSearch && (
+          {chosenOpt?.avatar ? (
+            <Avatar size="xs" name={chosenOpt.label} fallback={chosenOpt.avatar} />
+          ) : isSearch && (
             <MagnifyingGlassIcon
               className={cn(
                 "h-4 w-4 shrink-0",
@@ -579,7 +599,7 @@ export function ComboboxField({
         </Combobox.Trigger>
 
         <Combobox.Portal>
-          <Combobox.Positioner anchor={triggerRef} sideOffset={4} className="w-[var(--anchor-width)] min-w-[200px]">
+          <Combobox.Positioner anchor={triggerRef} sideOffset={4} className="z-[var(--z-index-modal)] w-[var(--anchor-width)] min-w-[200px]">
             <Combobox.Popup className={popupClass}>
               <FilteredList
                 options={options ?? []}

@@ -72,6 +72,34 @@
         "Disabled": "disabled",
         "Invalid": "invalid"
       }
+    },
+    "Hide label": {
+      "type": "enum",
+      "values": [
+        "False",
+        "True"
+      ],
+      "default": "False",
+      "reactProp": "hideLabel",
+      "reactValues": {
+        "False": false,
+        "True": true
+      },
+      "intent": "Label kept for screen readers only (visually hidden). For a filter in a toolbar where the placeholder / value says what it is (Records: Filter by person). Forms keep the visible label."
+    },
+    "Person options": {
+      "type": "enum",
+      "values": [
+        "False",
+        "True"
+      ],
+      "default": "False",
+      "reactProp": "options[].avatar / options[].hint",
+      "reactValues": {
+        "False": false,
+        "True": true
+      },
+      "intent": "An option can carry avatar (initials → Avatar XS before the label, in the list and in the trigger once chosen) and hint (secondary text such as an email, also matched by the search)."
     }
   },
   "availability": {
@@ -172,6 +200,9 @@
         "ringGlow": "color-mix(in_srgb,var(--color-border-error)_20%,transparent)",
         "notes": "Uses [&[aria-invalid]] compound selector to beat data-[state=open]/focus-visible specificity. Blue ring must NOT appear when invalid."
       }
+    },
+    "popup": {
+      "zIndex": "z-index/modal on the Positioner, so the list opens above a Dialog or Sheet (like Select)"
     }
   },
   "tokensUsed": [
@@ -222,7 +253,8 @@
     "spacing/component/md",
     "spacing/component/sm",
     "spacing/component/xs",
-    "spacing/component/xs-plus"
+    "spacing/component/xs-plus",
+    "z-index/modal"
   ],
   "accessibility": {
     "properties": [
@@ -261,6 +293,10 @@
       {
         "property": "Keyboard",
         "value": "Arrow keys open/move · Enter selects highlighted item · Escape closes · Typing filters Type=Search"
+      },
+      {
+        "property": "Hidden label",
+        "value": "`hideLabel` keeps the `<label>` (sr-only), so the input is still named"
       }
     ]
   },
@@ -299,6 +335,14 @@
       {
         "date": "2026-09-30",
         "change": "Popup shadow shadow/md → shadow/overlay (the role token for floating UI)."
+      },
+      {
+        "date": "2026-10-15",
+        "change": "Fixes: a chosen option now shows its label in the input (was its value, e.g. \"grace\"); the list opens above a Dialog / Sheet (z-index/modal on the Positioner, was under them). Added hideLabel (sr-only label) for toolbar filters."
+      },
+      {
+        "date": "2026-10-15",
+        "change": "Options can carry avatar (Avatar XS) and hint (secondary text, searchable): person pickers search by name or email."
       }
     ]
   },

@@ -27,6 +27,23 @@
     "Side": {
       "type": "VARIANT",
       "default": "Horizontal"
+    },
+    "Footer orientation": {
+      "type": "VARIANT",
+      "default": "Vertical",
+      "values": [
+        "Vertical",
+        "Horizontal"
+      ],
+      "reactProp": "orientation (on SheetFooter)",
+      "reactValues": {
+        "Vertical": "vertical",
+        "Horizontal": "horizontal"
+      },
+      "intent": {
+        "Vertical": "Stacked full-width buttons. Default; forms and three or more actions.",
+        "Horizontal": "One right-aligned row, secondary before primary. A detail sheet with one or two short actions (Records drawer: Request correction · Acknowledge)."
+      }
     }
   },
   "tokens": {
@@ -54,7 +71,8 @@
       "strokePosition": "top",
       "padding": "spacing/component/lg",
       "gap": "spacing/component/sm",
-      "buttons": "Buttons; their tokens are Button's."
+      "buttons": "Buttons; their tokens are Button's.",
+      "layout": "orientation vertical (default): V stack, full-width buttons · horizontal: one row, right-aligned"
     }
   },
   "tokensUsed": [
@@ -139,7 +157,7 @@
     "Use `Side=Horizontal` for panels that are **spatially related to content on the left or right** — detail panels, sidebars, filter drawers",
     "Use `Side=Vertical` for panels that **span the full width** — bottom sheets on mobile-first layouts, global command palettes, contextual action menus",
     "Always include `<SheetTitle>` — even with `<VisuallyHidden>` — so screen readers announce the panel purpose",
-    "The `sheet-footer` buttons are full-width by design — do not place footer buttons in a horizontal row inside a `Side=Horizontal` sheet; the narrow width makes vertical stacking the correct choice",
+    "The `sheet-footer` stacks full-width buttons by default (`orientation=\"vertical\"`). Use `orientation=\"horizontal\"` only for one or two short actions in a detail sheet (secondary first, primary last); forms and three or more actions stay vertical (user decision 2026-10-15, Records drawer)",
     "Keep `sheet-body` scrollable in code when content may exceed the available height — apply `overflow-y: auto` and let the header and footer remain fixed"
   ],
   "meta": {
@@ -172,6 +190,10 @@
       {
         "date": "2026-09-30",
         "change": "Spec token section matches the code: the body has no radius; footer actions are Buttons."
+      },
+      {
+        "date": "2026-10-15",
+        "change": "SheetFooter gets orientation=\"horizontal\" (one right-aligned row) for detail sheets with one or two actions; vertical stays the default. Constraint reworded."
       }
     ]
   },

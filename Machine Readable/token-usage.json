@@ -1627,5 +1627,8 @@
   ],
   "tooltip/fg": [
     "tooltip"
+  ],
+  "z-index/modal": [
+    "combobox"
   ]
 }
