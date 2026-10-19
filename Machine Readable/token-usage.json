@@ -420,7 +420,8 @@
   ],
   "color/border/strong": [
     "badge",
-    "button"
+    "button",
+    "career-map"
   ],
   "color/border/subtle": [
     "separator"
@@ -611,12 +612,14 @@
   ],
   "color/icon/success": [
     "alert",
+    "career-map",
     "progress",
     "stat",
     "toast"
   ],
   "color/icon/warning": [
     "alert",
+    "career-map",
     "stat",
     "toast"
   ],
@@ -961,6 +964,7 @@
   "color/yellow/700": [
     "alert",
     "badge",
+    "career-map",
     "stat",
     "toast"
   ],

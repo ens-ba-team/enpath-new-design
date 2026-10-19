@@ -75,7 +75,7 @@ and "what this role would need" looked the same. Keeping them apart is the main 
 
 ```
 Header ─ "My Career" · "Lan Nguyen · Backend Engineer L2 · Mid"   [path-change Alert] [Map | List] [Ask AI]
-Progress strip ─ Toward {target} · bar · 2 ready · 2 growth areas · 2 not assessed yet · of 6 · ⓘ
+Progress strip ─ Active target · {target} · bar · 2 ready · 2 growth areas · 2 not assessed yet · 6 competencies · ⓘ
 ┌ Map or List ───────────────────────────────────────────┐┌ Detail panel (when selected) ┐
 │ toolbar: [Following: {path} ▾]  [+ Explore a position]  ││ role panel or route panel    │
 │ ...                                                      ││ ...                          │
@@ -115,16 +115,13 @@ Progress strip ─ Toward {target} · bar · 2 ready · 2 growth areas · 2 not 
 |---|---|---|---|---|---|
 | **Growth area** | Approved score below what the role needs | warning (orange) | "3 → 4" (You → Needed) | the Matrix's behavior text for the needed point | **Plan an action** (toast "My Actions is coming next") |
 | **Not assessed yet** | Role sets an expectation, employee has no approved score | border-strong (grey) | "3" (Needed) | "No approved score yet" | none (manager's job) |
-| **Ready** | Approved score meets the expectation | success (green) | "3" (You) | "Based on: {source}" | none |
+| **Ready** | Approved score meets the expectation | success (green) | "3 → 2" (You → Needed) | "Based on: {source}" | none |
 | **Not set** | Setup has no expectation for this level | border-default | "Not set" | "Setup hasn't set an expectation for this level yet…" | none |
 
 Expanded rows (2026-09-30): one short line in `text-body-xs` secondary (never the row title's style
 or weight), no points repeated (they're on the row); several rows can be open at once.
 
-Groups in this order: Growth areas → Not assessed yet → Ready (collapsed) → Not set in Setup
-(collapsed). Each group is a Card; rows are Accordion items (one open at a time). If **every**
-expectation is Not set, the panel says "Nothing to compare yet. This level has no expectations set
-in Setup." and shows no bar.
+Visual comparison replaces the separate group cards: one static competency list, ordered Growth areas → Not assessed → Not set → Ready, without row toggles or a Ready disclosure. Each row uses one segmented scale: solid segments show the approved score, outlined segments show remaining required points, and muted segments show the rest of the Matrix scale. Direct Your score / Role requires labels include score/maximum values. Missing scores are explicitly Not assessed, never zero. Behavior text stays visible without expansion. Growth rows have a separate Create action icon (desktop hover/focus; always visible on narrow/touch screens). It opens a Title + Due date modal linked explicitly to the selected role and competency; cancel/close returns focus to the invoking icon. Save validates required fields and appends a To do action below the row without changing scores or target. Prototype limitation: these actions live in My Career session state only, survive role selection but reset on refresh, and are not yet synchronized with My Actions' independent mock state. If every expectation is unset, the panel shows a no-requirements message instead of a comparison.
 
 ### 4.3 Career vision request status
 
@@ -142,8 +139,14 @@ Approve / decline can't happen yet (no manager screen), so a sent request stays 
 
 ### 5.1 Progress strip (feature: `ProgressBoard`)
 
-- Heading "Toward **{target}**" (flag icon). A short segmented bar (ready / growth / not assessed)
-  and one outline **count button** per non-zero group, then "of {total}" and an ⓘ tooltip.
+- Heading "Active target · **{target}**" (flag icon). A short segmented bar (ready / growth / not assessed / not set)
+  and one outline **count button** per non-zero group, then "{total} competencies" and an ⓘ tooltip.
+  The total includes unset expectations; these remain a separate category, never a growth area.
+- The selected-role panel summarizes all non-zero competency counts above its comparison bar.
+  Ready rows show both approved and needed points. Essential comparison information remains visible
+  without expanding each row; behavior and provenance stay in the expandable details.
+- Copy refinement preserves the existing header, progress strip, map/list and detail-panel layout.
+  "Explore from this role" keeps the existing exploration action; "View changes" opens Path history.
 - A count button opens the target in the panel **with that group expanded and scrolled to**.
 - Tooltip: "Scores come from your latest approved assessment. "Not assessed yet" means a
   competency has no approved score yet, so it doesn't count as a growth area. Your manager assesses
@@ -160,8 +163,9 @@ Approve / decline can't happen yet (no manager screen), so a sent request stays 
 
 ### 5.2 Career map (design system: `CareerMap`)
 
-- Read-only canvas (React Flow): no drag, connect or delete. Cards 176×104, level as title
+- Read-only canvas (React Flow): no drag, connect or delete. Cards 176×144, level as title
   ("L3 · Senior"), Position under it, status band on top (§4.1).
+- Every role card also shows the employee's competency comparison against that role: ready / growth / unassessed / unset segments and compact counts. All-unset roles say "No requirements yet". This does not change role status or imply promotion probability.
 - **Layout:** the followed company path is row 0, every level left → right. Each Career vision gets
   its own row below; added company paths below the visions. Columns come from the longest chain of
   links, so a card sits right of everything leading to it.

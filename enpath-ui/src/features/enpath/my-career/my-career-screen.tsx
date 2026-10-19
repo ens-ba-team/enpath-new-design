@@ -25,6 +25,7 @@ import { EnpathAppShell } from '../app-shell';
 import { SidebarFollowsChat, useChatShortcut } from '../chat/sidebar-follows-chat';
 import { Tip } from '../tip';
 import { CareerChat } from './career-chat';
+import type { QuickCareerAction } from './gap-row';
 import { PathHistoryDrawer, type PathHistoryChange, type PathHistoryRow } from './path-history-drawer';
 import {
   buildMap, companyPaths, countGaps, describeChange, describeStep, employee, gapsFor, initialPlan, matchingPaths, removeBranch, removeVision,
@@ -51,6 +52,7 @@ const subscribeNarrow = (onChange: () => void) => {
 export function MyCareerScreen() {
   const [page, setPage] = React.useState('My Career');
   const [plan, setPlan] = React.useState<Plan>(initialPlan);
+  const [careerActions, setCareerActions] = React.useState<QuickCareerAction[]>([]);
   const [request, setRequest] = React.useState<VisionRequest | null>(null);
   // Map or List: List by default on narrow screens (no room to pan a canvas); a choice made with the
   // toggle wins. Read with useSyncExternalStore so the server render (Map) never mismatches.
@@ -104,8 +106,8 @@ export function MyCareerScreen() {
     // List view: the Active target's row carries its counts, like the progress strip.
     const n = s.state === 'target' ? countGaps(gapsFor(s)) : null;
     const plural = (k: number, one: string, many: string) => `${k} ${k === 1 ? one : many}`;
-    const detail = n ? [n.growth > 0 && plural(n.growth, 'growth area', 'growth areas'), n.evidence > 0 && `${n.evidence} not assessed yet`].filter(Boolean).join(' · ') || undefined : undefined;
-    return { id: s.id, title: d.title, level: d.level, state: s.state, lane: s.lane, detail, label: s.state === 'vision' ? (visionCount > 1 ? visionLabel(s) : 'Career vision') : undefined };
+    const detail = n ? [n.ready > 0 && `${n.ready} ready`, n.growth > 0 && plural(n.growth, 'growth area', 'growth areas'), n.evidence > 0 && `${n.evidence} not assessed yet`, n.unset > 0 && `${n.unset} not set`].filter(Boolean).join(' · ') || undefined : undefined;
+    return { id: s.id, title: d.title, level: d.level, state: s.state, lane: s.lane, detail, progress: countGaps(gapsFor(s)), label: s.state === 'vision' ? (visionCount > 1 ? visionLabel(s) : 'Career vision') : undefined };
   });
   const starts: StartOption[] = steps.filter((s) => s.state !== 'completed' && s.state !== 'new').map((s) => ({ id: s.id, label: stateName(s), vision: s.vision }));
 
@@ -318,7 +320,7 @@ export function MyCareerScreen() {
                     onClose: clearSelection,
                   }} />
               ) : (
-                <StepPanel step={actionStep} plan={plan} links={links} request={request} removable={!!removal} removeBlocked={removal?.blocked}
+                <StepPanel careerActions={careerActions} onCreateAction={(action) => setCareerActions((list) => [...list, action])} step={actionStep} plan={plan} links={links} request={request} removable={!!removal} removeBlocked={removal?.blocked}
                   focusGroup={actionStep.state === 'target' ? focusGroup : undefined}
                   actions={{ onSetTarget: () => setDialog('target'), onRemoveTarget: () => setDialog('untarget'), onAdd: () => setDialog('add'), onRemove: () => setDialog('remove'), onShowRoute: selectRoute, onClose: clearSelection }} />
               )}

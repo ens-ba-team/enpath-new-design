@@ -1,33 +1,20 @@
 'use client';
-// A role's competencies compared with Lan's assessed points, grouped by what to do next:
-// Growth areas → Not assessed yet → Ready (collapsed) → Not set (collapsed). Each row shows a short value
-// ("3 → 4", "needs 3", "3") and expands to say what the level looks like (or which record a Ready
-// point comes from). Growth areas link to the next step: Plan an action (My Actions).
-// Not assessed yet has no button: assessing is the manager's job, not the employee's.
-// Wording follows enpath-tone-and-voice.md: "Not assessed yet" means no approved Assessment score, never a gap.
-// Each group is a Card size="compact"; the gap between cards is structure (spacing/layout/xs — the
-// panel is narrow). Rows are an Accordion size="compact". Built only from design-system components: Card,
-// Accordion (rows), Collapsible + Button (Show/Hide).
-
+// Static competency comparisons with a shared score/requirement scale and modal quick creation.
 import * as React from 'react';
 import { toast } from 'sonner';
-import { ArrowRightIcon } from '@phosphor-icons/react/ssr';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { CheckIcon, PlusIcon } from '@phosphor-icons/react/ssr';
 import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardTitle } from '@/components/ui/card';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { DatePicker } from '@/components/ui/date-picker';
 import { cn } from '@/lib/utils';
+import { Tip } from '../tip';
+import { isoDate, shortDate } from '../my-actions/mock-data';
 import type { Gap, GapStatus } from './mock-data';
 
-/** `values` names the numbers on the right once per card, e.g. "You → Needed". */
-const groups: { status: GapStatus; title: string; collapsed: boolean; values?: string }[] = [
-  { status: 'growth', title: 'Growth areas', collapsed: false, values: 'You → Needed' },
-  { status: 'evidence', title: 'Not assessed yet', collapsed: false, values: 'Needed' },
-  { status: 'ready', title: 'Ready', collapsed: true, values: 'You' },
-  { status: 'unset', title: 'Not set in Setup', collapsed: true },
-];
+export interface QuickCareerAction { id: string; title: string; due: string; competencyId: string; roleId: string }
 
-/** Status colour for dots and readiness bars — the same as the progress strip. */
 export const statusFill: Record<GapStatus, string> = {
   ready: 'bg-[var(--color-icon-success)]',
   growth: 'bg-[var(--color-icon-warning)]',
@@ -35,94 +22,97 @@ export const statusFill: Record<GapStatus, string> = {
   unset: 'bg-[var(--color-border-default)]',
 };
 
-function value(gap: Gap) {
-  if (gap.required == null) return 'Not set';
-  if (gap.current == null) return String(gap.required); // the card's caption says "Needed"
-  if (gap.status === 'ready') return String(gap.current);
-  return `${gap.current} → ${gap.required}`;
-}
-
-function Detail({ gap }: { gap: Gap }) {
-  const comingNext = (where: string) => toast(`${where} is coming next. This button will open it.`);
-  // One short line in a smaller, regular, secondary style, so it never reads like the row's title
-  // (user, 2026-09-30). The points are already on the row ("3 → 4"), so the detail doesn't repeat them.
-  const body = (text: string) => <p className="text-body-xs text-[var(--color-text-secondary)]">{text}</p>;
-  const link = (text: string, where: string) => (
-    <Button variant="outline" size="sm" className="mt-[var(--spacing-component-xs)] self-start" onClick={() => comingNext(where)}>{text}<ArrowRightIcon aria-hidden="true" /></Button>
-  );
-  if (gap.status === 'growth') return (
-    <>
-      {body(gap.meaning ?? 'Your assessment shows this is a growth area for this level.')}
-      {link('Plan an action', 'My Actions')}
-    </>
-  );
-  if (gap.status === 'evidence') return (
-    <>
-      {/* "Why it doesn't count as a growth area" lives in the progress strip's ⓘ tooltip — the row only says what's needed. */}
-      {body('No approved score yet')}
-    </>
-  );
-  if (gap.status === 'ready') return (
-    <>
-      {body(gap.source ? `Based on: ${gap.source}` : 'Your assessment meets this level')}
-    </>
-  );
-  return body('Setup hasn’t set an expectation for this level yet, so there’s nothing to compare.');
-}
-
-/** One card per group. Rows are the design-system Accordion (single, collapsible); collapsed groups
- *  use Collapsible with a ghost xs Button — no hand-built controls. */
-/** `focus` opens that group's card and scrolls it into view (from the progress strip's counts). */
-export function GapList({ gaps, focus }: { gaps: Gap[]; focus?: GapStatus }) {
+function ScoreScale({ gap }: { gap: Gap }) {
   return (
-    <div className="flex flex-col gap-[var(--spacing-layout-xs)]">
-      {groups.map((g) => {
-        const rows = gaps.filter((x) => x.status === g.status);
-        if (rows.length === 0) return null;
-        return <GapGroup key={g.status} group={g} rows={rows} focused={focus === g.status} />;
-      })}
+    <div className="flex flex-col gap-[var(--spacing-component-sm)]">
+      <div className="flex justify-between gap-[var(--spacing-component-sm)] text-body-xs tabular-nums text-[var(--color-text-secondary)]">
+        <span>Your score: <span className="text-[var(--color-background-default-foreground)]">{gap.current ?? 'Not assessed'}</span></span>
+        <span>Role requires: <span className="text-[var(--color-background-default-foreground)]">{gap.required ?? 'Not set'}</span></span>
+      </div>
+      <div className="flex gap-[var(--spacing-component-xs)]" role="img" aria-label={`Your score: ${gap.current ?? 'not assessed'}. Role requires: ${gap.required ?? 'not set'}. Maximum: ${gap.scaleSize}. ${gap.status === 'ready' ? 'Requirement met.' : gap.status === 'growth' ? 'Orange shows your score; light orange shows remaining required points.' : 'Outlined segments show required points.'}`}>
+        {Array.from({ length: gap.scaleSize }, (_, i) => (
+          <span key={i} aria-hidden="true" className={cn('h-2 flex-1 rounded-[var(--radius-sm)]',
+            gap.status === 'ready' ? 'bg-[var(--color-icon-success)]'
+              : gap.status === 'growth' && i < gap.current! ? 'bg-[var(--color-icon-warning)]'
+              : gap.status === 'growth' && i < gap.required! ? 'bg-[color-mix(in_srgb,var(--color-icon-warning)_25%,var(--color-background-default))]'
+              : gap.current != null && i < gap.current ? 'bg-[var(--color-text-secondary)]'
+              : gap.required != null && i < gap.required ? 'border border-[var(--color-text-secondary)]' : 'bg-[var(--color-border-default)]')} />
+        ))}
+      </div>
     </div>
   );
 }
 
-function GapGroup({ group, rows, focused }: { group: (typeof groups)[number]; rows: Gap[]; focused: boolean }) {
-  const [open, setOpen] = React.useState(!group.collapsed || focused);
-  const ref = React.useRef<HTMLDivElement>(null);
-  React.useEffect(() => { if (focused) ref.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }, [focused]);
+function QuickActionForm({ onSave, onCancel }: { onSave: (title: string, due: string) => void; onCancel: () => void }) {
+  const id = React.useId();
+  const [title, setTitle] = React.useState('');
+  const [due, setDue] = React.useState<Date>();
+  const [tried, setTried] = React.useState(false);
   return (
-    <Collapsible open={open} onOpenChange={setOpen} asChild>
-      <Card ref={ref} size="compact" role="region" aria-label={group.title} className={cn(!open && 'gap-0')}>
-        <CardHeader className="flex-row items-center gap-[var(--spacing-component-sm)]">
-          <span aria-hidden="true" className={cn('h-2 w-2 shrink-0 rounded-[var(--radius-pill)]', statusFill[group.status])} />
-          <CardTitle className="flex-1" role="heading" aria-level={3}>{group.title} <span className="font-normal text-[var(--color-text-secondary)]">· {rows.length}</span></CardTitle>
-          {group.collapsed && (
-            <CollapsibleTrigger asChild>
-              <Button variant="ghost" size="xs">{open ? 'Hide' : 'Show'}</Button>
-            </CollapsibleTrigger>
-          )}
-        </CardHeader>
-        <CollapsibleContent className="flex flex-col">
-          {group.values && (
-            <p className="flex justify-between pr-[var(--spacing-component-xl)] text-body-xs text-[var(--color-text-secondary)]">
-              <span>Competency</span><span>{group.values}</span>
-            </p>
-          )}
-          {/* multiple: opening one row keeps the others open (user, 2026-09-30). */}
-          <Accordion type="multiple" size="compact">
-            {rows.map((gap) => (
-              <AccordionItem key={gap.id} value={gap.id}>
-                <AccordionTrigger className="[&[data-state=open]>span:first-child]:font-semibold">
-                  <span className="min-w-0 flex-1 text-left">{gap.name}</span>
-                  <span className="shrink-0 tabular-nums text-[var(--color-text-secondary)]">{value(gap)}</span>
-                </AccordionTrigger>
-                <AccordionContent className="flex flex-col gap-[var(--spacing-component-xs)]">
-                  <Detail gap={gap} />
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </CollapsibleContent>
-      </Card>
-    </Collapsible>
+    <form className="flex flex-col gap-[var(--spacing-component-xl)]" noValidate onSubmit={(e) => { e.preventDefault(); setTried(true); if (title.trim() && due) onSave(title.trim(), isoDate(due)); }}>
+      <div className="flex flex-col gap-[var(--spacing-component-xs)]">
+        <Label htmlFor={`${id}-title`}>Action</Label>
+        <Input id={`${id}-title`} autoFocus value={title} maxLength={200} placeholder="What will you do?" onChange={(e) => setTitle(e.target.value)} aria-invalid={tried && !title.trim() || undefined} aria-describedby={tried && !title.trim() ? `${id}-error` : undefined} />
+        {tried && !title.trim() && <p id={`${id}-error`} role="alert" className="text-body-xs text-[var(--color-text-invalid)]">Enter what you’ll do.</p>}
+      </div>
+      <div className="flex flex-col gap-[var(--spacing-component-xs)]">
+        <DatePicker id={`${id}-due`} label="Due date" value={due} onChange={(value) => setDue(value instanceof Date ? value : undefined)} />
+        {tried && !due && <p role="alert" className="text-body-xs text-[var(--color-text-invalid)]">Pick a due date.</p>}
+      </div>
+      <DialogFooter><Button type="button" variant="outline" onClick={onCancel}>Cancel</Button><Button type="submit">Add to plan</Button></DialogFooter>
+    </form>
+  );
+}
+
+function ComparisonRow({ gap, onEdit, actions }: { gap: Gap; onEdit: () => void; actions: QuickCareerAction[] }) {
+  const label = gap.status === 'growth' ? null
+    : gap.status === 'ready' ? 'Ready' : gap.status === 'evidence' ? 'Not assessed' : 'Not set';
+  return (
+    <li className="group/competency flex flex-col gap-[var(--spacing-component-sm)] py-[var(--spacing-component-md)]">
+      <div className="flex min-w-0 items-center gap-[var(--spacing-component-sm)]">
+        <h4 className="min-w-0 flex-1 text-heading-xs">{gap.name}</h4>
+        {label && <span className="inline-flex shrink-0 items-center gap-[var(--spacing-component-xs)] text-body-xs text-[var(--color-text-secondary)]">
+          {gap.status === 'ready' ? <CheckIcon className="h-3 w-3 text-[var(--color-icon-success)]" aria-hidden="true" /> : <span className={cn('h-2 w-2 rounded-[var(--radius-pill)]', statusFill[gap.status])} aria-hidden="true" />}
+          {label}
+        </span>}
+        {gap.status === 'growth' && <Tip label={`Create action for ${gap.name}`}>
+          <Button type="button" variant="ghost" size="icon-sm" aria-label={`Create action for ${gap.name}`} aria-haspopup="dialog" onClick={onEdit}
+            className="opacity-100 [@media(min-width:640px)_and_(hover:hover)_and_(pointer:fine)]:opacity-0 group-hover/competency:opacity-100 group-focus-within/competency:opacity-100 focus-visible:opacity-100"><PlusIcon aria-hidden="true" /></Button>
+        </Tip>}
+      </div>
+      <ScoreScale gap={gap} />
+      {gap.meaning && <p className="text-body-xs text-[var(--color-text-secondary)]">{gap.meaning}</p>}
+      {actions.length > 0 && <ul aria-label={`Actions for ${gap.name}`} className="flex flex-col gap-[var(--spacing-component-xs)]">
+        {actions.map((action) => <li key={action.id} className="text-body-xs"><span className="text-[var(--color-background-default-foreground)]">{action.title}</span><span className="block text-[var(--color-text-secondary)]">To do · Due {shortDate(action.due)}</span></li>)}
+      </ul>}
+    </li>
+  );
+}
+
+export function GapList({ gaps, focus, roleId, roleName, actions, onCreateAction }: { gaps: Gap[]; focus?: GapStatus; roleId: string; roleName: string; actions: QuickCareerAction[]; onCreateAction: (action: QuickCareerAction) => void }) {
+  const [editing, setEditing] = React.useState<Gap | null>(null);
+  const returnFocus = React.useRef<HTMLElement | null>(null);
+  const priority: Record<GapStatus, number> = { growth: 0, evidence: 1, unset: 2, ready: 3 };
+  const sorted = [...gaps].sort((a, b) => priority[a.status] - priority[b.status]);
+  const focusRef = React.useRef<HTMLDivElement>(null);
+  React.useEffect(() => {
+    if (focus) focusRef.current?.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+  }, [focus]);
+  return (
+    <section aria-label="Competency comparison" className="flex flex-col gap-[var(--spacing-component-md)]">
+      <h3 className="text-heading-xs">Competencies · {gaps.length}</h3>
+      <ul className="flex flex-col">
+        {sorted.map((gap) => <React.Fragment key={gap.id}>
+          {sorted.find((g) => g.status === focus)?.id === gap.id && <li aria-hidden="true"><div ref={focusRef} /></li>}
+          <ComparisonRow gap={gap} actions={actions.filter((a) => a.roleId === roleId && a.competencyId === gap.id)} onEdit={() => { returnFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; setEditing(gap); }} />
+        </React.Fragment>)}
+      </ul>
+      <Dialog open={editing != null} onOpenChange={(open) => { if (!open) setEditing(null); }}>
+        <DialogContent onCloseAutoFocus={(event) => { event.preventDefault(); returnFocus.current?.focus(); }}>
+          <DialogHeader><DialogTitle>Create action</DialogTitle><DialogDescription>{editing?.name} · {roleName}</DialogDescription></DialogHeader>
+          {editing && <QuickActionForm key={editing.id} onCancel={() => setEditing(null)} onSave={(title, due) => { onCreateAction({ id: crypto.randomUUID(), title, due, competencyId: editing.id, roleId }); setEditing(null); toast.success('Action added to your career plan'); }} />}
+        </DialogContent>
+      </Dialog>
+    </section>
   );
 }

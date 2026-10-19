@@ -22,9 +22,9 @@ const routes: CareerMapPath[] = [
 
 const items: CareerMapItem[] = [
   { id: 'be-1', title: 'Backend Engineer', level: 'L1 · Junior', state: 'completed', lane: 0 },
-  { id: 'be-2', title: 'Backend Engineer', level: 'L2 · Mid', state: 'current', lane: 0 },
-  { id: 'be-3', title: 'Backend Engineer', level: 'L3 · Senior', state: 'target', lane: 0 },
-  { id: 'be-4', title: 'Backend Engineer', level: 'L4 · Staff', state: 'planned', lane: 0 },
+  { id: 'be-2', title: 'Backend Engineer', level: 'L2 · Mid', state: 'current', lane: 0, progress: { ready: 4, growth: 0, evidence: 2, unset: 0 } },
+  { id: 'be-3', title: 'Backend Engineer', level: 'L3 · Senior', state: 'target', lane: 0, progress: { ready: 1, growth: 3, evidence: 2, unset: 0 } },
+  { id: 'be-4', title: 'Backend Engineer', level: 'L4 · Staff', state: 'planned', lane: 0, progress: { ready: 0, growth: 0, evidence: 0, unset: 6 } },
   { id: 'pd-1', title: 'Product Designer', level: 'L1 · Designer', state: 'vision', label: 'Career vision 1', lane: 1 },
   { id: 'pd-2', title: 'Product Designer', level: 'L2 · Senior', state: 'vision', label: 'Career vision 1', lane: 1 },
   { id: 'pm-2', title: 'Product Manager', level: 'L2 · PM', state: 'planned', lane: 2 },

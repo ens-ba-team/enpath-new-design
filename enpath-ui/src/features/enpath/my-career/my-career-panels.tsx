@@ -17,7 +17,7 @@ import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { routeColor, type CareerMapPath } from "@/components/ui/career-map";
 import { StepRail, StepRailItem, type StepRailMarker, type StepRailTone } from "@/components/ui/step-rail";
-import { GapList, statusFill } from "./gap-row";
+import { GapList, statusFill, type QuickCareerAction } from "./gap-row";
 import { Tip } from "../tip";
 import { cn } from "@/lib/utils";
 import {
@@ -43,13 +43,6 @@ export const requestBadge: Record<
   waiting: { text: "Waiting for approval", variant: "blue" },
   approved: { text: "Approved", variant: "success" },
   declined: { text: "Declined", variant: "secondary" },
-};
-
-const visionStatusText: Record<VisionStatus | "draft", string> = {
-  draft: "draft, only you can see it",
-  waiting: "waiting for approval",
-  approved: "approved",
-  declined: "declined",
 };
 
 export const stateName = (s: PlanStep) =>
@@ -140,7 +133,7 @@ export function PathChangeNotice({ path, date, onOpen, className }: { path: stri
         <AlertTitle>{path} changed {date}</AlertTitle>
       </span>
       <Button variant="link" size="sm" onClick={onOpen}>
-        See what’s different
+        View changes
       </Button>
     </Alert>
   );
@@ -165,7 +158,7 @@ export function NoTargetStrip({ lostTarget }: { lostTarget?: string }) {
           </span>{" "}
           {lostTarget
             ? `${lostTarget} is no longer on your path.`
-            : "Pick a role on your map and choose Set as target to track your progress."}
+            : "Select a role → Set as target."}
         </span>
       </div>
     </section>
@@ -192,9 +185,10 @@ export function ProgressBoard({
         label: n.growth === 1 ? "growth area" : "growth areas",
       },
       { key: "evidence", count: n.evidence, label: "not assessed yet" },
+      { key: "unset", count: n.unset, label: "not set" },
     ] as const
   ).filter((g) => g.count > 0);
-  const total = n.ready + n.growth + n.evidence;
+  const total = gapsFor(target).length;
   return (
     <section
       aria-labelledby="progress-title"
@@ -211,7 +205,7 @@ export function ProgressBoard({
           aria-hidden="true"
         />
         <span>
-          Toward{" "}
+          Active target ·{" "}
           <span className="font-semibold">
             {d.title} {d.level}
           </span>
@@ -251,7 +245,7 @@ export function ProgressBoard({
             </Button>
           ))}
           <span className="px-[var(--spacing-component-xs)] text-body-sm text-[var(--color-text-secondary)]">
-            of {total}
+            {total} competencies
           </span>
           <Tip
             label={`Scores come from your latest approved assessment. “Not assessed yet” means a competency has no approved score yet, so it doesn’t count as a growth area. Your manager assesses it in a future assessment.${
@@ -296,6 +290,8 @@ export function StepPanel({
   removeBlocked,
   focusGroup,
   actions,
+  careerActions,
+  onCreateAction,
 }: {
   step: PlanStep;
   plan: Plan;
@@ -306,6 +302,8 @@ export function StepPanel({
   /** Opened from the progress strip: which group to expand; `n` changes on every click */
   focusGroup?: { group: GapStatus; n: number };
   actions: StepActions;
+  careerActions: QuickCareerAction[];
+  onCreateAction: (action: QuickCareerAction) => void;
 }) {
   const d = describeStep(step);
   const gaps = gapsFor(step);
@@ -342,7 +340,7 @@ export function StepPanel({
       : step.state === "current"
       ? "Your official role · set by your admin"
       : step.state === "vision"
-      ? `Your own direction · ${visionStatusText[mine?.status ?? "draft"]}`
+      ? mine ? "Your own direction" : "Private · only you"
       : path
       ? `${path.name}${
           path.id === plan.followedPathId ? " · the path you follow" : ""
@@ -373,16 +371,16 @@ export function StepPanel({
         </Button>
       );
     if (mine?.status !== "approved")
-      hint = "Your manager approves career visions before they can become your target.";
+      hint = "Manager approval required before setting a target.";
   }
   // A level the path added behind Lan: nothing to do but know it. It isn't counted as held.
   if (step.state === "new")
-    hint = "You haven't held this level, so it isn't completed yet. It becomes completed when an approved assessment meets it, or when your manager marks it.";
+    hint = "Not held yet. Completed after an approved assessment meets it or your manager confirms it.";
   if (step.state !== "completed" && step.state !== "new")
     buttons.push(
       <Button key="add" variant="outline" onClick={actions.onAdd}>
         <PlusIcon aria-hidden="true" />
-        Explore a position from here
+        Explore from this role
       </Button>
     );
   if (step.state === "target")
@@ -435,12 +433,25 @@ export function StepPanel({
             </span>
           )}
         </div>
+        <div className="flex flex-wrap gap-x-[var(--spacing-component-md)] gap-y-[var(--spacing-component-xs)] text-body-xs text-[var(--color-text-secondary)]" aria-label="Competency summary">
+          {([
+            ["ready", n.ready, "ready"],
+            ["growth", n.growth, n.growth === 1 ? "growth area" : "growth areas"],
+            ["evidence", n.evidence, "not assessed"],
+            ["unset", n.unset, "not set"],
+          ] as const).filter(([, count]) => count > 0).map(([key, count, label]) => (
+            <span key={key} className="inline-flex items-center gap-[var(--spacing-component-xs)]">
+              <span aria-hidden="true" className={cn("h-2 w-2 rounded-[var(--radius-pill)]", statusFill[key])} />
+              {count} {label}
+            </span>
+          ))}
+        </div>
         {n.unset < gaps.length && (
           <div
             className="mt-[var(--spacing-component-sm)] flex h-1.5 gap-[var(--spacing-component-xxs)] overflow-hidden rounded-[var(--radius-pill)]"
             aria-hidden="true"
           >
-            {(["ready", "growth", "evidence"] as const).map((k) =>
+            {(["ready", "growth", "evidence", "unset"] as const).map((k) =>
               n[k] > 0 ? (
                 <span
                   key={k}
@@ -454,12 +465,16 @@ export function StepPanel({
       </div>
       {n.unset === gaps.length ? (
         note(
-          "Nothing to compare yet. This level has no expectations set in Setup."
+          "No expectations set for this role yet."
         )
       ) : (
         <GapList
           key={`${step.id}-${focusGroup?.n ?? 0}`}
           gaps={gaps}
+          roleId={step.levelId}
+          roleName={levelName(step.id)}
+          actions={careerActions}
+          onCreateAction={onCreateAction}
           focus={focusGroup?.group}
         />
       )}
@@ -580,9 +595,9 @@ export function RoutePanel({
           Withdraw request
         </Button>
       );
-      hint = "Your manager is reviewing it. Your current role stays the same.";
+      hint = "In review · your official role is unchanged.";
     } else if (mine?.status === "approved") {
-      hint = `Your manager agreed on this direction. Select a role in it to make it your target.`;
+      hint = "Approved. Select a role to set as target.";
     } else if (request?.status === "waiting") {
       hint = `Career vision ${request.vision} is waiting for approval. You can send one at a time. Withdraw it to send this one.`;
     } else {
@@ -593,7 +608,7 @@ export function RoutePanel({
             : "Request manager approval"}
         </Button>
       );
-      hint = `It leaves your company path, so your manager approves it before any role in it can become your target.`;
+      hint = "Outside your company paths. Manager approval required to set a target.";
     }
     if (!removeBlocked)
       buttons.push(
@@ -622,7 +637,7 @@ export function RoutePanel({
         {header(
           mine ? requestBadge[mine.status] : { text: "Draft", variant: "dashed" },
           route.name,
-          mine ? "Your own direction" : "Your own direction · private"
+          mine ? "Your own direction" : "Private · only you"
         )}
         <RouteSteps
           ids={ids}

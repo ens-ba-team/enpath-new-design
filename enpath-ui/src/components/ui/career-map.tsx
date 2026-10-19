@@ -67,6 +67,36 @@ export interface CareerMapItem {
   lane?: number;
   /** List view only: one short extra line on the row, e.g. "2 growth areas · 2 not assessed yet" */
   detail?: string;
+  /** Current employee's competency comparison against this role, never promotion probability. */
+  progress?: CareerMapProgress;
+}
+
+export interface CareerMapProgress {
+  ready: number;
+  growth: number;
+  evidence: number;
+  unset: number;
+}
+
+export function CareerProgress({ progress }: { progress: CareerMapProgress }) {
+  const total = progress.ready + progress.growth + progress.evidence + progress.unset;
+  const summary = total === 0 || progress.unset === total
+    ? 'No requirements yet'
+    : `${progress.ready}/${total} ready · ${progress.growth > 0 ? `${progress.growth} to grow` : progress.evidence > 0 ? `${progress.evidence} unassessed` : progress.unset > 0 ? `${progress.unset} not set` : 'All met'}`;
+  const segments = [
+    { count: progress.ready, fill: 'bg-[var(--color-icon-success)]' },
+    { count: progress.growth, fill: 'bg-[var(--color-icon-warning)]' },
+    { count: progress.evidence, fill: 'bg-[var(--color-border-strong)]' },
+    { count: progress.unset, fill: 'bg-[var(--color-border-default)]' },
+  ];
+  return (
+    <span className="flex flex-col gap-[var(--spacing-component-xs)]" role="img" aria-label={`${summary}. ${progress.evidence} not assessed. ${progress.unset} requirements not set.`}>
+      <span className="flex h-1.5 gap-[var(--spacing-component-xxs)] overflow-hidden rounded-[var(--radius-pill)]" aria-hidden="true">
+        {segments.map((segment, i) => segment.count > 0 ? <span key={i} className={segment.fill} style={{ flex: segment.count }} /> : null)}
+      </span>
+      <span className="text-body-xs text-[var(--color-text-secondary)]">{summary}</span>
+    </span>
+  );
 }
 
 export interface CareerMapLink {
@@ -101,7 +131,7 @@ export function routeColor(p?: CareerMapPath, active = true) {
 
 // Layout constants are canvas coordinates (React Flow positions), not CSS spacing.
 const NODE_WIDTH = 176;
-const NODE_HEIGHT = 104; // fits a two-line title
+const NODE_HEIGHT = 144; // role title, position and optional competency comparison
 const COLUMN_GAP = 48;
 // Opening view never shrinks cards below this zoom — text must stay readable. If the whole map
 // doesn't fit at this zoom (phones), the map opens on the current role and its next steps.
@@ -125,7 +155,7 @@ const stateLabel: Record<
 };
 
 type CareerMapNodeData = {
-  title: string; level: string; state: CareerMapNodeState; label?: string;
+  title: string; level: string; state: CareerMapNodeState; label?: string; progress?: CareerMapProgress;
   /** Colour of the selected route's ring, when this card is on it */
   ring?: string;
 };
@@ -170,6 +200,7 @@ function CareerMapNode({ data, selected }: NodeProps<CareerMapFlowNode>) {
         </span>
         <span className="line-clamp-2 text-body-xs text-[var(--career-map-node-description)]">{data.title}</span>
       </span>
+      {data.progress && <div className="px-[var(--career-map-node-padding)] pb-[var(--spacing-component-sm)]"><CareerProgress progress={data.progress} /></div>}
       <Handle type="source" position={Position.Right} isConnectable={false} className="!pointer-events-none !opacity-0" />
     </div>
   );
@@ -318,12 +349,12 @@ function CareerMapCanvas({ items, links, paths, selectedId, onSelect, selectedRo
     id: i.id,
     type: "careerMapNode",
     position: position.get(i.id) ?? { x: 0, y: 0 },
-    data: { title: i.title, level: i.level, state: i.state, label: i.label, ring: onRoute.has(i.id) && i.state !== "completed" ? routeColor(selected) : undefined },
+    data: { title: i.title, level: i.level, state: i.state, label: i.label, progress: i.progress, ring: onRoute.has(i.id) && i.state !== "completed" ? routeColor(selected) : undefined },
     selected: i.id === selectedId,
     width: NODE_WIDTH,
     height: NODE_HEIGHT,
     style: { width: NODE_WIDTH, height: NODE_HEIGHT },
-    ariaLabel: `${i.label ?? stateLabel[i.state].text}: ${i.title}, ${i.level}`,
+    ariaLabel: `${i.label ?? stateLabel[i.state].text}: ${i.title}, ${i.level}${i.progress ? `. ${i.progress.ready} ready, ${i.progress.growth} growth areas, ${i.progress.evidence} not assessed, ${i.progress.unset} not set` : ''}`,
   }));
 
   const edges: Edge[] = valid.map((l) => {

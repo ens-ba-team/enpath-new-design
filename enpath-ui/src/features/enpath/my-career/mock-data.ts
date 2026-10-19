@@ -282,6 +282,8 @@ export interface Gap {
   /** The level's expectation, or null when Setup hasn't set one */
   required: number | null;
   status: GapStatus;
+  /** Number of points defined by this competency's Matrix. */
+  scaleSize: number;
   /** What the required point looks like in practice (the Matrix's behavior text) */
   meaning?: string;
   /** The record Lan's assessed point comes from */
@@ -305,7 +307,7 @@ export function gapsForLevel(levelId: string): Gap[] {
     const current = evidence[c.id]?.point ?? null;
     const status: GapStatus = required == null ? 'unset' : current == null ? 'evidence' : current >= required ? 'ready' : 'growth';
     const meaning = required != null ? c.behaviors[required - 1]?.description : undefined;
-    return { id: c.id, name: c.name, current, required, status, meaning, source: evidence[c.id]?.source };
+    return { id: c.id, name: c.name, current, required, status, scaleSize: matrix.scaleSize, meaning, source: evidence[c.id]?.source };
   });
 }
 

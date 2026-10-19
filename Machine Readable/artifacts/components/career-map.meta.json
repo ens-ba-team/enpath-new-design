@@ -57,6 +57,11 @@
       "default": null,
       "reactProp": "onPaneClick"
     },
+    "progress": {
+      "type": "TEXT",
+      "default": null,
+      "reactProp": "items[].progress"
+    },
     "detail": {
       "type": "TEXT",
       "default": null,
@@ -89,6 +94,7 @@
       "description": "career-map/node-description (Position)",
       "selected": "career-map/node-selected",
       "shadow": "shadow/surface",
+      "progress": "color/icon/success · color/icon/warning · color/border/strong · color/border/default · color/text/secondary · radius/pill · spacing/component/xxs · spacing/component/xs · spacing/component/sm",
       "band": {
         "completed": "career-map/band-completed",
         "new": "career-map/band-planned (New on your path: reuses the Planned band, own icon + label)",
@@ -166,6 +172,7 @@
     "color/background/subtle",
     "color/border/default",
     "color/border/focus",
+    "color/border/strong",
     "color/border/success",
     "color/brand/100",
     "color/brand/200",
@@ -176,6 +183,8 @@
     "color/green/400",
     "color/green/600",
     "color/green/700",
+    "color/icon/success",
+    "color/icon/warning",
     "color/ring",
     "color/surface/default",
     "color/surface/default/foreground",
@@ -185,6 +194,7 @@
     "color/violet/400",
     "color/violet/600",
     "color/white",
+    "color/yellow/700",
     "color/zinc/100",
     "color/zinc/200",
     "color/zinc/400",
@@ -351,7 +361,7 @@
       "How to show many company paths at once (legend grouping, show only followed + selected) — open in what should be done.md."
     ],
     "notes": [
-      "Built on React Flow (@xyflow/react, MIT). Layout constants (card 176×104, column gap 48, row gap 32) are canvas coordinates, not CSS spacing."
+      "Built on React Flow (@xyflow/react, MIT). Layout constants (card 176×144, column gap 48, row gap 32) are canvas coordinates, not CSS spacing."
     ],
     "knownIssues": [
       "Card white vs canvas is 1.19:1 — the card edge relies on shadow/surface."
@@ -493,11 +503,11 @@
     "notes": "Verify at 390px and 1280px."
   },
   "docs": {
-    "intro": "# Career Map\n\nA read-only canvas of an employee's career plan — role cards joined by colour-coded company Career Path lines and dashed Career vision lines, laid out left to right.\n\n---\n\n",
+    "intro": "# Career Map\n\nA read-only canvas of an employee's career plan — role cards joined by colour-coded company Career Path lines and dashed Career vision lines, laid out left to right. Optional items[].progress carries ready, growth, evidence (not assessed) and unset counts for the current employee against each role. Cards show a segmented comparison and text counts, never a promotion probability or readiness percentage.\n\n---\n\n",
     "sections": [
       {
         "title": "Structure",
-        "body": "\n```\nCareerMap — group, fills its container; fill: career-map/canvas\n├─ grid — dot pattern: career-map/grid\n├─ toolbar — optional consumer slot, top-left; inset spacing/component/md, gap spacing/component/xs\n├─ controls — top-right; inset spacing/component/md, gap spacing/component/xs\n│  └─ Button ×3 (size icon) — Zoom out · Zoom in · Show whole map\n├─ CareerMapNode ×n — one per item, 176×104, shadow/surface; title wraps to 2 lines\n│  ├─ status band — full width, tinted per state; icon + text (Completed · New on your path · You are here · Active target · Planned · Career vision)\n│  ├─ level — the card's title, \"L2 · Mid\" (secondary when completed)\n│  └─ Position — small secondary text, up to 2 lines\n└─ connection ×n — curved line + ~10px arrowhead in its route's role colour (followed = green, other company paths = grey, vision = dashed violet); the active route is thicker in the strong shade, others use the light (-inactive) shade\nCareerMapLegend — list below the map, one outline button per route drawn on the map (plain entries without onSelectRoute); adds \"· you follow\" to the followed path\nCareerMapList — the same plan as a list: one Card per route (header: route button text-heading-sm · badge; note below), rows = StepRail (StepRailItem) in the route's colour; other routes open with a grey \"Starts from …\" row\n```\n\n---\n\n"
+        "body": "\n```\nCareerMap — group, fills its container; fill: career-map/canvas\n├─ grid — dot pattern: career-map/grid\n├─ toolbar — optional consumer slot, top-left; inset spacing/component/md, gap spacing/component/xs\n├─ controls — top-right; inset spacing/component/md, gap spacing/component/xs\n│  └─ Button ×3 (size icon) — Zoom out · Zoom in · Show whole map\n├─ CareerMapNode ×n — one per item, 176×144, shadow/surface; title wraps to 2 lines\n│  ├─ status band — full width, tinted per state; icon + text (Completed · New on your path · You are here · Active target · Planned · Career vision)\n│  ├─ level — the card's title, \"L2 · Mid\" (secondary when completed)\n│  └─ Position — small secondary text, up to 2 lines\n└─ connection ×n — curved line + ~10px arrowhead in its route's role colour (followed = green, other company paths = grey, vision = dashed violet); the active route is thicker in the strong shade, others use the light (-inactive) shade\nCareerMapLegend — list below the map, one outline button per route drawn on the map (plain entries without onSelectRoute); adds \"· you follow\" to the followed path\nCareerMapList — the same plan as a list: one Card per route (header: route button text-heading-sm · badge; note below), rows = StepRail (StepRailItem) in the route's colour; other routes open with a grey \"Starts from …\" row\n```\n\n---\n\n"
       },
       {
         "title": "Token Bindings",
