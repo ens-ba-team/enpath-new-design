@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-19T00:00:00.000Z",
+  "title": "Design System: Enpath",
+  "extensions": {
+    "colorMeta": {
+      "brand-primary": {
+        "role": "primary",
+        "displayName": "Enpath Blue",
+        "canonical": "oklch(50.4% 0.2782 264.53)",
+        "tonalRamp": ["oklch(15% 0.09 264.53)", "oklch(22% 0.13 264.53)", "oklch(30% 0.17 264.53)", "oklch(38% 0.22 264.53)", "oklch(44% 0.25 264.53)", "oklch(50.4% 0.2782 264.53)", "oklch(70% 0.19 264.53)", "oklch(97% 0.012 264.53)"]
+      },
+      "neutral-white": {"role":"neutral","displayName":"Clean White","canonical":"#ffffff","tonalRamp":["#0f172a","#1e293b","#334155","#475569","#64748b","#94a3b8","#cbd5e1","#ffffff"]},
+      "neutral-canvas": {"role":"neutral","displayName":"Cool Canvas","canonical":"#f8fafc","tonalRamp":["#0f172a","#1e293b","#334155","#475569","#64748b","#94a3b8","#cbd5e1","#f8fafc"]},
+      "neutral-muted": {"role":"neutral","displayName":"Soft Slate","canonical":"#f1f5f9","tonalRamp":["#0f172a","#1e293b","#334155","#475569","#64748b","#94a3b8","#cbd5e1","#f1f5f9"]},
+      "neutral-ink": {"role":"neutral","displayName":"Deep Slate Ink","canonical":"#0f172a","tonalRamp":["#0f172a","#1e293b","#334155","#475569","#64748b","#94a3b8","#cbd5e1","#ffffff"]},
+      "neutral-secondary-ink": {"role":"neutral","displayName":"Supporting Slate","canonical":"#475569","tonalRamp":["#0f172a","#1e293b","#334155","#475569","#64748b","#94a3b8","#cbd5e1","#ffffff"]},
+      "neutral-border": {"role":"neutral","displayName":"Fine Slate Border","canonical":"#e2e8f0","tonalRamp":["#0f172a","#1e293b","#334155","#475569","#64748b","#94a3b8","#cbd5e1","#e2e8f0"]},
+      "info-blue": {"role":"secondary","displayName":"Informational Blue","canonical":"#0e41ff","tonalRamp":["#071846","#0d2770","#0a2a8f","#072cba","#0934db","#0e41ff","#457afe","#f0f5ff"]},
+      "destructive-red": {"role":"tertiary","displayName":"Destructive Red","canonical":"#da2c24","tonalRamp":["#4b0b09","#71110d","#9a1a15","#ba1a16","#da2c24","#e45b55","#f0a19d","#fff1f0"]}
+    },
+    "typographyMeta": {
+      "display": {"displayName":"Display","purpose":"Large display moments; Nunito, as specified by the text-style token."},
+      "heading": {"displayName":"Heading","purpose":"Page and section hierarchy; Nunito for larger heading styles, Inter for smaller heading styles as specified by tokens."},
+      "body": {"displayName":"Body","purpose":"Interface and reading text in Inter."},
+      "label": {"displayName":"Label","purpose":"Compact interface labels; use named text styles and keep labels on one line."}
+    },
+    "shadows": [
+      {"name":"surface","value":"var(--shadow-surface)","purpose":"Default card and panel surface elevation."},
+      {"name":"raised","value":"var(--shadow-raised)","purpose":"Sticky or dragged content only."},
+      {"name":"overlay","value":"var(--shadow-overlay)","purpose":"Menus and popovers that leave the page usable."},
+      {"name":"modal","value":"var(--shadow-modal)","purpose":"Dialogs and sheets over a blocking scrim."}
+    ],
+    "motion": [
+      {"name":"standard","value":"var(--motion-easing-standard)","purpose":"Token-defined standard component state easing."},
+      {"name":"fast-duration","value":"var(--motion-duration-fast)","purpose":"Token-defined fast component state transition duration."}
+    ],
+    "breakpoints": [
+      {"name":"sm","value":"640px","purpose":"Switch paired touch/pointer control heights."},
+      {"name":"lg","value":"var(--breakpoint-lg)","purpose":"Main app layout switch; use the named Tailwind breakpoint token."}
+    ]
+  },
+  "components": [
+    {
+      "name":"Primary Button",
+      "kind":"button",
+      "refersTo":"button-primary",
+      "description":"Default Enpath primary action button.",
+      "html":"<button class=\"ds-btn-primary\">Continue</button>",
+      "css":".ds-btn-primary { background: var(--color-brand-primary); color: var(--color-brand-primary-foreground); border: 0; border-radius: var(--radius-control); padding: 0 var(--spacing-component-lg); min-height: 44px; font: 500 14px/1 Inter, sans-serif; transition: background-color var(--motion-duration-fast) var(--motion-easing-standard); cursor: pointer; } .ds-btn-primary:hover { background: var(--color-brand-primary-hover); } .ds-btn-primary:active { background: var(--color-brand-primary-active); } .ds-btn-primary:focus-visible { outline: 2px solid var(--color-ring); outline-offset: 2px; } .ds-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }"
+    },
+    {
+      "name":"Outline Button",
+      "kind":"button",
+      "refersTo":"button-outline",
+      "description":"Secondary action with a clear boundary and white surface.",
+      "html":"<button class=\"ds-btn-outline\">Cancel</button>",
+      "css":".ds-btn-outline { background: var(--color-background-default); color: var(--color-surface-default-foreground); border: 1px solid var(--color-border-default); border-radius: var(--radius-control); padding: 0 var(--spacing-component-lg); min-height: 44px; font: 500 14px/1 Inter, sans-serif; cursor: pointer; } .ds-btn-outline:hover { background: var(--color-surface-accent); border-color: var(--color-border-hover); } .ds-btn-outline:focus-visible { outline: 2px solid var(--color-ring); outline-offset: 2px; }"
+    },
+    {
+      "name":"Input",
+      "kind":"input",
+      "refersTo":"input",
+      "description":"Single-line editable field with semantic focus and invalid states.",
+      "html":"<input class=\"ds-input\" aria-label=\"Search\" placeholder=\"Search\">",
+      "css":".ds-input { width: 100%; min-height: 44px; padding: var(--spacing-component-xs) var(--spacing-component-md); color: var(--color-surface-default-foreground); background: var(--color-input-bg); border: 1px solid var(--color-input-border); border-radius: var(--radius-md); font: 400 14px/1.5 Inter, sans-serif; } .ds-input::placeholder { color: var(--color-input-placeholder); } .ds-input:hover { border-color: var(--color-border-hover); } .ds-input:focus-visible { outline: none; border-color: var(--color-border-focus); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-ring) 20%, transparent); } .ds-input[aria-invalid=\"true\"] { border-color: var(--color-border-error); } .ds-input:disabled { background: var(--color-surface-muted); color: var(--color-text-disabled); cursor: not-allowed; }"
+    },
+    {
+      "name":"Card",
+      "kind":"card",
+      "refersTo":"card",
+      "description":"Default bordered white container with purposeful surface elevation.",
+      "html":"<section class=\"ds-card\"><strong>Career target</strong><p>Choose a direction for your next step.</p></section>",
+      "css":".ds-card { padding: var(--spacing-component-lg); color: var(--color-surface-default-foreground); background: var(--color-surface-default); border: 1px solid var(--color-border-default); border-radius: var(--radius-surface); box-shadow: var(--shadow-surface); } .ds-card strong { font: 600 18px/1.4 Nunito, sans-serif; } .ds-card p { margin: var(--spacing-component-xs) 0 0; color: var(--color-text-secondary); font: 400 14px/1.5 Inter, sans-serif; }"
+    },
+    {
+      "name":"Status Badge",
+      "kind":"chip",
+      "refersTo":"badge",
+      "description":"Compact semantic status label; production status variants are individually token-bound.",
+      "html":"<span class=\"ds-badge\">Published</span>",
+      "css":".ds-badge { display: inline-flex; align-items: center; min-height: 22px; padding: 0 var(--spacing-component-xs); color: var(--color-surface-default-foreground); background: var(--color-surface-accent); border: 1px solid var(--color-border-default); border-radius: var(--radius-pill); font: 500 12px/1 Inter, sans-serif; white-space: nowrap; }"
+    }
+  ],
+  "narrative": {
+    "northStar":"Career Instrument",
+    "overview":"Enpath's interface is a precise, calm instrument for making career development legible. Information should feel trustworthy and actionable without turning a score into a verdict. Density and hierarchy serve real administrative and employee tasks rather than decoration. The incumbent system pairs crisp white working surfaces with a lightly tinted app canvas, restrained blue brand actions, and carefully differentiated semantic status and information colors. Depth is functional: borders, tonal shifts and deliberate shadows distinguish the page frame, cards and overlays.",
+    "keyCharacteristics":["Precise, calm and task-oriented.","White panels on a softly tinted app canvas.","Blue is brand/action; information blue has a distinct meaning.","Reusable semantic tokens govern surfaces, type, spacing and states.","Light mode only."],
+    "rules":[
+      {"name":"The Semantic Role Rule","body":"Choose colors by the intent of the semantic token, not by visual similarity between swatches. Never exchange brand, information, destructive and status roles.","section":"colors"},
+      {"name":"The No-Hover-Lift Rule","body":"Resting cards do not gain raised elevation on hover; elevation communicates a real stacking or interaction condition.","section":"elevation"}
+    ],
+    "dos":["Do use semantic tokens and follow the authority order: token → component → screen.","Do use existing components as documented by their metadata and Storybook stories.","Do use brand blue for brand actions and the information-blue role for information, links and rating-scale steps.","Do make keyboard focus visible and retain accessible names and semantics.","Do preserve touch/pointer control-height pairs and the required target areas.","Do use named text styles; keep Roboto Mono for machine text only.","Do keep the light-mode palette consistent; there is no dark-mode token system."],
+    "donts":["Don't hardcode token values in components or screens, edit generated tokens.css by hand, or bypass the token-binding guidance.","Don't rebuild an existing component from raw elements or change its semantic role, ARIA, or documented behavior.","Don't use a status color as a generic decoration or treat an AI suggestion as an approved score.","Don't build text styles from ad hoc font, size, weight or line-height utility combinations.","Don't add hover elevation to a resting card or stack multiple visual devices on one boundary without a real structural reason.","Don't invent dark mode or substitute a brand color for the distinct information-blue role."]
+  }
+}
