@@ -23,18 +23,24 @@ import { ActionsChat } from './actions-chat';
 import { BoardView } from './board-view';
 import { GrowthAreaGroup, type GroupHandlers } from './growth-area-group';
 import {
-  growthAreas, initialActions, initialProposals, isOverdue, shortDate, targetName, TODAY,
+  growthAreas, initialProposals, isOverdue, shortDate, targetName, targetLevelId, TODAY,
   type Action, type Proposal,
 } from './mock-data';
+
+import { useActionPlan } from './action-store';
+import { gapsForLevel } from '../my-career/mock-data';
+import { levelName } from '../my-career/plan-dialogs';
 
 /** "1 overdue" beside a summary note (color/text/danger), only when there is any. */
 const overdueNote = (n: number) => (n > 0 ? <span className="text-[var(--color-text-danger)]">{n} overdue</span> : undefined);
 
-type Editor = { mode: 'add'; prefill?: Partial<ActionDraft>; fromProposal?: string } | { mode: 'edit'; action: Action } | null;
+type Editor = { mode: 'add'; prefill?: Partial<ActionDraft>; fromProposal?: string; roleId?: string } | { mode: 'edit'; action: Action } | null;
 
 export function MyActionsScreen() {
   const [page, setPage] = React.useState('My Actions');
-  const [actions, setActions] = React.useState<Action[]>(initialActions);
+  const [actions, setActions] = useActionPlan();
+  const targetActions = actions.filter((action) => !action.roleId || action.roleId === targetLevelId);
+  const otherRoleIds = [...new Set(actions.flatMap((action) => action.roleId && action.roleId !== targetLevelId ? [action.roleId] : []))];
   const [proposals, setProposals] = React.useState<Proposal[]>(initialProposals);
   const [editor, setEditor] = React.useState<Editor>(null);
   const [editorKey, setEditorKey] = React.useState(0);
@@ -84,10 +90,10 @@ export function MyActionsScreen() {
     <Button variant="ghost" aria-pressed={view === v} onClick={() => setView(v)}>{icon}{text}</Button>
   );
 
-  const proposeFromChat = React.useCallback((p: Omit<Proposal, 'id'>) => {
+  const proposeFromChat = (p: Omit<Proposal, 'id'>) => {
     setEditorKey((k) => k + 1);
     setEditor({ mode: 'add', prefill: { title: p.title, competencyId: p.competencyId, outcome: p.outcome } });
-  }, []);
+  };
 
   const save = (d: { title: string; competencyId: string; outcome: string; due: string }) => {
     if (editor?.mode === 'edit') {
@@ -95,7 +101,7 @@ export function MyActionsScreen() {
       toast.success('Action saved');
     } else if (editor?.mode === 'add') {
       const fromAI = editor.fromProposal !== undefined || editor.prefill?.title !== undefined;
-      setActions((list) => [...list, { id: `a${Date.now()}`, ...d, status: 'todo', source: fromAI ? 'ai' : 'you', added: TODAY }]);
+      setActions((list) => [...list, { id: `a${Date.now()}`, ...d, roleId: editor.roleId, status: 'todo', source: fromAI ? 'ai' : 'you', added: TODAY }]);
       if (editor.fromProposal) setProposals((list) => list.filter((p) => p.id !== editor.fromProposal));
       toast.success(`Added to your plan: ${d.title}`);
     }
@@ -146,16 +152,26 @@ export function MyActionsScreen() {
               </section>
 
               {view === 'board' ? (
-                <BoardView actions={actions} proposals={proposals} areas={growthAreas} h={h} onMove={move} />
+                <BoardView actions={targetActions} proposals={proposals} areas={growthAreas} h={h} onMove={move} />
               ) : growthAreas.map((area) => (
                 <GrowthAreaGroup
                   key={area.id}
                   area={area}
-                  actions={actions.filter((a) => a.competencyId === area.id)}
+                  actions={targetActions.filter((a) => a.competencyId === area.id)}
                   proposals={proposals.filter((p) => p.competencyId === area.id)}
                   h={h}
                 />
               ))}
+              {otherRoleIds.map((roleId) => {
+                const roleActions = actions.filter((action) => action.roleId === roleId);
+                const areas = gapsForLevel(roleId).filter((area) => roleActions.some((action) => action.competencyId === area.id));
+                const roleHandlers = { ...h, onAddAction: (competencyId: string) => openEditor({ mode: 'add', prefill: { competencyId }, roleId }) };
+                return <section key={roleId} aria-label={`Actions toward ${levelName(roleId)}`} className="flex flex-col gap-[var(--spacing-component-md)]">
+                  <h2 className="text-heading-md">Toward {levelName(roleId)}</h2>
+                  <p className="text-body-sm text-[var(--color-text-secondary)]">Added while exploring this role in My Career. This doesn’t change your active target.</p>
+                  {view === 'board' ? <BoardView actions={roleActions} proposals={[]} areas={areas} h={roleHandlers} onMove={move} /> : areas.map((area) => <GrowthAreaGroup key={area.id} area={area} actions={roleActions.filter((action) => action.competencyId === area.id)} proposals={[]} h={roleHandlers} />)}
+                </section>;
+              })}
             </div>
           </div>
         )}
@@ -166,6 +182,7 @@ export function MyActionsScreen() {
           onOpenChange={(o) => !o && setEditor(null)}
           editing={editor?.mode === 'edit' ? editor.action : undefined}
           prefill={editor?.mode === 'add' ? editor.prefill : undefined}
+          roleId={editor?.mode === 'add' ? editor.roleId : undefined}
           onSave={save}
         />
         <RemoveActionDialog action={removing} onOpenChange={(o) => !o && setRemoving(undefined)}

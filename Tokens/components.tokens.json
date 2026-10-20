@@ -482,12 +482,12 @@
       "$description": "Intent:      \"You are here\" label and icon on the employee's current role card\nUse when:    The state label of the CareerMapNode in state current; the current ring and the \"You are here\" status of a StepRail row\nDo not use:  Other labels, links or any text outside the Career Map family (CareerMap, CareerMapList, StepRail)\nUse instead: color/text/link for links, career-map/node-description for neutral labels\nStatus:      active"
     },
     "target-label": {
-      "$value": "{color.text.success}",
+      "$value": "{color.yellow.800}",
       "$type": "color",
       "$description": "Intent:      \"Active target\" label and icon on the target role card\nUse when:    The state label of the CareerMapNode in state target; the \"Active target\" status of a StepRail row\nDo not use:  Success messages or any text outside the Career Map family (CareerMap, CareerMapList, StepRail)\nUse instead: color/text/success for general success text\nStatus:      active"
     },
     "target-border": {
-      "$value": "{color.border.success}",
+      "$value": "{color.yellow.600}",
       "$type": "color",
       "$description": "Intent:      Border of the Active target role card — a non-colour-text signal for the target\nUse when:    Outlining the CareerMapNode in state target; the target ring in StepRail\nDo not use:  Validation borders or containers outside the Career Map family (CareerMap, CareerMapList, StepRail)\nUse instead: color/border/success for validated inputs\nStatus:      active"
     },
@@ -502,7 +502,7 @@
       "$description": "Intent:      Status band across the top of a Career Map card in state current\nUse when:    Filling the band that holds the state label (icon + text) of a CareerMapNode in state current; the fill of the current ring in StepRail\nDo not use:  Card bodies, badges, alerts or anything outside the Career Map family (CareerMap, CareerMapList, StepRail)\nUse instead: career-map/node-surface for the card body\nForeground:  career-map/current-label (4.8:1)\nStatus:      active"
     },
     "band-target": {
-      "$value": "{color.green.100}",
+      "$value": "{color.yellow.100}",
       "$type": "color",
       "$description": "Intent:      Status band across the top of a Career Map card in state target\nUse when:    Filling the band that holds the state label (icon + text) of a CareerMapNode in state target; the fill of the target ring in StepRail\nDo not use:  Card bodies, badges, alerts or anything outside the Career Map family (CareerMap, CareerMapList, StepRail)\nUse instead: career-map/node-surface for the card body\nForeground:  career-map/target-label (4.6:1)\nStatus:      active"
     },

@@ -3,7 +3,7 @@
 // SetTargetDialog: the employee changes their Active target (no approval — it's personal).
 // VisionRequestDialog: the employee sends one Career vision to their manager.
 // ExplorePositionDialog: add a position's ladder; the dialog says whether it's company-path steps or a Career vision.
-// SwitchPathDialog: follow a different company path planned for the employee's role.
+// Explore also appends published company paths after the selected role.
 
 import * as React from 'react';
 import {
@@ -15,10 +15,11 @@ import { Button } from '@/components/ui/button';
 import { StepRail, StepRailItem, type StepRailTone } from '@/components/ui/step-rail';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { levelLabel } from '../mock-data';
-import { ladderMove, positionOfLevel, publishedPositions, visionMove, type Branch, type Plan } from './mock-data';
+import { careerPathMove, companyPaths, ladderMove, positionOfLevel, publishedPositions, visionMove, type Branch, type Plan } from './mock-data';
 
 /** "Backend Engineer L3 · Senior" for a level id */
 export function levelName(levelId: string) {
@@ -191,6 +192,10 @@ function ExplorePositionForm({ starts, defaultFrom, nextVision, plan, onMap, fol
   onAdd: (branches: Branch[], message: string, select: string) => void; onCancel: () => void;
 }) {
   const [from, setFrom] = React.useState(defaultFrom);
+  const [tab, setTab] = React.useState('position');
+  const [pathId, setPathId] = React.useState('');
+  const pathMovePreview = pathId ? careerPathMove(plan, from, pathId) : null;
+  const pathError = !pathId ? 'Choose a career path.' : !pathMovePreview ? 'No new steps can be added from this role. This path is already connected, has no remaining steps, or would loop back.' : '';
   const [positionId, setPositionId] = React.useState('');
   // The level the person picked; until they pick one, "Join at" shows the default for the position.
   const [pickedEntry, setPickedEntry] = React.useState('');
@@ -215,6 +220,11 @@ function ExplorePositionForm({ starts, defaultFrom, nextVision, plan, onMap, fol
 
   const submit = () => {
     setTried(true);
+    if (tab === 'path') {
+      if (pathError || !pathMovePreview) return;
+      onAdd(pathMovePreview.branches, `${pathMovePreview.path.name} added to your map`, pathMovePreview.levels.at(-1)!);
+      return;
+    }
     if (error || !move) return;
     const last = move.levels[move.levels.length - 1];
     onAdd(move.branches, move.path ? `${position!.name} added as planned steps` : `${position!.name} added to Career vision ${move.vision}`, last);
@@ -224,17 +234,23 @@ function ExplorePositionForm({ starts, defaultFrom, nextVision, plan, onMap, fol
     <>
       <DialogHeader>
         <DialogTitle>Explore a position</DialogTitle>
-        <DialogDescription>See the path from where you are to another position. It doesn’t change your current role.</DialogDescription>
+        <DialogDescription>Explore a position or add a company career path after the role you select. Your current role and target stay the same.</DialogDescription>
       </DialogHeader>
       <form className="flex flex-col gap-[var(--spacing-component-lg)]" onSubmit={(e) => { e.preventDefault(); submit(); }} noValidate>
         <div className="flex flex-col gap-[var(--spacing-component-xs)]">
           <Label htmlFor="explore-from">Starting from</Label>
-          <Select value={from} onValueChange={(v) => { setFrom(v); setPickedEntry(''); }}>
+          <Select value={from} onValueChange={(v) => { setFrom(v); setPickedEntry(''); setTried(false); }}>
             <SelectTrigger id="explore-from"><SelectValue /></SelectTrigger>
             <SelectContent>{starts.map((s) => <SelectItem key={s.id} value={s.id}>{s.label} · {levelName(s.id)}</SelectItem>)}</SelectContent>
           </Select>
         </div>
 
+        <Tabs value={tab} onValueChange={(value) => { setTab(value); setTried(false); }}>
+          <TabsList className="w-full" aria-label="Explore options">
+            <TabsTrigger value="position" className="flex-1">Select a position</TabsTrigger>
+            <TabsTrigger value="path" className="flex-1">Select career path</TabsTrigger>
+          </TabsList>
+          <TabsContent value="position" className="flex flex-col gap-[var(--spacing-component-lg)]">
         <div className="grid grid-cols-1 gap-[var(--spacing-component-md)] sm:grid-cols-2">
           <div className="flex flex-col gap-[var(--spacing-component-xs)]">
             <Label htmlFor="explore-position">Position</Label>
@@ -275,9 +291,26 @@ function ExplorePositionForm({ starts, defaultFrom, nextVision, plan, onMap, fol
           />
         )}
 
+          </TabsContent>
+          <TabsContent value="path" className="flex flex-col gap-[var(--spacing-component-lg)]">
+            <div className="flex flex-col gap-[var(--spacing-component-xs)]">
+              <Label htmlFor="explore-path">Career path</Label>
+              <Select value={pathId} onValueChange={setPathId}>
+                <SelectTrigger id="explore-path" aria-invalid={tried && !!pathError || undefined}><SelectValue placeholder="Choose a career path" /></SelectTrigger>
+                <SelectContent>{companyPaths.map((path) => <SelectItem key={path.id} value={path.id}>{path.name}</SelectItem>)}</SelectContent>
+              </Select>
+              <p className="text-body-xs text-[var(--color-text-secondary)]">Company-defined paths. Steps you have passed are skipped; existing cards are reused.</p>
+            </div>
+            {pathMovePreview && <>
+              {pathMovePreview.skipped.length > 0 && <p className="text-body-xs text-[var(--color-text-secondary)]">{pathMovePreview.skipped.length} earlier {pathMovePreview.skipped.length === 1 ? 'step' : 'steps'} skipped. This path continues after your selected role.</p>}
+              <RoutePreview from={from} fromLabel={starts.find((start) => start.id === from)?.label} levels={pathMovePreview.levels} onMap={onMap} heading={pathMovePreview.path.name} note="Adds to your map without replacing your existing paths or target." tone={pathId === followedPathId ? 'followed' : 'other'} />
+            </>}
+            {(tried || !!pathId) && pathError && <p role="alert" className="text-body-sm text-[var(--color-text-invalid)]">{pathError}</p>}
+          </TabsContent>
+        </Tabs>
         <DialogFooter>
           <Button type="button" variant="outline" onClick={onCancel}>Cancel</Button>
-          <Button type="submit">Add to my map</Button>
+          <Button type="submit" disabled={tab === 'path' && !pathMovePreview}>{tab === 'path' ? 'Add career path' : 'Add to my map'}</Button>
         </DialogFooter>
       </form>
     </>
@@ -301,40 +334,5 @@ function RoutePreview({ from, fromLabel, levels, onMap, heading, note, tone }: {
       </StepRail>
       {note && <p className="text-body-sm text-[var(--color-text-secondary)]">{note}</p>}
     </div>
-  );
-}
-
-// ─── Switch company path ─────────────────────────────────────────────────────
-
-export function SwitchPathDialog({ open, onOpenChange, from, to, targetNote, onConfirm }: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  /** The path followed now — omitted when none */
-  from?: string;
-  to: string;
-  /** Set when the Active target isn't on the new path and will move */
-  targetNote?: string;
-  onConfirm: () => void;
-}) {
-  return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>{from ? 'Follow a different company path?' : `Follow ${to}?`}</AlertDialogTitle>
-          <AlertDialogDescription>Your map shows the path you follow from your current role.</AlertDialogDescription>
-        </AlertDialogHeader>
-        <dl>
-          <Row label="From">{from ?? 'No company path'}</Row>
-          <Row label="To">{to}</Row>
-        </dl>
-        <p className="text-body-sm text-[var(--color-text-secondary)]">
-          {targetNote ?? 'Your Active target stays the same.'} Paths and career visions you added stay on your map.
-        </p>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm}>Follow {to}</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
   );
 }

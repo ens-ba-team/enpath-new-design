@@ -23,6 +23,19 @@ follow `glossary.md`.
 
 ---
 
+## Current graph and AI suggestion update
+
+- Competency list has View overview, opening a radar modal for the selected role. Solid brand line = approved score; dashed neutral line = requirement. Numbered clickable/keyboard axes map to labeled buttons with exact values. Selecting a competency closes the modal, scrolls to and focuses its list row; cancel/Escape restores focus to View overview. Coverage, growth/ready counts and unset requirements are explicit. Missing scores/requirements have no point and break adjacent lines (no invented zero or filled incomplete polygon). Radar requires 3–8 competencies, a shared scale and at least three comparable score/requirement pairs; otherwise an explanation and links back to competencies replace the chart. No readiness/match percentage is shown. Competency list and action creation remain the primary flow.
+
+- AI placeholder has 60% opacity (stronger on hover/focus); its incoming link has 40% opacity. Active target uses amber band/border/label tokens, distinct from green competency readiness. All nodes preceding You are here on the initial path display Previously held, including levels inserted behind the current role; this display rule supersedes the older history-based New on your path rule below.
+- Graph is an exploration map, not a committed plan. Future nodes have no Planned / Career vision badge; previous roles read Previously held. Route labels distinguish Company path and Custom direction. Internal `planned` / `vision` state names and approval mechanics remain for compatibility.
+- A single scripted **Demo AI suggestion** for Engineering to product is shown as a dashed placeholder linked from the current position. It is not a position, does not count toward competency comparisons, and opens a confirmation modal instead of a role panel. List view offers the same entry.
+- Modal shows rationale, data limitations, next-step competency counts, sources and a path preview. Not now preserves the placeholder; Dismiss hides it for the mounted prototype session. Add to my map uses `careerPathMove`, reuses cards, skips passed steps and preserves target/current role. No valid remaining move means no placeholder (including paths already added through Explore).
+- No background AI agent or event-driven refresh is implemented. Recommendations use mock assessment/path data, not a claimed analysis of records/actions. Production direction: evaluate on significant data changes throughout usage, only recommend published paths, at most two visible suggestions, explain missing data, and do not repeat dismissed suggestions absent meaningful changes.
+- Adding through Explore or AI opens the route panel with counts of newly added and reused destination positions (the attachment/start node is excluded), plus Your target hasn’t changed and Undo addition. The map explicitly focuses the appended segment even when all cards already existed, and highlights its positions for 2.5 seconds. List view selects/scrolls to the route. Undo restores the previous plan and selection; any subsequent plan mutation invalidates it, and actions/records are unaffected.
+- Route detail distinguishes definition from discovery: company routes say Defined by your company; personal routes say Added by you · Custom direction. AI-origin routes additionally say Added from an AI suggestion, without changing Company path into an AI route type. Origins are prototype plan metadata and reset on refresh.
+- This section supersedes older node-label descriptions below; the underlying career-target and approval rules are unchanged.
+
 ## 1. What My Career is
 
 The employee's own space. Three questions, each with its own place on the screen:
@@ -53,9 +66,7 @@ and "what this role would need" looked the same. Keeping them apart is the main 
 
 - **A Career vision is one road, never a fork** (2026-09-28). Branching off the middle of a vision
   makes a new vision that runs the whole way (see §6.2).
-- **Company paths are always there** for the employee's current role (RQ-03). The employee follows
-  one; they can switch but not "stop following" (removed 2026-09-28: there's always a path for
-  their role, so leaving it had no meaning).
+- **The initial company path stays on the map.** There is no Following picker or switch-path flow. Additional published company paths are appended from Explore a position → Select career path, after the selected role, without replacing the existing path or target.
 - **Scores come from Assessment only.** Competency statuses: **Ready · Growth area · Not assessed
   yet · Not set**. "Not assessed yet" is never a gap and has no button: assessing is the manager's
   job. **No readiness %.** Employee UI says **growth area**, never "gap".
@@ -77,7 +88,7 @@ and "what this role would need" looked the same. Keeping them apart is the main 
 Header ─ "My Career" · "Lan Nguyen · Backend Engineer L2 · Mid"   [path-change Alert] [Map | List] [Ask AI]
 Progress strip ─ Active target · {target} · bar · 2 ready · 2 growth areas · 2 not assessed yet · 6 competencies · ⓘ
 ┌ Map or List ───────────────────────────────────────────┐┌ Detail panel (when selected) ┐
-│ toolbar: [Following: {path} ▾]  [+ Explore a position]  ││ role panel or route panel    │
+│ toolbar: [+ Explore a position]                       ││ role panel or route panel    │
 │ ...                                                      ││ ...                          │
 │ legend (map only)                                        ││ footer: notes + buttons      │
 └──────────────────────────────────────────────────────────┘└──────────────────────────────┘
@@ -121,7 +132,7 @@ Progress strip ─ Active target · {target} · bar · 2 ready · 2 growth areas
 Expanded rows (2026-09-30): one short line in `text-body-xs` secondary (never the row title's style
 or weight), no points repeated (they're on the row); several rows can be open at once.
 
-Visual comparison replaces the separate group cards: one static competency list, ordered Growth areas → Not assessed → Not set → Ready, without row toggles or a Ready disclosure. Each row uses one segmented scale: solid segments show the approved score, outlined segments show remaining required points, and muted segments show the rest of the Matrix scale. Direct Your score / Role requires labels include score/maximum values. Missing scores are explicitly Not assessed, never zero. Behavior text stays visible without expansion. Growth rows have a separate Create action icon (desktop hover/focus; always visible on narrow/touch screens). It opens a Title + Due date modal linked explicitly to the selected role and competency; cancel/close returns focus to the invoking icon. Save validates required fields and appends a To do action below the row without changing scores or target. Prototype limitation: these actions live in My Career session state only, survive role selection but reset on refresh, and are not yet synchronized with My Actions' independent mock state. If every expectation is unset, the panel shows a no-requirements message instead of a comparison.
+Visual comparison replaces the separate group cards: one static competency list, ordered Growth areas → Not assessed → Not set → Ready, without row toggles or a Ready disclosure. Each row uses one segmented scale: solid segments show the approved score, outlined segments show remaining required points, and muted segments show the rest of the Matrix scale. Direct Your score / Role requires labels show the approved and required points. Ready rows fill only the approved score in green; remaining scale segments have a thin neutral border and no fill. The Ready label communicates that the requirement is met, not that the score is the scale maximum (e.g. score 3, required 3, maximum 5 shows three green segments and two empty segments). Missing scores are explicitly Not assessed, never zero. Behavior text stays visible without expansion. Every competency has an always-visible ghost icon-only + button on the action-summary row, with no resting border, a Create action tooltip and an accessible competency-specific label. It opens the shared My Actions Add action modal (Action, Growth area, Outcome, Due date), with Growth area prefilled from the invoking competency and the explored role retained. Cancel/close returns focus to the invoking button. Each competency always shows its action total and non-zero To do / In progress / Done counts. The action total is a toggle to expand/collapse action titles with status and due date (collapsed by default); zero actions is explicit. Existing My Actions mock actions are included under their mock target role. Save validates required fields and appends a To do action below the row without changing scores or target. Actions share an in-memory prototype store with My Actions. They survive client-side navigation between the two pages, and their current To do / In progress / Done status is reflected in My Career. My Actions keeps actions for other explored roles in separately labeled sections in Board and List views; these do not change the active target. The shared store resets on refresh (no backend or persistent storage). The two screens still have independent mock career-target state. If every expectation is unset, the panel shows a no-requirements message instead of a comparison.
 
 ### 4.3 Career vision request status
 
@@ -236,14 +247,12 @@ starts with a grey "Starts from {card}" row (not selectable); click a row to ope
 | Route | Badge · context | Buttons |
 |---|---|---|
 | Path you follow | "You follow" · "Planned by your company · N levels" | Open Active target (if there is one) · **Path history** (if the path changed) |
-| Other company path for the role | "Company path" · "For your role · no approval needed" | **Follow this path** (note: "It becomes your main route, shown in the top row.") |
+| Added company path | "Company path" · "Planned by your company · added to your map" | Select a role; no Follow / switch action |
 | Career vision | request status (§4.3) · "Your own direction · private" | per §4.3 + **Remove Career vision N** |
 
 ### 5.6 Toolbar
 
-- **"Following: {path}" picker** only when 2+ company paths include the employee's level
-  (Engineering growth / Engineering to product). Picking another opens the switch dialog (§6.4).
-- **Explore a position** (§6.2). Same toolbar above the list in List view.
+- **Explore a position** (§6.2) is the only add entry point in the toolbar. Same toolbar above the list in List view. No Following dropdown.
 
 ### 5.7 Ask AI (feature: `career-chat.tsx`)
 
@@ -267,6 +276,10 @@ not assessed yet in a future assessment"), compare two roles. It never changes t
   No-target strip.
 
 ### 6.2 Explore a position (dialog)
+
+Two tabs share **Starting from**, defaulting to the selected eligible role (otherwise the current role):
+- **Select a position** preserves the existing Position + Join at flow below.
+- **Select career path** selects a published company path and previews the steps to append. The selected node, its graph ancestors, the employee's current role and held roles define passed nodes. Skip the path prefix through the last such node, then connect only the remaining suffix from Starting from. Reuse existing cards, add only missing route edges, and reject cycles, duplicate connections and paths with no remaining steps. Confirm appends branches without switching the initial path or changing the active target. Added paths use one map lane per path. Preview explicitly reports skipped steps.
 
 Opened from the toolbar or "Explore a position from here" (defaults to the selected card).
 Fields: **Starting from** (any card but Completed) · **Position** (Published only, grouped by
@@ -306,11 +319,9 @@ is selected.
   ("Career vision N is waiting for approval. Withdraw the request before removing it.").
 - You are here and the followed path can't be removed.
 
-### 6.4 Switch the company path you follow
+### 6.4 Add a company career path
 
-Picker or **Follow this path** → dialog "Follow a different company path?" From → To. If the
-Active target isn't on the new path, the next level after You are here becomes the target and the
-dialog says so. No approval (admins published the path). Toast "You now follow {path}".
+The old switch flow is removed. Use Explore a position → Select career path (§6.2) to append a path after the selected role. Existing routes and the active target stay unchanged.
 
 ### 6.5 Request manager approval (Career vision)
 

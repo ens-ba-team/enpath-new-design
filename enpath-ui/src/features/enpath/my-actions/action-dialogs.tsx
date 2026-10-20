@@ -16,6 +16,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { growthAreas, isoDate, type Action } from './mock-data';
+import { gapsForLevel } from '../my-career/mock-data';
 
 export interface ActionDraft { title: string; competencyId: string; outcome: string; due?: Date }
 
@@ -24,13 +25,16 @@ const draftOf = (a: Action): ActionDraft => ({ title: a.title, competencyId: a.c
 
 /** Add or edit an Action. Adding can start prefilled: from a growth area's heading (the area) or
  *  from an AI proposal (title, area, outcome) — the person still picks the due date and confirms. */
-export function ActionDialog({ open, onOpenChange, editing, prefill, onSave }: {
+export function ActionDialog({ open, onOpenChange, editing, prefill, roleId, roleName, onCloseAutoFocus, onSave }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   /** The Action being edited; omit to add a new one */
   editing?: Action;
   /** Fields filled in when adding */
   prefill?: Partial<ActionDraft>;
+  roleId?: string;
+  roleName?: string;
+  onCloseAutoFocus?: React.ComponentProps<typeof DialogContent>['onCloseAutoFocus'];
   onSave: (draft: Required<Pick<ActionDraft, 'title' | 'competencyId' | 'outcome'>> & { due: string }) => void;
 }) {
   // The screen remounts the dialog (key) each time it opens, so the form starts from these props.
@@ -48,10 +52,10 @@ export function ActionDialog({ open, onOpenChange, editing, prefill, onSave }: {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[520px]">
+      <DialogContent className="max-w-[520px]" onCloseAutoFocus={onCloseAutoFocus}>
         <DialogHeader>
           <DialogTitle>{editing ? 'Edit action' : 'Add action'}</DialogTitle>
-          <DialogDescription>One piece of work toward a growth area, with a due date.</DialogDescription>
+          <DialogDescription>One piece of work toward a growth area, with a due date.{roleName && <> Toward {roleName}.</>}</DialogDescription>
         </DialogHeader>
 
         <form className="flex flex-col gap-[var(--spacing-component-xl)]" onSubmit={(e) => { e.preventDefault(); save(); }} noValidate>
@@ -68,7 +72,7 @@ export function ActionDialog({ open, onOpenChange, editing, prefill, onSave }: {
             <Select value={draft.competencyId} onValueChange={(v) => setDraft((d) => ({ ...d, competencyId: v }))}>
               <SelectTrigger id="act-area" aria-invalid={(tried && areaMissing) || undefined}><SelectValue placeholder="Choose a growth area" /></SelectTrigger>
               <SelectContent>
-                {growthAreas.map((g) => <SelectItem key={g.id} value={g.id}>{g.name}</SelectItem>)}
+                {((editing?.roleId ?? roleId) ? gapsForLevel((editing?.roleId ?? roleId)!).filter((g) => g.status === 'growth' || g.id === editing?.competencyId || g.id === prefill?.competencyId) : growthAreas).map((g) => <SelectItem key={g.id} value={g.id}>{g.name}</SelectItem>)}
               </SelectContent>
             </Select>
             {tried && areaMissing && <p className="text-body-xs text-[var(--color-text-invalid)]">Choose the growth area this action serves.</p>}

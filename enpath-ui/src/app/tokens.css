@@ -2740,7 +2740,7 @@
    * Use instead: color/text/success for general success text
    * Status:      active
    */
-  --career-map-target-label: #15803d;
+  --career-map-target-label: #973c00;
   /**
    * Intent:      Border of the Active target role card — a non-colour-text signal for the target
    * Use when:    Outlining the CareerMapNode in state target; the target ring in StepRail
@@ -2748,7 +2748,7 @@
    * Use instead: color/border/success for validated inputs
    * Status:      active
    */
-  --career-map-target-border: #16a34a;
+  --career-map-target-border: #e17100;
   /**
    * Intent:      Status band across the top of a Career Map card in state completed
    * Use when:    Filling the band that holds the state label (icon + text) of a CareerMapNode in state completed
@@ -2775,7 +2775,7 @@
    * Foreground:  career-map/target-label (4.6:1)
    * Status:      active
    */
-  --career-map-band-target: #dcfce7;
+  --career-map-band-target: #fef3c6;
   /**
    * Intent:      Status band across the top of a Career Map card in state planned
    * Use when:    Filling the band that holds the state label (icon + text) of a CareerMapNode in state planned

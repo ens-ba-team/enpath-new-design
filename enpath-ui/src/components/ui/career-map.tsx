@@ -62,6 +62,9 @@ export interface CareerMapItem {
   state: CareerMapNodeState;
   /** Replaces the state's label text, e.g. "Career vision 2". The state still sets icon and colour. */
   label?: string;
+  /** Exploration-only card representing an AI-proposed route, not a position. */
+  suggestion?: boolean;
+  hideStatus?: boolean;
   /** Row on the map: 0 is the top row (the company path), higher numbers go down. Cards without a
    *  lane are stacked per column. A taken spot pushes a card to the next free row below. */
   lane?: number;
@@ -146,7 +149,7 @@ const stateLabel: Record<
   CareerMapNodeState,
   { text: string; icon: React.ElementType; className: string }
 > = {
-  completed: { text: "Completed", icon: CheckCircleIcon, className: "bg-[var(--career-map-band-completed)] text-[var(--career-map-node-description)]" },
+  completed: { text: "Previously held", icon: CheckCircleIcon, className: "bg-[var(--career-map-band-completed)] text-[var(--career-map-node-description)]" },
   current: { text: "You are here", icon: MapPinIcon, className: "bg-[var(--career-map-band-current)] text-[var(--career-map-current-label)]" },
   target: { text: "Active target", icon: FlagIcon, className: "bg-[var(--career-map-band-target)] text-[var(--career-map-target-label)]" },
   new: { text: "New on your path", icon: SparkleIcon, className: "bg-[var(--career-map-band-planned)] text-[var(--career-map-node-description)]" },
@@ -155,7 +158,7 @@ const stateLabel: Record<
 };
 
 type CareerMapNodeData = {
-  title: string; level: string; state: CareerMapNodeState; label?: string; progress?: CareerMapProgress;
+  title: string; level: string; state: CareerMapNodeState; label?: string; progress?: CareerMapProgress; suggestion?: boolean; hideStatus?: boolean;
   /** Colour of the selected route's ring, when this card is on it */
   ring?: string;
 };
@@ -170,7 +173,8 @@ function CareerMapNode({ data, selected }: NodeProps<CareerMapFlowNode>) {
       data-state={data.state}
       className={cn(
         "flex h-full flex-col overflow-hidden rounded-[var(--career-map-node-radius)] border bg-[var(--career-map-node-surface)] text-left shadow-[var(--shadow-surface)]",
-        data.state === "vision"
+        data.suggestion && "opacity-60 hover:opacity-90 focus-within:opacity-100",
+        data.suggestion
           ? "border-dashed border-[var(--career-map-vision-border)]"
           : data.state === "target"
             ? "border-[var(--career-map-target-border)]"
@@ -185,10 +189,10 @@ function CareerMapNode({ data, selected }: NodeProps<CareerMapFlowNode>) {
     >
       <Handle type="target" position={Position.Left} isConnectable={false} className="!pointer-events-none !opacity-0" />
       {/* Status band on top; the level leads (it's what changes along a path), the Position follows. */}
-      <span className={cn("flex items-center gap-[var(--spacing-component-xs)] px-[var(--career-map-node-padding)] py-[var(--spacing-component-xs)] text-label-sm", label.className)}>
+      {!data.hideStatus && <span className={cn("flex items-center gap-[var(--spacing-component-xs)] px-[var(--career-map-node-padding)] py-[var(--spacing-component-xs)] text-label-sm", label.className)}>
         <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
         {data.label ?? label.text}
-      </span>
+      </span>}
       <span className="flex flex-1 flex-col justify-center gap-[var(--career-map-node-gap)] px-[var(--career-map-node-padding)]">
         <span
           className={cn(
@@ -200,6 +204,7 @@ function CareerMapNode({ data, selected }: NodeProps<CareerMapFlowNode>) {
         </span>
         <span className="line-clamp-2 text-body-xs text-[var(--career-map-node-description)]">{data.title}</span>
       </span>
+      {data.suggestion && <span className="px-[var(--career-map-node-padding)] pb-[var(--spacing-component-sm)] text-body-xs text-[var(--career-map-node-description)]">Explore this direction</span>}
       {data.progress && <div className="px-[var(--career-map-node-padding)] pb-[var(--spacing-component-sm)]"><CareerProgress progress={data.progress} /></div>}
       <Handle type="source" position={Position.Right} isConnectable={false} className="!pointer-events-none !opacity-0" />
     </div>
@@ -284,20 +289,24 @@ function viewportFor(ids: string[], position: Positions, width: number, height: 
  * the role before the current one, the current role and its next steps. Computed from the layout (card sizes are fixed), so it
  * doesn't wait for React Flow to measure the cards.
  */
-function OpeningView({ items, links, position }: { items: CareerMapItem[]; links: CareerMapLink[]; position: Positions }) {
+function OpeningView({ items, links, position, focus }: { items: CareerMapItem[]; links: CareerMapLink[]; position: Positions; focus?: { key: number; ids: string[] } }) {
   const width = useStore((s) => s.width);
   const height = useStore((s) => s.height);
   const { setViewport } = useReactFlow();
   const fittedFor = React.useRef("");
   const ids = items.map((i) => i.id).sort().join("|");
   // Width in 48px steps, so a panel opening or closing re-fits but a 1px resize doesn't.
-  const cardsKey = `${ids}#${Math.round(width / 48)}`;
+  const cardsKey = `${ids}#${Math.round(width / 48)}#${focus?.key ?? ''}`;
   React.useEffect(() => {
     if (fittedFor.current === cardsKey || !width || !height || items.length === 0) return;
     const first = fittedFor.current === "";
     const before = new Set(fittedFor.current.split("#")[0].split("|"));
     fittedFor.current = cardsKey;
     const duration = first ? 0 : 300;
+    if (focus?.ids.length) {
+      setViewport(viewportFor(focus.ids, position, width, height, MIN_READABLE_ZOOM).viewport, { duration });
+      return;
+    }
     const all = viewportFor(items.map((i) => i.id), position, width, height, MIN_READABLE_ZOOM);
     const current = items.find((i) => i.state === "current")?.id;
     if (all.fit >= MIN_READABLE_ZOOM || !current) { setViewport(all.viewport, { duration }); return; }
@@ -312,11 +321,13 @@ function OpeningView({ items, links, position }: { items: CareerMapItem[]; links
     const prev = links.filter((l) => l.to === current).map((l) => l.from);
     const next = links.filter((l) => l.from === current).map((l) => l.to);
     setViewport(viewportFor([...prev, current, ...next], position, width, height, MIN_READABLE_ZOOM).viewport, { duration });
-  }, [cardsKey, width, height, position, items, links, setViewport]);
+  }, [cardsKey, width, height, position, items, links, setViewport, focus]);
   return null;
 }
 
 export interface CareerMapProps {
+  focus?: { key: number; ids: string[] };
+  highlightIds?: string[];
   items: CareerMapItem[];
   links: CareerMapLink[];
   paths: CareerMapPath[];
@@ -335,7 +346,7 @@ export interface CareerMapProps {
   className?: string;
 }
 
-function CareerMapCanvas({ items, links, paths, selectedId, onSelect, selectedRoute, onSelectRoute, onPaneClick, "aria-label": ariaLabel, toolbar, className }: CareerMapProps) {
+function CareerMapCanvas({ items, links, paths, selectedId, onSelect, selectedRoute, onSelectRoute, onPaneClick, "aria-label": ariaLabel, toolbar, className, focus, highlightIds }: CareerMapProps) {
   const { position, links: valid } = React.useMemo(() => layout(items, links), [items, links]);
   const routeOf = React.useMemo(() => new Map(paths.map((p) => [p.id, p])), [paths]);
   // Cards on the selected route: both ends of a company path's links; for a Career vision, only the
@@ -349,12 +360,12 @@ function CareerMapCanvas({ items, links, paths, selectedId, onSelect, selectedRo
     id: i.id,
     type: "careerMapNode",
     position: position.get(i.id) ?? { x: 0, y: 0 },
-    data: { title: i.title, level: i.level, state: i.state, label: i.label, progress: i.progress, ring: onRoute.has(i.id) && i.state !== "completed" ? routeColor(selected) : undefined },
+    data: { title: i.title, level: i.level, state: i.state, label: i.label, suggestion: i.suggestion, hideStatus: i.hideStatus, progress: i.progress, ring: highlightIds?.includes(i.id) ? 'var(--career-map-node-selected)' : onRoute.has(i.id) && i.state !== "completed" ? routeColor(selected) : undefined },
     selected: i.id === selectedId,
     width: NODE_WIDTH,
     height: NODE_HEIGHT,
     style: { width: NODE_WIDTH, height: NODE_HEIGHT },
-    ariaLabel: `${i.label ?? stateLabel[i.state].text}: ${i.title}, ${i.level}${i.progress ? `. ${i.progress.ready} ready, ${i.progress.growth} growth areas, ${i.progress.evidence} not assessed, ${i.progress.unset} not set` : ''}`,
+    ariaLabel: `${i.hideStatus ? 'Position' : i.label ?? stateLabel[i.state].text}: ${i.title}, ${i.level}${i.progress ? `. ${i.progress.ready} ready, ${i.progress.growth} growth areas, ${i.progress.evidence} not assessed, ${i.progress.unset} not set` : ''}`,
   }));
 
   const edges: Edge[] = valid.map((l) => {
@@ -362,6 +373,7 @@ function CareerMapCanvas({ items, links, paths, selectedId, onSelect, selectedRo
     // The followed route is the default active route; an explicit selection overrides it.
     const on = selectedRoute ? l.route === selectedRoute : route?.followed === true;
     const stroke = routeColor(route, on);
+    const suggestion = items.some((item) => item.id === l.to && item.suggestion);
     return {
       // Routes can share a stretch (two Career visions): one line per route, keyed by route.
       id: `${l.route}:${l.from}->${l.to}`,
@@ -373,7 +385,7 @@ function CareerMapCanvas({ items, links, paths, selectedId, onSelect, selectedRo
       interactionWidth: 20,
       className: onSelectRoute ? "cursor-pointer" : undefined,
       zIndex: on ? 1 : 0,
-      style: { stroke, strokeWidth: on ? 3.5 : 2, strokeDasharray: route?.kind === "vision" ? "6 4" : undefined },
+      style: { stroke, opacity: suggestion ? 0.4 : 1, strokeWidth: on ? 3.5 : 2, strokeDasharray: route?.kind === "vision" ? "6 4" : undefined },
       // Arrowheads in screen units so they don't grow with the thicker active line. React Flow draws
       // the arrow in a quarter of the marker box, so 40 → a ~10px arrow at every stroke width.
       markerEnd: { type: MarkerType.ArrowClosed, color: stroke, width: 40, height: 40, markerUnits: "userSpaceOnUse" },
@@ -429,7 +441,7 @@ function CareerMapCanvas({ items, links, paths, selectedId, onSelect, selectedRo
           <div className="absolute left-[var(--spacing-component-md)] top-[var(--spacing-component-md)] z-10 flex flex-wrap items-center gap-[var(--spacing-component-xs)]">{toolbar}</div>
         )}
         <CareerMapControls ids={items.map((i) => i.id)} position={position} />
-        <OpeningView items={items} links={valid} position={position} />
+        <OpeningView items={items} links={valid} position={position} focus={focus} />
       </ReactFlow>
     </div>
   );
@@ -588,7 +600,7 @@ export function CareerMapList({ items, links, paths, selectedId, onSelect, selec
       ? "muted"
       : it.state === "current" ? "current" : it.state === "target" ? "target" : "route";
     // A vision row's section already says which Career vision it is.
-    const showLabel = !start && it.state !== "vision";
+    const showLabel = !start && it.state !== "vision" && !it.hideStatus;
     const status = start ? undefined : (showLabel || it.detail) ? (
       <>
         {showLabel && label}

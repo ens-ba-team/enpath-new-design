@@ -25,7 +25,6 @@ import {
   countGaps,
   describeStep,
   gapsFor,
-  matchingPaths,
   visionRoute,
   type GapStatus,
   type Plan,
@@ -47,17 +46,17 @@ export const requestBadge: Record<
 
 export const stateName = (s: PlanStep) =>
   ({
-    completed: "Completed",
+    completed: "Previously held",
     new: "New on your path",
     current: "You are here",
     target: "Active target",
-    planned: "Planned",
-    vision: visionLabel(s),
+    planned: "Future position",
+    vision: "Future position",
   }[s.state]);
 
 /** "Career vision 2", or "Career visions 1, 2" for a card two visions share. */
 export const visionLabel = (s: PlanStep) =>
-  (s.visions?.length ?? 0) > 1 ? `Career visions ${s.visions!.join(", ")}` : `Career vision ${s.vision}`;
+  (s.visions?.length ?? 0) > 1 ? `Custom directions ${s.visions!.join(", ")}` : `Custom direction ${s.vision}`;
 
 const note = (text: string) => (
   <p className="text-body-sm text-[var(--color-text-secondary)]">{text}</p>
@@ -321,12 +320,12 @@ export function StepPanel({
   // One badge for what the card is, one line for where it comes from.
   const badge: {
     text: string;
-    variant: "success" | "blue" | "secondary" | "dashed";
+    variant: "success" | "warning" | "blue" | "secondary" | "dashed";
   } = {
-    completed: { text: "Completed", variant: "secondary" as const },
+    completed: { text: "Previously held", variant: "secondary" as const },
     new: { text: "New on your path", variant: "secondary" as const },
     current: { text: "You are here", variant: "blue" as const },
-    target: { text: "Active target", variant: "success" as const },
+    target: { text: "Active target", variant: "warning" as const },
     planned: { text: "Planned", variant: "secondary" as const },
     vision: {
       text: `${visionLabel(step)} · ${mine ? mine.status : "draft"}`,
@@ -367,7 +366,7 @@ export function StepPanel({
           onClick={() => actions.onShowRoute(`vision-${n}`)}
         >
           <CompassIcon aria-hidden="true" />
-          Show Career vision {n}
+          Show Custom direction {n}
         </Button>
       );
     if (mine?.status !== "approved")
@@ -424,9 +423,9 @@ export function StepPanel({
         </h2>
         {/* Badge on its own line, the context line always under it — same in every detail panel. */}
         <div className="flex flex-col items-start gap-[var(--spacing-component-xs)]">
-          <Badge variant={badge.variant} shape="pill" size="md">
+          {(step.state === 'current' || step.state === 'target' || step.state === 'completed') && <Badge variant={badge.variant} shape="pill" size="md">
             {badge.text}
-          </Badge>
+          </Badge>}
           {context && (
             <span className="text-body-sm text-[var(--color-text-secondary)]">
               {context}
@@ -485,7 +484,6 @@ export function StepPanel({
 // ─── Route panel ─────────────────────────────────────────────────────────────
 
 export interface RouteActions {
-  onFollow: (pathId: string) => void;
   /** Path history drawer (the followed path, when it has changes) */
   onPathHistory: () => void;
   onRequest: () => void;
@@ -525,7 +523,7 @@ function RouteSteps({
           <StepRailItem
             key={id}
             title={start ? `Starts from ${levelName(id)}` : levelName(id)}
-            status={!start && s && state !== "vision" ? stateName(s) : undefined}
+            status={!start && s && (state === 'current' || state === 'target' || state === 'completed') ? stateName(s) : undefined}
             statusTone={state === "current" ? "current" : state === "target" ? "target" : "neutral"}
             marker={marker}
             muted={start || state === "completed"}
@@ -544,8 +542,12 @@ export function RoutePanel({
   request,
   removeBlocked,
   actions,
+  addition,
+  onUndo,
 }: {
   route: CareerMapPath;
+  addition?: { added: number; reused: number };
+  onUndo?: () => void;
   plan: Plan;
   steps: PlanStep[];
   request: VisionRequest | null;
@@ -579,7 +581,14 @@ export function RoutePanel({
           {badge.text}
         </Badge>
         <span className="text-body-sm text-[var(--color-text-secondary)]">{context}</span>
+        <span className="text-body-xs text-[var(--color-text-secondary)]">{route.kind === 'vision' ? (plan.routeOrigins?.[route.id] === 'ai' ? 'Custom direction · Accepted by you' : 'Added by you · Custom direction') : 'Defined by your company'}</span>
+        {plan.routeOrigins?.[route.id] === 'ai' && <span className="text-body-xs text-[var(--color-text-secondary)]">Added from an AI suggestion</span>}
       </div>
+      {addition && <div role="status" className="flex flex-col gap-[var(--spacing-component-sm)] rounded-[var(--radius-surface)] border border-[var(--color-border-default)] p-[var(--spacing-component-md)]">
+        <p className="text-body-sm">{addition.added} {addition.added === 1 ? 'position' : 'positions'} added · {addition.reused} existing {addition.reused === 1 ? 'position' : 'positions'} reused</p>
+        <p className="text-body-xs text-[var(--color-text-secondary)]">Your target hasn’t changed.</p>
+        <Button variant="outline" size="sm" onClick={onUndo}>Undo addition</Button>
+      </div>}
     </div>
   );
 
@@ -599,7 +608,7 @@ export function RoutePanel({
     } else if (mine?.status === "approved") {
       hint = "Approved. Select a role to set as target.";
     } else if (request?.status === "waiting") {
-      hint = `Career vision ${request.vision} is waiting for approval. You can send one at a time. Withdraw it to send this one.`;
+      hint = `Custom direction ${request.vision} is waiting for approval. You can send one at a time. Withdraw it to send this one.`;
     } else {
       buttons.push(
         <Button key="request" onClick={actions.onRequest}>
@@ -618,7 +627,7 @@ export function RoutePanel({
           onClick={actions.onRemoveVision}
         >
           <TrashIcon aria-hidden="true" />
-          Remove Career vision {n}
+          Remove Custom direction {n}
         </Button>
       );
     return (
@@ -651,18 +660,12 @@ export function RoutePanel({
   }
 
   const path = companyPaths.find((p) => p.id === route.id)!;
-  const ids = path.levels.filter((id) => steps.some((s) => s.id === id));
   const followed = route.id === plan.followedPathId;
-  const canFollow = !followed && matchingPaths.some((p) => p.id === route.id);
+  const branches = plan.branches.filter((branch) => branch.kind === 'path' && branch.pathId === route.id);
+  const ids = followed ? path.levels.filter((id) => steps.some((s) => s.id === id)) : [...new Set(branches.flatMap((branch) => [branch.from, branch.to]))];
   const target = steps.find((s) => s.state === "target");
   const companyButtons: React.ReactNode[] = [];
-  if (canFollow) {
-    companyButtons.push(
-      <Button key="follow" onClick={() => actions.onFollow(route.id)}>
-        Follow this path
-      </Button>,
-    );
-  } else if (followed) {
+  if (followed) {
     if (target) {
       companyButtons.push(
         <Button key="target" variant="outline" onClick={() => actions.onSelectCard(target.id)}>
@@ -682,9 +685,7 @@ export function RoutePanel({
     <Panel
       onClose={actions.onClose}
       labelledBy="route-title"
-      notes={[
-        canFollow && "It becomes your main route, shown in the top row.",
-      ]}
+      notes={[]}
       buttons={companyButtons}
     >
       {header(
@@ -692,12 +693,13 @@ export function RoutePanel({
         path.name,
         followed
           ? `Planned by your company · ${ids.length} levels`
-          : "For your role · no approval needed"
+          : "Planned by your company · added to your map"
       )}
       <RouteSteps
         ids={ids}
         steps={steps}
         tone={followed ? "followed" : "other"}
+        startsFrom={!followed}
         onSelectCard={actions.onSelectCard}
       />
     </Panel>

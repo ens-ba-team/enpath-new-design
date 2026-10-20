@@ -133,7 +133,7 @@ Route `/me/actions` (sidebar "My Actions"). Code: `enpath-ui/src/features/enpath
 
 **Prototype assumptions:** the Active target is **Frontend Engineer L3** (it replaced Backend
 Engineer L3 on Lan's path on 27 Sep), giving three growth areas: Code quality, Delivery, Mentoring.
-My Career's mock starts with no target; the pages keep separate state. Today = 30 Sep 2026.
+My Career's mock starts with no target; the pages keep separate career-target state. Actions now share an in-memory store: Create action in My Career adds to this page and status edits are reflected on returning to My Career. Actions for other explored roles appear under separately labeled role sections in Board and List, without changing the active target. Client-side navigation retains actions; refresh resets them. Today = 30 Sep 2026.
 
 **Rows** sit in fixed columns (status slot · title · caret | next-step button | "…") so they line up.
 

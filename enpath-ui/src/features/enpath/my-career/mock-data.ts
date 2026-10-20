@@ -84,6 +84,47 @@ export function ladderMove(from: string, ladder: string[], vision: number) {
   return { branches, levels, path: move.kind === 'path' ? move.path : undefined };
 }
 
+/** Append a published path after the selected role, never replaying passed steps or creating a cycle. */
+export function careerPathMove(plan: Plan, from: string, pathId: string) {
+  const path = companyPaths.find((item) => item.id === pathId);
+  if (!path) return null;
+  const { steps, links } = buildMap(plan);
+  if (!steps.some((step) => step.id === from)) return null;
+  const passed = new Set([employee.levelId, ...employee.heldLevels, from]);
+  const queue = [from];
+  // All ancestors of the attachment point are behind this exploration, including planned ancestors.
+  while (queue.length) {
+    const id = queue.pop()!;
+    for (const link of links.filter((item) => item.to === id)) {
+      if (!passed.has(link.from)) { passed.add(link.from); queue.push(link.from); }
+    }
+  }
+  const cut = path.levels.reduce((last, id, index) => passed.has(id) ? index : last, -1);
+  const levels = path.levels.slice(cut + 1);
+  if (!levels.length) return null;
+  const branches: Branch[] = [];
+  const edges = [...links];
+  let previous = from;
+  for (const to of levels) {
+    // A candidate must not already lead back to the preceding node through another route.
+    const pending = [to];
+    const visited = new Set<string>();
+    while (pending.length) {
+      const id = pending.pop()!;
+      if (id === previous) return null;
+      if (visited.has(id)) continue;
+      visited.add(id);
+      edges.filter((edge) => edge.from === id).forEach((edge) => pending.push(edge.to));
+    }
+    if (!edges.some((edge) => edge.from === previous && edge.to === to && edge.route === path.id)) {
+      branches.push({ kind: 'path', pathId: path.id, from: previous, to });
+      edges.push({ from: previous, to, route: path.id });
+    }
+    previous = to;
+  }
+  return branches.length ? { branches, levels, skipped: path.levels.slice(0, cut + 1), path } : null;
+}
+
 export interface Plan {
   /** The company path the employee follows (the top row) — null when none is followed (no longer reachable from the UI: Stop following was removed 2026-09-28) */
   followedPathId: string | null;
@@ -95,6 +136,8 @@ export interface Plan {
    *  doesn't bring it back. */
   removedTarget?: { levelId: string; date: string } | null;
   branches: Branch[];
+  /** How a route was first added; independent of who defined it. */
+  routeOrigins?: Record<string, 'you' | 'ai'>;
 }
 
 export const initialPlan: Plan = {
@@ -156,10 +199,9 @@ export function buildMap(plan: Plan, approvedVisions: number[] = []) {
   const followed = companyPaths.find((p) => p.id === plan.followedPathId);
   const here = followed ? followed.levels.indexOf(employee.levelId) : -1;
   if (followed && here > 0) {
-    // Behind You are here: Completed only if Lan held it; a level the path added later is
-    // "New on your path" until an approved assessment meets it or the manager marks it.
+    // All steps preceding the current position are displayed as Previously held.
     followed.levels.slice(0, here).forEach((levelId, i, done) => {
-      add(levelId, employee.heldLevels.includes(levelId) ? 'completed' : 'new', 0);
+      add(levelId, 'completed', 0);
       if (i > 0) link({ from: done[i - 1], to: levelId, route: followed.id });
     });
     link({ from: followed.levels[here - 1], to: employee.levelId, route: followed.id });
@@ -167,7 +209,7 @@ export function buildMap(plan: Plan, approvedVisions: number[] = []) {
   add(employee.levelId, 'current', 0);
   if (followed) walk(followed, employee.levelId, here + 1, 0);
   const visions = visionNumbers(plan);
-  let pathLane = visions.length + 1;
+  const pathLanes = new Map<string, number>();
   // A branch whose start card left the followed path re-attaches to the nearest earlier level still
   // on the map (by the path's previous order), or to You are here. Its status is kept.
   const before = followed?.changes?.flatMap((c) => c.before) ?? [];
@@ -179,7 +221,8 @@ export function buildMap(plan: Plan, approvedVisions: number[] = []) {
     const b = steps.has(raw.from) || !before.includes(raw.from) ? raw : { ...raw, from: reattach(raw.from) };
     if (!steps.has(b.from)) return; // its starting card was removed
     if (b.kind === 'path') {
-      add(b.to, 'planned', pathLane++, { branch: i });
+      if (!pathLanes.has(b.pathId)) pathLanes.set(b.pathId, visions.length + 1 + pathLanes.size);
+      add(b.to, 'planned', pathLanes.get(b.pathId)!, { branch: i });
       link({ from: b.from, to: b.to, route: b.pathId });
     } else {
       add(b.to, 'vision', visions.indexOf(b.vision) + 1, { vision: b.vision, visions: [], branch: i });

@@ -6,7 +6,7 @@
 //
 // PROTOTYPE ASSUMPTION: the Active target is Frontend Engineer L3 (it replaced Backend Engineer L3
 // on Lan's company path on 27 Sep). My Career's own mock starts with no target; the two pages keep
-// separate state until a shared store exists.
+// separate career-target state. Action data is shared in memory via action-store.ts.
 
 import { gapsForLevel, pointLabel, type Gap } from '../my-career/mock-data';
 import { levelName } from '../my-career/plan-dialogs';
@@ -24,6 +24,8 @@ export interface Action {
   title: string;
   /** The growth area (competency) it serves */
   competencyId: string;
+  /** Role explored when this action was created in My Career. */
+  roleId?: string;
   status: ActionStatus;
   /** ISO date */
   due: string;

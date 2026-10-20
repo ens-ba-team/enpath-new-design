@@ -18,21 +18,22 @@ import {
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
 import { CareerMap, CareerMapLegend, CareerMapList, type CareerMapItem, type CareerMapPath } from '@/components/ui/career-map';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Toaster } from '@/components/ui/toast';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { EnpathAppShell } from '../app-shell';
 import { SidebarFollowsChat, useChatShortcut } from '../chat/sidebar-follows-chat';
 import { Tip } from '../tip';
 import { CareerChat } from './career-chat';
-import type { QuickCareerAction } from './gap-row';
+import { AiSuggestionDialog, demoSuggestion } from './ai-suggestion-dialog';
+import { addCareerAction, useActionPlan } from '../my-actions/action-store';
+import { targetLevelId } from '../my-actions/mock-data';
 import { PathHistoryDrawer, type PathHistoryChange, type PathHistoryRow } from './path-history-drawer';
 import {
-  buildMap, companyPaths, countGaps, describeChange, describeStep, employee, gapsFor, initialPlan, matchingPaths, removeBranch, removeVision,
+  buildMap, careerPathMove, companyPaths, countGaps, describeChange, describeStep, employee, gapsFor, initialPlan, removeBranch, removeVision,
   visionNumbers, visionRoute, visionRouteId, type Branch, type GapStatus, type Plan, type VisionRequest,
 } from './mock-data';
 import { NoTargetStrip, PathChangeNotice, ProgressBoard, requestBadge, RoutePanel, stateName, StepPanel, visionLabel } from './my-career-panels';
-import { ExplorePositionDialog, levelName, RemoveTargetDialog, SetTargetDialog, SwitchPathDialog, VisionRequestDialog, type StartOption } from './plan-dialogs';
+import { ExplorePositionDialog, levelName, RemoveTargetDialog, SetTargetDialog, VisionRequestDialog, type StartOption } from './plan-dialogs';
 
 function Placeholder({ children }: { children: React.ReactNode }) {
   return <p className="p-[var(--spacing-layout-sm)] text-body-sm text-[var(--color-text-secondary)]">{children}</p>;
@@ -40,7 +41,7 @@ function Placeholder({ children }: { children: React.ReactNode }) {
 
 // 'none' = nothing selected: the detail panel is closed and the map gets the full width.
 type Selection = { kind: 'card'; id: string } | { kind: 'route'; id: string } | { kind: 'none' };
-type DialogName = 'target' | 'untarget' | 'request' | 'add' | 'remove' | 'switch' | null;
+type DialogName = 'target' | 'untarget' | 'request' | 'add' | 'remove' | null;
 
 const NARROW = '(max-width: 1023px)';
 const subscribeNarrow = (onChange: () => void) => {
@@ -50,9 +51,20 @@ const subscribeNarrow = (onChange: () => void) => {
 };
 
 export function MyCareerScreen() {
+  const [addition, setAddition] = React.useState<{ routeId: string; added: number; reused: number; before: Plan; after: Plan; selection: Selection } | null>(null);
+  const [mapFocus, setMapFocus] = React.useState<{ key: number; ids: string[] }>();
+  const [highlightIds, setHighlightIds] = React.useState<string[]>([]);
+  React.useEffect(() => {
+    if (!highlightIds.length) return;
+    const timer = window.setTimeout(() => setHighlightIds([]), 2500);
+    return () => window.clearTimeout(timer);
+  }, [highlightIds]);
+  const [suggestionOpen, setSuggestionOpen] = React.useState(false);
+  const [suggestionDismissed, setSuggestionDismissed] = React.useState(false);
   const [page, setPage] = React.useState('My Career');
   const [plan, setPlan] = React.useState<Plan>(initialPlan);
-  const [careerActions, setCareerActions] = React.useState<QuickCareerAction[]>([]);
+  const [sharedActions] = useActionPlan();
+  const careerActions = sharedActions.map((action) => ({ ...action, roleId: action.roleId ?? targetLevelId }));
   const [request, setRequest] = React.useState<VisionRequest | null>(null);
   // Map or List: List by default on narrow screens (no room to pan a canvas); a choice made with the
   // toggle wins. Read with useSyncExternalStore so the server render (Map) never mismatches.
@@ -65,7 +77,6 @@ export function MyCareerScreen() {
   // Path changes: the strip's notice shows until Path history is opened for the latest change.
   const [seenChange, setSeenChange] = React.useState<string | null>(null);
   const [historyOpen, setHistoryOpen] = React.useState(false);
-  const [switchTo, setSwitchTo] = React.useState('');
   const [chatOpen, setChatOpen] = React.useState(false);
   const [focusGroup, setFocusGroup] = React.useState<{ group: GapStatus; n: number } | undefined>();
   useChatShortcut(React.useCallback(() => setChatOpen((o) => !o), []));
@@ -73,6 +84,7 @@ export function MyCareerScreen() {
   const approvedVisions = request?.status === 'approved' ? [request.vision] : [];
   const approvedKey = approvedVisions.join(',');
   const { steps, links } = React.useMemo(() => buildMap(plan, approvedKey ? approvedKey.split(',').map(Number) : []), [plan, approvedKey]);
+  const suggestedMove = !suggestionDismissed ? careerPathMove(plan, demoSuggestion.from, demoSuggestion.pathId) : null;
   const current = steps.find((s) => s.state === 'current')!;
   const target = steps.find((s) => s.state === 'target');
   const visions = visionNumbers(plan);
@@ -86,11 +98,11 @@ export function MyCareerScreen() {
         const followed = p.id === plan.followedPathId;
         return followed
           ? { id: p.id, name: p.name, followed, badge: 'You follow', note: `Planned by your company · ${p.levels.length} levels` }
-          : { id: p.id, name: p.name, followed, badge: 'Company path', note: 'For your role · no approval needed' };
+          : { id: p.id, name: p.name, followed, badge: 'Company path', note: 'Planned by your company · added to your map' };
       }),
     ...visions.map((n): CareerMapPath => {
       const sent = request?.vision === n ? request : null;
-      return { id: visionRouteId(n), name: `Career vision ${n}`, kind: 'vision', badge: sent ? requestBadge[sent.status].text : 'Draft', note: sent ? 'Your own direction' : 'Your own direction · private' };
+      return { id: visionRouteId(n), name: `Custom direction ${n}`, kind: 'vision', badge: sent ? requestBadge[sent.status].text : 'Draft', note: sent ? 'Your own direction' : 'Your own direction · private' };
     }),
   ];
   const route = sel.kind === 'route' ? routes.find((r) => r.id === sel.id) : undefined;
@@ -107,8 +119,11 @@ export function MyCareerScreen() {
     const n = s.state === 'target' ? countGaps(gapsFor(s)) : null;
     const plural = (k: number, one: string, many: string) => `${k} ${k === 1 ? one : many}`;
     const detail = n ? [n.ready > 0 && `${n.ready} ready`, n.growth > 0 && plural(n.growth, 'growth area', 'growth areas'), n.evidence > 0 && `${n.evidence} not assessed yet`, n.unset > 0 && `${n.unset} not set`].filter(Boolean).join(' · ') || undefined : undefined;
-    return { id: s.id, title: d.title, level: d.level, state: s.state, lane: s.lane, detail, progress: countGaps(gapsFor(s)), label: s.state === 'vision' ? (visionCount > 1 ? visionLabel(s) : 'Career vision') : undefined };
+    return { id: s.id, title: d.title, level: d.level, state: s.state, hideStatus: s.state === 'planned' || s.state === 'vision' || s.state === 'new', lane: s.lane, detail, progress: countGaps(gapsFor(s)), label: s.state === 'vision' ? (visionCount > 1 ? visionLabel(s) : 'Career vision') : undefined };
   });
+  const graphItems: CareerMapItem[] = suggestedMove ? [...items, { id: demoSuggestion.id, title: demoSuggestion.name, level: 'Company path', state: 'vision', label: 'AI suggestion · Demo', suggestion: true, lane: Math.max(...items.map((item) => item.lane ?? 0)) + 1 }] : items;
+  const graphLinks = suggestedMove ? [...links, { from: demoSuggestion.from, to: demoSuggestion.id, route: demoSuggestion.id }] : links;
+  const graphRoutes: CareerMapPath[] = suggestedMove ? [...routes, { id: demoSuggestion.id, name: 'AI suggestion · Demo', kind: 'vision' }] : routes;
   const starts: StartOption[] = steps.filter((s) => s.state !== 'completed' && s.state !== 'new').map((s) => ({ id: s.id, label: stateName(s), vision: s.vision }));
 
   // What "Remove" takes away: a whole Career vision (route panel) or one company-path card you added.
@@ -159,6 +174,7 @@ export function MyCareerScreen() {
   });
 
   const commit = (next: Plan, message: string) => {
+    setAddition(null);
     // Setting a target ends the "Pick a new target" state.
     setPlan(next.targetId ? { ...next, removedTarget: null } : next);
     if (request && !visionNumbers(next).includes(request.vision)) setRequest(null);
@@ -166,19 +182,8 @@ export function MyCareerScreen() {
     toast.success(message);
   };
 
-  const switchPreview = React.useMemo(() => {
-    if (!switchTo) return null;
-    const next = { ...plan, followedPathId: switchTo };
-    if (!plan.targetId) return { next, note: 'You have no target yet. Pick one on the path when you’re ready.' };
-    if (buildMap(next).steps.some((s) => s.id === plan.targetId)) return { next, note: undefined };
-    const path = companyPaths.find((p) => p.id === switchTo)!;
-    const newTarget = path.levels[path.levels.indexOf(employee.levelId) + 1] ?? employee.levelId;
-    return { next: { ...next, targetId: newTarget }, note: `${levelName(plan.targetId)} isn't on ${path.name}, so ${levelName(newTarget)} becomes your target.` };
-  }, [switchTo, plan]);
-
-  const follow = (pathId: string) => { if (pathId !== plan.followedPathId) { setSwitchTo(pathId); setDialog('switch'); } };
-  const selectCard = (id: string) => setSel({ kind: 'card', id });
-  const selectRoute = (id: string) => setSel((s) => (s.kind === 'route' && s.id === id ? { kind: 'none' } : { kind: 'route', id }));
+  const selectCard = (id: string) => { if (id === demoSuggestion.id) { setSuggestionOpen(true); return; } setSel({ kind: 'card', id }); };
+  const selectRoute = (id: string) => { if (id === demoSuggestion.id) { setSuggestionOpen(true); return; } setSel((s) => (s.kind === 'route' && s.id === id ? { kind: 'none' } : { kind: 'route', id })); };
   const clearSelection = () => setSel({ kind: 'none' });
   // Esc closes the details — unless a dialog is open (it handles its own Esc).
   React.useEffect(() => {
@@ -187,7 +192,29 @@ export function MyCareerScreen() {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [sel.kind, dialog]);
-  const addBranches = (added: Branch[], message: string, select: string) => { commit({ ...plan, branches: [...plan.branches, ...added] }, message); selectCard(select); };
+  const undoAddition = () => {
+    if (!addition || plan !== addition.after) return;
+    setPlan(addition.before);
+    setSel(addition.selection);
+    setAddition(null);
+    setMapFocus(undefined);
+    setHighlightIds([]);
+    toast('Path addition undone. Your work is kept.');
+  };
+  const addBranches = (added: Branch[], message: string, select: string, source: 'you' | 'ai' = 'you') => {
+    if (!added.length) return;
+    const last = added.at(-1)!;
+    const routeId = last.kind === 'path' ? last.pathId : visionRouteId(last.vision);
+    const beforeIds = new Set(steps.map((item) => item.id));
+    const destinations = [...new Set(added.map((branch) => branch.to))];
+    const next = { ...plan, removedTarget: plan.targetId ? null : plan.removedTarget, branches: [...plan.branches, ...added], routeOrigins: { ...plan.routeOrigins, [routeId]: plan.routeOrigins?.[routeId] ?? source } };
+    commit(next, message);
+    setPlan(next);
+    setAddition({ routeId, added: destinations.filter((id) => !beforeIds.has(id)).length, reused: destinations.filter((id) => beforeIds.has(id)).length, before: plan, after: next, selection: sel });
+    setSel({ kind: 'route', id: routeId });
+    setMapFocus({ key: Date.now(), ids: [added[0].from, ...destinations] });
+    setHighlightIds(destinations);
+  };
   // From the AI chat: the suggested roles become a new Career vision, then it's highlighted.
   const addVisionFromChat = (from: string, ids: string[]) => {
     const onMap = new Set(steps.map((s) => s.id));
@@ -196,8 +223,7 @@ export function MyCareerScreen() {
     const n = (visions.at(-1) ?? 0) + 1;
     const start = onMap.has(from) ? from : current.id;
     const added: Branch[] = fresh.map((to, i) => ({ kind: 'vision', vision: n, from: i === 0 ? start : fresh[i - 1], to }));
-    commit({ ...plan, branches: [...plan.branches, ...added] }, `Added to your map as Career vision ${n}`);
-    setSel({ kind: 'route', id: visionRouteId(n) });
+    addBranches(added, `Added to your map as Custom direction ${n}`, fresh.at(-1)!, 'ai');
   };
 
   // Map toolbar (on the canvas) and List toolbar (a bar above the list) share the same controls.
@@ -214,12 +240,6 @@ export function MyCareerScreen() {
   );
   const toolbar = (
     <>
-      {(matchingPaths.length > 1 || !plan.followedPathId) && (
-        <Select value={plan.followedPathId ?? ''} onValueChange={follow}>
-          <SelectTrigger aria-label="Company path you follow" className="w-auto gap-[var(--spacing-component-xs)]"><SelectValue placeholder="Choose a company path" /></SelectTrigger>
-          <SelectContent>{matchingPaths.map((p) => <SelectItem key={p.id} value={p.id}>Following: {p.name}</SelectItem>)}</SelectContent>
-        </Select>
-      )}
       <Button variant="outline" onClick={() => setDialog('add')}>
         <PlusIcon aria-hidden="true" />Explore a position
       </Button>
@@ -276,9 +296,11 @@ export function MyCareerScreen() {
                 <>
                   <CareerMap
                     aria-label={`${employee.name}'s career map`}
-                    items={items}
-                    links={links}
-                    paths={routes}
+                    items={graphItems}
+                    links={graphLinks}
+                    paths={graphRoutes}
+                    focus={mapFocus}
+                    highlightIds={highlightIds}
                     selectedId={step?.id}
                     onSelect={selectCard}
                     selectedRoute={route?.id}
@@ -287,16 +309,16 @@ export function MyCareerScreen() {
                     className="flex-1"
                     toolbar={toolbar}
                   />
-                  <CareerMapLegend paths={routes} selectedRoute={route?.id} onSelectRoute={selectRoute} className="border-t border-[var(--color-border-default)] px-[var(--spacing-layout-sm)] py-[var(--spacing-component-sm)]" />
+                  <CareerMapLegend paths={graphRoutes} selectedRoute={route?.id} onSelectRoute={selectRoute} className="border-t border-[var(--color-border-default)] px-[var(--spacing-layout-sm)] py-[var(--spacing-component-sm)]" />
                 </>
               ) : (
                 <>
                   <div className="flex flex-wrap items-center gap-[var(--spacing-component-xs)] px-[var(--spacing-layout-xs)] pt-[var(--spacing-layout-xs)]">{toolbar}</div>
                   <CareerMapList
                     aria-label={`${employee.name}'s career plan`}
-                    items={items}
-                    links={links}
-                    paths={routes}
+                    items={graphItems}
+                    links={graphLinks}
+                    paths={graphRoutes}
                     selectedId={step?.id}
                     onSelect={selectCard}
                     selectedRoute={route?.id}
@@ -310,8 +332,8 @@ export function MyCareerScreen() {
             <aside aria-label={route ? 'Selected route' : 'Selected role'} className="flex shrink-0 flex-col border-t border-[var(--color-border-default)] lg:w-[400px] lg:overflow-y-auto lg:border-l lg:border-t-0">
               {route ? (
                 <RoutePanel route={route} plan={plan} steps={steps} request={request} removeBlocked={removal?.blocked}
+                  addition={addition?.routeId === route.id ? addition : undefined} onUndo={undoAddition}
                   actions={{
-                    onFollow: follow,
                     onPathHistory: openPathHistory,
                     onRequest: () => setDialog('request'),
                     onWithdraw: () => { setRequest(null); toast(`Request withdrawn. Career vision ${visionOfRoute} is a draft again.`); },
@@ -320,7 +342,7 @@ export function MyCareerScreen() {
                     onClose: clearSelection,
                   }} />
               ) : (
-                <StepPanel careerActions={careerActions} onCreateAction={(action) => setCareerActions((list) => [...list, action])} step={actionStep} plan={plan} links={links} request={request} removable={!!removal} removeBlocked={removal?.blocked}
+                <StepPanel careerActions={careerActions} onCreateAction={addCareerAction} step={actionStep} plan={plan} links={links} request={request} removable={!!removal} removeBlocked={removal?.blocked}
                   focusGroup={actionStep.state === 'target' ? focusGroup : undefined}
                   actions={{ onSetTarget: () => setDialog('target'), onRemoveTarget: () => setDialog('untarget'), onAdd: () => setDialog('add'), onRemove: () => setDialog('remove'), onShowRoute: selectRoute, onClose: clearSelection }} />
               )}
@@ -385,21 +407,7 @@ export function MyCareerScreen() {
           </AlertDialogContent>
         </AlertDialog>
       )}
-      {switchPreview && (
-        <SwitchPathDialog
-          open={dialog === 'switch'}
-          onOpenChange={(o) => { if (!o) { setDialog(null); setSwitchTo(''); } }}
-          from={companyPaths.find((p) => p.id === plan.followedPathId)?.name}
-          to={companyPaths.find((p) => p.id === switchTo)!.name}
-          targetNote={switchPreview.note}
-          onConfirm={() => {
-            const nextPath = switchTo;
-            commit(switchPreview.next, `You now follow ${companyPaths.find((p) => p.id === nextPath)!.name}`);
-            setSel({ kind: 'route', id: nextPath });
-            setSwitchTo('');
-          }}
-        />
-      )}
+      <AiSuggestionDialog open={suggestionOpen} onOpenChange={setSuggestionOpen} plan={plan} onAdd={(branches, message, select) => addBranches(branches, message, select, 'ai')} onDismiss={() => { setSuggestionDismissed(true); setSuggestionOpen(false); }} />
       <Toaster />
     </EnpathAppShell>
       {followedPath && <PathHistoryDrawer open={historyOpen} onOpenChange={setHistoryOpen} path={followedPath.name} changes={historyChanges} />}
