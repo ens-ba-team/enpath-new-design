@@ -345,7 +345,7 @@ export function gapsFor(step: PlanStep): Gap[] {
 export function gapsForLevel(levelId: string): Gap[] {
   const position = positionOfLevel(levelId);
   const matrix = initialMatrices.find((m) => m.id === position.matrixId)!;
-  return matrix.competencies.map((c) => {
+  return matrix.competencies.filter((c) => position.expectations[c.id]?.[levelId] != null).map((c) => {
     const required = position.expectations[c.id]?.[levelId] ?? null;
     const current = evidence[c.id]?.point ?? null;
     const status: GapStatus = required == null ? 'unset' : current == null ? 'evidence' : current >= required ? 'ready' : 'growth';

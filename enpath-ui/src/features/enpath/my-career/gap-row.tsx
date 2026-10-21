@@ -29,7 +29,7 @@ function ScoreScale({ gap }: { gap: Gap }) {
         <span>Role requires: <span className="text-[var(--color-background-default-foreground)]">{gap.required ?? 'Not set'}</span></span>
       </div>
       <div className="flex gap-[var(--spacing-component-xs)]" role="img" aria-label={`Your score: ${gap.current ?? 'not assessed'}. Role requires: ${gap.required ?? 'not set'}. Maximum: ${gap.scaleSize}. ${gap.status === 'ready' ? 'Requirement met.' : gap.status === 'growth' ? 'Orange shows your score; light orange shows remaining required points.' : 'Outlined segments show required points.'}`}>
-        {Array.from({ length: gap.scaleSize }, (_, i) => (
+        {Array.from({ length: Math.max(gap.current ?? 0, gap.required ?? 0) }, (_, i) => (
           <span key={i} aria-hidden="true" className={cn('h-2 flex-1 rounded-[var(--radius-sm)]',
             gap.status === 'ready' ? (i < gap.current! ? 'bg-[var(--color-icon-success)]' : 'border border-[var(--color-border-default)]')
               : gap.status === 'growth' && i < gap.current! ? 'bg-[var(--color-icon-warning)]'

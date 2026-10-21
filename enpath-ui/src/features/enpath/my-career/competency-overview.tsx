@@ -49,7 +49,7 @@ export function CompetencyOverview({ gaps, roleName, open, onOpenChange, onSelec
         <DialogDescription>{roleName}. Your approved scores compared with this role’s requirements.</DialogDescription>
       </DialogHeader>
       <p className="text-body-sm">{assessed}/{gaps.length} competencies assessed · Scale: 0–{maximum}</p>
-      <p className="text-body-xs text-[var(--color-text-secondary)]">{gaps.filter((gap) => gap.status === 'growth').length} growth areas · {gaps.filter((gap) => gap.status === 'ready').length} ready · {gaps.filter((gap) => gap.current == null).length} not assessed · {gaps.filter((gap) => gap.required == null).length} requirements not set</p>
+      <p className="text-body-xs text-[var(--color-text-secondary)]">{gaps.filter((gap) => gap.status === 'growth').length} growth areas · {gaps.filter((gap) => gap.status === 'ready').length} ready · {gaps.filter((gap) => gap.current == null).length} not assessed</p>
       {available ? <>
         <div className="flex flex-wrap gap-[var(--spacing-component-lg)] text-body-sm" aria-label="Chart legend">
           <span className="inline-flex items-center gap-[var(--spacing-component-sm)]"><span className="w-6 border-t-2 border-[var(--color-brand-primary)]" />Your score · solid</span>

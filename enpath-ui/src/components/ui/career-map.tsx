@@ -20,7 +20,6 @@ import {
   Background,
   BackgroundVariant,
   Handle,
-  MarkerType,
   Position,
   ReactFlow,
   ReactFlowProvider,
@@ -127,9 +126,10 @@ export interface CareerMapPath {
  * green, Career vision = violet, any other company path = grey. `active` = the selected route (or the
  * followed path when nothing is selected); inactive routes use the role's lighter token — never opacity.
  */
-export function routeColor(p?: CareerMapPath, active = true) {
-  const role = !p || p.kind === "vision" ? "vision-edge" : p.followed ? "followed-edge" : "other-path-edge";
-  return `var(--career-map-${role}${active ? "" : "-inactive"})`;
+export function routeColor(_p?: CareerMapPath, _active?: boolean) {
+  void _p;
+  void _active;
+  return 'var(--career-map-other-path-edge-inactive)';
 }
 
 // Layout constants are canvas coordinates (React Flow positions), not CSS spacing.
@@ -346,21 +346,28 @@ export interface CareerMapProps {
   className?: string;
 }
 
-function CareerMapCanvas({ items, links, paths, selectedId, onSelect, selectedRoute, onSelectRoute, onPaneClick, "aria-label": ariaLabel, toolbar, className, focus, highlightIds }: CareerMapProps) {
+function CareerMapCanvas({ items, links, selectedId, onSelect, onSelectRoute, onPaneClick, "aria-label": ariaLabel, toolbar, className, focus, highlightIds }: CareerMapProps) {
   const { position, links: valid } = React.useMemo(() => layout(items, links), [items, links]);
-  const routeOf = React.useMemo(() => new Map(paths.map((p) => [p.id, p])), [paths]);
   // Cards on the selected route: both ends of a company path's links; for a Career vision, only the
   // roles in it (not the card it branches from). Completed cards never get the ring — the past recedes.
-  const selected = selectedRoute ? routeOf.get(selectedRoute) : undefined;
-  const onRoute = new Set(
-    valid.filter((l) => l.route === selectedRoute).flatMap((l) => (selected?.kind === "vision" ? [l.to] : [l.from, l.to]))
-  );
+  const targetId = items.find((item) => item.state === 'target')?.id;
+  const currentId = items.find((item) => item.state === 'current')?.id;
+  const targetEdges = new Set<string>();
+  const queue: { id: string; edges: string[] }[] = targetId ? [{ id: targetId, edges: [] }] : [];
+  const visited = new Set<string>();
+  while (queue.length) {
+    const candidate = queue.shift()!;
+    if (candidate.id === currentId) { candidate.edges.forEach((edge) => targetEdges.add(edge)); break; }
+    if (visited.has(candidate.id)) continue;
+    visited.add(candidate.id);
+    valid.filter((link) => link.to === candidate.id).forEach((link) => queue.push({ id: link.from, edges: [...candidate.edges, `${link.route}:${link.from}->${link.to}`] }));
+  }
 
   const nodes: CareerMapFlowNode[] = items.map((i) => ({
     id: i.id,
     type: "careerMapNode",
     position: position.get(i.id) ?? { x: 0, y: 0 },
-    data: { title: i.title, level: i.level, state: i.state, label: i.label, suggestion: i.suggestion, hideStatus: i.hideStatus, progress: i.progress, ring: highlightIds?.includes(i.id) ? 'var(--career-map-node-selected)' : onRoute.has(i.id) && i.state !== "completed" ? routeColor(selected) : undefined },
+    data: { title: i.title, level: i.level, state: i.state, label: i.label, suggestion: i.suggestion, hideStatus: i.hideStatus, progress: i.progress, ring: highlightIds?.includes(i.id) ? 'var(--career-map-node-selected)' : undefined },
     selected: i.id === selectedId,
     width: NODE_WIDTH,
     height: NODE_HEIGHT,
@@ -369,10 +376,8 @@ function CareerMapCanvas({ items, links, paths, selectedId, onSelect, selectedRo
   }));
 
   const edges: Edge[] = valid.map((l) => {
-    const route = routeOf.get(l.route);
-    // The followed route is the default active route; an explicit selection overrides it.
-    const on = selectedRoute ? l.route === selectedRoute : route?.followed === true;
-    const stroke = routeColor(route, on);
+    const on = targetEdges.has(`${l.route}:${l.from}->${l.to}`);
+    const stroke = on ? 'var(--career-map-target-border)' : 'var(--career-map-other-path-edge-inactive)';
     const suggestion = items.some((item) => item.id === l.to && item.suggestion);
     return {
       // Routes can share a stretch (two Career visions): one line per route, keyed by route.
@@ -385,10 +390,7 @@ function CareerMapCanvas({ items, links, paths, selectedId, onSelect, selectedRo
       interactionWidth: 20,
       className: onSelectRoute ? "cursor-pointer" : undefined,
       zIndex: on ? 1 : 0,
-      style: { stroke, opacity: suggestion ? 0.4 : 1, strokeWidth: on ? 3.5 : 2, strokeDasharray: route?.kind === "vision" ? "6 4" : undefined },
-      // Arrowheads in screen units so they don't grow with the thicker active line. React Flow draws
-      // the arrow in a quarter of the marker box, so 40 → a ~10px arrow at every stroke width.
-      markerEnd: { type: MarkerType.ArrowClosed, color: stroke, width: 40, height: 40, markerUnits: "userSpaceOnUse" },
+      style: { stroke, opacity: suggestion ? 0.4 : 1, strokeWidth: on ? 3.5 : 2 },
     };
   });
 
@@ -477,9 +479,7 @@ export function CareerMapLegend({ paths, selectedRoute, onSelectRoute, className
       {paths.map((p) => {
         const active = p.id === selectedRoute || (!selectedRoute && p.followed === true);
         const color = routeColor(p, active);
-        const swatch = p.kind === "vision"
-          ? <span aria-hidden="true" className="w-5 border-t-[3px] border-dashed" style={{ borderColor: color }} />
-          : <span aria-hidden="true" className="h-[3px] w-5 rounded-[var(--radius-pill)]" style={{ backgroundColor: color }} />;
+        const swatch = <span aria-hidden="true" className="h-[3px] w-5 rounded-[var(--radius-pill)]" style={{ backgroundColor: color }} />;
         const pressed = active && "bg-[var(--button-outline-bg-active)] font-semibold text-[var(--color-background-default-foreground)]";
         return (
           <li key={p.id}>
@@ -545,7 +545,7 @@ function routeOrder(routeId: string, links: CareerMapLink[]) {
 }
 
 /** Rail tone for a route: its role (followed · other company path · Career vision). */
-const railTone = (p: CareerMapPath): StepRailTone => (p.kind === "vision" ? "vision" : p.followed ? "followed" : "other");
+const railTone = (): StepRailTone => 'other';
 
 export function CareerMapList({ items, links, paths, selectedId, onSelect, selectedRoute, onSelectRoute, "aria-label": ariaLabel, className }: CareerMapListProps) {
   const byId = new Map(items.map((i) => [i.id, i]));
@@ -655,7 +655,7 @@ export function CareerMapList({ items, links, paths, selectedId, onSelect, selec
             </div>
             {/* Context line under the header, like the detail panels. */}
             {note && <p className="text-body-sm text-[var(--color-text-secondary)]">{note}</p>}
-            <StepRail tone={railTone(path)} aria-label={`Roles on ${path.name}`}>
+            <StepRail tone={railTone()} aria-label={`Roles on ${path.name}`}>
               {rows.map((id) => row(byId.get(id)!, id === start))}
             </StepRail>
           </Card>
